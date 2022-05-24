@@ -9,7 +9,8 @@ dependencies = [
     dependency('gio-2.0'),
 ]
 
-sources = files('src/util/archive.vala'
+sources = files('src/util/archive.vala',
+                'src/util/logger.vala',
                )
 
 if get_option('static')
@@ -18,5 +19,6 @@ if get_option('static')
 else
     lib = library('inary', sources, dependencies: dependencies)
     executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
+    executable('inary-test', 'src/test.vala', dependencies: dependencies, link_with: lib)
 endif
 
