@@ -2,16 +2,21 @@
 
 public class archive {
 
-    Archive.Read archive;
     private string archive_path;
 
     public void load(string path){
         archive_path = path;
     }
     public string[] list_files (){
-        return getoutput("tar -f --list "+archive_path).split("\n");
+        return getoutput("tar -f --list '"+archive_path+"'").split("\n");
     }
-
+    public void extract_all(){
+        run_silent("tar -xf '"+archive_path+"'");
+    }
+    public void extract(string path){
+        run_silent("tar -xf '"+archive_path+"' '"+path+"'");
+    }
+}
 #else
 
 public class archive {
@@ -27,7 +32,8 @@ public class archive {
         archive.support_filter_all ();
         archive.support_format_all ();
         if (archive.open_filename (archive_path, 10240) != Archive.Result.OK) {
-            error ("Error: %s (%d)", archive.error_string (), archive.errno ());
+            log.error_add("Error: " + archive.error_string ());
+            log.error(archive.errno ());
         }
     }
     public string[] list_files (){
@@ -79,7 +85,6 @@ public class archive {
 
     public void extract_all(){
         foreach (string path in list_files()){
-            stdout.printf(path+"\n");
             extract(path);
         }
     }

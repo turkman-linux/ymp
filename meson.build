@@ -5,7 +5,6 @@ project('inary', 'vala', 'c',
 )
 
 dependencies = [
-    dependency('libarchive'),
     dependency('gio-2.0'),
 ]
 
@@ -13,8 +12,17 @@ sources = files('src/util/archive.vala',
                 'src/util/command.vala',
                 'src/util/logger.vala',
                )
+
+add_project_arguments('--pkg', 'posix', language: 'vala')
+
 if get_option('enable_debug')
     add_project_arguments('-D', 'DEBUG', language: 'vala')
+endif
+
+if get_option('no_libarchive')
+    add_project_arguments('-D', 'no_libarchive', language: 'vala')
+else
+    dependencies += dependency('libarchive')
 endif
 
 if get_option('static')

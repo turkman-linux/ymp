@@ -1,3 +1,4 @@
+using Posix;
 public static string getoutput (string command) {
     string stdout;
     string stderr;

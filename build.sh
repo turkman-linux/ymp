@@ -1,4 +1,5 @@
 rm -rf build
 meson build $@
 ninja -C build
-LD_LIBRARY_PATH="$(pwd)/build":$LD_LIBRARY_PATH build/inary-test
+cd build
+LD_LIBRARY_PATH="$(pwd)":$LD_LIBRARY_PATH ./inary-test

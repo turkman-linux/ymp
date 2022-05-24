@@ -1,6 +1,16 @@
 logger log;
 void main(){
     log = new logger();
+    // archive test
+    var tar = new archive();
+    tar.load("../example/main.tar.gz");
+    foreach (string path in tar.list_files()){
+        log.print(path);
+    }
+    tar.extract("aaa");
+    tar.extract_all();
+    
+    // logger test
     log.error_add("Hello World");
     #if DEBUG
     log.error_add("Test 123");
