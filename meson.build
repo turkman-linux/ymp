@@ -33,5 +33,6 @@ if get_option('static')
     executable('inary-static','src/main.vala', dependencies: dependencies, link_args: ['-static'], link_with: slib)
 endif
 executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
+executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_with: lib)
 executable('inary-test', 'src/test.vala', dependencies: dependencies, link_with: lib)
 

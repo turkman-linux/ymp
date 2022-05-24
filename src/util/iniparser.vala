@@ -52,6 +52,9 @@ public class inifile {
                 }
             }
         }
+        if (cur_section.name != null){
+            sections += cur_section;
+        }
     }
     public string get(string name, string variable){
         foreach (ini_section section in sections){
@@ -61,7 +64,7 @@ public class inifile {
         }
         return "";
     }
-    public string[] get_values(string name){
+    public string[] get_variables(string name){
         foreach (ini_section section in sections){
             if (section.name == name){
                 return section.get_variables();
@@ -75,5 +78,15 @@ public class inifile {
             keys += section.name;
         }
         return keys;
+    }
+    public string dump(){
+        string data="";
+        foreach (ini_section section in sections){
+            data += "["+section.name+"]";
+            foreach (string variable in section.get_variables()){
+                data += variable+"="+section.get(variable);
+            }
+        }
+        return data;
     }
 }

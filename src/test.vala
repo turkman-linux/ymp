@@ -20,7 +20,7 @@ void main(){
     ini.load("../example/test.ini");
     log.warning(ini.get("main","test"));
     log.warning(ini.get_sections()[0]);
-    log.warning(ini.get_values("main")[0]);
+    log.warning(ini.get_variables("devel")[0]);
     stdout.printf("--------------\n");
     
     // logger test
