@@ -9,6 +9,19 @@ void main(){
     }
     tar.extract("aaa");
     tar.extract_all();
+    stdout.printf("--------------\n");
+    
+    // file test
+    log.warning(readfile("/proc/cmdline"));
+    stdout.printf("--------------\n");
+    
+    //inifile test
+    var ini = new inifile();
+    ini.load("../example/test.ini");
+    log.warning(ini.get("main","test"));
+    log.warning(ini.get_sections()[0]);
+    log.warning(ini.get_values("main")[0]);
+    stdout.printf("--------------\n");
     
     // logger test
     log.error_add("Hello World");
@@ -21,4 +34,5 @@ void main(){
     run("non-command -non-parameter");
     log.error(0);
     log.error(1);
+    stdout.printf("--------------\n");
 }

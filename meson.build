@@ -11,6 +11,8 @@ dependencies = [
 sources = files('src/util/archive.vala',
                 'src/util/command.vala',
                 'src/util/logger.vala',
+                'src/util/file.vala',
+                'src/util/iniparser.vala',
                )
 
 add_project_arguments('--pkg', 'posix', language: 'vala')

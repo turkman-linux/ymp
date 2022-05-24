@@ -10,7 +10,9 @@ public class logger {
     string[] errors= {};
 
     public void print(string message){
-        stdout.printf(message+"\n");
+        if (message != null){
+            stdout.printf(message+"\n");
+        }
     }
 
     public string colorize(string message, int color){
@@ -22,7 +24,9 @@ public class logger {
     }
 
     public void warning(string message){
-        print(colorize(message,yellow));
+        if (message != null){
+            print(colorize(message,yellow));
+        }
     }
 
     public void debug(string message){
@@ -42,6 +46,8 @@ public class logger {
         }
     }
     public void error_add(string message){
-        errors += message;
+        if (message != null){
+            errors += message;
+        }
     }
 }
