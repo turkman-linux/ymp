@@ -1,3 +1,19 @@
+#if no_libarchive
+
+public class archive {
+
+    Archive.Read archive;
+    private string archive_path;
+
+    public void load(string path){
+        archive_path = path;
+    }
+    public string[] list_files (){
+        return getoutput("tar -f --list "+archive_path).split("\n");
+    }
+
+#else
+
 public class archive {
 
     Archive.Read archive;
@@ -69,3 +85,5 @@ public class archive {
     }
 
 }
+
+#endif

@@ -10,6 +10,7 @@ dependencies = [
 ]
 
 sources = files('src/util/archive.vala',
+                'src/util/command.vala',
                 'src/util/logger.vala',
                )
 if get_option('enable_debug')
