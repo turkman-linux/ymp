@@ -1,3 +1,5 @@
 option('static', type: 'boolean', value: 'false')
 option('enable_debug', type: 'boolean', value: 'false')
 option('no_libarchive', type: 'boolean', value: 'false')
+option('storagedir', type: 'string', value: 'var/lib/inary')
+

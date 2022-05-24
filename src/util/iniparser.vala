@@ -31,7 +31,9 @@ public class ini_section {
 }
 
 public class inifile {
+
     ini_section[] sections = {};
+
     public void load(string path){
         ini_section cur_section = new ini_section();
         foreach (string line in readfile(path).split("\n")){

@@ -6,8 +6,8 @@ logger log;
 
 public class logger {
     bool nocolor = false;
-    bool debug_enabled = true;
     string[] errors= {};
+    public bool enable_debug;
 
     public void print(string message){
         if (message != null){
@@ -30,7 +30,7 @@ public class logger {
     }
 
     public void debug(string message){
-        if(debug_enabled){
+        if(enable_debug){
             print(colorize(message,blue));
         }
     }

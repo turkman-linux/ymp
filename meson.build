@@ -8,14 +8,23 @@ dependencies = [
     dependency('gio-2.0'),
 ]
 
-sources = files('src/util/archive.vala',
+sources = files('src/inary.vala',
+                'src/util/archive.vala',
                 'src/util/command.vala',
                 'src/util/logger.vala',
                 'src/util/file.vala',
                 'src/util/iniparser.vala',
+                'src/settings.vala',
+                'ctx.vala',
                )
+run_command('bash', './mkctx.sh', 
+    'CONFIGDIR=/'+get_option('sysconfdir'),
+    'STORAGEDIR=/'+get_option('storagedir'),
+    check:true)
+
 
 add_project_arguments('--pkg', 'posix', language: 'vala')
+add_project_arguments('--enable-checking', language: 'vala')
 
 if get_option('enable_debug')
     add_project_arguments('-D', 'DEBUG', language: 'vala')
@@ -34,5 +43,5 @@ if get_option('static')
 endif
 executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
 executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_with: lib)
-executable('inary-test', 'src/test.vala', dependencies: dependencies, link_with: lib)
+executable('inary-test', 'test/test.vala', dependencies: dependencies, link_with: lib)
 
