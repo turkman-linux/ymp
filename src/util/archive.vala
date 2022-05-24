@@ -43,6 +43,10 @@ public class archive {
             if (entry.pathname() != path){
                 continue;
             }
+            #if DEBUG
+            log.debug("Extracting: "+path);
+            #endif
+
             if (extractor.write_header (entry) != Archive.Result.OK) {
                 continue;
             }

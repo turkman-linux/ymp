@@ -1,9 +1,14 @@
 int red = 31;
 int yellow = 33;
+int blue = 34;
+
+logger log;
 
 public class logger {
     bool nocolor = false;
+    bool debug_enabled = true;
     string[] errors= {};
+
     public void print(string message){
         stdout.printf(message+"\n");
     }
@@ -19,6 +24,13 @@ public class logger {
     public void warning(string message){
         print(colorize(message,yellow));
     }
+
+    public void debug(string message){
+        if(debug_enabled){
+            print(colorize(message,blue));
+        }
+    }
+
     public void error(int status){
         foreach (string error in errors){
             stderr.printf(colorize(error,red)+"\n");

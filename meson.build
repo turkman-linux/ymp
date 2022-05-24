@@ -12,6 +12,9 @@ dependencies = [
 sources = files('src/util/archive.vala',
                 'src/util/logger.vala',
                )
+if get_option('enable_debug')
+    add_project_arguments('-D', 'DEBUG', language: 'vala')
+endif
 
 if get_option('static')
     slib = static_library('inary-static', sources, dependencies: dependencies)

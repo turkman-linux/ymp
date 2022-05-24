@@ -1,1 +1,2 @@
 option('static', type: 'boolean', value: 'false')
+option('enable_debug', type: 'boolean', value: 'false')
