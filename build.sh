@@ -1,3 +1,3 @@
 rm -rf build
-meson build
+meson build $@
 ninja -C build
