@@ -23,6 +23,7 @@ public class archive {
 
     Archive.Read archive;
     private string archive_path;
+    private string target_path;
 
     public void load(string path){
         archive_path = path;
@@ -47,6 +48,12 @@ public class archive {
     return ret;
     }
 
+    public void set_target(string path){
+        if(path != null){
+            target_path = path;
+        }
+    }
+
     public void extract (string path) {
         load_archive(archive_path);
         Archive.ExtractFlags flags;
@@ -68,6 +75,11 @@ public class archive {
             #if DEBUG
             log.debug("Extracting: "+path);
             #endif
+
+            if (target_path == null){
+                target_path = "./";
+            }
+            entry.set_pathname(target_path+"/"+path);
 
             if (extractor.write_header (entry) != Archive.Result.OK) {
                 continue;

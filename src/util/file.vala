@@ -12,7 +12,11 @@ public string readfile (string path){
             #endif
         }
     } catch (Error e) {
-        log.error_add(e.message);
+        if (log != null){
+            log.error_add(e.message);
+        }else{
+            stderr.printf(e.message);
+        }
         return "";
     }
     return data;

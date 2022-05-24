@@ -1,6 +1,9 @@
+
 void main(){
     // init inary
+    set_destdir("../test/example/rootfs");
     Inary inary = inary_init();
+    
     // archive test
     var tar = new archive();
     tar.load("../test/example/main.tar.gz");
@@ -8,6 +11,7 @@ void main(){
         inary.log.print(path);
     }
     tar.extract("aaa");
+    tar.set_target("./ffff/");
     tar.extract_all();
     stdout.printf("--------------\n");
     

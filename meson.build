@@ -24,7 +24,7 @@ run_command('bash', './mkctx.sh',
 
 
 add_project_arguments('--pkg', 'posix', language: 'vala')
-add_project_arguments('--enable-checking', language: 'vala')
+add_project_arguments('--debug', language: 'vala')
 
 if get_option('enable_debug')
     add_project_arguments('-D', 'DEBUG', language: 'vala')

@@ -2,8 +2,6 @@ int red = 31;
 int yellow = 33;
 int blue = 34;
 
-logger log;
-
 public class logger {
     bool nocolor = false;
     string[] errors= {};

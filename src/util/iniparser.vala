@@ -35,6 +35,9 @@ public class inifile {
     ini_section[] sections = {};
 
     public void load(string path){
+        if (path == null){
+            return;
+        }
         ini_section cur_section = new ini_section();
         foreach (string line in readfile(path).split("\n")){
             if (line[0] == '[' && line[line.length-1] == ']'){
