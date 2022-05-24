@@ -25,12 +25,11 @@ else
     dependencies += dependency('libarchive')
 endif
 
+slib = static_library('inary-static', sources, dependencies: dependencies)
+lib = library('inary', sources, dependencies: dependencies)
 if get_option('static')
-    slib = static_library('inary-static', sources, dependencies: dependencies)
     executable('inary-static','src/main.vala', dependencies: dependencies, link_args: ['-static'], link_with: slib)
-else
-    lib = library('inary', sources, dependencies: dependencies)
-    executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
-    executable('inary-test', 'src/test.vala', dependencies: dependencies, link_with: lib)
 endif
+executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
+executable('inary-test', 'src/test.vala', dependencies: dependencies, link_with: lib)
 
