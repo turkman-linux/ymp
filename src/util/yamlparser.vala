@@ -1,6 +1,9 @@
 public class yamlfile {
+
     public string data;
-    public int offset = 0;
+    private int offset = 0;
+
+
     public void load(string path){
         data = readfile(path);
     }
@@ -14,6 +17,17 @@ public class yamlfile {
             tmp = get_area(tmp,item);
         }
         return tmp;
+    }
+    
+    public string[] get_area_list(string fdata, string path){
+        string[] ret = {};
+        int data_length = fdata.split("\n").length;
+        while(offset < data_length){
+            string data = get_area(fdata,path);
+            ret += data;
+            offset += data.split("\n").length + 1;
+        }
+        return ret;
     }
     
     public string get_area(string fdata,string path){

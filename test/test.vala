@@ -31,8 +31,13 @@ void main(){
     var pkg = yaml.get_area(yaml.data,"package");
     var deps = yaml.get_area(pkg,"dependency");
     var pkdep = yaml.get("package.dependency");
+    var pkglist = yaml.get_area_list(yaml.data,"package");
+    foreach(string p in pkglist){
+        inary.log.print(p);
+    }
     inary.log.warning(deps);
     inary.log.warning(pkdep);
+    stdout.printf("--------------\n");
     //inifile test
     var ini = new inifile();
     ini.load("../test/example/test.ini");
