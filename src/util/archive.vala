@@ -4,6 +4,13 @@ public class archive {
 
     private string archive_path;
 
+    private string target_path;
+    public void set_target(string path){
+        if(path != null){
+            target_path = path;
+        }
+    }
+
     public void load(string path){
         archive_path = path;
     }
@@ -11,10 +18,16 @@ public class archive {
         return getoutput("tar -f --list '"+archive_path+"'").split("\n");
     }
     public void extract_all(){
-        run_silent("tar -xf '"+archive_path+"'");
+        if (target_path == null){
+            target_path = "./";
+        }
+        run_silent("tar -xf -C '"+target_path+"' '"+archive_path+"'");
     }
     public void extract(string path){
-        run_silent("tar -xf '"+archive_path+"' '"+path+"'");
+        if (target_path == null){
+            target_path = "./";
+        }
+        run_silent("tar -xf -C '"+target_path+"' '"+archive_path+"' '"+path+"'");
     }
 }
 #else

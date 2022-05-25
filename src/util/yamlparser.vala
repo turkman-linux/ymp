@@ -59,7 +59,7 @@ public class yamlfile {
         }
         return trim(area);
     }
-    public int c(string line){
+    private int c(string line){
         for(int i = 0; i<line.length;i++){
             if (line[i] != ' '){
                 return i;
