@@ -1,0 +1,12 @@
+package:
+  name : inary
+  version : 1.0
+  dependency:
+    - glibc
+    - glib-2.0
+package:
+   name : bash
+   version : 5.0
+   dependency:
+     - glibc
+     - glib-2.0

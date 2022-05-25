@@ -3,7 +3,6 @@ void main(){
     // init inary
     set_destdir("../test/example/rootfs");
     Inary inary = inary_init();
-    
     // archive test
     var tar = new archive();
     tar.load("../test/example/main.tar.gz");
@@ -26,7 +25,14 @@ void main(){
     cd(curdir);
     inary.log.warning(pwd());
     stdout.printf("--------------\n");
-    
+    //yamlfile test
+    var yaml = new yamlfile();
+    yaml.load("../test/example/test.yaml");
+    var pkg = yaml.get_area(yaml.data,"package");
+    var deps = yaml.get_area(pkg,"dependency");
+    var pkdep = yaml.get("package.dependency");
+    inary.log.warning(deps);
+    inary.log.warning(pkdep);
     //inifile test
     var ini = new inifile();
     ini.load("../test/example/test.ini");
@@ -53,6 +59,5 @@ void main(){
     
     inary.log.error(0);
     inary.log.error(1);
-    stdout.printf("--------------\n");
-    
+    stdout.printf("--------------\n");   
 }
