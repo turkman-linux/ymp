@@ -21,3 +21,29 @@ public string readfile (string path){
     }
     return data;
 }
+
+public void cd(string path){
+    GLib.Environment.set_current_dir(path);
+}
+
+public string pwd(){
+    return GLib.Environment.get_current_dir();
+}
+
+public int create_dir(string path){
+    return GLib.DirUtils.create_with_parents(path,0755);
+}
+
+public int remove_dir(string path){
+    return GLib.DirUtils.remove(path);
+}
+
+public int remove_file(string path){
+    File file = File.new_for_path(path);
+    try {
+        file.delete();
+        return 0;
+    }catch (Error e){
+        return -1;
+    }
+}

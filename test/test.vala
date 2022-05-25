@@ -17,6 +17,12 @@ void main(){
     
     // file test
     inary.log.warning(readfile("/proc/cmdline"));
+    run("pwd");
+    cd("..");
+    create_dir("uuu");
+    remove_dir("uuu");
+    run("pwd");
+    inary.log.warning(pwd());
     stdout.printf("--------------\n");
     
     //inifile test
