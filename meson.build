@@ -14,6 +14,8 @@ sources = files('src/inary.vala',
                 'src/util/logger.vala',
                 'src/util/file.vala',
                 'src/util/iniparser.vala',
+                'src/operation.vala',
+                'src/operations/install.vala',
                 'src/settings.vala',
                 'ctx.vala',
                )

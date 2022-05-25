@@ -18,10 +18,12 @@ void main(){
     // file test
     inary.log.warning(readfile("/proc/cmdline"));
     run("pwd");
+    string curdir = pwd();
     cd("..");
     create_dir("uuu");
     remove_dir("uuu");
     run("pwd");
+    cd(curdir);
     inary.log.warning(pwd());
     stdout.printf("--------------\n");
     

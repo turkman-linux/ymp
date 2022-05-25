@@ -1,5 +1,5 @@
 
-string DESTDIR;
+private string DESTDIR;
 public class inaryconfig {
     public string jobs;
     public string debug;
