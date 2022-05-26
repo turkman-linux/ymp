@@ -2,5 +2,4 @@ option('static', type: 'boolean', value: 'false')
 option('colorize', type: 'boolean', value: 'true')
 option('no_libarchive', type: 'boolean', value: 'false')
 option('storagedir', type: 'string', value: 'var/lib/inary')
-option('storagedir', type: 'string', value: 'var/lib/inary')
 

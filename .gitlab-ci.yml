@@ -1,0 +1,21 @@
+image: debian:unstable
+
+build:
+  stage: build
+  script:
+    - apt update 
+    - apt install meson gcc valac --no-install-recommends -y
+    - apt install libarchive-dev --no-install-recommends -y
+    - meson build
+    - ninja -C build
+    - cd build && ./inary-test
+
+debug:
+  stage: build
+  script:
+    - apt update 
+    - apt install meson gcc valac --no-install-recommends -y
+    - apt install libarchive-dev --no-install-recommends -y
+    - meson build -Ddebug=true
+    - ninja -C build
+    - cd build && ./inary-test
