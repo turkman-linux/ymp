@@ -1,4 +1,4 @@
-public string readfile (string path){
+public string readfile_raw (string path){
     File file = File.new_for_path (path);
     string data="";
     try {
@@ -16,6 +16,13 @@ public string readfile (string path){
         return "";
     }
     return data;
+}
+public string readfile(string path){
+    string new_data = "";
+    foreach(string line in readfile_raw(path).split("\n")){
+        new_data += line.split("#")[0]+"\n";
+    }
+    return new_data;
 }
 
 public void cd(string path){

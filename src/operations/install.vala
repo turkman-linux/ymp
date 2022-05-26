@@ -3,6 +3,5 @@ public int install_main(string[] args){
     return 0;
 }
 public void install_help(){
-    print_stderr("install:");
-    print_stderr("  install packages");
+    print_stderr("install packages");
 }
