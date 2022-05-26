@@ -46,8 +46,8 @@ public class archive {
         archive.support_filter_all ();
         archive.support_format_all ();
         if (archive.open_filename (archive_path, 10240) != Archive.Result.OK) {
-            log.error_add("Error: " + archive.error_string ());
-            log.error(archive.errno ());
+            error_add("Error: " + archive.error_string ());
+            error(archive.errno ());
         }
     }
     public string[] list_files (){
@@ -86,7 +86,7 @@ public class archive {
                 continue;
             }
             #if DEBUG
-            log.debug("Extracting: "+path);
+            debug("Extracting: "+path);
             #endif
 
             if (target_path == null){

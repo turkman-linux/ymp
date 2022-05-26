@@ -1,6 +1,6 @@
 int main(string[] args){
     if (args.length < 4){
-        stderr.printf("Usage: iniget [file] [section] [variable]\n");
+        print_stderr("Usage: iniget [file] [section] [variable]");
         return 1;
     }
     var file = args[1];

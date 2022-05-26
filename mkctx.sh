@@ -11,3 +11,21 @@ for i in $@ ; do
     echo "    $name=\"$value\";" >> ctx.vala
 done
 echo "}" >> ctx.vala
+cat >> ctx.vala << EOF
+public int operation_main(string name,string[] args){
+    switch(name){
+EOF
+find src/operations -type f | while read file ; do
+    op_name=$(basename $file| sed "s/\..*//g")
+    echo "        case \"${op_name}\":"
+    echo "            return ${op_name}_main(args);"
+done >> ctx.vala
+cat >> ctx.vala << EOF
+        default :
+            error_add("Invalid operation");
+            error(1);
+            break;
+    }
+    return 0;
+}
+EOF

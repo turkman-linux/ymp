@@ -15,11 +15,13 @@ sources = files('src/inary.vala',
                 'src/util/file.vala',
                 'src/util/iniparser.vala',
                 'src/util/yamlparser.vala',
-                'src/operation.vala',
-                'src/operations/install.vala',
                 'src/settings.vala',
                 'ctx.vala',
                )
+glob = run_command('find', 'src/operations','-type','f')
+sources += glob.stdout().strip().split('\n')
+
+
 run_command('bash', './mkctx.sh', 
     'CONFIGDIR=/'+get_option('sysconfdir'),
     'STORAGEDIR=/'+get_option('storagedir'),
@@ -27,11 +29,16 @@ run_command('bash', './mkctx.sh',
 
 
 add_project_arguments('--pkg', 'posix', language: 'vala')
-add_project_arguments('--debug', language: 'vala')
 
-if get_option('enable_debug')
+if get_option('debug')
+    add_project_arguments('--debug', language: 'vala')
     add_project_arguments('-D', 'DEBUG', language: 'vala')
 endif
+
+if not get_option('colorize')
+    add_project_arguments('-D', 'NOCOLOR', language: 'vala')
+endif
+
 
 if get_option('no_libarchive')
     add_project_arguments('-D', 'no_libarchive', language: 'vala')
@@ -39,12 +46,13 @@ else
     dependencies += dependency('libarchive')
 endif
 
-slib = static_library('inary-static', sources, dependencies: dependencies)
-lib = library('inary', sources, dependencies: dependencies)
 if get_option('static')
+    slib = static_library('inary-static', sources, dependencies: dependencies)
     executable('inary-static','src/main.vala', dependencies: dependencies, link_args: ['-static'], link_with: slib)
+else
+    lib = library('inary', sources, dependencies: dependencies)
+    executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
+    executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_with: lib)
+    executable('inarysh', 'src/tools/inarysh.vala', dependencies: dependencies, link_with: lib)
+    executable('inary-test', 'test/test.vala', dependencies: dependencies, link_with: lib)
 endif
-executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
-executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_with: lib)
-executable('inary-test', 'test/test.vala', dependencies: dependencies, link_with: lib)
-

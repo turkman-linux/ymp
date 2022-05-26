@@ -3,11 +3,13 @@ void main(){
     // init inary
     set_destdir("../test/example/rootfs");
     Inary inary = inary_init();
+    inary.add_process("echo",{"hello","world"});
+    inary.run();
     // archive test
     var tar = new archive();
     tar.load("../test/example/main.tar.gz");
     foreach (string path in tar.list_files()){
-        inary.log.print(path);
+        print(path);
     }
     tar.extract("aaa");
     tar.set_target("./ffff/");
@@ -15,7 +17,7 @@ void main(){
     stdout.printf("--------------\n");
     
     // file test
-    inary.log.warning(readfile("/proc/cmdline"));
+    warning(readfile("/proc/cmdline"));
     run("pwd");
     string curdir = pwd();
     cd("..");
@@ -23,7 +25,7 @@ void main(){
     remove_dir("uuu");
     run("pwd");
     cd(curdir);
-    inary.log.warning(pwd());
+    warning(pwd());
     stdout.printf("--------------\n");
     //yamlfile test
     var yaml = new yamlfile();
@@ -33,36 +35,36 @@ void main(){
     var pkdep = yaml.get("package.dependency");
     var pkglist = yaml.get_area_list(yaml.data,"package");
     foreach(string p in pkglist){
-        inary.log.print(p);
+        print(p);
     }
-    inary.log.warning(deps);
-    inary.log.warning(pkdep);
+    warning(deps);
+    warning(pkdep);
     stdout.printf("--------------\n");
     //inifile test
     var ini = new inifile();
     ini.load("../test/example/test.ini");
-    inary.log.warning(ini.get("main","test"));
-    inary.log.warning(ini.get_sections()[0]);
-    inary.log.warning(ini.get_variables("devel")[0]);
+    warning(ini.get("main","test"));
+    warning(ini.get_sections()[0]);
+    warning(ini.get_variables("devel")[0]);
     stdout.printf("--------------\n");
     
     // settings test
     set_destdir("../test/example/rootfs");
-    inary.log.print("jobs="+inary.config.jobs);
+    print("jobs="+inary.config.jobs);
     
     // logger test
-    inary.log.error_add("Hello World");
+    error_add("Hello World");
     #if DEBUG
-    inary.log.error_add("Test 123");
+    error_add("Test 123");
     #endif
     
     // command test
     string i = getoutput("echo -n hmmm");
-    inary.log.debug(i.to_string());
-    inary.log.debug(run_silent("non-command -non-parameter").to_string());
+    debug(i.to_string());
+    debug(run_silent("non-command -non-parameter").to_string());
     run("non-command -non-parameter");
     
-    inary.log.error(0);
-    inary.log.error(1);
+    error(0);
+    error(1);
     stdout.printf("--------------\n");   
 }

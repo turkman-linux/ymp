@@ -8,15 +8,11 @@ public string readfile (string path){
         while ((line = dis.read_line ()) != null){
             data += line+"\n";
             #if debug
-            log.debug("Read line from:"+path)
+            debug("Read line from:"+path)
             #endif
         }
     } catch (Error e) {
-        if (log != null){
-            log.error_add(e.message);
-        }else{
-            stderr.printf(e.message);
-        }
+        error_add(e.message);
         return "";
     }
     return data;
