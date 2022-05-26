@@ -29,6 +29,9 @@ public class Inary {
         op.args = args;
         process += op;
     }
+    public void clear_process(){
+        process = {};
+    }
     public void run(){
         for(int i=0;i<process.length;i++){
             int status = process[i].run();

@@ -1,8 +1,9 @@
 public int echo_main(string[] args){
+    string data="";
     foreach(string arg in args){
-        print_fn(arg+" ",false,false);
+        data += arg+" ";
     }
-    print("");
+    print(data[0:data.length-1]);
     return 0;
 }
 public void echo_help(){

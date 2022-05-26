@@ -16,8 +16,10 @@ public void print_fn(string message, bool new_line, bool err){
         }
         if(err){
             stderr.printf(message+nl);
+            stderr.flush();
         }else{
             stdout.printf(message+nl);
+            stderr.flush();
         }
     }
 }
