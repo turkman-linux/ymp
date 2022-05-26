@@ -54,5 +54,6 @@ public Inary inary_init(){
     Inary app = new Inary();
     app.config = settings_init();
     enable_debug = (app.config.debug == "true");
+    error(31);
     return app;
 }

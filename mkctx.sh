@@ -11,6 +11,7 @@ for i in $@ ; do
     echo "    $name=\"$value\";" >> ctx.vala
 done
 echo "}" >> ctx.vala
+### Operation function build
 cat >> ctx.vala << EOF
 public int operation_main(string name,string[] args){
     switch(name){
@@ -29,3 +30,15 @@ cat >> ctx.vala << EOF
     return 0;
 }
 EOF
+### help function build
+cat >> ctx.vala << EOF
+public void help(){
+EOF
+find src/operations -type f | while read file ; do
+    op_name=$(basename $file| sed "s/\..*//g")
+    echo "    ${op_name}_help();"
+done >> ctx.vala
+cat >> ctx.vala << EOF
+}
+EOF
+

@@ -63,8 +63,10 @@ void main(){
     debug(i.to_string());
     debug(run_silent("non-command -non-parameter").to_string());
     run("non-command -non-parameter");
-    
+
+    // help test
+    help();    
     error(0);
     error(1);
-    stdout.printf("--------------\n");   
+    stdout.printf("--------------\n");
 }

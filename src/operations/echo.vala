@@ -5,3 +5,7 @@ public int echo_main(string[] args){
     print("");
     return 0;
 }
+public void echo_help(){
+    print_stderr("echo:");
+    print_stderr("  write string to console");
+}

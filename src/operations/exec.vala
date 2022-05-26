@@ -10,3 +10,7 @@ public int exec_main(string[] args){
     }
     return status;
 }
+public void exec_help(){
+    print_stderr("exec:");
+    print_stderr("  execute a command");
+}

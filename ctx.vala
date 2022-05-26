@@ -19,3 +19,8 @@ public int operation_main(string name,string[] args){
     }
     return 0;
 }
+public void help(){
+    exec_help();
+    install_help();
+    echo_help();
+}
