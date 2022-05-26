@@ -7,6 +7,18 @@ int main(string[] args){
     var path = args[2];
     var yaml = new yamlfile();
     yaml.load(file);
-    print(yaml.get(path));
+    var data = yaml.get(path);
+    if(args.length > 3){
+        var fdata = yaml.get_value(data,args[3]);
+        if(fdata==""){
+            foreach(string item in yaml.get_array(data,args[3])){
+                fdata += item +"\n";
+            }
+            data = yaml.trim(fdata);
+        }else{
+            data = fdata;
+        }
+    }
+    print(data);
     return 0;
 }

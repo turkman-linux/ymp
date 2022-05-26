@@ -31,6 +31,8 @@ void main(){
     var yaml = new yamlfile();
     yaml.load("../test/example/metadata-source.yaml");
     var metadata = yaml.get("inary.source");
+    print(yaml.get_value(metadata,"name"));
+    print(yaml.get_array(metadata,"archive")[0]);
     print(metadata);
     stdout.printf("--------------\n");
     //inifile test
@@ -56,6 +58,11 @@ void main(){
     debug(i.to_string());
     debug(run_silent("non-command -non-parameter").to_string());
     run("non-command -non-parameter");
+
+    // package test
+    var pkg = new package();
+    pkg.load("../test/example/metadata-binary.yaml");
+    warning(pkg.name);
 
     // help test
     help();    

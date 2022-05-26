@@ -34,6 +34,33 @@ public class yamlfile {
         return ret;
     }
     
+    public string get_value(string data,string name){
+        foreach(string line in trim(data).split("\n")){
+            if(line.length < name.length+1){
+                continue;
+            }
+            int level = c(line);
+            if(level == 0 && line[0:name.length+1] == name+":"){
+                if(line.length == name.length+1){
+                    return "";
+                }
+                return trim(line[name.length+1:]);
+            }
+        }
+        return "";
+    }
+
+    public string[] get_array(string data,string name){
+        string[] array = {};
+        string fdata = get_area(data,name);
+        foreach(string line in fdata.split("\n")){
+            if(line[0:2] == "- "){
+                array += line[1:];
+            }
+        }
+        return array;
+    }
+    
     public string get_area(string fdata,string path){
         if(fdata == null){
             return "";
@@ -92,6 +119,6 @@ public class yamlfile {
             }
             new_data += line[min:]+"\n";
         }
-        return new_data;
+        return new_data[:new_data.length-1];
     }
 }
