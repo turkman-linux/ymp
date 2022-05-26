@@ -30,8 +30,7 @@ void main(){
     //yamlfile test
     var yaml = new yamlfile();
     yaml.load("../test/example/metadata-source.yaml");
-    var metadata = yaml.get("inary.source.dependencies");
-    var pkglist = yaml.get_area_list(metadata,"package");
+    var metadata = yaml.get("inary.source");
     print(metadata);
     stdout.printf("--------------\n");
     //inifile test
