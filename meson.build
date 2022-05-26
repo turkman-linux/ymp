@@ -7,6 +7,10 @@ project('inary', 'vala', 'c',
 dependencies = [
     dependency('gio-2.0'),
 ]
+run_command('bash', './mkctx.sh', 
+    'CONFIGDIR=/'+get_option('sysconfdir'),
+    'STORAGEDIR=/'+get_option('storagedir'),
+    check:true)
 
 sources = files('src/inary.vala',
                 'src/util/archive.vala',
@@ -20,12 +24,6 @@ sources = files('src/inary.vala',
                )
 glob = run_command('find', 'src/operations','-type','f')
 sources += glob.stdout().strip().split('\n')
-
-
-run_command('bash', './mkctx.sh', 
-    'CONFIGDIR=/'+get_option('sysconfdir'),
-    'STORAGEDIR=/'+get_option('storagedir'),
-    check:true)
 
 
 add_project_arguments('--pkg', 'posix', language: 'vala')
