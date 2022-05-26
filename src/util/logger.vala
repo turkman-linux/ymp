@@ -61,14 +61,18 @@ public void error(int status){
         stderr.printf(colorize("ERROR: ",red)+error+"\n");
     }
     if(errors.length == 0){
-        //dummy
-    }else if (status != 0){
-        Process.exit (status);
-    }else{
-        errors = {};
+        return;
     }
+    errors = null;
+    if (status != 0){
+        Process.exit (status);
+    }
+
 }
 public void error_add(string message){
+    if(errors == null){
+        errors = {};
+    }
     if (message != null){
         errors += message;
     }

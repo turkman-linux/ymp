@@ -34,7 +34,7 @@ public class Inary {
             int status = process[i].run();
             if(status != 0){
                 string type = process[i].type;
-                error_add(@"Process: $type failed.");
+                error_add(@"Process: $type failed. Exited with $status.");
                 error(status);
             }
         }

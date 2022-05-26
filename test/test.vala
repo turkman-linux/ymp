@@ -50,7 +50,7 @@ void main(){
     // logger test
     error_add("Hello World");
     #if DEBUG
-    error_add("Test 123");
+    debug("Test 123");
     #endif
     
     // command test
@@ -67,6 +67,7 @@ void main(){
     // help test
     help();    
     error(0);
+    error_add("Test 123");
     error(1);
     stdout.printf("--------------\n");
 }

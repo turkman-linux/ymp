@@ -17,12 +17,12 @@ public static int run_silent (string command) {
     int status;
     try {
         Process.spawn_command_line_sync (command, out stdout, out stderr, out status);
-        return status;
+        return status/256;
     } catch (SpawnError e) {
         return 1;
     }
 }
 
 public int run (string command){
-    return Posix.system(command);
+    return Posix.system(command)/256;
 }
