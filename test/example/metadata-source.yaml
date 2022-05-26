@@ -1,0 +1,52 @@
+inary:
+
+  source:
+    name: bash
+    homepage: https://www.gnu.org/software/bash/
+    release: 1
+    version: 5.0
+    archive:
+      - https://ftp.gnu.org/gnu/bash/bash-$version.tar.gz
+      - file://$pwd/bash.patch
+    dependencies:
+     - readline-devel
+     - ncurses-devel
+    packager:
+      - name: Your Name
+      - email: you@example.org
+
+  package:
+    name: bash
+    description: GNU bash shell
+    dependencies:
+     - readline
+     - ncurses
+    files:
+      - /etc
+      - /bin
+      - /lib
+    operations:
+      post-install:
+        - xxx
+        - yyy
+
+  package:
+    name: bash-doc
+    descripion: GNU bash shell doc files
+    files:
+      - /usr/share/doc
+      - /usr/share/man
+
+  package:
+    name: bash-devel
+    descripion: GNU bash shell headers
+    files:
+      - /usr/share/include
+
+  build:
+    setup:
+      ./configure --prefix=/
+    build:
+      make -j`nproc`
+    install:
+      make install

@@ -7,11 +7,15 @@ public class yamlfile {
     public void load(string path){
         data = readfile(path);
     }
-    
+
     public string get(string path){
-        if(data == null){
+       if(data == null){
             return "";
         }
+        return get_from_data(data,path);
+        
+    }    
+    public string get_from_data(string data, string path){
         string tmp = data;
         foreach(string item in path.split(".")){
             tmp = get_area(tmp,item);
@@ -45,10 +49,10 @@ public class yamlfile {
             }
             level = c(line);
             if(level == 0){
-                if(line == path+":"){
-                    if(e){
-                        return trim(area);    
-                    }
+               if(e){
+                   return trim(area);
+               }
+               if(line == path+":"){
                     e=true;
                     continue;
                 }

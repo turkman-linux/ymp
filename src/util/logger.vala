@@ -11,6 +11,9 @@ public void print_fn(string message, bool new_line, bool err){
         if(new_line){
             nl="\n";
         }
+        if(message == ""){
+            return;
+        }
         if(err){
             stderr.printf(message+nl);
         }else{

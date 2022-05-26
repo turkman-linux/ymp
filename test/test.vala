@@ -29,16 +29,10 @@ void main(){
     stdout.printf("--------------\n");
     //yamlfile test
     var yaml = new yamlfile();
-    yaml.load("../test/example/test.yaml");
-    var pkg = yaml.get_area(yaml.data,"package");
-    var deps = yaml.get_area(pkg,"dependency");
-    var pkdep = yaml.get("package.dependency");
-    var pkglist = yaml.get_area_list(yaml.data,"package");
-    foreach(string p in pkglist){
-        print(p);
-    }
-    warning(deps);
-    warning(pkdep);
+    yaml.load("../test/example/metadata-source.yaml");
+    var metadata = yaml.get("inary.source.dependencies");
+    var pkglist = yaml.get_area_list(metadata,"package");
+    print(metadata);
     stdout.printf("--------------\n");
     //inifile test
     var ini = new inifile();
