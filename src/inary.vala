@@ -44,8 +44,8 @@ public class Inary {
         error(1);
     }
     public void add_script(string data){
-        foreach(string line in data.split("\n")){
-            string[] proc_args = line.split(" ");
+        foreach(string line in split(data,"\n")){
+            string[] proc_args = split(line," ");
             if(proc_args[0] != null){
                 add_process(proc_args[0],proc_args[1:]);
             }

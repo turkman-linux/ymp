@@ -15,7 +15,7 @@ public class archive {
         archive_path = path;
     }
     public string[] list_files (){
-        return getoutput("tar -f --list '"+archive_path+"'").split("\n");
+        return split(getoutput("tar -f --list '"+archive_path+"'"),"\n");
     }
     public void extract_all(){
         if (target_path == null){

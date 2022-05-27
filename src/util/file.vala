@@ -19,8 +19,8 @@ public string readfile_raw (string path){
 }
 public string readfile(string path){
     string new_data = "";
-    foreach(string line in readfile_raw(path).split("\n")){
-        new_data += line.split("#")[0]+"\n";
+    foreach(string line in split(readfile_raw(path),"\n")){
+        new_data += split(line,"#")[0]+"\n";
     }
     return new_data;
 }
@@ -66,3 +66,9 @@ public string[] listdir(string path){
     }
     return ret; 
 }
+
+public bool isfile(string path){
+    File file = File.new_for_path(path);
+    return file.query_exists ();
+}
+

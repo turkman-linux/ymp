@@ -19,17 +19,17 @@ public class yamlfile {
 
     public string[] get_area_list(string fdata, string path){
         string[] ret = {};
-        int data_length = fdata.split("\n").length;
+        int data_length = split(fdata,"\n").length;
         while(offset < data_length){
             string data = get_area(fdata,path);
             ret += data;
-            offset += data.split("\n").length + 1;
+            offset += split(data,"\n").length + 1;
         }
         return ret;
     }
     
     public string get_value(string data,string name){
-        foreach(string line in trim(data).split("\n")){
+        foreach(string line in split(trim(data),"\n")){
             if(line.length < name.length+1){
                 continue;
             }
@@ -47,7 +47,7 @@ public class yamlfile {
     public string[] get_array(string data,string name){
         string[] array = {};
         string fdata = get_area(data,name);
-        foreach(string line in fdata.split("\n")){
+        foreach(string line in split(fdata,"\n")){
             if(line[0:2] == "- "){
                 array += line[1:];
             }
@@ -57,7 +57,7 @@ public class yamlfile {
 
     public string get_area(string data, string path){
         string tmp = data;
-        foreach(string item in path.split(".")){
+        foreach(string item in split(path,".")){
             tmp = get_area_single(tmp,item);
         }
         return tmp;
@@ -71,7 +71,7 @@ public class yamlfile {
         bool e = false;
         string area = "";
         int i = 0;
-        foreach(string line in trim(fdata).split("\n")){
+        foreach(string line in split(trim(fdata),"\n")){
             i +=1;
             if(i<offset){
                 continue;
@@ -101,27 +101,5 @@ public class yamlfile {
         }
         return 0;
     }
-    public string trim(string data){
-        int min = -1;
-        string new_data = "";
-        foreach(string line in data.split("\n")){ 
-            int level = c(line);
-            if(line.length == 0){
-                continue;
-            }
-            if(min == -1 || c(line) < min){
-                min = level;
-            }
-        }
-        if(min == -1){
-            min = 0;
-        }
-        foreach(string line in data.split("\n")){
-            if(line.length == 0){
-                continue;
-            }
-            new_data += line[min:]+"\n";
-        }
-        return new_data[:new_data.length-1];
-    }
+
 }

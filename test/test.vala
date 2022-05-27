@@ -69,8 +69,8 @@ void main(string[] args){
     pkg.load("../test/example/metadata-binary.yaml");
     warning(pkg.name);
 
+    print(join(", ",{"aaa","bbb"}));
     var pkg2 = get_installed_packege("aaa");
-    print(pkg2.name);
     stdout.printf("--------------\n");
 
     // help test
