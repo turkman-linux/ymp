@@ -3,9 +3,16 @@ void main(string[] args){
     // init inary
     set_destdir("../test/example/rootfs");
     Inary inary = inary_init();
+
+    // settings test
+    set_destdir("../test/example/rootfs");
+    print("jobs="+config.jobs);
+
+
     inary.add_process("echo",{"hello","world"});
     parse_args(args);
     inary.run();
+
     // archive test
     var tar = new archive();
     tar.load("../test/example/main.tar.gz");
@@ -44,9 +51,6 @@ void main(string[] args){
     warning(ini.get_variables("devel")[0]);
     stdout.printf("--------------\n");
     
-    // settings test
-    set_destdir("../test/example/rootfs");
-    print("jobs="+config.jobs);
     
     // logger test
     error_add("Hello World");
@@ -65,6 +69,10 @@ void main(string[] args){
     pkg.load("../test/example/metadata-binary.yaml");
     warning(pkg.name);
 
+    var pkg2 = get_installed_packege("aaa");
+    print(pkg2.name);
+    stdout.printf("--------------\n");
+
     // help test
     help();
     print(config.interactive.to_string());  
@@ -72,4 +80,5 @@ void main(string[] args){
     error_add("Test 123");
     error(1);
     stdout.printf("--------------\n");
+
 }

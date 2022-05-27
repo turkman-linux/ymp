@@ -5,6 +5,7 @@ public class yamlfile {
 
 
     public void load(string path){
+        debug("Loading yaml from: "+path);
         data = readfile(path);
     }
 
@@ -53,40 +54,45 @@ public class yamlfile {
         }
         return array;
     }
-    
-    public string get_area(string fdata,string path){
-        string area = fdata;
+
+    public string get_area(string data, string path){
+        string tmp = data;
         foreach(string item in path.split(".")){
-            if(area == null){
-                return "";
+            tmp = get_area_single(tmp,item);
+        }
+        return tmp;
+    }
+
+    private string get_area_single(string fdata,string path){
+        if(fdata == null){
+            return "";
+        }
+        int level = 0;
+        bool e = false;
+        string area = "";
+        int i = 0;
+        foreach(string line in trim(fdata).split("\n")){
+            i +=1;
+            if(i<offset){
+                continue;
             }
-            int level = 0;
-            bool e = false;
-            int i = 0;
-            string tmp = "";
-            foreach(string line in trim(area).split("\n")){
-                i +=1;
-                if(i<offset){
+            level = c(line);
+            if(level == 0){
+               if(e){
+                   return trim(area);
+               }
+               if(line == path+":"){
+                    e=true;
                     continue;
                 }
-                level = c(line);
-                if(level == 0){
-                   if(e){
-                       return trim(tmp);
-                   }
-                   if(line == item+":"){
-                        e=true;
-                        continue;
-                    }
-                }
-                if(e){
-                    tmp += line + "\n";
-                }
             }
-            area = trim(tmp);
+            if(e){
+                area += line + "\n";
+            }
         }
-        return area;
+        return trim(area);
     }
+
     private int c(string line){
         for(int i = 0; i<line.length;i++){
             if (line[i] != ' '){

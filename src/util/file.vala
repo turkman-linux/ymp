@@ -50,3 +50,19 @@ public int remove_file(string path){
         return -1;
     }
 }
+
+public string[] listdir(string path){
+    string[] ret = {};
+    string name;
+    try{
+        Dir dir = Dir.open(path, 0);
+        while ((name = dir.read_name ()) != null) {
+            ret += name; 
+        }
+
+    }catch(Error e){
+        error_add(e.message);
+        return {};
+    }
+    return ret; 
+}
