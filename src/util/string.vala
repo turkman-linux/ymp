@@ -48,11 +48,25 @@ public string trim(string data){
     return new_data[:new_data.length-1];
 }
 
-private int count_tab(string line){
+public int count_tab(string line){
     for(int i = 0; i<line.length;i++){
         if (line[i] != ' '){
             return i;
         }
     }
     return 0;
+}
+
+public bool startswith(string data,string f){
+    if(data.length < f.length){
+        return false;
+    }
+    return data[:f.length-1] == f;
+}
+
+public bool endswith(string data,string f){
+    if(data.length < f.length){
+        return false;
+    }
+    return data[data.length-f.length:] == f;
 }
