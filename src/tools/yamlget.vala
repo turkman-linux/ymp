@@ -14,7 +14,7 @@ int main(string[] args){
             foreach(string item in yaml.get_array(data,args[3])){
                 fdata += item +"\n";
             }
-            data = yaml.trim(fdata);
+            data = trim(fdata);
         }else{
             data = fdata;
         }

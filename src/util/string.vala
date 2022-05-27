@@ -25,25 +25,34 @@ public string[] split(string data, string f){
 }
 
 public string trim(string data){
-        int min = -1;
-        string new_data = "";
-        foreach(string line in split(data,"\n")){ 
-            int level = c(line);
-            if(line.length == 0){
-                continue;
-            }
-            if(min == -1 || c(line) < min){
-                min = level;
-            }
+    int min = -1;
+    string new_data = "";
+    foreach(string line in split(data,"\n")){ 
+        int level = count_tab(line);
+        if(line.length == 0){
+            continue;
         }
-        if(min == -1){
-            min = 0;
+        if(min == -1 || count_tab(line) < min){
+            min = level;
         }
-        foreach(string line in split(data,"\n")){
-            if(line.length == 0){
-                continue;
-            }
-            new_data += line[min:]+"\n";
-        }
-        return new_data[:new_data.length-1];
     }
+    if(min == -1){
+        min = 0;
+    }
+    foreach(string line in split(data,"\n")){
+        if(line.length == 0){
+            continue;
+        }
+        new_data += line[min:]+"\n";
+    }
+    return new_data[:new_data.length-1];
+}
+
+private int count_tab(string line){
+    for(int i = 0; i<line.length;i++){
+        if (line[i] != ' '){
+            return i;
+        }
+    }
+    return 0;
+}

@@ -33,7 +33,7 @@ public class yamlfile {
             if(line.length < name.length+1){
                 continue;
             }
-            int level = c(line);
+            int level = count_tab(line);
             if(level == 0 && line[0:name.length+1] == name+":"){
                 if(line.length == name.length+1){
                     return "";
@@ -76,7 +76,7 @@ public class yamlfile {
             if(i<offset){
                 continue;
             }
-            level = c(line);
+            level = count_tab(line);
             if(level == 0){
                if(e){
                    return trim(area);
@@ -92,14 +92,4 @@ public class yamlfile {
         }
         return trim(area);
     }
-
-    private int c(string line){
-        for(int i = 0; i<line.length;i++){
-            if (line[i] != ' '){
-                return i;
-            }
-        }
-        return 0;
-    }
-
 }
