@@ -1,7 +1,6 @@
 int red = 31;
 int yellow = 33;
 int blue = 34;
-bool nocolor = false;
 private string[] errors;
 public bool enable_debug;
 
@@ -34,7 +33,7 @@ public string colorize(string message, int color){
     #if NOCOLOR
     if(true){
     #else
-    if (nocolor){
+    if (!config.colorize){
     #endif
         return message;
     }else{

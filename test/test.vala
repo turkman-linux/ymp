@@ -1,9 +1,10 @@
 
-void main(){
+void main(string[] args){
     // init inary
     set_destdir("../test/example/rootfs");
     Inary inary = inary_init();
     inary.add_process("echo",{"hello","world"});
+    parse_args(args);
     inary.run();
     // archive test
     var tar = new archive();
@@ -45,7 +46,7 @@ void main(){
     
     // settings test
     set_destdir("../test/example/rootfs");
-    print("jobs="+inary.config.jobs);
+    print("jobs="+config.jobs);
     
     // logger test
     error_add("Hello World");
@@ -65,7 +66,8 @@ void main(){
     warning(pkg.name);
 
     // help test
-    help();    
+    help();
+    print(config.interactive.to_string());  
     error(0);
     error_add("Test 123");
     error(1);

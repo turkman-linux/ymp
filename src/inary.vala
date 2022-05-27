@@ -12,9 +12,9 @@ public class operation{
         return operation_main(type,args);
     }
 }
+public inaryconfig config;
 
 public class Inary {
-    public inaryconfig config;
     operation[] process;
     
     public void add_process(string type, string[] args){
@@ -55,8 +55,8 @@ public class Inary {
 public Inary inary_init(){
     ctx_init();
     Inary app = new Inary();
-    app.config = settings_init();
-    enable_debug = (app.config.debug == "true");
+    config = settings_init();
+    enable_debug = (config.debug == "true");
     error(31);
     return app;
 }
