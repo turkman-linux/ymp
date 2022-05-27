@@ -12,17 +12,10 @@ public class yamlfile {
        if(data == null){
             return "";
         }
-        return get_from_data(data,path);
+        return get_area(data,path);
         
     }    
-    public string get_from_data(string data, string path){
-        string tmp = data;
-        foreach(string item in path.split(".")){
-            tmp = get_area(tmp,item);
-        }
-        return tmp;
-    }
-    
+
     public string[] get_area_list(string fdata, string path){
         string[] ret = {};
         int data_length = fdata.split("\n").length;
@@ -62,33 +55,37 @@ public class yamlfile {
     }
     
     public string get_area(string fdata,string path){
-        if(fdata == null){
-            return "";
-        }
-        int level = 0;
-        bool e = false;
-        string area = "";
-        int i = 0;
-        foreach(string line in trim(fdata).split("\n")){
-            i +=1;
-            if(i<offset){
-                continue;
+        string area = fdata;
+        foreach(string item in path.split(".")){
+            if(area == null){
+                return "";
             }
-            level = c(line);
-            if(level == 0){
-               if(e){
-                   return trim(area);
-               }
-               if(line == path+":"){
-                    e=true;
+            int level = 0;
+            bool e = false;
+            int i = 0;
+            string tmp = "";
+            foreach(string line in trim(area).split("\n")){
+                i +=1;
+                if(i<offset){
                     continue;
                 }
+                level = c(line);
+                if(level == 0){
+                   if(e){
+                       return trim(tmp);
+                   }
+                   if(line == item+":"){
+                        e=true;
+                        continue;
+                    }
+                }
+                if(e){
+                    tmp += line + "\n";
+                }
             }
-            if(e){
-                area += line + "\n";
-            }
+            area = trim(tmp);
         }
-        return trim(area);
+        return area;
     }
     private int c(string line){
         for(int i = 0; i<line.length;i++){
