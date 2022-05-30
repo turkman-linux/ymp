@@ -7,17 +7,22 @@ public int main(string[] args){
     }
     Inary inary = inary_init(args);
     if(args[1] == "-" || args.length == 1){
-        set_bool("shellmode",false);
+        set_bool("shellmode",true);
         while(!stdin.eof()){
             string prompt = colorize("Inary >> ",blue);
             #if no_libreadline
                 print_fn(prompt,false,false);
-                inary.add_script(stdin.read_line());
+                string line = stdin.read_line();
             #else
-               inary.add_script(Readline.readline(prompt));
+                string line = Readline.readline(prompt);
             #endif
-            inary.run();
-            inary.clear_process();
+            if(line != null){
+                inary.add_script(line);
+                inary.run();
+                inary.clear_process();
+            }else{
+                print("\n"+"Use exit or Ctrl-C");
+            }
         }
     }else{
         string data = readfile(args[1]);
