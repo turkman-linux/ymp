@@ -1,6 +1,5 @@
 inary:
   package:
-    name: bash
+    name: aaa
     dependencies:
-      - aaa
       - bbb
