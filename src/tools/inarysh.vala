@@ -8,6 +8,7 @@ public int main(string[] args){
     Inary inary = inary_init(args);
     if(args[1] == "-" || args.length == 1){
         while(!stdin.eof()){
+            print_fn(colorize("Inary >> ",blue),false,false);
             inary.add_script(stdin.read_line());
             inary.run();
             inary.clear_process();

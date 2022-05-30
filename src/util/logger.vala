@@ -1,6 +1,3 @@
-int red = 31;
-int yellow = 33;
-int blue = 34;
 private string[] errors;
 public bool enable_debug;
 

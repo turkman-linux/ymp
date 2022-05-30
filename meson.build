@@ -13,6 +13,7 @@ run_command('bash', './mkctx.sh',
     check:true)
 
 sources = files('src/inary.vala',
+                'src/color.vala',
                 'src/settings.vala',
                 'ctx.vala',
                )
