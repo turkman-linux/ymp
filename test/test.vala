@@ -7,7 +7,7 @@ void main(string[] args){
     // settings test
     set_destdir("../test/example/rootfs");
     print("jobs="+config.jobs);
-
+/*
 
     inary.add_process("echo",{"hello","world"});
     parse_args(args);
@@ -74,6 +74,21 @@ void main(string[] args){
 
     print(join(", ",{"aaa","bbb"}));
     var pkg2 = get_installed_packege("aaa");
+    stdout.printf("--------------\n");
+*/
+    // index test
+    repository[] repos = get_repos();
+    foreach(repository repo in repos){
+        print(repo.name);
+        foreach(string area in repo.packages){
+            var pkg = new package();
+            pkg.load_from_data(area);
+            foreach(string dep in pkg.dependencies){
+                warning(dep);
+            }
+            print(pkg.get("name"));
+        }
+    }
     stdout.printf("--------------\n");
 
     // help test

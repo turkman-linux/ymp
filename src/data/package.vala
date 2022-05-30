@@ -8,9 +8,17 @@ public class package {
     
     public void load(string metadata){
         yaml = new yamlfile();
-
         yaml.load(metadata);
         pkgarea = yaml.get("inary.package");
+        read_values();
+    }
+    public void load_from_data(string data){
+        yaml = new yamlfile();
+        pkgarea = data;
+        read_values();
+    }
+    
+    private void read_values(){
         name = get("name");
         version = get("version");
         dependencies = gets("dependencies");
@@ -26,10 +34,14 @@ public class package {
     
     public string get(string name){
         if (yaml.has_area(pkgarea,name)){
+            debug(@"Package data: $name");
             return yaml.get_value(pkgarea,name);
         }
         error_add(@"Package information broken: $name");
         return "";
+    }
+    public bool is_installed(){
+        return is_installed_package(name);
     }
 }
 
@@ -53,7 +65,8 @@ public package get_installed_packege(string name){
     pkg.load(metadata);
     return pkg;
 }
-public bool is_installed(string name){
+
+public bool is_installed_package(string name){
     return isfile(get_metadata_path(name));
 }
 

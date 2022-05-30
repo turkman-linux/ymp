@@ -27,7 +27,7 @@ public class repository {
         foreach(string area in packages){
             var pkgarea = yaml.get_area(area,"package");
             if (yaml.get_value(pkgarea,"name") == name){
-                pkg.load(pkgarea);
+                pkg.load_from_data(pkgarea);
                 return pkg;
             }
         }
@@ -39,7 +39,7 @@ public repository[] get_repos(){
     repository[] repos = {};
     foreach(string file in listdir(DESTDIR+STORAGEDIR+"/index")){
         repository repo = new repository();
-        repo.load(STORAGEDIR+"/index/"+file);
+        repo.load(DESTDIR+STORAGEDIR+"/index/"+file);
         repos += repo;
     }
     return repos;
