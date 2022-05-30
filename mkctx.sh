@@ -8,7 +8,7 @@ done
 echo "public string[] operation_names;" >> ctx.vala
 
 function list_operations(){
-    find src/operations -type f -exec basename {} \; | sed "s/\..*//g"
+    find src/operations -type f -exec basename {} \; | sed "s/\..*//g" | sort
 }
 ### ctx_init function build
 echo "public void ctx_init(){" >> ctx.vala
