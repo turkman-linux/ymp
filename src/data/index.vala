@@ -15,8 +15,7 @@ public class repository {
     
     public bool has_package(string name){
         foreach(string area in packages){
-            var pkgarea = yaml.get_area(area,"package");
-            if (yaml.get_value(pkgarea,"name") == name){
+            if (yaml.get_value(area,"name") == name){
                 return true;
             }
         }
@@ -25,13 +24,19 @@ public class repository {
     public package get_package(string name){
         package pkg = new package();
         foreach(string area in packages){
-            var pkgarea = yaml.get_area(area,"package");
-            if (yaml.get_value(pkgarea,"name") == name){
-                pkg.load_from_data(pkgarea);
+            if (yaml.get_value(area,"name") == name){
+                pkg.load_from_data(area);
                 return pkg;
             }
         }
         return pkg;
+    }
+    public string[] list_packages(){
+        string[] ret = {};
+        foreach(string area in packages){
+            ret += yaml.get_value(area,"name");
+        }
+        return ret;
     }
 }
 

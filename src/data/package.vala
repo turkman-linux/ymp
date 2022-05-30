@@ -37,7 +37,7 @@ public class package {
             debug(@"Package data: $name");
             return yaml.get_value(pkgarea,name);
         }
-        error_add(@"Package information broken: $name");
+        warning(@"Package information broken: $name");
         return "";
     }
     public bool is_installed(){

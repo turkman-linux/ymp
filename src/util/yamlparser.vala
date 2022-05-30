@@ -29,15 +29,26 @@ public class yamlfile {
 
     public string[] get_area_list(string fdata, string path){
         string[] ret = {};
+        offset = find_first_offset(fdata,path);
         int data_length = split(fdata,"\n").length;
-        while(offset < data_length){
-            string data = get_area(fdata,path);
+        while(offset < data_length-1){
+            string data = get_area_single(fdata,path);
             ret += data;
             offset += split(data,"\n").length + 1;
         }
         return ret;
     }
     
+    private int find_first_offset(string fdata, string name){
+        int i=0;
+        foreach(string line in split(trim(fdata),"\n")){
+            i+=1;
+            if(startswith(line, name+":")){
+                return i-1;
+            }
+        }
+        return i-1;
+    }
     public string get_value(string data,string name){
         foreach(string line in split(trim(data),"\n")){
             if(line.length < name.length+1){

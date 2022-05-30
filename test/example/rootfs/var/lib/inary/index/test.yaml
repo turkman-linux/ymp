@@ -4,15 +4,18 @@ index:
   update: 1653905119
   package:
     name: bash
+    description: gnu bash shell
     version: 5.0
     dependencies:
       - readline
       - ncurses
   package:
     name: readline
+    description: readline library
     version: 8.0
     dependencies:
       - ncurses
   package:
     name: ncurses
     version: 8.0
+    description: ncurses library
