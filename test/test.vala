@@ -7,11 +7,18 @@ void main(string[] args){
     // settings test
     set_destdir("../test/example/rootfs");
     print("jobs="+config.jobs);
-/*
-
+    
     inary.add_process("echo",{"hello","world"});
     parse_args(args);
     inary.run();
+
+    //yesno test
+    if(yesno("Fff")){
+        print("Yes accept");
+    }else{
+        error_add("no selected");
+        error(1);
+    }
 
     // archive test
     var tar = new archive();
@@ -65,17 +72,17 @@ void main(string[] args){
     run("non-command -non-parameter");
 
     // package test
-    var pkg = new package();
-    pkg.load("../test/example/metadata-binary.yaml");
-    warning(pkg.name);
-    foreach (string name in pkg.dependencies){
+    var pkg1 = new package();
+    pkg1.load("../test/example/metadata-binary.yaml");
+    warning(pkg1.name);
+    foreach (string name in pkg1.dependencies){
         print(name);
     }
 
     print(join(", ",{"aaa","bbb"}));
     var pkg2 = get_installed_packege("aaa");
     stdout.printf("--------------\n");
-*/
+
     // index test
     repository[] repos = get_repos();
     foreach(repository repo in repos){

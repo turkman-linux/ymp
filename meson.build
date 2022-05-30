@@ -6,6 +6,7 @@ project('inary', 'vala', 'c',
 
 dependencies = [
     dependency('gio-2.0'),
+    dependency('readline'),
 ]
 run_command('bash', './mkctx.sh', 
     'CONFIGDIR=/'+get_option('sysconfdir'),
@@ -34,10 +35,16 @@ if not get_option('colorize')
 endif
 
 
-if get_option('no_libarchive')
-    add_project_arguments('-D', 'no_libarchive', language: 'vala')
-else
+if get_option('libarchive')
     dependencies += dependency('libarchive')
+else
+    add_project_arguments('-D', 'no_libarchive', language: 'vala')
+endif
+
+if get_option('libreadline')
+    dependencies += dependency('readline')
+else
+    add_project_arguments('-D', 'no_libareadline', language: 'vala')
 endif
 
 if get_option('static')
