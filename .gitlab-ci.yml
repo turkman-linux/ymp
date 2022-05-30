@@ -5,7 +5,7 @@ build:
   script:
     - apt update 
     - apt install meson gcc valac --no-install-recommends -y
-    - apt install libarchive-dev --no-install-recommends -y
+    - apt install libarchive-dev libreadline-dev --no-install-recommends -y
     - meson build
     - ninja -C build
     - cd build && ./inary-test || true
@@ -15,7 +15,7 @@ debug:
   script:
     - apt update 
     - apt install meson gcc valac --no-install-recommends -y
-    - apt install libarchive-dev --no-install-recommends -y
+    - apt install libarchive-dev libreadline-dev --no-install-recommends -y
     - meson build -Ddebug=true
     - ninja -C build
     - cd build && ./inary-test || true
