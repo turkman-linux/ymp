@@ -10,7 +10,6 @@ public class inaryconfig {
 }
 
 public inaryconfig settings_init(){
-    
     inifile ini = new inifile();
     inaryconfig config = new inaryconfig();
     if (DESTDIR == null){
@@ -25,6 +24,7 @@ public inaryconfig settings_init(){
     config.interactive = (ini.get("inary","interactive") == "true");
     config.colorize = (ini.get("inary","colorize") != "false");
     config.shellmode = (ini.get("inary","shellmode") == "true");
+    clear_env();
     return config;
 }
 

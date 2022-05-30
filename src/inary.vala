@@ -62,8 +62,8 @@ public Inary inary_init(string[] args){
     ctx_init();
     Inary app = new Inary();
     config = settings_init();
-    enable_debug = (config.debug == "true");
     parse_args(args);
+    set_env("G_DEBUG","fatal-criticals");
     error(31);
     return app;
 }

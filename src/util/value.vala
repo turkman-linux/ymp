@@ -39,3 +39,19 @@ public string[] list_values(){
     }
     return ret;
 }
+
+public void set_env(string variable,string value){
+    GLib.Environment.set_variable(variable,value,true);
+}
+
+public string get_env(string variable){
+    return GLib.Environment.get_variable(variable);
+}
+
+public void clear_env(){
+    string path = get_env("PATH");
+    foreach(string name in GLib.Environment.list_variables()){
+        GLib.Environment.unset_variable(name);
+    }
+    set_env("PATH",path);
+}
