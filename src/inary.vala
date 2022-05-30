@@ -12,8 +12,6 @@ public class operation{
         return operation_main(type,args);
     }
 }
-public inaryconfig config;
-
 public class Inary {
     operation[] process;
     
@@ -24,9 +22,16 @@ public class Inary {
         if(type == null){
            return;
         }
+        string[] new_args = {};
+        foreach (string arg in args){
+            if(arg.length > 1 && arg[0] == '$'){
+                arg = get_value(arg[1:]);
+            }
+            new_args += arg;
+        }
         operation op = new operation();
         op.type = type;
-        op.args = args;
+        op.args = new_args;
         process += op;
     }
     public void clear_process(){
@@ -59,9 +64,8 @@ public class Inary {
     }
 }
 public Inary inary_init(string[] args){
-    ctx_init();
     Inary app = new Inary();
-    config = settings_init();
+    settings_init();
     parse_args(args);
     set_env("G_DEBUG","fatal-criticals");
     error(31);

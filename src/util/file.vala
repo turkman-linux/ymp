@@ -68,6 +68,9 @@ public string[] listdir(string path){
 }
 
 public bool isfile(string path){
+    if(path == null){
+        return false;
+    }
     File file = File.new_for_path(path);
     return file.query_exists ();
 }

@@ -47,14 +47,14 @@ public class package {
 
 public string[] list_installed_packages(){
     string[] pkgs = {};
-    foreach(string fname in listdir(DESTDIR+STORAGEDIR+"/metadata")){
+    foreach(string fname in listdir(get_value("DESTDIR")+STORAGEDIR+"/metadata")){
         pkgs += split(fname,".")[0];
     }
     return pkgs;
 }
 
 private string get_metadata_path(string name){
-    return DESTDIR+STORAGEDIR+"/metadata/"+name+".yaml";
+    return get_value("DESTDIR")+STORAGEDIR+"/metadata/"+name+".yaml";
 }
 
 public package get_installed_packege(string name){

@@ -37,9 +37,9 @@ public class repository {
 
 public repository[] get_repos(){
     repository[] repos = {};
-    foreach(string file in listdir(DESTDIR+STORAGEDIR+"/index")){
+    foreach(string file in listdir(get_value("DESTDIR")+STORAGEDIR+"/index")){
         repository repo = new repository();
-        repo.load(DESTDIR+STORAGEDIR+"/index/"+file);
+        repo.load(get_value("DESTDIR")+STORAGEDIR+"/index/"+file);
         repos += repo;
     }
     return repos;

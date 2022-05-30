@@ -3,10 +3,6 @@ void main(string[] args){
     // init inary
     set_destdir("../test/example/rootfs");
     Inary inary = inary_init(args);
-
-    // settings test
-    set_destdir("../test/example/rootfs");
-    print("jobs="+config.jobs);
     
     inary.add_process("echo",{"hello","world"});
     parse_args(args);
@@ -100,7 +96,7 @@ void main(string[] args){
 
     // help test
     help();
-    print(config.interactive.to_string());  
+    print(get_value("interactive"));  
     error(0);
     error_add("Test 123");
     error(1);

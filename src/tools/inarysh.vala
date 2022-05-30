@@ -7,7 +7,7 @@ public int main(string[] args){
     }
     Inary inary = inary_init(args);
     if(args[1] == "-" || args.length == 1){
-        config.shellmode = true;
+        set_bool("shellmode",false);
         while(!stdin.eof()){
             string prompt = colorize("Inary >> ",blue);
             #if no_libreadline

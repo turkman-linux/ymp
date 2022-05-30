@@ -1,5 +1,5 @@
 public bool yesno(string message){
-    if(!config.interactive){
+    if(!get_bool("interactive")){
         return true;
     }
     #if no_libreadline

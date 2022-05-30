@@ -1,5 +1,4 @@
 private string[] errors;
-public bool enable_debug;
 
 public void print_fn(string message, bool new_line, bool err){
     if (message != null){
@@ -30,7 +29,7 @@ public string colorize(string message, int color){
     #if NOCOLOR
     if(true){
     #else
-    if (!config.colorize){
+    if (get_bool("no_color")){
     #endif
         return message;
     }else{
@@ -48,7 +47,7 @@ public void debug(string message){
     #if DEBUG
     if(true){
     #else
-    if(enable_debug){
+    if(get_bool("debug")){
     #endif
         print(colorize("DEBUG: ",blue)+message);
     }
@@ -62,7 +61,7 @@ public void error(int status){
         return;
     }
     errors = null;
-    if (status != 0 && !config.shellmode){
+    if (status != 0 && !get_bool("shellmode")){
         Process.exit (status);
     }
 

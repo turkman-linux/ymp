@@ -1,35 +1,32 @@
+public string CONFIG;
+public string DESTDIR;
 
-private string DESTDIR;
-private string CONFIG;
-public class inaryconfig {
-    public string jobs;
-    public string debug;
-    public bool interactive;
-    public bool colorize;
-    public bool shellmode;
-}
-
-public inaryconfig settings_init(){
+public void settings_init(){
+    ctx_init();
     inifile ini = new inifile();
-    inaryconfig config = new inaryconfig();
-    if (DESTDIR == null){
-        DESTDIR="/";
+    if(DESTDIR == null){
+        DESTDIR = "/";
     }
     if (CONFIG == null){
-        CONFIG = DESTDIR+CONFIGDIR+"/inary.conf";
+        CONFIG = DESTDIR+"/"+CONFIGDIR+"/inary.conf";
     }
-    ini.load(CONFIG);
-    config.jobs = ini.get("build","jobs");
-    config.debug = ini.get("build","debug");
-    config.interactive = (ini.get("inary","interactive") == "true");
-    config.colorize = (ini.get("inary","colorize") != "false");
-    config.shellmode = (ini.get("inary","shellmode") == "true");
+    if(isfile(CONFIG)){
+        ini.load(CONFIG);
+        string[] sections = {"jobs", "no_color"};
+        foreach(string section in sections){
+            set_value(section,ini.get("build",section));
+        }
+    }else{
+        warning("Config file not exists:"+"\n"+CONFIG);
+    }
     clear_env();
-    return config;
 }
 
-public void set_destdir(string path){
-    DESTDIR=path;
+
+public void set_destdir(string rootfs){
+    DESTDIR=rootfs;
+    set_value("DESTDIR",rootfs);
+    settings_init();
 }
 
 public void set_config(string path){
@@ -39,10 +36,10 @@ public void parse_args(string[] args){
     foreach(string arg in args){
         switch(arg){
             case "--ask":
-                config.interactive = true;
+                set_value("interactive","true");
                 break;
             case "--no-color":
-                config.colorize = false;
+                set_value("no_color","true");
                 break;
         }
     }

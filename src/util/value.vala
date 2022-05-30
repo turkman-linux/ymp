@@ -32,6 +32,19 @@ public string get_value(string name){
     }
     return "";
 }
+
+public bool get_bool(string name){
+    return get_value(name) == "true";
+}
+
+public void set_bool(string name,bool value){
+    if(value){
+        set_value(name,"true");
+    }else{
+        set_value(name,"false");
+    }
+}
+
 public string[] list_values(){
     string[] ret = {};
     foreach(variable var in vars){
