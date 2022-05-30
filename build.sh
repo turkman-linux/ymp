@@ -1,5 +1,5 @@
 rm -rf build
-meson build $@ -Ddebug=false
+meson build $@ 
 ninja -C build
 cd build
 export G_DEBUG=fatal-criticals

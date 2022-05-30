@@ -9,7 +9,7 @@ public class operation{
         if(args == null){
             args = {};
         }
-        return operation_main(type,args);
+        return operation_main(get_alias_type(type),args);
     }
 }
 public class Inary {
@@ -78,3 +78,18 @@ public Inary inary_init(string[] args){
     error(31);
     return app;
 }
+
+public string get_alias_type(string type){
+    switch(type){
+        case "la":
+            return "list-available";
+        case "li":
+            return "list-installed";
+        case "it":
+            return "install";
+        default:
+            return type;
+    }
+}
+
+

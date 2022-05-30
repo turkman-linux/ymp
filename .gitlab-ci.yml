@@ -6,7 +6,7 @@ build:
     - apt update 
     - apt install meson gcc valac --no-install-recommends -y
     - apt install libarchive-dev libreadline-dev --no-install-recommends -y
-    - meson build
+    - meson build -Ddebug=false
     - ninja -C build
     - cd build && ./inary-test || true
 

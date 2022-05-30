@@ -49,7 +49,7 @@ public int operation_help(string name){
     switch(name){
 EOF
 for op_name in $(list_operations) ; do
-    echo "        case \"${op_name}}\":"
+    echo "        case \"${op_name}\":"
     echo "            ${op_name/-/_}_help();"
     echo "            break;"
 done >> ctx.vala
