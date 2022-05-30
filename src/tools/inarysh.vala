@@ -6,10 +6,16 @@ public int main(string[] args){
         return 0;
     }
     Inary inary = inary_init(args);
+    config.shellmode = true;
     if(args[1] == "-" || args.length == 1){
         while(!stdin.eof()){
-            print_fn(colorize("Inary >> ",blue),false,false);
-            inary.add_script(stdin.read_line());
+            string prompt = colorize("Inary >> ",blue);
+            #if no_libreadline
+                print_fn(prompt,false,false);
+                inary.add_script(stdin.read_line());
+            #else
+               inary.add_script(Readline.readline(prompt));
+            #endif
             inary.run();
             inary.clear_process();
         }

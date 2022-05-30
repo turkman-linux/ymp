@@ -2,7 +2,7 @@ public bool yesno(string message){
     if(!config.interactive){
         return true;
     }
-    #if no_libareadline
+    #if no_libreadline
        print_fn(message+" [y/n]",false,true);
        var response = stdin.read_line();
     #else

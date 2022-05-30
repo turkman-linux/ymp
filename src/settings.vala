@@ -6,6 +6,7 @@ public class inaryconfig {
     public string debug;
     public bool interactive;
     public bool colorize;
+    public bool shellmode;
 }
 
 public inaryconfig settings_init(){
@@ -23,6 +24,7 @@ public inaryconfig settings_init(){
     config.debug = ini.get("build","debug");
     config.interactive = (ini.get("inary","interactive") == "true");
     config.colorize = (ini.get("inary","colorize") != "false");
+    config.shellmode = (ini.get("inary","shellmode") == "true");
     return config;
 }
 

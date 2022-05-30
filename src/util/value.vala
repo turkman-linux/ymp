@@ -32,3 +32,10 @@ public string get_value(string name){
     }
     return "";
 }
+public string[] list_values(){
+    string[] ret = {};
+    foreach(variable var in vars){
+        ret += var.name;
+    }
+    return ret;
+}

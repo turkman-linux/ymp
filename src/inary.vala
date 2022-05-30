@@ -18,11 +18,11 @@ public class Inary {
     operation[] process;
     
     public void add_process(string type, string[] args){
-        if(type == null){
-            type = "";
-        }    
         if(process == null){
             process = {};
+        }
+        if(type == null){
+           return;
         }
         operation op = new operation();
         op.type = type;
@@ -44,7 +44,13 @@ public class Inary {
         error(1);
     }
     public void add_script(string data){
+        if(data == null){
+            return;
+        }
         foreach(string line in split(data,"\n")){
+            if(line.length == 0){
+                continue;
+            }
             string[] proc_args = split(line," ");
             if(proc_args[0] != null){
                 add_process(proc_args[0],proc_args[1:]);

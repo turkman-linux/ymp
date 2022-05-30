@@ -62,7 +62,7 @@ public void error(int status){
         return;
     }
     errors = null;
-    if (status != 0){
+    if (status != 0 && !config.shellmode){
         Process.exit (status);
     }
 
