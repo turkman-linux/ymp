@@ -2,7 +2,7 @@
 void main(string[] args){
     // init inary
     set_destdir("../test/example/rootfs");
-    Inary inary = inary_init();
+    Inary inary = inary_init(args);
 
     // settings test
     set_destdir("../test/example/rootfs");

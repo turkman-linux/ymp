@@ -52,11 +52,12 @@ public class Inary {
         }
     }
 }
-public Inary inary_init(){
+public Inary inary_init(string[] args){
     ctx_init();
     Inary app = new Inary();
     config = settings_init();
     enable_debug = (config.debug == "true");
+    parse_args(args);
     error(31);
     return app;
 }

@@ -54,6 +54,7 @@ else
     executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
     executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_with: lib)
     executable('yamlget', 'src/tools/yamlget.vala', dependencies: dependencies, link_with: lib)
+    executable('extract', 'src/tools/extract.vala', dependencies: dependencies, link_with: lib)
     executable('inarysh', 'src/tools/inarysh.vala', dependencies: dependencies, link_with: lib)
     executable('inary-test', 'test/test.vala', dependencies: dependencies, link_with: lib)
 endif

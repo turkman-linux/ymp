@@ -3,6 +3,7 @@ public class package {
     public string name;
     public string version;
     public string[] dependencies;
+    public string[] provides;
     private string pkgarea;
     
     public void load(string metadata){
@@ -10,16 +11,20 @@ public class package {
 
         yaml.load(metadata);
         pkgarea = yaml.get("inary.package");
-        name = get("name",true);
-        version = get("version",true);
-        if (yaml.has_area(pkgarea,"dependencies")){
-            dependencies = yaml.get_array(pkgarea,"dependencies");
-        }else{
-            dependencies = {};
-        }
+        name = get("name");
+        version = get("version");
+        dependencies = gets("dependencies");
+        provides = gets("provides");
     }
     
-    public string get(string name,bool vital){
+    public string[] gets(string name){
+        if (yaml.has_area(pkgarea,name)){
+            return yaml.get_array(pkgarea,name);
+        }
+        return {};
+    }
+    
+    public string get(string name){
         if (yaml.has_area(pkgarea,name)){
             return yaml.get_value(pkgarea,name);
         }

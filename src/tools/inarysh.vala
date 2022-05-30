@@ -5,7 +5,7 @@ public int main(string[] args){
         print_stderr("   -  : read from stdin");
         return 0;
     }
-    Inary inary = inary_init();
+    Inary inary = inary_init(args);
     if(args[1] == "-" || args.length == 1){
         while(!stdin.eof()){
             inary.add_script(stdin.read_line());
