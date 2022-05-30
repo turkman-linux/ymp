@@ -16,6 +16,16 @@ public class yamlfile {
         return get_area(data,path);
         
     }    
+    public bool has_area(string fdata, string path){
+        foreach(string line in split(trim(fdata),"\n")){
+            if (startswith(line,path+":")){
+                debug("Area Check: TRUE");
+                return true;
+            }
+        }
+        debug("Area Check: FALSE");
+        return false;
+    }
 
     public string[] get_area_list(string fdata, string path){
         string[] ret = {};

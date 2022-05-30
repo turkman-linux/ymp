@@ -68,6 +68,9 @@ void main(string[] args){
     var pkg = new package();
     pkg.load("../test/example/metadata-binary.yaml");
     warning(pkg.name);
+    foreach (string name in pkg.dependencies){
+        print(name);
+    }
 
     print(join(", ",{"aaa","bbb"}));
     var pkg2 = get_installed_packege("aaa");
@@ -80,5 +83,4 @@ void main(string[] args){
     error_add("Test 123");
     error(1);
     stdout.printf("--------------\n");
-
 }

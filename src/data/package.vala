@@ -3,15 +3,28 @@ public class package {
     public string name;
     public string version;
     public string[] dependencies;
+    private string pkgarea;
     
     public void load(string metadata){
         yaml = new yamlfile();
 
         yaml.load(metadata);
-        var pkgarea = yaml.get("inary.package");
-        name = yaml.get_value(pkgarea,"name");
-        version = yaml.get_value(pkgarea,"version");
-        dependencies = yaml.get_array(pkgarea,"dependencies");
+        pkgarea = yaml.get("inary.package");
+        name = get("name",true);
+        version = get("version",true);
+        if (yaml.has_area(pkgarea,"dependencies")){
+            dependencies = yaml.get_array(pkgarea,"dependencies");
+        }else{
+            dependencies = {};
+        }
+    }
+    
+    public string get(string name,bool vital){
+        if (yaml.has_area(pkgarea,name)){
+            return yaml.get_value(pkgarea,name);
+        }
+        error_add(@"Package information broken: $name");
+        return "";
     }
 }
 

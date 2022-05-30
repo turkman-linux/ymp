@@ -61,7 +61,7 @@ public bool startswith(string data,string f){
     if(data.length < f.length){
         return false;
     }
-    return data[:f.length-1] == f;
+    return data[:f.length] == f;
 }
 
 public bool endswith(string data,string f){
