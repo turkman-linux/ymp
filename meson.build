@@ -22,6 +22,7 @@ sources = files('src/inary.vala',
                 'src/util/yamlparser.vala',
                 'src/settings.vala',
                 'src/data/package.vala',
+                'src/data/index.vala',
                 'ctx.vala',
                )
 glob = run_command('find', 'src/operations','-type','f')

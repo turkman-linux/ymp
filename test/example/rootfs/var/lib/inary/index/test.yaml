@@ -1,0 +1,13 @@
+index:
+  name: test
+  description: test repository
+  update: 1653905119
+  package:
+    name: bash
+    version: 5.0
+  package:
+    name: readline
+    version: 8.0
+  package:
+    name: ncurses
+    version: 8.0

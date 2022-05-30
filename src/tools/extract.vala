@@ -1,5 +1,5 @@
 int main(string[] args){
-    var inary = inary_init(args);
+    inary_init(args);
     if(args.length < 2){
         error_add("Archive Missing");
         error(2);

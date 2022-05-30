@@ -40,6 +40,7 @@ public string[] list_installed_packages(){
     }
     return pkgs;
 }
+
 private string get_metadata_path(string name){
     return DESTDIR+STORAGEDIR+"/metadata/"+name+".yaml";
 }
@@ -55,3 +56,4 @@ public package get_installed_packege(string name){
 public bool is_installed(string name){
     return isfile(get_metadata_path(name));
 }
+
