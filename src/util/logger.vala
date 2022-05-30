@@ -49,7 +49,7 @@ public void debug(string message){
     #else
     if(get_bool("debug")){
     #endif
-        print(colorize("DEBUG: ",blue)+message);
+        print_fn(colorize("DEBUG: ",blue)+message,true,true);
     }
 }
 

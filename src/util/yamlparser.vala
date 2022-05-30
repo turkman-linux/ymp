@@ -19,11 +19,9 @@ public class yamlfile {
     public bool has_area(string fdata, string path){
         foreach(string line in split(trim(fdata),"\n")){
             if (startswith(line,path+":")){
-                debug("Area Check: TRUE");
                 return true;
             }
         }
-        debug("Area Check: FALSE");
         return false;
     }
 
