@@ -13,20 +13,12 @@ run_command('bash', './mkctx.sh',
     check:true)
 
 sources = files('src/inary.vala',
-                'src/util/archive.vala',
-                'src/util/command.vala',
-                'src/util/logger.vala',
-                'src/util/file.vala',
-                'src/util/string.vala',
-                'src/util/iniparser.vala',
-                'src/util/yamlparser.vala',
                 'src/settings.vala',
-                'src/data/package.vala',
-                'src/data/index.vala',
                 'ctx.vala',
                )
-glob = run_command('find', 'src/operations','-type','f')
-sources += glob.stdout().strip().split('\n')
+sources += run_command('find', 'src/util','-type','f').stdout().strip().split('\n')
+sources += run_command('find', 'src/operations','-type','f').stdout().strip().split('\n')
+sources += run_command('find', 'src/data','-type','f').stdout().strip().split('\n')
 
 
 add_project_arguments('--pkg', 'posix', language: 'vala')
