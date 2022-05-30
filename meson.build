@@ -18,9 +18,9 @@ sources = files('src/inary.vala',
                 'src/settings.vala',
                 'ctx.vala',
                )
-sources += run_command('find', 'src/util','-type','f').stdout().strip().split('\n')
-sources += run_command('find', 'src/operations','-type','f').stdout().strip().split('\n')
-sources += run_command('find', 'src/data','-type','f').stdout().strip().split('\n')
+sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip().split('\n')
+sources += run_command('find', 'src/operations','-type','f',check:true).stdout().strip().split('\n')
+sources += run_command('find', 'src/data','-type','f',check:true).stdout().strip().split('\n')
 
 
 add_project_arguments('--pkg', 'posix', language: 'vala')
