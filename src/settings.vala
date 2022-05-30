@@ -42,5 +42,8 @@ public void parse_args(string[] args){
                 set_value("no_color","true");
                 break;
         }
+        if(startswith(arg,"-D")){
+            set_value("DESTDIR",arg[2:]);
+        }
     }
 }

@@ -22,16 +22,9 @@ public class Inary {
         if(type == null){
            return;
         }
-        string[] new_args = {};
-        foreach (string arg in args){
-            if(arg.length > 1 && arg[0] == '$'){
-                arg = get_value(arg[1:]);
-            }
-            new_args += arg;
-        }
         operation op = new operation();
         op.type = type;
-        op.args = new_args;
+        op.args = args;
         process += op;
     }
     public void clear_process(){
@@ -56,13 +49,27 @@ public class Inary {
             if(line.length == 0){
                 continue;
             }
-            string[] proc_args = split(line," ");
+            string[] proc_args = argument_process(split(line," "));
             if(proc_args[0] != null){
                 add_process(proc_args[0],proc_args[1:]);
             }
         }
     }
 }
+public string[] argument_process(string[] args){
+     string[] new_args = {};
+     foreach (string arg in args){
+         if(arg.length > 1 && arg[0] == '$'){
+             arg = get_value(arg[1:]);
+         }
+         if(arg[0] == '-'){
+             continue;
+         }
+         new_args += arg;
+     }
+     return new_args;
+}
+
 public Inary inary_init(string[] args){
     Inary app = new Inary();
     settings_init();
