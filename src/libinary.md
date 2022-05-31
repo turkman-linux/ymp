@@ -1,3 +1,20 @@
+## Colors
+Available colors
+
+black, red, green, yellow, blue, magenta, cyan, white
+
+`string colorize(string message, int color):`
+
+Change string color if no_color is false.
+
+Example usage:
+
+```vala
+var msg = colorize("Hello",red); 
+var msg2 = colorize("world",blue); 
+stdout.printf(msg+" "+msg2); 
+```
+
 ## logging functions
 `void print_fn(string message, bool new_line, bool err):`
 
