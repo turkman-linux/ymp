@@ -1,5 +1,5 @@
 //DOC: ## File functions
-//DOC: Fine & Directory functions;
+//DOC: File & Directory functions;
 
 //DOC: `string readfile_raw (string path):`;
 //DOC: Read file from **path** and return content;

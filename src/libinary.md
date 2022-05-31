@@ -1,5 +1,5 @@
 ## File functions
-Fine & Directory functions
+File & Directory functions
 
 `string readfile_raw (string path):`
 
