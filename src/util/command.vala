@@ -1,5 +1,5 @@
 using Posix;
-//DOC: ## command functions
+//DOC: ## Command functions
 //DOC: This functions call shell commands;
 //DOC: Example usage:
 //DOC: ```vala

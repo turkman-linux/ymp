@@ -1,3 +1,8 @@
+//DOC: ## File functions
+//DOC: Fine & Directory functions;
+
+//DOC: `string readfile_raw (string path):`;
+//DOC: Read file from **path** and return content;
 public string readfile_raw (string path){
     File file = File.new_for_path (path);
     string data="";
@@ -17,6 +22,9 @@ public string readfile_raw (string path){
     }
     return data;
 }
+
+//DOC: `string readfile(string path):`;
+//DOC: read file from **path** and remove commends;
 public string readfile(string path){
     string new_data = "";
     foreach(string line in split(readfile_raw(path),"\n")){
@@ -25,22 +33,32 @@ public string readfile(string path){
     return new_data;
 }
 
+//DOC: `void cd(string path):`;
+//DOC: change current directory to **path**;
 public void cd(string path){
     GLib.Environment.set_current_dir(path);
 }
 
+//DOC: `string pwd():`;
+//DOC: return current directory path
 public string pwd(){
     return GLib.Environment.get_current_dir();
 }
 
+//DOC: `int create_dir(string path)`;
+//DOC: create **path** directory;
 public int create_dir(string path){
     return GLib.DirUtils.create_with_parents(path,0755);
 }
 
+//DOC: `int remove_dir(string path)`;
+//DOC: remove **path** directory;
 public int remove_dir(string path){
     return GLib.DirUtils.remove(path);
 }
 
+//DOC: `int remove_file(string path)`;
+//DOC: remove **path** file;
 public int remove_file(string path){
     File file = File.new_for_path(path);
     try {
@@ -51,6 +69,8 @@ public int remove_file(string path){
     }
 }
 
+//DOC: `string[] listdir(string path):`;
+//DOC: list directory content and result as array;
 public string[] listdir(string path){
     string[] ret = {};
     string name;
@@ -67,6 +87,8 @@ public string[] listdir(string path){
     return ret; 
 }
 
+//DOC: `bool isfile(string path):`;
+//DOC: Check **path** is file;
 public bool isfile(string path){
     if(path == null){
         return false;

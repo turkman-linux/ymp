@@ -1,3 +1,41 @@
+## File functions
+Fine & Directory functions
+
+`string readfile_raw (string path):`
+
+Read file from **path** and return content
+
+`string readfile(string path):`
+
+read file from **path** and remove commends
+
+`void cd(string path):`
+
+change current directory to **path**
+
+`string pwd():`
+
+return current directory path
+`int create_dir(string path)`
+
+create **path** directory
+
+`int remove_dir(string path)`
+
+remove **path** directory
+
+`int remove_file(string path)`
+
+remove **path** file
+
+`string[] listdir(string path):`
+
+list directory content and result as array
+
+`bool isfile(string path):`
+
+Check **path** is file
+
 ## class archive()
 Load & extract archive files.
 
@@ -29,7 +67,7 @@ Extract **path** file to target directory
 
 Extract all files to target
 
-## command functions
+## Command functions
 This functions call shell commands
 
 Example usage:
