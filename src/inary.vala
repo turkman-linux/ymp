@@ -71,6 +71,7 @@ public string[] argument_process(string[] args){
 }
 
 public Inary inary_init(string[] args){
+    wsl_block();
     Inary app = new Inary();
     parse_args(args);
     settings_init();

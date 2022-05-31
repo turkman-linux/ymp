@@ -21,6 +21,7 @@ run_command('bash', '-c',
 sources = files('src/inary.vala',
                 'src/color.vala',
                 'src/settings.vala',
+                'src/wslblock.vala',
                 'ctx.vala',
                )
 sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip().split('\n')
