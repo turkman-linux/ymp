@@ -46,11 +46,11 @@ Run command and return output
 
 **Note:** stderr ignored.
 
-`int run_silent(stning command):`
+`int run_silent(string command):`
 
 run command silently.
 
-`int run(stning command):`
+`int run(string command):`
 
 run command.
 
