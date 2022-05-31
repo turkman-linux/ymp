@@ -1,6 +1,6 @@
-#Inary source code
+# Inary source code
 
-##libinary documentation
+## libinary documentation
 look **libinary.md** file
 
 # Writing documentation
