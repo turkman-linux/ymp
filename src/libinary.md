@@ -36,6 +36,21 @@ list directory content and result as array
 
 Check **path** is file
 
+## Interface functions
+User interaction functions
+
+Example usege:
+
+```vala
+if(yesno("Do you want to continue?")){ 
+    ... 
+} else { 
+    stderr.printf("Operation canceled."); 
+} 
+```
+
+`bool yesno(string message):`
+Create a yes/no question.
 ## class archive()
 Load & extract archive files.
 

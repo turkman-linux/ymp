@@ -1,3 +1,16 @@
+//DOC: ## Interface functions
+//DOC: User interaction functions;
+//DOC: Example usege:;
+//DOC: ```vala
+//DOC: if(yesno("Do you want to continue?")){ 
+//DOC:     ... 
+//DOC: } else { 
+//DOC:     stderr.printf("Operation canceled."); 
+//DOC: } 
+//DOC: ```;
+
+//DOC: `bool yesno(string message):`
+//DOC: Create a yes/no question.
 public bool yesno(string message){
     if(!get_bool("interactive")){
         return true;
