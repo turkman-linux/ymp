@@ -1,4 +1,18 @@
 using Posix;
+//DOC: ## command functions
+//DOC: This functions call shell commands;
+//DOC: Example usage:
+//DOC: ```vala
+//DOC: if (0 != run("ls /var/lib/inary")){ 
+//DOC:     stdout.printf("Command failed"); 
+//DOC: } 
+//DOC: string uname = getoutput("uname"); 
+//DOC: ```;
+
+
+//DOC: `string getoutput (string command):`;
+//DOC: Run command and return output;
+//DOC: **Note:** stderr ignored.;
 public static string getoutput (string command) {
     string stdout;
     string stderr;
@@ -11,6 +25,8 @@ public static string getoutput (string command) {
     }
 }
 
+//DOC: `int run_silent(stning command):`;
+//DOC: run command silently.;
 public static int run_silent (string command) {
     string stdout;
     string stderr;
@@ -23,6 +39,8 @@ public static int run_silent (string command) {
     }
 }
 
+//DOC: `int run(stning command):`;
+//DOC: run command.;
 public int run (string command){
     return Posix.system(command)/256;
 }

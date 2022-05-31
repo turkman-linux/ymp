@@ -1,7 +1,7 @@
 ## class archive()
-Load & axtract archive files.
+Load & extract archive files.
 
-example usage:
+Example usage:
 
 ```vala 
 var tar = new archive(); 
@@ -28,4 +28,29 @@ Extract **path** file to target directory
 `void archive.extract_all()`
 
 Extract all files to target
+
+## command functions
+This functions call shell commands
+
+Example usage:
+```vala
+if (0 != run("ls /var/lib/inary")){ 
+    stdout.printf("Command failed"); 
+} 
+string uname = getoutput("uname"); 
+```
+
+`string getoutput (string command):`
+
+Run command and return output
+
+**Note:** stderr ignored.
+
+`int run_silent(stning command):`
+
+run command silently.
+
+`int run(stning command):`
+
+run command.
 
