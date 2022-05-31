@@ -1,6 +1,6 @@
 //DOC: ## ini parser
-//DOC: ini parser library for libinary
-//DOC: ini_variable and ini_section classes are struct. inifile class is actual parser.
+//DOC: ini parser library for libinary;
+//DOC: ini_variable and ini_section classes are struct. inifile class is actual parser.;
 
 //DOC: ### class ini_variable()
 //DOC: struct for ini variables;
@@ -60,7 +60,7 @@ public class ini_section {
         return keys;
     }
 }
-//DOC: ### class inifile
+//DOC: ### class inifile()
 //DOC: ini file parser;
 //DOC: Example usage:;
 //DOC: ``` vala

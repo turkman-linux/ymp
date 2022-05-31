@@ -1,3 +1,55 @@
+## logging functions
+`void print_fn(string message, bool new_line, bool err):`
+
+Main print function. Has 3 arguments
+
+* message: log message
+* new_line: if set true, append new line
+* err: if set true, write log to stderr
+`void print(string message):`
+
+write standard messages to stdout
+
+Example usage:
+
+```vala
+print("Hello world!"); 
+```
+
+`void print_stderr(string message):`
+
+same with print but write to stderr
+
+`void warning(string message):`
+
+write warning message like this:
+
+```yaml
+WARNING: message
+```
+
+`void debug(string message):`
+write debug messages. Its only print if debug mode enabled.
+`void error(int status):`
+print error message and exit if error message list not empty and status is not 0.
+
+This function clear error message list.
+
+This funtion must run after **error_add(string message)**
+
+Example usage:
+
+```vala
+if(num == 12){
+    error_add("Number is not 12.")
+
+}
+error(1)
+
+//DOC:```
+
+`void error_add(string message):`
+add error message to error message list
 ## class archive()
 Load & extract archive files.
 
@@ -31,7 +83,9 @@ Extract all files to target
 
 ## ini parser
 ini parser library for libinary
+
 ini_variable and ini_section classes are struct. inifile class is actual parser.
+
 ### class ini_variable()
 struct for ini variables
 
@@ -71,7 +125,7 @@ add ini_variable into ini_section
 get ini_variable value by variable name
 `string[] ini_section.get_variables():`
 return ini_variable names in ini_section
-### class inifile
+### class inifile()
 ini file parser
 
 Example usage:
