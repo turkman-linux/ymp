@@ -10,7 +10,7 @@ using Posix;
 //DOC: ```;
 
 
-//DOC: ### `string getoutput (string command):`;
+//DOC: `string getoutput (string command):`;
 //DOC: Run command and return output;
 //DOC: **Note:** stderr ignored.;
 public static string getoutput (string command) {
@@ -25,7 +25,7 @@ public static string getoutput (string command) {
     }
 }
 
-//DOC: ### `int run_silent(stning command):`;
+//DOC: `int run_silent(stning command):`;
 //DOC: run command silently.;
 public static int run_silent (string command) {
     string stdout;
@@ -39,7 +39,7 @@ public static int run_silent (string command) {
     }
 }
 
-//DOC: ### `int run(stning command):`;
+//DOC: `int run(stning command):`;
 //DOC: run command.;
 public int run (string command){
     return Posix.system(command)/256;

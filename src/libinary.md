@@ -40,17 +40,17 @@ if (0 != run("ls /var/lib/inary")){
 string uname = getoutput("uname"); 
 ```
 
-### `string getoutput (string command):`
+`string getoutput (string command):`
 
 Run command and return output
 
 **Note:** stderr ignored.
 
-### `int run_silent(stning command):`
+`int run_silent(stning command):`
 
 run command silently.
 
-### `int run(stning command):`
+`int run(stning command):`
 
 run command.
 
