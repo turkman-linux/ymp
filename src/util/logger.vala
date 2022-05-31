@@ -52,8 +52,8 @@ public void warning(string message){
     }
 }
 
-//DOC: `void debug(string message):`
-//DOC: write debug messages. Its only print if debug mode enabled.
+//DOC: `void debug(string message):`;
+//DOC: write debug messages. Its only print if debug mode enabled.;
 public void debug(string message){
     #if DEBUG
     if(true){
@@ -64,17 +64,17 @@ public void debug(string message){
     }
 }
 
-//DOC: `void error(int status):`
+//DOC: `void error(int status):`;
 //DOC: print error message and exit if error message list not empty and status is not 0.;
 //DOC: This function clear error message list.;
 //DOC: This funtion must run after **error_add(string message)**;
 //DOC: Example usage:;
 //DOC: ```vala
 //DOC: if(num == 12){
-//DOC:     error_add("Number is not 12.");
+//DOC:     error_add("Number is not 12."); 
 //DOC: }
 //DOC: error(1);
-//DOC:```;
+//DOC: ```;
 public void error(int status){
     foreach (string error in errors){
         stderr.printf(colorize("ERROR: ",red)+error+"\n");
