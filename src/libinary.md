@@ -239,6 +239,53 @@ get a enviranmental variable
 
 remove all environmental variable except **PATH**
 
+## Yaml parser
+yaml file parser library for inary
+
+Example usage:
+
+```vala
+var yaml = new yamlfile(); 
+yaml.load("/var/lib/inary/metadata/bash.yaml"); 
+var pkgarea = yaml.get("inary.package"); 
+var name = yaml.get_value(pkgarea,"name"); 
+if(yaml.has_area(pkgarea,"dependencies")){
+    dependencies = yaml.get_array(pkgarea,"dependencies"); 
+}
+```
+
+`string yamlfile.data:`
+
+Yaml file content
+
+`void yamlfile.load(string path):`
+
+load yaml from file
+
+`string yamlfile.get(string path):`
+
+get area from yaml content
+
+`bool yamlfile.has_area(string fdata, string path):`
+
+return true if **fdata** has **path** area
+
+`string[] yamlfile.get_area_list(string fdata, string path):`
+
+list all areas the name is **path**
+
+`string yamlfile.get_value(string data, string name):`
+
+get value from area data
+
+`string[] yamlfile.get_array(string data, string name):`
+
+get array from area data
+
+`string yamlfile.get_area(string data, string path):`
+
+get area from data
+
 ## File functions
 File & Directory functions
 
