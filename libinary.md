@@ -1,4 +1,13 @@
-## archive class
+## class archive()
+Load & axtract archive files.
+
+example usage:
+
+```vala 
+var tar = new archive(); 
+tar.load("/tmp/archive.tar.gz"); 
+tar.extract_all(); 
+```
 
 `void archive.load(string path):`
 
