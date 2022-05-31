@@ -15,6 +15,63 @@ var msg2 = colorize("world",blue);
 stdout.printf(msg+" "+msg2); 
 ```
 
+## class package
+inary package struct & functions
+
+Example usage:
+
+```vala
+var pkg = new package(); 
+pkg.load_from_archive("/tmp/bash-5.0-x86_64.inary"); 
+stdout.printf(pkg.get("archive-hash")); 
+foreach(string pkgname in pkg.dependencies){
+    stdout.printf(pkgname); 
+}
+var pkg2 = new package(); 
+pkg2.load("/tmp/metadata.yaml"); 
+if(pkg2.is_installed()){
+    stdout.printf(pkg2+" installed"); 
+}
+```
+
+`void package.load(string metadata):`
+
+Read package information from metadata file
+
+`void package.load_from_data(string data):`
+
+Read package information from string data
+
+`void package.load_from_archive(string path):`
+
+Read package information from inary file
+
+`string[] package.list_files():`
+
+return inary package files list
+
+`string[] package.gets(string name):`
+
+Get package array value
+
+`string package.get(string name):`
+
+Get package value
+
+## Miscellaneous package functions
+package functions outside package class
+
+`string[] list_installed_packages():`
+return installed package names array
+
+`package get_installed_packege(string name):`
+
+get package object from installed package name
+
+`bool is_installed_package():`
+
+return true if package installed
+
 ## logging functions
 `void print_fn(string message, bool new_line, bool err):`
 

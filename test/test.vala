@@ -5,7 +5,6 @@ void main(string[] args){
     Inary inary = inary_init(args);
     
     inary.add_process("echo",{"hello","world"});
-    parse_args(args);
     inary.run();
 
     //yesno test
@@ -78,6 +77,13 @@ void main(string[] args){
     print(join(", ",{"aaa","bbb"}));
     var pkg2 = get_installed_packege("aaa");
     stdout.printf("--------------\n");
+
+    var pkg3 = new package();
+    pkg3.load_from_archive("../test/example/package.inary");
+    warning(pkg3.name);
+    foreach(string file in pkg3.list_files()){
+        print(file);
+    }
 
     // index test
     repository[] repos = get_repos();

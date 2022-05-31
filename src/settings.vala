@@ -1,7 +1,7 @@
 public string CONFIG;
 public string DESTDIR;
 
-public void settings_init(){
+private void settings_init(){
     ctx_init();
     inifile ini = new inifile();
     if(DESTDIR == null){
@@ -12,9 +12,8 @@ public void settings_init(){
     }
     if(isfile(CONFIG)){
         ini.load(CONFIG);
-        string[] sections = {"jobs", "no_color"};
-        foreach(string section in sections){
-            set_value(section,ini.get("build",section));
+        foreach(string section in ini.get_variables("inary")){
+            set_value(section,ini.get("inary",section));
         }
     }else{
         warning("Config file not exists:"+"\n"+CONFIG);
@@ -29,10 +28,15 @@ public void set_destdir(string rootfs){
     settings_init();
 }
 
+public string get_storage(){
+    return get_value("DESTDIR")+STORAGEDIR;
+}
+
 public void set_config(string path){
     CONFIG=path;
+    settings_init();
 }
-public void parse_args(string[] args){
+private void parse_args(string[] args){
     foreach(string arg in args){
         switch(arg){
             case "--ask":

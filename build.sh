@@ -1,7 +1,7 @@
 rm -rf build
-meson build $@ 
+meson build $@ -Ddebug=false
 ninja -C build
 cd build
 export G_DEBUG=fatal-criticals
 export LD_LIBRARY_PATH="$(pwd)":$LD_LIBRARY_PATH
-yes | ./inary-test --ask --no-color || true
+yes | ./inary-test --ask || true
