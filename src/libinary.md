@@ -1,3 +1,108 @@
+## class archive()
+Load & extract archive files.
+
+Example usage:
+
+```vala 
+var tar = new archive(); 
+tar.load("/tmp/archive.tar.gz"); 
+tar.extract_all(); 
+```
+
+`void archive.load(string path):`
+
+load archive file from **path**
+
+`string[] archive.list_files():`
+
+Get archive file list
+
+`void archive.set_target(string path):`
+
+Change target directory for extract
+
+`void archive.extract(string path):`
+
+Extract **path** file to target directory
+
+`void archive.extract_all()`
+
+Extract all files to target
+
+## ini parser
+ini parser library for libinary
+ini_variable and ini_section classes are struct. inifile class is actual parser.
+### class ini_variable()
+struct for ini variables
+
+Example usage:
+
+```vala
+var inivar = new ini_variable(); 
+inivar.name = "colorize"; 
+inivar.value = "false"; 
+```
+
+`string ini_variable.name`
+
+`string ini_variable.value`
+
+### class ini_section()
+struct for ini sections
+Example usage:
+
+```vala
+var inisec = new ini_section(); 
+inisec.add("debug","false"); 
+...
+stdout.printf(inisec.name); 
+```
+
+`string ini_section.name:`
+
+ini section name
+
+`void ini_section.add(string variable, string value):`
+
+add ini_variable into ini_section
+
+`string ini_section.get(string name):`
+
+get ini_variable value by variable name
+`string[] ini_section.get_variables():`
+return ini_variable names in ini_section
+### class inifile
+ini file parser
+
+Example usage:
+
+``` vala
+var ini = new inifile(); 
+ini.load("/etc/inary.conf")
+
+var is_debug =  (ini.get("inary", "debug") == "true"); 
+```
+
+`void inifile.load(string path):`
+
+load ini file from **path**
+
+`string inifile.get(string name, string variable):`
+
+get value from ini file by section name and variable name.
+
+`string[] inifile.get_variables(string name):`
+
+get variable names by section name
+
+`string[] inifile.get_sections():`
+
+get section names from ini
+
+`string inifile.dump():`
+
+print inifile data
+
 ## File functions
 File & Directory functions
 
@@ -52,37 +157,6 @@ if(yesno("Do you want to continue?")){
 `bool yesno(string message):`
 
 Create a yes/no question.
-
-## class archive()
-Load & extract archive files.
-
-Example usage:
-
-```vala 
-var tar = new archive(); 
-tar.load("/tmp/archive.tar.gz"); 
-tar.extract_all(); 
-```
-
-`void archive.load(string path):`
-
-load archive file from **path**
-
-`string[] archive.list_files():`
-
-Get archive file list
-
-`void archive.set_target(string path):`
-
-Change target directory for extract
-
-`void archive.extract(string path):`
-
-Extract **path** file to target directory
-
-`void archive.extract_all()`
-
-Extract all files to target
 
 ## Command functions
 This functions call shell commands
