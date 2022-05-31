@@ -9,8 +9,8 @@
 //DOC: } 
 //DOC: ```;
 
-//DOC: `bool yesno(string message):`
-//DOC: Create a yes/no question.
+//DOC: `bool yesno(string message):`;
+//DOC: Create a yes/no question.;
 public bool yesno(string message){
     if(!get_bool("interactive")){
         return true;

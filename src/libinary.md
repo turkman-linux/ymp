@@ -50,7 +50,9 @@ if(yesno("Do you want to continue?")){
 ```
 
 `bool yesno(string message):`
+
 Create a yes/no question.
+
 ## class archive()
 Load & extract archive files.
 
