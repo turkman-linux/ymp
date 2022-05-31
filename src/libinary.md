@@ -160,6 +160,85 @@ get section names from ini
 
 print inifile data
 
+## String functions
+easy & safe string operation functions.
+
+`string join(string f, string[] array):`
+
+merge array items. insert **f** in between
+
+Example usage:
+
+```vala
+string[] aa = {"hello","world","!"}; 
+string bb = join(aa," "); 
+stdout.printf(bb); 
+```
+
+`string[] split(string data, string f):`
+safe split function. If data null or empty return empty array.
+
+if **f** not in data, return single item array.
+
+`string trim(string data):`
+
+fixes excess indentation
+
+`int count_tab(string line):`
+
+count indentation level
+
+`boot startswith(string data, string f):`
+
+return true if data starts with f
+
+`bool endswith(string data, string f):`
+
+return true if data ends with f
+
+## Variable functions
+set or get inary global variable
+Example usage:
+
+```vala
+set_value("CFLAGS","-O3"); 
+var jobs = get_value("jobs"); 
+if(get_bool("debug")){
+    stderr.printf("Debug mode enabled"); 
+}
+```
+
+`void set_value(string name, string value):`
+
+add a global inary variable as string
+
+`string get_value(string name):`
+
+get a inary global variable as string
+
+`bool get_bool(string name):`
+
+get a inary global variable as bool
+
+`void set_bool(string name, bool value):`
+
+add a global inary variable as bool
+
+`string[] list_values():`
+
+return array of all inary global value names
+
+`void set_env(string variable, string value):`
+
+add environmental variable
+`string get_env(string variable):`
+
+get a enviranmental variable
+
+`void clear_env():`
+
+remove all environmental variable except **PATH**
+
 ## File functions
 File & Directory functions
 
