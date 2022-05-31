@@ -154,6 +154,10 @@ Change target directory for extract
 
 Extract **path** file to target directory
 
+`string archive.readfile(string path):`
+
+Read **path** file to target directory
+
 `void archive.extract_all()`
 
 Extract all files to target

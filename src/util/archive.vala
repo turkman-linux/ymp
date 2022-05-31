@@ -121,6 +121,28 @@ public class archive {
             }
         }
     }
+    //DOC: `string archive.readfile(string path):`;
+    //DOC: Read **path** file to target directory;
+    public string readfile (string path) {
+        load_archive(archive_path);
+
+        string ret="";
+        unowned Archive.Entry entry;
+        Archive.Result last_result;
+        while ((last_result = archive.next_header (out entry)) == Archive.Result.OK) {
+            if (entry.pathname() != path){
+                continue;
+            }
+
+            uint8[] buffer = null;
+            Posix.off_t offset;
+            while (archive.read_data_block (out buffer, out offset) == Archive.Result.OK) {
+                ret+=@"$((string) buffer)";
+            }
+        }
+        return ret;
+    }
+
 
     //DOC: `void archive.extract_all()`;
     //DOC: Extract all files to target;

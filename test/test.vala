@@ -22,6 +22,8 @@ void main(string[] args){
         print(path);
     }
     tar.extract("aaa");
+    var aaa = tar.readfile("aaa");
+    print(aaa);
     tar.set_target("./ffff/");
     tar.extract_all();
     stdout.printf("--------------\n");

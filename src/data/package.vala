@@ -45,10 +45,7 @@ public class package {
     public void load_from_archive(string path){
         pkgfile = new archive();
         pkgfile.load(path);
-        pkgfile.set_target(get_storage()+"/tmp/");
-        pkgfile.extract("metadata.yaml");
-        load(get_storage()+"/tmp/metadata.yaml");
-        remove_file(get_storage()+"/tmp/metadata.yaml");
+        load_from_data(pkgfile.readfile("metadata.yaml"));
     }
 
     //DOC: `string[] package.list_files():`;
@@ -57,9 +54,7 @@ public class package {
         if(pkgfile == null){
             error_add("Package archive missing");
         }
-        pkgfile.extract("files");
-        string files = readfile(get_storage()+"/tmp/files");
-        remove_file(get_storage()+"/tmp/files");
+        string files = pkgfile.readfile("files");
         return split(files,"\n");
     }
     
