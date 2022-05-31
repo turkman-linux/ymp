@@ -73,7 +73,7 @@ public void debug(string message){
 //DOC: if(num == 12){
 //DOC:     error_add("Number is not 12."); 
 //DOC: }
-//DOC: error(1);
+//DOC: error(1); 
 //DOC: ```;
 public void error(int status){
     foreach (string error in errors){
@@ -88,8 +88,8 @@ public void error(int status){
     }
 
 }
-//DOC: `void error_add(string message):`
-//DOC: add error message to error message list
+//DOC: `void error_add(string message):`;
+//DOC: add error message to error message list;
 public void error_add(string message){
     if(errors == null){
         errors = {};

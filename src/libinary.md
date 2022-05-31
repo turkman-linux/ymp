@@ -29,8 +29,11 @@ WARNING: message
 ```
 
 `void debug(string message):`
+
 write debug messages. Its only print if debug mode enabled.
+
 `void error(int status):`
+
 print error message and exit if error message list not empty and status is not 0.
 
 This function clear error message list.
@@ -41,15 +44,15 @@ Example usage:
 
 ```vala
 if(num == 12){
-    error_add("Number is not 12.")
-
+    error_add("Number is not 12."); 
 }
-error(1)
-
-//DOC:```
+error(1); 
+```
 
 `void error_add(string message):`
+
 add error message to error message list
+
 ## class archive()
 Load & extract archive files.
 
