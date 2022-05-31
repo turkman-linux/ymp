@@ -13,6 +13,11 @@ run_command('bash', './mkctx.sh',
     'STORAGEDIR=/'+get_option('storagedir'),
     check:true)
 
+run_command('bash', '-c',
+            'find src -type f -exec cat {} \; | grep "//DOC:" | sed "s|.*//DOC: ||g;s|$|\\n|g" > libinary.md',
+    check:true)
+
+
 sources = files('src/inary.vala',
                 'src/color.vala',
                 'src/settings.vala',
