@@ -422,6 +422,9 @@ if(yesno("Do you want to continue?")){
 
 Create a yes/no question.
 
+`void nostdin():`
+
+close stdin. Ignore input. This function may broke application.
 ## Command functions
 This functions call shell commands
 
