@@ -72,8 +72,8 @@ public string[] argument_process(string[] args){
 
 public Inary inary_init(string[] args){
     Inary app = new Inary();
-    settings_init();
     parse_args(args);
+    settings_init();
     set_env("G_DEBUG","fatal-criticals");
     error(31);
     return app;

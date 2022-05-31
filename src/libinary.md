@@ -106,6 +106,9 @@ WARNING: message
 
 write debug messages. Its only print if debug mode enabled.
 
+`void info(string message):`
+
+write additional info messages.
 `void error(int status):`
 
 print error message and exit if error message list not empty and status is not 0.

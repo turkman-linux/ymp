@@ -40,14 +40,23 @@ private void parse_args(string[] args){
     foreach(string arg in args){
         switch(arg){
             case "--ask":
-                set_value("interactive","true");
+                set_bool("interactive",true);
                 break;
             case "--no-color":
-                set_value("no_color","true");
+                set_bool("no_color",true);
+                break;
+            case "--verbose":
+                set_bool("verbose",true);
+                break;
+            case "--debug":
+                set_bool("debug",true);
                 break;
         }
         if(startswith(arg,"-D")){
             set_value("DESTDIR",arg[2:]);
         }
+    }
+    if(get_env("NO_COLOR") != null){
+        set_bool("no_color",true);
     }
 }

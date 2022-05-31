@@ -64,6 +64,14 @@ public void debug(string message){
     }
 }
 
+//DOC: `void info(string message):`;
+//DOC: write additional info messages.
+public void info(string message){
+    if(get_bool("verbose")){
+        print_fn(message,true,false);
+    }
+}
+
 //DOC: `void error(int status):`;
 //DOC: print error message and exit if error message list not empty and status is not 0.;
 //DOC: This function clear error message list.;
