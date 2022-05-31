@@ -14,7 +14,7 @@ run_command('bash', './mkctx.sh',
     check:true)
 
 run_command('bash', '-c',
-            'find src -type f -exec cat {} \; | grep "//DOC:" | sed "s|.*//DOC: ||g;s|;$|\\n|g" > libinary.md',
+            'find src -type f -exec cat {} \; | grep "//DOC:" | sed "s|.*//DOC: ||g;s|;$|\\n|g" > src/libinary.md',
     check:true)
 
 

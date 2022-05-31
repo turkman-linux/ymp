@@ -29,3 +29,4 @@ Extract **path** file to target directory
 
 Extract all files to target
 
+* Document line must starts with `//DOC:`
