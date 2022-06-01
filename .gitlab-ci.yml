@@ -14,7 +14,7 @@ debian:
     - cd build && ./inary-test || true
 
 archlinux:
-  image: archlinux:latests
+  image: archlinux:latest
   stage: build
   artifacts:
     expire_in: 1 week
