@@ -53,16 +53,18 @@ else
     add_project_arguments('-D', 'no_libreadline', language: 'vala')
 endif
 
+args = ['-X','-O3', '-s', '-flto']
+
 if get_option('static')
-    slib = static_library('inary-static', sources, dependencies: dependencies)
-    executable('inary-static','src/main.vala', dependencies: dependencies, link_args: ['-X','-static'], link_with: slib)
+    lib = static_library('inary', sources, dependencies: dependencies)
+    args += ['-X','-static']
 else
     lib = library('inary', sources, dependencies: dependencies)
-    executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
-    executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_with: lib)
-    executable('yamlget', 'src/tools/yamlget.vala', dependencies: dependencies, link_with: lib)
-    executable('extract', 'src/tools/extract.vala', dependencies: dependencies, link_with: lib)
-    executable('revdep-rebuild', 'src/tools/revdep-rebuild.vala', dependencies: dependencies, link_with: lib)
-    executable('inarysh', 'src/tools/inarysh.vala', dependencies: dependencies, link_with: lib)
-    executable('inary-test', 'test/test.vala', dependencies: dependencies, link_with: lib)
 endif
+executable('inary','src/main.vala', dependencies: dependencies, link_args: args, link_with: lib)
+executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_args: args, link_with: lib)
+executable('yamlget', 'src/tools/yamlget.vala', dependencies: dependencies, link_args: args, link_with: lib)
+executable('extract', 'src/tools/extract.vala', dependencies: dependencies, link_args: args, link_with: lib)
+executable('revdep-rebuild', 'src/tools/revdep-rebuild.vala', dependencies: dependencies, link_args: args, link_with: lib)
+executable('inarysh', 'src/tools/inarysh.vala', dependencies: dependencies, link_args: args, link_with: lib)
+executable('inary-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
