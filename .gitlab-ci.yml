@@ -13,7 +13,19 @@ debian:
     - ninja -C build
     - cd build && ./inary-test || true
 
-
+archlinux:
+  image: archlinux:latests
+  stage: build
+  artifacts:
+    expire_in: 1 week
+    paths: 
+      - build
+  script:
+    - pacman -Sy meson gcc vala
+    - pacman -Sy  libarchive libreadline
+    - meson build -Ddebug=true
+    - ninja -C build
+    - cd build && ./inary-test || true
 
 alpine:
   image: alpine:latest
