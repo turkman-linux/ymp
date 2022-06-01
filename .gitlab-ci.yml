@@ -16,7 +16,8 @@ alpine:
   stage: build
   script:
     - apk update 
-    - apk add meson musl-dev gcc bash vala glib-dev glib-static readline-dev libarchive-dev libarchive-static readline-static
+    - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev
+    - apk add libarchive-static readline-static glib-static zlib-static ncurses-static acl-static expat-static
     - meson build -Ddebug=true -Dstatic=true
     - ninja -C build
     - cd build && ./inary-test || true
