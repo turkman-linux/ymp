@@ -90,6 +90,20 @@ public class package {
     //DOC: `void package.extract():`;
     //DOC: extract package to quarantine directory
     //DOC: quarantine directory is **get_storage()+"/quarantine"**;
+    //DOC: Example inary archive format:;
+    //DOC: ```yaml
+    //DOC: package.inary
+    //DOC:   ├── data.tar.gz
+    //DOC:   │     ├ /usr
+    //DOC:   │     │  └ ...
+    //DOC:   │     └ /etc
+    //DOC:   │        └ ...
+    //DOC:   ├── files
+    //DOC:   └── metadata.yaml
+    //DOC: ```
+    //DOC: * **metadata.yaml** file is package information data.
+    //DOC: * **files** is file list
+    //DOC: * **data.tar.gz** in package archive
     public void extract(){
         if(pkgfile == null){
             error_add("Package archive missing");
@@ -104,13 +118,17 @@ public class package {
         // extract data archive
         pkgfile.set_target(get_storage()+"/quarantine");
         foreach (string data in pkgfile.list_files()){
+            // Allowed formats: data.tar.xz data.zip data.tar.zst data.tar.gz ..
             if(startswith(data,"data.")){
+                // 1. data.* file extract to quarantine from inary package
                 pkgfile.extract(data);
                 var datafile = get_storage()+"/quarantine/"+data;
+                // 2. data.* package extract to quarantine/rootfs
                 var file_archive = new archive();
                 file_archive.load(datafile);
                 file_archive.set_target(get_storage()+"/quarantine/rootfs");
                 file_archive.extract_all();
+                // 3. remove data.* file
                 remove_file(datafile);
                 break;
             }
