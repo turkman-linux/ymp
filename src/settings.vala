@@ -16,7 +16,7 @@ private void settings_init(){
             set_value(section,ini.get("inary",section));
         }
     }else{
-        warning("Config file not exists:"+"\n"+CONFIG);
+        warning("Config file not exists: "+CONFIG);
     }
     clear_env();
 }
