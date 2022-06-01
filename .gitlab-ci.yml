@@ -21,8 +21,8 @@ archlinux:
     paths: 
       - build
   script:
-    - pacman -Sy meson gcc vala
-    - pacman -Sy  libarchive libreadline
+    - pacman -Sy meson gcc vala --noconfirm
+    - pacman -Sy  libarchive libreadline --noconfirm
     - meson build -Ddebug=true
     - ninja -C build
     - cd build && ./inary-test || true
