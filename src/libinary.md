@@ -98,11 +98,6 @@ stdout.printf(msg+" "+msg2);
 # src/operations/exit.vala
 # src/operations/get.vala
 # src/main.vala
-# src/tools/extract.vala
-# src/tools/revdep-rebuild.vala
-# src/tools/inarysh.vala
-# src/tools/iniget.vala
-# src/tools/yamlget.vala
 # src/util/file.vala
 ## File functions
 File & Directory functions
