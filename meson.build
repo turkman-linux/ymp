@@ -42,15 +42,15 @@ endif
 
 
 if get_option('libarchive')
-    dependencies += dependency('libarchive')
+    dependencies += dependency('libarchive', static:get_option('static'))
 else
     add_project_arguments('-D', 'no_libarchive', language: 'vala')
 endif
 
 if get_option('libreadline')
-    dependencies += dependency('readline')
+    dependencies += dependency('readline', static:get_option('static'))
 else
-    add_project_arguments('-D', 'no_libareadline', language: 'vala')
+    add_project_arguments('-D', 'no_libreadline', language: 'vala')
 endif
 
 if get_option('static')
