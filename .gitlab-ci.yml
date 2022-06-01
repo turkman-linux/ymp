@@ -17,6 +17,6 @@ alpine:
   script:
     - apk update 
     - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev
-    - meson build -Ddebug=true
+    - meson build -Ddebug=true -Dstatic=true
     - ninja -C build
     - cd build && ./inary-test || true
