@@ -24,8 +24,9 @@ alpine:
       - build
   script:
     - apk update 
-    - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev
+    - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev upx
     - apk add libarchive-static readline-static glib-static zlib-static ncurses-static acl-static expat-static openssl-libs-static xz-dev zstd-static lz4-static bzip2-static
     - meson build -Ddebug=true -Dstatic=true
+    - upx -9 build/*
     - ninja -C build
     - cd build && ./inary-static || true
