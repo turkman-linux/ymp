@@ -16,7 +16,7 @@ alpine:
   stage: build
   script:
     - apk update 
-    - apk add meson gcc vala glib libarchive
+    - apk add meson musl-dev gcc vala glib libarchive
     - meson build -Ddebug=true
     - ninja -C build
     - cd build && ./inary-test || true
