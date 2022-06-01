@@ -79,7 +79,7 @@ public class inifile {
             return;
         }
         ini_section cur_section = new ini_section();
-        foreach (string line in split(readfile(path),"\n")){
+        foreach (string line in ssplit(readfile(path),"\n")){
             if (line[0] == '[' && line[line.length-1] == ']'){
                 var section = new ini_section();
                 section.name = line[1:line.length-1];
@@ -90,8 +90,8 @@ public class inifile {
                     cur_section = section;
                 }
             }else{
-                string variable = split(line,"=")[0];
-                string value = split(line,"=")[1];
+                string variable = ssplit(line,"=")[0];
+                string value = ssplit(line,"=")[1];
                 if (variable != null && value != null){
                     cur_section.add(variable,value);
                 }

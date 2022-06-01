@@ -38,7 +38,7 @@ public class yamlfile {
     //DOC: `bool yamlfile.has_area(string fdata, string path):`;
     //DOC: return true if **fdata** has **path** area;
     public bool has_area(string fdata, string path){
-        foreach(string line in split(trim(fdata),"\n")){
+        foreach(string line in ssplit(trim(fdata),"\n")){
             if (startswith(line,path+":")){
                 return true;
             }
@@ -51,18 +51,18 @@ public class yamlfile {
     public string[] get_area_list(string fdata, string path){
         string[] ret = {};
         offset = find_first_offset(fdata,path);
-        int data_length = split(fdata,"\n").length;
+        int data_length = ssplit(fdata,"\n").length;
         while(offset < data_length-1){
             string data = get_area_single(fdata,path);
             ret += data;
-            offset += split(data,"\n").length + 1;
+            offset += ssplit(data,"\n").length + 1;
         }
         return ret;
     }
     
     private int find_first_offset(string fdata, string name){
         int i=0;
-        foreach(string line in split(trim(fdata),"\n")){
+        foreach(string line in ssplit(trim(fdata),"\n")){
             i+=1;
             if(startswith(line, name+":")){
                 return i-1;
@@ -74,7 +74,7 @@ public class yamlfile {
     //DOC: `string yamlfile.get_value(string data, string name):`;
     //DOC: get value from area data;
     public string get_value(string data,string name){
-        foreach(string line in split(trim(data),"\n")){
+        foreach(string line in ssplit(trim(data),"\n")){
             if(line.length < name.length+1){
                 continue;
             }
@@ -94,7 +94,7 @@ public class yamlfile {
     public string[] get_array(string data,string name){
         string[] array = {};
         string fdata = get_area(data,name);
-        foreach(string line in split(fdata,"\n")){
+        foreach(string line in ssplit(fdata,"\n")){
             if(line[0:2] == "- "){
                 array += line[1:];
             }
@@ -106,7 +106,7 @@ public class yamlfile {
     //DOC: get area from data;
     public string get_area(string data, string path){
         string tmp = data;
-        foreach(string item in split(path,".")){
+        foreach(string item in ssplit(path,".")){
             tmp = get_area_single(tmp,item);
         }
         return tmp;
@@ -120,7 +120,7 @@ public class yamlfile {
         bool e = false;
         string area = "";
         int i = 0;
-        foreach(string line in split(trim(fdata),"\n")){
+        foreach(string line in ssplit(trim(fdata),"\n")){
             i +=1;
             if(i<offset){
                 continue;

@@ -55,7 +55,7 @@ public class package {
             error_add("Package archive missing");
         }
         string files = pkgfile.readfile("files");
-        return split(files,"\n");
+        return ssplit(files,"\n");
     }
     
     private void read_values(){
@@ -97,7 +97,7 @@ public class package {
 public string[] list_installed_packages(){
     string[] pkgs = {};
     foreach(string fname in listdir(get_storage()+"/metadata")){
-        pkgs += split(fname,".")[0];
+        pkgs += ssplit(fname,".")[0];
     }
     return pkgs;
 }

@@ -45,11 +45,11 @@ public class Inary {
         if(data == null){
             return;
         }
-        foreach(string line in split(data,"\n")){
+        foreach(string line in ssplit(data,"\n")){
             if(line.length == 0){
                 continue;
             }
-            string[] proc_args = argument_process(split(line," "));
+            string[] proc_args = argument_process(ssplit(line," "));
             if(proc_args[0] != null){
                 add_process(proc_args[0],proc_args[1:]);
             }

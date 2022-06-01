@@ -24,10 +24,10 @@ public string join(string f,string[] array){
     }
     return tmp[0:tmp.length-f.length];
 }
-//DOC: `string[] split(string data, string f):`
+//DOC: `string[] ssplit(string data, string f):`
 //DOC: safe split function. If data null or empty return empty array.;
 //DOC: if **f** not in data, return single item array.;
-public string[] split(string data, string f){
+public string[] ssplit(string data, string f){
     if(data == null || f == null){
         debug("empty data");
         return {};
@@ -42,7 +42,7 @@ public string[] split(string data, string f){
 public string trim(string data){
     int min = -1;
     string new_data = "";
-    foreach(string line in split(data,"\n")){ 
+    foreach(string line in ssplit(data,"\n")){ 
         int level = count_tab(line);
         if(line.length == 0){
             continue;
@@ -54,7 +54,7 @@ public string trim(string data){
     if(min == -1){
         min = 0;
     }
-    foreach(string line in split(data,"\n")){
+    foreach(string line in ssplit(data,"\n")){
         if(line.length == 0){
             continue;
         }

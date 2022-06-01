@@ -1,20 +1,3 @@
-## Colors
-Available colors
-
-black, red, green, yellow, blue, magenta, cyan, white
-
-`string colorize(string message, int color):`
-
-Change string color if no_color is false.
-
-Example usage:
-
-```vala
-var msg = colorize("Hello",red); 
-var msg2 = colorize("world",blue); 
-stdout.printf(msg+" "+msg2); 
-```
-
 ## class package
 inary package struct & functions
 
@@ -72,64 +55,81 @@ get package object from installed package name
 
 return true if package installed
 
-## logging functions
-`void print_fn(string message, bool new_line, bool err):`
+## Colors
+Available colors
 
-Main print function. Has 3 arguments
+black, red, green, yellow, blue, magenta, cyan, white
 
-* message: log message
-* new_line: if set true, append new line
-* err: if set true, write log to stderr
-`void print(string message):`
+`string colorize(string message, int color):`
 
-write standard messages to stdout
+Change string color if no_color is false.
 
 Example usage:
 
 ```vala
-print("Hello world!"); 
+var msg = colorize("Hello",red); 
+var msg2 = colorize("world",blue); 
+stdout.printf(msg+" "+msg2); 
 ```
 
-`void print_stderr(string message):`
+## File functions
+File & Directory functions
 
-same with print but write to stderr
+`string readfile_raw (string path):`
 
-`void warning(string message):`
+Read file from **path** and return content
 
-write warning message like this:
+`string readfile(string path):`
 
-```yaml
-WARNING: message
-```
+read file from **path** and remove commends
 
-`void debug(string message):`
+`void cd(string path):`
 
-write debug messages. Its only print if debug mode enabled.
+change current directory to **path**
 
-`void info(string message):`
+`string pwd():`
 
-write additional info messages.
-`void error(int status):`
+return current directory path
+`int create_dir(string path)`
 
-print error message and exit if error message list not empty and status is not 0.
+create **path** directory
 
-This function clear error message list.
+`int remove_dir(string path)`
 
-This funtion must run after **error_add(string message)**
+remove **path** directory
 
-Example usage:
+`int remove_file(string path)`
+
+remove **path** file
+
+`string[] listdir(string path):`
+
+list directory content and result as array
+
+`bool isfile(string path):`
+
+Check **path** is file
+
+## Interface functions
+User interaction functions
+
+Example usege:
 
 ```vala
-if(num == 12){
-    error_add("Number is not 12."); 
-}
-error(1); 
+if(yesno("Do you want to continue?")){ 
+    ... 
+} else { 
+    stderr.printf("Operation canceled."); 
+} 
 ```
 
-`void error_add(string message):`
+`bool yesno(string message):`
 
-add error message to error message list
+Create a yes/no question.
 
+`void nostdin():`
+
+close stdin. Ignore input. This function may broke application.
 ## class archive()
 Load & extract archive files.
 
@@ -164,6 +164,42 @@ Read **path** file to target directory
 `void archive.extract_all()`
 
 Extract all files to target
+
+## String functions
+easy & safe string operation functions.
+
+`string join(string f, string[] array):`
+
+merge array items. insert **f** in between
+
+Example usage:
+
+```vala
+string[] aa = {"hello","world","!"}; 
+string bb = join(aa," "); 
+stdout.printf(bb); 
+```
+
+`string[] ssplit(string data, string f):`
+safe split function. If data null or empty return empty array.
+
+if **f** not in data, return single item array.
+
+`string trim(string data):`
+
+fixes excess indentation
+
+`int count_tab(string line):`
+
+count indentation level
+
+`boot startswith(string data, string f):`
+
+return true if data starts with f
+
+`bool endswith(string data, string f):`
+
+return true if data ends with f
 
 ## ini parser
 ini parser library for libinary
@@ -240,42 +276,6 @@ get section names from ini
 `string inifile.dump():`
 
 print inifile data
-
-## String functions
-easy & safe string operation functions.
-
-`string join(string f, string[] array):`
-
-merge array items. insert **f** in between
-
-Example usage:
-
-```vala
-string[] aa = {"hello","world","!"}; 
-string bb = join(aa," "); 
-stdout.printf(bb); 
-```
-
-`string[] split(string data, string f):`
-safe split function. If data null or empty return empty array.
-
-if **f** not in data, return single item array.
-
-`string trim(string data):`
-
-fixes excess indentation
-
-`int count_tab(string line):`
-
-count indentation level
-
-`boot startswith(string data, string f):`
-
-return true if data starts with f
-
-`bool endswith(string data, string f):`
-
-return true if data ends with f
 
 ## Variable functions
 set or get inary global variable
@@ -367,64 +367,64 @@ get array from area data
 
 get area from data
 
-## File functions
-File & Directory functions
+## logging functions
+`void print_fn(string message, bool new_line, bool err):`
 
-`string readfile_raw (string path):`
+Main print function. Has 3 arguments
 
-Read file from **path** and return content
+* message: log message
+* new_line: if set true, append new line
+* err: if set true, write log to stderr
+`void print(string message):`
 
-`string readfile(string path):`
+write standard messages to stdout
 
-read file from **path** and remove commends
-
-`void cd(string path):`
-
-change current directory to **path**
-
-`string pwd():`
-
-return current directory path
-`int create_dir(string path)`
-
-create **path** directory
-
-`int remove_dir(string path)`
-
-remove **path** directory
-
-`int remove_file(string path)`
-
-remove **path** file
-
-`string[] listdir(string path):`
-
-list directory content and result as array
-
-`bool isfile(string path):`
-
-Check **path** is file
-
-## Interface functions
-User interaction functions
-
-Example usege:
+Example usage:
 
 ```vala
-if(yesno("Do you want to continue?")){ 
-    ... 
-} else { 
-    stderr.printf("Operation canceled."); 
-} 
+print("Hello world!"); 
 ```
 
-`bool yesno(string message):`
+`void print_stderr(string message):`
 
-Create a yes/no question.
+same with print but write to stderr
 
-`void nostdin():`
+`void warning(string message):`
 
-close stdin. Ignore input. This function may broke application.
+write warning message like this:
+
+```yaml
+WARNING: message
+```
+
+`void debug(string message):`
+
+write debug messages. Its only print if debug mode enabled.
+
+`void info(string message):`
+
+write additional info messages.
+`void error(int status):`
+
+print error message and exit if error message list not empty and status is not 0.
+
+This function clear error message list.
+
+This funtion must run after **error_add(string message)**
+
+Example usage:
+
+```vala
+if(num == 12){
+    error_add("Number is not 12."); 
+}
+error(1); 
+```
+
+`void error_add(string message):`
+
+add error message to error message list
+
 ## Command functions
 This functions call shell commands
 

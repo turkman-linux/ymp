@@ -27,8 +27,8 @@ public string readfile_raw (string path){
 //DOC: read file from **path** and remove commends;
 public string readfile(string path){
     string new_data = "";
-    foreach(string line in split(readfile_raw(path),"\n")){
-        new_data += split(line,"#")[0]+"\n";
+    foreach(string line in ssplit(readfile_raw(path),"\n")){
+        new_data += ssplit(line,"#")[0]+"\n";
     }
     return new_data;
 }
