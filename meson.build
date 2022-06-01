@@ -5,8 +5,8 @@ project('inary', 'vala', 'c',
 )
 
 dependencies = [
-    dependency('gio-2.0'),
-    dependency('readline'),
+    dependency('gio-2.0', static:get_option('static')),
+    dependency('readline', static:get_option('static')),
 ]
 run_command('bash', './mkctx.sh', 
     'CONFIGDIR=/'+get_option('sysconfdir'),
