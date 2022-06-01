@@ -1,6 +1,5 @@
-image: debian:unstable
-
 debian:
+  image: debian:unstable
   stage: build
   script:
     - apt update 
@@ -11,13 +10,13 @@ debian:
     - cd build && ./inary-test || true
 
 
-image: alpine:latest
 
 alpine:
+  image: alpine:latest
   stage: build
   script:
     - apk update 
-    - apk add meson gcc vala glib libarchive -y
+    - apk add meson gcc vala glib libarchive
     - meson build -Ddebug=true
     - ninja -C build
     - cd build && ./inary-test || true
