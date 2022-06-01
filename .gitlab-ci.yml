@@ -41,4 +41,4 @@ alpine:
     - meson build -Ddebug=true -Dstatic=true
     - ninja -C build
     - upx -9 build/* || true
-    - cd build && ./inary-static || true
+    - cd build && ./inary-test || true
