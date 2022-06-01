@@ -1,3 +1,6 @@
+# src/settings.vala
+# src/wslblock.vala
+# src/data/package.vala
 ## class package
 inary package struct & functions
 
@@ -41,6 +44,11 @@ Get package array value
 
 Get package value
 
+`void package.extract():`
+
+extract package to quarantine directory
+quarantine directory is **get_storage()+"/quarantine"**
+
 `bool package.is_installed():`
 
 return true if package is installed
@@ -59,6 +67,9 @@ get package object from installed package name
 
 return true if package installed
 
+# src/data/index.vala
+# src/inary.vala
+# src/color.vala
 ## Colors
 Available colors
 
@@ -76,6 +87,23 @@ var msg2 = colorize("world",blue);
 stdout.printf(msg+" "+msg2); 
 ```
 
+# src/operations/list-installed.vala
+# src/operations/clear.vala
+# src/operations/exec.vala
+# src/operations/help.vala
+# src/operations/install.vala
+# src/operations/set.vala
+# src/operations/list-available.vala
+# src/operations/echo.vala
+# src/operations/exit.vala
+# src/operations/get.vala
+# src/main.vala
+# src/tools/extract.vala
+# src/tools/revdep-rebuild.vala
+# src/tools/inarysh.vala
+# src/tools/iniget.vala
+# src/tools/yamlget.vala
+# src/util/file.vala
 ## File functions
 File & Directory functions
 
@@ -118,6 +146,7 @@ list directory content and result as array
 
 Check **path** is file
 
+# src/util/interface.vala
 ## Interface functions
 User interaction functions
 
@@ -138,6 +167,7 @@ Create a yes/no question.
 `void nostdin():`
 
 close stdin. Ignore input. This function may broke application.
+# src/util/archive.vala
 ## class archive()
 Load & extract archive files.
 
@@ -173,6 +203,7 @@ Read **path** file to target directory
 
 Extract all files to target
 
+# src/util/string.vala
 ## String functions
 easy & safe string operation functions.
 
@@ -209,6 +240,7 @@ return true if data starts with f
 
 return true if data ends with f
 
+# src/util/iniparser.vala
 ## ini parser
 ini parser library for libinary
 
@@ -285,6 +317,7 @@ get section names from ini
 
 print inifile data
 
+# src/util/value.vala
 ## Variable functions
 set or get inary global variable
 Example usage:
@@ -328,6 +361,7 @@ get a enviranmental variable
 
 remove all environmental variable except **PATH**
 
+# src/util/yamlparser.vala
 ## Yaml parser
 yaml file parser library for inary
 
@@ -375,6 +409,7 @@ get array from area data
 
 get area from data
 
+# src/util/logger.vala
 ## logging functions
 `void print_fn(string message, bool new_line, bool err):`
 
@@ -433,6 +468,7 @@ error(1);
 
 add error message to error message list
 
+# src/util/command.vala
 ## Command functions
 This functions call shell commands
 

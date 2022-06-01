@@ -8,13 +8,13 @@ dependencies = [
     dependency('gio-2.0', static:get_option('static')),
     dependency('readline', static:get_option('static')),
 ]
-run_command('bash', './mkctx.sh', 
+run_command('bash', './tool/mkctx.sh', 
     'CONFIGDIR=/'+get_option('sysconfdir'),
     'STORAGEDIR=/'+get_option('storagedir'),
     check:true)
 
 run_command('bash', '-c',
-            'find src -type f -iname "*.vala" -exec cat {} \; | grep "//DOC:" | sed "s|.*//DOC: ||g;s|;$|\\n|g" > src/libinary.md',
+            'find src -type f -iname "*.vala" | bash ./tool/mkdoc.sh > src/libinary.md',
     check:true)
 
 

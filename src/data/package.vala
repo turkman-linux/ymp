@@ -87,6 +87,9 @@ public class package {
         return "";
     }
 
+    //DOC: `void package.extract():`;
+    //DOC: extract package to quarantine directory
+    //DOC: quarantine directory is **get_storage()+"/quarantine"**;
     public void extract(){
         if(pkgfile == null){
             error_add("Package archive missing");
