@@ -61,7 +61,7 @@ if get_option('static')
 else
     lib = library('inary', sources, dependencies: dependencies, link_args: args)
 endif
-executable('inary','src/main.vala', dependencies: dependencies, link_args: args, link_with: lib)
+executable('inary','src/tools/inary-cli.vala', dependencies: dependencies, link_args: args, link_with: lib)
 executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_args: args, link_with: lib)
 executable('yamlget', 'src/tools/yamlget.vala', dependencies: dependencies, link_args: args, link_with: lib)
 executable('extract', 'src/tools/extract.vala', dependencies: dependencies, link_args: args, link_with: lib)

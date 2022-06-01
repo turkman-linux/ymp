@@ -97,7 +97,6 @@ stdout.printf(msg+" "+msg2);
 # src/operations/echo.vala
 # src/operations/exit.vala
 # src/operations/get.vala
-# src/main.vala
 # src/util/file.vala
 ## File functions
 File & Directory functions
