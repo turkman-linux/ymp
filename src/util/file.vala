@@ -69,6 +69,18 @@ public int remove_file(string path){
     }
 }
 
+//DOC: `void move_file(stirg src, string desc):`;
+//DOC: move **src** file to **desc**;
+public void move_file(string src, string desc){
+    GLib.File dest_file = GLib.File.new_for_path(src);
+    GLib.File src_file = GLib.File.new_for_path(desc);
+    try {
+        dest_file.move(src_file, FileCopyFlags.NONE, null);
+    } catch (Error e) {
+        error_add(e.message);
+    }
+}
+
 //DOC: `string[] listdir(string path):`;
 //DOC: list directory content and result as array;
 public string[] listdir(string path){

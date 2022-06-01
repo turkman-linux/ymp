@@ -45,7 +45,9 @@ public class package {
     public void load_from_archive(string path){
         pkgfile = new archive();
         pkgfile.load(path);
-        load_from_data(pkgfile.readfile("metadata.yaml"));
+        var metadata = pkgfile.readfile("metadata.yaml");
+        yaml = new yamlfile();
+        load_from_data(yaml.get_area(metadata,"inary.package"));
     }
 
     //DOC: `string[] package.list_files():`;
@@ -84,6 +86,45 @@ public class package {
         warning(@"Package information broken: $name");
         return "";
     }
+
+    public void extract(){
+        if(pkgfile == null){
+            error_add("Package archive missing");
+            return;
+        }
+        var rootfs_medatata = get_storage()+"/quarantine/rootfs"+STORAGEDIR+"/metadata/";
+        var rootfs_files = get_storage()+"/quarantine/rootfs"+STORAGEDIR+"/files/";
+        if(isfile(rootfs_medatata+name+".yaml")){
+            debug("skip quartine package extract:"+name);
+            return;
+        }
+        // extract data archive
+        pkgfile.set_target(get_storage()+"/quarantine");
+        foreach (string data in pkgfile.list_files()){
+            if(startswith(data,"data.")){
+                pkgfile.extract(data);
+                var datafile = get_storage()+"/quarantine/"+data;
+                var file_archive = new archive();
+                file_archive.load(datafile);
+                file_archive.set_target(get_storage()+"/quarantine/rootfs");
+                file_archive.extract_all();
+                remove_file(datafile);
+                break;
+            }
+        }
+        // extract metadata
+        pkgfile.set_target(rootfs_medatata);
+        pkgfile.extract("metadata.yaml");
+        move_file(rootfs_medatata+"metadata.yaml",rootfs_medatata+name+".yaml");
+        // extract files
+        pkgfile.set_target(rootfs_files);
+        pkgfile.extract("files");
+        move_file(rootfs_medatata+"files",rootfs_files+name);
+        error(1);
+    }
+    
+    //DOC: `bool package.is_installed():`;
+    //DOC: return true if package is installed;
     public bool is_installed(){
         return is_installed_package(name);
     }
@@ -103,7 +144,7 @@ public string[] list_installed_packages(){
 }
 
 private string get_metadata_path(string name){
-    return get_value("DESTDIR")+STORAGEDIR+"/metadata/"+name+".yaml";
+    return get_storage()+"/metadata/"+name+".yaml";
 }
 
 //DOC: `package get_installed_packege(string name):`;

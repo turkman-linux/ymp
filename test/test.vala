@@ -86,6 +86,7 @@ void main(string[] args){
     foreach(string file in pkg3.list_files()){
         print(file);
     }
+    pkg3.extract();
 
     // index test
     repository[] repos = get_repos();

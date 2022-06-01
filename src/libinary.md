@@ -41,6 +41,10 @@ Get package array value
 
 Get package value
 
+`bool package.is_installed():`
+
+return true if package is installed
+
 ## Miscellaneous package functions
 package functions outside package class
 
@@ -101,6 +105,10 @@ remove **path** directory
 `int remove_file(string path)`
 
 remove **path** file
+
+`void move_file(stirg src, string desc):`
+
+move **src** file to **desc**
 
 `string[] listdir(string path):`
 
