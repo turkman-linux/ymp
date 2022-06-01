@@ -55,8 +55,7 @@ endif
 
 if get_option('static')
     slib = static_library('inary-static', sources, dependencies: dependencies)
-    add_project_arguments('-X', '-static', language: 'vala')
-    executable('inary-static','src/main.vala', dependencies: dependencies, link_args: ['-static'], link_with: slib)
+    executable('inary-static','src/main.vala', dependencies: dependencies, link_args: ['-X','-static'], link_with: slib)
 else
     lib = library('inary', sources, dependencies: dependencies)
     executable('inary', 'src/main.vala', dependencies: dependencies, link_with: lib)
