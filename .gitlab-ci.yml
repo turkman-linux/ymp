@@ -1,21 +1,23 @@
 image: debian:unstable
 
-build:
+debian:
   stage: build
   script:
     - apt update 
     - apt install meson gcc valac --no-install-recommends -y
     - apt install libarchive-dev libreadline-dev --no-install-recommends -y
-    - meson build -Ddebug=false
+    - meson build -Ddebug=true
     - ninja -C build
     - cd build && ./inary-test || true
 
-debug:
+
+image: alpine:latest
+
+alpine:
   stage: build
   script:
-    - apt update 
-    - apt install meson gcc valac --no-install-recommends -y
-    - apt install libarchive-dev libreadline-dev --no-install-recommends -y
+    - apk update 
+    - apk add meson gcc vala glib libarchive -y
     - meson build -Ddebug=true
     - ninja -C build
     - cd build && ./inary-test || true
