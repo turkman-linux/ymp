@@ -56,10 +56,10 @@ endif
 args = ['-X','-O3', '-s', '-flto']
 
 if get_option('static')
-    lib = static_library('inary', sources, dependencies: dependencies)
+    lib = static_library('inary', sources, dependencies: dependencies, link_args: args)
     args += ['-X','-static']
 else
-    lib = library('inary', sources, dependencies: dependencies)
+    lib = library('inary', sources, dependencies: dependencies, link_args: args)
 endif
 executable('inary','src/main.vala', dependencies: dependencies, link_args: args, link_with: lib)
 executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_args: args, link_with: lib)
