@@ -15,8 +15,6 @@ public void set_fetcher_progress(fetcher_process proc){
 
 #else
 
-using Curl;
-
 private string fetcher_data;
 private int fetcher_data_size;
 private DataOutputStream fetcher_data_output_steam;
@@ -75,23 +73,23 @@ public bool fetch(string url, string path){
         file.delete ();
     }
     fetcher_data_output_steam = new DataOutputStream (file.create (FileCreateFlags.REPLACE_DESTINATION));
-    EasyHandle handle = new EasyHandle();
-    handle.setopt(Option.URL, url);
+    Curl.EasyHandle handle = new Curl.EasyHandle();
+    handle.setopt(Curl.Option.URL, url);
     #if debug
-        handle.setopt(Option.VERBOSE, 1);
+        handle.setopt(Curl.Option.VERBOSE, 1);
     #else
-        handle.setopt(Option.VERBOSE, 0);
+        handle.setopt(Curl.Option.VERBOSE, 0);
     #endif
-    handle.setopt(Option.STDERR, 1);
-    handle.setopt(Option.USERAGENT, get_value("useragent"));
+    handle.setopt(Curl.Option.STDERR, 1);
+    handle.setopt(Curl.Option.USERAGENT, get_value("useragent"));
 
-    handle.setopt(Option.WRITEFUNCTION, WriteFileCallback);
-    handle.setopt(Option.NOPROGRESS, 0);
-    handle.setopt(Option.PROGRESSFUNCTION, progress_callback);
+    handle.setopt(Curl.Option.WRITEFUNCTION, WriteFileCallback);
+    handle.setopt(Curl.Option.NOPROGRESS, 0);
+    handle.setopt(Curl.Option.PROGRESSFUNCTION, progress_callback);
 
     handle.perform();
     int i;
-    handle.getinfo(Info.RESPONSE_CODE, out i);
+    handle.getinfo(Curl.Info.RESPONSE_CODE, out i);
     return i == 200;
 }
 
@@ -99,20 +97,20 @@ public bool fetch(string url, string path){
 //DOC: download file content and return as string;
 public string fetch_string(string url){
     fetcher_data = "";
-    EasyHandle handle = new EasyHandle();
-    handle.setopt(Option.URL, url);
+    Curl.EasyHandle handle = new Curl.EasyHandle();
+    handle.setopt(Curl.Option.URL, url);
     #if debug
-        handle.setopt(Option.VERBOSE, 1);
+        handle.setopt(Curl.Option.VERBOSE, 1);
     #else
-        handle.setopt(Option.VERBOSE, 0);
+        handle.setopt(Curl.Option.VERBOSE, 0);
     #endif
-    handle.setopt(Option.STDERR, 1);
-    handle.setopt(Option.USERAGENT, get_value("useragent"));
+    handle.setopt(Curl.Option.STDERR, 1);
+    handle.setopt(Curl.Option.USERAGENT, get_value("useragent"));
 
-    handle.setopt(Option.WRITEFUNCTION, WriteMemoryCallback);
+    handle.setopt(Curl.Option.WRITEFUNCTION, WriteMemoryCallback);
     handle.perform();
     int i;
-    handle.getinfo(Info.RESPONSE_CODE, out i);
+    handle.getinfo(Curl.Info.RESPONSE_CODE, out i);
     if(i==200){
        return fetcher_data;
     }
