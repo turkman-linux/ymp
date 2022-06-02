@@ -9,7 +9,7 @@ debian:
     - apt update 
     - apt install meson gcc valac --no-install-recommends -y
     - apt install libarchive-dev libreadline-dev libcurl4-openssl-dev --no-install-recommends -y
-    - meson build -Ddebug=true
+    - meson build -Ddebug=true -Dtools=true
     - ninja -C build
     - cd build && ./inary-test || true
 
@@ -23,7 +23,7 @@ archlinux:
   script:
     - pacman -Sy meson gcc vala --noconfirm
     - pacman -Sy  libarchive readline --noconfirm
-    - meson build -Ddebug=true
+    - meson build -Ddebug=true -Dtools=true
     - ninja -C build
     - cd build && ./inary-test || true
 
@@ -38,7 +38,7 @@ alpine:
     - apk update 
     - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev libcurl curl-dev upx
     - apk add libarchive-static readline-static glib-static zlib-static ncurses-static acl-static expat-static openssl-libs-static xz-dev zstd-static lz4-static bzip2-static curl-static brotli-static nghttp2-static
-    - meson build -Ddebug=true -Dstatic=true
+    - meson build -Ddebug=true -Dstatic=true -Dtools=true
     - ninja -C build
     - upx -9 build/* || true
     - cd build && ./inary-test || true
