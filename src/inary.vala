@@ -1,11 +1,11 @@
 public delegate int function(string[] args);
 
 private operation[] ops;
-public class operation{
+private class operation{
     public function callback;
     public string[] names;
 }
-public void add_operation(function callback, string[] names){
+private void add_operation(function callback, string[] names){
     if(ops == null){
         ops = {};
     }
@@ -15,8 +15,8 @@ public void add_operation(function callback, string[] names){
     ops += op;
 }
 
-public int operation_main(string type, string[] args){
-    print(type + ":" + join(" ",args));
+private int operation_main(string type, string[] args){
+    debug("RUN:"+type + ":" + join(" ",args));
     foreach(operation op in ops){
         foreach(string name in op.names){
             if(type == name){
@@ -24,10 +24,11 @@ public int operation_main(string type, string[] args){
             }
         }
     }
+    warning("Invalid operation name: "+type);
     return 0;
 }
 
-public class process{
+private class process{
     public string type;
     public string[] args;
     
@@ -85,7 +86,7 @@ public class Inary {
         }
     }
 }
-public string[] argument_process(string[] args){
+private string[] argument_process(string[] args){
      string[] new_args = {};
      foreach (string arg in args){
          if(arg.length > 1 && arg[0] == '$'){
