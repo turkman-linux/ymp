@@ -12,7 +12,9 @@ public string fetch_string(string url){
 using Curl;
 
 private string fetcher_data;
+private int fetcher_data_size;
 private DataOutputStream fetcher_data_output_steam;
+private string fetcher_filename;
 
 private size_t WriteMemoryCallback(char* ptr, size_t size, size_t nmemb, void* data) {
     
@@ -35,9 +37,24 @@ private size_t WriteFileCallback(char* ptr, size_t size, size_t nmemb, void* dat
     return total_size;
 }
 
+private int progress_callback(void *clientp,  double dltotal, double dlnow, double ultotal, double ulnow){
+    if(fetcher_proc != null){
+        fetcher_proc(dlnow, dltotal,fetcher_filename);
+    }
+    return 0;
+}
+
+public delegate void fetcher_process(double current, double total, string filename);
+private fetcher_process fetcher_proc;
+
+public void set_fetcher_progress(fetcher_process proc){
+    fetcher_proc = proc;
+}
+
 //DOC: `bool fetch(string url, string path):`;
 //DOC: download file content and write to file;
 public bool fetch(string url, string path){
+    fetcher_filename = path;
     var file = File.new_for_path (path);
     if (file.query_exists ()) {
         file.delete ();
@@ -54,6 +71,9 @@ public bool fetch(string url, string path){
     handle.setopt(Option.USERAGENT, get_value("useragent"));
 
     handle.setopt(Option.WRITEFUNCTION, WriteFileCallback);
+    handle.setopt(Option.NOPROGRESS, 0);
+    handle.setopt(Option.PROGRESSFUNCTION, progress_callback);
+
     handle.perform();
     int i;
     handle.getinfo(Info.RESPONSE_CODE, out i);
