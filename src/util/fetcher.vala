@@ -32,9 +32,22 @@ private size_t WriteMemoryCallback(char* ptr, size_t size, size_t nmemb, void* d
 private size_t WriteFileCallback(char* ptr, size_t size, size_t nmemb, void* data) {
     size_t total_size = size*nmemb;
     try {
-        for(int i = 0; i < total_size; i++) {
-             fetcher_data_output_steam.write (ptr[i].to_string().data);
-        }
+        #if debug
+            // slow and write byte by byte
+            for(int i = 0; i < total_size; i++) {
+                 fetcher_data_output_steam.put_byte(ptr[i]);
+            }
+        #else
+            // fast and default way
+            uint8[] text = {};
+            for(int i = 0; i < total_size; i++) {
+                text += ptr[i];
+            }
+            long written = 0;
+            while (written < text.length) {
+                written += fetcher_data_output_steam.write (text[written:text.length]);
+            }
+        #endif
     } catch (Error e) {
         error_add(e.message);
     }
