@@ -53,7 +53,7 @@ endif
 
 if get_option('libcurl')
     dependencies += dependency('libcurl', static:get_option('static'))
-    args += ['-lunistring', '-liconv', '-lbrotlicommon']
+    args += ['-lbrotlicommon']
 else
     add_project_arguments('-D', 'no_libcurl', language: 'vala')
 endif
