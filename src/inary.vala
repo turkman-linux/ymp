@@ -1,4 +1,33 @@
+public delegate int function(string[] args);
+
+private operation[] ops;
 public class operation{
+    public function callback;
+    public string[] names;
+}
+public void add_operation(function callback, string[] names){
+    if(ops == null){
+        ops = {};
+    }
+    operation op = new operation();
+    op.callback = callback;
+    op.names = names;
+    ops += op;
+}
+
+public int operation_main(string type, string[] args){
+    print(type + ":" + join(" ",args));
+    foreach(operation op in ops){
+        foreach(string name in op.names){
+            if(type == name){
+                return op.callback(args);
+            }
+        }
+    }
+    return 0;
+}
+
+public class process{
     public string type;
     public string[] args;
     
@@ -9,32 +38,32 @@ public class operation{
         if(args == null){
             args = {};
         }
-        return operation_main(get_alias_type(type),args);
+        return operation_main(type,args);
     }
 }
 public class Inary {
-    operation[] process;
+    process[] proc;
     
     public void add_process(string type, string[] args){
-        if(process == null){
-            process = {};
+        if(proc == null){
+            proc = {};
         }
         if(type == null){
            return;
         }
-        operation op = new operation();
+        process op = new process();
         op.type = type;
         op.args = args;
-        process += op;
+        proc += op;
     }
     public void clear_process(){
-        process = {};
+        proc = {};
     }
     public void run(){
-        for(int i=0;i<process.length;i++){
-            int status = process[i].run();
+        for(int i=0;i<proc.length;i++){
+            int status = proc[i].run();
             if(status != 0){
-                string type = process[i].type;
+                string type = proc[i].type;
                 error_add(@"Process: $type failed. Exited with $status.");
                 error(status);
             }
@@ -70,27 +99,20 @@ public string[] argument_process(string[] args){
      return new_args;
 }
 
+private bool inary_activated = false;
 public Inary inary_init(string[] args){
     wsl_block();
     Inary app = new Inary();
+    if(inary_activated){
+        return app;
+    }
     parse_args(args);
+    ctx_init();
     settings_init();
     set_env("G_DEBUG","fatal-criticals");
     error(31);
+    inary_activated = true;
     return app;
-}
-
-public string get_alias_type(string type){
-    switch(type){
-        case "la":
-            return "list-available";
-        case "li":
-            return "list-installed";
-        case "it":
-            return "install";
-        default:
-            return type;
-    }
 }
 
 

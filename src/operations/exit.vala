@@ -5,6 +5,6 @@ public int exit_main(string[] args){
     }
     Process.exit(status);
 }
-public void exit_help(){
-    print_stderr("exit inary");
+public void exit_init(){
+    add_operation(exit_main,{"exit","bye"});
 }

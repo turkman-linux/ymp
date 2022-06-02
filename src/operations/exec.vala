@@ -10,6 +10,6 @@ public int exec_main(string[] args){
     }
     return status;
 }
-public void exec_help(){
-    print_stderr("execute a command");
+public void exec_init(){
+    add_operation(exec_main,{"exec"});
 }

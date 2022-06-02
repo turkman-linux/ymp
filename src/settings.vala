@@ -2,7 +2,6 @@ public string CONFIG;
 public string DESTDIR;
 
 private void settings_init(){
-    ctx_init();
     inifile ini = new inifile();
     if(DESTDIR == null){
         DESTDIR = "/";

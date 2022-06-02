@@ -103,8 +103,7 @@ void main(string[] args){
     }
     stdout.printf("--------------\n");
 
-    // help test
-    help();
+    // value test
     print(get_value("interactive"));  
     error(0);
     error_add("Test 123");

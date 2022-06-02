@@ -9,6 +9,16 @@ public int get_main(string[] args){
     print(value);
     return 0;
 }
-public void get_help(){
-    print_stderr("print a inary variable");
+
+public int set_main(string[] args){
+    if(args.length < 2){
+        return 1;
+    }
+    set_value(args[0],args[1]);
+    return 0;
+}
+
+public void setget_init(){
+    add_operation(get_main,{"get"});
+    add_operation(set_main,{"set"});
 }
