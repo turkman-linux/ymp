@@ -403,6 +403,19 @@ get a enviranmental variable
 remove all environmental variable except **PATH**
 
 # src/util/fetcher.vala
+`void set_fetcher_progress(fetcher_process proc):`
+
+set fetcher progressbar hanndler.
+
+For example:
+
+```vala
+public void progress_bar(int current, int total, string filename){
+   ...
+}
+set_fetcher_progress(progress_bar); 
+```
+
 `bool fetch(string url, string path):`
 
 download file content and write to file

@@ -1,3 +1,5 @@
+public delegate void fetcher_process(double current, double total, string filename);
+
 #if no_libcurl
 public bool fetch(string url, string path){
     return 0 == run("wget -U '"+get_value("useragent")+"' -c '"+url+"' -O '"+path+"'");
@@ -5,6 +7,10 @@ public bool fetch(string url, string path){
 
 public string fetch_string(string url){
     return getoutput("wget -U '"+get_value("useragent")+"' -c '"+url+"' -O -");
+}
+
+public void set_fetcher_progress(fetcher_process proc){
+    // dummy function for compability
 }
 
 #else
@@ -44,9 +50,18 @@ private int progress_callback(void *clientp,  double dltotal, double dlnow, doub
     return 0;
 }
 
-public delegate void fetcher_process(double current, double total, string filename);
 private fetcher_process fetcher_proc;
 
+
+//DOC: `void set_fetcher_progress(fetcher_process proc):`;
+//DOC: set fetcher progressbar hanndler.;
+//DOC: For example:;
+//DOC: ```vala
+//DOC: public void progress_bar(int current, int total, string filename){
+//DOC:    ...
+//DOC: }
+//DOC: set_fetcher_progress(progress_bar); 
+//DOC: ```;
 public void set_fetcher_progress(fetcher_process proc){
     fetcher_proc = proc;
 }
