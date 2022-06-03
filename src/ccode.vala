@@ -1,3 +1,5 @@
+//DOC: ## Inary C source adaptations
+//DOC: ### ttysize.c
 //DOC: `void tty_size_init():`;
 //DOC: start tty size calculation;
 public extern void tty_size_init();

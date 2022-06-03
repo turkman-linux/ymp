@@ -22,6 +22,7 @@ sources = files('src/inary.vala',
                 'src/color.vala',
                 'src/settings.vala',
                 'src/wslblock.vala',
+                'src/ccode.vala',
                 'ctx.vala',
                )
 sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip().split('\n')
@@ -34,7 +35,9 @@ args = ['-X','-O3', '-s', '-flto']
 add_project_arguments(['--vapidir', vapi_dir], language: 'vala')
 add_project_arguments(['--pkg', 'posix'], language: 'vala')
 add_project_arguments(['--pkg', 'libcurl'], language: 'vala')
-args += [meson.current_source_dir() / 'src/ccode/ttysize.c']
+foreach csource : run_command('find', 'src/ccode','-type','f',check:true).stdout().strip().split('\n')
+    args += [meson.current_source_dir() / csource]
+endforeach
 
 if get_option('debug')
     add_project_arguments('--debug', language: 'vala')

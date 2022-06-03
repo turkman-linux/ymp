@@ -1,3 +1,18 @@
+# src/ccode.vala
+## Inary C source adaptations
+### ttysize.c
+`void tty_size_init():`
+
+start tty size calculation
+
+`int get_tty_width():`
+
+return tty column size
+
+`int get_tty_heigth():`
+
+return tty line size
+
 # src/settings.vala
 # src/wslblock.vala
 # src/data/package.vala
@@ -540,19 +555,6 @@ error(1);
 `void error_add(string message):`
 
 add error message to error message list
-
-# src/util/ttysize.vala
-`void tty_size_init():`
-
-start tty size calculation
-
-`int get_tty_width():`
-
-return tty column size
-
-`int get_tty_heigth():`
-
-return tty line size
 
 # src/util/command.vala
 ## Command functions
