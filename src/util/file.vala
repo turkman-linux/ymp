@@ -126,7 +126,7 @@ public bool iself(string path){
     return startswith(ctx,"\x7F\x45\x4C\x46");
 }
 
-//DOC: `bool iself(string path):`;
+//DOC: `bool is64bit(string path):`;
 //DOC: return true if file is elf binary;
 public bool is64bit(string path){
     var ctx = readfile_raw(path);

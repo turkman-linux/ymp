@@ -599,7 +599,7 @@ list directory content and result as array
 
 return true if file is elf binary
 
-`bool iself(string path):`
+`bool is64bit(string path):`
 
 return true if file is elf binary
 
