@@ -1,4 +1,17 @@
-public delegate int function(string[] args);
+//DOC: ## class Inary
+//DOC: libinary operation controller;
+//DOC: For example:;
+//DOC: ```vala
+//DOC: int main(string[] args){
+//DOC:     var inary = new inary_init(args); 
+//DOC:     inary.add_process("install",{"ncurses", "readline"}); 
+//DOC:     inary.add_script("install bash glibc perl"); 
+//DOC:     inary.run(); 
+//DOC:     return 0;
+//DOC: }
+//DOC: ```;
+
+private delegate int function(string[] args);
 
 private operation[] ops;
 private class operation{
@@ -45,6 +58,10 @@ private class process{
 public class Inary {
     process[] proc;
     
+    //DOC: `void Inary.add_process(string type, string[] args):`;
+    //DOC: add inary process using **type** and **args**;
+    //DOC: * type is operation type (install, remove, list-installed ...);
+    //DOC: * args is operation argument (package list, repository list ...);
     public void add_process(string type, string[] args){
         if(proc == null){
             proc = {};
@@ -57,9 +74,14 @@ public class Inary {
         op.args = args;
         proc += op;
     }
+    //DOC: `void Inary.clear_process():`;
+    //DOC: remove all inary process;
     public void clear_process(){
         proc = {};
     }
+    
+    //DOC: `void Inary.run():`;
+    //DOC: run inary process then if succes remove;
     public void run(){
         for(int i=0;i<proc.length;i++){
             int status = proc[i].run();
@@ -71,6 +93,9 @@ public class Inary {
         }
         error(1);
     }
+    
+    //DOC: `void Inary.add_script(string data):`;
+    //DOC: add inary process from inary script;
     public void add_script(string data){
         if(data == null){
             return;
@@ -101,6 +126,10 @@ private string[] argument_process(string[] args){
 }
 
 private bool inary_activated = false;
+
+//DOC: `Inary inary_init(string[] args):`;
+//DOC: start inary application.;
+//DOC: * args is program arguments;
 public Inary inary_init(string[] args){
     wsl_block();
     Inary app = new Inary();

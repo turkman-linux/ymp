@@ -1,5 +1,5 @@
 //DOC: ## WSL shit bloker
-//DOC: detect & block WSL
+//DOC: detect & block WSL;
 
 //DOC: `void wsl_block():`;
 //DOC: If runs on WSL shit write fail message and exit :);

@@ -32,6 +32,7 @@ change inary config file (default /etc/inary.conf)
 # src/wslblock.vala
 ## WSL shit bloker
 detect & block WSL
+
 `void wsl_block():`
 
 If runs on WSL shit write fail message and exit :)
@@ -160,6 +161,48 @@ repository functions outside repository class
 get all repositories as array
 
 # src/inary.vala
+## class Inary
+libinary operation controller
+
+For example:
+
+```vala
+int main(string[] args){
+    var inary = new inary_init(args); 
+    inary.add_process("install",{"ncurses", "readline"}); 
+    inary.add_script("install bash glibc perl"); 
+    inary.run(); 
+    return 0
+
+}
+```
+
+`void Inary.add_process(string type, string[] args):`
+
+add inary process using **type** and **args**
+
+* type is operation type (install, remove, list-installed ...)
+
+* args is operation argument (package list, repository list ...)
+
+`void Inary.clear_process():`
+
+remove all inary process
+
+`void Inary.run():`
+
+run inary process then if succes remove
+
+`void Inary.add_script(string data):`
+
+add inary process from inary script
+
+`Inary inary_init(string[] args):`
+
+start inary application.
+
+* args is program arguments
+
 # src/color.vala
 ## Colors
 Available colors
