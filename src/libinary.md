@@ -14,7 +14,28 @@ return tty column size
 return tty line size
 
 # src/settings.vala
+## Settings functions
+inary configuration functions
+
+`void set_destdir(string rootfs):`
+
+change distdir 
+
+`string get_storage():`
+
+get inary storage directory. (default: /var/lib/inary)
+
+`void set_config(string path):`
+
+change inary config file (default /etc/inary.conf)
+
 # src/wslblock.vala
+## WSL shit bloker
+detect & block WSL
+`void wsl_block():`
+
+If runs on WSL shit write fail message and exit :)
+
 # src/data/package.vala
 ## class package
 inary package struct & functions

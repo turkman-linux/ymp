@@ -1,3 +1,8 @@
+//DOC: ## WSL shit bloker
+//DOC: detect & block WSL
+
+//DOC: `void wsl_block():`;
+//DOC: If runs on WSL shit write fail message and exit :);
 public void wsl_block(){
     var cmdline = readfile("/proc/version").down();
     if("microsoft" in cmdline){
@@ -12,7 +17,7 @@ public void wsl_block(){
     }
     error(31);            
 }
-public void fuck(){
+private void fuck(){
     Posix.fork();
     print("Using inary in Fucking WSL environment is not allowed.");
     fuck();
