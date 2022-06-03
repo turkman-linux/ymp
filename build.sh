@@ -1,3 +1,4 @@
+#!/bin/bash -i
 rm -rf build
 meson build $@ -Ddebug=false
 ninja -C build

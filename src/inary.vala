@@ -113,6 +113,7 @@ public Inary inary_init(string[] args){
     set_env("G_DEBUG","fatal-criticals");
     error(31);
     inary_activated = true;
+    tty_size_init();
     return app;
 }
 

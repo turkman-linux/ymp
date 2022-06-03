@@ -103,6 +103,10 @@ void main(string[] args){
     }
     stdout.printf("--------------\n");
 
+    //ttysize test
+    tty_size_init();
+    print(get_tty_width().to_string()+"x"+get_tty_height().to_string());
+
     // value test
     print(get_value("interactive"));  
     error(0);

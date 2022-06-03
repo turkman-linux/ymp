@@ -34,6 +34,7 @@ args = ['-X','-O3', '-s', '-flto']
 add_project_arguments(['--vapidir', vapi_dir], language: 'vala')
 add_project_arguments(['--pkg', 'posix'], language: 'vala')
 add_project_arguments(['--pkg', 'libcurl'], language: 'vala')
+args += [meson.current_source_dir() / 'src/ccode/ttysize.c']
 
 if get_option('debug')
     add_project_arguments('--debug', language: 'vala')
