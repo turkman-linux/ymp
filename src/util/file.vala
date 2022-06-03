@@ -118,6 +118,23 @@ public string[] listdir(string path){
     return ret; 
 }
 
+//DOC: `bool iself(string path):`;
+//DOC: return true if file is elf binary;
+public bool iself(string path){
+    var ctx = readfile_raw(path);
+    // .ELF magic bytes
+    return startswith(ctx,"\x7F\x45\x4C\x46");
+}
+
+//DOC: `bool iself(string path):`;
+//DOC: return true if file is elf binary;
+public bool is64bit(string path){
+    var ctx = readfile_raw(path);
+    // first byte after magic is bit size flag
+    // 01 = 32bit 02 = 64bit
+    return ctx[4] == '\x02';
+}
+
 //DOC: `bool isfile(string path):`;
 //DOC: Check **path** is file;
 public bool isfile(string path){

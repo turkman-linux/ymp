@@ -103,6 +103,14 @@ void main(string[] args){
     }
     stdout.printf("--------------\n");
 
+    // binary test
+    if(iself("inary-test")){
+        print("binary test");
+    }
+    if(is64bit("inary")){
+        print("64bit build detected");
+    }
+
     //ttysize test
     tty_size_init();
     print(get_tty_width().to_string()+"x"+get_tty_height().to_string());

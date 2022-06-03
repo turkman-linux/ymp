@@ -1,18 +1,3 @@
-# src/ccode.vala
-## Inary C source adaptations
-### ttysize.c
-`void tty_size_init():`
-
-start tty size calculation
-
-`int get_tty_width():`
-
-return tty column size
-
-`int get_tty_heigth():`
-
-return tty line size
-
 # src/settings.vala
 ## Settings functions
 inary configuration functions
@@ -29,13 +14,64 @@ get inary storage directory. (default: /var/lib/inary)
 
 change inary config file (default /etc/inary.conf)
 
-# src/wslblock.vala
-## WSL shit bloker
-detect & block WSL
+# src/color.vala
+## Colors
+Available colors
 
-`void wsl_block():`
+black, red, green, yellow, blue, magenta, cyan, white
 
-If runs on WSL shit write fail message and exit :)
+`string colorize(string message, int color):`
+
+Change string color if no_color is false.
+
+Example usage:
+
+```vala
+var msg = colorize("Hello",red); 
+var msg2 = colorize("world",blue); 
+stdout.printf(msg+" "+msg2); 
+```
+
+# src/data/repository.vala
+## class repository
+repository object to list or select packages from repository
+
+Example usage:
+
+```vala
+var repo = new repository(); 
+repo.load("main.yaml"); 
+if(repo.has_package("bash")){
+    stdout.printf("Package found."); 
+}
+foreach(string name in repo.list_packages()){
+    package pkg = repo.get_package(name); 
+    stdout.printf(pkg.version)
+
+}
+```
+`void repository.load(string repo_name):`
+
+load repository data from repo name
+
+`bool repository.has_package(string name):`
+
+return true if package exists in repository
+
+`package repository.get_package(string name):`
+
+get package object from repository by package name
+
+`string[] repository.list_packages():`
+
+get all available package names from repository
+
+## Miscellaneous repository functions
+repository functions outside repository class
+
+`repository[] get_repos():`
+
+get all repositories as array
 
 # src/data/package.vala
 ## class package
@@ -119,46 +155,36 @@ get package object from installed package name
 
 return true if package installed
 
-# src/data/repository.vala
-## class repository
-repository object to list or select packages from repository
+# src/operations/install.vala
+# src/operations/echo.vala
+# src/operations/dummy.vala
+# src/operations/clear.vala
+# src/operations/list.vala
+# src/operations/exit.vala
+# src/operations/setget.vala
+# src/operations/exec.vala
+# src/ccode.vala
+## Inary C source adaptations
+### ttysize.c
+`void tty_size_init():`
 
-Example usage:
+start tty size calculation
 
-```vala
-var repo = new repository(); 
-repo.load("main.yaml"); 
-if(repo.has_package("bash")){
-    stdout.printf("Package found."); 
-}
-foreach(string name in repo.list_packages()){
-    package pkg = repo.get_package(name); 
-    stdout.printf(pkg.version)
+`int get_tty_width():`
 
-}
-```
-`void repository.load(string repo_name):`
+return tty column size
 
-load repository data from repo name
+`int get_tty_heigth():`
 
-`bool repository.has_package(string name):`
+return tty line size
 
-return true if package exists in repository
+# src/wslblock.vala
+## WSL shit bloker
+detect & block WSL
 
-`package repository.get_package(string name):`
+`void wsl_block():`
 
-get package object from repository by package name
-
-`string[] repository.list_packages():`
-
-get all available package names from repository
-
-## Miscellaneous repository functions
-repository functions outside repository class
-
-`repository[] get_repos():`
-
-get all repositories as array
+If runs on WSL shit write fail message and exit :)
 
 # src/inary.vala
 ## class Inary
@@ -203,121 +229,64 @@ start inary application.
 
 * args is program arguments
 
-# src/color.vala
-## Colors
-Available colors
+# src/util/logger.vala
+## logging functions
+`void print_fn(string message, bool new_line, bool err):`
 
-black, red, green, yellow, blue, magenta, cyan, white
+Main print function. Has 3 arguments
 
-`string colorize(string message, int color):`
+* message: log message
+* new_line: if set true, append new line
+* err: if set true, write log to stderr
+`void print(string message):`
 
-Change string color if no_color is false.
+write standard messages to stdout
 
 Example usage:
 
 ```vala
-var msg = colorize("Hello",red); 
-var msg2 = colorize("world",blue); 
-stdout.printf(msg+" "+msg2); 
+print("Hello world!"); 
 ```
 
-# src/operations/list.vala
-# src/operations/setget.vala
-# src/operations/clear.vala
-# src/operations/exec.vala
-# src/operations/install.vala
-# src/operations/echo.vala
-# src/operations/exit.vala
-# src/operations/dummy.vala
-# src/util/file.vala
-## File functions
-File & Directory functions
+`void print_stderr(string message):`
 
-`string readfile_raw (string path):`
+same with print but write to stderr
 
-Read file from **path** and return content
+`void warning(string message):`
 
-`string readfile(string path):`
+write warning message like this:
 
-read file from **path** and remove commends
-
-`void writefile(string path, string ctx):`
-
-write **ctx** data to **path** file
-
-`void cd(string path):`
-
-change current directory to **path**
-
-`string pwd():`
-
-return current directory path
-`int create_dir(string path)`
-
-create **path** directory
-
-`int remove_dir(string path)`
-
-remove **path** directory
-
-`int remove_file(string path)`
-
-remove **path** file
-
-`void move_file(stirg src, string desc):`
-
-move **src** file to **desc**
-
-`string[] listdir(string path):`
-
-list directory content and result as array
-
-`bool isfile(string path):`
-
-Check **path** is file
-
-# src/util/interface.vala
-## Interface functions
-User interaction functions
-
-Example usege:
-
-```vala
-if(yesno("Do you want to continue?")){ 
-    ... 
-} else { 
-    stderr.printf("Operation canceled."); 
-} 
+```yaml
+WARNING: message
 ```
 
-`bool yesno(string message):`
+`void debug(string message):`
 
-Create a yes/no question.
+write debug messages. Its only print if debug mode enabled.
 
-`void nostdin():`
+`void info(string message):`
 
-close stdin. Ignore input. This function may broke application.
-# src/util/fetcher.vala
-`void set_fetcher_progress(fetcher_process proc):`
+write additional info messages.
+`void error(int status):`
 
-set fetcher progressbar hanndler.
+print error message and exit if error message list not empty and status is not 0.
 
-For example:
+This function clear error message list.
+
+This funtion must run after **error_add(string message)**
+
+Example usage:
 
 ```vala
-public void progress_bar(int current, int total, string filename){
-   ...
+if(num == 12){
+    error_add("Number is not 12."); 
 }
-set_fetcher_progress(progress_bar); 
+error(1); 
 ```
 
-`bool fetch(string url, string path):`
+`void error_add(string message):`
 
-download file content and write to file
-
-`bool fetch_string(string url, string path):`
-
-download file content and return as string
+add error message to error message list
 
 # src/util/archive.vala
 ## class archive()
@@ -354,43 +323,6 @@ Read **path** file to target directory
 `void archive.extract_all()`
 
 Extract all files to target
-
-# src/util/string.vala
-## String functions
-easy & safe string operation functions.
-
-`string join(string f, string[] array):`
-
-merge array items. insert **f** in between
-
-Example usage:
-
-```vala
-string[] aa = {"hello","world","!"}; 
-string bb = join(aa," "); 
-stdout.printf(bb); 
-```
-
-`string[] ssplit(string data, string f):`
-safe split function. If data null or empty return empty array.
-
-if **f** not in data, return single item array.
-
-`string trim(string data):`
-
-fixes excess indentation
-
-`int count_tab(string line):`
-
-count indentation level
-
-`boot startswith(string data, string f):`
-
-return true if data starts with f
-
-`bool endswith(string data, string f):`
-
-return true if data ends with f
 
 # src/util/iniparser.vala
 ## ini parser
@@ -469,6 +401,43 @@ get section names from ini
 
 print inifile data
 
+# src/util/string.vala
+## String functions
+easy & safe string operation functions.
+
+`string join(string f, string[] array):`
+
+merge array items. insert **f** in between
+
+Example usage:
+
+```vala
+string[] aa = {"hello","world","!"}; 
+string bb = join(aa," "); 
+stdout.printf(bb); 
+```
+
+`string[] ssplit(string data, string f):`
+safe split function. If data null or empty return empty array.
+
+if **f** not in data, return single item array.
+
+`string trim(string data):`
+
+fixes excess indentation
+
+`int count_tab(string line):`
+
+count indentation level
+
+`boot startswith(string data, string f):`
+
+return true if data starts with f
+
+`bool endswith(string data, string f):`
+
+return true if data ends with f
+
 # src/util/value.vala
 ## Variable functions
 set or get inary global variable
@@ -512,6 +481,28 @@ get a enviranmental variable
 `void clear_env():`
 
 remove all environmental variable except **PATH**
+
+# src/util/fetcher.vala
+`void set_fetcher_progress(fetcher_process proc):`
+
+set fetcher progressbar hanndler.
+
+For example:
+
+```vala
+public void progress_bar(int current, int total, string filename){
+   ...
+}
+set_fetcher_progress(progress_bar); 
+```
+
+`bool fetch(string url, string path):`
+
+download file content and write to file
+
+`bool fetch_string(string url, string path):`
+
+download file content and return as string
 
 # src/util/yamlparser.vala
 ## Yaml parser
@@ -561,65 +552,82 @@ get array from area data
 
 get area from data
 
-# src/util/logger.vala
-## logging functions
-`void print_fn(string message, bool new_line, bool err):`
+# src/util/file.vala
+## File functions
+File & Directory functions
 
-Main print function. Has 3 arguments
+`string readfile_raw (string path):`
 
-* message: log message
-* new_line: if set true, append new line
-* err: if set true, write log to stderr
-`void print(string message):`
+Read file from **path** and return content
 
-write standard messages to stdout
+`string readfile(string path):`
 
-Example usage:
+read file from **path** and remove commends
+
+`void writefile(string path, string ctx):`
+
+write **ctx** data to **path** file
+
+`void cd(string path):`
+
+change current directory to **path**
+
+`string pwd():`
+
+return current directory path
+`int create_dir(string path)`
+
+create **path** directory
+
+`int remove_dir(string path)`
+
+remove **path** directory
+
+`int remove_file(string path)`
+
+remove **path** file
+
+`void move_file(stirg src, string desc):`
+
+move **src** file to **desc**
+
+`string[] listdir(string path):`
+
+list directory content and result as array
+
+`bool iself(string path):`
+
+return true if file is elf binary
+
+`bool iself(string path):`
+
+return true if file is elf binary
+
+`bool isfile(string path):`
+
+Check **path** is file
+
+# src/util/interface.vala
+## Interface functions
+User interaction functions
+
+Example usege:
 
 ```vala
-print("Hello world!"); 
+if(yesno("Do you want to continue?")){ 
+    ... 
+} else { 
+    stderr.printf("Operation canceled."); 
+} 
 ```
 
-`void print_stderr(string message):`
+`bool yesno(string message):`
 
-same with print but write to stderr
+Create a yes/no question.
 
-`void warning(string message):`
+`void nostdin():`
 
-write warning message like this:
-
-```yaml
-WARNING: message
-```
-
-`void debug(string message):`
-
-write debug messages. Its only print if debug mode enabled.
-
-`void info(string message):`
-
-write additional info messages.
-`void error(int status):`
-
-print error message and exit if error message list not empty and status is not 0.
-
-This function clear error message list.
-
-This funtion must run after **error_add(string message)**
-
-Example usage:
-
-```vala
-if(num == 12){
-    error_add("Number is not 12."); 
-}
-error(1); 
-```
-
-`void error_add(string message):`
-
-add error message to error message list
-
+close stdin. Ignore input. This function may broke application.
 # src/util/command.vala
 ## Command functions
 This functions call shell commands
