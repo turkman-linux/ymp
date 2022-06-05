@@ -4,6 +4,37 @@
 //DOC: `string readfile_raw (string path):`;
 //DOC: Read file from **path** and return content;
 public string readfile_raw (string path){
+    if(!isfile(path)){
+        warning("File not found: "+path);
+        return "";
+    }
+    FileStream stream = FileStream.open (path, "r");
+	assert (stream != null);
+
+	// get file size:
+	stream.seek (0, FileSeek.END);
+	long size = stream.tell ();
+	stream.rewind ();
+	if(size == 0){
+	    string data = readfile_raw2(path);
+	    if(data != ""){
+	        return data;
+	    }
+	    warning("File is empty: "+path);
+	    return data;
+	}
+
+	// load content:
+	uint8[] buf = new uint8[size];
+	size_t read = stream.read (buf, 1);
+	assert (size == read);
+
+	return (string) buf;
+}
+
+//DOC: `string readfile_raw2 (string path):`;
+//DOC: Read file from **path** and return content;
+private string readfile_raw2 (string path){
     File file = File.new_for_path (path);
     string data="";
     try {
@@ -21,6 +52,48 @@ public string readfile_raw (string path){
         return "";
     }
     return data;
+}
+
+
+//DOC: `string readfile_byte(string path, int size):`;
+//DOC: read **n** byte from file;
+public string readfile_byte(string path, int n){
+    if(!isfile(path)){
+        warning("File not found: "+path);
+        return "";
+    }
+    FileStream stream = FileStream.open (path, "r");
+	assert (stream != null);
+
+	// get file size:
+	stream.seek (0, FileSeek.END);
+	long size = stream.tell ();
+	stream.rewind ();
+	if(size == 0){
+	    warning("File is empty: "+path);
+	    return "";
+	}else if(size < n){
+	    warning("Read byte size bigger than file size: "+path);
+	    print(size.to_string()+ " "+ n.to_string());
+	    return "";
+	}
+
+	// load content:
+	uint8[] buf = new uint8[n];
+	size_t read = stream.read (buf, 1);
+	assert (n == read);
+	return (string) buf;
+}
+
+//DOC: `long get_filesize(string path):`;
+//DOC: calculate file size;
+public long get_filesize(string path){
+    FileStream stream = FileStream.open (path, "r");
+	assert (stream != null);
+
+	// get file size:
+	stream.seek (0, FileSeek.END);
+	return stream.tell ();
 }
 
 //DOC: `string readfile(string path):`;
@@ -121,7 +194,7 @@ public string[] listdir(string path){
 //DOC: `bool iself(string path):`;
 //DOC: return true if file is elf binary;
 public bool iself(string path){
-    var ctx = readfile_raw(path);
+    var ctx = readfile_byte(path,4);
     // .ELF magic bytes
     return startswith(ctx,"\x7F\x45\x4C\x46");
 }
@@ -129,7 +202,7 @@ public bool iself(string path){
 //DOC: `bool is64bit(string path):`;
 //DOC: return true if file is elf binary;
 public bool is64bit(string path){
-    var ctx = readfile_raw(path);
+    var ctx = readfile_byte(path,4);
     // first byte after magic is bit size flag
     // 01 = 32bit 02 = 64bit
     return ctx[4] == '\x02';

@@ -16,7 +16,6 @@ public void set_fetcher_progress(fetcher_process proc){
 #else
 
 private string fetcher_data;
-private int fetcher_data_size;
 private DataOutputStream fetcher_data_output_steam;
 private string fetcher_filename;
 
@@ -83,9 +82,19 @@ public bool fetch(string url, string path){
     fetcher_filename = path;
     var file = File.new_for_path (path);
     if (file.query_exists ()) {
-        file.delete ();
+        try{
+            file.delete ();
+        }catch(Error e){
+            error_add(e.message);
+            return false;
+        }
     }
-    fetcher_data_output_steam = new DataOutputStream (file.create (FileCreateFlags.REPLACE_DESTINATION));
+    try{
+        fetcher_data_output_steam = new DataOutputStream (file.create (FileCreateFlags.REPLACE_DESTINATION));
+    }catch(Error e){
+        error_add(e.message);
+        return false;
+    }
     Curl.EasyHandle handle = new Curl.EasyHandle();
     handle.setopt(Curl.Option.URL, url);
     #if debug

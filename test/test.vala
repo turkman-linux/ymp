@@ -1,124 +1,94 @@
 
 void main(string[] args){
     // init inary
+    print("Inary test");
     set_destdir("../test/example/rootfs");
     Inary inary = inary_init(args);
-    
-    inary.add_process("echo",{"hello","world"});
+    inary.add_process("init",{"hello","world"});
     inary.run();
 
     //yesno test
-    if(yesno("Fff")){
-        print("Yes accept");
-    }else{
-        error_add("no selected");
-        error(1);
-    }
+    print("Interface test");
+    yesno("Yes or no");
 
     // archive test
+    print("Archive test");
     var tar = new archive();
     tar.load("../test/example/main.tar.gz");
-    foreach (string path in tar.list_files()){
-        print(path);
-    }
+    tar.list_files();
     tar.extract("aaa");
-    var aaa = tar.readfile("aaa");
-    print(aaa);
+    tar.readfile("aaa");
     tar.set_target("./ffff/");
     tar.extract_all();
-    stdout.printf("--------------\n");
     
     // file test
-    warning(readfile("/proc/cmdline"));
-    run("pwd");
+    print("File test");
+    readfile("/proc/cmdline");
     string curdir = pwd();
     cd("..");
     create_dir("uuu");
     remove_dir("uuu");
-    run("pwd");
     cd(curdir);
-    warning(pwd());
-    stdout.printf("--------------\n");
+    pwd();
+
     //yamlfile test
+    print("Yaml test");
     var yaml = new yamlfile();
     yaml.load("../test/example/metadata-source.yaml");
     var metadata = yaml.get("inary.source");
-    print(yaml.get_value(metadata,"name"));
-    print(yaml.get_array(metadata,"archive")[0]);
-    print(metadata);
-    stdout.printf("--------------\n");
+    yaml.get_value(metadata,"name");
+    yaml.get_array(metadata,"archive");
+
     //inifile test
+    print("Ini test");
     var ini = new inifile();
     ini.load("../test/example/test.ini");
-    warning(ini.get("main","test"));
-    warning(ini.get_sections()[0]);
-    warning(ini.get_variables("devel")[0]);
-    stdout.printf("--------------\n");
-    
-    
+    ini.get("main","test");
+    ini.get_sections()[0];
+    ini.get_variables("devel")[0];
+
     // logger test
+    print("Logging test");
     error_add("Hello World");
-    #if DEBUG
-    debug("Test 123");
-    #endif
-    
+    debug("debug test");
+
     // command test
-    string i = getoutput("echo -n hmmm");
-    debug(i.to_string());
-    debug(run_silent("non-command -non-parameter").to_string());
-    run("non-command -non-parameter");
+    print("Command test");
+    getoutput("echo -n hmmm");
+    run_silent("non-command -non-parameter");
+    run("false");
 
     // package test
+    print("Package test");
     var pkg1 = new package();
     pkg1.load("../test/example/metadata-binary.yaml");
-    warning(pkg1.name);
-    foreach (string name in pkg1.dependencies){
-        print(name);
-    }
-
-    print(join(", ",{"aaa","bbb"}));
-    var pkg2 = get_installed_packege("aaa");
-    stdout.printf("--------------\n");
-
+    join(", ",{"aaa","bbb"});
+    get_installed_packege("aaa");
     var pkg3 = new package();
     pkg3.load_from_archive("../test/example/package.inary");
-    warning(pkg3.name);
-    foreach(string file in pkg3.list_files()){
-        print(file);
-    }
+    pkg3.list_files();
     pkg3.extract();
 
     // index test
+    print("Repository test");
     repository[] repos = get_repos();
-    foreach(repository repo in repos){
-        print(repo.name);
-        foreach(string area in repo.packages){
-            var pkg = new package();
-            pkg.load_from_data(area);
-            foreach(string dep in pkg.dependencies){
-                warning(dep);
-            }
-            print(pkg.get("name"));
-        }
-    }
-    stdout.printf("--------------\n");
+    repos[0].list_packages();
 
     // binary test
-    if(iself("inary-test")){
-        print("binary test");
-    }
-    if(is64bit("inary")){
-        print("64bit build detected");
-    }
+    print("Binary test");
+    iself("inary-test");
+    is64bit("inary");
 
     //ttysize test
+    print("C functions test");
     tty_size_init();
-    print(get_tty_width().to_string()+"x"+get_tty_height().to_string());
+    get_tty_width();
+    get_tty_height();
 
     // value test
-    print(get_value("interactive"));  
+    print("value test");
+    get_value("interactive");
+    error_add("Error test");
     error(0);
-    error_add("Test 123");
-    error(1);
-    stdout.printf("--------------\n");
+
 }

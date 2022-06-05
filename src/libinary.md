@@ -560,6 +560,18 @@ File & Directory functions
 
 Read file from **path** and return content
 
+`string readfile_raw2 (string path):`
+
+Read file from **path** and return content
+
+`string readfile_byte(string path, int size):`
+
+read **n** byte from file
+
+`long get_filesize(string path):`
+
+calculate file size
+
 `string readfile(string path):`
 
 read file from **path** and remove commends
