@@ -15,8 +15,14 @@ private void settings_init(){
     }
     if(isfile(CONFIG)){
         ini.load(CONFIG);
-        foreach(string section in ini.get_variables("inary")){
-            set_value(section,ini.get("inary",section));
+        foreach(string section in ini.get_sections()){
+            foreach(string variable in ini.get_variables("inary")){
+                if(section == "inary"){
+                    set_value(variable,ini.get("inary",variable));
+                }else{
+                    set_value(section+":"+variable,ini.get(section,variable));
+                }
+            }
         }
     }else{
         warning("Config file not exists: "+CONFIG);

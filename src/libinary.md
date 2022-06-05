@@ -305,6 +305,16 @@ error(1);
 
 add error message to error message list
 
+# src/util/gpg.vala
+# sign & verify file
+`void sign_file(string path):`
+
+sign a file with gpg key
+
+`bool verify_file(string path):`
+
+verify a file with gpg signature
+
 # src/util/archive.vala
 ## class archive()
 Load & extract archive files.
