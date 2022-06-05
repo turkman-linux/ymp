@@ -315,6 +315,14 @@ sign a file with gpg key
 
 verify a file with gpg signature
 
+`void sign_elf(string path):`
+
+create gpg signature and insert into elf binary
+
+`bool verify_elf(string path):`
+
+dump gpg signature from file and verify elf file
+
 # src/util/archive.vala
 ## class archive()
 Load & extract archive files.

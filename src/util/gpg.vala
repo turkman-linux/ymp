@@ -15,3 +15,31 @@ public bool verify_file(string path){
     }
     return 0 == run_silent("gpg --verify '"+path+".sig' '"+path+"'");
 }
+
+//DOC: `void sign_elf(string path):`;
+//DOC: create gpg signature and insert into elf binary;
+public void sign_elf(string path){
+    if(!iself(path)){
+        return;
+    }
+    sign_file(path);
+    run_silent("objcopy --add-section '.gpg="+path+".sig' '"+path+"'");
+    remove_file(path+".sig");
+}
+
+//DOC: `bool verify_elf(string path):`;
+//DOC: dump gpg signature from file and verify elf file;
+public bool verify_elf(string path){
+   if(!iself(path)){
+        return false;
+    }
+    int status = 0;
+    status += run_silent("objcopy -R .gpg '"+path+"' '/tmp/inary-elf'");
+    status += run_silent("objcopy --dump-section .gpg=/tmp/inary-elf.sig '"+path+"'");
+    if(!verify_file("/tmp/inary-elf")){
+        status += 1;
+    }
+    remove_file("/tmp/inary-elf.sig");
+    remove_file("/tmp/inary-elf");
+    return status == 0;
+}
