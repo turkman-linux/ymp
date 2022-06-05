@@ -4,6 +4,10 @@ project('inary', 'vala', 'c',
 
 )
 
+args = ['-X','-O3', '-flto']
+
+args += ['-X', '-s', '-R', '.comment', '-R', '.gnu.version', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
+
 dependencies = [
     dependency('gio-2.0', static:get_option('static')),
     dependency('readline', static:get_option('static')),
@@ -25,14 +29,14 @@ sources = files('src/inary.vala',
                 'src/ccode.vala',
                 'ctx.vala',
                )
+
 sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip().split('\n')
 sources += run_command('find', 'src/operations','-type','f',check:true).stdout().strip().split('\n')
 sources += run_command('find', 'src/data','-type','f',check:true).stdout().strip().split('\n')
 
 vapi_dir = meson.current_source_dir() / 'vapi'
-args = ['-X','-O3', '-s', '-flto']
-
 add_project_arguments(['--vapidir', vapi_dir], language: 'vala')
+
 add_project_arguments(['--pkg', 'posix'], language: 'vala')
 add_project_arguments(['--pkg', 'libcurl'], language: 'vala')
 foreach csource : run_command('find', 'src/ccode','-type','f',check:true).stdout().strip().split('\n')
@@ -78,11 +82,10 @@ else
 endif
 executable('inary','src/tools/inary-cli.vala', dependencies: dependencies, link_args: args, link_with: lib)
 if get_option('tools')
-    executable('iniget', 'src/tools/iniget.vala', dependencies: dependencies, link_args: args, link_with: lib)
-    executable('yamlget', 'src/tools/yamlget.vala', dependencies: dependencies, link_args: args, link_with: lib)
-    executable('extract', 'src/tools/extract.vala', dependencies: dependencies, link_args: args, link_with: lib)
-    executable('fetch', 'src/tools/fetch.vala', dependencies: dependencies, link_args: args, link_with: lib)
-    executable('revdep-rebuild', 'src/tools/revdep-rebuild.vala', dependencies: dependencies, link_args: args, link_with: lib)
-    executable('inarysh', 'src/tools/inarysh.vala', dependencies: dependencies, link_args: args, link_with: lib)
+    foreach tool: run_command('find', 'src/tools','-type','f',check:true).stdout().strip().split('\n')
+        name = run_command('basename', tool, check:true).stdout().split('.')[0]
+        executable(name, tool, dependencies: dependencies, link_args: args, link_with: lib)
+    endforeach
 endif
 executable('inary-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
+
