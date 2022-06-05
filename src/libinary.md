@@ -178,6 +178,23 @@ return tty column size
 
 return tty line size
 
+### which.c
+`string which(string cmd):`
+
+get command file location
+
+### users.c
+`void switch_user(string username):`
+
+change current user.
+`int get_uid_by_user(string username):`
+
+get UID value from username
+
+` bool is_root():`
+
+chech root user
+
 # src/wslblock.vala
 ## WSL shit bloker
 detect & block WSL

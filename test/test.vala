@@ -79,11 +79,18 @@ void main(string[] args){
     iself("inary-test");
     is64bit("inary");
 
-    //ttysize test
+    // ttysize test
     print("C functions test");
     tty_size_init();
     get_tty_width();
     get_tty_height();
+
+    // which test
+    which("bash");
+
+    // users test
+    get_uid_by_user("root");
+    switch_user("root");
 
     // value test
     print("value test");
