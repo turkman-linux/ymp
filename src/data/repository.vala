@@ -78,3 +78,18 @@ public repository[] get_repos(){
     }
     return repos;
 }
+
+//DOC: `package get_package_from_repository(string name):`;
+//DOC: get package object from all repositories;
+public package get_package_from_repository(string name){
+    int release = 0;
+    package ret = null;
+    foreach(repository repo in get_repos()){
+        package pkg = repo.get_package(name);
+        if(int.parse(pkg.get("release")) > release){
+            ret = pkg;
+            release = int.parse(pkg.get("release"));
+        }
+    }
+    return ret;
+}
