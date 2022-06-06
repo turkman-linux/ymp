@@ -18,7 +18,7 @@ run_command('bash', './tool/mkctx.sh',
     check:true)
 
 run_command('bash', '-c',
-            'find src -type f -iname "*.vala" | bash ./tool/mkdoc.sh > src/libinary.md',
+            'find src -type f -iname "*.vala" | sort -V | bash ./tool/mkdoc.sh > src/libinary.md',
     check:true)
 
 
