@@ -32,20 +32,20 @@ public class archive {
 #else
 public class archive {
     //DOC: ## class archive()
-    //DOC: Load & extract archive files.;
-    //DOC: Example usage:;
+    //DOC: Load & extract archive files.
+    //DOC: Example usage:
     //DOC: ```vala
     //DOC: var tar = new archive();
     //DOC: tar.load("/tmp/archive.tar.gz");
     //DOC: tar.extract_all();
-    //DOC: ```;
+    //DOC: ```
 
     Archive.Read archive;
     private string archive_path;
     private string target_path;
 
-    //DOC: `void archive.load(string path):`;
-    //DOC: load archive file from **path**;
+    //DOC: `void archive.load(string path):`
+    //DOC: load archive file from **path**
     public void load(string path){
         archive_path = path;
     }
@@ -58,8 +58,8 @@ public class archive {
             error(archive.errno ());
         }
     }
-    //DOC: `string[] archive.list_files():`;
-    //DOC: Get archive file list;
+    //DOC: `string[] archive.list_files():`
+    //DOC: Get archive file list
     public string[] list_files (){
         load_archive(archive_path);
         unowned Archive.Entry entry;
@@ -71,16 +71,16 @@ public class archive {
     return ret;
     }
 
-    //DOC: `void archive.set_target(string path):`;
-    //DOC: Change target directory for extract;
+    //DOC: `void archive.set_target(string path):`
+    //DOC: Change target directory for extract
     public void set_target(string path){
         if(path != null){
             target_path = path;
         }
     }
 
-    //DOC: `void archive.extract(string path):`;
-    //DOC: Extract **path** file to target directory;
+    //DOC: `void archive.extract(string path):`
+    //DOC: Extract **path** file to target directory
     public void extract (string path) {
         load_archive(archive_path);
         Archive.ExtractFlags flags;
@@ -121,8 +121,8 @@ public class archive {
             }
         }
     }
-    //DOC: `string archive.readfile(string path):`;
-    //DOC: Read **path** file to target directory;
+    //DOC: `string archive.readfile(string path):`
+    //DOC: Read **path** file to target directory
     public string readfile (string path) {
         load_archive(archive_path);
 
@@ -144,8 +144,8 @@ public class archive {
     }
 
 
-    //DOC: `void archive.extract_all()`;
-    //DOC: Extract all files to target;
+    //DOC: `void archive.extract_all()`
+    //DOC: Extract all files to target
     public void extract_all(){
         foreach (string path in list_files()){
             extract(path);

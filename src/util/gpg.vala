@@ -1,14 +1,14 @@
 //DOC: # sign & verify file
-//DOC: `void sign_file(string path):`;
-//DOC: sign a file with gpg key;
+//DOC: `void sign_file(string path):`
+//DOC: sign a file with gpg key
 public void sign_file(string path){
     if(!isfile(path)){
         return;
     }
     run_silent("gpg --detach-sign -r '"+get_value("gpg:repicent")+"' '"+path+"'");
 }
-//DOC: `bool verify_file(string path):`;
-//DOC: verify a file with gpg signature;
+//DOC: `bool verify_file(string path):`
+//DOC: verify a file with gpg signature
 public bool verify_file(string path){
     if(!isfile(path)){
         return false;
@@ -16,8 +16,8 @@ public bool verify_file(string path){
     return 0 == run_silent("gpg --verify '"+path+".sig' '"+path+"'");
 }
 
-//DOC: `void sign_elf(string path):`;
-//DOC: create gpg signature and insert into elf binary;
+//DOC: `void sign_elf(string path):`
+//DOC: create gpg signature and insert into elf binary
 public void sign_elf(string path){
     if(!iself(path)){
         return;
@@ -27,8 +27,8 @@ public void sign_elf(string path){
     remove_file(path+".sig");
 }
 
-//DOC: `bool verify_elf(string path):`;
-//DOC: dump gpg signature from file and verify elf file;
+//DOC: `bool verify_elf(string path):`
+//DOC: dump gpg signature from file and verify elf file
 public bool verify_elf(string path){
    if(!iself(path)){
         return false;

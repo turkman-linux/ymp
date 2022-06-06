@@ -1,8 +1,8 @@
 //DOC: ## File functions
-//DOC: File & Directory functions;
+//DOC: File & Directory functions
 
-//DOC: `string readfile_raw (string path):`;
-//DOC: Read file from **path** and return content;
+//DOC: `string readfile_raw (string path):`
+//DOC: Read file from **path** and return content
 public string readfile_raw (string path){
     if(!isfile(path)){
         warning("File not found: "+path);
@@ -32,8 +32,8 @@ public string readfile_raw (string path){
 	return (string) buf;
 }
 
-//DOC: `string readfile_raw2 (string path):`;
-//DOC: Read file from **path** and return content;
+//DOC: `string readfile_raw2 (string path):`
+//DOC: Read file from **path** and return content
 private string readfile_raw2 (string path){
     File file = File.new_for_path (path);
     string data="";
@@ -55,8 +55,8 @@ private string readfile_raw2 (string path){
 }
 
 
-//DOC: `string readfile_byte(string path, int size):`;
-//DOC: read **n** byte from file;
+//DOC: `string readfile_byte(string path, int size):`
+//DOC: read **n** byte from file
 public string readfile_byte(string path, int n){
     if(!isfile(path)){
         warning("File not found: "+path);
@@ -85,8 +85,8 @@ public string readfile_byte(string path, int n){
 	return (string) buf;
 }
 
-//DOC: `long get_filesize(string path):`;
-//DOC: calculate file size;
+//DOC: `long get_filesize(string path):`
+//DOC: calculate file size
 public long get_filesize(string path){
     FileStream stream = FileStream.open (path, "r");
 	assert (stream != null);
@@ -96,8 +96,8 @@ public long get_filesize(string path){
 	return stream.tell ();
 }
 
-//DOC: `string readfile(string path):`;
-//DOC: read file from **path** and remove commends;
+//DOC: `string readfile(string path):`
+//DOC: read file from **path** and remove commends
 public string readfile(string path){
     string new_data = "";
     foreach(string line in ssplit(readfile_raw(path),"\n")){
@@ -106,8 +106,8 @@ public string readfile(string path){
     return new_data;
 }
 
-//DOC: `void writefile(string path, string ctx):`;
-//DOC: write **ctx** data to **path** file;
+//DOC: `void writefile(string path, string ctx):`
+//DOC: write **ctx** data to **path** file
 public void writefile(string path, string ctx){
     try {
         var file = File.new_for_path (path);
@@ -125,32 +125,32 @@ public void writefile(string path, string ctx){
     }
 }
 
-//DOC: `void cd(string path):`;
-//DOC: change current directory to **path**;
+//DOC: `void cd(string path):`
+//DOC: change current directory to **path**
 public void cd(string path){
     GLib.Environment.set_current_dir(path);
 }
 
-//DOC: `string pwd():`;
+//DOC: `string pwd():`
 //DOC: return current directory path
 public string pwd(){
     return GLib.Environment.get_current_dir();
 }
 
-//DOC: `int create_dir(string path)`;
-//DOC: create **path** directory;
+//DOC: `int create_dir(string path)`
+//DOC: create **path** directory
 public int create_dir(string path){
     return GLib.DirUtils.create_with_parents(path,0755);
 }
 
-//DOC: `int remove_dir(string path)`;
-//DOC: remove **path** directory;
+//DOC: `int remove_dir(string path)`
+//DOC: remove **path** directory
 public int remove_dir(string path){
     return GLib.DirUtils.remove(path);
 }
 
-//DOC: `int remove_file(string path)`;
-//DOC: remove **path** file;
+//DOC: `int remove_file(string path)`
+//DOC: remove **path** file
 public int remove_file(string path){
     File file = File.new_for_path(path);
     try {
@@ -161,8 +161,8 @@ public int remove_file(string path){
     }
 }
 
-//DOC: `void move_file(stirg src, string desc):`;
-//DOC: move **src** file to **desc**;
+//DOC: `void move_file(stirg src, string desc):`
+//DOC: move **src** file to **desc**
 public void move_file(string src, string desc){
     GLib.File dest_file = GLib.File.new_for_path(src);
     GLib.File src_file = GLib.File.new_for_path(desc);
@@ -173,8 +173,8 @@ public void move_file(string src, string desc){
     }
 }
 
-//DOC: `string[] listdir(string path):`;
-//DOC: list directory content and result as array;
+//DOC: `string[] listdir(string path):`
+//DOC: list directory content and result as array
 public string[] listdir(string path){
     string[] ret = {};
     string name;
@@ -191,16 +191,16 @@ public string[] listdir(string path){
     return ret;
 }
 
-//DOC: `bool iself(string path):`;
-//DOC: return true if file is elf binary;
+//DOC: `bool iself(string path):`
+//DOC: return true if file is elf binary
 public bool iself(string path){
     var ctx = readfile_byte(path,4);
     // .ELF magic bytes
     return startswith(ctx,"\x7F\x45\x4C\x46");
 }
 
-//DOC: `bool is64bit(string path):`;
-//DOC: return true if file is elf binary;
+//DOC: `bool is64bit(string path):`
+//DOC: return true if file is elf binary
 public bool is64bit(string path){
     var ctx = readfile_byte(path,4);
     // first byte after magic is bit size flag
@@ -208,8 +208,8 @@ public bool is64bit(string path){
     return ctx[4] == '\x02';
 }
 
-//DOC: `bool isfile(string path):`;
-//DOC: Check **path** is file;
+//DOC: `bool isfile(string path):`
+//DOC: Check **path** is file
 public bool isfile(string path){
     if(path == null){
         return false;

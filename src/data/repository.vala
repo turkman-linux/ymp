@@ -1,6 +1,6 @@
 //DOC: ## class repository
-//DOC: repository object to list or select packages from repository;
-//DOC: Example usage:;
+//DOC: repository object to list or select packages from repository
+//DOC: Example usage:
 //DOC: ```vala
 //DOC: var repo = new repository();
 //DOC: repo.load("main.yaml");
@@ -18,8 +18,8 @@ public class repository {
     private string indexarea;
     public string[] packages;
 
-    //DOC: `void repository.load(string repo_name):`;
-    //DOC: load repository data from repo name;
+    //DOC: `void repository.load(string repo_name):`
+    //DOC: load repository data from repo name
     public void load(string repo_name){
         yaml = new yamlfile();
         yaml.load(get_storage()+"/index/"+repo_name);
@@ -29,8 +29,8 @@ public class repository {
 
     }
 
-    //DOC: `bool repository.has_package(string name):`;
-    //DOC: return true if package exists in repository;
+    //DOC: `bool repository.has_package(string name):`
+    //DOC: return true if package exists in repository
     public bool has_package(string name){
         foreach(string area in packages){
             if (yaml.get_value(area,"name") == name){
@@ -40,8 +40,8 @@ public class repository {
         return false;
     }
 
-    //DOC: `package repository.get_package(string name):`;
-    //DOC: get package object from repository by package name;
+    //DOC: `package repository.get_package(string name):`
+    //DOC: get package object from repository by package name
     public package get_package(string name){
         package pkg = new package();
         foreach(string area in packages){
@@ -53,8 +53,8 @@ public class repository {
         return pkg;
     }
 
-    //DOC: `string[] repository.list_packages():`;
-    //DOC: get all available package names from repository;
+    //DOC: `string[] repository.list_packages():`
+    //DOC: get all available package names from repository
     public string[] list_packages(){
         string[] ret = {};
         foreach(string area in packages){
@@ -65,11 +65,11 @@ public class repository {
 }
 
 //DOC: ## Miscellaneous repository functions
-//DOC: repository functions outside repository class;
+//DOC: repository functions outside repository class
 
 private repository[] repos;
-//DOC: `repository[] get_repos():`;
-//DOC: get all repositories as array;
+//DOC: `repository[] get_repos():`
+//DOC: get all repositories as array
 public repository[] get_repos(){
     if(repos == null){
         repos = {};
@@ -84,8 +84,8 @@ public repository[] get_repos(){
     return repos;
 }
 
-//DOC: `package get_package_from_repository(string name):`;
-//DOC: get package object from all repositories;
+//DOC: `package get_package_from_repository(string name):`
+//DOC: get package object from all repositories
 public package get_package_from_repository(string name){
     int release = 0;
     package ret = null;

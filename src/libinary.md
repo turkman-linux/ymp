@@ -1,6 +1,8 @@
 # src/ccode.vala
 ## Inary C source adaptations
+
 ### ttysize.c
+
 `void tty_size_init():`
 
 start tty size calculation
@@ -14,14 +16,17 @@ return tty column size
 return tty line size
 
 ### which.c
+
 `string which(string cmd):`
 
 get command file location
 
 ### users.c
+
 `void switch_user(string username):`
 
-change current user.
+change current user
+
 `int get_uid_by_user(string username):`
 
 get UID value from username
@@ -32,11 +37,12 @@ chech root user
 
 # src/settings.vala
 ## Settings functions
+
 inary configuration functions
 
 `void set_destdir(string rootfs):`
 
-change distdir 
+change distdir
 
 `string get_storage():`
 
@@ -48,6 +54,7 @@ change inary config file (default /etc/inary.conf)
 
 # src/wslblock.vala
 ## WSL shit bloker
+
 detect & block WSL
 
 `void wsl_block():`
@@ -56,29 +63,35 @@ If runs on WSL shit write fail message and exit :)
 
 # src/data/package.vala
 ## class package
+
 inary package struct & functions
 
 Example usage:
 
 ```vala
-var pkg = new package()
 
-pkg.load_from_archive("/tmp/bash-5.0-x86_64.inary")
+var pkg = new package();
 
-stdout.printf(pkg.get("archive-hash"))
+pkg.load_from_archive("/tmp/bash-5.0-x86_64.inary");
+
+stdout.printf(pkg.get("archive-hash"));
 
 foreach(string pkgname in pkg.dependencies){
-    stdout.printf(pkgname)
+
+    stdout.printf(pkgname);
 
 }
-var pkg2 = new package()
 
-pkg2.load("/tmp/metadata.yaml")
+var pkg2 = new package();
+
+pkg2.load("/tmp/metadata.yaml");
 
 if(pkg2.is_installed()){
-    stdout.printf(pkg2+" installed")
+
+    stdout.printf(pkg2+" installed");
 
 }
+
 ```
 
 `void package.load(string metadata):`
@@ -108,31 +121,47 @@ Get package value
 `void package.extract():`
 
 extract package to quarantine directory
-quarantine directory is **get_storage()+"/quarantine"**
+
+quarantine directory is **get_storage()+"/quarantine"**;
 
 Example inary archive format:
 
 ```yaml
+
 package.inary
+
   ├── data.tar.gz
+
   │     ├ /usr
+
   │     │  └ ...
+
   │     └ /etc
+
   │        └ ...
+
   ├── files
+
   └── metadata.yaml
+
 ```
+
 * **metadata.yaml** file is package information data.
+
 * **files** is file list
+
 * **data.tar.gz** in package archive
+
 `bool package.is_installed():`
 
 return true if package is installed
 
 ## Miscellaneous package functions
+
 package functions outside package class
 
 `string[] list_installed_packages():`
+
 return installed package names array
 
 `package get_installed_packege(string name):`
@@ -145,6 +174,7 @@ return true if package installed
 
 # src/data/dependency.vala
 ## Dependency analysis
+
 resolve dependencies
 
 `string[] resolve_dependencies(string[] names):`
@@ -153,26 +183,33 @@ return package name list with required dependencies
 
 # src/data/repository.vala
 ## class repository
+
 repository object to list or select packages from repository
 
 Example usage:
 
 ```vala
-var repo = new repository()
 
-repo.load("main.yaml")
+var repo = new repository();
+
+repo.load("main.yaml");
 
 if(repo.has_package("bash")){
-    stdout.printf("Package found.")
+
+    stdout.printf("Package found.");
 
 }
+
 foreach(string name in repo.list_packages()){
-    package pkg = repo.get_package(name)
 
-    stdout.printf(pkg.version)
+    package pkg = repo.get_package(name);
+
+    stdout.printf(pkg.version);
 
 }
+
 ```
+
 `void repository.load(string repo_name):`
 
 load repository data from repo name
@@ -190,6 +227,7 @@ get package object from repository by package name
 get all available package names from repository
 
 ## Miscellaneous repository functions
+
 repository functions outside repository class
 
 `repository[] get_repos():`
@@ -202,23 +240,27 @@ get package object from all repositories
 
 # src/inary.vala
 ## class Inary
+
 libinary operation controller
 
 For example:
 
 ```vala
+
 int main(string[] args){
-    var inary = new inary_init(args)
 
-    inary.add_process("install",{"ncurses", "readline"})
+    var inary = new inary_init(args);
 
-    inary.add_script("install bash glibc perl")
+    inary.add_process("install",{"ncurses", "readline"});
 
-    inary.run()
+    inary.add_script("install bash glibc perl");
 
-    return 0
+    inary.run();
+
+    return 0;
 
 }
+
 ```
 
 `void Inary.add_process(string type, string[] args):`
@@ -249,6 +291,7 @@ start inary application.
 
 # src/color.vala
 ## Colors
+
 Available colors
 
 black, red, green, yellow, blue, magenta, cyan, white
@@ -260,11 +303,12 @@ Change string color if no_color is false.
 Example usage:
 
 ```vala
-var msg = colorize("Hello",red)
 
-var msg2 = colorize("world",blue)
+var msg = colorize("Hello",red);
 
-stdout.printf(msg+" "+msg2)
+var msg2 = colorize("world",blue);
+
+stdout.printf(msg+" "+msg2);
 
 ```
 
@@ -278,6 +322,7 @@ stdout.printf(msg+" "+msg2)
 # src/operations/dummy.vala
 # src/util/file.vala
 ## File functions
+
 File & Directory functions
 
 `string readfile_raw (string path):`
@@ -311,6 +356,7 @@ change current directory to **path**
 `string pwd():`
 
 return current directory path
+
 `int create_dir(string path)`
 
 create **path** directory
@@ -345,17 +391,23 @@ Check **path** is file
 
 # src/util/interface.vala
 ## Interface functions
+
 User interaction functions
 
 Example usege:
 
 ```vala
+
 if(yesno("Do you want to continue?")){
+
     ...
+
 } else {
-    stderr.printf("Operation canceled.")
+
+    stderr.printf("Operation canceled.");
 
 }
+
 ```
 
 `bool yesno(string message):`
@@ -365,6 +417,7 @@ Create a yes/no question.
 `void nostdin():`
 
 close stdin. Ignore input. This function may broke application.
+
 # src/util/fetcher.vala
 `void set_fetcher_progress(fetcher_process proc):`
 
@@ -373,10 +426,14 @@ set fetcher progressbar hanndler.
 For example:
 
 ```vala
+
 public void progress_bar(int current, int total, string filename){
+
    ...
+
 }
-set_fetcher_progress(progress_bar)
+
+set_fetcher_progress(progress_bar);
 
 ```
 
@@ -390,16 +447,18 @@ download file content and return as string
 
 # src/util/archive.vala
 ## class archive()
+
 Load & extract archive files.
 
 Example usage:
 
 ```vala
-var tar = new archive()
 
-tar.load("/tmp/archive.tar.gz")
+var tar = new archive();
 
-tar.extract_all()
+tar.load("/tmp/archive.tar.gz");
+
+tar.extract_all();
 
 ```
 
@@ -429,6 +488,7 @@ Extract all files to target
 
 # src/util/gpg.vala
 # sign & verify file
+
 `void sign_file(string path):`
 
 sign a file with gpg key
@@ -447,6 +507,7 @@ dump gpg signature from file and verify elf file
 
 # src/util/string.vala
 ## String functions
+
 easy & safe string operation functions.
 
 `string join(string f, string[] array):`
@@ -456,15 +517,17 @@ merge array items. insert **f** in between
 Example usage:
 
 ```vala
-string[] aa = {"hello","world","!"}
 
-string bb = join(aa," ")
+string[] aa = {"hello","world","!"};
 
-stdout.printf(bb)
+string bb = join(aa," ");
+
+stdout.printf(bb);
 
 ```
 
 `string[] ssplit(string data, string f):`
+
 safe split function. If data null or empty return empty array.
 
 if **f** not in data, return single item array.
@@ -487,21 +550,24 @@ return true if data ends with f
 
 # src/util/iniparser.vala
 ## ini parser
+
 ini parser library for libinary
 
 ini_variable and ini_section classes are struct. inifile class is actual parser.
 
 ### class ini_variable()
+
 struct for ini variables
 
 Example usage:
 
 ```vala
-var inivar = new ini_variable()
 
-inivar.name = "colorize"
+var inivar = new ini_variable();
 
-inivar.value = "false"
+inivar.name = "colorize";
+
+inivar.value = "false";
 
 ```
 
@@ -510,16 +576,20 @@ inivar.value = "false"
 `string ini_variable.value`
 
 ### class ini_section()
+
 struct for ini sections
+
 Example usage:
 
 ```vala
-var inisec = new ini_section()
 
-inisec.add("debug","false")
+var inisec = new ini_section();
+
+inisec.add("debug","false");
 
 ...
-stdout.printf(inisec.name)
+
+stdout.printf(inisec.name);
 
 ```
 
@@ -534,19 +604,24 @@ add ini_variable into ini_section
 `string ini_section.get(string name):`
 
 get ini_variable value by variable name
+
 `string[] ini_section.get_variables():`
+
 return ini_variable names in ini_section
+
 ### class inifile()
+
 ini file parser
 
 Example usage:
 
 ``` vala
-var ini = new inifile()
 
-ini.load("/etc/inary.conf")
+var ini = new inifile();
 
-var is_debug =  (ini.get("inary", "debug") == "true")
+ini.load("/etc/inary.conf");
+
+var is_debug =  (ini.get("inary", "debug") == "true");
 
 ```
 
@@ -572,18 +647,23 @@ print inifile data
 
 # src/util/value.vala
 ## Variable functions
+
 set or get inary global variable
+
 Example usage:
 
 ```vala
-set_value("CFLAGS","-O3")
 
-var jobs = get_value("jobs")
+set_value("CFLAGS","-O3");
+
+var jobs = get_value("jobs");
 
 if(get_bool("debug")){
-    stderr.printf("Debug mode enabled")
+
+    stderr.printf("Debug mode enabled");
 
 }
+
 ```
 
 `void set_value(string name, string value):`
@@ -609,6 +689,7 @@ return array of all inary global value names
 `void set_env(string variable, string value):`
 
 add environmental variable
+
 `string get_env(string variable):`
 
 get a enviranmental variable
@@ -619,23 +700,27 @@ remove all environmental variable except **PATH**
 
 # src/util/yamlparser.vala
 ## Yaml parser
+
 yaml file parser library for inary
 
 Example usage:
 
 ```vala
-var yaml = new yamlfile()
 
-yaml.load("/var/lib/inary/metadata/bash.yaml")
+var yaml = new yamlfile();
 
-var pkgarea = yaml.get("inary.package")
+yaml.load("/var/lib/inary/metadata/bash.yaml");
 
-var name = yaml.get_value(pkgarea,"name")
+var pkgarea = yaml.get("inary.package");
+
+var name = yaml.get_value(pkgarea,"name");
 
 if(yaml.has_area(pkgarea,"dependencies")){
-    dependencies = yaml.get_array(pkgarea,"dependencies")
+
+    dependencies = yaml.get_array(pkgarea,"dependencies");
 
 }
+
 ```
 
 `string yamlfile.data:`
@@ -672,13 +757,17 @@ get area from data
 
 # src/util/logger.vala
 ## logging functions
+
 `void print_fn(string message, bool new_line, bool err):`
 
 Main print function. Has 3 arguments
 
 * message: log message
+
 * new_line: if set true, append new line
+
 * err: if set true, write log to stderr
+
 `void print(string message):`
 
 write standard messages to stdout
@@ -686,7 +775,8 @@ write standard messages to stdout
 Example usage:
 
 ```vala
-print("Hello world!")
+
+print("Hello world!");
 
 ```
 
@@ -699,7 +789,9 @@ same with print but write to stderr
 write warning message like this:
 
 ```yaml
+
 WARNING: message
+
 ```
 
 `void debug(string message):`
@@ -709,6 +801,7 @@ write debug messages. Its only print if debug mode enabled.
 `void info(string message):`
 
 write additional info messages.
+
 `void error(int status):`
 
 print error message and exit if error message list not empty and status is not 0.
@@ -720,11 +813,14 @@ This funtion must run after **error_add(string message)**
 Example usage:
 
 ```vala
+
 if(num == 12){
-    error_add("Number is not 12.")
+
+    error_add("Number is not 12.");
 
 }
-error(1)
+
+error(1);
 
 ```
 
@@ -734,15 +830,20 @@ add error message to error message list
 
 # src/util/command.vala
 ## Command functions
+
 This functions call shell commands
 
-Example usage:
+Example usage
+
 ```vala
+
 if (0 != run("ls /var/lib/inary")){
-    stdout.printf("Command failed")
+
+    stdout.printf("Command failed");
 
 }
-string uname = getoutput("uname")
+
+string uname = getoutput("uname");
 
 ```
 

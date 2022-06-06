@@ -1,6 +1,6 @@
 //DOC: ## class package
-//DOC: inary package struct & functions;
-//DOC: Example usage:;
+//DOC: inary package struct & functions
+//DOC: Example usage:
 //DOC: ```vala
 //DOC: var pkg = new package();
 //DOC: pkg.load_from_archive("/tmp/bash-5.0-x86_64.inary");
@@ -13,7 +13,7 @@
 //DOC: if(pkg2.is_installed()){
 //DOC:     stdout.printf(pkg2+" installed");
 //DOC: }
-//DOC: ```;
+//DOC: ```
 public class package {
     private yamlfile yaml;
     public string name;
@@ -23,8 +23,8 @@ public class package {
     private string pkgarea;
     private archive pkgfile;
 
-    //DOC: `void package.load(string metadata):`;
-    //DOC: Read package information from metadata file;
+    //DOC: `void package.load(string metadata):`
+    //DOC: Read package information from metadata file
     public void load(string metadata){
         yaml = new yamlfile();
         yaml.load(metadata);
@@ -32,16 +32,16 @@ public class package {
         read_values();
     }
 
-    //DOC: `void package.load_from_data(string data):`;
-    //DOC: Read package information from string data;
+    //DOC: `void package.load_from_data(string data):`
+    //DOC: Read package information from string data
     public void load_from_data(string data){
         yaml = new yamlfile();
         pkgarea = data;
         read_values();
     }
 
-    //DOC: `void package.load_from_archive(string path):`;
-    //DOC: Read package information from inary file;
+    //DOC: `void package.load_from_archive(string path):`
+    //DOC: Read package information from inary file
     public void load_from_archive(string path){
         pkgfile = new archive();
         pkgfile.load(path);
@@ -50,8 +50,8 @@ public class package {
         load_from_data(yaml.get_area(metadata,"inary.package"));
     }
 
-    //DOC: `string[] package.list_files():`;
-    //DOC: return inary package files list;
+    //DOC: `string[] package.list_files():`
+    //DOC: return inary package files list
     public string[] list_files(){
         if(pkgfile == null){
             error_add("Package archive missing");
@@ -67,8 +67,8 @@ public class package {
         provides = gets("provides");
     }
 
-    //DOC: `string[] package.gets(string name):`;
-    //DOC: Get package array value;
+    //DOC: `string[] package.gets(string name):`
+    //DOC: Get package array value
     public string[] gets(string name){
         if (yaml.has_area(pkgarea,name)){
             return yaml.get_array(pkgarea,name);
@@ -76,8 +76,8 @@ public class package {
         return {};
     }
 
-    //DOC: `string package.get(string name):`;
-    //DOC: Get package value;
+    //DOC: `string package.get(string name):`
+    //DOC: Get package value
     public string get(string name){
         if (yaml.has_area(pkgarea,name)){
             debug(@"Package data: $name");
@@ -87,10 +87,10 @@ public class package {
         return "";
     }
 
-    //DOC: `void package.extract():`;
+    //DOC: `void package.extract():`
     //DOC: extract package to quarantine directory
     //DOC: quarantine directory is **get_storage()+"/quarantine"**;
-    //DOC: Example inary archive format:;
+    //DOC: Example inary archive format:
     //DOC: ```yaml
     //DOC: package.inary
     //DOC:   ├── data.tar.gz
@@ -144,18 +144,18 @@ public class package {
         error(1);
     }
 
-    //DOC: `bool package.is_installed():`;
-    //DOC: return true if package is installed;
+    //DOC: `bool package.is_installed():`
+    //DOC: return true if package is installed
     public bool is_installed(){
         return is_installed_package(name);
     }
 }
 
 //DOC: ## Miscellaneous package functions
-//DOC: package functions outside package class;
+//DOC: package functions outside package class
 
 //DOC: `string[] list_installed_packages():`
-//DOC: return installed package names array;
+//DOC: return installed package names array
 public string[] list_installed_packages(){
     string[] pkgs = {};
     foreach(string fname in listdir(get_storage()+"/metadata")){
@@ -163,13 +163,8 @@ public string[] list_installed_packages(){
     }
     return pkgs;
 }
-
-private string get_metadata_path(string name){
-    return get_storage()+"/metadata/"+name+".yaml";
-}
-
-//DOC: `package get_installed_packege(string name):`;
-//DOC: get package object from installed package name;
+//DOC: `package get_installed_packege(string name):`
+//DOC: get package object from installed package name
 public package get_installed_packege(string name){
     package pkg = new package();
     string metadata = get_metadata_path(name);
@@ -178,8 +173,8 @@ public package get_installed_packege(string name){
     return pkg;
 }
 
-//DOC: `bool is_installed_package():`;
-//DOC: return true if package installed;
+//DOC: `bool is_installed_package():`
+//DOC: return true if package installed
 public bool is_installed_package(string name){
     return isfile(get_metadata_path(name));
 }

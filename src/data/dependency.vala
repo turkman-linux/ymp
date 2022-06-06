@@ -1,5 +1,5 @@
 //DOC: ## Dependency analysis
-//DOC: resolve dependencies;
+//DOC: resolve dependencies
 private string[] need_install;
 private string[] cache_list;
 
@@ -24,8 +24,8 @@ private void resolve_process(string[] names){
     }
     return;
 }
-//DOC: `string[] resolve_dependencies(string[] names):`;
-//DOC: return package name list with required dependencies;
+//DOC: `string[] resolve_dependencies(string[] names):`
+//DOC: return package name list with required dependencies
 public string[] resolve_dependencies(string[] names){
     // reset need list
     need_install = {};

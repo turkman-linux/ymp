@@ -1,18 +1,18 @@
 //DOC: ## ini parser
-//DOC: ini parser library for libinary;
-//DOC: ini_variable and ini_section classes are struct. inifile class is actual parser.;
+//DOC: ini parser library for libinary
+//DOC: ini_variable and ini_section classes are struct. inifile class is actual parser.
 
 //DOC: ### class ini_variable()
-//DOC: struct for ini variables;
-//DOC: Example usage:;
+//DOC: struct for ini variables
+//DOC: Example usage:
 //DOC: ```vala
 //DOC: var inivar = new ini_variable();
 //DOC: inivar.name = "colorize";
 //DOC: inivar.value = "false";
-//DOC: ```;
+//DOC: ```
 public class ini_variable {
-    //DOC: `string ini_variable.name`;
-    //DOC: `string ini_variable.value`;
+    //DOC: `string ini_variable.name`
+    //DOC: `string ini_variable.value`
     public string name;
     public string value;
 }
@@ -20,27 +20,27 @@ public class ini_variable {
 
 //DOC: ### class ini_section()
 //DOC: struct for ini sections
-//DOC: Example usage:;
+//DOC: Example usage:
 //DOC: ```vala
 //DOC: var inisec = new ini_section();
 //DOC: inisec.add("debug","false");
 //DOC: ...
 //DOC: stdout.printf(inisec.name);
-//DOC: ```;
+//DOC: ```
 public class ini_section {
     ini_variable[] variables = {};
-    //DOC: `string ini_section.name:`;
-    //DOC: ini section name;
+    //DOC: `string ini_section.name:`
+    //DOC: ini section name
     public string name;
-    //DOC: `void ini_section.add(string variable, string value):`;
-    //DOC: add ini_variable into ini_section;
+    //DOC: `void ini_section.add(string variable, string value):`
+    //DOC: add ini_variable into ini_section
     public void add(string variable, string value){
         ini_variable v = new ini_variable();
         v.name = variable;
         v.value = value;
         variables += v;
     }
-    //DOC: `string ini_section.get(string name):`;
+    //DOC: `string ini_section.get(string name):`
     //DOC: get ini_variable value by variable name
     public string get(string name){
         foreach (ini_variable variable in variables){
@@ -61,19 +61,19 @@ public class ini_section {
     }
 }
 //DOC: ### class inifile()
-//DOC: ini file parser;
-//DOC: Example usage:;
+//DOC: ini file parser
+//DOC: Example usage:
 //DOC: ``` vala
 //DOC: var ini = new inifile();
 //DOC: ini.load("/etc/inary.conf");
 //DOC: var is_debug =  (ini.get("inary", "debug") == "true");
-//DOC: ```;
+//DOC: ```
 public class inifile {
 
     ini_section[] sections = {};
 
-    //DOC: `void inifile.load(string path):`;
-    //DOC: load ini file from **path**;
+    //DOC: `void inifile.load(string path):`
+    //DOC: load ini file from **path**
     public void load(string path){
         if (path == null){
             return;
@@ -101,8 +101,8 @@ public class inifile {
             sections += cur_section;
         }
     }
-    //DOC: `string inifile.get(string name, string variable):`;
-    //DOC: get value from ini file by section name and variable name.;
+    //DOC: `string inifile.get(string name, string variable):`
+    //DOC: get value from ini file by section name and variable name.
     public string get(string name, string variable){
         foreach (ini_section section in sections){
             if (section.name == name){
@@ -111,8 +111,8 @@ public class inifile {
         }
         return "";
     }
-    //DOC: `string[] inifile.get_variables(string name):`;
-    //DOC: get variable names by section name;
+    //DOC: `string[] inifile.get_variables(string name):`
+    //DOC: get variable names by section name
     public string[] get_variables(string name){
         foreach (ini_section section in sections){
             if (section.name == name){
@@ -121,8 +121,8 @@ public class inifile {
         }
         return {};
     }
-    //DOC: `string[] inifile.get_sections():`;
-    //DOC: get section names from ini;
+    //DOC: `string[] inifile.get_sections():`
+    //DOC: get section names from ini
     public string[] get_sections(){
         string[] keys = {};
         foreach (ini_section section in sections){
@@ -130,8 +130,8 @@ public class inifile {
         }
         return keys;
     }
-    //DOC: `string inifile.dump():`;
-    //DOC: print inifile data;
+    //DOC: `string inifile.dump():`
+    //DOC: print inifile data
     public string dump(){
         string data="";
         foreach (ini_section section in sections){

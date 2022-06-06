@@ -63,21 +63,21 @@ private int progress_callback(void *clientp,  double dltotal, double dlnow, doub
 private fetcher_process fetcher_proc;
 
 
-//DOC: `void set_fetcher_progress(fetcher_process proc):`;
-//DOC: set fetcher progressbar hanndler.;
-//DOC: For example:;
+//DOC: `void set_fetcher_progress(fetcher_process proc):`
+//DOC: set fetcher progressbar hanndler.
+//DOC: For example:
 //DOC: ```vala
 //DOC: public void progress_bar(int current, int total, string filename){
 //DOC:    ...
 //DOC: }
 //DOC: set_fetcher_progress(progress_bar);
-//DOC: ```;
+//DOC: ```
 public void set_fetcher_progress(fetcher_process proc){
     fetcher_proc = proc;
 }
 
-//DOC: `bool fetch(string url, string path):`;
-//DOC: download file content and write to file;
+//DOC: `bool fetch(string url, string path):`
+//DOC: download file content and write to file
 public bool fetch(string url, string path){
     fetcher_filename = path;
     var file = File.new_for_path (path);
@@ -115,8 +115,8 @@ public bool fetch(string url, string path){
     return i == 200;
 }
 
-//DOC: `bool fetch_string(string url, string path):`;
-//DOC: download file content and return as string;
+//DOC: `bool fetch_string(string url, string path):`
+//DOC: download file content and return as string
 public string fetch_string(string url){
     fetcher_data = "";
     Curl.EasyHandle handle = new Curl.EasyHandle();

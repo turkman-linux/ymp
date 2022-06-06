@@ -1,7 +1,6 @@
 
 //DOC: ## Settings functions
-//DOC: inary configuration functions;
-
+//DOC: inary configuration functions
 private string CONFIG;
 private string DESTDIR;
 
@@ -30,22 +29,26 @@ private void settings_init(){
     clear_env();
 }
 
-//DOC: `void set_destdir(string rootfs):`;
-//DOC: change distdir ;
+//DOC: `void set_destdir(string rootfs):`
+//DOC: change distdir
 public void set_destdir(string rootfs){
     DESTDIR=rootfs;
     set_value("DESTDIR",rootfs);
     settings_init();
 }
 
-//DOC: `string get_storage():`;
-//DOC: get inary storage directory. (default: /var/lib/inary);
+//DOC: `string get_storage():`
+//DOC: get inary storage directory. (default: /var/lib/inary)
 public string get_storage(){
     return get_value("DESTDIR")+STORAGEDIR;
 }
 
-//DOC: `void set_config(string path):`;
-//DOC: change inary config file (default /etc/inary.conf);
+private string get_metadata_path(string name){
+    return get_storage()+"/metadata/"+name+".yaml";
+}
+
+//DOC: `void set_config(string path):`
+//DOC: change inary config file (default /etc/inary.conf)
 public void set_config(string path){
     CONFIG=path;
     settings_init();
