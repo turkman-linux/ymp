@@ -18,10 +18,11 @@ private void resolve_process(string[] names){
             // run recursive function
             resolve_process(pkg.dependencies);
             // add package to list
+            debug(name);
             need_install += name;
         }
     }
-    return ;
+    return;
 }
 //DOC: `string[] resolve_dependencies(string[] names):`;
 //DOC: return package name list with required dependencies;
@@ -32,5 +33,6 @@ public string[] resolve_dependencies(string[] names){
     cache_list = {};
     // process
     resolve_process(names);
+    error(3);
     return need_install;
 }

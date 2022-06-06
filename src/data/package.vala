@@ -173,7 +173,6 @@ private string get_metadata_path(string name){
 public package get_installed_packege(string name){
     package pkg = new package();
     string metadata = get_metadata_path(name);
-    debug(pwd());
     debug("Loading package metadata from: "+metadata);
     pkg.load(metadata);
     return pkg;

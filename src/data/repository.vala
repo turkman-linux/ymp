@@ -67,10 +67,15 @@ public class repository {
 //DOC: ## Miscellaneous repository functions
 //DOC: repository functions outside repository class;
 
+private repository[] repos;
 //DOC: `repository[] get_repos():`;
 //DOC: get all repositories as array;
 public repository[] get_repos(){
-    repository[] repos = {};
+    if(repos == null){
+        repos = {};
+    }else{
+        return repos;
+    }
     foreach(string file in listdir(get_storage()+"/index")){
         repository repo = new repository();
         repo.load(file);
@@ -90,6 +95,9 @@ public package get_package_from_repository(string name){
             ret = pkg;
             release = int.parse(pkg.get("release"));
         }
+    }
+    if(ret == null){
+        error_add("Package not satisfied: "+name);
     }
     return ret;
 }
