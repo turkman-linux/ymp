@@ -44,3 +44,33 @@ public static int run_silent (string command) {
 public int run (string command){
     return Posix.system(command)/256;
 }
+
+//DOC: `int run_args(string[] args):`
+//DOC: ruh command from argument array
+public int run_args(string[] args){
+    string stdout;
+    string stderr;
+    string[] spawn_env = Environ.get ();
+    int status;
+    try {
+        Process.spawn_sync ("/", args, spawn_env, SpawnFlags.SEARCH_PATH, null, out stdout, out stderr, out status);
+        return status/256;
+    } catch (SpawnError e) {
+        return 1;
+    }
+}
+
+//DOC: `int run_args(string[] args):`
+//DOC: ruh command from argument array
+public string getoutput_args(string[] args){
+    string stdout;
+    string stderr;
+    string[] spawn_env = Environ.get ();
+    int status;
+    try {
+        Process.spawn_sync ("/", args, spawn_env, SpawnFlags.SEARCH_PATH, null, out stdout, out stderr, out status);
+        return stdout;
+    } catch (SpawnError e) {
+        return "";
+    }
+}

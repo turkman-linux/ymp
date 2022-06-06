@@ -5,7 +5,7 @@ public void sign_file(string path){
     if(!isfile(path)){
         return;
     }
-    run_silent("gpg --detach-sign -r '"+get_value("gpg:repicent")+"' '"+path+"'");
+    run_args({"gpg", "--detach-sign","-r", get_value("gpg:repicent"), path});
 }
 //DOC: `bool verify_file(string path):`
 //DOC: verify a file with gpg signature
@@ -13,7 +13,7 @@ public bool verify_file(string path){
     if(!isfile(path)){
         return false;
     }
-    return 0 == run_silent("gpg --verify '"+path+".sig' '"+path+"'");
+    return 0 == run_args({"gpg","--verify", path+".sig", path});
 }
 
 //DOC: `void sign_elf(string path):`
@@ -23,7 +23,7 @@ public void sign_elf(string path){
         return;
     }
     sign_file(path);
-    run_silent("objcopy --add-section '.gpg="+path+".sig' '"+path+"'");
+    run_args({"objcopy", "--add-section", ".gpg="+path+".sig", path});
     remove_file(path+".sig");
 }
 
@@ -34,8 +34,8 @@ public bool verify_elf(string path){
         return false;
     }
     int status = 0;
-    status += run_silent("objcopy -R .gpg '"+path+"' '/tmp/inary-elf'");
-    status += run_silent("objcopy --dump-section .gpg=/tmp/inary-elf.sig '"+path+"'");
+    status += run_args({"objcopy", "-R", ".gpg", path, "/tmp/inary-elf"});
+    status += run_args({"objcopy", "--dump-section", ".gpg=/tmp/inary-elf.sig", "path"});
     if(!verify_file("/tmp/inary-elf")){
         status += 1;
     }

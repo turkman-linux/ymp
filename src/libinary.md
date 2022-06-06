@@ -385,6 +385,14 @@ run command silently.
 
 run command.
 
+`int run_args(string[] args):`
+
+ruh command from argument array
+
+`int run_args(string[] args):`
+
+ruh command from argument array
+
 # src/util/fetcher.vala
 `void set_fetcher_progress(fetcher_process proc):`
 
