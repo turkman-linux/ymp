@@ -29,7 +29,7 @@ public void print_fn(string message, bool new_line, bool err){
 //DOC: write standard messages to stdout;
 //DOC: Example usage:;
 //DOC: ```vala
-//DOC: print("Hello world!"); 
+//DOC: print("Hello world!");
 //DOC: ```;
 public void print(string message){
     print_fn(message,true,false);
@@ -79,9 +79,9 @@ public void info(string message){
 //DOC: Example usage:;
 //DOC: ```vala
 //DOC: if(num == 12){
-//DOC:     error_add("Number is not 12."); 
+//DOC:     error_add("Number is not 12.");
 //DOC: }
-//DOC: error(1); 
+//DOC: error(1);
 //DOC: ```;
 public void error(int status){
     foreach (string error in errors){

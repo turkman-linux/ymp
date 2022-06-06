@@ -9,7 +9,7 @@
 
 char* which(char* cmd){
     char* fullPath = getenv("PATH");
-    
+
     struct stat buffer;
     int exists;
     char* fileOrDirectory = cmd;

@@ -2,11 +2,11 @@
 //DOC: User interaction functions;
 //DOC: Example usege:;
 //DOC: ```vala
-//DOC: if(yesno("Do you want to continue?")){ 
-//DOC:     ... 
-//DOC: } else { 
-//DOC:     stderr.printf("Operation canceled."); 
-//DOC: } 
+//DOC: if(yesno("Do you want to continue?")){
+//DOC:     ...
+//DOC: } else {
+//DOC:     stderr.printf("Operation canceled.");
+//DOC: }
 //DOC: ```;
 
 private bool nostdin_enabled = false;
@@ -24,7 +24,7 @@ public bool yesno(string message){
        print_fn(message+" [y/n]",false,true);
        var response = stdin.read_line();
     #else
-       var response = Readline.readline(message+" [y/n]");       
+       var response = Readline.readline(message+" [y/n]");
     #endif
     return (response[0] == 'y' || response[0] == 'Y');
 }

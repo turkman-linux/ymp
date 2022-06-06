@@ -20,7 +20,7 @@ private DataOutputStream fetcher_data_output_steam;
 private string fetcher_filename;
 
 private size_t WriteMemoryCallback(char* ptr, size_t size, size_t nmemb, void* data) {
-    
+
     size_t total_size = size*nmemb;
     for(int i = 0; i < total_size; i++) {
         fetcher_data += ptr[i].to_string();
@@ -70,7 +70,7 @@ private fetcher_process fetcher_proc;
 //DOC: public void progress_bar(int current, int total, string filename){
 //DOC:    ...
 //DOC: }
-//DOC: set_fetcher_progress(progress_bar); 
+//DOC: set_fetcher_progress(progress_bar);
 //DOC: ```;
 public void set_fetcher_progress(fetcher_process proc){
     fetcher_proc = proc;

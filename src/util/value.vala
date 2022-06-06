@@ -2,10 +2,10 @@
 //DOC: set or get inary global variable
 //DOC: Example usage:;
 //DOC: ```vala
-//DOC: set_value("CFLAGS","-O3"); 
-//DOC: var jobs = get_value("jobs"); 
+//DOC: set_value("CFLAGS","-O3");
+//DOC: var jobs = get_value("jobs");
 //DOC: if(get_bool("debug")){
-//DOC:     stderr.printf("Debug mode enabled"); 
+//DOC:     stderr.printf("Debug mode enabled");
 //DOC: }
 //DOC: ```;
 class variable {

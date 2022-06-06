@@ -1,5 +1,6 @@
 #!/bin/bash -i
-rm -rf build
+rm -rf build || true
+find src -type f -exec sed -i  "s/ *$//g" {} \;
 meson build $@ -Ddebug=false
 ninja -C build
 cd build

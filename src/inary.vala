@@ -3,10 +3,10 @@
 //DOC: For example:;
 //DOC: ```vala
 //DOC: int main(string[] args){
-//DOC:     var inary = new inary_init(args); 
-//DOC:     inary.add_process("install",{"ncurses", "readline"}); 
-//DOC:     inary.add_script("install bash glibc perl"); 
-//DOC:     inary.run(); 
+//DOC:     var inary = new inary_init(args);
+//DOC:     inary.add_process("install",{"ncurses", "readline"});
+//DOC:     inary.add_script("install bash glibc perl");
+//DOC:     inary.run();
 //DOC:     return 0;
 //DOC: }
 //DOC: ```;
@@ -44,7 +44,7 @@ private int operation_main(string type, string[] args){
 private class process{
     public string type;
     public string[] args;
-    
+
     public int run(){
         if(type == null){
             return 0;
@@ -57,7 +57,7 @@ private class process{
 }
 public class Inary {
     process[] proc;
-    
+
     //DOC: `void Inary.add_process(string type, string[] args):`;
     //DOC: add inary process using **type** and **args**;
     //DOC: * type is operation type (install, remove, list-installed ...);
@@ -79,7 +79,7 @@ public class Inary {
     public void clear_process(){
         proc = {};
     }
-    
+
     //DOC: `void Inary.run():`;
     //DOC: run inary process then if succes remove;
     public void run(){
@@ -93,7 +93,7 @@ public class Inary {
         }
         error(1);
     }
-    
+
     //DOC: `void Inary.add_script(string data):`;
     //DOC: add inary process from inary script;
     public void add_script(string data){

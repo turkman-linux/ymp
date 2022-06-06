@@ -12,7 +12,7 @@ dependencies = [
     dependency('gio-2.0', static:get_option('static')),
     dependency('readline', static:get_option('static')),
 ]
-run_command('bash', './tool/mkctx.sh', 
+run_command('bash', './tool/mkctx.sh',
     'CONFIGDIR=/'+get_option('sysconfdir'),
     'STORAGEDIR=/'+get_option('storagedir'),
     check:true)

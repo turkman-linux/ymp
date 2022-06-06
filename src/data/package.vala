@@ -2,16 +2,16 @@
 //DOC: inary package struct & functions;
 //DOC: Example usage:;
 //DOC: ```vala
-//DOC: var pkg = new package(); 
-//DOC: pkg.load_from_archive("/tmp/bash-5.0-x86_64.inary"); 
-//DOC: stdout.printf(pkg.get("archive-hash")); 
+//DOC: var pkg = new package();
+//DOC: pkg.load_from_archive("/tmp/bash-5.0-x86_64.inary");
+//DOC: stdout.printf(pkg.get("archive-hash"));
 //DOC: foreach(string pkgname in pkg.dependencies){
-//DOC:     stdout.printf(pkgname); 
+//DOC:     stdout.printf(pkgname);
 //DOC: }
-//DOC: var pkg2 = new package(); 
-//DOC: pkg2.load("/tmp/metadata.yaml"); 
+//DOC: var pkg2 = new package();
+//DOC: pkg2.load("/tmp/metadata.yaml");
 //DOC: if(pkg2.is_installed()){
-//DOC:     stdout.printf(pkg2+" installed"); 
+//DOC:     stdout.printf(pkg2+" installed");
 //DOC: }
 //DOC: ```;
 public class package {
@@ -22,7 +22,7 @@ public class package {
     public string[] provides;
     private string pkgarea;
     private archive pkgfile;
-    
+
     //DOC: `void package.load(string metadata):`;
     //DOC: Read package information from metadata file;
     public void load(string metadata){
@@ -59,7 +59,7 @@ public class package {
         string files = pkgfile.readfile("files");
         return ssplit(files,"\n");
     }
-    
+
     private void read_values(){
         name = get("name");
         version = get("version");
@@ -75,7 +75,7 @@ public class package {
         }
         return {};
     }
-    
+
     //DOC: `string package.get(string name):`;
     //DOC: Get package value;
     public string get(string name){
@@ -143,7 +143,7 @@ public class package {
         move_file(rootfs_medatata+"files",rootfs_files+name);
         error(1);
     }
-    
+
     //DOC: `bool package.is_installed():`;
     //DOC: return true if package is installed;
     public bool is_installed(){

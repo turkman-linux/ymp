@@ -3,10 +3,10 @@ debian:
   stage: build
   artifacts:
     expire_in: 1 week
-    paths: 
+    paths:
       - build
   script:
-    - apt update 
+    - apt update
     - apt install meson gcc valac --no-install-recommends -y
     - apt install libarchive-dev libreadline-dev libcurl4-openssl-dev libbrotli-dev --no-install-recommends -y
     - meson build -Ddebug=true -Dtools=true -Dlibbrotli=false
@@ -18,7 +18,7 @@ archlinux:
   stage: build
   artifacts:
     expire_in: 1 week
-    paths: 
+    paths:
       - build
   script:
     - pacman -Sy meson gcc vala --noconfirm
@@ -35,7 +35,7 @@ alpine:
     paths:
       - build
   script:
-    - apk update 
+    - apk update
     - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev libcurl curl-dev upx
     - apk add libarchive-static readline-static glib-static zlib-static ncurses-static acl-static expat-static openssl-libs-static xz-dev zstd-static lz4-static bzip2-static curl-static brotli-static nghttp2-static
     - meson build -Ddebug=false -Dstatic=true -Dtools=true

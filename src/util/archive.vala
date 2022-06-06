@@ -34,10 +34,10 @@ public class archive {
     //DOC: ## class archive()
     //DOC: Load & extract archive files.;
     //DOC: Example usage:;
-    //DOC: ```vala 
-    //DOC: var tar = new archive(); 
-    //DOC: tar.load("/tmp/archive.tar.gz"); 
-    //DOC: tar.extract_all(); 
+    //DOC: ```vala
+    //DOC: var tar = new archive();
+    //DOC: tar.load("/tmp/archive.tar.gz");
+    //DOC: tar.extract_all();
     //DOC: ```;
 
     Archive.Read archive;

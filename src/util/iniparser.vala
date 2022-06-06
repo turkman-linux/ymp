@@ -6,9 +6,9 @@
 //DOC: struct for ini variables;
 //DOC: Example usage:;
 //DOC: ```vala
-//DOC: var inivar = new ini_variable(); 
-//DOC: inivar.name = "colorize"; 
-//DOC: inivar.value = "false"; 
+//DOC: var inivar = new ini_variable();
+//DOC: inivar.name = "colorize";
+//DOC: inivar.value = "false";
 //DOC: ```;
 public class ini_variable {
     //DOC: `string ini_variable.name`;
@@ -22,10 +22,10 @@ public class ini_variable {
 //DOC: struct for ini sections
 //DOC: Example usage:;
 //DOC: ```vala
-//DOC: var inisec = new ini_section(); 
-//DOC: inisec.add("debug","false"); 
+//DOC: var inisec = new ini_section();
+//DOC: inisec.add("debug","false");
 //DOC: ...
-//DOC: stdout.printf(inisec.name); 
+//DOC: stdout.printf(inisec.name);
 //DOC: ```;
 public class ini_section {
     ini_variable[] variables = {};
@@ -64,9 +64,9 @@ public class ini_section {
 //DOC: ini file parser;
 //DOC: Example usage:;
 //DOC: ``` vala
-//DOC: var ini = new inifile(); 
+//DOC: var ini = new inifile();
 //DOC: ini.load("/etc/inary.conf");
-//DOC: var is_debug =  (ini.get("inary", "debug") == "true"); 
+//DOC: var is_debug =  (ini.get("inary", "debug") == "true");
 //DOC: ```;
 public class inifile {
 

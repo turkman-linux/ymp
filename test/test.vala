@@ -20,7 +20,7 @@ void main(string[] args){
     tar.readfile("aaa");
     tar.set_target("./ffff/");
     tar.extract_all();
-    
+
     // file test
     print("File test");
     readfile("/proc/cmdline");

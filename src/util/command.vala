@@ -3,10 +3,10 @@ using Posix;
 //DOC: This functions call shell commands;
 //DOC: Example usage:
 //DOC: ```vala
-//DOC: if (0 != run("ls /var/lib/inary")){ 
-//DOC:     stdout.printf("Command failed"); 
-//DOC: } 
-//DOC: string uname = getoutput("uname"); 
+//DOC: if (0 != run("ls /var/lib/inary")){
+//DOC:     stdout.printf("Command failed");
+//DOC: }
+//DOC: string uname = getoutput("uname");
 //DOC: ```;
 
 

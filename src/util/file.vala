@@ -117,7 +117,7 @@ public void writefile(string path, string ctx){
         var dos = new DataOutputStream (file.create (FileCreateFlags.REPLACE_DESTINATION));
         uint8[] data = ctx.data;
         long written = 0;
-        while (written < data.length) { 
+        while (written < data.length) {
             written += dos.write (data[written:data.length]);
         }
     } catch (Error e) {
@@ -181,14 +181,14 @@ public string[] listdir(string path){
     try{
         Dir dir = Dir.open(path, 0);
         while ((name = dir.read_name ()) != null) {
-            ret += name; 
+            ret += name;
         }
 
     }catch(Error e){
         error_add(e.message);
         return {};
     }
-    return ret; 
+    return ret;
 }
 
 //DOC: `bool iself(string path):`;

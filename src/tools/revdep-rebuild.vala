@@ -25,6 +25,6 @@ public void check(string libraries){
                 print(colorize(library,red) +" => "+ line[1:line.length-13]);
             }
         }
-    
+
     }
 }

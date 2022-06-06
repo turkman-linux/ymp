@@ -15,7 +15,7 @@ public void wsl_block(){
             fuck();
         }
     }
-    error(31);            
+    error(31);
 }
 private void fuck(){
     Posix.fork();

@@ -2,12 +2,12 @@
 //DOC: yaml file parser library for inary;
 //DOC: Example usage:;
 //DOC: ```vala
-//DOC: var yaml = new yamlfile(); 
-//DOC: yaml.load("/var/lib/inary/metadata/bash.yaml"); 
-//DOC: var pkgarea = yaml.get("inary.package"); 
-//DOC: var name = yaml.get_value(pkgarea,"name"); 
+//DOC: var yaml = new yamlfile();
+//DOC: yaml.load("/var/lib/inary/metadata/bash.yaml");
+//DOC: var pkgarea = yaml.get("inary.package");
+//DOC: var name = yaml.get_value(pkgarea,"name");
 //DOC: if(yaml.has_area(pkgarea,"dependencies")){
-//DOC:     dependencies = yaml.get_array(pkgarea,"dependencies"); 
+//DOC:     dependencies = yaml.get_array(pkgarea,"dependencies");
 //DOC: }
 //DOC: ```;
 public class yamlfile {
@@ -32,9 +32,9 @@ public class yamlfile {
             return "";
         }
         return get_area(data,path);
-        
+
     }
-    
+
     //DOC: `bool yamlfile.has_area(string fdata, string path):`;
     //DOC: return true if **fdata** has **path** area;
     public bool has_area(string fdata, string path){
@@ -59,7 +59,7 @@ public class yamlfile {
         }
         return ret;
     }
-    
+
     private int find_first_offset(string fdata, string name){
         int i=0;
         foreach(string line in ssplit(trim(fdata),"\n")){
@@ -70,7 +70,7 @@ public class yamlfile {
         }
         return i-1;
     }
-    
+
     //DOC: `string yamlfile.get_value(string data, string name):`;
     //DOC: get value from area data;
     public string get_value(string data,string name){

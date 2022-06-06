@@ -5,9 +5,9 @@
 //DOC: merge array items. insert **f** in between;
 //DOC: Example usage:;
 //DOC: ```vala
-//DOC: string[] aa = {"hello","world","!"}; 
-//DOC: string bb = join(aa," "); 
-//DOC: stdout.printf(bb); 
+//DOC: string[] aa = {"hello","world","!"};
+//DOC: string bb = join(aa," ");
+//DOC: stdout.printf(bb);
 //DOC: ```;
 public string join(string f,string[] array){
     string tmp="";
@@ -42,7 +42,7 @@ public string[] ssplit(string data, string f){
 public string trim(string data){
     int min = -1;
     string new_data = "";
-    foreach(string line in ssplit(data,"\n")){ 
+    foreach(string line in ssplit(data,"\n")){
         int level = count_tab(line);
         if(line.length == 0){
             continue;
