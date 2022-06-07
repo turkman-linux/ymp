@@ -103,6 +103,7 @@ public bool fetch(string url, string path){
         handle.setopt(Curl.Option.VERBOSE, 0);
     #endif
     handle.setopt(Curl.Option.STDERR, 1);
+    handle.setopt(Curl.Option.FOLLOWLOCATION, 1);
     handle.setopt(Curl.Option.USERAGENT, get_value("useragent"));
 
     handle.setopt(Curl.Option.WRITEFUNCTION, WriteFileCallback);
