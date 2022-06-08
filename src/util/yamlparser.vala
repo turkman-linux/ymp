@@ -83,7 +83,7 @@ public class yamlfile {
                 if(line.length == name.length+1){
                     return "";
                 }
-                return trim(line[name.length+1:]);
+                return line[name.length+1:].strip();
             }
         }
         return "";
@@ -96,7 +96,7 @@ public class yamlfile {
         string fdata = get_area(data,name);
         foreach(string line in ssplit(fdata,"\n")){
             if(line[0:2] == "- "){
-                array += line[1:];
+                array += line[1:].strip();
             }
         }
         return array;

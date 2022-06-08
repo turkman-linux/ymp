@@ -43,9 +43,10 @@ public class repository {
     //DOC: `package repository.get_package(string name):`
     //DOC: get package object from repository by package name
     public package get_package(string name){
-        package pkg = new package();
+        package pkg = null;
         foreach(string area in packages){
             if (yaml.get_value(area,"name") == name){
+                pkg = new package();
                 pkg.load_from_data(area);
                 return pkg;
             }
@@ -91,9 +92,11 @@ public package get_package_from_repository(string name){
     package ret = null;
     foreach(repository repo in get_repos()){
         package pkg = repo.get_package(name);
-        if(int.parse(pkg.get("release")) > release){
-            ret = pkg;
-            release = int.parse(pkg.get("release"));
+        if(pkg != null){
+            if(int.parse(pkg.get("release")) > release){
+                ret = pkg;
+                release = int.parse(pkg.get("release"));
+            }
         }
     }
     if(ret == null){

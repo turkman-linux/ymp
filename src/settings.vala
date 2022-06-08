@@ -59,7 +59,6 @@ public void set_config(string path){
 }
 private void parse_args(string[] args){
     foreach(string arg in args){
-        arg = arg.down();
         if(startswith(arg,"--")){
             if(arg.contains("=")){
                 if(ssplit(arg[2:],"=")[0] == "destdir"){

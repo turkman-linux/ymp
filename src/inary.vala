@@ -33,7 +33,7 @@ private int operation_main(string type, string[] args){
     foreach(operation op in ops){
         foreach(string name in op.names){
             if(type == name){
-                return op.callback(args);
+                return op.callback(argument_process(args));
             }
         }
     }

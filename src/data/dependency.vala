@@ -15,6 +15,9 @@ private void resolve_process(string[] names){
         if (!(name in need_install || is_installed_package(name))){
             // get package object from repository
             package pkg = get_package_from_repository(name);
+            if(pkg == null){
+                return;
+            }
             // run recursive function
             resolve_process(pkg.dependencies);
             // add package to list
