@@ -1,6 +1,6 @@
 public int install_main(string[] args){
     string[] pkgs = resolve_dependencies(args);
-    foreach(string pkg in args){
+    foreach(string pkg in pkgs){
         print(pkg);
     }
     return 0;
