@@ -22,19 +22,36 @@ public void set_value(string name, string value){
         vars = {};
     }
     foreach(variable varx in vars){
-        if(varx.name == name){
+        if(varx.name == name.down()){
             varx.value = value;
             return;
         }
     }
     variable varx = new variable();
-    varx.name = name;
+    varx.name = name.down();
+    varx.value = value;
+    vars += varx;
+}
+
+private void set_value_readonly(string name, string value){
+    if(vars == null){
+        vars = {};
+    }
+    foreach(variable varx in vars){
+        if(varx.name == name.up()){
+            varx.value = value;
+            return;
+        }
+    }
+    variable varx = new variable();
+    varx.name = name.up();
     varx.value = value;
     vars += varx;
 }
 
 //DOC: `string get_value(string name):`
 //DOC: get a inary global variable as string
+//DOC: big names are read only and only defined by inary
 public string get_value(string name){
     if(vars == null){
         vars = {};

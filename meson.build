@@ -15,6 +15,7 @@ dependencies = [
 run_command('bash', './tool/mkctx.sh',
     'CONFIGDIR=/'+get_option('sysconfdir'),
     'STORAGEDIR=/'+get_option('storagedir'),
+    'VERSION='+meson.project_version(),
     check:true)
 
 run_command('bash', '-c',

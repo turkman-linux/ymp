@@ -22,7 +22,7 @@ public string colorize(string message, int color){
     #if NOCOLOR
     if(true){
     #else
-    if (get_bool("no_color")){
+    if (get_bool("no-color")){
     #endif
         return message;
     }else{

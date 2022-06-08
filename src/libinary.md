@@ -779,6 +779,8 @@ add a global inary variable as string
 
 get a inary global variable as string
 
+big names are read only and only defined by inary
+
 `bool get_bool(string name):`
 
 get a inary global variable as bool

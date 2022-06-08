@@ -1,7 +1,7 @@
 #!/bin/bash -i
 rm -rf build || true
-find src -type f -exec sed -i  "s/ *$//g" {} \;
-meson build $@ -Ddebug=false
+# find src -type f -exec sed -i  "s/ *$//g" {} \;
+meson build $@ -Ddebug=false -Dtools=true
 ninja -C build
 cd build
 export G_DEBUG=fatal-criticals

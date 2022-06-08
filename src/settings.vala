@@ -12,6 +12,11 @@ private void settings_init(){
     if (CONFIG == null){
         CONFIG = DESTDIR+"/"+CONFIGDIR+"/inary.conf";
     }
+    set_value_readonly("destdir",DESTDIR);
+    set_value_readonly("config",CONFIG);
+    if(VERSION != null){
+        set_value_readonly("version",VERSION);
+    }
     if(isfile(CONFIG)){
         ini.load(CONFIG);
         foreach(string section in ini.get_sections()){
@@ -33,14 +38,13 @@ private void settings_init(){
 //DOC: change distdir
 public void set_destdir(string rootfs){
     DESTDIR=rootfs;
-    set_value("DESTDIR",rootfs);
     settings_init();
 }
 
 //DOC: `string get_storage():`
 //DOC: get inary storage directory. (default: /var/lib/inary)
 public string get_storage(){
-    return get_value("DESTDIR")+STORAGEDIR;
+    return DESTDIR+"/"+STORAGEDIR;
 }
 
 private string get_metadata_path(string name){
@@ -55,25 +59,20 @@ public void set_config(string path){
 }
 private void parse_args(string[] args){
     foreach(string arg in args){
-        switch(arg){
-            case "--ask":
-                set_bool("interactive",true);
-                break;
-            case "--no-color":
-                set_bool("no_color",true);
-                break;
-            case "--verbose":
-                set_bool("verbose",true);
-                break;
-            case "--debug":
-                set_bool("debug",true);
-                break;
-        }
-        if(startswith(arg,"-D")){
-            set_value("DESTDIR",arg[2:]);
+        arg = arg.down();
+        if(startswith(arg,"--")){
+            if(arg.contains("=")){
+                if(ssplit(arg[2:],"=")[0] == "destdir"){
+                    DESTDIR = ssplit(arg[2:],"=")[1];
+                }else{
+                    set_value(ssplit(arg[2:],"=")[0],ssplit(arg[2:],"=")[1]);
+                }
+            }else{
+                set_bool(arg[2:],true);
+            }
         }
     }
     if(get_env("NO_COLOR") != null){
-        set_bool("no_color",true);
+        set_bool("no-color",true);
     }
 }
