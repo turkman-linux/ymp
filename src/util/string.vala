@@ -89,3 +89,10 @@ public bool endswith(string data,string f){
     }
     return data[data.length-f.length:] == f;
 }
+
+//DOC: `string sbasename(string path):`
+//DOC: safe basename. return filename
+public string sbasename(string path){
+    string[] f = ssplit(path,"/");
+    return f[f.length-1];
+}

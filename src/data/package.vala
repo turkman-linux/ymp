@@ -20,6 +20,7 @@ public class package {
     public string version;
     public string[] dependencies;
     public string[] provides;
+    public string repo_address;
     private string pkgarea;
     private archive pkgfile;
 
@@ -85,6 +86,13 @@ public class package {
         }
         warning(@"Package information broken: $name");
         return "";
+    }
+
+    public string get_uri(){
+        if(repo_address == null){
+            return "";
+        }
+        return repo_address + "/" + get("uri");
     }
 
     //DOC: `void package.extract():`

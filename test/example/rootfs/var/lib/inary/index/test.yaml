@@ -1,5 +1,6 @@
 index:
   name: test
+  address: http://127.0.0.1:8000
   description: test repository
   update: 1653905119
   package:
@@ -10,6 +11,7 @@ index:
     dependencies:
       - readline
       - ncurses
+    uri: b/bash/bash-5.0-x86_64.inary
   package:
     name: readline
     release: 1
@@ -17,8 +19,10 @@ index:
     version: 8.0
     dependencies:
       - ncurses
+    uri: r/readline/readline-8.0-x8_64.inary
   package:
     name: ncurses
     release: 1
     version: 8.0
     description: ncurses library
+    uri: n/ncurses/ncurses-8.0-x8_64.inary

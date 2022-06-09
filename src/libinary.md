@@ -758,6 +758,10 @@ return true if data starts with f
 
 return true if data ends with f
 
+`string sbasename(string path):`
+
+safe basename. return filename
+
 # src/util/value.vala
 ## Variable functions
 

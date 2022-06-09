@@ -15,6 +15,7 @@
 public class repository {
     private yamlfile yaml;
     public string name;
+    public string address;
     private string indexarea;
     public string[] packages;
 
@@ -25,6 +26,7 @@ public class repository {
         yaml.load(get_storage()+"/index/"+repo_name);
         indexarea = yaml.get("index");
         name = yaml.get_value(indexarea,"name");
+        address = yaml.get_value(indexarea,"address");
         packages = yaml.get_area_list(indexarea,"package");
 
     }
@@ -95,6 +97,7 @@ public package get_package_from_repository(string name){
         if(pkg != null){
             if(int.parse(pkg.get("release")) > release){
                 ret = pkg;
+                pkg.repo_address = repo.address;
                 release = int.parse(pkg.get("release"));
             }
         }

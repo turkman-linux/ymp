@@ -1,2 +1,3 @@
-set DESTDIR ./test/example/rootfs
 list-available
+exec pwd
+echo hello world

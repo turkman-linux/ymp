@@ -5,7 +5,8 @@ int main(string[] args){
         error(2);
     }
     var tar = new archive();
-    tar.load(args[1]);
+    string[] new_args = argument_process(args);
+    tar.load(new_args[1]);
     tar.extract_all();
     return 0;
 }
