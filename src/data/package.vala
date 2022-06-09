@@ -141,7 +141,7 @@ public class package {
         pkgfile.set_target(rootfs_files);
         pkgfile.extract("files");
         move_file(rootfs_medatata+"files",rootfs_files+name);
-        error(1);
+        error(3);
     }
 
     //DOC: `bool package.is_installed():`
