@@ -81,7 +81,6 @@ if get_option('static')
 else
     lib = library('inary', sources, dependencies: dependencies, link_args: args)
 endif
-executable('inary','src/tools/inary-cli.vala', dependencies: dependencies, link_args: args, link_with: lib)
 if get_option('tools')
     foreach tool: run_command('find', 'src/tools','-type','f',check:true).stdout().strip().split('\n')
         name = run_command('basename', tool, check:true).stdout().split('.')[0]
