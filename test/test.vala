@@ -30,11 +30,10 @@ void main(string[] args){
     remove_dir("uuu");
     cd(curdir);
     pwd();
-    print("---");
-    foreach(string p in find("../src")){
-        print(p);
-    }
-    print("---");
+    find(".");
+    create_dir("uuu/aaa/fff");
+    writefile("uuu/aaa/fff/ggg","inary");
+    remove_all("uuu");
 
     //yamlfile test
     print("Yaml test");

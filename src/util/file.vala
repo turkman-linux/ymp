@@ -155,30 +155,24 @@ public int remove_file(string path){
     File file = File.new_for_path(path);
     try {
         file.delete();
+        print("ccc");
         return 0;
     }catch (Error e){
         return -1;
     }
 }
-//DOC: `int remove(string path):`
+//DOC: `int remove_all(string path):`
 //DOC: Remove files and directories (like **rm -rf**)
-public int remove(string path){
+public int remove_all(string path){
     string[] inodes = find(path);
-    foreach(string file in inodes){
-        if(isfile(file)){
-            if (-1 == remove_file(file)){
-                return -1;
-            }
+    foreach(string inode in inodes){
+        if(isfile(inode)){
+            remove_file(inode);
         }
     }
-    int i = inodes.length;
-    while(i>0){
-        i -=1;
-        string dir = inodes[i];
-        if(isdir(dir)){
-            if (-1 == remove_dir(dir)){
-                return -1;
-            }
+    foreach(string inode in reverse(inodes)){
+        if(isdir(inode)){
+            remove_dir(inode);
         }
     }
     return 0;

@@ -96,3 +96,15 @@ public string sbasename(string path){
     string[] f = ssplit(path,"/");
     return f[f.length-1];
 }
+
+//DOC: `string[] reverse(string[] array):`
+//DOC: reverse a string array
+public string[] reverse(string[] array){
+    int i = array.length;
+    string[] new_array = {};
+    while(i>0){
+        i -=1;
+        new_array += array[i];
+    }
+    return new_array;
+}

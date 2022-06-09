@@ -473,7 +473,7 @@ remove **path** directory
 
 remove **path** file
 
-`int remove(string path):`
+`int remove_all(string path):`
 
 Remove files and directories (like **rm -rf**)
 
@@ -773,6 +773,10 @@ return true if data ends with f
 `string sbasename(string path):`
 
 safe basename. return filename
+
+`string[] reverse(string[] array):`
+
+reverse a string array
 
 # src/util/value.vala
 ## Variable functions
