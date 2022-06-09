@@ -218,6 +218,8 @@ public bool isfile(string path){
     return file.query_exists ();
 }
 
+//DOC: `string srealpath(string path):`
+//DOC: safe realpath function.
 public string srealpath(string path){
     string real = Posix.realpath(path);
     if(real == null){
