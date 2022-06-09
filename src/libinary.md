@@ -473,6 +473,10 @@ remove **path** directory
 
 remove **path** file
 
+`int remove(string path):`
+
+Remove files and directories (like **rm -rf**)
+
 `void move_file(stirg src, string desc):`
 
 move **src** file to **desc**
@@ -493,9 +497,17 @@ return true if file is elf binary
 
 Check **path** is file
 
+`bool isdir(string path):`
+
+Check **path** is directory
+
 `string srealpath(string path):`
 
 safe realpath function.
+
+`string[] find(string path):`
+
+find file and directories with parents
 
 # src/util/gpg.vala
 # sign & verify file

@@ -160,6 +160,29 @@ public int remove_file(string path){
         return -1;
     }
 }
+//DOC: `int remove(string path):`
+//DOC: Remove files and directories (like **rm -rf**)
+public int remove(string path){
+    string[] inodes = find(path);
+    foreach(string file in inodes){
+        if(isfile(file)){
+            if (-1 == remove_file(file)){
+                return -1;
+            }
+        }
+    }
+    int i = inodes.length;
+    while(i>0){
+        i -=1;
+        string dir = inodes[i];
+        if(isdir(dir)){
+            if (-1 == remove_dir(dir)){
+                return -1;
+            }
+        }
+    }
+    return 0;
+}
 
 //DOC: `void move_file(stirg src, string desc):`
 //DOC: move **src** file to **desc**
@@ -211,11 +234,13 @@ public bool is64bit(string path){
 //DOC: `bool isfile(string path):`
 //DOC: Check **path** is file
 public bool isfile(string path){
-    if(path == null){
-        return false;
-    }
-    File file = File.new_for_path(path);
-    return file.query_exists ();
+    return GLib.FileUtils.test(path, GLib.FileTest.IS_REGULAR);
+}
+
+//DOC: `bool isdir(string path):`
+//DOC: Check **path** is directory
+public bool isdir(string path){
+    return GLib.FileUtils.test(path, GLib.FileTest.IS_DIR);
 }
 
 //DOC: `string srealpath(string path):`
@@ -226,4 +251,21 @@ public string srealpath(string path){
         return path;
     }
     return real;
+}
+
+//DOC: `string[] find(string path):`
+//DOC: find file and directories with parents
+public string[] find(string path){
+    find_ret = {};
+    find_operation(path);
+    return find_ret;
+}
+private string[] find_ret;
+private void find_operation(string path){
+    find_ret += srealpath(path);
+    if(isdir(path)){
+        foreach(string p in listdir(path)){
+            find_operation(path+"/"+p);
+        }
+    }
 }
