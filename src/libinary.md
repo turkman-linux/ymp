@@ -493,6 +493,10 @@ return true if file is elf binary
 
 Check **path** is file
 
+`string srealpath(string path):`
+
+safe realpath function.
+
 # src/util/gpg.vala
 # sign & verify file
 
