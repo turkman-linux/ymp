@@ -90,14 +90,13 @@ public void info(string message){
 //DOC: error(1);
 //DOC: ```
 public void error(int status){
-    if(get_bool("ignore-error")){
-        return;
-    }
-    foreach (string error in errors){
-        stderr.printf(colorize("ERROR: ",red)+error+"\n");
-    }
     if(errors.length == 0){
         return;
+    }
+    if(!get_bool("ignore-error")){
+        foreach (string error in errors){
+            stderr.printf(colorize("ERROR: ",red)+error+"\n");
+        }
     }
     errors = null;
     if (status != 0 && !get_bool("shellmode")){
