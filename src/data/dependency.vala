@@ -30,6 +30,9 @@ private void resolve_process(string[] names){
 //DOC: `string[] resolve_dependencies(string[] names):`
 //DOC: return package name list with required dependencies
 public string[] resolve_dependencies(string[] names){
+    if(get_bool("ignore-dependency")){
+        return names;
+    }
     // reset need list
     need_install = {};
     // reset cache list

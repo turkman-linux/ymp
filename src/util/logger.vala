@@ -32,6 +32,9 @@ public void print_fn(string message, bool new_line, bool err){
 //DOC: print("Hello world!");
 //DOC: ```
 public void print(string message){
+    if(get_bool("quiet")){
+        return;
+    }
     print_fn(message,true,false);
 }
 
@@ -47,6 +50,9 @@ public void print_stderr(string message){
 //DOC: WARNING: message
 //DOC: ```
 public void warning(string message){
+    if(get_bool("ignore-warning")){
+        return;
+    }
     if (message != null){
         print_stderr(colorize("WARNING: ",yellow)+message);
     }
@@ -84,6 +90,9 @@ public void info(string message){
 //DOC: error(1);
 //DOC: ```
 public void error(int status){
+    if(get_bool("ignore-error")){
+        return;
+    }
     foreach (string error in errors){
         stderr.printf(colorize("ERROR: ",red)+error+"\n");
     }

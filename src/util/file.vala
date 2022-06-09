@@ -218,3 +218,10 @@ public bool isfile(string path){
     return file.query_exists ();
 }
 
+public string srealpath(string path){
+    string real = Posix.realpath(path);
+    if(real == null){
+        return path;
+    }
+    return real;
+}

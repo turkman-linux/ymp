@@ -13,7 +13,7 @@ private void settings_init(){
         CONFIGDIR = "/etc/";
     }
     if (CONFIG == null){
-        CONFIG = DESTDIR+"/"+CONFIGDIR+"/inary.conf";
+        CONFIG = srealpath(DESTDIR+"/"+CONFIGDIR+"/inary.conf");
     }
     set_value_readonly("destdir",DESTDIR);
     set_value_readonly("config",CONFIG);
@@ -40,14 +40,14 @@ private void settings_init(){
 //DOC: `void set_destdir(string rootfs):`
 //DOC: change distdir
 public void set_destdir(string rootfs){
-    DESTDIR=rootfs;
+    DESTDIR=srealpath(rootfs);
     settings_init();
 }
 
 //DOC: `string get_storage():`
 //DOC: get inary storage directory. (default: /var/lib/inary)
 public string get_storage(){
-    return DESTDIR+"/"+STORAGEDIR;
+    return srealpath(DESTDIR+"/"+STORAGEDIR);
 }
 
 private string get_metadata_path(string name){
@@ -57,7 +57,7 @@ private string get_metadata_path(string name){
 //DOC: `void set_config(string path):`
 //DOC: change inary config file (default /etc/inary.conf)
 public void set_config(string path){
-    CONFIG=path;
+    CONFIG=srealpath(path);
     settings_init();
 }
 private void parse_args(string[] args){
