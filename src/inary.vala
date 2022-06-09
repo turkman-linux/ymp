@@ -111,7 +111,9 @@ public class Inary {
         }
     }
 }
-private string[] argument_process(string[] args){
+//DOC: `string[] argument_process(string[] args):`
+//DOC: Clear options and apply variables from argument
+public string[] argument_process(string[] args){
      string[] new_args = {};
      foreach (string arg in args){
          if(arg.length > 1 && arg[0] == '$'){

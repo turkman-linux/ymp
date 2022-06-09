@@ -6,4 +6,4 @@ ninja -C build
 cd build
 export G_DEBUG=fatal-criticals
 export LD_LIBRARY_PATH="$(pwd)":$LD_LIBRARY_PATH
-yes | ./inary-test --ask || true
+yes | ./inary-test --allow-oem --ask || true

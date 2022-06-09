@@ -1,6 +1,12 @@
 int main (string[] args) {
     Inary inary = inary_init(args);
-    inary.add_process(args[1],args[2:]);
+    string[] new_args = argument_process(args);
+    if(new_args.length < 2){
+        error_add("No command given.");
+        error(31);
+    }else{
+        inary.add_process(new_args[1],new_args[2:]);
+    }
     inary.run();
     error(1);
     return 0;

@@ -280,6 +280,10 @@ run inary process then if succes remove
 
 add inary process from inary script
 
+`string[] argument_process(string[] args):`
+
+Clear options and apply variables from argument
+
 `Inary inary_init(string[] args):`
 
 start inary application.

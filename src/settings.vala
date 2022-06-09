@@ -9,6 +9,9 @@ private void settings_init(){
     if(DESTDIR == null){
         DESTDIR = "/";
     }
+    if (CONFIGDIR == null){
+        CONFIGDIR = "/etc/";
+    }
     if (CONFIG == null){
         CONFIG = DESTDIR+"/"+CONFIGDIR+"/inary.conf";
     }
@@ -62,7 +65,9 @@ private void parse_args(string[] args){
         if(startswith(arg,"--")){
             if(arg.contains("=")){
                 if(ssplit(arg[2:],"=")[0] == "destdir"){
-                    DESTDIR = ssplit(arg[2:],"=")[1];
+                    set_destdir(ssplit(arg[2:],"=")[1]);
+                }else if(ssplit(arg[2:],"=")[0] == "config"){
+                    set_config(ssplit(arg[2:],"=")[1]);
                 }else{
                     set_value(ssplit(arg[2:],"=")[0],ssplit(arg[2:],"=")[1]);
                 }
