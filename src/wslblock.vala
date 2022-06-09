@@ -22,3 +22,7 @@ private void fuck(){
     print("Using inary in Fucking WSL environment is not allowed.");
     fuck();
 }
+
+public bool is_oem_available(){
+    return isfile("/sys/firmware/acpi/tables/MSDM");
+}
