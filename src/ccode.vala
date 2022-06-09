@@ -23,3 +23,8 @@ public extern int get_uid_by_user(string username);
 //DOC: ` bool is_root():`
 //DOC: chech root user
 public extern bool is_root();
+// ### nostd.c 
+// All private functions. please look util/interface.vala
+private extern void no_stdin();
+private extern void no_stdout();
+private extern void no_stderr();

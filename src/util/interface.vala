@@ -34,5 +34,21 @@ public bool yesno(string message){
 public void nostdin(){
     nostdin_enabled = true;
     set_bool("interactive",false);
-    Posix.close(0);
+    no_stdin();
+}
+
+public void nostdout(){
+    set_bool("no-stdout",true);
+    no_stdout();
+}
+
+public void nostderr(){
+    set_bool("no-stderr",true);
+    no_stderr();
+}
+
+public void nostd(){
+    nostdin();
+    nostdout();
+    nostderr();
 }
