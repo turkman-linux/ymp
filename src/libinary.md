@@ -124,6 +124,14 @@ Get package array value
 
 Get package value
 
+`string package.get_uri():`
+
+get repository uri
+
+`void package.download():`
+
+download package file from repository
+
 `void package.extract():`
 
 extract package to quarantine directory

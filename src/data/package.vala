@@ -88,12 +88,27 @@ public class package {
         return "";
     }
 
+    //DOC: `string package.get_uri():`
+    //DOC: get repository uri
     public string get_uri(){
         if(repo_address == null){
             return "";
         }
         return repo_address + "/" + get("uri");
     }
+
+
+	//DOC: `void package.download():`
+	//DOC: download package file from repository
+    public void download(){
+		if(get_uri() != ""){
+	        if(!fetch(get_uri(),get_storage()+"/packages/"+sbasename(get_uri()))){
+                error_add("failed to fetch package: "+get_uri());
+            }
+	    }else{
+			error_add("package is not downloadable: "+ name);
+		}
+	}
 
     //DOC: `void package.extract():`
     //DOC: extract package to quarantine directory
