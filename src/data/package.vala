@@ -108,6 +108,8 @@ public class package {
 	    }else{
 			error_add("package is not downloadable: "+ name);
 		}
+        pkgfile = new archive();
+        pkgfile.load(get_storage()+"/packages/"+sbasename(get_uri()));
 	}
 
     //DOC: `void package.extract():`
@@ -128,6 +130,9 @@ public class package {
     //DOC: * **files** is file list
     //DOC: * **data.tar.gz** in package archive
     public void extract(){
+        create_dir(get_storage()+"/quarantine/metadata");
+        create_dir(get_storage()+"/quarantine/rootfs");
+        create_dir(get_storage()+"/quarantine/files");
         if(pkgfile == null){
             error_add("Package archive missing");
             return;
@@ -159,11 +164,11 @@ public class package {
         // extract metadata
         pkgfile.set_target(rootfs_medatata);
         pkgfile.extract("metadata.yaml");
-        move_file(rootfs_medatata+"metadata.yaml",rootfs_medatata+name+".yaml");
+        move_file(rootfs_medatata+"metadata.yaml",get_storage()+"/quarantine/metadata/"+name+".yaml");
         // extract files
         pkgfile.set_target(rootfs_files);
         pkgfile.extract("files");
-        move_file(rootfs_medatata+"files",rootfs_files+name);
+        move_file(rootfs_files+"files",get_storage()+"/quarantine/files/"+name);
         error(3);
     }
 

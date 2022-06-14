@@ -155,7 +155,6 @@ public int remove_file(string path){
     File file = File.new_for_path(path);
     try {
         file.delete();
-        print("ccc");
         return 0;
     }catch (Error e){
         return -1;
