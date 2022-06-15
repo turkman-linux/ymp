@@ -55,9 +55,9 @@ private string readfile_raw2 (string path){
 }
 
 
-//DOC: `string readfile_byte(string path, int size):`
+//DOC: `string readfile_byte(string path, long size):`
 //DOC: read **n** byte from file
-public string readfile_byte(string path, int n){
+public string readfile_byte(string path, long n){
     if(!isfile(path)){
         warning("File not found: "+path);
         return "";
@@ -76,6 +76,8 @@ public string readfile_byte(string path, int n){
 	    warning("Read byte size bigger than file size: "+path);
 	    print(size.to_string()+ " "+ n.to_string());
 	    return "";
+	}else if(n == 0){
+	    n = size;
 	}
 
 	// load content:
@@ -261,4 +263,32 @@ private void find_operation(string path){
             find_operation(path+"/"+p);
         }
     }
+}
+
+//DOC: `string calculate_sha1sum(string path):`
+//DOC: calculate sha1sum value from file path
+public string calculate_sha1sum(string path){
+    return  calculate_checksum(path, ChecksumType.SHA1);
+}
+
+//DOC: `string calculate_md5sum(string path):`
+//DOC: calculate md5sum value from file path
+public string calculate_md5sum(string path){
+    return  calculate_checksum(path, ChecksumType.MD5);
+}
+
+//DOC: `string calculate_checksum(string path, ChecksumType type):`
+//DOC: calculate checksum value from file path and checksum type
+public string calculate_checksum(string path, ChecksumType type){
+    if(!isfile(path)){
+        return "";
+    }
+    Checksum checksum = new Checksum (type);
+	FileStream stream = FileStream.open (path, "rb");
+	uint8 fbuf[100];
+	size_t size;
+	while ((size = stream.read (fbuf)) > 0) {
+		checksum.update (fbuf, size);
+	}
+	return checksum.get_string ();
 }

@@ -450,7 +450,7 @@ Read file from **path** and return content
 
 Read file from **path** and return content
 
-`string readfile_byte(string path, int size):`
+`string readfile_byte(string path, long size):`
 
 read **n** byte from file
 
@@ -521,6 +521,18 @@ safe realpath function.
 `string[] find(string path):`
 
 find file and directories with parents
+
+`string calculate_sha1sum(string path):`
+
+calculate sha1sum value from file path
+
+`string calculate_md5sum(string path):`
+
+calculate md5sum value from file path
+
+`string calculate_checksum(string path, ChecksumType type):`
+
+calculate checksum value from file path and checksum type
 
 # src/util/gpg.vala
 # sign & verify file

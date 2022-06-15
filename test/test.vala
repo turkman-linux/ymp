@@ -82,6 +82,7 @@ void main(string[] args){
     print("Binary test");
     iself("inary-test");
     is64bit("inary");
+    print(calculate_sha1sum("/bin/bash"));
 
     // ttysize test
     print("C functions test");
@@ -91,6 +92,7 @@ void main(string[] args){
 
     // which test
     which("bash");
+    
 
     // users test
     get_uid_by_user("root");
