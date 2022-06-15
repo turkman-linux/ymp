@@ -186,6 +186,11 @@ get package object from installed package name
 
 return true if package installed
 
+# src/data/quarantine.vala
+`bool quarantine_validate_files():`
+
+check quarantine file hashes
+
 # src/data/repository.vala
 ## class repository
 

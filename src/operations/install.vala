@@ -1,5 +1,8 @@
 public int install_main(string[] args){
     string[] pkgs = resolve_dependencies(args);
+    if(get_bool("ignore-dependency")){
+        pkgs = args;
+    }
     package[] pkg_obj = {};
     create_dir(get_storage()+"/packages/");
     // Download package files from repository
@@ -14,8 +17,10 @@ public int install_main(string[] args){
 	    return 0;	
 	}
 	foreach(package p in pkg_obj){
+	    info("Extracting: "+p.name);
 	    p.extract();
 	}
+	quarantine_validate_files();
     return 0;
 }
 public void install_init(){

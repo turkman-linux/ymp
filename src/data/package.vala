@@ -137,8 +137,8 @@ public class package {
             error_add("Package archive missing");
             return;
         }
-        var rootfs_medatata = get_storage()+"/quarantine/rootfs"+STORAGEDIR+"/metadata/";
-        var rootfs_files = get_storage()+"/quarantine/rootfs"+STORAGEDIR+"/files/";
+        var rootfs_medatata = get_storage()+"/quarantine/metadata/";
+        var rootfs_files = get_storage()+"/quarantine/files/";
         if(isfile(rootfs_medatata+name+".yaml")){
             debug("skip quartine package extract:"+name);
             return;
