@@ -63,7 +63,8 @@ int sandbox(char** args){
             unshare(CLONE_VM);
             _exit(execv(which(args[0]),args));
         }
-    return 127;
+        _exit(127);
+        return 127;
     }else{
         int status;
         wait(&status);
