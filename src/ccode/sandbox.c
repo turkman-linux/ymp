@@ -61,7 +61,7 @@ int sandbox(char** args){
             }
             unshare(CLONE_NEWIPC);
             unshare(CLONE_VM);
-            _exit(execv(which(args[0]),args));
+            _exit(execvpe(which(args[0]),args,NULL));
         }
         _exit(127);
         return 127;
