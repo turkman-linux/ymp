@@ -1,3 +1,6 @@
+#ifndef _users
+#define _GNU_SOURCE
+#define _users
 #include <unistd.h>
 #include <pwd.h>
 
@@ -20,3 +23,4 @@ int switch_user(char* username){
     }
     return 0;
 }
+#endif

@@ -1,4 +1,5 @@
 #ifndef _nostd
+#define _GNU_SOURCE
 #define _nostd
 
 #include <stdio.h>

@@ -1,4 +1,5 @@
 #ifndef _ttysize
+#define _GNU_SOURCE
 #define _ttysize
 
 #include <stdio.h>

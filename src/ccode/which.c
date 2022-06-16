@@ -1,6 +1,11 @@
+// musl libc fix
 #ifndef F_OK
 #define F_OK 0
 #endif
+
+#ifndef _which
+#define _which
+#define _GNU_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,3 +36,5 @@ char* which(char* cmd){
     }
     return cmd;
 }
+
+#endif
