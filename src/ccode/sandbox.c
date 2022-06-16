@@ -7,6 +7,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/mount.h>
 
 char* which(char* cmd);
 void write_to_file(const char *which, const char *format, ...);
@@ -24,16 +27,16 @@ void sandbox(char** args){
         write_to_file("/proc/self/setgroups", "deny");
         // remap gid
         write_to_file("/proc/self/gid_map", "0 %d 1", gid);
-        unshare(CLONE_NEWPID);
-        unshare(CLONE_NEWUTS);
-        unshare(CLONE_NEWNET);
-        unshare(CLONE_NEWIPC);
-        unshare(CLONE_VM);
-        chroot("/");
-        mount("tmpfs", "/home", "tmpfs", 0, NULL);
-        mount("tmpfs", "/root", "tmpfs", 0, NULL);
-
-        execvpe(which(args[0]),args,NULL);
+    
+        if (0 == chroot("/")){
+            unshare(CLONE_NEWUTS);
+            unshare(CLONE_NEWNET);
+            unshare(CLONE_NEWIPC);
+            unshare(CLONE_VM);
+            mount("tmpfs", "/home", "tmpfs", 0, NULL);
+            mount("tmpfs", "/root", "tmpfs", 0, NULL);
+            execvpe(which(args[0]),args,NULL);
+        }
     }
     waitpid(pid, NULL, 0);
 }
