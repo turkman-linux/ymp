@@ -28,3 +28,7 @@ public extern bool is_root();
 private extern void no_stdin();
 private extern void no_stdout();
 private extern void no_stderr();
+//DOC: ### sandbox.c
+//DOC: `void sandbox(string[] args):`
+//DOC: run command in sandboxed area
+public extern void sandbox(string[] args);

@@ -35,6 +35,12 @@ get UID value from username
 
 chech root user
 
+### sandbox.c
+
+`void sandbox(string[] args):`
+
+run command in sandboxed area
+
 # src/color.vala
 ## Colors
 
