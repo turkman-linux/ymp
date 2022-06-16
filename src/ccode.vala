@@ -31,4 +31,13 @@ private extern void no_stderr();
 //DOC: ### sandbox.c
 //DOC: `void sandbox(string[] args):`
 //DOC: run command in sandboxed area
-public extern void sandbox(string[] args);
+public extern int sandbox(string[] args);
+//DOC: `boot sandbox_network:`
+//DOC: enable/disable sandbox network access (default: false)
+public extern bool sandbox_network;
+//DOC: `int sandbox_uid:`
+//DOC: sandbox user uid value (default: 0)
+public extern int sandbox_uid;
+//DOC: `int sandbox_gid:`
+//DOC: sandbox user gid value (default: 0)
+public extern int sandbox_gid;

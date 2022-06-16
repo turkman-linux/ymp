@@ -41,6 +41,18 @@ chech root user
 
 run command in sandboxed area
 
+`boot sandbox_network:`
+
+enable/disable sandbox network access (default: false)
+
+`int sandbox_uid:`
+
+sandbox user uid value (default: 0)
+
+`int sandbox_gid:`
+
+sandbox user gid value (default: 0)
+
 # src/color.vala
 ## Colors
 
