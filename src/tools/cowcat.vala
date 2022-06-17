@@ -1,14 +1,14 @@
 int main(string[] args){
+    string data="";
     if(args[1] == "-"){
         string line = " ";
         while(line != ""){
             line = stdin.read_line();
-            lolcat(line);
-            print_fn("\n",false,false);
+            data += line+"\n";
         }
-        return 0;
+    }else{
+        data = readfile(args[1]);
     }
-    string data = readfile(args[1]);
-    lolcat(data);
+    print_with_cow(data);
     return 0;
 }

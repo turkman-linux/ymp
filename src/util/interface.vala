@@ -43,12 +43,56 @@ public void print_array(string[] array){
     print_fn("\n",false,false);
 }
 
-public void lolcat(string data){
+public void shitcat(string data){
     int cur = 0;
     while(cur  < data.length){
         print_fn(colorize(data[cur].to_string(),31+((int)GLib.Random.next_int() % 7)),false,false);
         cur++;
     }
+}
+
+public void print_with_cow(string data){
+    int max = 0;
+    foreach(string line in data.split("\n")){
+        if(line.length>max){
+            max = line.length;
+        }
+    }
+    if(max % 2 == 1){
+        max += 1;
+    }
+    print_fn("+",false,false);
+    for(int i=0;i<max;i++){
+        print_fn("-",false,false);
+    }
+    print("+");
+    foreach(string line in data.split("\n")){
+        print_fn("|",false,false);
+        int space = max - line.length;
+        for(int i=0;i<(space/2);i++){
+            print_fn(" ",false,false);
+        }
+        print_fn(line,false,false);
+        for(int i=0;i<(space/2);i++){
+            print_fn(" ",false,false);
+        }
+        if(space % 2 == 1){
+            print_fn(" ",false,false);
+        }
+        print("|");
+    }
+    print_fn("+",false,false);
+    for(int i=0;i<max;i++){
+        print_fn("-",false,false);
+    }
+    print("+");
+    print("   \\   ^__^");
+    print("    \\  (oo)\\_______");
+    print("       (__)\\       )\\/\\");
+    print("           ||----w |");
+    print("           ||     ||");
+    print("");
+
 }
 
 //DOC: `void nostdin():`
