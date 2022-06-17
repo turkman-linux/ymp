@@ -130,6 +130,9 @@ public void writefile(string path, string ctx){
 //DOC: `void cd(string path):`
 //DOC: change current directory to **path**
 public void cd(string path){
+    if(!isdir(path)){
+        create_dir(path);
+    }
     GLib.Environment.set_current_dir(path);
 }
 
@@ -241,6 +244,9 @@ public bool isdir(string path){
 //DOC: `string srealpath(string path):`
 //DOC: safe realpath function.
 public string srealpath(string path){
+    if(!isdir(path)){
+        create_dir(path);
+    }
     string real = Posix.realpath(path);
     if(real == null){
         return path;

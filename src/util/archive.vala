@@ -58,6 +58,17 @@ public class archive {
             error(archive.errno ());
         }
     }
+    
+    public bool is_archive(string path){
+        archive = new Archive.Read();
+        archive.support_filter_all ();
+        archive.support_format_all ();
+        if (archive.open_filename (path, 10240) != Archive.Result.OK) {
+            return false;
+        }
+        return true;
+    
+    }
     //DOC: `string[] archive.list_files():`
     //DOC: Get archive file list
     public string[] list_files (){
@@ -147,8 +158,35 @@ public class archive {
     //DOC: `void archive.extract_all()`
     //DOC: Extract all files to target
     public void extract_all(){
-        foreach (string path in list_files()){
-            extract(path);
+        load_archive(archive_path);
+        Archive.ExtractFlags flags;
+        flags = Archive.ExtractFlags.TIME;
+        flags |= Archive.ExtractFlags.PERM;
+        flags |= Archive.ExtractFlags.ACL;
+        flags |= Archive.ExtractFlags.FFLAGS;
+
+        Archive.WriteDisk extractor = new Archive.WriteDisk ();
+        extractor.set_options (flags);
+        extractor.set_standard_lookup ();
+
+        unowned Archive.Entry entry;
+        Archive.Result last_result;
+        while ((last_result = archive.next_header (out entry)) == Archive.Result.OK) {
+            if (target_path == null){
+                target_path = "./";
+            }
+
+            if (extractor.write_header (entry) != Archive.Result.OK) {
+                continue;
+            }
+
+            uint8[] buffer = null;
+            Posix.off_t offset;
+            while (archive.read_data_block (out buffer, out offset) == Archive.Result.OK) {
+                if (extractor.write_data_block (buffer, offset) != Archive.Result.OK) {
+                    break;
+                }
+            }
         }
     }
 

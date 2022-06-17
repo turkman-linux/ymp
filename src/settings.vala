@@ -50,6 +50,12 @@ public string get_storage(){
     return srealpath(DESTDIR+"/"+STORAGEDIR);
 }
 
+//DOC: `string get_storage():`
+//DOC: get inary storage directory. (default: /var/lib/inary)
+public string get_build_dir(){
+    return srealpath(DESTDIR+"/tmp/inary-build")+"/";
+}
+
 private string get_metadata_path(string name){
     return get_storage()+"/metadata/"+name+".yaml";
 }

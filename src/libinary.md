@@ -209,7 +209,11 @@ return true if package installed
 
 inary uses archlinux pkgbuild format.
 
-`void set_pkgbuild_path(string path):`
+`void set_pkgbuild_srcpath(string path):`
+
+configure pkgbuild file directory
+
+`void set_pkgbuild_srcpath(string path):`
 
 configure pkgbuild file directory
 
@@ -359,6 +363,10 @@ inary configuration functions
 `void set_destdir(string rootfs):`
 
 change distdir
+
+`string get_storage():`
+
+get inary storage directory. (default: /var/lib/inary)
 
 `string get_storage():`
 

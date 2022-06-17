@@ -79,6 +79,7 @@ public void set_fetcher_progress(fetcher_process proc){
 //DOC: `bool fetch(string url, string path):`
 //DOC: download file content and write to file
 public bool fetch(string url, string path){
+    info("Download: "+url);
     fetcher_filename = path;
     var file = File.new_for_path (path);
     if (file.query_exists ()) {

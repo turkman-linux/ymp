@@ -141,6 +141,7 @@ public Inary inary_init(string[] args){
     parse_args(args);
     ctx_init();
     settings_init();
+    pkgbuild_init();
     if(is_oem_available()){
         warning("OEM detected! Inary may not working good.");
         if(!get_bool("allow-oem")){
