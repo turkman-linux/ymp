@@ -1,4 +1,4 @@
-//DOC: # PKGBUILD file functions.
+//DOC: ## PKGBUILD file functions.
 //DOC: inary uses archlinux pkgbuild format.
 
 // private variables used by functions

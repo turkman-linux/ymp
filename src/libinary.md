@@ -205,7 +205,7 @@ get package object from installed package name
 return true if package installed
 
 # src/data/pkgbuild.vala
-# PKGBUILD file functions.
+## PKGBUILD file functions.
 
 inary uses archlinux pkgbuild format.
 
