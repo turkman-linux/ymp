@@ -12,9 +12,15 @@ int _tty_row;
 int _tty_col;
 
 int get_tty_height(){
+    if(_tty_row < 1){
+        return 24;
+    }
     return _tty_row;
 }
 int get_tty_width(){
+    if(_tty_col < 1){
+        return 80;
+    }
     return _tty_col;
 }
 

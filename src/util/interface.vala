@@ -29,6 +29,28 @@ public bool yesno(string message){
     return (response[0] == 'y' || response[0] == 'Y');
 }
 
+public void print_array(string[] array){
+    int max = get_tty_width();
+    int cur = 0;
+    foreach(string item in array){
+        if(cur + item.length + 1 > max){
+            cur = 0;
+            print_fn("\n",false,false);
+        }
+        print_fn(item+" ",false,false);
+        cur += item.length + 1;
+    }
+    print_fn("\n",false,false);
+}
+
+public void lolcat(string data){
+    int cur = 0;
+    while(cur  < data.length){
+        print_fn(colorize(data[cur].to_string(),31+((int)GLib.Random.next_int() % 7)),false,false);
+        cur++;
+    }
+}
+
 //DOC: `void nostdin():`
 //DOC: close stdin. Ignore input. This function may broke application.
 public void nostdin(){
