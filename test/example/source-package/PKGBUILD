@@ -1,0 +1,63 @@
+# Maintainer:  David Runge <dvzrv@archlinux.org>
+# Contributor:  Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
+# Contributor: Allan McRae <allan@archlinux.org>
+# Contributor: judd <jvinet@zeroflux.org>
+
+pkgname=ncurses
+pkgver=6.3
+pkgrel=3
+pkgdesc='System V Release 4.0 curses emulation library'
+arch=(x86_64)
+url='https://invisible-island.net/ncurses/ncurses.html'
+license=(MIT)
+depends=(glibc gcc-libs)
+makedepends=(autoconf-archive)
+optdepends=('bash: for ncursesw6-config')
+provides=(libncurses++w.so libformw.so libmenuw.so libpanelw.so libncursesw.so)
+replaces=(alacritty-terminfo)
+options=(debug)
+source=(
+  https://invisible-mirror.net/archives/$pkgname/$pkgname-$pkgver.tar.gz{,.asc}
+)
+sha1sums=('SKIP')
+
+build() {
+  cd $pkgname-$pkgver
+
+  ./configure --prefix=/usr \
+    --enable-widec \
+    --enable-pc-files \
+    --mandir=/usr/share/man \
+    --with-cxx-binding \
+    --with-cxx-shared \
+    --with-manpage-format=normal \
+    --with-pkg-config-libdir=/usr/lib/pkgconfig \
+    --with-shared \
+    --with-versioned-syms \
+    --with-xterm-kbs=del \
+    --without-ada
+  make
+}
+
+package() {
+  make DESTDIR="$pkgdir" install -C $pkgname-$pkgver
+  install -vDm 644 $pkgname-$pkgver/COPYING -t "$pkgdir/usr/share/licenses/$pkgname/"
+
+  # fool packages looking to link to non-wide-character ncurses libraries
+  for lib in ncurses ncurses++ form panel menu; do
+    printf "INPUT(-l%sw)\n" "${lib}" > "$pkgdir/usr/lib/lib${lib}.so"
+    ln -sv ${lib}w.pc "$pkgdir/usr/lib/pkgconfig/${lib}.pc"
+  done
+
+  # some packages look for -lcurses during build
+  printf 'INPUT(-lncursesw)\n' > "$pkgdir/usr/lib/libcursesw.so"
+  ln -sv libncurses.so "$pkgdir/usr/lib/libcurses.so"
+
+  # tic and ticinfo functionality is built in by default
+  # make sure that anything linking against it links against libncursesw.so instead
+  for lib in tic tinfo; do
+    printf "INPUT(libncursesw.so.%s)\n" "${pkgver:0:1}" > "$pkgdir/usr/lib/lib${lib}.so"
+    ln -sv libncursesw.so.${pkgver:0:1} "$pkgdir/usr/lib/lib${lib}.so.${pkgver:0:1}"
+    ln -sv ncursesw.pc "$pkgdir/usr/lib/pkgconfig/${lib}.pc"
+  done
+}

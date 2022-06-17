@@ -35,14 +35,6 @@ void main(string[] args){
     writefile("uuu/aaa/fff/ggg","inary");
     remove_all("uuu");
 
-    //yamlfile test
-    print("Yaml test");
-    var yaml = new yamlfile();
-    yaml.load("../test/example/metadata-source.yaml");
-    var metadata = yaml.get("inary.source");
-    yaml.get_value(metadata,"name");
-    yaml.get_array(metadata,"archive");
-
     //inifile test
     print("Ini test");
     var ini = new inifile();

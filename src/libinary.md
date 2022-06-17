@@ -204,6 +204,27 @@ get package object from installed package name
 
 return true if package installed
 
+# src/data/pkgbuild.vala
+# PKGBUILD file functions.
+
+inary uses archlinux pkgbuild format.
+
+`void set_pkgbuild_path(string path):`
+
+configure pkgbuild file directory
+
+`string get_pkgbuild_value(string variable):`
+
+get a variable from pkgbuild file
+
+`string[] get_pkgbuild_array(string variable):`
+
+get a array from pkgbuild file
+
+`int run_pkgbuild_function(string function):`
+
+run a build function from pkgbuild file
+
 # src/data/quarantine.vala
 `bool quarantine_validate_files():`
 
@@ -321,6 +342,7 @@ start inary application.
 
 * args is program arguments
 
+# src/operations/build.vala
 # src/operations/clear.vala
 # src/operations/dummy.vala
 # src/operations/echo.vala
