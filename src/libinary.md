@@ -693,6 +693,18 @@ if(yesno("Do you want to continue?")){
 
 Create a yes/no question.
 
+`void print_array(string[] array):`
+
+print string array to fit terminal size
+
+`void shitcat(string data):`
+
+print data with shitty random colors.
+
+`void print_with_cow(string data):`
+
+print message with cow dialog
+
 `void nostdin():`
 
 close stdin. Ignore input. This function may broke application.

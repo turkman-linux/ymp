@@ -29,6 +29,8 @@ public bool yesno(string message){
     return (response[0] == 'y' || response[0] == 'Y');
 }
 
+//DOC: `void print_array(string[] array):`
+//DOC: print string array to fit terminal size
 public void print_array(string[] array){
     int max = get_tty_width();
     int cur = 0;
@@ -43,6 +45,8 @@ public void print_array(string[] array){
     print_fn("\n",false,false);
 }
 
+//DOC: `void shitcat(string data):`
+//DOC: print data with shitty random colors.
 public void shitcat(string data){
     int cur = 0;
     while(cur  < data.length){
@@ -51,6 +55,8 @@ public void shitcat(string data){
     }
 }
 
+//DOC: `void print_with_cow(string data):`
+//DOC: print message with cow dialog
 public void print_with_cow(string data){
     int max = 0;
     foreach(string line in data.split("\n")){
