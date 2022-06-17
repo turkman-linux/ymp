@@ -58,6 +58,7 @@ public void print_with_cow(string data){
             max = line.length;
         }
     }
+    max += 2;
     if(max % 2 == 1){
         max += 1;
     }
