@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 add_project_arguments(['--disable-assert', '--hide-internal', '--nostdpkg', '--enable-checking', '--abi-stability'], language: 'vala')
-add_project_arguments('-D', '_GNU_SOURCE', language: 'vala')
+add_project_arguments('-D', '_GNU_SOURCE', '--disable-warnings', '--disable-version-header', language: 'vala')
 
 run_command('bash', './tool/mkctx.sh',
     'CONFIGDIR=/'+get_option('sysconfdir'),
