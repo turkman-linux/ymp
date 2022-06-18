@@ -1,7 +1,0 @@
-inary:
-  package:
-    name: aaa
-    version: 1.0
-    description: test package a
-    dependencies:
-      - bbb

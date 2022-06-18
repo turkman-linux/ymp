@@ -97,6 +97,20 @@ public string sbasename(string path){
     return f[f.length-1];
 }
 
+//DOC: `string sdirname(string path):`
+//DOC: safe dirname. return path name
+public string sdirname(string path){
+    string[] f = ssplit(path,"/");
+    string ret = "";
+    if(f.length == 0){
+        return "";
+    }
+    foreach(string g in f[:f.length-1]){
+        ret +=g+"/";
+    }
+    return ret;
+}
+
 //DOC: `string[] reverse(string[] array):`
 //DOC: reverse a string array
 public string[] reverse(string[] array){

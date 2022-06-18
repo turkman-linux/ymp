@@ -70,7 +70,6 @@ public void create_source_archive(){
 }
 
 public void create_binary_package(){
-    info("Creating package:");
     cd(inrbuild_pkgdir+"/output");
     if(isfile("data.tar.gz")){
         remove_file("data.tar.gz");
@@ -90,11 +89,18 @@ public void create_binary_package(){
     }
     string[] arrys = {"depends","provides","replaces"};
     foreach(string arr in arrys){
-        new_data += "    "+arr+":\n";
-        foreach(string dep in yaml.get_array(srcdata,arr)){
-            new_data += "      - "+dep+"\n";
+        if(!yaml.has_area(srcdata,arr)){
+            continue;
+        }
+        string[] deps = yaml.get_array(srcdata,arr);
+        if(deps.length > 0){
+            new_data += "    "+arr+":\n";
+            foreach(string dep in deps){
+                new_data += "      - "+dep+"\n";
+            }
         }
     }
+    string files_data = "";
     var tar = new archive();
     tar.load(inrbuild_pkgdir+"/output/data.tar.gz");
     aformat=1;
@@ -105,6 +111,7 @@ public void create_binary_package(){
         }
         file = file[(inrbuild_pkgdir+"/output/").length:];
         debug("Compress:"+file);
+        files_data += calculate_sha1sum(file)+" "+file+"\n";
         tar.add(file);
     }
     if(isfile(inrbuild_pkgdir+"/output/data.tar.gz")){
@@ -120,7 +127,9 @@ public void create_binary_package(){
     tar.load(inrbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version")+"_"+getArch()+".inary");
     tar.add("data.tar.gz");
     tar.add("metadata.yaml");
+    tar.add("files");
     writefile("metadata.yaml",new_data);
+    writefile("files",files_data);
     if(isfile(inrbuild_srcpath+"/postOps")){
         copy_file(inrbuild_srcpath+"/postOps","./postOps");
         tar.add("postOps");

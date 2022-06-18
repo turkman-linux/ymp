@@ -887,6 +887,10 @@ return true if data ends with f
 
 safe basename. return filename
 
+`string sdirname(string path):`
+
+safe dirname. return path name
+
 `string[] reverse(string[] array):`
 
 reverse a string array

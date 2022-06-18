@@ -264,11 +264,17 @@ public string srealpath(string path){
 //DOC: find file and directories with parents
 public string[] find(string path){
     find_ret = {};
+    if(path == "" || path == null){
+        return {};
+    }
     find_operation(path);
     return find_ret;
 }
 private string[] find_ret;
 private void find_operation(string path){
+    if(path == "" || path == null){
+        return;
+    }
     find_ret += srealpath(path);
     if(isdir(path)){
         foreach(string p in listdir(path)){

@@ -46,3 +46,29 @@ public bool quarantine_validate_files(){
     return true;
 }
 
+public void quarantine_install(){
+    string rootfs = srealpath(get_storage()+"/quarantine/rootfs/");
+    string files = srealpath(get_storage()+"/quarantine/files/");
+    string metadata = srealpath(get_storage()+"/quarantine/metadata/");
+    foreach(string fname in find(rootfs)){
+        string ftarget = get_destdir()+fname[rootfs.length:];
+        string fdir = sdirname(ftarget);
+        info("Installing: "+ftarget);
+        if(!isdir(fname)){
+            create_dir(fdir);
+        }
+        if(isfile(fname)){
+            move_file(fname,ftarget);
+        }
+    }
+    foreach(string fname in listdir(files)){
+        if(isfile(fname)){
+            move_file(fname,get_storage()+"/files/"+fname);
+        }
+    }
+    foreach(string fname in listdir(metadata)){
+        if(isfile(fname)){
+            move_file(fname,get_storage()+"/metadata/"+fname);
+        }
+    }
+}

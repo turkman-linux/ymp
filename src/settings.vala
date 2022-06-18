@@ -50,6 +50,13 @@ public string get_storage(){
     return srealpath(DESTDIR+"/"+STORAGEDIR);
 }
 
+public string get_destdir(){
+    if(DESTDIR == null){
+        DESTDIR = "/";
+    }
+    return DESTDIR;
+}
+
 //DOC: `string get_storage():`
 //DOC: get inary storage directory. (default: /var/lib/inary)
 public string get_build_dir(){

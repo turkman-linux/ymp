@@ -138,6 +138,7 @@ public class archive {
             entry.set_pathname(target_path+"/"+path);
 
             if (extractor.write_header (entry) != Archive.Result.OK) {
+                error_add("Failed to write file: "+entry.pathname());
                 continue;
             }
 
@@ -149,6 +150,7 @@ public class archive {
                 }
             }
         }
+        error(3);
     }
     //DOC: `string archive.readfile(string path):`
     //DOC: Read **path** file to target directory
@@ -193,8 +195,10 @@ public class archive {
             if (target_path == null){
                 target_path = "./";
             }
-
+            info("Extracting: "+entry.pathname());
+            entry.set_pathname(target_path+"/"+entry.pathname());
             if (extractor.write_header (entry) != Archive.Result.OK) {
+                error_add("Failed to write file: "+entry.pathname());
                 continue;
             }
 
@@ -206,6 +210,7 @@ public class archive {
                 }
             }
         }
+        error(3);
     }
 
 }

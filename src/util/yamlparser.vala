@@ -113,13 +113,16 @@ public class yamlfile {
     }
 
     private string get_area_single(string fdata,string path){
-        if(fdata == null){
+        if(fdata == null|| fdata == ""){
             return "";
         }
         int level = 0;
         bool e = false;
         string area = "";
         int i = 0;
+        if(!has_area(fdata,path)){
+            return "";
+        }
         foreach(string line in ssplit(trim(fdata),"\n")){
             i +=1;
             if(i<offset){
