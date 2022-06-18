@@ -59,6 +59,16 @@ sandbox user gid value (default: 0)
 
 create archive file
 
+### file.c
+
+`int filesize(string path):`
+
+calculate file size
+
+`string getArch():`
+
+get current cpu architecture
+
 # src/color.vala
 ## Colors
 
@@ -90,6 +100,31 @@ resolve dependencies
 `string[] resolve_dependencies(string[] names):`
 
 return package name list with required dependencies
+
+# src/data/inrbuild.vala
+## inrbuild file functions.
+
+inary uses archlinux inrbuild format.
+
+`void set_inrbuild_srcpath(string path):`
+
+configure inrbuild file directory
+
+`void set_inrbuild_srcpath(string path):`
+
+configure inrbuild file directory
+
+`string get_inrbuild_value(string variable):`
+
+get a variable from inrbuild file
+
+`string[] get_inrbuild_array(string variable):`
+
+get a array from inrbuild file
+
+`int run_inrbuild_function(string function):`
+
+run a build function from inrbuild file
 
 # src/data/package.vala
 ## class package
@@ -209,31 +244,6 @@ get package object from installed package name
 `bool is_installed_package():`
 
 return true if package installed
-
-# src/data/pkgbuild.vala
-## PKGBUILD file functions.
-
-inary uses archlinux pkgbuild format.
-
-`void set_pkgbuild_srcpath(string path):`
-
-configure pkgbuild file directory
-
-`void set_pkgbuild_srcpath(string path):`
-
-configure pkgbuild file directory
-
-`string get_pkgbuild_value(string variable):`
-
-get a variable from pkgbuild file
-
-`string[] get_pkgbuild_array(string variable):`
-
-get a array from pkgbuild file
-
-`int run_pkgbuild_function(string function):`
-
-run a build function from pkgbuild file
 
 # src/data/quarantine.vala
 `bool quarantine_validate_files():`
@@ -555,6 +565,10 @@ Remove files and directories (like **rm -rf**)
 `void move_file(stirg src, string desc):`
 
 move **src** file to **desc**
+
+`void copy_file(string src, string desc):`
+
+copy **src** file to **desc**. File permissions and owners are ignored.
 
 `string[] listdir(string path):`
 

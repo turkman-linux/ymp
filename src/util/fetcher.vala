@@ -80,6 +80,10 @@ public void set_fetcher_progress(fetcher_process proc){
 //DOC: download file content and write to file
 public bool fetch(string url, string path){
     info(colorize("Download: ",yellow)+url);
+    if(!(startswith(url,"http://") || startswith(url,"https://"))){
+        warning("Unsupported url: "+url);
+        return false;
+    }
     fetcher_filename = path+".part";
     if(isfile(path)){
         return true;

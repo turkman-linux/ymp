@@ -48,3 +48,10 @@ public extern int sandbox_gid;
 public extern void write_archive(string output,string[] files);
 private extern int afilter;
 private extern int aformat;
+//DOC: ### file.c
+//DOC: `int filesize(string path):`
+//DOC: calculate file size
+public extern int filesize(string path);
+//DOC: `string getArch():`
+//DOC: get current cpu architecture
+public extern string getArch();

@@ -194,6 +194,12 @@ public void move_file(string src, string desc){
     }
 }
 
+//DOC: `void copy_file(string src, string desc):`
+//DOC: copy **src** file to **desc**. File permissions and owners are ignored.
+public void copy_file(string src, string desc){
+    writefile(desc,readfile(src));
+}
+
 //DOC: `string[] listdir(string path):`
 //DOC: list directory content and result as array
 public string[] listdir(string path){
