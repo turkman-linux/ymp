@@ -69,6 +69,10 @@ calculate file size
 
 get current cpu architecture
 
+`void sync():`
+
+sync call
+
 # src/color.vala
 ## Colors
 

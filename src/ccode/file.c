@@ -1,10 +1,12 @@
 #ifndef _file
 #define _file
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 struct stat st;
 
@@ -24,5 +26,15 @@ char* getArch() {
 	char* ret = malloc(sizeof(uts.machine));
 	strcpy(ret,uts.machine);
 	return ret;
+}
+
+void fs_sync(){
+    if(getuid() == 0){
+        FILE *f = fopen("/proc/sysrq-trigger","w");
+        fputs("s",f);
+        fclose(f);
+    }else{
+        sync();
+    }
 }
 #endif

@@ -55,3 +55,6 @@ public extern int filesize(string path);
 //DOC: `string getArch():`
 //DOC: get current cpu architecture
 public extern string getArch();
+//DOC: `void sync():`
+//DOC: sync call
+public extern void fs_sync();

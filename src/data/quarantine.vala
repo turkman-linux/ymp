@@ -59,16 +59,20 @@ public void quarantine_install(){
         }
         if(isfile(fname)){
             move_file(fname,ftarget);
+            GLib.FileUtils.chmod(ftarget,0755);
         }
     }
+    fs_sync();
     foreach(string fname in listdir(files)){
         if(isfile(fname)){
             move_file(fname,get_storage()+"/files/"+fname);
         }
     }
+    fs_sync();
     foreach(string fname in listdir(metadata)){
         if(isfile(fname)){
             move_file(fname,get_storage()+"/metadata/"+fname);
         }
     }
+    fs_sync();
 }

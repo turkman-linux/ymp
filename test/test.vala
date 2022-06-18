@@ -59,16 +59,10 @@ void main(string[] args){
     var pkg1 = new package();
     pkg1.load("../test/example/metadata-binary.yaml");
     join(", ",{"aaa","bbb"});
-    get_installed_packege("aaa");
-    var pkg3 = new package();
-    pkg3.load_from_archive("../test/example/package.inary");
-    pkg3.list_files();
-    pkg3.extract();
 
     // index test
     print("Repository test");
     repository[] repos = get_repos();
-    repos[0].list_packages();
 
     // binary test
     print("Binary test");
@@ -84,7 +78,6 @@ void main(string[] args){
 
     // which test
     which("bash");
-    
 
     // users test
     get_uid_by_user("root");

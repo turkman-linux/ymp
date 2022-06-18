@@ -150,6 +150,7 @@ public class archive {
                 }
             }
         }
+        fs_sync();
         error(3);
     }
     //DOC: `string archive.readfile(string path):`
@@ -210,6 +211,7 @@ public class archive {
                 }
             }
         }
+        fs_sync();
         error(3);
     }
 
