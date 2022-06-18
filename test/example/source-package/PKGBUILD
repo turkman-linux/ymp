@@ -20,7 +20,6 @@ source=(
   https://invisible-mirror.net/archives/$pkgname/$pkgname-$pkgver.tar.gz{,.asc}
 )
 sha1sums=('SKIP')
-
 build() {
   cd $pkgname-$pkgver
 

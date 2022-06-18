@@ -79,18 +79,16 @@ public void set_fetcher_progress(fetcher_process proc){
 //DOC: `bool fetch(string url, string path):`
 //DOC: download file content and write to file
 public bool fetch(string url, string path){
-    info("Download: "+url);
-    fetcher_filename = path;
-    var file = File.new_for_path (path);
-    if (file.query_exists ()) {
-        try{
-            file.delete ();
-        }catch(Error e){
-            error_add(e.message);
-            return false;
-        }
+    info(colorize("Download: ",yellow)+url);
+    fetcher_filename = path+".part";
+    if(isfile(path)){
+        return true;
+    }
+    if(isfile(fetcher_filename)){
+        remove_file(fetcher_filename);
     }
     try{
+        var file = File.new_for_path (fetcher_filename);
         fetcher_data_output_steam = new DataOutputStream (file.create (FileCreateFlags.REPLACE_DESTINATION));
     }catch(Error e){
         error_add(e.message);
@@ -114,7 +112,13 @@ public bool fetch(string url, string path){
     handle.perform();
     int i;
     handle.getinfo(Curl.Info.RESPONSE_CODE, out i);
-    return i == 200;
+    if(i == 200){
+        if(isfile(fetcher_filename)){
+            move_file(fetcher_filename,path);
+            return true;
+        }
+    }
+    return false;
 }
 
 //DOC: `bool fetch_string(string url, string path):`

@@ -53,6 +53,12 @@ sandbox user uid value (default: 0)
 
 sandbox user gid value (default: 0)
 
+### archive-create.c
+
+`void write_archive(string output,string[] files):`
+
+create archive file
+
 # src/color.vala
 ## Colors
 
@@ -404,6 +410,14 @@ Get archive file list
 `void archive.set_target(string path):`
 
 Change target directory for extract
+
+`void archive.add(string path):`
+
+Add a file to archive create list
+
+`void archive.create():`
+
+Create archive.
 
 `void archive.extract(string path):`
 

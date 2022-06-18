@@ -1,0 +1,22 @@
+inary:
+  source:
+    name: ncurses
+    version: 6.3
+    release: 3
+    description: System V Release 4.0 curses emulation library
+    makedepends:
+      - autoconf-archive
+    depends:
+      - glibc
+      - gcc-libs
+    archive:
+      - https://invisible-mirror.net/archives/ncurses/ncurses-6.3.tar.gz
+      - https://invisible-mirror.net/archives/ncurses/ncurses-6.3.tar.gz.asc
+    provides:
+      - libncurses++w.so
+      - libformw.so
+      - libmenuw.so
+      - libpanelw.so
+      - libncursesw.so
+    replaces:
+      - alacritty-terminfo

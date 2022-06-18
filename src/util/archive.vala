@@ -48,6 +48,8 @@ public class archive {
     //DOC: load archive file from **path**
     public void load(string path){
         archive_path = path;
+        afilter = 0;
+        aformat = 0;
     }
     private void load_archive(string path){
         archive = new Archive.Read();
@@ -88,6 +90,22 @@ public class archive {
         if(path != null){
             target_path = path;
         }
+    }
+
+    //DOC: `void archive.add(string path):`
+    //DOC: Add a file to archive create list
+    private string[] archive_add_list;
+    public void add(string path){
+        if(archive_add_list == null){
+            archive_add_list = {};
+        }
+        archive_add_list += path;
+    }
+    
+    //DOC: `void archive.create():`
+    //DOC: Create archive.
+    public void create(){
+        write_archive(archive_path,archive_add_list);
     }
 
     //DOC: `void archive.extract(string path):`

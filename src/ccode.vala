@@ -41,3 +41,10 @@ public extern int sandbox_uid;
 //DOC: `int sandbox_gid:`
 //DOC: sandbox user gid value (default: 0)
 public extern int sandbox_gid;
+//DOC: ### archive-create.c
+//DOC: `void write_archive(string output,string[] files):`
+//DOC: create archive file
+//this functions and values used by util/archive.vala
+public extern void write_archive(string output,string[] files);
+private extern int afilter;
+private extern int aformat;
