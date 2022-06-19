@@ -191,9 +191,9 @@ public string[] list_installed_packages(){
     }
     return pkgs;
 }
-//DOC: `package get_installed_packege(string name):`
+//DOC: `package get_installed_package(string name):`
 //DOC: get package object from installed package name
-public package get_installed_packege(string name){
+public package get_installed_package(string name){
     package pkg = new package();
     string metadata = get_metadata_path(name);
     debug("Loading package metadata from: "+metadata);

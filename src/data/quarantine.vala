@@ -1,6 +1,10 @@
 private string[] quarantine_file_cache_list;
 private string[] quarantine_file_conflict_list;
 private string[] quarantine_file_broken_list;
+
+public void quarantine_reset(){
+  remove_all(get_storage()+"/quarantine/");
+}
 //DOC: `bool quarantine_validate_files():`
 //DOC: check quarantine file hashes
 public bool quarantine_validate_files(){
@@ -21,7 +25,7 @@ public bool quarantine_validate_files(){
                 path = path.strip();
                 string file_path = srealpath(get_storage()+"/quarantine/rootfs/"+path);
                 if(!isfile(file_path)){
-                    warning("Package file missing: /"+path);
+                    warning("Package file missing: /"+file_path);
                     quarantine_file_broken_list += file_path;
                     continue;
                 }
@@ -53,7 +57,7 @@ public void quarantine_install(){
     foreach(string fname in find(rootfs)){
         string ftarget = get_destdir()+fname[rootfs.length:];
         string fdir = sdirname(ftarget);
-        info("Installing: "+ftarget);
+        debug("Installing: "+ftarget);
         if(!isdir(fname)){
             create_dir(fdir);
         }
@@ -64,14 +68,14 @@ public void quarantine_install(){
     }
     fs_sync();
     foreach(string fname in listdir(files)){
-        if(isfile(fname)){
-            move_file(fname,get_storage()+"/files/"+fname);
+        if(isfile(files+"/"+fname)){
+            move_file(files+"/"+fname,get_storage()+"/files/"+fname);
         }
     }
     fs_sync();
     foreach(string fname in listdir(metadata)){
-        if(isfile(fname)){
-            move_file(fname,get_storage()+"/metadata/"+fname);
+        if(isfile(metadata+"/"+fname)){
+            move_file(metadata+"/"+fname,get_storage()+"/metadata/"+fname);
         }
     }
     fs_sync();

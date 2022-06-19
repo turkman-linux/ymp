@@ -241,7 +241,7 @@ package functions outside package class
 
 return installed package names array
 
-`package get_installed_packege(string name):`
+`package get_installed_package(string name):`
 
 get package object from installed package name
 
