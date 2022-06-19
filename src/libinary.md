@@ -530,10 +530,6 @@ Read file from **path** and return content
 
 read **n** byte from file
 
-`long get_filesize(string path):`
-
-calculate file size
-
 `string readfile(string path):`
 
 read file from **path** and remove commends

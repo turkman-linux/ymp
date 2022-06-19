@@ -87,16 +87,6 @@ public string readfile_byte(string path, long n){
 	return (string) buf;
 }
 
-//DOC: `long get_filesize(string path):`
-//DOC: calculate file size
-public long get_filesize(string path){
-    FileStream stream = FileStream.open (path, "r");
-	assert (stream != null);
-
-	// get file size:
-	stream.seek (0, FileSeek.END);
-	return stream.tell ();
-}
 
 //DOC: `string readfile(string path):`
 //DOC: read file from **path** and remove commends
