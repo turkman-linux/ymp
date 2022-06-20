@@ -5,8 +5,11 @@ public int build_operation(string[] args){
         if(!get_bool("no-clear")){
             remove_all(inrbuild_buildpath);
         }
-        build_package();
+        create_metadata_info();
+        fetch_package_sources();
         create_source_archive();
+        extract_package_sources();
+        build_package();
         create_binary_package();
     }
     return 0;
@@ -18,23 +21,36 @@ private void set_build_target(string src_path){
     set_inrbuild_buildpath(build_path);
 }
 
-private void build_package(){
-    info("Building package from:"+inrbuild_buildpath);
-    cd(inrbuild_srcpath);
+private void fetch_package_sources(){
+    cd(inrbuild_buildpath);
     var tar = new archive();
     foreach(string src in get_inrbuild_array("source")){
         if(src == ""){
             continue;
         }
         string srcfile = sbasename(src);
-        if(!get_bool("no-download")){
             fetch(src,srcfile);
+    }
+}
+
+private void extract_package_sources(){
+    cd(inrbuild_buildpath);
+    var tar = new archive();
+    foreach(string src in get_inrbuild_array("source")){
+        if(src == ""){
+            continue;
         }
+        string srcfile = sbasename(src);
         if(tar.is_archive(srcfile)){
             tar.load(srcfile);
             tar.extract_all();
         }
     }
+}
+
+private void build_package(){
+    info("Building package from:"+inrbuild_buildpath);
+    cd(inrbuild_buildpath);
     int status = 0;
     if(!get_bool("no-build")){
         string[] build_actions = {"pkgver","prepare", "build"};
@@ -58,20 +74,33 @@ private void build_package(){
             }
         }
     }
-    create_metadata_info();
     create_files_info();
 }
 
 private void create_source_archive(){
     cd(inrbuild_srcpath);
     string metadata = get_inrbuild_metadata();
-    writefile(srealpath(inrbuild_srcpath+"/metadata.yaml"),metadata.strip());
+    writefile(srealpath(inrbuild_buildpath+"/metadata.yaml"),metadata.strip());
     var tar = new archive();
     tar.load(output_package_path+"_source.inary");
-    foreach(string file in listdir(".")){
-        if(!endswith(file,".inary")){
-            tar.add(file);
+    foreach(string file in find(inrbuild_srcpath)){
+        if(!endswith(file,".inary") && isfile(file)){
+            file = file[(inrbuild_srcpath).length:];
+            create_dir(sdirname(inrbuild_buildpath+file));
+            copy_file(inrbuild_srcpath+file,inrbuild_buildpath+file);
         }
+    }
+    cd(inrbuild_buildpath);
+    foreach(string file in find(inrbuild_buildpath)){
+        file = file[(inrbuild_buildpath).length:];
+        if(file[0] == '/'){
+            file = file[1:];
+        }
+        if(file == null || file == "" || startswith(file,"output")){
+            continue;
+        }
+        print(file);
+        tar.add(file);
     }
     tar.create();
 }
@@ -140,10 +169,10 @@ private void create_data_file(){
     tar.create();
     string hash = calculate_sha1sum(inrbuild_buildpath+"/output/data.tar.gz");
     int size = filesize(inrbuild_buildpath+"/output/data.tar.gz");
-    string new_data = readfile("metadata.yaml");
+    string new_data = readfile(inrbuild_buildpath+"/output/metadata.yaml");
     new_data += "    archive-hash: "+hash+"\n";
     new_data += "    archive-size: "+size.to_string()+"\n";
-    writefile("metadata.yaml",new_data);
+    writefile(inrbuild_buildpath+"/output/metadata.yaml",new_data);
     
 }
 

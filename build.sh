@@ -1,5 +1,5 @@
 #!/bin/bash -i
-rm -rf build || true
+rm -rf build ./test/example/rootfs /tmp/inary-buildŞ|| true
 # find src -type f -exec sed -i  "s/ *$//g" {} \;
 meson build $@ -Ddebug=false -Dtools=true
 ninja -C build
