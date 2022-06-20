@@ -38,12 +38,16 @@ public int install_main(string[] args){
 	        p.extract();
 	    }
 	}
+	error(1);
 	quarantine_validate_files();
+	error(1);
 	string[] leftovers = calculate_leftover(pkg_obj);
 	quarantine_install();
+	error(1);
 	foreach(string file in leftovers){
-	    remove_file(file);
+	    remove_file(DESTDIR+"/"+file);
 	}
+	error(1);
     return 0;
 }
 public string[] calculate_leftover(package[] pkgs){

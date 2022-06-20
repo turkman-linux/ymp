@@ -97,8 +97,12 @@ private void quarantine_import_from_path(string path){
     move_file(path+"/metadata.yaml",metadata+"/"+p.name+".yaml");
     move_file(path+"/files",files+"/"+p.name);
     foreach(string fname in find(path)){
-
+        string ftarget = fname[path.length:];
+        if(isfile(fname)){
+            create_dir(rootfs+sdirname(ftarget));
+            move_file(fname,rootfs+ftarget);
+        }
     }
-    
+    error(2);
     fs_sync();
 }

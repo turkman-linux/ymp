@@ -154,12 +154,14 @@ public class package {
             return;
         }
         if(is_source){
-            create_dir("/tmp/inary-build/"+name);
-            pkgfile.set_target("/tmp/inary-build/"+name);
+            string curdir = pwd();
+            create_dir(DESTDIR+"/tmp/inary-build/"+name);
+            pkgfile.set_target(DESTDIR+"/tmp/inary-build/"+name);
             pkgfile.extract_all();
-            set_build_target("/tmp/inary-build/"+name);
+            set_build_target(DESTDIR+"/tmp/inary-build/"+name);
             build_package();
             quarantine_import_from_path(inrbuild_buildpath+"/output");
+            cd(curdir);
             return;
         }
         var rootfs_medatata = get_storage()+"/quarantine/metadata/";

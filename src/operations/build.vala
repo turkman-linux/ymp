@@ -19,8 +19,8 @@ private void set_build_target(string src_path){
 }
 
 private void build_package(){
-    cd(inrbuild_buildpath);
     info("Building package from:"+inrbuild_buildpath);
+    cd(inrbuild_srcpath);
     var tar = new archive();
     foreach(string src in get_inrbuild_array("source")){
         if(src == ""){
@@ -35,29 +35,27 @@ private void build_package(){
             tar.extract_all();
         }
     }
-    if(get_bool("no-build")){
-        return;
-    }
     int status = 0;
-    string[] build_actions = {"pkgver","prepare", "build"};
-    foreach(string func in build_actions){
-        info("Running build action: "+func);
-        status = run_inrbuild_function(func);
-        if(status != 0){
-            error_add("Failed to build package. Action: "+func);
-            error(status);
+    if(!get_bool("no-build")){
+        string[] build_actions = {"pkgver","prepare", "build"};
+        foreach(string func in build_actions){
+            info("Running build action: "+func);
+            status = run_inrbuild_function(func);
+            if(status != 0){
+                error_add("Failed to build package. Action: "+func);
+                error(status);
+            }
         }
     }
-    if(get_bool("no-install")){
-        return;
-    }
-    string[] install_actions = {"check","package"};
-    foreach(string func in install_actions){
-        info("Running build action: "+func);
-        status = run_inrbuild_function(func);
-        if(status != 0){
-            error_add("Failed to build package. Action: "+func);
-            error(status);
+    if(!get_bool("no-install")){
+        string[] install_actions = {"check","package"};
+        foreach(string func in install_actions){
+            info("Running build action: "+func);
+            status = run_inrbuild_function(func);
+            if(status != 0){
+                error_add("Failed to build package. Action: "+func);
+                error(status);
+            }
         }
     }
     create_metadata_info();
@@ -69,7 +67,6 @@ private void create_source_archive(){
     string metadata = get_inrbuild_metadata();
     writefile(srealpath(inrbuild_srcpath+"/metadata.yaml"),metadata.strip());
     var tar = new archive();
-    print(inrbuild_srcpath+"/source.inary");
     tar.load(output_package_path+"_source.inary");
     foreach(string file in listdir(".")){
         if(!endswith(file,".inary")){
@@ -87,13 +84,16 @@ private void create_files_info(){
             continue;
         }
         file = file[(inrbuild_buildpath+"/output/").length:];
+        if(file == "metadata.yaml"){
+            continue;
+        }
+        debug("File info add: "+ file);
         files_data += calculate_sha1sum(file)+" "+file+"\n";
     }
-    writefile("files",files_data);
+    writefile(inrbuild_buildpath+"/output/files",files_data);
 }
 private string output_package_path;
 private void create_metadata_info(){
-    cd(inrbuild_buildpath+"/output");
     string metadata = get_inrbuild_metadata();
     var yaml = new yamlfile();
     yaml.data = metadata;
@@ -118,11 +118,10 @@ private void create_metadata_info(){
         }
     }
     output_package_path = inrbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version");
-    writefile("metadata.yaml",new_data);
+    writefile(inrbuild_buildpath+"/output/metadata.yaml",new_data);
 }
 
 private void create_data_file(){
-    cd(inrbuild_buildpath+"/output");
     var tar = new archive();
     tar.load(inrbuild_buildpath+"/output/data.tar.gz");
     aformat=1;

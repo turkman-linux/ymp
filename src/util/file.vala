@@ -181,9 +181,13 @@ public void move_file(string src, string desc){
     debug("Move: "+src +" => "+desc);
     GLib.File dest_file = GLib.File.new_for_path(src);
     GLib.File src_file = GLib.File.new_for_path(desc);
+    if(isfile(desc)){
+        remove_file(desc);
+    }
     try {
         dest_file.move(src_file, FileCopyFlags.NONE, null);
     } catch (Error e) {
+        error_add("Failed to move file: "+src + " => "+desc);
         error_add(e.message);
     }
 }
