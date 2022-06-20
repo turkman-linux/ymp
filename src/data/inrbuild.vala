@@ -3,7 +3,7 @@
 
 // private variables used by functions
 private string inrbuild_srcpath;
-private string inrbuild_pkgdir;
+private string inrbuild_buildpath;
 private string inrbuild_header;
 
 
@@ -12,7 +12,7 @@ private void inrbuild_init(){
         inrbuild_srcpath = "./";
     }
     inrbuild_header = "
-    pkgdir="+inrbuild_pkgdir+"/output
+    pkgdir="+inrbuild_buildpath+"/output
     DESTDIR=$pkgdir
     alias python=python3
     alias msg2=echo
@@ -83,7 +83,7 @@ public void set_inrbuild_srcpath(string path){
 //DOC: `void set_inrbuild_srcpath(string path):`
 //DOC: configure inrbuild file directory
 public void set_inrbuild_buildpath(string path){
-    inrbuild_pkgdir = srealpath(path);
+    inrbuild_buildpath = srealpath(path);
     inrbuild_init();
 }
 
