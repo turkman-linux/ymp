@@ -135,21 +135,21 @@ public string pwd(){
 //DOC: `int create_dir(string path)`
 //DOC: create **path** directory
 public int create_dir(string path){
-    debug("Create: "+path);
-    return GLib.DirUtils.create_with_parents(path,0755);
+    debug("Create directory: "+path);
+    return GLib.DirUtils.create_with_parents(path,0644);
 }
 
 //DOC: `int remove_dir(string path)`
 //DOC: remove **path** directory
 public int remove_dir(string path){
-    debug("Remove: "+path);
+    debug("Remove directory: "+path);
     return GLib.DirUtils.remove(path);
 }
 
 //DOC: `int remove_file(string path)`
 //DOC: remove **path** file
 public int remove_file(string path){
-    debug("Remove: "+path);
+    debug("Remove file: "+path);
     File file = File.new_for_path(path);
     try {
         file.delete();
@@ -235,14 +235,12 @@ public bool is64bit(string path){
 }
 
 public bool isfile(string path){
-    debug("Check: "+path);
     return GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_REGULAR);
 }
 
 //DOC: `bool isdir(string path):`
 //DOC: Check **path** is directory
 public bool isdir(string path){
-    debug("Check: "+path);
     return GLib.FileUtils.test(path, GLib.FileTest.IS_DIR);
 }
 
