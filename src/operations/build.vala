@@ -1,10 +1,7 @@
 public int build_operation(string[] args){
-    var tar = new archive();
     foreach(string arg in args){
         set_build_target(arg);
-        if(!get_bool("no-clear")){
-            remove_all(inrbuild_buildpath);
-        }
+        remove_all(inrbuild_buildpath);
         create_metadata_info();
         fetch_package_sources();
         create_source_archive();
