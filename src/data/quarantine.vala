@@ -22,9 +22,9 @@ public bool quarantine_validate_files(){
         // uses sha1sum
         string file_data = readfile(rootfs_files+files_list);
         foreach(string line in ssplit(file_data,"\n")){
-            if(line.length > 40){
+            if(line.length > 41){
                 // fetch absolute file path
-                string path = line[40:];
+                string path = line[41:];
                 path = path.strip();
                 string file_path = srealpath(get_storage()+"/quarantine/rootfs/"+path);
                 if(!isfile(file_path)){

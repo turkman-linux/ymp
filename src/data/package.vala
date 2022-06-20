@@ -65,6 +65,9 @@ public class package {
     //DOC: `string[] package.list_files():`
     //DOC: return inary package files list
     public string[] list_files(){
+        if(is_source){
+            return readfile(inrbuild_buildpath+"/output/files").split("\n");
+        }
         if(pkgfile == null){
             if(is_installed_package(name)){
                 string files = readfile(get_storage()+"/files/"+name);
@@ -159,6 +162,9 @@ public class package {
             pkgfile.set_target(DESTDIR+"/tmp/inary-build/"+name);
             pkgfile.extract_all();
             set_build_target(DESTDIR+"/tmp/inary-build/"+name);
+            fetch_package_sources();
+            extract_package_sources();
+            create_metadata_info();
             build_package();
             quarantine_import_from_path(inrbuild_buildpath+"/output");
             cd(curdir);

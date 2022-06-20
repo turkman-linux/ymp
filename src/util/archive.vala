@@ -128,9 +128,7 @@ public class archive {
             if (entry.pathname() != path){
                 continue;
             }
-            #if DEBUG
             debug("Extracting: "+path);
-            #endif
 
             if (target_path == null){
                 target_path = "./";

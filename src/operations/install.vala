@@ -59,15 +59,15 @@ public string[] calculate_leftover(package[] pkgs){
         if(is_installed_package(p.name)){
              //new files list
              foreach(string file in p.list_files()){
-                 if(file.length > 40){
-                     new_files += file[40:];
+                 if(file.length > 41){
+                     new_files += file[41:];
                  }
              }
              // installed files
              package pi = get_installed_package(p.name);
              foreach(string file in pi.list_files()){
-                 if(file.length > 40){
-                     installed_files += file[40:];
+                 if(file.length > 41){
+                     installed_files += file[41:];
                  }
              }
         }
