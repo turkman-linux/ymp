@@ -159,6 +159,8 @@ public class package {
             pkgfile.extract_all();
             set_build_target("/tmp/inary-build/"+name);
             build_package();
+            quarantine_import_from_path(inrbuild_buildpath+"/output");
+            return;
         }
         var rootfs_medatata = get_storage()+"/quarantine/metadata/";
         var rootfs_files = get_storage()+"/quarantine/files/";
