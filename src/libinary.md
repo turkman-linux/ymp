@@ -311,7 +311,7 @@ get all repositories as array
 
 get package object from all repositories
 
-`package get_package_from_repository(string path):`
+`package get_package_from_file(string path):`
 
 get package object from inary file archive
 

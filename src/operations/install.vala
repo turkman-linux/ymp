@@ -39,8 +39,11 @@ public int install_main(string[] args){
 	    }
 	}
 	quarantine_validate_files();
-	calculate_leftover(pkg_obj);
+	string[] leftovers = calculate_leftover(pkg_obj);
 	quarantine_install();
+	foreach(string file in leftovers){
+	    remove_file(file);
+	}
     return 0;
 }
 public string[] calculate_leftover(package[] pkgs){

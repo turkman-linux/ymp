@@ -20,6 +20,7 @@ public class package {
     public string version;
     public string[] dependencies;
     public int release;
+    public bool is_source;
     public string repo_address;
     private string pkgarea;
     private archive pkgfile;
@@ -48,7 +49,20 @@ public class package {
         pkgfile.load(path);
         var metadata = pkgfile.readfile("metadata.yaml");
         yaml = new yamlfile();
-        load_from_data(yaml.get_area(metadata,"inary.package"));
+        if(yaml.has_area(metadata,"inary")){
+            string inarydata = yaml.get_area(metadata,"inary");
+            if(yaml.has_area(inarydata,"package")){
+                is_source = false;
+                load_from_data(yaml.get_area(inarydata,"package"));
+            }else if(yaml.has_area(inarydata,"source")){
+                is_source = true;
+                load_from_data(yaml.get_area(inarydata,"source"));
+            }else{
+                error_add("Package is broken");
+            }
+        }else{
+            error_add("Package is broken");
+        }
     }
 
     //DOC: `string[] package.list_files():`

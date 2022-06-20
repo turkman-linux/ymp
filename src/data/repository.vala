@@ -18,6 +18,7 @@ public class repository {
     public string address;
     private string indexarea;
     public string[] packages;
+    public string[] sources;
 
     //DOC: `void repository.load(string repo_name):`
     //DOC: load repository data from repo name
@@ -28,6 +29,7 @@ public class repository {
         name = yaml.get_value(indexarea,"name");
         address = yaml.get_value(indexarea,"address");
         packages = yaml.get_area_list(indexarea,"package");
+        sources = yaml.get_area_list(indexarea,"source");
 
     }
 
@@ -109,7 +111,7 @@ public package get_package_from_repository(string name){
     return ret;
 }
 
-//DOC: `package get_package_from_repository(string path):`
+//DOC: `package get_package_from_file(string path):`
 //DOC: get package object from inary file archive
 public package get_package_from_file(string path){
     package pkg = new package();
