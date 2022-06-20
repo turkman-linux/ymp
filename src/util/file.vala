@@ -135,18 +135,21 @@ public string pwd(){
 //DOC: `int create_dir(string path)`
 //DOC: create **path** directory
 public int create_dir(string path){
+    debug("Create: "+path);
     return GLib.DirUtils.create_with_parents(path,0755);
 }
 
 //DOC: `int remove_dir(string path)`
 //DOC: remove **path** directory
 public int remove_dir(string path){
+    debug("Remove: "+path);
     return GLib.DirUtils.remove(path);
 }
 
 //DOC: `int remove_file(string path)`
 //DOC: remove **path** file
 public int remove_file(string path){
+    debug("Remove: "+path);
     File file = File.new_for_path(path);
     try {
         file.delete();
@@ -175,6 +178,7 @@ public int remove_all(string path){
 //DOC: `void move_file(stirg src, string desc):`
 //DOC: move **src** file to **desc**
 public void move_file(string src, string desc){
+    debug("Move: "+src +" => "+desc);
     GLib.File dest_file = GLib.File.new_for_path(src);
     GLib.File src_file = GLib.File.new_for_path(desc);
     try {
@@ -187,6 +191,7 @@ public void move_file(string src, string desc){
 //DOC: `void copy_file(string src, string desc):`
 //DOC: copy **src** file to **desc**. File permissions and owners are ignored.
 public void copy_file(string src, string desc){
+    debug("Copy: "+src +" => "+desc);
     writefile(desc,readfile(src));
 }
 
@@ -225,24 +230,21 @@ public bool is64bit(string path){
     return ctx[4] == '\x02';
 }
 
-//DOC: `bool isfile(string path):`
-//DOC: Check **path** is file
 public bool isfile(string path){
-    return GLib.FileUtils.test(path, GLib.FileTest.IS_REGULAR);
+    debug("Check: "+path);
+    return GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_REGULAR);
 }
 
 //DOC: `bool isdir(string path):`
 //DOC: Check **path** is directory
 public bool isdir(string path){
+    debug("Check: "+path);
     return GLib.FileUtils.test(path, GLib.FileTest.IS_DIR);
 }
 
 //DOC: `string srealpath(string path):`
 //DOC: safe realpath function.
 public string srealpath(string path){
-    if(!isdir(path)){
-        create_dir(path);
-    }
     string real = Posix.realpath(path);
     if(real == null){
         return path;
@@ -253,6 +255,7 @@ public string srealpath(string path){
 //DOC: `string[] find(string path):`
 //DOC: find file and directories with parents
 public string[] find(string path){
+    debug("Search: "+path);
     find_ret = {};
     if(path == "" || path == null){
         return {};

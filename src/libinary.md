@@ -311,6 +311,10 @@ get all repositories as array
 
 get package object from all repositories
 
+`package get_package_from_repository(string path):`
+
+get package object from inary file archive
+
 # src/inary.vala
 ## class Inary
 
@@ -581,10 +585,6 @@ return true if file is elf binary
 `bool is64bit(string path):`
 
 return true if file is elf binary
-
-`bool isfile(string path):`
-
-Check **path** is file
 
 `bool isdir(string path):`
 

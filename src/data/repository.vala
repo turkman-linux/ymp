@@ -75,6 +75,7 @@ private repository[] repos;
 //DOC: get all repositories as array
 public repository[] get_repos(){
     if(repos == null){
+        create_dir(get_storage()+"/index");
         repos = {};
     }else{
         return repos;
@@ -103,7 +104,16 @@ public package get_package_from_repository(string name){
         }
     }
     if(ret == null){
-        error_add("Package not satisfied: "+name);
+        error_add("Package not satisfied from repository: "+name);
     }
     return ret;
 }
+
+//DOC: `package get_package_from_repository(string path):`
+//DOC: get package object from inary file archive
+public package get_package_from_file(string path){
+    package pkg = new package();
+    pkg.load_from_archive(path);
+    return pkg;
+}
+

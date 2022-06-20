@@ -5,8 +5,8 @@ public int install_main(string[] args){
     }
     package[] pkg_obj = {};
     create_dir(get_storage()+"/packages/");
-create_dir(get_storage()+"/metadata/");
-create_dir(get_storage()+"/files/");
+    create_dir(get_storage()+"/metadata/");
+    create_dir(get_storage()+"/files/");
     // Download package files from repository
     foreach(string pkg in pkgs){
         if(isfile(pkg)){
@@ -24,10 +24,19 @@ create_dir(get_storage()+"/files/");
     if(get_bool("download-only")){
 	    return 0;	
 	}
-quarantine_reset();
+    quarantine_reset();
 	foreach(package p in pkg_obj){
 	    info("Extracting: "+p.name);
-	    p.extract();
+	    if(get_bool("reinstall")){
+	        p.extract();
+	    }else if(is_installed_package(p.name)){
+	        package pi = get_installed_package(p.name);
+	        if(pi.release < p.release){
+	            p.extract();
+	        }
+	    }else{
+	        p.extract();
+	    }
 	}
 	quarantine_validate_files();
 	calculate_leftover(pkg_obj);
@@ -35,13 +44,35 @@ quarantine_reset();
     return 0;
 }
 public string[] calculate_leftover(package[] pkgs){
+    string[] installed_files = {};
+    string[] new_files = {};
+    string[] leftover = {};
+    // Fetch installed and new files list
     foreach(package p in pkgs){
         if(is_installed_package(p.name)){
+             //new files list
+             foreach(string file in p.list_files()){
+                 if(file.length > 40){
+                     new_files += file[40:];
+                 }
+             }
+             // installed files
              package pi = get_installed_package(p.name);
-             print(pi.name);
+             foreach(string file in pi.list_files()){
+                 if(file.length > 40){
+                     installed_files += file[40:];
+                 }
+             }
         }
     }
-    return {};
+    // Calculate leftover files
+    foreach(string file in installed_files){
+        if(!(file in new_files)){
+            leftover += file;
+            debug("Leftover file detected: "+file);
+        }
+    }
+    return leftover;
 }
 public void install_init(){
     add_operation(install_main,{"install","it"});

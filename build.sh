@@ -9,4 +9,5 @@ export LD_LIBRARY_PATH="$(pwd)":$LD_LIBRARY_PATH
 yes | ./inary-test --allow-oem --ask || true
 echo "-------------"
 ./inarysh ../test/test.inarysh --allow-oem --destdir=../test/example/rootfs || true
-./inary-cli build ../test/example/source-package --allow-oem --verbose --no-download --no-build
+#./inary-cli build ../test/example/source-package --allow-oem --verbose
+./inary-cli install ../test/example/source-package/hello_2.10_x86_64.inary --destdir=../test/example/rootfs --allow-oem

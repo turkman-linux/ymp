@@ -57,6 +57,9 @@ if not get_option('colorize')
     add_project_arguments('-D', 'NOCOLOR', language: 'vala')
 endif
 
+if not get_option('ignore-oem')
+    add_project_arguments('-D', 'check_oem', language: 'vala')
+endif
 
 if get_option('libarchive')
     dependencies += dependency('libarchive', static:get_option('static'))

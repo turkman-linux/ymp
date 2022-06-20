@@ -19,7 +19,7 @@ public class package {
     public string name;
     public string version;
     public string[] dependencies;
-    public string[] provides;
+    public int release;
     public string repo_address;
     private string pkgarea;
     private archive pkgfile;
@@ -55,7 +55,12 @@ public class package {
     //DOC: return inary package files list
     public string[] list_files(){
         if(pkgfile == null){
+            if(is_installed_package(name)){
+                string files = readfile(get_storage()+"/files/"+name);
+                return ssplit(files,"\n");
+            }
             error_add("Package archive missing");
+            return {};
         }
         string files = pkgfile.readfile("files");
         return ssplit(files,"\n");
@@ -65,7 +70,7 @@ public class package {
         name = get("name");
         version = get("version");
         dependencies = gets("dependencies");
-        provides = gets("provides");
+        release = int.parse(get("release"));
     }
 
     //DOC: `string[] package.gets(string name):`
@@ -162,6 +167,9 @@ public class package {
             }
         }
         // extract metadata
+        if(isfile(rootfs_medatata+"metadata.yaml")){
+            remove_file(rootfs_medatata+"metadata.yaml");
+        }
         pkgfile.set_target(rootfs_medatata);
         pkgfile.extract("metadata.yaml");
         move_file(rootfs_medatata+"metadata.yaml",get_storage()+"/quarantine/metadata/"+name+".yaml");

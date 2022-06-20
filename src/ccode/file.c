@@ -2,6 +2,7 @@
 #define _file
 #define _GNU_SOURCE
 #include <stdio.h>
+#include <stdbool.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
 #include <string.h>

@@ -142,13 +142,15 @@ public Inary inary_init(string[] args){
     ctx_init();
     settings_init();
     inrbuild_init();
-    if(is_oem_available()){
-        warning("OEM detected! Inary may not working good.");
-        if(!get_bool("allow-oem")){
-            error_add("OEM not allowed! Please use --allow-oem to allow oem.");
-            error(31);
+    #if check_oem
+        if(is_oem_available()){
+            warning("OEM detected! Inary may not working good.");
+            if(!get_bool("allow-oem")){
+                error_add("OEM not allowed! Please use --allow-oem to allow oem.");
+                error(31);
+            }
         }
-    }
+    #endif
     set_env("G_DEBUG","fatal-criticals");
     error(31);
     inary_activated = true;

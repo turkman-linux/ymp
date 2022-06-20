@@ -13,8 +13,13 @@ private void resolve_process(string[] names){
         }
         // 2. process if not installed or need install
         if (!(name in need_install || is_installed_package(name))){
-            // get package object from repository
-            package pkg = get_package_from_repository(name);
+            // get package object
+            package pkg = null;
+            if(isfile(name)){
+                pkg = get_package_from_file(name);
+            }else{
+                pkg = get_package_from_repository(name);
+            }
             if(pkg == null){
                 return;
             }
