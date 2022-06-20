@@ -163,7 +163,7 @@ if(pkg2.is_installed()){
 
 ```
 
-`void package.load(string metadata):`
+`void package.load(string path):`
 
 Read package information from metadata file
 

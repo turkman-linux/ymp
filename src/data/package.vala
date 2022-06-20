@@ -25,20 +25,31 @@ public class package {
     private string pkgarea;
     private archive pkgfile;
 
-    //DOC: `void package.load(string metadata):`
+    //DOC: `void package.load(string path):`
     //DOC: Read package information from metadata file
-    public void load(string metadata){
-        yaml = new yamlfile();
-        yaml.load(metadata);
-        pkgarea = yaml.get("inary.package");
+    public void load(string path){
+        load_from_data(readfile(path));
         read_values();
     }
 
     //DOC: `void package.load_from_data(string data):`
     //DOC: Read package information from string data
-    public void load_from_data(string data){
+    public void load_from_data(string metadata){
         yaml = new yamlfile();
-        pkgarea = data;
+        if(yaml.has_area(metadata,"inary")){
+            string inarydata = yaml.get_area(metadata,"inary");
+            if(yaml.has_area(inarydata,"package")){
+                is_source = false;
+                pkgarea = yaml.get_area(inarydata,"package");
+            }else if(yaml.has_area(inarydata,"source")){
+                is_source = true;
+                pkgarea = yaml.get_area(inarydata,"source");
+            }else{
+                error_add("Package is broken");
+            }
+        }else{
+            error_add("Package is broken");
+        }
         read_values();
     }
 
@@ -48,21 +59,7 @@ public class package {
         pkgfile = new archive();
         pkgfile.load(path);
         var metadata = pkgfile.readfile("metadata.yaml");
-        yaml = new yamlfile();
-        if(yaml.has_area(metadata,"inary")){
-            string inarydata = yaml.get_area(metadata,"inary");
-            if(yaml.has_area(inarydata,"package")){
-                is_source = false;
-                load_from_data(yaml.get_area(inarydata,"package"));
-            }else if(yaml.has_area(inarydata,"source")){
-                is_source = true;
-                load_from_data(yaml.get_area(inarydata,"source"));
-            }else{
-                error_add("Package is broken");
-            }
-        }else{
-            error_add("Package is broken");
-        }
+        load_from_data(metadata);
     }
 
     //DOC: `string[] package.list_files():`
@@ -155,6 +152,13 @@ public class package {
         if(pkgfile == null){
             error_add("Package archive missing");
             return;
+        }
+        if(is_source){
+            create_dir("/tmp/inary-build/"+name);
+            pkgfile.set_target("/tmp/inary-build/"+name);
+            pkgfile.extract_all();
+            set_build_target("/tmp/inary-build/"+name);
+            build_package();
         }
         var rootfs_medatata = get_storage()+"/quarantine/metadata/";
         var rootfs_files = get_storage()+"/quarantine/files/";

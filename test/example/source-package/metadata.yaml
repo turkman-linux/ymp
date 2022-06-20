@@ -1,0 +1,8 @@
+inary:
+  source:
+    name: hello
+    version: 2.10
+    release: 1
+    description: Prints Hello World and more
+    archive:
+      - https://ftp.gnu.org/gnu/hello/hello-2.10.tar.gz

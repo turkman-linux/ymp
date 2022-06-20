@@ -1,9 +1,7 @@
 public int build_operation(string[] args){
     var tar = new archive();
     foreach(string arg in args){
-        set_inrbuild_srcpath(arg);
-        string build_path = srealpath(get_build_dir()+calculate_md5sum(inrbuild_srcpath+"/INRBUILD"));
-        set_inrbuild_buildpath(build_path);
+        set_build_target(arg);
         if(!get_bool("no-clear")){
             remove_all(inrbuild_buildpath);
         }
@@ -12,6 +10,12 @@ public int build_operation(string[] args){
         create_binary_package();
     }
     return 0;
+}
+
+private void set_build_target(string src_path){
+    set_inrbuild_srcpath(src_path);
+    string build_path = srealpath(get_build_dir()+calculate_md5sum(inrbuild_srcpath+"/INRBUILD"));
+    set_inrbuild_buildpath(build_path);
 }
 
 private void build_package(){
@@ -66,7 +70,7 @@ private void create_source_archive(){
     writefile(srealpath(inrbuild_srcpath+"/metadata.yaml"),metadata.strip());
     var tar = new archive();
     print(inrbuild_srcpath+"/source.inary");
-    tar.load(output_package_path+"source.inary");
+    tar.load(output_package_path+"_source.inary");
     foreach(string file in listdir(".")){
         if(!endswith(file,".inary")){
             tar.add(file);
@@ -113,7 +117,7 @@ private void create_metadata_info(){
             }
         }
     }
-    output_package_path = inrbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version")+"_"+getArch();
+    output_package_path = inrbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version");
     writefile("metadata.yaml",new_data);
 }
 
@@ -144,15 +148,11 @@ private void create_data_file(){
     
 }
 
-private void quarantine_install_binary(){
-
-}
-
 private void create_binary_package(){
     cd(inrbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();
-    tar.load(output_package_path+".inary");
+    tar.load(output_package_path+"_"+getArch()+".inary");
     tar.add("data.tar.gz");
     tar.add("metadata.yaml");
     tar.add("files");
