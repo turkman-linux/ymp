@@ -161,6 +161,9 @@ private void create_data_file(){
         }
         file = file[(inrbuild_buildpath+"/output/").length:];
         debug("Compress:"+file);
+        if(file == "files" || file == "metadata.yaml"){
+            continue;
+        }
         tar.add(file);
     }
     if(isfile(inrbuild_buildpath+"/output/data.tar.gz")){

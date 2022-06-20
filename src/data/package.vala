@@ -157,13 +157,16 @@ public class package {
             string curdir = pwd();
             create_dir(DESTDIR+"/tmp/inary-build/"+name);
             pkgfile.set_target(DESTDIR+"/tmp/inary-build/"+name);
-            pkgfile.extract_all();
             set_build_target(DESTDIR+"/tmp/inary-build/"+name);
+            if(!get_bool("no-clear")){
+                remove_all(inrbuild_buildpath);
+            }
+            pkgfile.extract_all();
+            create_metadata_info();
             fetch_package_sources();
             extract_package_sources();
-            create_metadata_info();
             build_package();
-            create_files_info();
+            error(1);
             quarantine_import_from_path(inrbuild_buildpath+"/output");
             cd(curdir);
             return;
