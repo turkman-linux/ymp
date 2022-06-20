@@ -56,7 +56,7 @@ public string[] calculate_leftover(package[] pkgs){
     string[] leftover = {};
     // Fetch installed and new files list
     foreach(package p in pkgs){
-        if(is_installed_package(p.name)){
+        if(is_installed_package(p.name) && !p.is_source ){
              //new files list
              foreach(string file in p.list_files()){
                  if(file.length > 41){

@@ -59,8 +59,9 @@ public void quarantine_install(){
     string metadata = srealpath(get_storage()+"/quarantine/metadata/");
     foreach(string fname in find(rootfs)){
         string ftarget = get_destdir()+fname[rootfs.length:];
+        
         string fdir = sdirname(ftarget);
-        debug("Installing: "+ftarget);
+        debug("Installing: "+fname+" => "+ftarget);
         create_dir(fdir);
         if(isfile(fname)){
             move_file(fname,ftarget);
