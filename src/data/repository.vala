@@ -77,7 +77,6 @@ private repository[] repos;
 //DOC: get all repositories as array
 public repository[] get_repos(){
     if(repos == null){
-        create_dir(get_storage()+"/index");
         repos = {};
     }else{
         return repos;

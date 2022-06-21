@@ -79,7 +79,7 @@ public void set_fetcher_progress(fetcher_process proc){
 //DOC: `bool fetch(string url, string path):`
 //DOC: download file content and write to file
 public bool fetch(string url, string path){
-    info(colorize("Download: ",yellow)+url);
+    info(colorize("Download: ",yellow)+url+" => "+path);
     if(!(startswith(url,"http://") || startswith(url,"https://"))){
         warning("Unsupported url: "+url);
         return false;

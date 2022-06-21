@@ -1,5 +1,4 @@
 public int upgrade_main(string[] args){
-    create_dir(get_storage()+"/index/");
     string[] need_upgrade = {};
     foreach(string name in list_installed_packages()){
         if(!is_available_package(name)){

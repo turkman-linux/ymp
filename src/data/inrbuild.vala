@@ -12,8 +12,8 @@ private void inrbuild_init(){
         inrbuild_srcpath = "./";
     }
     inrbuild_header = "
-    pkgdir="+inrbuild_buildpath+"/output
-    DESTDIR=$pkgdir
+    export installdir="+inrbuild_buildpath+"/output
+    export DESTDIR=\"$installdir\"
     alias python=python3
     alias msg2=echo
     arch-meson(){
@@ -34,10 +34,10 @@ private void inrbuild_init(){
     inary_print_metadata(){
         echo \"inary:\"
         echo \"  source:\"
-        echo \"    name: $pkgname\"
-        echo \"    version: $pkgver\"
-        echo \"    release: $pkgrel\"
-        echo \"    description: $pkgdesc\"
+        echo \"    name: $name\"
+        echo \"    version: $version\"
+        echo \"    release: $release\"
+        echo \"    description: $description\"
         if [[ \"${makedepends[@]}\" != \"\" ]] ; then
         echo \"    makedepends:\"
         for dep in ${makedepends[@]} ; do

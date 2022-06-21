@@ -127,6 +127,16 @@ public string[] argument_process(string[] args){
      return new_args;
 }
 
+private void directories_init(){
+    create_dir(get_build_dir());
+    create_dir(get_storage()+"/index/");
+    create_dir(get_storage()+"/packages/");
+    create_dir(get_storage()+"/metadata/");
+    create_dir(get_storage()+"/files/");
+    create_dir(get_storage()+"/quarantine/");
+
+}
+
 private bool inary_activated = false;
 
 //DOC: `Inary inary_init(string[] args):`
@@ -155,6 +165,7 @@ public Inary inary_init(string[] args){
     error(31);
     inary_activated = true;
     tty_size_init();
+    directories_init();
     return app;
 }
 

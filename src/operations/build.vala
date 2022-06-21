@@ -1,7 +1,6 @@
 public int build_operation(string[] args){
     foreach(string arg in args){
         set_build_target(arg);
-        remove_all(inrbuild_buildpath);
         create_metadata_info();
         fetch_package_sources();
         create_source_archive();
@@ -16,17 +15,27 @@ private void set_build_target(string src_path){
     set_inrbuild_srcpath(src_path);
     string build_path = srealpath(get_build_dir()+calculate_md5sum(inrbuild_srcpath+"/INRBUILD"));
     set_inrbuild_buildpath(build_path);
+    if(isdir(build_path)){
+        remove_all(build_path);
+    }
 }
 
 private void fetch_package_sources(){
-    cd(inrbuild_buildpath);
+    int i = 0;
+    string[] md5sums = get_inrbuild_array("md5sums");
     foreach(string src in get_inrbuild_array("source")){
-        if(src == ""){
+        if(src == "" || md5sums[i] == ""){
             continue;
         }
-        string srcfile = sbasename(src);
-            fetch(src,srcfile);
+        string srcfile = inrbuild_buildpath+"/"+sbasename(src);
+        fetch(src,srcfile);
+        string md5 = calculate_md5sum(srcfile);
+        if (md5sums[i] != md5 && md5sums[i] != "SKIP"){
+            error_add("md5 check failed. Excepted: "+md5sums[i]+" <> Reveiced: "+md5);
+        }
+        i++;
     }
+    error(2);
 }
 
 private void extract_package_sources(){
@@ -74,6 +83,7 @@ private void build_package(){
 }
 
 private void create_source_archive(){
+    debug("Create source package from :"+inrbuild_srcpath);
     cd(inrbuild_srcpath);
     string metadata = get_inrbuild_metadata();
     writefile(srealpath(inrbuild_buildpath+"/metadata.yaml"),metadata.strip());
@@ -82,7 +92,7 @@ private void create_source_archive(){
     foreach(string file in find(inrbuild_srcpath)){
         if(!endswith(file,".inary") && isfile(file)){
             file = file[(inrbuild_srcpath).length:];
-            create_dir(sdirname(inrbuild_buildpath+file));
+            create_dir(sdirname(inrbuild_buildpath+"/"+file));
             copy_file(inrbuild_srcpath+file,inrbuild_buildpath+file);
         }
     }
@@ -120,6 +130,7 @@ private void create_files_info(){
 private string output_package_path;
 private void create_metadata_info(){
     string metadata = get_inrbuild_metadata();
+    debug("Create metadata info: "+inrbuild_buildpath+"/output/metadata.yaml");
     var yaml = new yamlfile();
     yaml.data = metadata;
     string srcdata = yaml.get("inary.source");
@@ -147,6 +158,7 @@ private void create_metadata_info(){
 }
 
 private void create_data_file(){
+    debug("Create data file: "+inrbuild_buildpath+"/output/data.tar.gz");
     var tar = new archive();
     tar.load(inrbuild_buildpath+"/output/data.tar.gz");
     aformat=1;
@@ -176,6 +188,7 @@ private void create_data_file(){
 }
 
 private void create_binary_package(){
+    debug("Create binary package from :"+inrbuild_buildpath);
     cd(inrbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();

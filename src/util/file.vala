@@ -101,6 +101,8 @@ public string readfile(string path){
 //DOC: `void writefile(string path, string ctx):`
 //DOC: write **ctx** data to **path** file
 public void writefile(string path, string ctx){
+    string dir = sdirname(path);
+    create_dir(dir);
     try {
         var file = File.new_for_path (path);
         if (file.query_exists ()) {

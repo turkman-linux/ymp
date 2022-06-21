@@ -3,9 +3,6 @@ public int install_main(string[] args){
     if(get_bool("ignore-dependency")){
         pkgs = args;
     }
-    create_dir(get_storage()+"/packages/");
-    create_dir(get_storage()+"/metadata/");
-    create_dir(get_storage()+"/files/");
     quarantine_reset();
     package[] pkg_obj = {};
     foreach(string name in pkgs){

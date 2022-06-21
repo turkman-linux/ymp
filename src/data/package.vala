@@ -80,7 +80,7 @@ public class package {
     private void read_values(){
         name = get("name");
         version = get("version");
-        dependencies = gets("dependencies");
+        dependencies = gets("depends");
         release = int.parse(get("release"));
     }
 
