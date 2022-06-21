@@ -136,7 +136,7 @@ public string pwd(){
 //DOC: create **path** directory
 public int create_dir(string path){
     debug("Create directory: "+path);
-    return GLib.DirUtils.create_with_parents(path,0644);
+    return GLib.DirUtils.create_with_parents(path,0755);
 }
 
 //DOC: `int remove_dir(string path)`

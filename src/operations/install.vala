@@ -3,52 +3,53 @@ public int install_main(string[] args){
     if(get_bool("ignore-dependency")){
         pkgs = args;
     }
-    package[] pkg_obj = {};
     create_dir(get_storage()+"/packages/");
     create_dir(get_storage()+"/metadata/");
     create_dir(get_storage()+"/files/");
-    // Download package files from repository
-    foreach(string pkg in pkgs){
-        if(isfile(pkg)){
-            package p = new package();
-            p.load_from_archive(pkg);
-            pkg_obj += p;
+    quarantine_reset();
+    package[] pkg_obj = {};
+    foreach(string name in pkgs){
+        package pkg = install_single(name);
+        if(pkg == null){
+            error(1);
         }else{
-            package p = get_package_from_repository(pkg);
-            p.download();
-            pkg_obj += p;
+            pkg_obj += pkg;
         }
+    }
+    quarantine_validate_files();
+    error(1);
+    quarantine_install();
+    error(1);
+    foreach(string file in calculate_leftover(pkg_obj)){
+        remove_file(DESTDIR+"/"+file);
+    }
+    error(1);
+    return 0;
+}
+public package install_single(string pkg){
+    package p = null;
+    // Download package files from repository
+    if(isfile(pkg)){
+        p = new package();
+        p.load_from_archive(pkg);
+    }else{
+        p = get_package_from_repository(pkg);
+        p.download();
     }
     error(2);
     //If download-only finish operation
-    if(get_bool("download-only")){
-	    return 0;	
-	}
-    quarantine_reset();
-	foreach(package p in pkg_obj){
-	    info("Extracting: "+p.name);
-	    if(get_bool("reinstall")){
-	        p.extract();
-	    }else if(is_installed_package(p.name)){
-	        package pi = get_installed_package(p.name);
-	        if(pi.release < p.release){
-	            p.extract();
-	        }
-	    }else{
-	        p.extract();
-	    }
-	}
-	error(1);
-	quarantine_validate_files();
-	error(1);
-	string[] leftovers = calculate_leftover(pkg_obj);
-	quarantine_install();
-	error(1);
-	foreach(string file in leftovers){
-	    remove_file(DESTDIR+"/"+file);
-	}
-	error(1);
-    return 0;
+    info("Extracting: "+p.name);
+    if(get_bool("reinstall")){
+        p.extract();
+    }else if(is_installed_package(p.name)){
+        package pi = get_installed_package(p.name);
+        if(pi.release < p.release){
+            p.extract();
+        }
+    }else{
+        p.extract();
+    }
+    return p;
 }
 public string[] calculate_leftover(package[] pkgs){
     string[] installed_files = {};

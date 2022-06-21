@@ -48,8 +48,8 @@ private void resolve_reverse_process(string[] names){
         // 2. process if not installed or need install
         package pkg = get_installed_package(pkgname);
         foreach(string name in names){
+            need_install += pkgname;
             if(name in pkg.dependencies){
-                need_install += pkgname;
                 string[] tmp = {pkgname};
                 resolve_reverse_process(tmp);
             }

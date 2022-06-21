@@ -90,6 +90,15 @@ public repository[] get_repos(){
     return repos;
 }
 
+public bool is_available_package(string name){
+    foreach(repository repo in get_repos()){
+        if(repo.has_package(name)){
+            return true;
+        }
+    }
+    return false;
+}
+
 //DOC: `package get_package_from_repository(string name):`
 //DOC: get package object from all repositories
 public package get_package_from_repository(string name){
