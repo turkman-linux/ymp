@@ -379,6 +379,7 @@ start inary application.
 # src/operations/install.vala
 # src/operations/list.vala
 # src/operations/setget.vala
+# src/operations/upgrade.vala
 # src/settings.vala
 ## Settings functions
 

@@ -12,7 +12,7 @@ private void resolve_process(string[] names){
             cache_list += name;
         }
         // 2. process if not installed or need install
-        if (!(name in need_install || is_installed_package(name))){
+        if (!(name in need_install)){
             // get package object
             package pkg = null;
             if(isfile(name)){
@@ -22,6 +22,11 @@ private void resolve_process(string[] names){
             }
             if(pkg == null){
                 return;
+            }
+            if(is_installed_package(name)){
+                if(pkg.release <= get_installed_package(name).release){
+                    return;
+                }
             }
             // run recursive function
             resolve_process(pkg.dependencies);
