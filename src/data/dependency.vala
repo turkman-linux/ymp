@@ -37,6 +37,26 @@ private void resolve_process(string[] names){
     }
     return;
 }
+
+private void resolve_reverse_process(string[] names){
+    foreach(string pkgname in list_installed_packages()){
+        if(pkgname in cache_list){
+            return;
+        }else{
+            cache_list += pkgname;
+        }
+        // 2. process if not installed or need install
+        package pkg = get_installed_package(pkgname);
+        foreach(string name in names){
+            if(name in pkg.dependencies){
+                need_install += pkgname;
+                string[] tmp = {pkgname};
+                resolve_reverse_process(tmp);
+            }
+        }
+    }
+}
+
 //DOC: `string[] resolve_dependencies(string[] names):`
 //DOC: return package name list with required dependencies
 public string[] resolve_dependencies(string[] names){
@@ -49,6 +69,16 @@ public string[] resolve_dependencies(string[] names){
     cache_list = {};
     // process
     resolve_process(names);
+    error(3);
+    return need_install;
+}
+
+public string[] resolve_reverse_dependencies(string[] names){
+    // reset need list
+    need_install = {};
+    // reset cache list
+    cache_list = {};
+    resolve_reverse_process(names);
     error(3);
     return need_install;
 }
