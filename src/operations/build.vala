@@ -166,6 +166,7 @@ private void create_data_file(){
     tar.load(inrbuild_buildpath+"/output/data.tar.gz");
     aformat=1;
     afilter=1;
+    int fnum = 0;
     foreach(string file in find(inrbuild_buildpath+"/output")){
         if(isdir(file)){
             continue;
@@ -176,11 +177,14 @@ private void create_data_file(){
             continue;
         }
         tar.add(file);
+        fnum++;
     }
     if(isfile(inrbuild_buildpath+"/output/data.tar.gz")){
         remove_file(inrbuild_buildpath+"/output/data.tar.gz");
     }
-    tar.create();
+    if(fnum != 0){
+        tar.create();
+    }
     string hash = calculate_sha1sum(inrbuild_buildpath+"/output/data.tar.gz");
     int size = filesize(inrbuild_buildpath+"/output/data.tar.gz");
     string new_data = readfile(inrbuild_buildpath+"/output/metadata.yaml");
@@ -196,7 +200,9 @@ private void create_binary_package(){
     create_data_file();
     var tar = new archive();
     tar.load(output_package_path+"_"+getArch()+".inary");
-    tar.add("data.tar.gz");
+    if(isfile("data.tar.gz")){
+        tar.add("data.tar.gz");
+    }
     tar.add("metadata.yaml");
     tar.add("files");
     if(isfile(inrbuild_srcpath+"/postOps")){
