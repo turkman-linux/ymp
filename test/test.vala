@@ -62,7 +62,7 @@ void main(string[] args){
 
     // index test
     print("Repository test");
-    repository[] repos = get_repos();
+    get_repos();
 
     // binary test
     print("Binary test");

@@ -20,7 +20,6 @@ private void set_build_target(string src_path){
 
 private void fetch_package_sources(){
     cd(inrbuild_buildpath);
-    var tar = new archive();
     foreach(string src in get_inrbuild_array("source")){
         if(src == ""){
             continue;
