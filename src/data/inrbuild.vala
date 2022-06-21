@@ -16,17 +16,25 @@ private void inrbuild_init(){
     export DESTDIR=\"$installdir\"
     alias python=python3
     alias msg2=echo
-    arch-meson(){
-	exec meson setup \\
-	  --prefix        /usr \\
-	  --libexecdir    lib \\
-	  --sbindir       bin \\
-	  --buildtype     plain \\
-	  --auto-features enabled \\
-	  --wrap-mode     nodownload \\
-	  -D              b_lto=true \\
-	  -D              b_pie=true \\
-	  \"$@\"
+    inary-meson(){
+	  meson setup \\
+	    --prefix        /usr \\
+	    --libexecdir    libexec \\
+	    --libdir        lib \\
+	    --sbindir       sbin \\
+	    --bindir        bin \\
+	    --buildtype     release \\
+	    --debug         false \\
+	    --auto-features disabled \\
+	    --strip         true \\
+	    --wrap-mode     nodownload \\
+	    --layout        flat \\
+	    -D              b_lto=true \\
+	    -D              b_pie=true \\
+	    -D              b_colorout=never \\
+	    -D              b_pgo=true \\
+	    -D              b_asneeded=true \\
+	    \"$@\"
     }
     _dump_variables(){
         set -o posix ; set  

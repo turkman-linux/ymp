@@ -9,8 +9,9 @@ license=('GPL')
 source=(https://gitlab.com/sulincix/inary-new/-/archive/master/inary-new-master.zip)
 md5sums=(SKIP)
 
+cd inary-new-master
+
 build(){
-    cd inary-new-master
     rm -rf build || true
     mkdir -p build
     meson build -Dtools=true
