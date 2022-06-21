@@ -35,6 +35,8 @@ private void settings_init(){
         warning("Config file not exists: "+CONFIG);
     }
     clear_env();
+    set_env("LANG","C.UTF-8");
+    set_env("LC_ALL","C.UTF-8");
 }
 
 //DOC: `void set_destdir(string rootfs):`

@@ -22,9 +22,11 @@ run_command('bash', './tool/mkctx.sh',
     'VERSION='+meson.project_version(),
     check:true)
 
-run_command('bash', '-c',
-            'find src -type f -iname "*.vala" | sort -V | bash ./tool/mkdoc.sh > src/libinary.md',
-    check:true)
+if get_option('doc')
+    run_command('bash', '-c',
+        'find src -type f -iname "*.vala" | sort -V | bash ./tool/mkdoc.sh > src/libinary.md',
+        check:true)
+endif
 
 
 sources = files('src/inary.vala',

@@ -70,7 +70,7 @@ private void inrbuild_init(){
         fi
         
     }
-    mkdir -p $pkgdir
+    mkdir -p \"$DESTDIR\"
     ";
 }
 //DOC: `void set_inrbuild_srcpath(string path):`
@@ -105,14 +105,21 @@ public string[] get_inrbuild_array(string variable){
     return ssplit(getoutput("bash -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD ; echo ${"+variable+"[@]}'").strip()," ");
 }
 
+public bool inrbuild_has_function(string function){
+    return 0 == run_silent("bash -c 'source "+inrbuild_srcpath+"/INRBUILD ;declare -F "+function+"'");
+}
+
 //DOC: `int run_inrbuild_function(string function):`
 //DOC: run a build function from inrbuild file
 public int run_inrbuild_function(string function){
     if(function == ""){
         return 0;
     }
-    info(colorize("Run action: ",blue)+function);
-    return run("bash -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD ;declare -f -F "+function+" && "+function+" || true'");
+    print(colorize("Run action: ",blue)+function);
+    if(inrbuild_has_function(function)){
+        return run("bash -e -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD ; "+function+"'");
+    }
+    return 0;
 }
 
 public string get_inrbuild_metadata(){

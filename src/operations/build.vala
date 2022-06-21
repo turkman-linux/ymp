@@ -1,5 +1,9 @@
 public int build_operation(string[] args){
-    foreach(string arg in args){
+    string[] new_args = args;
+    if(new_args.length == 0){
+        new_args = {"."};
+    }
+    foreach(string arg in new_args){
         set_build_target(arg);
         create_metadata_info();
         fetch_package_sources();
@@ -58,7 +62,7 @@ private void build_package(){
     cd(inrbuild_buildpath);
     int status = 0;
     if(!get_bool("no-build")){
-        string[] build_actions = {"pkgver","prepare", "build"};
+        string[] build_actions = {"setup", "build"};
         foreach(string func in build_actions){
             info("Running build action: "+func);
             status = run_inrbuild_function(func);
@@ -69,7 +73,7 @@ private void build_package(){
         }
     }
     if(!get_bool("no-install")){
-        string[] install_actions = {"check","package"};
+        string[] install_actions = {"test","install"};
         foreach(string func in install_actions){
             info("Running build action: "+func);
             status = run_inrbuild_function(func);
@@ -105,7 +109,6 @@ private void create_source_archive(){
         if(file == null || file == "" || startswith(file,"output")){
             continue;
         }
-        print(file);
         tar.add(file);
     }
     tar.create();
@@ -204,7 +207,7 @@ private void create_binary_package(){
 }
 
 public void build_init(){
-    add_operation(build_operation,{"build","bi"});
+    add_operation(build_operation,{"build","bi","make"});
 }
 
 

@@ -43,9 +43,7 @@ private string readfile_raw2 (string path){
         string line;
         while ((line = dis.read_line ()) != null){
             data += line+"\n";
-            #if debug
-            debug("Read line from:"+path)
-            #endif
+            debug("Read line from:"+path);
         }
     } catch (Error e) {
         error_add(e.message);

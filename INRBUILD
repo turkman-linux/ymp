@@ -1,0 +1,19 @@
+#!/bin/bash
+name=inary
+version=$(grep version meson.build | head -n 1 | cut -f2 -d:| cut -f2 -d"'")
+release=1
+description="Package manager for Sulin Project"
+arch=(i686 x86_64)
+url='https://sulinos.gitlab.io'
+license=('GPL')
+
+build(){
+    rm -rf build || true
+    mkdir -p build
+    meson build -Dtools=true
+    ninja -C build
+}
+package(){
+    DESTDIR=$installdir ninja install -C build
+}
+

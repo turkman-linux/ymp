@@ -18,15 +18,16 @@ public int white = 37;
 //DOC: var msg2 = colorize("world",blue);
 //DOC: stdout.printf(msg+" "+msg2);
 //DOC: ```
+#if NOCOLOR
 public string colorize(string message, int color){
-    #if NOCOLOR
-    if(true){
-    #else
+    return message;
+}
+#else
+public string colorize(string message, int color){
     if (get_bool("no-color")){
-    #endif
         return message;
     }else{
         return "\x1b["+color.to_string()+"m"+message+"\x1b[;0m";
     }
 }
-
+#endif
