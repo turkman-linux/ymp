@@ -16,7 +16,7 @@ build(){
     meson build -Dtools=true
     ninja -C build
 }
-package(){
+install(){
     DESTDIR=$installdir ninja install -C build
 }
 

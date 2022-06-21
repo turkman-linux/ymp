@@ -15,7 +15,7 @@ build(){
     ./configure --prefix=/usr
     make
 }
-package(){
+install(){
     cd "$name-$version"
     make install DESTDIR=$installdir
 }
