@@ -36,20 +36,26 @@ public class package {
     //DOC: Read package information from string data
     public void load_from_data(string metadata){
         yaml = new yamlfile();
+        string inarydata = "";
+        // metadata detection
         if(yaml.has_area(metadata,"inary")){
-            string inarydata = yaml.get_area(metadata,"inary");
-            if(yaml.has_area(inarydata,"package")){
-                is_source = false;
-                pkgarea = yaml.get_area(inarydata,"package");
-            }else if(yaml.has_area(inarydata,"source")){
-                is_source = true;
-                pkgarea = yaml.get_area(inarydata,"source");
-            }else{
-                error_add("Package is broken");
-            }
+            inarydata = yaml.get_area(metadata,"inary");
+        }else if(yaml.has_area(metadata,"package") || yaml.has_area(metadata,"source")){
+            inarydata = metadata;
         }else{
             error_add("Package is broken");
         }
+        // package area load
+        if(yaml.has_area(inarydata,"package")){
+            is_source = false;
+            pkgarea = yaml.get_area(inarydata,"package");
+        }else if(yaml.has_area(inarydata,"source")){
+            is_source = true;
+            pkgarea = yaml.get_area(inarydata,"source");
+        }else{
+            error_add("Package is broken");
+        }
+        //read values from data
         read_values();
     }
 

@@ -1,26 +1,22 @@
 index:
   package:
-    name: bash
-    description: GNU bash shell
+    name: readline
+    description: readline
     release: 1
     version: 5.0
     archive-hash: da39a3ee5e6b4b0d3255bfef95601890afd80709
     archive-size: 153600
     dependencies:
-      - readline
       - ncurses
     uri: /r/readline/readline-8.0-x8_64.inary
 
   package:
-    name: bash
-    description: GNU bash shell
+    name: ncurses
+    description: ncurses
     release: 1
     version: 5.0
     archive-hash: da39a3ee5e6b4b0d3255bfef95601890afd80709
     archive-size: 153600
-    dependencies:
-      - readline
-      - ncurses
     uri: /n/ncurses/ncurses-8.0-x8_64.inary
 
   package:
