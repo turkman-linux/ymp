@@ -127,3 +127,49 @@ public package get_package_from_file(string path){
     return pkg;
 }
 
+public string[] get_repo_address(){
+    string repolist = readfile(get_storage()+"/sources.list")+"\n";
+    if(isdir(get_storage()+"/sources.list.d")){
+        foreach(string file in find(get_storage()+"/sources.list.d")){
+        repolist += readfile(file)+"\n";
+        }
+    }
+    return ssplit(repolist,"\n");
+}
+
+public void update_repo(){
+    remove_all(get_storage()+"/index");
+    create_dir(get_storage()+"/index");
+    foreach(string repo in get_repo_address()){
+        if(repo == "" || repo == null){
+            continue;
+        }
+        fetch(repo,get_storage()+"/index/.inary-index");
+        string name = calculate_md5sum(get_storage()+"/index/.inary-index");
+        move_file(get_storage()+"/index/.inary-index",get_storage()+"/index/"+name);
+    }
+}
+
+public string create_index_data(string fpath){
+    string index = "index:\n";
+    string path = srealpath(fpath);
+    var tar = new archive();
+    var yaml = new yamlfile();
+    foreach(string file in find(path)){
+        if(endswith(file,".inary")){
+            tar.load(file);
+            file = file[path.length:];
+            info("Index: "+file);
+            string metadata = tar.readfile("metadata.yaml");
+            string inaryarea = yaml.get_area(metadata,"inary");
+            foreach(string line in ssplit(inaryarea,"\n")){
+                if(line == "" || line == null){
+                    continue;
+                }
+                index += "  "+line+"\n";
+            }
+            index+="    uri: "+file+"\n\n";
+        }
+    }
+    return index;
+}
