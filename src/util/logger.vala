@@ -57,7 +57,7 @@ public void warning(string message){
         print_stderr(colorize("WARNING: ",yellow)+message);
     }
 }
-
+#if debug
 //DOC: `void debug(string message):`
 //DOC: write debug messages. Its only print if debug mode enabled.
 public void debug(string message){
@@ -69,6 +69,9 @@ public void debug(string message){
         print_fn(colorize("DEBUG: ",blue)+message,true,true);
     }
 }
+#else
+public void debug(string message){}
+#endif
 
 //DOC: `void info(string message):`
 //DOC: write additional info messages.

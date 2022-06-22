@@ -36,15 +36,11 @@ public package install_single(string pkg){
     error(2);
     //If download-only finish operation
     info("Extracting: "+p.name);
-    if(get_bool("reinstall")){
-        p.extract();
-    }else if(is_installed_package(p.name)){
-        package pi = get_installed_package(p.name);
-        if(pi.release < p.release){
-            p.extract();
-        }
-    }else{
-        p.extract();
+    p.extract();
+    if(p.is_source){
+        quarantine_validate_files();
+        error(1);
+        quarantine_install();
     }
     return p;
 }

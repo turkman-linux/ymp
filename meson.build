@@ -6,7 +6,7 @@ project('inary', 'vala', 'c',
 
 args = ['-X','-O3', '-flto']
 
-args += ['-X', '-s', '-R', '.comment', '-R', '.gnu.version', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
+args += ['-X', '-s', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
 
 dependencies = [
     dependency('gio-2.0', static:get_option('static')),

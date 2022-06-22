@@ -23,7 +23,7 @@ private void resolve_process(string[] names){
             if(pkg == null){
                 return;
             }
-            if(is_installed_package(name)){
+            if(!get_bool("reinstall") && is_installed_package(name)){
                 if(pkg.release <= get_installed_package(name).release){
                     return;
                 }
