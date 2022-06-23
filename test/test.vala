@@ -26,14 +26,15 @@ void main(string[] args){
     readfile("/proc/cmdline");
     string curdir = pwd();
     cd("..");
+
     create_dir("uuu");
     remove_dir("uuu");
     cd(curdir);
-    pwd();
     find(".");
     create_dir("uuu/aaa/fff");
     writefile("uuu/aaa/fff/ggg","inary");
     remove_all("uuu");
+    pwd();
 
     //inifile test
     print("Ini test");

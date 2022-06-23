@@ -132,13 +132,6 @@ public string pwd(){
     return GLib.Environment.get_current_dir();
 }
 
-//DOC: `int create_dir(string path)`
-//DOC: create **path** directory
-public int create_dir(string path){
-    debug("Create directory: "+path);
-    return GLib.DirUtils.create_with_parents(path,0755);
-}
-
 //DOC: `int remove_dir(string path)`
 //DOC: remove **path** directory
 public int remove_dir(string path){
