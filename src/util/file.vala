@@ -189,7 +189,7 @@ public void move_file(string src, string desc){
 //DOC: copy **src** file to **desc**. File permissions and owners are ignored.
 public void copy_file(string src, string desc){
     debug("Copy: "+src +" => "+desc);
-    writefile(desc,readfile(src));
+    writefile(desc,readfile_raw(src));
 }
 
 //DOC: `string[] listdir(string path):`

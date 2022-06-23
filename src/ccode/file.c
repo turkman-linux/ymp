@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 
 struct stat st;
 
@@ -40,7 +41,7 @@ void fs_sync(){
 }
 
 void create_dir(const char *dir) {
-    char tmp[256];
+    char tmp[PATH_MAX];
     char *p = NULL;
     size_t len;
 
