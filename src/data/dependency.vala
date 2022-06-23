@@ -18,10 +18,7 @@ private void resolve_process(string[] names){
             if(isfile(name)){
                 pkg = get_package_from_file(name);
             }else{
-                pkg = get_package_from_repository(name);
-            }
-            if(pkg == null){
-                return;
+                pkg = get_from_repository(name);
             }
             if(!get_bool("reinstall") && is_installed_package(name)){
                 if(pkg.release <= get_installed_package(name).release){

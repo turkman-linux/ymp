@@ -159,24 +159,6 @@ public class package {
             error_add("Package archive missing");
             return;
         }
-        if(is_source){
-            string curdir = pwd();
-            create_dir(DESTDIR+"/tmp/inary-build/"+name);
-            pkgfile.set_target(DESTDIR+"/tmp/inary-build/"+name);
-            set_build_target(DESTDIR+"/tmp/inary-build/"+name);
-            if(!get_bool("no-clear")){
-                remove_all(inrbuild_buildpath);
-            }
-            pkgfile.extract_all();
-            create_metadata_info();
-            fetch_package_sources();
-            extract_package_sources();
-            build_package();
-            error(1);
-            quarantine_import_from_path(inrbuild_buildpath+"/output");
-            cd(curdir);
-            return;
-        }
         var rootfs_medatata = get_storage()+"/quarantine/metadata/";
         var rootfs_files = get_storage()+"/quarantine/files/";
         if(isfile(rootfs_medatata+name+".yaml")){
@@ -214,6 +196,28 @@ public class package {
         move_file(rootfs_files+"files",get_storage()+"/quarantine/files/"+name);
         error(3);
     }
+    public void build(){
+        if(pkgfile == null){
+            error_add("Package archive missing");
+            return;
+        }
+        string curdir = pwd();
+        create_dir(DESTDIR+"/tmp/inary-build/"+name);
+        pkgfile.set_target(DESTDIR+"/tmp/inary-build/"+name);
+        set_build_target(DESTDIR+"/tmp/inary-build/"+name);
+        if(!get_bool("no-clear")){
+            remove_all(inrbuild_buildpath);
+        }
+        pkgfile.extract_all();
+        create_metadata_info();
+        fetch_package_sources();
+        extract_package_sources();
+        build_package();
+        error(1);
+        quarantine_import_from_path(inrbuild_buildpath+"/output");
+        cd(curdir);
+    }
+
 
     //DOC: `bool package.is_installed():`
     //DOC: return true if package is installed

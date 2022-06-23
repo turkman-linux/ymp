@@ -44,6 +44,20 @@ public class repository {
         return false;
     }
 
+    //DOC: `package repository.get_source(string name):`
+    //DOC: get package object from repository by source name
+    public package get_source(string name){
+        package pkg = null;
+        foreach(string area in sources){
+            if (yaml.get_value(area,"name") == name){
+                pkg = new package();
+                pkg.load_from_data(area);
+                return pkg;
+            }
+        }
+        return pkg;
+    }
+
     //DOC: `package repository.get_package(string name):`
     //DOC: get package object from repository by package name
     public package get_package(string name){
@@ -67,6 +81,17 @@ public class repository {
         }
         return ret;
     }
+
+    //DOC: `string[] repository.list_sources():`
+    //DOC: get all available source names from repository
+    public string[] list_sources(){
+        string[] ret = {};
+        foreach(string area in sources){
+            ret += yaml.get_value(area,"name");
+        }
+        return ret;
+    }
+
 }
 
 //DOC: ## Miscellaneous repository functions
@@ -118,6 +143,38 @@ public package get_package_from_repository(string name){
     }
     return ret;
 }
+
+//DOC: `package get_source_from_repository(string name):`
+//DOC: get source package object from all repositories
+public package get_source_from_repository(string name){
+    int release = 0;
+    package ret = null;
+    foreach(repository repo in get_repos()){
+        package pkg = repo.get_source(name);
+        if(pkg != null){
+            if(int.parse(pkg.get("release")) > release){
+                ret = pkg;
+                pkg.repo_address = repo.address;
+                release = int.parse(pkg.get("release"));
+            }
+        }
+    }
+    if(ret == null){
+        error_add("Package not satisfied from repository: "+name);
+    }
+    return ret;
+}
+
+//DOC: `package get_from_repositony(stning name):`
+//DOC: return source if emerge else return package
+public package get_from_repository(string name){
+    if(get_bool("--emerge")){
+        return get_source_from_repository(name);
+    }else{
+        return get_package_from_repository(name);
+    }
+}
+
 
 //DOC: `package get_package_from_file(string path):`
 //DOC: get package object from inary file archive

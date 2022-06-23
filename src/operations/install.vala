@@ -35,12 +35,14 @@ public package install_single(string pkg){
     }
     error(2);
     //If download-only finish operation
-    info("Extracting: "+p.name);
-    p.extract();
+    info("Installing: "+p.name);
     if(p.is_source){
+        p.build();
         quarantine_validate_files();
         error(1);
         quarantine_install();
+    }else{
+        p.extract();
     }
     return p;
 }
