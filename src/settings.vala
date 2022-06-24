@@ -78,7 +78,9 @@ public void set_config(string path){
 private void parse_args(string[] args){
     foreach(string arg in args){
         if(startswith(arg,"--")){
-            if(arg.contains("=")){
+            if(arg[2:] == "allow-oem"){
+                    set_value_readonly("allow-oem","true");
+            }else if(arg.contains("=")){
                 if(ssplit(arg[2:],"=")[0] == "destdir"){
                     set_destdir(ssplit(arg[2:],"=")[1]);
                 }else if(ssplit(arg[2:],"=")[0] == "config"){

@@ -154,10 +154,9 @@ public Inary inary_init(string[] args){
     inrbuild_init();
     #if check_oem
         if(is_oem_available()){
-            warning("OEM detected! Inary may not working good.");
-            if(!get_bool("allow-oem")){
-                error_add("OEM not allowed! Please use --allow-oem to allow oem.");
-                error(31);
+            if(!get_bool("ALLOW-OEM")){
+                warning("OEM detected! Inary may not working good.");
+                error_add("OEM is not allowed! Please use --allow-oem to allow oem.");
             }
         }
     #endif
