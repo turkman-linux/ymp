@@ -228,7 +228,8 @@ public bool is64bit(string path){
 }
 
 public bool isfile(string path){
-    return GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_REGULAR);
+    return GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_REGULAR) || 
+               GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_SYMLINK);
 }
 
 //DOC: `bool isdir(string path):`

@@ -26,7 +26,7 @@ public bool quarantine_validate_files(){
                 // fetch absolute file path
                 string path = line[41:];
                 path = path.strip();
-                string file_path = srealpath(get_storage()+"/quarantine/rootfs/"+path);
+                string file_path = get_storage()+"/quarantine/rootfs/"+path;
                 if(!isfile(file_path)){
                     warning("Package file missing: /"+file_path);
                     quarantine_file_broken_list += file_path;
