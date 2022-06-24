@@ -201,9 +201,8 @@ public void update_repo(){
         if(repo == "" || repo == null){
             continue;
         }
-        fetch(repo,get_storage()+"/index/.inary-index");
-        string name = calculate_md5sum(get_storage()+"/index/.inary-index");
-        move_file(get_storage()+"/index/.inary-index",get_storage()+"/index/"+name);
+        string name = repo.replace("/","-");
+        fetch(repo,get_storage()+"/index/"+name);
     }
 }
 

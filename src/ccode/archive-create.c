@@ -1,3 +1,5 @@
+#ifndef _archive
+#define _archive
 #include <sys/types.h>
 
 #include <sys/stat.h>
@@ -9,6 +11,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include <limits.h>
 
 #define zip 0
 #define tar 1
@@ -39,11 +43,62 @@ void write_archive(const char *outname, const char **filename) {
       archive_write_set_format_pax_restricted(a);
   archive_write_open_filename(a, outname);
   while (*filename) {
-    stat(*filename, &st);
+    lstat(*filename, &st);
     entry = archive_entry_new(); 
     archive_entry_set_pathname(entry, *filename);
     archive_entry_set_size(entry, st.st_size);
-    archive_entry_set_filetype(entry, AE_IFREG);
+    char* type;
+    switch (st.st_mode & S_IFMT) {
+            case S_IFBLK:
+                 // block device
+                archive_entry_set_filetype(entry, AE_IFBLK);
+                type = "block device";
+                break;
+            case S_IFCHR:
+                // character device
+                type = "character device";
+                archive_entry_set_filetype(entry, AE_IFCHR);
+                break;
+            case S_IFDIR:
+                // directory
+                type = "directory";
+                archive_entry_set_filetype(entry, AE_IFDIR);
+                break;
+            case S_IFIFO:
+                // FIFO/pipe
+                type = "fifo";
+                archive_entry_set_filetype(entry, AE_IFIFO);
+                break;
+            case S_IFLNK:
+                // symlink
+                type = "symlink";
+                char link[PATH_MAX];
+                if(readlink(*filename,link,sizeof(link)) < 0){
+                    fprintf(stderr,"Broken symlink: %s\n",*filename);
+                    continue;
+                }
+                archive_entry_set_filetype(entry, AE_IFLNK);
+                archive_entry_set_symlink(entry, link);
+                break;
+            case S_IFREG:
+                // regular file
+                type = "file";
+                archive_entry_set_filetype(entry, AE_IFREG);
+                break;
+            case S_IFSOCK:
+                // socket
+                type = "socket";
+                archive_entry_set_filetype(entry, AE_IFSOCK);
+                break;                
+            default:
+                // unknown
+                type = "unknown";
+                archive_entry_set_filetype(entry, AE_IFREG);
+                break;
+    }
+    #ifdef DEBUG
+    fprintf(stderr,"Compress: %s type %s (%d)\n",*filename,type,st.st_mode);
+    #endif
     archive_entry_set_perm(entry, 0644);
     archive_write_header(a, entry);
     fd = open(*filename, O_RDONLY);
@@ -59,3 +114,4 @@ void write_archive(const char *outname, const char **filename) {
   archive_write_close(a);
   archive_write_free(a);
 }
+#endif

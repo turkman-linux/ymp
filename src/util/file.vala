@@ -263,7 +263,7 @@ private void find_operation(string path){
     if(path == "" || path == null){
         return;
     }
-    find_ret += srealpath(path);
+    find_ret += path;
     if(isdir(path)){
         foreach(string p in listdir(path)){
             find_operation(path+"/"+p);
