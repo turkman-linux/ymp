@@ -85,10 +85,10 @@ else
 endif
 
 if get_option('static')
-    lib = static_library('inary', sources, install : true, dependencies: dependencies, link_args: args)
+    lib = static_library('inary', sources, dependencies: dependencies, link_args: args)
     args += ['-X','-static']
 else
-    lib = library('inary', sources, install : true, dependencies: dependencies, link_args: args)
+    lib = library('inary', sources, dependencies: dependencies, link_args: args)
 endif
 if get_option('tools')
     foreach tool: run_command('find', 'src/tools','-type','f',check:true).stdout().strip().split('\n')
@@ -97,6 +97,11 @@ if get_option('tools')
     endforeach
 endif
 install_data('data/inary.conf', install_dir : get_option('sysconfdir'), rename : 'inary.conf')
+if get_option('static')
+    install_data(meson.current_build_dir() / 'libinary.a', install_dir : get_option('libdir'))
+else
+    install_data(meson.current_build_dir() / 'libinary.so', install_dir : get_option('libdir'))
+endif
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
 install_data(meson.current_build_dir() / 'inary.h', install_dir : get_option('includedir'), rename : 'inary.h')
 # Test binary
