@@ -18,7 +18,7 @@ public int set_main(string[] args){
     return 0;
 }
 
-public void setget_init(){
+void setget_init(){
     add_operation(get_main,{"get"});
     add_operation(set_main,{"set"});
 }

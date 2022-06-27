@@ -6,6 +6,6 @@ public int echo_main(string[] args){
     print(data[0:data.length-1]);
     return 0;
 }
-public void echo_init(){
+void echo_init(){
     add_operation(echo_main,{"echo"});
 }

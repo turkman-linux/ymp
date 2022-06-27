@@ -213,7 +213,7 @@ private void create_binary_package(){
     tar.create();
 }
 
-public void build_init(){
+void build_init(){
     add_operation(build_operation,{"build","bi","make"});
 }
 

@@ -23,6 +23,6 @@ public int remove_single(package p){
     return 0;
 }
 
-public void remove_init(){
+void remove_init(){
     add_operation(remove_main,{"remove","rm"});
 }

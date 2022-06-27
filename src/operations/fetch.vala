@@ -1,4 +1,4 @@
-int main(string[] args){
+public int fetch_main(string[] args){
     inary_init(args);
     if(args.length < 2){
         error_add("URL missing");
@@ -13,7 +13,11 @@ int main(string[] args){
     return 0;
 }
 
-public void progressbar(double cur, double total, string filename){
+void progressbar(double cur, double total, string filename){
     int percent = (int)(cur*100/total);
     print_fn("\x1b[2K\r %"+percent.to_string()+"\t"+filename+"\t"+GLib.format_size((uint64)cur)+"\t"+GLib.format_size((uint64)total),false,true);
+}
+
+void fetch_init(){
+    add_operation(fetch_main,{"download","dl"});
 }

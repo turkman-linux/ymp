@@ -3,6 +3,6 @@ public int update_main(string[] args){
     return 0;
 }
 
-public void update_init(){
+void update_init(){
     add_operation(update_main,{"update","up"});
 }

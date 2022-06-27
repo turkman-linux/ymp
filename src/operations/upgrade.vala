@@ -13,6 +13,6 @@ public int upgrade_main(string[] args){
     return install_main(need_upgrade);
 }
 
-public void upgrade_init(){
+void upgrade_init(){
     add_operation(upgrade_main,{"upgrade","ug"});
 }

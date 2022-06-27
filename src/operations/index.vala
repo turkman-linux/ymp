@@ -6,6 +6,6 @@ public int index_operation(string[] args){
     }
     return 0;
 }
-public void index_init(){
+void index_init(){
     add_operation(index_operation,{"index", "ix"});
 }

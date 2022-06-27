@@ -24,7 +24,7 @@ public int list_available_main(string[] args){
 }
 
 
-public void list_init(){
+void list_init(){
     add_operation(list_installed_main,{"list-installed","li"});
     add_operation(list_available_main,{"list-available","la"});
 }

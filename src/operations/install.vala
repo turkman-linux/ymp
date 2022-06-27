@@ -77,6 +77,6 @@ public string[] calculate_leftover(package[] pkgs){
     }
     return leftover;
 }
-public void install_init(){
+void install_init(){
     add_operation(install_main,{"install","it"});
 }

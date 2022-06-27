@@ -1,4 +1,4 @@
-int main(string[] args){
+public int extract_main(string[] args){
     inary_init(args);
     if(args.length < 2){
         error_add("Archive Missing");
@@ -21,4 +21,8 @@ int main(string[] args){
     }
     tar.extract_all();
     return 0;
+}
+
+void extract_init(){
+    add_operation(extract_main,{"extract","x"});
 }
