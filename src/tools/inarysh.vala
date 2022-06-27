@@ -1,11 +1,11 @@
-public int inarysh_main(string[] args){
+public int main(string[] args){
     if (args[1] == "--help"){
         print_stderr("Usage: inarysh [file/-]");
         print_stderr("  file: inary script path");
         print_stderr("   -  : read from stdin");
         return 0;
     }
-    var inary = inary_init(args);
+    Inary inary = inary_init(args);
     if(args[1] == "-" || args.length == 1){
         set_bool("shellmode",true);
         while(!stdin.eof()){
@@ -31,8 +31,4 @@ public int inarysh_main(string[] args){
         inary.clear_process();
     }
     return 0;
-}
-
-void inarysh_init(){
-    add_operation(inarysh_main,{"shell","sh"});
 }
