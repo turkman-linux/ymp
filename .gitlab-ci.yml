@@ -12,6 +12,7 @@ debian:
     - meson build -Ddebug=true -Dtools=true -Dlibbrotli=false
     - ninja -C build
     - cd build && ./inary-test || true
+    - ninja install -C build
 
 archlinux:
   image: archlinux:latest
@@ -26,6 +27,7 @@ archlinux:
     - meson build -Ddebug=true -Dtools=true
     - ninja -C build
     - cd build && ./inary-test || true
+    - ninja install -C build
 
 alpine:
   image: alpine:latest
@@ -42,3 +44,4 @@ alpine:
     - ninja -C build
     - upx -9 build/* || true
     - cd build && ./inary-test || true
+    - ninja install -C build
