@@ -82,6 +82,7 @@ private void build_package(){
                 error(status);
             }
         }
+        inary_process_binaries();
     }
     create_files_info();
 }

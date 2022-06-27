@@ -57,7 +57,6 @@ private string readfile_raw2 (string path){
 //DOC: read **n** byte from file
 public string readfile_byte(string path, long n){
     if(!isfile(path)){
-        warning("File not found: "+path);
         return "";
     }
     FileStream stream = FileStream.open (path, "r");

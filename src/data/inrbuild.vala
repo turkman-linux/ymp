@@ -15,29 +15,29 @@ private void inrbuild_init(){
     export installdir="+inrbuild_buildpath+"/output
     export DESTDIR=\"$installdir\"
     alias python=python3
-    export CFLAGS=\"-Dsulin -L/lib/sulin "+get_value("build:cflags")+"\"
-    export CXXFLAGS=\"-Dsulin -L/lib/sulin "+get_value("build:cxxflags")+"\"
+    export CFLAGS=\"-s -Dsulin -L/lib/sulin "+get_value("build:cflags")+"\"
+    export CXXFLAGS=\"-s -Dsulin -L/lib/sulin "+get_value("build:cxxflags")+"\"
     export CC=\""+get_value("build:cc")+"\"
     export LDFLAGS=\""+get_value("build:ldflags")+"\"
     inary-meson(){
-	  meson setup \\
-	    --prefix        /usr \\
-	    --libexecdir    libexec \\
-	    --libdir        lib \\
-	    --sbindir       sbin \\
-	    --bindir        bin \\
-	    --buildtype     release \\
-	    --debug         false \\
-	    --auto-features disabled \\
-	    --strip         true \\
-	    --wrap-mode     nodownload \\
-	    --layout        flat \\
-	    -D              b_lto=true \\
-	    -D              b_pie=true \\
-	    -D              b_colorout=never \\
-	    -D              b_pgo=true \\
-	    -D              b_asneeded=true \\
-	    \"$@\"
+      meson setup \\
+        --prefix        /usr \\
+        --libexecdir    libexec \\
+        --libdir        lib \\
+        --sbindir       sbin \\
+        --bindir        bin \\
+        --buildtype     release \\
+        --debug         false \\
+        --auto-features disabled \\
+        --strip         true \\
+        --wrap-mode     nodownload \\
+        --layout        flat \\
+        -D              b_lto=true \\
+        -D              b_pie=true \\
+        -D              b_colorout=never \\
+        -D              b_pgo=true \\
+        -D              b_asneeded=true \\
+        \"$@\"
     }
     _dump_variables(){
         set -o posix ; set  
@@ -80,6 +80,14 @@ private void inrbuild_init(){
         done
         fi
         
+    }
+    inary_process_binaries(){
+        find $installdir -type f \\
+            -exec objcopy -R .comment \\
+            -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
+            -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\
+            -R .debug_ranges -R .debug_loc '{}' \\;
+            
     }
     mkdir -p \"$DESTDIR\"
     ";
@@ -129,8 +137,20 @@ public int run_inrbuild_function(string function){
     print(colorize("Run action: ",blue)+function);
     if(inrbuild_has_function(function)){
         return run("bash -e -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD ; "+function+"'");
+    }else{
+        warning("INRBUILD function not exists: "+function);
     }
     return 0;
+}
+public void inary_process_binaries(){
+    foreach(string file in find(inrbuild_buildpath+"/output")){
+        if(iself(file)){
+            run_silent("objcopy -R .comment \\
+            -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
+            -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\
+            -R .debug_ranges -R .debug_loc '"+file+"' \\;");
+        }
+    }
 }
 
 public string get_inrbuild_metadata(){
