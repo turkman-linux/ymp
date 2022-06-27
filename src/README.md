@@ -28,3 +28,6 @@ look **libinary.md** file
 | 2       | File not found        |
 | 1       | Operation failed      |
 | 0       | Successfull           |
+
+# How to inary works
+![inary-work-schema](inary-work-schema.svg)
