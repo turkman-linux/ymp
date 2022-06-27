@@ -93,7 +93,8 @@ endif
 if get_option('tools')
     foreach tool: run_command('find', 'src/tools','-type','f',check:true).stdout().strip().split('\n')
         name = run_command('basename', tool, check:true).stdout().split('.')[0]
-        executable(name, tool, install : true, dependencies: dependencies, link_args: args, link_with: lib)
+        executable(name, tool, dependencies: dependencies, link_args: args, link_with: lib)
+        install_data(meson.current_build_dir() / name, install_dir : get_option('bindir'))
     endforeach
 endif
 install_data('data/inary.conf', install_dir : get_option('sysconfdir'), rename : 'inary.conf')
