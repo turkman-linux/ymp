@@ -1,3 +1,4 @@
+#!/bin/bash
 > ctx.vala
 ### ctx_init variable build
 for i in $@ ; do

@@ -3,8 +3,8 @@ project('inary', 'vala', 'c',
     license: ['GplV3']
 
 )
-
-args = ['-X','-O3', '-flto']
+run_command('bash', './tool/check.sh', meson.current_build_dir())
+args = ['-X','-O3', '-flto', '-Dsulin']
 
 args += ['-X', '-s', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
 
@@ -85,16 +85,20 @@ else
 endif
 
 if get_option('static')
-    lib = static_library('inary', sources, dependencies: dependencies, link_args: args)
+    lib = static_library('inary', sources, install : true, dependencies: dependencies, link_args: args)
     args += ['-X','-static']
 else
-    lib = library('inary', sources, dependencies: dependencies, link_args: args)
+    lib = library('inary', sources, install : true, dependencies: dependencies, link_args: args)
 endif
 if get_option('tools')
     foreach tool: run_command('find', 'src/tools','-type','f',check:true).stdout().strip().split('\n')
         name = run_command('basename', tool, check:true).stdout().split('.')[0]
-        executable(name, tool, dependencies: dependencies, link_args: args, link_with: lib)
+        executable(name, tool, install : true, dependencies: dependencies, link_args: args, link_with: lib)
     endforeach
 endif
+install_data('data/inary.conf', install_dir : get_option('sysconfdir'), rename : 'inary.conf')
+install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
+install_data(meson.current_build_dir() / 'inary.h', install_dir : get_option('includedir'), rename : 'inary.h')
+# Test binary
 executable('inary-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
 

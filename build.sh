@@ -5,6 +5,7 @@ cp data/inary.conf ./test/example/rootfs/etc/inary.conf
 # find src -type f -exec sed -i  "s/ *$//g" {} \;
 meson build $@ -Ddebug=false -Dtools=true
 ninja -C build
+DESTDIR=output ninja install -C build
 cd build
 export G_DEBUG=fatal-criticals
 export LD_LIBRARY_PATH="$(pwd)":$LD_LIBRARY_PATH

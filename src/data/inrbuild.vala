@@ -15,7 +15,10 @@ private void inrbuild_init(){
     export installdir="+inrbuild_buildpath+"/output
     export DESTDIR=\"$installdir\"
     alias python=python3
-    alias msg2=echo
+    export CFLAGS=\"-Dsulin -L/lib/sulin "+get_value("build:cflags")+"\"
+    export CXXFLAGS=\"-Dsulin -L/lib/sulin "+get_value("build:cxxflags")+"\"
+    export CC=\""+get_value("build:cc")+"\"
+    export LDFLAGS=\""+get_value("build:ldflags")+"\"
     inary-meson(){
 	  meson setup \\
 	    --prefix        /usr \\
