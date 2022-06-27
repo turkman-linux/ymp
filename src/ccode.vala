@@ -59,4 +59,3 @@ public extern string getArch();
 //DOC: sync call
 public extern void fs_sync();
 public extern void create_dir(string path);
-public extern string _(string msg);
