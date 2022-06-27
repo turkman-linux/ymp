@@ -15,6 +15,8 @@ private void inrbuild_init(){
     export installdir="+inrbuild_buildpath+"/output
     export DESTDIR=\"$installdir\"
     alias python=python3
+    export NOCONFIGURE=1
+    export NO_COLOR=1
     export CFLAGS=\"-s -Dsulin -L/lib/sulin "+get_value("build:cflags")+"\"
     export CXXFLAGS=\"-s -Dsulin -L/lib/sulin "+get_value("build:cxxflags")+"\"
     export CC=\""+get_value("build:cc")+"\"
