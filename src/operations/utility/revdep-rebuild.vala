@@ -1,4 +1,4 @@
-int main(string[] args){
+public int revdep_rebuild_main(string[] args){
     inary_init(args);
     set_env("LANG","C");
     set_env("LC_ALL","C");
@@ -27,4 +27,8 @@ public void check(string libraries){
         }
 
     }
+}
+
+void revdep_rebuild_init(){
+    add_operation(revdep_rebuild_main,{"revdep-rebuild","rbd"});
 }
