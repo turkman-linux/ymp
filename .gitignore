@@ -2,3 +2,7 @@ build
 ctx.vala
 test/example/rootfs
 obj-x86_64-linux-gnu
+debian/inary
+debian/.debhelper
+debian/debhelper-build-stamp
+debian/files
