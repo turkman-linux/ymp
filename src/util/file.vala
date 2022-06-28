@@ -60,7 +60,10 @@ public string readfile_byte(string path, long n){
         return "";
     }
     FileStream stream = FileStream.open (path, "r");
-	assert (stream != null);
+	if(stream == null){
+	    warning("Failed to read file: "+path);
+	    return "";
+	}
 
 	// get file size:
 	stream.seek (0, FileSeek.END);
@@ -214,6 +217,9 @@ public string[] listdir(string path){
 public bool iself(string path){
     var ctx = readfile_byte(path,4);
     // .ELF magic bytes
+    if(ctx == ""){
+        return false;
+    }
     return startswith(ctx,"\x7F\x45\x4C\x46");
 }
 
@@ -223,6 +229,9 @@ public bool is64bit(string path){
     var ctx = readfile_byte(path,4);
     // first byte after magic is bit size flag
     // 01 = 32bit 02 = 64bit
+    if(ctx == ""){
+        return false;
+    }
     return ctx[4] == '\x02';
 }
 
