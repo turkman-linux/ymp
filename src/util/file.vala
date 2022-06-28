@@ -9,7 +9,10 @@ public string readfile_raw (string path){
         return "";
     }
     FileStream stream = FileStream.open (path, "r");
-	assert (stream != null);
+    if(stream == null){
+	    warning("Failed to read file: "+path);
+	    return "";
+	}
 
 	// get file size:
 	stream.seek (0, FileSeek.END);
@@ -302,6 +305,13 @@ public string calculate_checksum(string path, ChecksumType type){
     if(!isfile(path)){
         return "";
     }
+    if(issymlink(path)){
+        if(!isfile(GLib.FileUtils.read_link(path))){
+            warning("broken symlink detected");
+            return "";
+        }
+    }
+    info("Calculating checksum: "+path);
     Checksum checksum = new Checksum (type);
 	FileStream stream = FileStream.open (path, "rb");
 	uint8 fbuf[100];
