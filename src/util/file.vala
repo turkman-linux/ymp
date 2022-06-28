@@ -231,6 +231,10 @@ public bool isfile(string path){
                GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_SYMLINK);
 }
 
+public bool issymlink(string path){
+    return GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_SYMLINK);
+}
+
 //DOC: `bool isdir(string path):`
 //DOC: Check **path** is directory
 public bool isdir(string path){

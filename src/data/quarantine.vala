@@ -18,6 +18,7 @@ public bool quarantine_validate_files(){
     //get quarantine file store and list
     string rootfs_files = get_storage()+"/quarantine/files/";
     foreach(string files_list in listdir(rootfs_files)){
+        info("Validate quarantine for: "+files_list);
         // file list format xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /path/to/file
         // uses sha1sum
         string file_data = readfile(rootfs_files+files_list);
@@ -27,6 +28,10 @@ public bool quarantine_validate_files(){
                 string path = line[41:];
                 path = path.strip();
                 string file_path = get_storage()+"/quarantine/rootfs/"+path;
+                if(issymlink(file_path)){
+                    continue;
+                }
+                info("Validating: "+path);
                 if(!isfile(file_path)){
                     warning("Package file missing: /"+file_path);
                     quarantine_file_broken_list += file_path;

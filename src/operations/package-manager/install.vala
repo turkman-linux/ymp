@@ -13,10 +13,13 @@ public int install_main(string[] args){
             pkg_obj += pkg;
         }
     }
+    info("Quarantine validation");
     quarantine_validate_files();
     error(1);
+    info("Quarantine installation");
     quarantine_install();
     error(1);
+    info("Clear leftovers");
     foreach(string file in calculate_leftover(pkg_obj)){
         remove_file(DESTDIR+"/"+file);
     }
