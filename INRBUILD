@@ -14,7 +14,7 @@ cd inary-new-master
 build(){
     rm -rf build || true
     mkdir -p build
-    meson build -Dtools=true
+    inary-meson build
     ninja -C build
 }
 install(){
