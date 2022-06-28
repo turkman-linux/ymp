@@ -13,6 +13,6 @@ Homepage: https://sulinos.githab.io
 
 Package: inary
 Architecture: any
-Depends: ${misc:Depends}, libc6, libarchive, libreadline, libcurl4-openssl
+Depends: ${misc:Depends}, libc6, libarchive13, libreadline8, libcurl4
 Description: Inary package manager
  A package manager for Sulin project

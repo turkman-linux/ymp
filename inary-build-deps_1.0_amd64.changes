@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Tue, 28 Jun 2022 16:22:28 +0000
+Source: inary-build-deps
+Binary: inary-build-deps
+Architecture: all
+Version: 1.0
+Distribution: unstable
+Urgency: low
+Maintainer: Equivs Dummy Package Generator <a@>
+Changed-By: Equivs Dummy Package Generator <a@>
+Description:
+ inary-build-deps - build-dependencies for inary
+Changes:
+ inary-build-deps (1.0) unstable; urgency=low
+ .
+   * First version
+Checksums-Sha1:
+ 438121b1c8868c730781d57ffcbcb7d4491c6e38 2140 inary-build-deps_1.0_all.deb
+ fe1a617018d9c5aaeae0d8d75e3b2df6ecaed337 4537 inary-build-deps_1.0_amd64.buildinfo
+Checksums-Sha256:
+ 2cd6f28b97d9c04052fbffb25afd2b1368ab804710abbdc2a6972158a882bea9 2140 inary-build-deps_1.0_all.deb
+ bf2757ac41d7ac0ef8938754ec8742e5f5a6c65df82a662cf8902a42b9f5fd8e 4537 inary-build-deps_1.0_amd64.buildinfo
+Files:
+ 0ee1c917e5de7631916a9af0507e987d 2140 devel optional inary-build-deps_1.0_all.deb
+ 998e090b4eea0b44029ede2a9bd45e63 4537 devel optional inary-build-deps_1.0_amd64.buildinfo
