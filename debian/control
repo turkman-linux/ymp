@@ -1,0 +1,18 @@
+Source: inary
+Section: utils
+Priority: optional
+Maintainer: Ali Riza KESKIN <parduscix@yandex.ru>
+Build-Depends: make,
+               libarchive-dev,
+               libreadline-dev,
+               libcurl4-openssl-dev,
+               libbrotli-dev,
+               meson, gcc, valac
+Standards-Version: 4.3.0
+Homepage: https://sulinos.githab.io
+
+Package: inary
+Architecture: any
+Depends: ${misc:Depends}, libc6, libarchive, libreadline, libcurl4-openssl
+Description: Inary package manager
+ A package manager for Sulin project

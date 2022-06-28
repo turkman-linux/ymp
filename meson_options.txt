@@ -1,6 +1,6 @@
 option('static', type: 'boolean', value: 'false')
 option('doc', type: 'boolean', value: 'false')
-option('tools', type: 'boolean', value: 'false')
+option('tools', type: 'boolean', value: 'true')
 option('colorize', type: 'boolean', value: 'true')
 option('ignore-oem', type: 'boolean', value: 'false')
 option('libarchive', type: 'boolean', value: 'true')
