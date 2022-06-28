@@ -68,11 +68,11 @@ private void inrbuild_init(){
     }
     inary-install(){
     	if [[ -f configure ]] ; then
-            make -j`nproc` install
+            make -j`nproc` install DESTDIR=$DESTDIR
         elif [[ -f meson.build ]] ; then
             ninja -C build install
         elif [[ -f CMakeLists.txt ]] ; then
-            make -j`nproc` install
+            make -j`nproc` install DESTDIR=$DESTDIR
         fi
     }
     _dump_variables(){

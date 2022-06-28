@@ -77,7 +77,7 @@ private void build_package(){
         }
     }
     if(!get_bool("no-install")){
-        string[] install_actions = {"test","install"};
+        string[] install_actions = {"test","package"};
         foreach(string func in install_actions){
             info("Running build action: "+func);
             status = run_inrbuild_function(func);
