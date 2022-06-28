@@ -7,10 +7,14 @@ public int build_operation(string[] args){
         set_build_target(arg);
         create_metadata_info();
         fetch_package_sources();
-        create_source_archive();
-        extract_package_sources();
-        build_package();
-        create_binary_package();
+        if(!get_bool("no-source")){
+            create_source_archive();
+        }
+        if(!get_bool("no-binary")){
+            extract_package_sources();
+            build_package();
+            create_binary_package();
+        }
     }
     return 0;
 }
@@ -138,12 +142,19 @@ private void create_metadata_info(){
     var yaml = new yamlfile();
     yaml.data = metadata;
     string srcdata = yaml.get("inary.source");
+    foreach(string dep in yaml.get_array(srcdata,"depends")){
+        if(!is_installed_package(dep)){
+            error_add("Package "+dep+" in not satisfied. Required by: "+yaml.get_value(srcdata,"name"));
+        }
+    }
+    error(2);
     string new_data = "inary:\n";
     new_data += "  package:\n";
     string[] attrs = {"name", "version","release","description"};
     foreach(string attr in attrs){
         new_data += "    "+attr+": "+yaml.get_value(srcdata,attr)+"\n";
     }
+
     string[] arrys = {"depends","provides","replaces"};
     foreach(string arr in arrys){
         if(!yaml.has_area(srcdata,arr)){
