@@ -5,6 +5,7 @@ private string[] cache_list;
 
 private void resolve_process(string[] names){
     foreach(string name in names){
+        info("Resolve dependency: "+name);
         // 1. block process packages for multiple times.
         if(name in cache_list){
             return;
@@ -19,6 +20,9 @@ private void resolve_process(string[] names){
                 pkg = get_package_from_file(name);
             }else{
                 pkg = get_from_repository(name);
+            }
+            if(pkg == null){
+                return;
             }
             if(!get_bool("reinstall") && is_installed_package(name)){
                 if(pkg.release <= get_installed_package(name).release){
