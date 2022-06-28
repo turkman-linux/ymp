@@ -41,6 +41,40 @@ private void inrbuild_init(){
         -D              b_asneeded=true \\
         \"$@\"
     }
+    inary-configure(){
+        if [[ -f \"./autogen.sh\" ]] ; then
+			NOCONFIGURE=1 ./autogen.sh
+		fi
+		if [[ -f configure ]] ; then
+            ./configure --prefix=/usr \"$@\"
+        elif [[ -f meson.build ]] ; then
+            inary-meson build
+        elif [[ -f CMakeLists.txt ]] ; then
+            mkdir build
+            cd build
+	        cmake .. -DCMAKE_INSTALL_PREFIX=/usr \"$@\"
+	        cd ..
+        fi
+    }
+    inary-build(){
+		if [[ -f configure ]] ; then
+            make -j`nproc`
+        elif [[ -f meson.build ]] ; then
+            ninja -C build
+        elif [[ -f CMakeLists.txt ]] ; then
+            make -j`nproc`
+        fi
+
+    }
+    inary-install(){
+    	if [[ -f configure ]] ; then
+            make -j`nproc` install
+        elif [[ -f meson.build ]] ; then
+            ninja -C build install
+        elif [[ -f CMakeLists.txt ]] ; then
+            make -j`nproc` install
+        fi
+    }
     _dump_variables(){
         set -o posix ; set  
     }
@@ -83,16 +117,12 @@ private void inrbuild_init(){
         fi
         
     }
-    inary_process_binaries(){
-        find $installdir -type f \\
-            -exec objcopy -R .comment \\
-            -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
-            -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\
-            -R .debug_ranges -R .debug_loc '{}' \\;
-            
-    }
     mkdir -p \"$DESTDIR\"
+
     ";
+    #if debug
+    inrbuild_header += "set -x"
+    #endif
 }
 //DOC: `void set_inrbuild_srcpath(string path):`
 //DOC: configure inrbuild file directory
