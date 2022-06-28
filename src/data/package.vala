@@ -204,10 +204,12 @@ public class package {
         string curdir = pwd();
         create_dir(DESTDIR+"/tmp/inary-build/"+name);
         pkgfile.set_target(DESTDIR+"/tmp/inary-build/"+name);
-        set_build_target(DESTDIR+"/tmp/inary-build/"+name);
+        set_inrbuild_srcpath(DESTDIR+"/tmp/inary-build/"+name);
+        set_inrbuild_buildpath(DESTDIR+"/tmp/inary-build/"+name);
         if(!get_bool("no-clear")){
             remove_all(inrbuild_buildpath);
         }
+        cd(DESTDIR+"/tmp/inary-build/"+name);
         pkgfile.extract_all();
         create_metadata_info();
         fetch_package_sources();
