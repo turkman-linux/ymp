@@ -142,12 +142,18 @@ private void create_metadata_info(){
     var yaml = new yamlfile();
     yaml.data = metadata;
     string srcdata = yaml.get("inary.source");
-    foreach(string dep in yaml.get_array(srcdata,"depends")){
-        if(!is_installed_package(dep)){
-            error_add("Package "+dep+" in not satisfied. Required by: "+yaml.get_value(srcdata,"name"));
+    if(get_bool("ignore-dependency")){
+        warning("Dependency check disabled");
+    }else if(yaml.has_area(srcdata,"depends")){
+        foreach(string dep in yaml.get_array(srcdata,"depends")){
+            if(!is_installed_package(dep)){
+                error_add("Package "+dep+" in not satisfied. Required by: "+yaml.get_value(srcdata,"name"));
+            }
         }
+        error(2);
+    }else{
+        warning("Depends array not defined!");
     }
-    error(2);
     string new_data = "inary:\n";
     new_data += "  package:\n";
     string[] attrs = {"name", "version","release","description"};
