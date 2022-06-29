@@ -31,13 +31,13 @@ char* getArch() {
 }
 
 void fs_sync(){
-    if(getuid() == 0){
+    /*if(getuid() == 0){
         FILE *f = fopen("/proc/sysrq-trigger","w");
         fputs("s",f);
         fclose(f);
-    }else{
+    }else{*/
         sync();
-    }
+    //}
 }
 
 void create_dir(const char *dir) {

@@ -12,6 +12,7 @@ private void inrbuild_init(){
         inrbuild_srcpath = "./";
     }
     inrbuild_header = "
+    source /etc/profile
     export installdir="+inrbuild_buildpath+"/output
     export DESTDIR=\"$installdir\"
     alias python=python3
