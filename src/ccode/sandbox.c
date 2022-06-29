@@ -60,16 +60,17 @@ int sandbox(char** args){
         sandbox_bind(sandbox_shared);
 
         if (0 == chroot("/root")){
-            int t = chdir("/");
-            unshare(CLONE_NEWUTS);
-            if(sandbox_network == 0){
-                unshare(CLONE_NEWNET);
+            if(0 == chdir("/")){
+                unshare(CLONE_NEWUTS);
+                if(sandbox_network == 0){
+                    unshare(CLONE_NEWNET);
+                }
+                unshare(CLONE_NEWIPC);
+                unshare(CLONE_VM);
+                setenv("PATH","/bin:/usr/bin:/sbin:/usr/sbin",1);
+                setenv("TERM","linux",1);
+                _exit(execvpe(which(args[0]),args,NULL));
             }
-            unshare(CLONE_NEWIPC);
-            unshare(CLONE_VM);
-            setenv("PATH","/bin:/usr/bin:/sbin:/usr/sbin",1);
-            setenv("TERM","linux",1);
-            _exit(execvpe(which(args[0]),args,NULL));
         }
         _exit(127);
         return 127;

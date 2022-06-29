@@ -47,31 +47,43 @@ void write_archive(const char *outname, const char **filename) {
     entry = archive_entry_new(); 
     archive_entry_set_pathname(entry, *filename);
     archive_entry_set_size(entry, st.st_size);
+    #ifdef DEBUG
     char* type;
+    #endif
     switch (st.st_mode & S_IFMT) {
             case S_IFBLK:
                  // block device
                 archive_entry_set_filetype(entry, AE_IFBLK);
+                #ifdef DEBUG
                 type = "block device";
+                #endif
                 break;
             case S_IFCHR:
                 // character device
+                #ifdef DEBUG
                 type = "character device";
+                #endif
                 archive_entry_set_filetype(entry, AE_IFCHR);
                 break;
             case S_IFDIR:
                 // directory
+                #ifdef DEBUG
                 type = "directory";
+                #endif
                 archive_entry_set_filetype(entry, AE_IFDIR);
                 break;
             case S_IFIFO:
                 // FIFO/pipe
+                #ifdef DEBUG
                 type = "fifo";
+                #endif
                 archive_entry_set_filetype(entry, AE_IFIFO);
                 break;
             case S_IFLNK:
                 // symlink
+                #ifdef DEBUG
                 type = "symlink";
+                #endif
                 char link[PATH_MAX];
                 if(readlink(*filename,link,sizeof(link)) < 0){
                     fprintf(stderr,"Broken symlink: %s\n",*filename);
@@ -82,17 +94,23 @@ void write_archive(const char *outname, const char **filename) {
                 break;
             case S_IFREG:
                 // regular file
+                #ifdef DEBUG
                 type = "file";
+                #endif
                 archive_entry_set_filetype(entry, AE_IFREG);
                 break;
             case S_IFSOCK:
                 // socket
+                #ifdef DEBUG
                 type = "socket";
+                #endif
                 archive_entry_set_filetype(entry, AE_IFSOCK);
                 break;                
             default:
                 // unknown
+                #ifdef DEBUG
                 type = "unknown";
+                #endif
                 archive_entry_set_filetype(entry, AE_IFREG);
                 break;
     }

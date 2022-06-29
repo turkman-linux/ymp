@@ -4,7 +4,7 @@ project('inary', 'vala', 'c',
 
 )
 run_command('bash', './tool/check.sh', meson.current_build_dir())
-args = ['-X','-O3', '-flto', '-Dsulin']
+args = ['-X','-O3', '-flto', '-Dsulin', '-Wall']
 
 args += ['-X', '-s', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
 
