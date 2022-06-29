@@ -1,10 +1,7 @@
 #!/bin/bash
 set -ex
-find src/tools -type f | while read file ; do
-    name=$(echo $file | sed "s/.*\///g;s/.vala//g")
-    touch "$1"/$name
-done
 touch "$1"/inary.h
+touch "$1"/inary-cli
 touch "$1"/libinary.so
 touch "$1"/libinary.a
 echo | gcc -c -x c - -o "$1"/obj.o

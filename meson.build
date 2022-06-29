@@ -91,11 +91,8 @@ else
     lib = library('inary', sources, dependencies: dependencies, link_args: args)
 endif
 if get_option('tools')
-    foreach tool: run_command('find', 'src/tools','-type','f',check:true).stdout().strip().split('\n')
-        name = run_command('basename', tool, check:true).stdout().split('.')[0]
-        executable(name, tool, dependencies: dependencies, link_args: args, link_with: lib)
-        install_data(meson.current_build_dir() / name, install_dir : get_option('bindir'))
-    endforeach
+    executable('inary-cli', 'src/inary-cli.vala', dependencies: dependencies, link_args: args, link_with: lib)
+    install_data(meson.current_build_dir() / 'inary-cli', install_dir : get_option('bindir'))
 endif
 install_data('data/inary.conf', install_dir : get_option('sysconfdir'), rename : 'inary.conf')
 install_data('data/application-x-inary.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')

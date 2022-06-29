@@ -30,9 +30,11 @@ public package install_single(string pkg){
     package p = null;
     // Download package files from repository
     if(isfile(pkg)){
+        info("Installing from package file:" + pkg);
         p = new package();
         p.load_from_archive(pkg);
     }else{
+        info("Installing from repository:" + pkg);
         p = get_package_from_repository(pkg);
         p.download();
     }

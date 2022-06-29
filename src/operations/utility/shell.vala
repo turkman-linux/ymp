@@ -1,12 +1,6 @@
-public int main(string[] args){
-    if (args[1] == "--help"){
-        print_stderr("Usage: inarysh [file/-]");
-        print_stderr("  file: inary script path");
-        print_stderr("   -  : read from stdin");
-        return 0;
-    }
+public int shell_main(string[] args){
     Inary inary = inary_init(args);
-    if(args[1] == "-" || args.length == 1){
+    if(args[0] == "-" || args.length == 0){
         set_bool("shellmode",true);
         while(!stdin.eof()){
             string prompt = colorize("Inary >> ",blue);
@@ -25,10 +19,14 @@ public int main(string[] args){
             }
         }
     }else{
-        string data = readfile(args[1]);
+        string data = readfile(args[0]);
         inary.add_script(data);
         inary.run();
         inary.clear_process();
     }
     return 0;
+}
+
+void shell_init(){
+    add_operation(shell_main,{"shell","sh"});
 }
