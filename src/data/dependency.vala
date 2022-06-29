@@ -18,6 +18,7 @@ private void resolve_process(string[] names){
             package pkg = null;
             if(isfile(name)){
                 pkg = get_package_from_file(name);
+                name = pkg.name;
             }else{
                 pkg = get_from_repository(name);
             }

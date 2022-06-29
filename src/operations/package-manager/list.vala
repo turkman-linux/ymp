@@ -11,12 +11,20 @@ public int list_available_main(string[] args){
         if(get_bool("package")){
             foreach(string name in repo.list_packages()){
                 var description = repo.get_package(name).get("description");
-                print(name + " " + description);
+                if(is_installed_package(name)){
+                    print(colorize(name,green) + " " + description);
+                }else{
+                    print(colorize(name,red) + " " + description);
+                }
             }
         } if(get_bool("source")){
            foreach(string name in repo.list_sources()){
                 var description = repo.get_source(name).get("description");
-                print(name + " " + description);
+                if(is_installed_package(name)){
+                    print(colorize(name,green) + " " + description);
+                }else{
+                    print(colorize(name,red) + " " + description);
+                }
             }
         }
     }
