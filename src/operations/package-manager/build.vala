@@ -4,6 +4,9 @@ public int build_operation(string[] args){
         new_args = {"."};
     }
     foreach(string arg in new_args){
+        if(!isfile(arg+"/INRBUILD")){
+            continue;
+        }
         set_build_target(arg);
         create_metadata_info();
         fetch_package_sources();
