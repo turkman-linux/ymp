@@ -98,6 +98,8 @@ if get_option('tools')
     endforeach
 endif
 install_data('data/inary.conf', install_dir : get_option('sysconfdir'), rename : 'inary.conf')
+install_data('data/application-x-inary.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
+install_data('data/inary-mime.xml', install_dir : get_option('prefix') / 'share/mime/application/')
 if get_option('static')
     install_data(meson.current_build_dir() / 'libinary.a', install_dir : get_option('libdir'))
 else

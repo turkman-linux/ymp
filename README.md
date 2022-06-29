@@ -1,4 +1,5 @@
 # Inary
+![inary logo](data/application-x-inary.svg)
 A package manager for Sulin Project
 
 ## Building from source

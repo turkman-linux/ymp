@@ -49,6 +49,7 @@ void write_archive(const char *outname, const char **filename) {
     archive_entry_set_size(entry, st.st_size);
     #ifdef DEBUG
     char* type;
+    char *link = malloc(PATH_MAX*sizeof(char));
     #endif
     switch (st.st_mode & S_IFMT) {
             case S_IFBLK:
@@ -84,7 +85,6 @@ void write_archive(const char *outname, const char **filename) {
                 #ifdef DEBUG
                 type = "symlink";
                 #endif
-                char link[PATH_MAX];
                 if(readlink(*filename,link,sizeof(link)) < 0){
                     fprintf(stderr,"Broken symlink: %s\n",*filename);
                     continue;
