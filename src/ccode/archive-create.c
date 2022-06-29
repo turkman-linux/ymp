@@ -43,14 +43,14 @@ void write_archive(const char *outname, const char **filename) {
       archive_write_set_format_pax_restricted(a);
   archive_write_open_filename(a, outname);
   char *link = malloc(PATH_MAX*sizeof(char));
+  #ifdef DEBUG
+  char* type;
+  #endif
   while (*filename) {
     lstat(*filename, &st);
     entry = archive_entry_new(); 
     archive_entry_set_pathname(entry, *filename);
     archive_entry_set_size(entry, st.st_size);
-    #ifdef DEBUG
-    char* type;
-    #endif
     switch (st.st_mode & S_IFMT) {
             case S_IFBLK:
                  // block device
