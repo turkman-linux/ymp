@@ -14,14 +14,19 @@
 #include <sys/stat.h>
 #include <sys/mount.h>
 
+void create_dir(const char *dir);
+
 int sandbox_network = 0;
 int sandbox_uid = 0;
 int sandbox_gid = 0;
 
 char* which(char* cmd);
 void write_to_file(const char *which, const char *format, ...);
-void bind_root(char* dir);
-void create_tmpfs(char* dir);
+void sandbox_bind(char* dir);
+void sandbox_create_tmpfs(char* dir);
+void sandbox_mount_shared();
+
+char* sandbox_shared;
 
 int sandbox(char** args){
     int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER;
@@ -37,21 +42,22 @@ int sandbox(char** args){
         // remap gid
         write_to_file("/proc/self/gid_map", "%d %d 1", sandbox_gid, gid);
         mount("tmpfs","/root","tmpfs",0,NULL);
-        bind_root("/usr");
-        bind_root("/etc");
-        bind_root("/bin");
-        bind_root("/lib");
-        bind_root("/lib64");
-        bind_root("/etc");
-        bind_root("/bin");
-        bind_root("/sbin");
-        bind_root("/var");
-        bind_root("/dev");
-        bind_root("/sys");
-        bind_root("/proc");
-        create_tmpfs("/root/root");
-        create_tmpfs("/root/tmp");
-        create_tmpfs("/root/run");
+        sandbox_bind("/usr");
+        sandbox_bind("/etc");
+        sandbox_bind("/bin");
+        sandbox_bind("/lib");
+        sandbox_bind("/lib64");
+        sandbox_bind("/etc");
+        sandbox_bind("/bin");
+        sandbox_bind("/sbin");
+        sandbox_bind("/var");
+        sandbox_bind("/dev");
+        sandbox_bind("/sys");
+        sandbox_bind("/proc");
+        sandbox_create_tmpfs("/root/root");
+        sandbox_create_tmpfs("/root/tmp");
+        sandbox_create_tmpfs("/root/run");
+        sandbox_bind(sandbox_shared);
 
         if (0 == chroot("/root")){
             int t = chdir("/");
@@ -61,6 +67,8 @@ int sandbox(char** args){
             }
             unshare(CLONE_NEWIPC);
             unshare(CLONE_VM);
+            setenv("PATH","/bin:/usr/bin:/sbin:/usr/sbin",1);
+            setenv("TERM","linux",1);
             _exit(execvpe(which(args[0]),args,NULL));
         }
         _exit(127);
@@ -72,16 +80,16 @@ int sandbox(char** args){
     }
 }
 
-void bind_root(char* dir){
+void sandbox_bind(char* dir){
     char target[(strlen(dir)+10)*sizeof(char)];
     strcpy(target,"/root/");
     strcat(target,dir);
-    mkdir(target, 0755);
-    mount(dir, target, 0, MS_BIND, NULL);
+    create_dir(target);
+    mount(dir, target, NULL, MS_SILENT | MS_BIND | MS_REC, NULL);
 }
 
-void create_tmpfs(char* dir){
-    mkdir(dir, 0755);
+void sandbox_create_tmpfs(char* dir){
+    create_dir(dir);
     mount("tmpfs",dir,"tmpfs",0,NULL);
 }
 

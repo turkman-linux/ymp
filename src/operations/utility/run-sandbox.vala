@@ -1,7 +1,9 @@
 public int run_sandbox_main(string[] args){
-    sandbox_network = true;
+    if(!get_bool("no-net")){
+        sandbox_network = true;
+    }
     clear_env();
-    set_env("PATH","/bin:/usr/bin:/sbin:/usr/sbin");
+    sandbox_shared = get_value("shared");
     int status = sandbox(args);
     return status/256;
 }
