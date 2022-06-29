@@ -42,6 +42,7 @@ void write_archive(const char *outname, const char **filename) {
   if(aformat == tar)
       archive_write_set_format_pax_restricted(a);
   archive_write_open_filename(a, outname);
+  char *link = malloc(PATH_MAX*sizeof(char));
   while (*filename) {
     lstat(*filename, &st);
     entry = archive_entry_new(); 
@@ -49,7 +50,6 @@ void write_archive(const char *outname, const char **filename) {
     archive_entry_set_size(entry, st.st_size);
     #ifdef DEBUG
     char* type;
-    char *link = malloc(PATH_MAX*sizeof(char));
     #endif
     switch (st.st_mode & S_IFMT) {
             case S_IFBLK:
@@ -131,5 +131,6 @@ void write_archive(const char *outname, const char **filename) {
   }
   archive_write_close(a);
   archive_write_free(a);
+  free(link);
 }
 #endif
