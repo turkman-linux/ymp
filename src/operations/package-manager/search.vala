@@ -38,8 +38,26 @@ public int search_srcrepo_main(string[] args){
     return 0;
 }
 
+public int search_files_main(string[] args){
+    foreach(string pkg in list_installed_packages()){
+        string files = readfile(get_storage()+"/files/"+pkg);
+        foreach(string file in files.split("\n")){
+            if(file.length < 41){
+                continue;
+            }
+            foreach(string arg in args){
+                if(arg in "/"+file[41:]){
+                    print("Found: "+pkg+" => /"+file[41:]);
+                }
+            }
+        }
+    }
+    return 0;
+}
+
 void search_init(){
     add_operation(search_main,{"search","sr"});
     add_operation(search_pkgrepo_main,{"search-package","sp"});
     add_operation(search_srcrepo_main,{"search-source","ss"});
+    add_operation(search_files_main,{"search-file","sf"});
 }
