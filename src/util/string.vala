@@ -110,15 +110,3 @@ public string sdirname(string path){
     }
     return ret;
 }
-
-//DOC: `string[] reverse(string[] array):`
-//DOC: reverse a string array
-public string[] reverse(string[] array){
-    int i = array.length;
-    string[] new_array = {};
-    while(i>0){
-        i -=1;
-        new_array += array[i];
-    }
-    return new_array;
-}

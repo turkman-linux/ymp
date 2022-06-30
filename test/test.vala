@@ -64,6 +64,20 @@ void main(string[] args){
     // index test
     print("Repository test");
     get_repos();
+    
+    //array test
+    print("Array test");
+    var a = new array();
+    a.add("aa");
+    a.add("bb");
+    a.add("cc");
+    a.reverse();
+    a.pop(0);
+    a.remove("aa");
+    a.has("bb");
+    a.insert("dd",0);
+    a.set({"yumusak","ge"});
+    a.get();
 
     // binary test
     print("Binary test");

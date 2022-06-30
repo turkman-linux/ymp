@@ -96,7 +96,9 @@ public string readfile_byte(string path, long n){
 public string readfile(string path){
     string new_data = "";
     foreach(string line in ssplit(readfile_raw(path),"\n")){
-        new_data += ssplit(line,"#")[0]+"\n";
+        if(line.length > 0){
+            new_data += ssplit(line,"#")[0]+"\n";
+        }
     }
     return new_data;
 }
@@ -159,13 +161,15 @@ public int remove_file(string path){
 //DOC: `int remove_all(string path):`
 //DOC: Remove files and directories (like **rm -rf**)
 public int remove_all(string path){
-    string[] inodes = find(path);
-    foreach(string inode in inodes){
+    var inodes = new array();
+    inodes.set(find(path));
+    foreach(string inode in inodes.get()){
         if(isfile(inode)){
             remove_file(inode);
         }
     }
-    foreach(string inode in reverse(inodes)){
+    inodes.reverse();
+    foreach(string inode in inodes.get()){
         if(isdir(inode)){
             remove_dir(inode);
         }
