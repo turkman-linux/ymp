@@ -33,7 +33,7 @@ private int operation_main(string type, string[] args){
     foreach(operation op in ops){
         foreach(string name in op.names){
             if(type == name){
-                return op.callback(argument_process(args));
+                return op.callback(args);
             }
         }
     }
@@ -115,7 +115,16 @@ public class Inary {
 //DOC: Clear options and apply variables from argument
 public string[] argument_process(string[] args){
      string[] new_args = {};
+     bool e = false;
      foreach (string arg in args){
+        if(arg == "--"){
+            e = true;
+            continue;
+        }
+        if(e){
+            new_args += arg;
+            continue;
+        }
          if(arg.length > 1 && arg[0] == '$'){
              arg = get_value(arg[1:]);
          }

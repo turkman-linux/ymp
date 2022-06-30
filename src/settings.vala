@@ -77,6 +77,9 @@ public void set_config(string path){
 }
 private void parse_args(string[] args){
     foreach(string arg in args){
+        if(arg == "--"){
+            return;
+        }
         if(startswith(arg,"--")){
             if(arg[2:] == "allow-oem"){
                     set_value_readonly("allow-oem","true");
