@@ -1,3 +1,4 @@
+private bool no_src = false;
 public int build_operation(string[] args){
     string[] new_args = args;
     if(new_args.length == 0){
@@ -33,6 +34,9 @@ private void set_build_target(string src_path){
 
 private void fetch_package_sources(){
     int i = 0;
+    if(no_src){
+        return;
+    }
     string[] md5sums = get_inrbuild_array("md5sums");
     foreach(string src in get_inrbuild_array("source")){
         if(src == "" || md5sums[i] == ""){
@@ -156,6 +160,10 @@ private void create_metadata_info(){
         error(2);
     }else{
         warning("Depends array not defined!");
+    }
+    no_src = false;
+    if(!yaml.has_area(srcdata,"source")){
+        no_src = true;
     }
     string new_data = "inary:\n";
     new_data += "  package:\n";

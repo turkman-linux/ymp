@@ -119,8 +119,13 @@ private void inrbuild_init(){
         
     }
     mkdir -p \"$DESTDIR\"
-
     ";
+    foreach(string flag in ssplit(get_value("USE")," ")){
+       if(flag == "" || flag == null){
+           continue;
+       }
+       inrbuild_header += "declare -r '"+flag+"'=1 \n";
+    }
     #if debug
     inrbuild_header += "set -x"
     #endif

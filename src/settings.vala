@@ -23,7 +23,7 @@ private void settings_init(){
     if(isfile(CONFIG)){
         ini.load(CONFIG);
         foreach(string section in ini.get_sections()){
-            foreach(string variable in ini.get_variables("inary")){
+            foreach(string variable in ini.get_variables(section)){
                 if(section == "inary"){
                     set_value(variable,ini.get("inary",variable));
                 }else{
@@ -33,6 +33,11 @@ private void settings_init(){
         }
     }else{
         warning("Config file not exists: "+CONFIG);
+    }
+    if(get_env("USE") != null){
+        set_value_readonly("USE",get_env("USE"));
+    }else{
+        set_value_readonly("USE",ini.get("inary","USE"));
     }
     clear_env();
     set_env("LANG","C.UTF-8");
