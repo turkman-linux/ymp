@@ -86,7 +86,12 @@ public class package {
     private void read_values(){
         name = get("name");
         version = get("version");
-        dependencies = gets("depends");
+        var a = new array();
+        a.adds(gets("depends"));
+        if(is_source){
+            a.adds(gets("makedepends"));
+        }
+        dependencies = a.get();
         release = int.parse(get("release"));
     }
 

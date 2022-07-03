@@ -12,7 +12,14 @@ public class array{
         a = new_a;
     }
     public void add(string item){
-        a += item;
+        if(item != "" && item != null){
+            a += item;
+        }
+    }
+    public void adds(string[] arr){
+        foreach(string item in arr){
+            add(item);
+        }
     }
     public void remove(string item){
         string[] new_a = {};

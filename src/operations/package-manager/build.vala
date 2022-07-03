@@ -151,19 +151,27 @@ private void create_metadata_info(){
     string srcdata = yaml.get("inary.source");
     if(get_bool("ignore-dependency")){
         warning("Dependency check disabled");
-    }else if(yaml.has_area(srcdata,"depends")){
-        foreach(string dep in yaml.get_array(srcdata,"depends")){
-            if(!is_installed_package(dep)){
-                error_add("Package "+dep+" in not satisfied. Required by: "+yaml.get_value(srcdata,"name"));
+    }else{
+        if(yaml.has_area(srcdata,"depends")){
+            foreach(string dep in yaml.get_array(srcdata,"depends")){
+                if(!is_installed_package(dep)){
+                    error_add("Package "+dep+" in not satisfied. Required by: "+yaml.get_value(srcdata,"name"));
+                }
+            }
+        }
+        if(yaml.has_area(srcdata,"makedepends")){
+            foreach(string dep in yaml.get_array(srcdata,"makedepends")){
+                if(!is_installed_package(dep)){
+                    error_add("Package "+dep+" in not satisfied. Required by: "+yaml.get_value(srcdata,"name"));
+                }
             }
         }
         error(2);
-    }else{
-        warning("Depends array not defined!");
     }
     no_src = false;
     if(!yaml.has_area(srcdata,"source")){
         no_src = true;
+        warning("Source array not defined");
     }
     string new_data = "inary:\n";
     new_data += "  package:\n";

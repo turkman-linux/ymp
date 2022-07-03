@@ -124,7 +124,7 @@ private void inrbuild_init(){
        if(flag == "" || flag == null){
            continue;
        }
-       inrbuild_header += "declare -r '"+flag+"'=1 \n";
+       inrbuild_header += "declare -r '"+flag.replace("'","\\'")+"'=31 \n";
     }
     #if debug
     inrbuild_header += "set -x"
