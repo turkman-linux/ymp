@@ -94,6 +94,11 @@ if get_option('tools')
     executable('inary-cli', 'src/inary-cli.vala', dependencies: dependencies, link_args: args, link_with: lib)
     install_data(meson.current_build_dir() / 'inary-cli', install_dir : get_option('bindir'))
 endif
+if get_option('scripts')
+    foreach script : run_command('find', 'scripts','-type','f',check:true).stdout().strip().split('\n')
+        install_data(script, install_dir : get_option('bindir'))
+    endforeach
+endif
 install_data('data/inary.conf', install_dir : get_option('sysconfdir'), rename : 'inary.conf')
 install_data('data/application-x-inary.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
 install_data('data/inary-mime.xml', install_dir : get_option('prefix') / 'share/mime/application/')

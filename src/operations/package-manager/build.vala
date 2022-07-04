@@ -169,7 +169,7 @@ private void create_metadata_info(){
         error(2);
     }
     no_src = false;
-    if(!yaml.has_area(srcdata,"source")){
+    if(!yaml.has_area(srcdata,"archive")){
         no_src = true;
         warning("Source array not defined");
     }

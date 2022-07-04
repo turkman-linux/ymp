@@ -183,6 +183,7 @@ public int run_inrbuild_function(string function){
 public void inary_process_binaries(){
     foreach(string file in find(inrbuild_buildpath+"/output")){
         if(iself(file)){
+            info("Binary process: "+file);
             run_silent("objcopy -R .comment \\
             -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
             -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\
