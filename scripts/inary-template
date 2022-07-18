@@ -1,0 +1,270 @@
+#!/bin/bash
+set -e
+#define constants
+available_build_types=(none autotools cmaketools mesontools)
+
+info(){
+    echo -e "\033[32;1m$1\033[;0m: $2"
+}
+err(){
+    echo -e "\033[31;1m$1\033[;0m: $2"
+}
+inf_msg(){
+    echo "Create new inary package template. "
+}
+
+err_msg(){
+      echo "Usage: $(basename $0) -n package-name -a source-url [OPTIONS]" >&2
+      echo "  General Options:"
+      echo "    -o   output directory (default: package name)"
+      echo "    -n   package name (required)"
+      echo "    -x   build package after create"
+      echo "    -y   do not ask anything"
+      echo "    -z   do not generate pspec and actions"
+      echo "    -j   do not generate pspec class"
+      echo "    -h   write help message"
+      echo "  Actions options:"
+      echo "    -t   build type (default: none)"
+      echo "           Build types: ${available_build_types[@]}"
+      echo "    -c   configure options"
+      echo "  Pspec options:"
+      echo "    Source section:"
+      echo "      -p   homepage url"
+      echo "      -u   packager name"
+      echo "      -e   packager email adress"
+      echo "      -l   package license"
+      echo "      -d   package description"
+      echo "      -b   build dependencies list"
+      echo "      -a   package source archive list (required)"
+      echo "    Package section:"
+      echo "      -r   runtime dependencies list"
+      echo "      -v   package verison"
+      exit 1
+}
+
+#default variables
+name=""
+directory=""
+homepage="https://gitlab.com/sulinos/devel/inary"
+buildtype="none"
+if [[ -f "$HOME/.gitconfig" ]] ; then
+    email="$(cat ~/.gitconfig | grep 'email =' | sed 's/.*= //g')"
+    packager="$(cat ~/.gitconfig | grep 'name =' | sed 's/.*= //g')"
+else
+    packager="Your Name"
+    email="yourmane@example.org"
+fi
+license="GPLv3"
+description="Package description missing"
+src=""
+bdeps=""
+rdeps=""
+ver="1.0.0"
+bnow=false
+confopt=""
+forceyes=""
+dummy=""
+noclass=""
+#opt parse
+while getopts -- ':o:n:t:c:p:u:e:l:d:b:a:r:v' OPTION; do
+  case "$OPTION" in
+   o)
+      directory="${OPTARG[@]}"
+      ;;
+
+   n)
+      name="${OPTARG[@]}"
+      ;;
+   t)
+      buildtype="${OPTARG[@]}"
+      a=0
+      for item in ${available_build_types[@]}
+      do
+        if [[ "$buildtype" == "$item" ]]; then
+          a=1
+        fi
+      done
+      if [[ "$a" == "0" ]] ; then
+        err "Error" "Invalid build type: $a $buildtype"
+        err_msg
+      fi
+      ;;
+      
+    c)
+      confopt="${OPTARG[@]}"
+      ;;
+    p)
+      homepage="${OPTARG[@]}"
+      ;;
+      
+    u)
+      packager="${OPTARG[@]}"
+      ;;
+      
+    e)
+      email="${OPTARG[@]}"
+      ;;
+      
+    l)
+      license="${OPTARG[@]}"
+      ;;
+      
+      
+    d)
+      description="${OPTARG[@]}"
+      ;;      
+      
+    b)
+      bdeps="${OPTARG[@]}"
+      ;;
+      
+    a)
+      src="${OPTARG[@]}"
+      ;;
+      
+    r)
+      rdeps="${OPTARG[@]}"
+      ;;
+      
+    v)
+      ver="${OPTARG[@]}"
+      ;;
+    ?)
+      for arg in ${OPTARG[@]} ; do
+        case "$arg" in
+          y)
+            forceyes="-y"
+            ;;
+          x)
+            bnow="true"
+            ;;
+          z)
+            dummy="true"
+            ;;
+          j)
+            noclass="true"
+            ;;
+          *)
+            inf_msg
+            err_msg
+            ;;
+          esac
+        done
+      ;;
+  esac
+done
+
+#check options
+if [[ "$name" == "" ]] ; then
+    echo "Error: package name missing."
+    err_msg
+fi
+if [[ "$directory" == "" ]] ; then
+    directory=$name
+fi
+if [[ "$src" == "" ]] ; then
+    echo "Error: source archive missing."
+    err_msg
+fi
+
+
+writespec(){
+mkdir -p "$directory"
+cat > "$directory/INRBUILD" <<EOF
+#!/bin/bash
+name=$name
+release=1
+version=$ver
+url='$homepage'
+description='$description'
+email='$email'
+maintainer='$packager'
+license=('$license')
+
+if [[ -d "\$name-\$version" ]] ; then
+    cd "\$name-\$version"
+fi
+
+setup(){
+EOF
+if [[ $buildtype == "autotools" ]] ; then
+    echo "    if [[ -f \"./autogen.sh\" ]] ; then" >> "$directory/INRBUILD"
+    echo "        NOCONFIGURE=1 ./autogen.sh" >> "$directory/INRBUILD"
+    echo "    fi" >> "$directory/INRBUILD"
+    echo "    ./confugure --prefix=/usr $confopt" >> "$directory/INRBUILD"
+elif [[ $buildtype == "cmaketools" ]] ; then
+    echo "    mkdir build" >> "$directory/INRBUILD"
+    echo "    cd build" >> "$directory/INRBUILD"
+    echo "    cmake .. $confopt" >> "$directory/INRBUILD"
+elif [[ $buildtype == "meson" ]] ; then
+    echo "    meson build" >> "$directory/INRBUILD"
+else
+    echo >> "$directory/INRBUILD"
+fi
+cat >> "$directory/INRBUILD" <<EOF
+}
+build(){
+EOF
+if [[ $buildtype == "autotools" ]] ; then
+    echo "    make -j\$(nproc)" >> "$directory/INRBUILD"
+elif [[ $buildtype == "cmaketools" ]] ; then
+    echo "    cd build" >> "$directory/INRBUILD"
+    echo "    make -j\$(nproc)" >> "$directory/INRBUILD"
+elif [[ $buildtype == "meson" ]] ; then
+    echo "    ninja -C build" >> "$directory/INRBUILD"
+else
+    echo >> "$directory/INRBUILD"
+fi
+cat >> "$directory/INRBUILD" <<EOF
+}
+package(){
+EOF
+if [[ $buildtype == "autotools" ]] ; then
+    echo "    make -j\$(nproc) install" >> "$directory/INRBUILD"
+elif [[ $buildtype == "cmaketools" ]] ; then
+    echo "    cd build" >> "$directory/INRBUILD"
+    echo "    make -j\$(nproc) install" >> "$directory/INRBUILD"
+elif [[ $buildtype == "meson" ]] ; then
+    echo "    ninja -C build install" >> "$directory/INRBUILD"
+else
+    echo >> "$directory/INRBUILD"
+fi
+cat >> "$directory/INRBUILD" <<EOF
+}
+EOF
+}
+
+
+# Write info after creating
+info "Package name" "$name"
+info "Output directory" "$(realpath $directory)"
+info "Package version" "$ver"
+info "Homepage" "$homepage"
+info "Packager" "$packager"
+info "Email" "$email"
+info "License" "$license"
+info "Description" "$description"
+info "Build type" "$buildtype"
+
+if [[ "$forceyes" == "" ]] ; then
+    echo ""
+    info ">>>" "Are informations correct? [y/N]"
+    read -s -n 1 c
+    if ! [[ "$c" == "y" || "$c" == "Y" ]] ; then
+        echo "       Operation canceled."
+        exit
+    fi
+fi
+if [[ "$dummy" == "true" ]] ; then
+    echo "Do not create pspec and actions. If you wanna create, you must remove -z parameter."
+    echo "  Operation canceled."
+    exit
+fi
+writespec 
+directory=$(realpath $directory)
+mkdir -p $directory
+
+if [[ "$bnow" == "true" ]] ; then
+  cd $directory
+  exec inary-cli build --verbose $forceyes
+fi
