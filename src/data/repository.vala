@@ -168,7 +168,7 @@ public package get_source_from_repository(string name){
 //DOC: `package get_from_repositony(stning name):`
 //DOC: return source if emerge else return package
 public package get_from_repository(string name){
-    if(get_bool("--emerge")){
+    if(get_bool("emerge")){
         return get_source_from_repository(name);
     }else{
         return get_package_from_repository(name);
