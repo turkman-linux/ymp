@@ -4,6 +4,7 @@ public int run_sandbox_main(string[] args){
     }
     clear_env();
     sandbox_shared = get_value("shared");
+    sandbox_rootfs = get_destdir();
     int status = sandbox(args);
     return status/256;
 }

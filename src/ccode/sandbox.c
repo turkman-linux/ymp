@@ -23,10 +23,13 @@ int sandbox_gid = 0;
 char* which(char* cmd);
 void write_to_file(const char *which, const char *format, ...);
 void sandbox_bind(char* dir);
+void sandbox_bind_shared(char* dir);
 void sandbox_create_tmpfs(char* dir);
 void sandbox_mount_shared();
 
 char* sandbox_shared;
+
+char* sandbox_rootfs;
 
 int sandbox(char** args){
     int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER;
@@ -57,8 +60,7 @@ int sandbox(char** args){
         sandbox_create_tmpfs("/root/root");
         sandbox_create_tmpfs("/root/tmp");
         sandbox_create_tmpfs("/root/run");
-        sandbox_bind(sandbox_shared);
-
+        sandbox_bind_shared(sandbox_shared);
         if (0 == chroot("/root")){
             if(0 == chdir("/")){
                 unshare(CLONE_NEWUTS);
@@ -83,6 +85,17 @@ int sandbox(char** args){
 
 void sandbox_bind(char* dir){
     char target[(strlen(dir)+10)*sizeof(char)];
+    char source[(strlen(dir)+strlen(sandbox_rootfs)+10)*sizeof(char)];
+    strcpy(target,"/root/");
+    strcat(target,dir);
+    strcpy(source,sandbox_rootfs);
+    strcat(source,"/");
+    strcat(source,dir);
+    create_dir(target);
+    mount(source, target, NULL, MS_SILENT | MS_BIND | MS_REC, NULL);
+}
+void sandbox_bind_shared(char* dir){
+    char target[(strlen(dir)+10)*sizeof(char)];
     strcpy(target,"/root/");
     strcat(target,dir);
     create_dir(target);
@@ -90,8 +103,12 @@ void sandbox_bind(char* dir){
 }
 
 void sandbox_create_tmpfs(char* dir){
-    create_dir(dir);
-    mount("tmpfs",dir,"tmpfs",0,NULL);
+    char source[(strlen(dir)+strlen(sandbox_rootfs)+10)*sizeof(char)];
+    strcpy(source,sandbox_rootfs);
+    strcat(source,"/");
+    strcat(source,dir);
+    
+    mount("tmpfs",source,"tmpfs",0,NULL);
 }
 
 void write_to_file(const char *which, const char *format, ...) {

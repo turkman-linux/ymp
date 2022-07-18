@@ -38,6 +38,7 @@ public extern bool sandbox_network;
 //DOC: `void sandbox_bind(string path):`
 //DOC: bind directory to sandboxed environment
 public extern string sandbox_shared;
+public extern string sandbox_rootfs;
 //DOC: `int sandbox_uid:`
 //DOC: sandbox user uid value (default: 0)
 public extern int sandbox_uid;
