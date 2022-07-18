@@ -180,6 +180,9 @@ description='$description'
 email='$email'
 maintainer='$packager'
 license=('$license')
+source=('$src')
+md5sums=('FIXME') # replace this
+arch=($(uname -m))
 
 if [[ -d "\$name-\$version" ]] ; then
     cd "\$name-\$version"
