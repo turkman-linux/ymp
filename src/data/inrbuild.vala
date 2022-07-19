@@ -12,7 +12,6 @@ private void inrbuild_init(){
         inrbuild_srcpath = "./";
     }
     inrbuild_header = "
-    source /etc/profile
     export installdir="+inrbuild_buildpath+"/output
     export DESTDIR=\"$installdir\"
     alias python=python3
@@ -174,7 +173,7 @@ public int run_inrbuild_function(string function){
     }
     print(colorize("Run action: ",blue)+function);
     if(inrbuild_has_function(function)){
-        return run("bash -e -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD ; "+function+"'");
+        return run("bash -e -c '"+inrbuild_header+" \n source /etc/profile \n source "+inrbuild_srcpath+"/INRBUILD ; set -e ; "+function+"'");
     }else{
         warning("INRBUILD function not exists: "+function);
     }
