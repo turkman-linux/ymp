@@ -85,10 +85,15 @@ void write_archive(const char *outname, const char **filename) {
                 #ifdef DEBUG
                 type = "symlink";
                 #endif
-                if(readlink(*filename,(char*)link,sizeof(link)) < 0){
+                int len = readlink(*filename,(char*)link,sizeof(link));
+                if(len < 0){
                     fprintf(stderr,"Broken symlink: %s\n",*filename);
                     continue;
                 }
+                link[len] = '\0';
+                #ifdef DEBUG
+                fprintf(stderr,"Symlink: %s %s",filename, link);
+                #endif
                 archive_entry_set_filetype(entry, AE_IFLNK);
                 archive_entry_set_symlink(entry, (char*)link);
                 break;
