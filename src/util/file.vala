@@ -285,6 +285,9 @@ private void find_operation(string path){
     }
     find_ret += path;
     if(isdir(path)){
+        if(issymlink(path)){
+            return;
+        }
         foreach(string p in listdir(path)){
             find_operation(path+"/"+p);
         }
