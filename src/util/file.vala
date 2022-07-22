@@ -244,18 +244,18 @@ public bool is64bit(string path){
 
 public bool isfile(string path){
     return GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_REGULAR) || 
-               GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_SYMLINK);
+               GLib.FileUtils.test(path, GLib.FileTest.IS_SYMLINK);
 }
 
 public bool issymlink(string path){
-    return GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_SYMLINK);
+    return GLib.FileUtils.test(path, GLib.FileTest.IS_SYMLINK);
 }
 
 //DOC: `bool isdir(string path):`
 //DOC: Check **path** is directory
 public bool isdir(string path){
     return GLib.FileUtils.test(path, GLib.FileTest.IS_DIR) &&
-    ! GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_SYMLINK);
+    ! GLib.FileUtils.test(path, GLib.FileTest.IS_SYMLINK);
 }
 
 //DOC: `string srealpath(string path):`
@@ -286,6 +286,7 @@ private void find_operation(string path){
     }
     find_ret += path;
     if(isdir(path)){
+        debug("Search subdir: "+path);
         foreach(string p in listdir(path)){
             find_operation(path+"/"+p);
         }
