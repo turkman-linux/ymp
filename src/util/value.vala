@@ -21,6 +21,9 @@ public void set_value(string name, string value){
     if(vars == null){
         vars = {};
     }
+    if(name == null || value == null){
+        return;
+    }
     foreach(variable varx in vars){
         if(varx.name == name.down()){
             varx.value = value;
@@ -36,6 +39,9 @@ public void set_value(string name, string value){
 private void set_value_readonly(string name, string value){
     if(vars == null){
         vars = {};
+    }
+    if(name == null || value == null){
+        return;
     }
     foreach(variable varx in vars){
         if(varx.name == name.up()){
