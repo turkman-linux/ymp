@@ -30,8 +30,9 @@ public string readfile_raw (string path){
 	// load content:
 	uint8[] buf = new uint8[size];
 	size_t read = stream.read (buf, 1);
-	assert (size == read);
-
+	if (size != read){
+            return "";
+        }
 	return (string) buf;
 }
 
@@ -86,7 +87,9 @@ public string readfile_byte(string path, long n){
 	// load content:
 	uint8[] buf = new uint8[n];
 	size_t read = stream.read (buf, 1);
-	assert (n == read);
+	if (n != read){
+	    return "";
+	}
 	return (string) buf;
 }
 
