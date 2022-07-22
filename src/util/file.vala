@@ -254,7 +254,8 @@ public bool issymlink(string path){
 //DOC: `bool isdir(string path):`
 //DOC: Check **path** is directory
 public bool isdir(string path){
-    return GLib.FileUtils.test(path, GLib.FileTest.IS_DIR);
+    return GLib.FileUtils.test(path, GLib.FileTest.IS_DIR) &&
+    ! GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_SYMLINK);
 }
 
 //DOC: `string srealpath(string path):`
@@ -285,9 +286,6 @@ private void find_operation(string path){
     }
     find_ret += path;
     if(isdir(path)){
-        if(issymlink(path)){
-            return;
-        }
         foreach(string p in listdir(path)){
             find_operation(path+"/"+p);
         }
