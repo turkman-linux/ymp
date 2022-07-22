@@ -226,6 +226,7 @@ private void create_data_file(){
     int size = filesize(inrbuild_buildpath+"/output/data.tar.gz");
     string new_data = readfile(inrbuild_buildpath+"/output/metadata.yaml");
     new_data += "    archive-hash: "+hash+"\n";
+    new_data += "    arch: "+getArch()+"\n";
     new_data += "    archive-size: "+size.to_string()+"\n";
     writefile(inrbuild_buildpath+"/output/metadata.yaml",new_data);
     
