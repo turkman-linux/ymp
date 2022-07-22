@@ -26,6 +26,7 @@ public int build_operation(string[] args){
 private void set_build_target(string src_path){
     set_inrbuild_srcpath(src_path);
     string build_path = srealpath(get_build_dir()+calculate_md5sum(inrbuild_srcpath+"/INRBUILD"));
+    remove_all(build_path);
     set_inrbuild_buildpath(build_path);
     if(isdir(build_path)){
         remove_all(build_path);
