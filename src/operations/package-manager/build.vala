@@ -103,7 +103,7 @@ private void create_source_archive(){
     debug("Create source package from :"+inrbuild_srcpath);
     cd(inrbuild_srcpath);
     string metadata = get_inrbuild_metadata();
-    writefile(srealpath(inrbuild_buildpath+"/metadata.yaml"),metadata.strip());
+    writefile(srealpath(inrbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
     var tar = new archive();
     tar.load(output_package_path+"_source.inary");
     foreach(string file in find(inrbuild_srcpath)){

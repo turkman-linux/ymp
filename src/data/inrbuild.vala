@@ -86,36 +86,35 @@ private void inrbuild_init(){
         echo \"    release: $release\"
         echo \"    description: $description\"
         if [[ \"${makedepends[@]}\" != \"\" ]] ; then
-        echo \"    makedepends:\"
-        for dep in ${makedepends[@]} ; do
-        echo \"      - $dep\"
-        done
+            echo \"    makedepends:\"
+            for dep in ${makedepends[@]} ; do
+                echo \"      - $dep\"
+            done
         fi
         if [[ \"${depends[@]}\" != \"\" ]] ; then
-        echo \"    depends:\"
-        for dep in ${depends[@]} ; do
-        echo \"      - $dep\"
-        done
+            echo \"    depends:\"
+            for dep in ${depends[@]} ; do
+                echo \"      - $dep\"
+            done
         fi
         if [[ \"${source[@]}\" != \"\" ]] ; then
-        echo \"    archive:\"
-        for src in ${source[@]} ; do
-        echo \"      - $src\"
-        done
+            echo \"    archive:\"
+            for src in ${source[@]} ; do
+                echo \"      - ${src}\"
+            done
         fi
         if [[ \"${provides[@]}\" != \"\" ]] ; then
-        echo \"    provides:\"
-        for pro in ${provides[@]} ; do
-        echo \"      - $pro\"
-        done
+            echo \"    provides:\"
+            for pro in ${provides[@]} ; do
+                echo \"      - $pro\"
+            done
         fi
         if [[ \"${replaces[@]}\" != \"\" ]] ; then
-        echo \"    replaces:\"
-        for rep in ${replaces[@]} ; do
-        echo \"      - $rep\"
-        done
+            echo \"    replaces:\"
+            for rep in ${replaces[@]} ; do
+                echo \"      - $rep\"
+            done
         fi
-        
     }
     mkdir -p \"$DESTDIR\"
     ";
