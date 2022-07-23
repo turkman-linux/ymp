@@ -75,6 +75,9 @@ public string[] resolve_dependencies(string[] names){
 }
 
 public string[] resolve_reverse_dependencies(string[] names){
+    if(get_bool("ignore-dependency")){
+        return names;
+    }
     // reset need list
     need_install = {};
     // reset cache list

@@ -1,8 +1,5 @@
 public int install_main(string[] args){
     string[] pkgs = resolve_dependencies(args);
-    if(get_bool("ignore-dependency")){
-        pkgs = args;
-    }
     quarantine_reset();
     package[] pkg_obj = {};
     foreach(string name in pkgs){
