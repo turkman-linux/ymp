@@ -5,6 +5,8 @@ public int run_sandbox_main(string[] args){
     clear_env();
     sandbox_shared = get_value("shared");
     sandbox_rootfs = get_destdir();
+    sandbox_uid = int.parse(get_value("uid"));
+    sandbox_gid = int.parse(get_value("gid"));
     int status = sandbox(args);
     return status/256;
 }
