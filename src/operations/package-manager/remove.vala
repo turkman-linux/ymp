@@ -8,6 +8,7 @@ public int remove_main(string[] args){
         print(p.name);
         remove_single(p);
     }
+    sysconf_main(null);
     return 0;
 }
 

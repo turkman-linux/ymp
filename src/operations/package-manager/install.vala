@@ -20,6 +20,7 @@ public int install_main(string[] args){
     foreach(string file in calculate_leftover(pkg_obj)){
         remove_file(DESTDIR+"/"+file);
     }
+    sysconf_main(null);
     error(1);
     return 0;
 }
