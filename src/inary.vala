@@ -33,6 +33,7 @@ private int operation_main(string type, string[] args){
     foreach(operation op in ops){
         foreach(string name in op.names){
             if(type == name){
+                set_value_readonly("operation",name);
                 return op.callback(args);
             }
         }
