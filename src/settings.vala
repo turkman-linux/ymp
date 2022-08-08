@@ -57,6 +57,12 @@ public string get_storage(){
     return srealpath(DESTDIR+"/"+STORAGEDIR);
 }
 
+//DOC: `string get_configdir():`
+//DOC: get inary storage directory. (default: /etc/)
+public string get_configdir(){
+    return srealpath(DESTDIR+"/"+CONFIGDIR);
+}
+
 public string get_destdir(){
     if(DESTDIR == null){
         DESTDIR = "/";
