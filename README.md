@@ -1,6 +1,7 @@
-# Inary
+# YMP (Yerli ve Milli Paket sistemi)
 ![ymp logo](data/application-x-ymp.svg)
-A package manager for Sulin Project
+
+A package manager for Sulix Project
 
 ## Building from source
 
