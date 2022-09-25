@@ -1,5 +1,5 @@
 # src/ccode.vala
-## Inary C source adaptations
+## Ymp C source adaptations
 
 ### ttysize.c
 
@@ -995,7 +995,7 @@ detect & block WSL
 If runs on WSL shit write fail message and exit :)
 
 # src/ymp.vala
-## class Inary
+## class Ymp
 
 libymp operation controller
 
@@ -1019,7 +1019,7 @@ int main(string[] args){
 
 ```
 
-`void Inary.add_process(string type, string[] args):`
+`void Ymp.add_process(string type, string[] args):`
 
 add ymp process using **type** and **args**
 
@@ -1027,15 +1027,15 @@ add ymp process using **type** and **args**
 
 * args is operation argument (package list, repository list ...)
 
-`void Inary.clear_process():`
+`void Ymp.clear_process():`
 
 remove all ymp process
 
-`void Inary.run():`
+`void Ymp.run():`
 
 run ymp process then if succes remove
 
-`void Inary.add_script(string data):`
+`void Ymp.add_script(string data):`
 
 add ymp process from ymp script
 
@@ -1043,7 +1043,7 @@ add ymp process from ymp script
 
 Clear options and apply variables from argument
 
-`Inary ymp_init(string[] args):`
+`Ymp ymp_init(string[] args):`
 
 start ymp application.
 

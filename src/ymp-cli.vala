@@ -1,5 +1,5 @@
 int main (string[] args) {
-    Inary ymp = ymp_init(args);
+    Ymp ymp = ymp_init(args);
     string[] new_args = argument_process(args);
     if(new_args.length < 2){
         error_add("No command given.");

@@ -15,4 +15,4 @@ Package: ymp
 Architecture: any
 Depends: ${misc:Depends}, libc6, libarchive13, libreadline8, libcurl4
 Description: Inary package manager
- A package manager for Sulin project
+ A package manager for Sulix project

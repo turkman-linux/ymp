@@ -1,9 +1,9 @@
 public int shell_main(string[] args){
-    Inary ymp = ymp_init(args);
+    Ymp ymp = ymp_init(args);
     if(args[0] == "-" || args.length == 0){
         set_bool("shellmode",true);
         while(!stdin.eof()){
-            string prompt = colorize("Inary >> ",blue);
+            string prompt = colorize("Ymp >> ",blue);
             #if no_libreadline
                 print_fn(prompt,false,false);
                 string line = stdin.read_line();

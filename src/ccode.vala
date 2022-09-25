@@ -1,4 +1,4 @@
-//DOC: ## Inary C source adaptations
+//DOC: ## Ymp C source adaptations
 //DOC: ### ttysize.c
 //DOC: `void tty_size_init():`
 //DOC: start tty size calculation

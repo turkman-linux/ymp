@@ -1,8 +1,8 @@
 prefix=/usr
 includedir=${prefix}/include
 
-Name: Inary
-Description: Package manager for Sulin Project
+Name: Ymp
+Description: Package manager for Sulix Project
 Version: 9999
 Cflags: -L/lib -O2 -s -g -Dsulin -flto
 Libs: -lymp

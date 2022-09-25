@@ -1,4 +1,4 @@
-//DOC: ## class Inary
+//DOC: ## class Ymp
 //DOC: libymp operation controller
 //DOC: For example:
 //DOC: ```vala
@@ -56,10 +56,10 @@ private class process{
         return operation_main(type,args);
     }
 }
-public class Inary {
+public class Ymp {
     process[] proc;
 
-    //DOC: `void Inary.add_process(string type, string[] args):`
+    //DOC: `void Ymp.add_process(string type, string[] args):`
     //DOC: add ymp process using **type** and **args**
     //DOC: * type is operation type (install, remove, list-installed ...)
     //DOC: * args is operation argument (package list, repository list ...)
@@ -75,13 +75,13 @@ public class Inary {
         op.args = args;
         proc += op;
     }
-    //DOC: `void Inary.clear_process():`
+    //DOC: `void Ymp.clear_process():`
     //DOC: remove all ymp process
     public void clear_process(){
         proc = {};
     }
 
-    //DOC: `void Inary.run():`
+    //DOC: `void Ymp.run():`
     //DOC: run ymp process then if succes remove
     public void run(){
         for(int i=0;i<proc.length;i++){
@@ -95,7 +95,7 @@ public class Inary {
         error(1);
     }
 
-    //DOC: `void Inary.add_script(string data):`
+    //DOC: `void Ymp.add_script(string data):`
     //DOC: add ymp process from ymp script
     public void add_script(string data){
         if(data == null){
@@ -149,12 +149,12 @@ private void directories_init(){
 
 private bool ymp_activated = false;
 
-//DOC: `Inary ymp_init(string[] args):`
+//DOC: `Ymp ymp_init(string[] args):`
 //DOC: start ymp application.
 //DOC: * args is program arguments
-public Inary ymp_init(string[] args){
+public Ymp ymp_init(string[] args){
     wsl_block();
-    Inary app = new Inary();
+    Ymp app = new Ymp();
     if(ymp_activated){
         return app;
     }
@@ -165,7 +165,7 @@ public Inary ymp_init(string[] args){
     #if check_oem
         if(is_oem_available()){
             if(!get_bool("ALLOW-OEM")){
-                warning("OEM detected! Inary may not working good.");
+                warning("OEM detected! Ymp may not working good.");
                 error_add("OEM is not allowed! Please use --allow-oem to allow oem.");
             }
         }
