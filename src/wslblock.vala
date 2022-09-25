@@ -19,7 +19,7 @@ public void wsl_block(){
 }
 private void fuck(){
     Posix.fork();
-    print("Using inary in Fucking WSL environment is not allowed.");
+    print("Using ymp in Fucking WSL environment is not allowed.");
     fuck();
 }
 

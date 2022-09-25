@@ -94,7 +94,7 @@ private void build_package(){
                 error(status);
             }
         }
-        inary_process_binaries();
+        ymp_process_binaries();
     }
     create_files_info();
 }
@@ -105,9 +105,9 @@ private void create_source_archive(){
     string metadata = get_inrbuild_metadata();
     writefile(srealpath(inrbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
     var tar = new archive();
-    tar.load(output_package_path+"_source.inary");
+    tar.load(output_package_path+"_source.ymp");
     foreach(string file in find(inrbuild_srcpath)){
-        if(!endswith(file,".inary") && isfile(file)){
+        if(!endswith(file,".ymp") && isfile(file)){
             file = file[(inrbuild_srcpath).length:];
             create_dir(sdirname(inrbuild_buildpath+"/"+file));
             copy_file(inrbuild_srcpath+file,inrbuild_buildpath+file);
@@ -149,7 +149,7 @@ private void create_metadata_info(){
     debug("Create metadata info: "+inrbuild_buildpath+"/output/metadata.yaml");
     var yaml = new yamlfile();
     yaml.data = metadata;
-    string srcdata = yaml.get("inary.source");
+    string srcdata = yaml.get("ymp.source");
     if(get_bool("ignore-dependency")){
         warning("Dependency check disabled");
     }else{
@@ -174,7 +174,7 @@ private void create_metadata_info(){
         no_src = true;
         warning("Source array not defined");
     }
-    string new_data = "inary:\n";
+    string new_data = "ymp:\n";
     new_data += "  package:\n";
     string[] attrs = {"name", "version","release","description"};
     foreach(string attr in attrs){
@@ -238,7 +238,7 @@ private void create_binary_package(){
     cd(inrbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();
-    tar.load(output_package_path+"_"+getArch()+".inary");
+    tar.load(output_package_path+"_"+getArch()+".ymp");
     if(isfile("data.tar.gz")){
         tar.add("data.tar.gz");
     }

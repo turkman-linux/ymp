@@ -1,11 +1,11 @@
 
 void main(string[] args){
-    // init inary
+    // init ymp
     print("Inary test");
     set_destdir("../test/example/rootfs");
-    Inary inary = inary_init(args);
-    inary.add_process("init",{"hello","world"});
-    inary.run();
+    Inary ymp = ymp_init(args);
+    ymp.add_process("init",{"hello","world"});
+    ymp.run();
 
     //yesno test
     print("Interface test");
@@ -32,7 +32,7 @@ void main(string[] args){
     cd(curdir);
     find(".");
     create_dir("uuu/aaa/fff");
-    writefile("uuu/aaa/fff/ggg","inary");
+    writefile("uuu/aaa/fff/ggg","ymp");
     remove_all("uuu");
     pwd();
 
@@ -79,10 +79,10 @@ void main(string[] args){
     a.set({"yumusak","ge"});
     a.get();
 
-    // binary test
+    // Binary test
     print("Binary test");
-    iself("inary-test");
-    is64bit("inary");
+    iself("ymp-test");
+    is64bit("ymp");
     print(calculate_sha1sum("/bin/bash"));
 
     // ttysize test

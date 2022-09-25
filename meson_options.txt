@@ -8,5 +8,5 @@ option('libarchive', type: 'boolean', value: 'true')
 option('libreadline', type: 'boolean', value: 'true')
 option('libcurl', type: 'boolean', value: 'true')
 option('libbrotli', type: 'boolean', value: 'true')
-option('storagedir', type: 'string', value: 'var/lib/inary')
+option('storagedir', type: 'string', value: 'var/lib/ymp')
 

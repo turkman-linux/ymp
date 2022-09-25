@@ -177,7 +177,7 @@ public package get_from_repository(string name){
 
 
 //DOC: `package get_package_from_file(string path):`
-//DOC: get package object from inary file archive
+//DOC: get package object from ymp file archive
 public package get_package_from_file(string path){
     package pkg = new package();
     pkg.load_from_archive(path);
@@ -212,13 +212,13 @@ public string create_index_data(string fpath){
     var tar = new archive();
     var yaml = new yamlfile();
     foreach(string file in find(path)){
-        if(endswith(file,".inary")){
+        if(endswith(file,".ymp")){
             tar.load(file);
             file = file[path.length:];
             info("Index: "+file);
             string metadata = tar.readfile("metadata.yaml");
-            string inaryarea = yaml.get_area(metadata,"inary");
-            foreach(string line in ssplit(inaryarea,"\n")){
+            string ymparea = yaml.get_area(metadata,"ymp");
+            foreach(string line in ssplit(ymparea,"\n")){
                 if(line == "" || line == null){
                     continue;
                 }

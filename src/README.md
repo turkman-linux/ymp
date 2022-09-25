@@ -1,7 +1,7 @@
 # Inary source code
 
-## libinary documentation
-look **libinary.md** file
+## libymp documentation
+look **libymp.md** file
 
 # Writing documentation
 
@@ -14,9 +14,9 @@ look **libinary.md** file
 * **data/** has package, repository and other functions.
 * **operations/** has install/remove and other operation functions.
 * **tools/** has command line programs.
-* **util/** has utility functions for libinary.
+* **util/** has utility functions for libymp.
 * **color.vala** has color related functions.
-* **inary.vala** is main libinary file.
+* **ymp.vala** is main libymp file.
 * **settings.vala** has init functions and settings.
 * **wslblock.vala** has wsl blocker functions.
 
@@ -29,5 +29,5 @@ look **libinary.md** file
 | 1       | Operation failed      |
 | 0       | Successfull           |
 
-# How to inary works
-![inary-work-schema](inary-work-schema.svg)
+# How to ymp works
+![ymp-work-schema](ymp-work-schema.svg)

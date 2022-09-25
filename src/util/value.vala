@@ -1,5 +1,5 @@
 //DOC: ## Variable functions
-//DOC: set or get inary global variable
+//DOC: set or get ymp global variable
 //DOC: Example usage:
 //DOC: ```vala
 //DOC: set_value("CFLAGS","-O3");
@@ -16,7 +16,7 @@ class variable {
 variable[] vars;
 
 //DOC: `void set_value(string name, string value):`
-//DOC: add a global inary variable as string
+//DOC: add a global ymp variable as string
 public void set_value(string name, string value){
     if(vars == null){
         vars = {};
@@ -56,8 +56,8 @@ private void set_value_readonly(string name, string value){
 }
 
 //DOC: `string get_value(string name):`
-//DOC: get a inary global variable as string
-//DOC: big names are read only and only defined by inary
+//DOC: get a ymp global variable as string
+//DOC: big names are read only and only defined by ymp
 public string get_value(string name){
     if(vars == null){
         vars = {};
@@ -71,13 +71,13 @@ public string get_value(string name){
 }
 
 //DOC: `bool get_bool(string name):`
-//DOC: get a inary global variable as bool
+//DOC: get a ymp global variable as bool
 public bool get_bool(string name){
     return get_value(name) == "true";
 }
 
 //DOC: `void set_bool(string name, bool value):`
-//DOC: add a global inary variable as bool
+//DOC: add a global ymp variable as bool
 public void set_bool(string name,bool value){
     if(value){
         set_value(name,"true");
@@ -87,7 +87,7 @@ public void set_bool(string name,bool value){
 }
 
 //DOC: `string[] list_values():`
-//DOC: return array of all inary global value names
+//DOC: return array of all ymp global value names
 public string[] list_values(){
     string[] ret = {};
     foreach(variable var in vars){

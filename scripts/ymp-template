@@ -10,7 +10,7 @@ err(){
     echo -e "\033[31;1m$1\033[;0m: $2"
 }
 inf_msg(){
-    echo "Create new inary package template. "
+    echo "Create new ymp package template. "
 }
 
 err_msg(){
@@ -45,7 +45,7 @@ err_msg(){
 #default variables
 name=""
 directory=""
-homepage="https://gitlab.com/sulinos/devel/inary"
+homepage="https://gitlab.com/sulinos/devel/ymp"
 buildtype="none"
 if [[ -f "$HOME/.gitconfig" ]] ; then
     email="$(cat ~/.gitconfig | grep 'email =' | sed 's/.*= //g')"
@@ -269,5 +269,5 @@ mkdir -p $directory
 
 if [[ "$bnow" == "true" ]] ; then
   cd $directory
-  exec inary-cli build --verbose $forceyes
+  exec ymp-cli build --verbose $forceyes
 fi

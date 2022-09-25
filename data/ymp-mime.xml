@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="application/x-inary">
+  <mime-type type="application/x-ymp">
     <_comment>Inary package</_comment>
-    <glob pattern="*.inary"/>
+    <glob pattern="*.ymp"/>
   </mime-type>
-  <mime-type type="application/x-rfp-inary">
+  <mime-type type="application/x-rfp-ymp">
     <_comment>Inary RFP package</_comment>
-    <glob pattern="*.rfp.inary"/>
+    <glob pattern="*.rfp.ymp"/>
   </mime-type>
-  <mime-type type="application/x-inary-script">
+  <mime-type type="application/x-ymp-script">
     <_comment>Inary script</_comment>
     <glob pattern="*.ish"/>
   </mime-type>

@@ -1,5 +1,5 @@
 public int shell_main(string[] args){
-    Inary inary = inary_init(args);
+    Inary ymp = ymp_init(args);
     if(args[0] == "-" || args.length == 0){
         set_bool("shellmode",true);
         while(!stdin.eof()){
@@ -11,18 +11,18 @@ public int shell_main(string[] args){
                 string line = Readline.readline(prompt);
             #endif
             if(line != null){
-                inary.add_script(line);
-                inary.run();
-                inary.clear_process();
+                ymp.add_script(line);
+                ymp.run();
+                ymp.clear_process();
             }else{
                 print("\n"+"Use exit or Ctrl-C");
             }
         }
     }else{
         string data = readfile(args[0]);
-        inary.add_script(data);
-        inary.run();
-        inary.clear_process();
+        ymp.add_script(data);
+        ymp.run();
+        ymp.clear_process();
     }
     return 0;
 }

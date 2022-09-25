@@ -1,4 +1,4 @@
-project('inary', 'vala', 'c',
+project('ymp', 'vala', 'c',
     version : '1.0',
     license: ['GplV3']
 
@@ -24,12 +24,12 @@ run_command('bash', './tool/mkctx.sh',
 
 if get_option('doc')
     run_command('bash', '-c',
-        'find src -type f -iname "*.vala" | sort -V | bash ./tool/mkdoc.sh > src/libinary.md',
+        'find src -type f -iname "*.vala" | sort -V | bash ./tool/mkdoc.sh > src/libymp.md',
         check:true)
 endif
 
 
-sources = files('src/inary.vala',
+sources = files('src/ymp.vala',
                 'src/color.vala',
                 'src/settings.vala',
                 'src/wslblock.vala',
@@ -85,30 +85,30 @@ else
 endif
 
 if get_option('static')
-    lib = static_library('inary', sources, dependencies: dependencies, link_args: args)
+    lib = static_library('ymp', sources, dependencies: dependencies, link_args: args)
     args += ['-X','-static']
 else
-    lib = library('inary', sources, dependencies: dependencies, link_args: args)
+    lib = library('ymp', sources, dependencies: dependencies, link_args: args)
 endif
 if get_option('tools')
-    executable('inary-cli', 'src/inary-cli.vala', dependencies: dependencies, link_args: args, link_with: lib)
-    install_data(meson.current_build_dir() / 'inary-cli', install_dir : get_option('bindir'))
+    executable('ymp-cli', 'src/ymp-cli.vala', dependencies: dependencies, link_args: args, link_with: lib)
+    install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'))
 endif
 if get_option('scripts')
     foreach script : run_command('find', 'scripts','-type','f',check:true).stdout().strip().split('\n')
         install_data(script, install_dir : get_option('bindir'))
     endforeach
 endif
-install_data('data/inary.conf', install_dir : get_option('sysconfdir'), rename : 'inary.conf')
-install_data('data/application-x-inary.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
-install_data('data/inary-mime.xml', install_dir : get_option('prefix') / 'share/mime/application/')
+install_data('data/ymp.conf', install_dir : get_option('sysconfdir'), rename : 'ymp.conf')
+install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
+install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/application/')
 if get_option('static')
-    install_data(meson.current_build_dir() / 'libinary.a', install_dir : get_option('libdir'))
+    install_data(meson.current_build_dir() / 'libymp.a', install_dir : get_option('libdir'))
 else
-    install_data(meson.current_build_dir() / 'libinary.so', install_dir : get_option('libdir'))
+    install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('libdir'))
 endif
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
-install_data(meson.current_build_dir() / 'inary.h', install_dir : get_option('includedir'), rename : 'inary.h')
+install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'), rename : 'ymp.h')
 # Test binary
-executable('inary-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
+executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
 

@@ -1,5 +1,5 @@
 public int revdep_rebuild_main(string[] args){
-    inary_init(args);
+    ymp_init(args);
     set_env("LANG","C");
     set_env("LC_ALL","C");
     string[] paths = {

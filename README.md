@@ -1,5 +1,5 @@
 # Inary
-![inary logo](data/application-x-inary.svg)
+![ymp logo](data/application-x-ymp.svg)
 A package manager for Sulin Project
 
 ## Building from source

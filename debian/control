@@ -1,4 +1,4 @@
-Source: inary
+Source: ymp
 Section: utils
 Priority: optional
 Maintainer: Ali Riza KESKIN <parduscix@yandex.ru>
@@ -11,7 +11,7 @@ Build-Depends: make,
 Standards-Version: 4.3.0
 Homepage: https://sulinos.githab.io
 
-Package: inary
+Package: ymp
 Architecture: any
 Depends: ${misc:Depends}, libc6, libarchive13, libreadline8, libcurl4
 Description: Inary package manager

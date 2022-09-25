@@ -1,9 +1,9 @@
 //DOC: ## class package
-//DOC: inary package struct & functions
+//DOC: ymp package struct & functions
 //DOC: Example usage:
 //DOC: ```vala
 //DOC: var pkg = new package();
-//DOC: pkg.load_from_archive("/tmp/bash-5.0-x86_64.inary");
+//DOC: pkg.load_from_archive("/tmp/bash-5.0-x86_64.ymp");
 //DOC: stdout.printf(pkg.get("archive-hash"));
 //DOC: foreach(string pkgname in pkg.dependencies){
 //DOC:     stdout.printf(pkgname);
@@ -36,22 +36,22 @@ public class package {
     //DOC: Read package information from string data
     public void load_from_data(string metadata){
         yaml = new yamlfile();
-        string inarydata = "";
+        string ympdata = "";
         // metadata detection
-        if(yaml.has_area(metadata,"inary")){
-            inarydata = yaml.get_area(metadata,"inary");
+        if(yaml.has_area(metadata,"ymp")){
+            ympdata = yaml.get_area(metadata,"ymp");
         }else if(yaml.has_area(metadata,"package") || yaml.has_area(metadata,"source")){
-            inarydata = metadata;
+            ympdata = metadata;
         }else{
             error_add("Package is broken");
         }
         // package area load
-        if(yaml.has_area(inarydata,"package")){
+        if(yaml.has_area(ympdata,"package")){
             is_source = false;
-            pkgarea = yaml.get_area(inarydata,"package");
-        }else if(yaml.has_area(inarydata,"source")){
+            pkgarea = yaml.get_area(ympdata,"package");
+        }else if(yaml.has_area(ympdata,"source")){
             is_source = true;
-            pkgarea = yaml.get_area(inarydata,"source");
+            pkgarea = yaml.get_area(ympdata,"source");
         }else{
             error_add("Package is broken");
         }
@@ -60,7 +60,7 @@ public class package {
     }
 
     //DOC: `void package.load_from_archive(string path):`
-    //DOC: Read package information from inary file
+    //DOC: Read package information from ymp file
     public void load_from_archive(string path){
         pkgfile = new archive();
         pkgfile.load(path);
@@ -69,7 +69,7 @@ public class package {
     }
 
     //DOC: `string[] package.list_files():`
-    //DOC: return inary package files list
+    //DOC: return ymp package files list
     public string[] list_files(){
         if(pkgfile == null){
             if(is_installed_package(name)){
@@ -142,9 +142,9 @@ public class package {
     //DOC: `void package.extract():`
     //DOC: extract package to quarantine directory
     //DOC: quarantine directory is **get_storage()+"/quarantine"**;
-    //DOC: Example inary archive format:
+    //DOC: Example ymp archive format:
     //DOC: ```yaml
-    //DOC: package.inary
+    //DOC: package.ymp
     //DOC:   ├── data.tar.gz
     //DOC:   │     ├ /usr
     //DOC:   │     │  └ ...
@@ -175,7 +175,7 @@ public class package {
         foreach (string data in pkgfile.list_files()){
             // Allowed formats: data.tar.xz data.zip data.tar.zst data.tar.gz ..
             if(startswith(data,"data.")){
-                // 1. data.* file extract to quarantine from inary package
+                // 1. data.* file extract to quarantine from ymp package
                 pkgfile.extract(data);
                 var datafile = get_storage()+"/quarantine/"+data;
                 // 2. data.* package extract to quarantine/rootfs
@@ -207,14 +207,14 @@ public class package {
             return;
         }
         string curdir = pwd();
-        create_dir(DESTDIR+"/tmp/inary-build/"+name);
-        pkgfile.set_target(DESTDIR+"/tmp/inary-build/"+name);
-        set_inrbuild_srcpath(DESTDIR+"/tmp/inary-build/"+name);
-        set_inrbuild_buildpath(DESTDIR+"/tmp/inary-build/"+name);
+        create_dir(DESTDIR+"/tmp/ymp-build/"+name);
+        pkgfile.set_target(DESTDIR+"/tmp/ymp-build/"+name);
+        set_inrbuild_srcpath(DESTDIR+"/tmp/ymp-build/"+name);
+        set_inrbuild_buildpath(DESTDIR+"/tmp/ymp-build/"+name);
         if(!get_bool("no-clear")){
             remove_all(inrbuild_buildpath);
         }
-        cd(DESTDIR+"/tmp/inary-build/"+name);
+        cd(DESTDIR+"/tmp/ymp-build/"+name);
         pkgfile.extract_all();
         create_metadata_info();
         fetch_package_sources();

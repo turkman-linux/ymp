@@ -34,12 +34,12 @@ public bool verify_elf(string path){
         return false;
     }
     int status = 0;
-    status += run_args({"objcopy", "-R", ".gpg", path, "/tmp/inary-elf"});
-    status += run_args({"objcopy", "--dump-section", ".gpg=/tmp/inary-elf.sig", "path"});
-    if(!verify_file("/tmp/inary-elf")){
+    status += run_args({"objcopy", "-R", ".gpg", path, "/tmp/ymp-elf"});
+    status += run_args({"objcopy", "--dump-section", ".gpg=/tmp/ymp-elf.sig", "path"});
+    if(!verify_file("/tmp/ymp-elf")){
         status += 1;
     }
-    remove_file("/tmp/inary-elf.sig");
-    remove_file("/tmp/inary-elf");
+    remove_file("/tmp/ymp-elf.sig");
+    remove_file("/tmp/ymp-elf");
     return status == 0;
 }

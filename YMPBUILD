@@ -1,20 +1,20 @@
 #!/bin/bash
-name=inary
+name=ymp
 version=master
 release=1
 description="Package manager for Sulin Project"
 arch=(i686 x86_64)
 url='https://sulinos.gitlab.io'
 license=('GPL')
-source=(https://gitlab.com/sulincix/inary-new/-/archive/master/inary-new-master.zip)
+source=(https://gitlab.com/sulincix/ymp-new/-/archive/master/ymp-new-master.zip)
 md5sums=(SKIP)
 
-cd inary-new-master
+cd ymp-new-master
 
 build(){
     rm -rf build || true
     mkdir -p build
-    inary-meson build
+    ymp-meson build
     ninja -C build
 }
 install(){

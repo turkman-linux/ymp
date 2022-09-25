@@ -45,6 +45,10 @@ run command in sandboxed area
 
 enable/disable sandbox network access (default: false)
 
+`void sandbox_bind(string path):`
+
+bind directory to sandboxed environment
+
 `int sandbox_uid:`
 
 sandbox user uid value (default: 0)
@@ -105,35 +109,10 @@ resolve dependencies
 
 return package name list with required dependencies
 
-# src/data/inrbuild.vala
-## inrbuild file functions.
-
-inary uses archlinux inrbuild format.
-
-`void set_inrbuild_srcpath(string path):`
-
-configure inrbuild file directory
-
-`void set_inrbuild_srcpath(string path):`
-
-configure inrbuild file directory
-
-`string get_inrbuild_value(string variable):`
-
-get a variable from inrbuild file
-
-`string[] get_inrbuild_array(string variable):`
-
-get a array from inrbuild file
-
-`int run_inrbuild_function(string function):`
-
-run a build function from inrbuild file
-
 # src/data/package.vala
 ## class package
 
-inary package struct & functions
+ymp package struct & functions
 
 Example usage:
 
@@ -141,7 +120,7 @@ Example usage:
 
 var pkg = new package();
 
-pkg.load_from_archive("/tmp/bash-5.0-x86_64.inary");
+pkg.load_from_archive("/tmp/bash-5.0-x86_64.ymp");
 
 stdout.printf(pkg.get("archive-hash"));
 
@@ -173,11 +152,11 @@ Read package information from string data
 
 `void package.load_from_archive(string path):`
 
-Read package information from inary file
+Read package information from ymp file
 
 `string[] package.list_files():`
 
-return inary package files list
+return ymp package files list
 
 `string[] package.gets(string name):`
 
@@ -201,11 +180,11 @@ extract package to quarantine directory
 
 quarantine directory is **get_storage()+"/quarantine"**;
 
-Example inary archive format:
+Example ymp archive format:
 
 ```yaml
 
-package.inary
+package.ymp
 
   ├── data.tar.gz
 
@@ -291,6 +270,10 @@ load repository data from repo name
 
 return true if package exists in repository
 
+`package repository.get_source(string name):`
+
+get package object from repository by source name
+
 `package repository.get_package(string name):`
 
 get package object from repository by package name
@@ -298,6 +281,10 @@ get package object from repository by package name
 `string[] repository.list_packages():`
 
 get all available package names from repository
+
+`string[] repository.list_sources():`
+
+get all available source names from repository
 
 ## Miscellaneous repository functions
 
@@ -311,80 +298,72 @@ get all repositories as array
 
 get package object from all repositories
 
+`package get_source_from_repository(string name):`
+
+get source package object from all repositories
+
+`package get_from_repositony(stning name):`
+
+return source if emerge else return package
+
 `package get_package_from_file(string path):`
 
-get package object from inary file archive
+get package object from ymp file archive
 
-# src/inary.vala
-## class Inary
+# src/data/ympbuild.vala
+## inrbuild file functions.
 
-libinary operation controller
+ymp uses archlinux inrbuild format.
 
-For example:
+`void set_inrbuild_srcpath(string path):`
 
-```vala
+configure inrbuild file directory
 
-int main(string[] args){
+`void set_inrbuild_srcpath(string path):`
 
-    var inary = new inary_init(args);
+configure inrbuild file directory
 
-    inary.add_process("install",{"ncurses", "readline"});
+`string get_inrbuild_value(string variable):`
 
-    inary.add_script("install bash glibc perl");
+get a variable from inrbuild file
 
-    inary.run();
+`string[] get_inrbuild_array(string variable):`
 
-    return 0;
+get a array from inrbuild file
 
-}
+`int run_inrbuild_function(string function):`
 
-```
+run a build function from inrbuild file
 
-`void Inary.add_process(string type, string[] args):`
-
-add inary process using **type** and **args**
-
-* type is operation type (install, remove, list-installed ...)
-
-* args is operation argument (package list, repository list ...)
-
-`void Inary.clear_process():`
-
-remove all inary process
-
-`void Inary.run():`
-
-run inary process then if succes remove
-
-`void Inary.add_script(string data):`
-
-add inary process from inary script
-
-`string[] argument_process(string[] args):`
-
-Clear options and apply variables from argument
-
-`Inary inary_init(string[] args):`
-
-start inary application.
-
-* args is program arguments
-
-# src/operations/build.vala
-# src/operations/clear.vala
-# src/operations/dummy.vala
-# src/operations/echo.vala
-# src/operations/exec.vala
-# src/operations/exit.vala
-# src/operations/install.vala
-# src/operations/list.vala
-# src/operations/remove.vala
-# src/operations/setget.vala
-# src/operations/upgrade.vala
+# src/operations/misc/clear.vala
+# src/operations/misc/cowcat.vala
+# src/operations/misc/dummy.vala
+# src/operations/misc/echo.vala
+# src/operations/misc/exec.vala
+# src/operations/misc/exit.vala
+# src/operations/misc/shitcat.vala
+# src/operations/package-manager/build.vala
+# src/operations/package-manager/index.vala
+# src/operations/package-manager/info.vala
+# src/operations/package-manager/install.vala
+# src/operations/package-manager/list.vala
+# src/operations/package-manager/remove.vala
+# src/operations/package-manager/search.vala
+# src/operations/package-manager/update.vala
+# src/operations/package-manager/upgrade.vala
+# src/operations/utility/extract.vala
+# src/operations/utility/fetch.vala
+# src/operations/utility/iniget.vala
+# src/operations/utility/revdep-rebuild.vala
+# src/operations/utility/run-sandbox.vala
+# src/operations/utility/setget.vala
+# src/operations/utility/shell.vala
+# src/operations/utility/sysconf.vala
+# src/operations/utility/yamlget.vala
 # src/settings.vala
 ## Settings functions
 
-inary configuration functions
+ymp configuration functions
 
 `void set_destdir(string rootfs):`
 
@@ -392,15 +371,19 @@ change distdir
 
 `string get_storage():`
 
-get inary storage directory. (default: /var/lib/inary)
+get ymp storage directory. (default: /var/lib/ymp)
+
+`string get_configdir():`
+
+get ymp storage directory. (default: /etc/)
 
 `string get_storage():`
 
-get inary storage directory. (default: /var/lib/inary)
+get ymp storage directory. (default: /var/lib/ymp)
 
 `void set_config(string path):`
 
-change inary config file (default /etc/inary.conf)
+change ymp config file (default /etc/ymp.conf)
 
 # src/util/archive.vala
 ## class archive()
@@ -451,6 +434,7 @@ Read **path** file to target directory
 
 Extract all files to target
 
+# src/util/array.vala
 # src/util/command.vala
 ## Command functions
 
@@ -460,7 +444,7 @@ Example usage
 
 ```vala
 
-if (0 != run("ls /var/lib/inary")){
+if (0 != run("ls /var/lib/ymp")){
 
     stdout.printf("Command failed");
 
@@ -552,10 +536,6 @@ change current directory to **path**
 
 return current directory path
 
-`int create_dir(string path)`
-
-create **path** directory
-
 `int remove_dir(string path)`
 
 remove **path** directory
@@ -634,7 +614,7 @@ dump gpg signature from file and verify elf file
 # src/util/iniparser.vala
 ## ini parser
 
-ini parser library for libinary
+ini parser library for libymp
 
 ini_variable and ini_section classes are struct. inifile class is actual parser.
 
@@ -702,9 +682,9 @@ Example usage:
 
 var ini = new inifile();
 
-ini.load("/etc/inary.conf");
+ini.load("/etc/ymp.conf");
 
-var is_debug =  (ini.get("inary", "debug") == "true");
+var is_debug =  (ini.get("ymp", "debug") == "true");
 
 ```
 
@@ -893,14 +873,10 @@ safe basename. return filename
 
 safe dirname. return path name
 
-`string[] reverse(string[] array):`
-
-reverse a string array
-
 # src/util/value.vala
 ## Variable functions
 
-set or get inary global variable
+set or get ymp global variable
 
 Example usage:
 
@@ -920,25 +896,25 @@ if(get_bool("debug")){
 
 `void set_value(string name, string value):`
 
-add a global inary variable as string
+add a global ymp variable as string
 
 `string get_value(string name):`
 
-get a inary global variable as string
+get a ymp global variable as string
 
-big names are read only and only defined by inary
+big names are read only and only defined by ymp
 
 `bool get_bool(string name):`
 
-get a inary global variable as bool
+get a ymp global variable as bool
 
 `void set_bool(string name, bool value):`
 
-add a global inary variable as bool
+add a global ymp variable as bool
 
 `string[] list_values():`
 
-return array of all inary global value names
+return array of all ymp global value names
 
 `void set_env(string variable, string value):`
 
@@ -955,7 +931,7 @@ remove all environmental variable except **PATH**
 # src/util/yamlparser.vala
 ## Yaml parser
 
-yaml file parser library for inary
+yaml file parser library for ymp
 
 Example usage:
 
@@ -963,9 +939,9 @@ Example usage:
 
 var yaml = new yamlfile();
 
-yaml.load("/var/lib/inary/metadata/bash.yaml");
+yaml.load("/var/lib/ymp/metadata/bash.yaml");
 
-var pkgarea = yaml.get("inary.package");
+var pkgarea = yaml.get("ymp.package");
 
 var name = yaml.get_value(pkgarea,"name");
 
@@ -1018,3 +994,59 @@ detect & block WSL
 
 If runs on WSL shit write fail message and exit :)
 
+# src/ymp.vala
+## class Inary
+
+libymp operation controller
+
+For example:
+
+```vala
+
+int main(string[] args){
+
+    var ymp = new ymp_init(args);
+
+    ymp.add_process("install",{"ncurses", "readline"});
+
+    ymp.add_script("install bash glibc perl");
+
+    ymp.run();
+
+    return 0;
+
+}
+
+```
+
+`void Inary.add_process(string type, string[] args):`
+
+add ymp process using **type** and **args**
+
+* type is operation type (install, remove, list-installed ...)
+
+* args is operation argument (package list, repository list ...)
+
+`void Inary.clear_process():`
+
+remove all ymp process
+
+`void Inary.run():`
+
+run ymp process then if succes remove
+
+`void Inary.add_script(string data):`
+
+add ymp process from ymp script
+
+`string[] argument_process(string[] args):`
+
+Clear options and apply variables from argument
+
+`Inary ymp_init(string[] args):`
+
+start ymp application.
+
+* args is program arguments
+
+# src/ymp-cli.vala

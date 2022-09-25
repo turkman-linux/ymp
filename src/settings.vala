@@ -1,6 +1,6 @@
 
 //DOC: ## Settings functions
-//DOC: inary configuration functions
+//DOC: ymp configuration functions
 private string CONFIG;
 private string DESTDIR;
 
@@ -13,7 +13,7 @@ private void settings_init(){
         CONFIGDIR = "/etc/";
     }
     if (CONFIG == null){
-        CONFIG = srealpath(DESTDIR+"/"+CONFIGDIR+"/inary.conf");
+        CONFIG = srealpath(DESTDIR+"/"+CONFIGDIR+"/ymp.conf");
     }
     set_value_readonly("destdir",DESTDIR);
     set_value_readonly("config",CONFIG);
@@ -24,8 +24,8 @@ private void settings_init(){
         ini.load(CONFIG);
         foreach(string section in ini.get_sections()){
             foreach(string variable in ini.get_variables(section)){
-                if(section == "inary"){
-                    set_value(variable,ini.get("inary",variable));
+                if(section == "ymp"){
+                    set_value(variable,ini.get("ymp",variable));
                 }else{
                     set_value(section+":"+variable,ini.get(section,variable));
                 }
@@ -37,7 +37,7 @@ private void settings_init(){
     if(get_env("USE") != null){
         set_value_readonly("USE",get_env("USE"));
     }else{
-        set_value_readonly("USE",ini.get("inary","USE"));
+        set_value_readonly("USE",ini.get("ymp","USE"));
     }
     clear_env();
     set_env("LANG","C.UTF-8");
@@ -52,13 +52,13 @@ public void set_destdir(string rootfs){
 }
 
 //DOC: `string get_storage():`
-//DOC: get inary storage directory. (default: /var/lib/inary)
+//DOC: get ymp storage directory. (default: /var/lib/ymp)
 public string get_storage(){
     return srealpath(DESTDIR+"/"+STORAGEDIR);
 }
 
 //DOC: `string get_configdir():`
-//DOC: get inary storage directory. (default: /etc/)
+//DOC: get ymp storage directory. (default: /etc/)
 public string get_configdir(){
     return srealpath(DESTDIR+"/"+CONFIGDIR);
 }
@@ -71,9 +71,9 @@ public string get_destdir(){
 }
 
 //DOC: `string get_storage():`
-//DOC: get inary storage directory. (default: /var/lib/inary)
+//DOC: get ymp storage directory. (default: /var/lib/ymp)
 public string get_build_dir(){
-    return srealpath(DESTDIR+"/tmp/inary-build")+"/";
+    return srealpath(DESTDIR+"/tmp/ymp-build")+"/";
 }
 
 private string get_metadata_path(string name){
@@ -81,7 +81,7 @@ private string get_metadata_path(string name){
 }
 
 //DOC: `void set_config(string path):`
-//DOC: change inary config file (default /etc/inary.conf)
+//DOC: change ymp config file (default /etc/ymp.conf)
 public void set_config(string path){
     CONFIG=srealpath(path);
     settings_init();

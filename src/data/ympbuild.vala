@@ -1,5 +1,5 @@
 //DOC: ## inrbuild file functions.
-//DOC: inary uses archlinux inrbuild format.
+//DOC: ymp uses archlinux inrbuild format.
 
 // private variables used by functions
 private string inrbuild_srcpath;
@@ -21,7 +21,7 @@ private void inrbuild_init(){
     export CXXFLAGS=\"-s -Dsulin -L/lib/sulin "+get_value("build:cxxflags")+"\"
     export CC=\""+get_value("build:cc")+"\"
     export LDFLAGS=\""+get_value("build:ldflags")+"\"
-    inary-meson(){
+    ymp-meson(){
       meson setup \\
         --prefix        /usr \\
         --libexecdir    libexec \\
@@ -41,14 +41,14 @@ private void inrbuild_init(){
         -D              b_asneeded=true \\
         \"$@\"
     }
-    inary-configure(){
+    ymp-configure(){
         if [[ -f \"./autogen.sh\" ]] ; then
 			NOCONFIGURE=1 ./autogen.sh
 		fi
 		if [[ -f configure ]] ; then
             ./configure --prefix=/usr \"$@\"
         elif [[ -f meson.build ]] ; then
-            inary-meson build
+            ymp-meson build
         elif [[ -f CMakeLists.txt ]] ; then
             mkdir build
             cd build
@@ -56,7 +56,7 @@ private void inrbuild_init(){
 	        cd ..
         fi
     }
-    inary-build(){
+    ymp-build(){
 		if [[ -f configure ]] ; then
             make -j`nproc`
         elif [[ -f meson.build ]] ; then
@@ -66,7 +66,7 @@ private void inrbuild_init(){
         fi
 
     }
-    inary-install(){
+    ymp-install(){
     	if [[ -f configure ]] ; then
             make -j`nproc` install DESTDIR=$DESTDIR
         elif [[ -f meson.build ]] ; then
@@ -78,8 +78,8 @@ private void inrbuild_init(){
     _dump_variables(){
         set -o posix ; set  
     }
-    inary_print_metadata(){
-        echo \"inary:\"
+    ymp_print_metadata(){
+        echo \"ymp:\"
         echo \"  source:\"
         echo \"    name: $name\"
         echo \"    version: $version\"
@@ -178,7 +178,7 @@ public int run_inrbuild_function(string function){
     }
     return 0;
 }
-public void inary_process_binaries(){
+public void ymp_process_binaries(){
     foreach(string file in find(inrbuild_buildpath+"/output")){
         if(iself(file)){
             info("Binary process: "+file);
@@ -191,5 +191,5 @@ public void inary_process_binaries(){
 }
 
 public string get_inrbuild_metadata(){
-    return getoutput ("bash -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD >/dev/null ; inary_print_metadata'");
+    return getoutput ("bash -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD >/dev/null ; ymp_print_metadata'");
 }

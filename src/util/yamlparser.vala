@@ -1,10 +1,10 @@
 //DOC: ## Yaml parser
-//DOC: yaml file parser library for inary
+//DOC: yaml file parser library for ymp
 //DOC: Example usage:
 //DOC: ```vala
 //DOC: var yaml = new yamlfile();
-//DOC: yaml.load("/var/lib/inary/metadata/bash.yaml");
-//DOC: var pkgarea = yaml.get("inary.package");
+//DOC: yaml.load("/var/lib/ymp/metadata/bash.yaml");
+//DOC: var pkgarea = yaml.get("ymp.package");
 //DOC: var name = yaml.get_value(pkgarea,"name");
 //DOC: if(yaml.has_area(pkgarea,"dependencies")){
 //DOC:     dependencies = yaml.get_array(pkgarea,"dependencies");

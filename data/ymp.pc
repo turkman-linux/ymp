@@ -5,4 +5,4 @@ Name: Inary
 Description: Package manager for Sulin Project
 Version: 9999
 Cflags: -L/lib -O2 -s -g -Dsulin -flto
-Libs: -linary
+Libs: -lymp

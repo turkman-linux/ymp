@@ -60,7 +60,7 @@ int sandbox(char** args){
         sandbox_create_tmpfs("/root/root");
         sandbox_create_tmpfs("/root/tmp");
         sandbox_create_tmpfs("/root/run");
-        sandbox_bind("/tmp/inary-build");
+        sandbox_bind("/tmp/ymp-build");
         sandbox_bind_shared(sandbox_shared);
         if (0 == chroot("/root")){
             if(0 == chdir("/")){

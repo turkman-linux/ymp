@@ -1,5 +1,5 @@
 public int extract_main(string[] args){
-    inary_init(args);
+    ymp_init(args);
     if(args.length < 1){
         error_add("Archive Missing");
         error(2);

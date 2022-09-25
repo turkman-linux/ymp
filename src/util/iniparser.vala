@@ -1,5 +1,5 @@
 //DOC: ## ini parser
-//DOC: ini parser library for libinary
+//DOC: ini parser library for libymp
 //DOC: ini_variable and ini_section classes are struct. inifile class is actual parser.
 
 //DOC: ### class ini_variable()
@@ -65,8 +65,8 @@ public class ini_section {
 //DOC: Example usage:
 //DOC: ``` vala
 //DOC: var ini = new inifile();
-//DOC: ini.load("/etc/inary.conf");
-//DOC: var is_debug =  (ini.get("inary", "debug") == "true");
+//DOC: ini.load("/etc/ymp.conf");
+//DOC: var is_debug =  (ini.get("ymp", "debug") == "true");
 //DOC: ```
 public class inifile {
 

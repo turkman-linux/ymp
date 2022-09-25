@@ -1,5 +1,5 @@
 public int yamlget_main(string[] args){
-    inary_init(args);
+    ymp_init(args);
     string[] new_args = argument_process(args);
     if (new_args.length < 2){
         print_stderr("Usage: iniget [file] [path]");

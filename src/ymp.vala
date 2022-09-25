@@ -1,12 +1,12 @@
 //DOC: ## class Inary
-//DOC: libinary operation controller
+//DOC: libymp operation controller
 //DOC: For example:
 //DOC: ```vala
 //DOC: int main(string[] args){
-//DOC:     var inary = new inary_init(args);
-//DOC:     inary.add_process("install",{"ncurses", "readline"});
-//DOC:     inary.add_script("install bash glibc perl");
-//DOC:     inary.run();
+//DOC:     var ymp = new ymp_init(args);
+//DOC:     ymp.add_process("install",{"ncurses", "readline"});
+//DOC:     ymp.add_script("install bash glibc perl");
+//DOC:     ymp.run();
 //DOC:     return 0;
 //DOC: }
 //DOC: ```
@@ -60,7 +60,7 @@ public class Inary {
     process[] proc;
 
     //DOC: `void Inary.add_process(string type, string[] args):`
-    //DOC: add inary process using **type** and **args**
+    //DOC: add ymp process using **type** and **args**
     //DOC: * type is operation type (install, remove, list-installed ...)
     //DOC: * args is operation argument (package list, repository list ...)
     public void add_process(string type, string[] args){
@@ -76,13 +76,13 @@ public class Inary {
         proc += op;
     }
     //DOC: `void Inary.clear_process():`
-    //DOC: remove all inary process
+    //DOC: remove all ymp process
     public void clear_process(){
         proc = {};
     }
 
     //DOC: `void Inary.run():`
-    //DOC: run inary process then if succes remove
+    //DOC: run ymp process then if succes remove
     public void run(){
         for(int i=0;i<proc.length;i++){
             int status = proc[i].run();
@@ -96,7 +96,7 @@ public class Inary {
     }
 
     //DOC: `void Inary.add_script(string data):`
-    //DOC: add inary process from inary script
+    //DOC: add ymp process from ymp script
     public void add_script(string data){
         if(data == null){
             return;
@@ -147,15 +147,15 @@ private void directories_init(){
 
 }
 
-private bool inary_activated = false;
+private bool ymp_activated = false;
 
-//DOC: `Inary inary_init(string[] args):`
-//DOC: start inary application.
+//DOC: `Inary ymp_init(string[] args):`
+//DOC: start ymp application.
 //DOC: * args is program arguments
-public Inary inary_init(string[] args){
+public Inary ymp_init(string[] args){
     wsl_block();
     Inary app = new Inary();
-    if(inary_activated){
+    if(ymp_activated){
         return app;
     }
     parse_args(args);
@@ -172,7 +172,7 @@ public Inary inary_init(string[] args){
     #endif
     set_env("G_DEBUG","fatal-criticals");
     error(31);
-    inary_activated = true;
+    ymp_activated = true;
     tty_size_init();
     directories_init();
     return app;
