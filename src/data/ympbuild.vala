@@ -1,18 +1,18 @@
-//DOC: ## inrbuild file functions.
-//DOC: ymp uses archlinux inrbuild format.
+//DOC: ## ympbuild file functions.
+//DOC: ymp uses archlinux ympbuild format.
 
 // private variables used by functions
-private string inrbuild_srcpath;
-private string inrbuild_buildpath;
-private string inrbuild_header;
+private string ympbuild_srcpath;
+private string ympbuild_buildpath;
+private string ympbuild_header;
 
 
-private void inrbuild_init(){
-    if(inrbuild_srcpath == null){
-        inrbuild_srcpath = "./";
+private void ympbuild_init(){
+    if(ympbuild_srcpath == null){
+        ympbuild_srcpath = "./";
     }
-    inrbuild_header = "
-    export installdir="+inrbuild_buildpath+"/output
+    ympbuild_header = "
+    export installdir="+ympbuild_buildpath+"/output
     export DESTDIR=\"$installdir\"
     alias python=python3
     export NOCONFIGURE=1
@@ -122,64 +122,64 @@ private void inrbuild_init(){
        if(flag == "" || flag == null){
            continue;
        }
-       inrbuild_header += "declare -r '"+flag.replace("'","\\'")+"'=31 \n";
+       ympbuild_header += "declare -r '"+flag.replace("'","\\'")+"'=31 \n";
     }
     #if debug
-    inrbuild_header += "set -x"
+    ympbuild_header += "set -x"
     #endif
 }
-//DOC: `void set_inrbuild_srcpath(string path):`
-//DOC: configure inrbuild file directory
-public void set_inrbuild_srcpath(string path){
-    inrbuild_srcpath = srealpath(path);
-    inrbuild_init();
+//DOC: `void set_ympbuild_srcpath(string path):`
+//DOC: configure ympbuild file directory
+public void set_ympbuild_srcpath(string path){
+    ympbuild_srcpath = srealpath(path);
+    ympbuild_init();
 }
 
-//DOC: `void set_inrbuild_srcpath(string path):`
-//DOC: configure inrbuild file directory
-public void set_inrbuild_buildpath(string path){
-    inrbuild_buildpath = srealpath(path);
-    inrbuild_init();
+//DOC: `void set_ympbuild_srcpath(string path):`
+//DOC: configure ympbuild file directory
+public void set_ympbuild_buildpath(string path){
+    ympbuild_buildpath = srealpath(path);
+    ympbuild_init();
 }
 
-//DOC: `string get_inrbuild_value(string variable):`
-//DOC: get a variable from inrbuild file
-public string get_inrbuild_value(string variable){
-    if(inrbuild_srcpath == null){
-        inrbuild_srcpath = "./";
+//DOC: `string get_ympbuild_value(string variable):`
+//DOC: get a variable from ympbuild file
+public string get_ympbuild_value(string variable){
+    if(ympbuild_srcpath == null){
+        ympbuild_srcpath = "./";
     }
-    return getoutput("bash -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD ; echo ${"+variable+"[@]}'").strip();
+    return getoutput("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild ; echo ${"+variable+"[@]}'").strip();
 }
 
-//DOC: `string[] get_inrbuild_array(string variable):`
-//DOC: get a array from inrbuild file
-public string[] get_inrbuild_array(string variable){
-    if(inrbuild_srcpath == null){
-        inrbuild_srcpath = "./";
+//DOC: `string[] get_ympbuild_array(string variable):`
+//DOC: get a array from ympbuild file
+public string[] get_ympbuild_array(string variable){
+    if(ympbuild_srcpath == null){
+        ympbuild_srcpath = "./";
     }
-    return ssplit(getoutput("bash -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD ; echo ${"+variable+"[@]}'").strip()," ");
+    return ssplit(getoutput("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild ; echo ${"+variable+"[@]}'").strip()," ");
 }
 
-public bool inrbuild_has_function(string function){
-    return 0 == run_silent("bash -c 'source "+inrbuild_srcpath+"/INRBUILD ;declare -F "+function+"'");
+public bool ympbuild_has_function(string function){
+    return 0 == run_silent("bash -c 'source "+ympbuild_srcpath+"/ympbuild ;declare -F "+function+"'");
 }
 
-//DOC: `int run_inrbuild_function(string function):`
-//DOC: run a build function from inrbuild file
-public int run_inrbuild_function(string function){
+//DOC: `int run_ympbuild_function(string function):`
+//DOC: run a build function from ympbuild file
+public int run_ympbuild_function(string function){
     if(function == ""){
         return 0;
     }
     print(colorize("Run action: ",blue)+function);
-    if(inrbuild_has_function(function)){
-        return run("bash -e -c '"+inrbuild_header+" \n source /etc/profile \n source "+inrbuild_srcpath+"/INRBUILD ; set -e ; "+function+"'");
+    if(ympbuild_has_function(function)){
+        return run("bash -e -c '"+ympbuild_header+" \n source /etc/profile \n source "+ympbuild_srcpath+"/ympbuild ; set -e ; "+function+"'");
     }else{
-        warning("INRBUILD function not exists: "+function);
+        warning("ympbuild function not exists: "+function);
     }
     return 0;
 }
 public void ymp_process_binaries(){
-    foreach(string file in find(inrbuild_buildpath+"/output")){
+    foreach(string file in find(ympbuild_buildpath+"/output")){
         if(iself(file)){
             info("Binary process: "+file);
             run_silent("objcopy -R .comment \\
@@ -190,6 +190,6 @@ public void ymp_process_binaries(){
     }
 }
 
-public string get_inrbuild_metadata(){
-    return getoutput ("bash -c '"+inrbuild_header+" source "+inrbuild_srcpath+"/INRBUILD >/dev/null ; ymp_print_metadata'");
+public string get_ympbuild_metadata(){
+    return getoutput ("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild >/dev/null ; ymp_print_metadata'");
 }

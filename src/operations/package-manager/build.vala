@@ -5,7 +5,7 @@ public int build_operation(string[] args){
         new_args = {"."};
     }
     foreach(string arg in new_args){
-        if(!isfile(arg+"/INRBUILD")){
+        if(!isfile(arg+"/ympbuild")){
             continue;
         }
         set_build_target(arg);
@@ -24,10 +24,10 @@ public int build_operation(string[] args){
 }
 
 private void set_build_target(string src_path){
-    set_inrbuild_srcpath(src_path);
-    string build_path = srealpath(get_build_dir()+calculate_md5sum(inrbuild_srcpath+"/INRBUILD"));
+    set_ympbuild_srcpath(src_path);
+    string build_path = srealpath(get_build_dir()+calculate_md5sum(ympbuild_srcpath+"/ympbuild"));
     remove_all(build_path);
-    set_inrbuild_buildpath(build_path);
+    set_ympbuild_buildpath(build_path);
     if(isdir(build_path)){
         remove_all(build_path);
     }
@@ -38,12 +38,12 @@ private void fetch_package_sources(){
     if(no_src){
         return;
     }
-    string[] md5sums = get_inrbuild_array("md5sums");
-    foreach(string src in get_inrbuild_array("source")){
+    string[] md5sums = get_ympbuild_array("md5sums");
+    foreach(string src in get_ympbuild_array("source")){
         if(src == "" || md5sums[i] == ""){
             continue;
         }
-        string srcfile = inrbuild_buildpath+"/"+sbasename(src);
+        string srcfile = ympbuild_buildpath+"/"+sbasename(src);
         fetch(src,srcfile);
         string md5 = calculate_md5sum(srcfile);
         if (md5sums[i] != md5 && md5sums[i] != "SKIP"){
@@ -55,9 +55,9 @@ private void fetch_package_sources(){
 }
 
 private void extract_package_sources(){
-    cd(inrbuild_buildpath);
+    cd(ympbuild_buildpath);
     var tar = new archive();
-    foreach(string src in get_inrbuild_array("source")){
+    foreach(string src in get_ympbuild_array("source")){
         if(src == ""){
             continue;
         }
@@ -70,14 +70,14 @@ private void extract_package_sources(){
 }
 
 private void build_package(){
-    info("Building package from:"+inrbuild_buildpath);
-    cd(inrbuild_buildpath);
+    info("Building package from:"+ympbuild_buildpath);
+    cd(ympbuild_buildpath);
     int status = 0;
     if(!get_bool("no-build")){
         string[] build_actions = {"setup", "build"};
         foreach(string func in build_actions){
             info("Running build action: "+func);
-            status = run_inrbuild_function(func);
+            status = run_ympbuild_function(func);
             if(status != 0){
                 error_add("Failed to build package. Action: "+func);
                 error(status);
@@ -88,7 +88,7 @@ private void build_package(){
         string[] install_actions = {"test","package"};
         foreach(string func in install_actions){
             info("Running build action: "+func);
-            status = run_inrbuild_function(func);
+            status = run_ympbuild_function(func);
             if(status != 0){
                 error_add("Failed to build package. Action: "+func);
                 error(status);
@@ -100,22 +100,22 @@ private void build_package(){
 }
 
 private void create_source_archive(){
-    debug("Create source package from :"+inrbuild_srcpath);
-    cd(inrbuild_srcpath);
-    string metadata = get_inrbuild_metadata();
-    writefile(srealpath(inrbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
+    debug("Create source package from :"+ympbuild_srcpath);
+    cd(ympbuild_srcpath);
+    string metadata = get_ympbuild_metadata();
+    writefile(srealpath(ympbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
     var tar = new archive();
     tar.load(output_package_path+"_source.ymp");
-    foreach(string file in find(inrbuild_srcpath)){
+    foreach(string file in find(ympbuild_srcpath)){
         if(!endswith(file,".ymp") && isfile(file)){
-            file = file[(inrbuild_srcpath).length:];
-            create_dir(sdirname(inrbuild_buildpath+"/"+file));
-            copy_file(inrbuild_srcpath+file,inrbuild_buildpath+file);
+            file = file[(ympbuild_srcpath).length:];
+            create_dir(sdirname(ympbuild_buildpath+"/"+file));
+            copy_file(ympbuild_srcpath+file,ympbuild_buildpath+file);
         }
     }
-    cd(inrbuild_buildpath);
-    foreach(string file in find(inrbuild_buildpath)){
-        file = file[(inrbuild_buildpath).length:];
+    cd(ympbuild_buildpath);
+    foreach(string file in find(ympbuild_buildpath)){
+        file = file[(ympbuild_buildpath).length:];
         if(file[0] == '/'){
             file = file[1:];
         }
@@ -128,25 +128,25 @@ private void create_source_archive(){
 }
 
 private void create_files_info(){
-    cd(inrbuild_buildpath+"/output");
+    cd(ympbuild_buildpath+"/output");
     string files_data = "";
-    foreach(string file in find(inrbuild_buildpath+"/output")){
+    foreach(string file in find(ympbuild_buildpath+"/output")){
         if(isdir(file)){
             continue;
         }
-        file = file[(inrbuild_buildpath+"/output/").length:];
+        file = file[(ympbuild_buildpath+"/output/").length:];
         if(file == "metadata.yaml"){
             continue;
         }
         debug("File info add: "+ file);
         files_data += calculate_sha1sum(file)+" "+file+"\n";
     }
-    writefile(inrbuild_buildpath+"/output/files",files_data);
+    writefile(ympbuild_buildpath+"/output/files",files_data);
 }
 private string output_package_path;
 private void create_metadata_info(){
-    string metadata = get_inrbuild_metadata();
-    debug("Create metadata info: "+inrbuild_buildpath+"/output/metadata.yaml");
+    string metadata = get_ympbuild_metadata();
+    debug("Create metadata info: "+ympbuild_buildpath+"/output/metadata.yaml");
     var yaml = new yamlfile();
     yaml.data = metadata;
     string srcdata = yaml.get("ymp.source");
@@ -194,22 +194,22 @@ private void create_metadata_info(){
             }
         }
     }
-    output_package_path = inrbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version");
-    writefile(inrbuild_buildpath+"/output/metadata.yaml",new_data);
+    output_package_path = ympbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version");
+    writefile(ympbuild_buildpath+"/output/metadata.yaml",new_data);
 }
 
 private void create_data_file(){
-    debug("Create data file: "+inrbuild_buildpath+"/output/data.tar.gz");
+    debug("Create data file: "+ympbuild_buildpath+"/output/data.tar.gz");
     var tar = new archive();
-    tar.load(inrbuild_buildpath+"/output/data.tar.gz");
+    tar.load(ympbuild_buildpath+"/output/data.tar.gz");
     aformat=1;
     afilter=1;
     int fnum = 0;
-    foreach(string file in find(inrbuild_buildpath+"/output")){
+    foreach(string file in find(ympbuild_buildpath+"/output")){
         if(isdir(file)){
             continue;
         }
-        file = file[(inrbuild_buildpath+"/output/").length:];
+        file = file[(ympbuild_buildpath+"/output/").length:];
         debug("Compress:"+file);
         if(file == "files" || file == "metadata.yaml"){
             continue;
@@ -217,25 +217,25 @@ private void create_data_file(){
         tar.add(file);
         fnum++;
     }
-    if(isfile(inrbuild_buildpath+"/output/data.tar.gz")){
-        remove_file(inrbuild_buildpath+"/output/data.tar.gz");
+    if(isfile(ympbuild_buildpath+"/output/data.tar.gz")){
+        remove_file(ympbuild_buildpath+"/output/data.tar.gz");
     }
     if(fnum != 0){
         tar.create();
     }
-    string hash = calculate_sha1sum(inrbuild_buildpath+"/output/data.tar.gz");
-    int size = filesize(inrbuild_buildpath+"/output/data.tar.gz");
-    string new_data = readfile(inrbuild_buildpath+"/output/metadata.yaml");
+    string hash = calculate_sha1sum(ympbuild_buildpath+"/output/data.tar.gz");
+    int size = filesize(ympbuild_buildpath+"/output/data.tar.gz");
+    string new_data = readfile(ympbuild_buildpath+"/output/metadata.yaml");
     new_data += "    archive-hash: "+hash+"\n";
     new_data += "    arch: "+getArch()+"\n";
     new_data += "    archive-size: "+size.to_string()+"\n";
-    writefile(inrbuild_buildpath+"/output/metadata.yaml",new_data);
+    writefile(ympbuild_buildpath+"/output/metadata.yaml",new_data);
     
 }
 
 private void create_binary_package(){
-    debug("Create binary package from :"+inrbuild_buildpath);
-    cd(inrbuild_buildpath+"/output");
+    debug("Create binary package from :"+ympbuild_buildpath);
+    cd(ympbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();
     tar.load(output_package_path+"_"+getArch()+".ymp");
@@ -244,8 +244,8 @@ private void create_binary_package(){
     }
     tar.add("metadata.yaml");
     tar.add("files");
-    if(isfile(inrbuild_srcpath+"/postOps")){
-        copy_file(inrbuild_srcpath+"/postOps","./postOps");
+    if(isfile(ympbuild_srcpath+"/postOps")){
+        copy_file(ympbuild_srcpath+"/postOps","./postOps");
         tar.add("postOps");
     }
     tar.create();

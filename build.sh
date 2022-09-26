@@ -12,7 +12,7 @@ export LD_LIBRARY_PATH="$(pwd)":$LD_LIBRARY_PATH
 yes | ./ymp-test --allow-oem --ask || true
 echo "-------------"
 ./ymp-cli shell ../test/test.ympsh --allow-oem --destdir=../test/example/rootfs || true
-#./ymp-cli build ../test/example/source-package --allow-oem --verbose
+# ./ymp-cli build ../test/example/source-package --allow-oem --verbose
 if [[ "$DEBUG" != "" ]] ; then
     ./ymp-cli --args ./ymp-cli install ../test/example/source-package/hello_2.10_x86_64.ymp --destdir=../test/example/rootfs --allow-oem --verbose --debug
 else
