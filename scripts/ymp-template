@@ -170,7 +170,7 @@ fi
 
 writespec(){
 mkdir -p "$directory"
-cat > "$directory/INRBUILD" <<EOF
+cat > "$directory/ympbuild" <<EOF
 #!/bin/bash
 name=$name
 release=1
@@ -191,48 +191,48 @@ fi
 setup(){
 EOF
 if [[ $buildtype == "autotools" ]] ; then
-    echo "    if [[ -f \"./autogen.sh\" ]] ; then" >> "$directory/INRBUILD"
-    echo "        NOCONFIGURE=1 ./autogen.sh" >> "$directory/INRBUILD"
-    echo "    fi" >> "$directory/INRBUILD"
-    echo "    ./confugure --prefix=/usr $confopt" >> "$directory/INRBUILD"
+    echo "    if [[ -f \"./autogen.sh\" ]] ; then" >> "$directory/ympbuild"
+    echo "        NOCONFIGURE=1 ./autogen.sh" >> "$directory/ympbuild"
+    echo "    fi" >> "$directory/ympbuild"
+    echo "    ./confugure --prefix=/usr $confopt" >> "$directory/ympbuild"
 elif [[ $buildtype == "cmaketools" ]] ; then
-    echo "    mkdir build" >> "$directory/INRBUILD"
-    echo "    cd build" >> "$directory/INRBUILD"
-    echo "    cmake .. $confopt" >> "$directory/INRBUILD"
+    echo "    mkdir build" >> "$directory/ympbuild"
+    echo "    cd build" >> "$directory/ympbuild"
+    echo "    cmake .. $confopt" >> "$directory/ympbuild"
 elif [[ $buildtype == "meson" ]] ; then
-    echo "    meson build" >> "$directory/INRBUILD"
+    echo "    meson build" >> "$directory/ympbuild"
 else
-    echo >> "$directory/INRBUILD"
+    echo >> "$directory/ympbuild"
 fi
-cat >> "$directory/INRBUILD" <<EOF
+cat >> "$directory/ympbuild" <<EOF
 }
 build(){
 EOF
 if [[ $buildtype == "autotools" ]] ; then
-    echo "    make -j\$(nproc)" >> "$directory/INRBUILD"
+    echo "    make -j\$(nproc)" >> "$directory/ympbuild"
 elif [[ $buildtype == "cmaketools" ]] ; then
-    echo "    cd build" >> "$directory/INRBUILD"
-    echo "    make -j\$(nproc)" >> "$directory/INRBUILD"
+    echo "    cd build" >> "$directory/ympbuild"
+    echo "    make -j\$(nproc)" >> "$directory/ympbuild"
 elif [[ $buildtype == "meson" ]] ; then
-    echo "    ninja -C build" >> "$directory/INRBUILD"
+    echo "    ninja -C build" >> "$directory/ympbuild"
 else
-    echo >> "$directory/INRBUILD"
+    echo >> "$directory/ympbuild"
 fi
-cat >> "$directory/INRBUILD" <<EOF
+cat >> "$directory/ympbuild" <<EOF
 }
 package(){
 EOF
 if [[ $buildtype == "autotools" ]] ; then
-    echo "    make -j\$(nproc) install" >> "$directory/INRBUILD"
+    echo "    make -j\$(nproc) install" >> "$directory/ympbuild"
 elif [[ $buildtype == "cmaketools" ]] ; then
-    echo "    cd build" >> "$directory/INRBUILD"
-    echo "    make -j\$(nproc) install" >> "$directory/INRBUILD"
+    echo "    cd build" >> "$directory/ympbuild"
+    echo "    make -j\$(nproc) install" >> "$directory/ympbuild"
 elif [[ $buildtype == "meson" ]] ; then
-    echo "    ninja -C build install" >> "$directory/INRBUILD"
+    echo "    ninja -C build install" >> "$directory/ympbuild"
 else
-    echo >> "$directory/INRBUILD"
+    echo >> "$directory/ympbuild"
 fi
-cat >> "$directory/INRBUILD" <<EOF
+cat >> "$directory/ympbuild" <<EOF
 }
 EOF
 }

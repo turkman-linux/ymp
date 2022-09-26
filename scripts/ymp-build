@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [[ -f INRBUILD ]] ; then
+if [[ -f ympbuild ]] ; then
     exec ymp-cli sandbox --allow-oem --shared="$(pwd)" -- \
     ymp-cli build --allow-oem "$(pwd)" $@
 fi

@@ -311,29 +311,29 @@ return source if emerge else return package
 get package object from ymp file archive
 
 # src/data/ympbuild.vala
-## inrbuild file functions.
+## ympbuild file functions.
 
-ymp uses archlinux inrbuild format.
+ymp uses archlinux ympbuild format.
 
-`void set_inrbuild_srcpath(string path):`
+`void set_ympbuild_srcpath(string path):`
 
-configure inrbuild file directory
+configure ympbuild file directory
 
-`void set_inrbuild_srcpath(string path):`
+`void set_ympbuild_srcpath(string path):`
 
-configure inrbuild file directory
+configure ympbuild file directory
 
-`string get_inrbuild_value(string variable):`
+`string get_ympbuild_value(string variable):`
 
-get a variable from inrbuild file
+get a variable from ympbuild file
 
-`string[] get_inrbuild_array(string variable):`
+`string[] get_ympbuild_array(string variable):`
 
-get a array from inrbuild file
+get a array from ympbuild file
 
-`int run_inrbuild_function(string function):`
+`int run_ympbuild_function(string function):`
 
-run a build function from inrbuild file
+run a build function from ympbuild file
 
 # src/operations/misc/clear.vala
 # src/operations/misc/cowcat.vala
