@@ -1,9 +1,6 @@
 public int exec_main(string[] args){
     string cmd = join(" ",args);
     print_stderr(colorize("Executing: =>",blue)+cmd);
-    if(get_bool("daemon")){
-        cmd+=" &";
-    }
     int status = 0;
     if(get_bool("quiet")){
         status = run_silent(cmd);
