@@ -14,5 +14,5 @@ public int cowcat_main(string[] args){
 }
 
 void cowcat_init(){
-    add_operation(cowcat_main,{"cow","moo","cowcat"});
+    add_operation(cowcat_main,{"cow","moo","cowcat"},"Write message with cow.");
 }

@@ -12,5 +12,5 @@ public int run_sandbox_main(string[] args){
 }
 
 void run_sandbox_init(){
-    add_operation(run_sandbox_main,{"sandbox", "sb"});
+    add_operation(run_sandbox_main,{"sandbox", "sb"},"Start sandbox environment.");
 }

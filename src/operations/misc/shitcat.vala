@@ -14,5 +14,5 @@ public int shitcat_main(string[] args){
 }
 
 void shitcat_init(){
-    add_operation(shitcat_main,{"shitcat","shit"});
+    add_operation(shitcat_main,{"shitcat","shit"},"Write message with bad appearance.");
 }

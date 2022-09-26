@@ -7,5 +7,5 @@ public int index_operation(string[] args){
     return 0;
 }
 void index_init(){
-    add_operation(index_operation,{"index", "ix"});
+    add_operation(index_operation,{"index", "ix"},"Create repository index.");
 }

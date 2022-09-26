@@ -252,7 +252,7 @@ private void create_binary_package(){
 }
 
 void build_init(){
-    add_operation(build_operation,{"build","bi","make"});
+    add_operation(build_operation,{"build","bi","make"},"Build package from ympbuild file.");
 }
 
 

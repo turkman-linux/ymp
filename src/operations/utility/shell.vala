@@ -28,5 +28,5 @@ public int shell_main(string[] args){
 }
 
 void shell_init(){
-    add_operation(shell_main,{"shell","sh"});
+    add_operation(shell_main,{"shell","sh"},"Create ymp shell");
 }

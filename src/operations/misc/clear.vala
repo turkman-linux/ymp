@@ -3,5 +3,5 @@ public int clear_main(string[] args){
     return 0;
 }
 void clear_init(){
-    add_operation(clear_main,{"clear"});
+    add_operation(clear_main,{"clear"},"Clear terminal screen.");
 }

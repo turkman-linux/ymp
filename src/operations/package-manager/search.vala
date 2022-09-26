@@ -56,8 +56,8 @@ public int search_files_main(string[] args){
 }
 
 void search_init(){
-    add_operation(search_main,{"search","sr"});
-    add_operation(search_pkgrepo_main,{"search-package","sp"});
-    add_operation(search_srcrepo_main,{"search-source","ss"});
-    add_operation(search_files_main,{"search-file","sf"});
+    add_operation(search_main,{"search","sr"},"Search installed package.");
+    add_operation(search_pkgrepo_main,{"search-package","sp"},"Search package from binary repo.");
+    add_operation(search_srcrepo_main,{"search-source","ss"},"Search package from source repo.");
+    add_operation(search_files_main,{"search-file","sf"},"Search file in files database.");
 }

@@ -7,5 +7,5 @@ public int echo_main(string[] args){
     return 0;
 }
 void echo_init(){
-    add_operation(echo_main,{"echo"});
+    add_operation(echo_main,{"echo"},"Write message to terminal.");
 }

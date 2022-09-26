@@ -14,5 +14,5 @@ public int upgrade_main(string[] args){
 }
 
 void upgrade_init(){
-    add_operation(upgrade_main,{"upgrade","ug"});
+    add_operation(upgrade_main,{"upgrade","ug"},"Upgrade system.");
 }

@@ -341,6 +341,7 @@ run a build function from ympbuild file
 # src/operations/misc/echo.vala
 # src/operations/misc/exec.vala
 # src/operations/misc/exit.vala
+# src/operations/misc/help.vala
 # src/operations/misc/shitcat.vala
 # src/operations/package-manager/build.vala
 # src/operations/package-manager/index.vala

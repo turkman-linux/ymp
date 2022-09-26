@@ -19,5 +19,5 @@ void progressbar(double cur, double total, string filename){
 }
 
 void fetch_init(){
-    add_operation(fetch_main,{"download","dl"});
+    add_operation(fetch_main,{"fetch","download","dl"}, "Download file.");
 }

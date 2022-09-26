@@ -4,5 +4,5 @@ public int update_main(string[] args){
 }
 
 void update_init(){
-    add_operation(update_main,{"update","up"});
+    add_operation(update_main,{"update","up"}, "Update repo index cache.");
 }

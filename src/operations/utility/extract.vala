@@ -24,5 +24,5 @@ public int extract_main(string[] args){
 }
 
 void extract_init(){
-    add_operation(extract_main,{"extract","x"});
+    add_operation(extract_main,{"extract","x"},"Extract archive file.");
 }

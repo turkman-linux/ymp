@@ -33,6 +33,6 @@ public int list_available_main(string[] args){
 
 
 void list_init(){
-    add_operation(list_installed_main,{"list-installed","li"});
-    add_operation(list_available_main,{"list-available","la"});
+    add_operation(list_installed_main,{"list-installed","li"},"List installed packages.");
+    add_operation(list_available_main,{"list-available","la"},"List available packages.");
 }

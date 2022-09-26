@@ -7,5 +7,5 @@ public int info_main(string[] args){
 }
 
 void info_init(){
-    add_operation(info_main,{"info","i"});
+    add_operation(info_main,{"info","i"},"Get information.");
 }

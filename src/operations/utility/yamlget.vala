@@ -26,5 +26,5 @@ public int yamlget_main(string[] args){
 }
 
 void yamlget_init(){
-    add_operation(yamlget_main,{"yamlgel","yaml"});
+    add_operation(yamlget_main,{"yamlgel","yaml"},"Parse yaml file.");
 }

@@ -16,5 +16,5 @@ public int iniget_main(string[] args){
     return 0;
 }
 void iniget_init(){
-    add_operation(iniget_main,{"iniget","ini"});
+    add_operation(iniget_main,{"iniget","ini"}, "Parse ini file.");
 }

@@ -109,6 +109,8 @@ else
 endif
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
 install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'), rename : 'ymp.h')
-# Test binary
-executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
+if get_option('test')
+    # Test binary
+    executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
+endif
 

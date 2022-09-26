@@ -81,5 +81,5 @@ public string[] calculate_leftover(package[] pkgs){
     return leftover;
 }
 void install_init(){
-    add_operation(install_main,{"install","it"});
+    add_operation(install_main,{"install","it"},"Install package");
 }

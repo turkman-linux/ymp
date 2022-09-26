@@ -25,5 +25,5 @@ public int remove_single(package p){
 }
 
 void remove_init(){
-    add_operation(remove_main,{"remove","rm"});
+    add_operation(remove_main,{"remove","rm"},"Remove package.");
 }

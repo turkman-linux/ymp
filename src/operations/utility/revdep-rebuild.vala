@@ -30,5 +30,5 @@ public void check(string libraries){
 }
 
 void revdep_rebuild_init(){
-    add_operation(revdep_rebuild_main,{"revdep-rebuild","rbd"});
+    add_operation(revdep_rebuild_main,{"revdep-rebuild","rbd"},"Check library for broken link.");
 }

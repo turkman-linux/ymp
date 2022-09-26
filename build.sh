@@ -3,7 +3,7 @@ rm -rf build ./test/example/rootfs /tmp/ymp-build|| true
 mkdir -p ./test/example/rootfs/etc
 cp data/ymp.conf ./test/example/rootfs/etc/ymp.conf
 # find src -type f -exec sed -i  "s/ *$//g" {} \;
-meson build -Ddoc=true $@
+meson build -Ddoc=true -Dtest=true $@
 ninja -C build
 DESTDIR=output ninja install -C build
 cd build

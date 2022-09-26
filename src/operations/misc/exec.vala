@@ -11,5 +11,5 @@ public int exec_main(string[] args){
     return status;
 }
 void exec_init(){
-    add_operation(exec_main,{"exec"});
+    add_operation(exec_main,{"exec"},"Execute command.");
 }

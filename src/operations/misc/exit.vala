@@ -6,5 +6,5 @@ public int exit_main(string[] args){
     Process.exit(status);
 }
 void exit_init(){
-    add_operation(exit_main,{"exit","bye"});
+    add_operation(exit_main,{"exit","bye"},"Exit ymp.");
 }

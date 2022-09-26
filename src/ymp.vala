@@ -17,14 +17,17 @@ private operation[] ops;
 private class operation{
     public function callback;
     public string[] names;
+    public string help;
 }
-private void add_operation(function callback, string[] names){
+
+private void add_operation(function callback, string[] names, string help){
     if(ops == null){
         ops = {};
     }
     operation op = new operation();
     op.callback = callback;
     op.names = names;
+    op.help = help;
     ops += op;
 }
 
