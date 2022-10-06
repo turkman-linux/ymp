@@ -92,7 +92,7 @@ else
 endif
 if get_option('tools')
     executable('ymp-cli', 'src/ymp-cli.vala', dependencies: dependencies, link_args: args, link_with: lib)
-    install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'))
+    install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
 endif
 if get_option('scripts')
     foreach script : run_command('find', 'scripts','-type','f',check:true).stdout().strip().split('\n')
