@@ -63,3 +63,7 @@ public extern string getArch();
 //DOC: sync call
 public extern void fs_sync();
 public extern void create_dir(string path);
+//DOC: ### signal.c
+//DOC: `void block_sigint()`
+public extern void block_sigint();
+

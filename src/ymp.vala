@@ -162,6 +162,7 @@ public Ymp ymp_init(string[] args){
         return app;
     }
     parse_args(args);
+    block_sigint();
     ctx_init();
     settings_init();
     ympbuild_init();

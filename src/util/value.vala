@@ -43,6 +43,7 @@ private void set_value_readonly(string name, string value){
     if(name == null || value == null){
         return;
     }
+    stdout.printf("Set value: "+name+"="+value+"\n");
     foreach(variable varx in vars){
         if(varx.name == name.up()){
             varx.value = value;
@@ -62,6 +63,10 @@ public string get_value(string name){
     if(vars == null){
         vars = {};
     }
+    if(name == null){
+        return "";
+    }
+    stdout.printf("Get value: "+name+"\n");
     foreach(variable var in vars){
         if(var.name == name){
             return var.value;
