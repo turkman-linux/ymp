@@ -30,6 +30,9 @@ public void set_value(string name, string value){
             return;
         }
     }
+    #if debug
+    stderr.printf("Set value: "+name+"="+value+"\n");
+    #endif
     variable varx = new variable();
     varx.name = name.down();
     varx.value = value;
@@ -43,7 +46,9 @@ private void set_value_readonly(string name, string value){
     if(name == null || value == null){
         return;
     }
-    stdout.printf("Set value: "+name+"="+value+"\n");
+    #if debug
+    stderr.printf("Set read_only value: "+name+"="+value+"\n");
+    #endif
     foreach(variable varx in vars){
         if(varx.name == name.up()){
             varx.value = value;
@@ -66,7 +71,9 @@ public string get_value(string name){
     if(name == null){
         return "";
     }
+    #if debug
     stdout.printf("Get value: "+name+"\n");
+    #endif
     foreach(variable var in vars){
         if(var.name == name){
             return var.value;

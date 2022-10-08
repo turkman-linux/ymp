@@ -317,7 +317,7 @@ public string calculate_checksum(string path, ChecksumType type){
     if(issymlink(path)){
         try{
             if(!isfile(GLib.FileUtils.read_link(path))){
-                warning("broken symlink detected");
+                warning("broken symlink detected:\n"+path+" => "+GLib.FileUtils.read_link(path));
                 return "";
             }
         }catch(Error e){
