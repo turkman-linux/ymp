@@ -1,5 +1,5 @@
 debian:
-  image: debian:unstable
+  image: debian:testing
   stage: build
   artifacts:
     expire_in: 1 week
