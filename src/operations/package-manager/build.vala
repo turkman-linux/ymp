@@ -48,7 +48,11 @@ private void fetch_package_sources(){
             continue;
         }
         string srcfile = ympbuild_buildpath+"/"+sbasename(src);
-        fetch(src,srcfile);
+        if(isfile(ympbuild_srcpath+"/"+src)){
+            copy_file(ympbuild_srcpath+"/"+src, srcfile);
+        }else{
+            fetch(src,srcfile);
+        }
         string md5 = calculate_md5sum(srcfile);
         if (md5sums[i] != md5 && md5sums[i] != "SKIP"){
             error_add("md5 check failed. Excepted: "+md5sums[i]+" <> Reveiced: "+md5);
