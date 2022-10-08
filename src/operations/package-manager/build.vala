@@ -9,6 +9,10 @@ public int build_operation(string[] args){
             continue;
         }
         set_build_target(arg);
+        if(!ympbuild_check()){
+            error_add("ympbuild file is invalid!");
+            error(2);
+        }
         create_metadata_info();
         fetch_package_sources();
         if(!get_bool("no-source")){

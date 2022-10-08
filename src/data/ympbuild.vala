@@ -17,8 +17,8 @@ private void ympbuild_init(){
     alias python=python3
     export NOCONFIGURE=1
     export NO_COLOR=1
-    export CFLAGS=\"-s -Dsulin -L/lib/sulin "+get_value("build:cflags")+"\"
-    export CXXFLAGS=\"-s -Dsulin -L/lib/sulin "+get_value("build:cxxflags")+"\"
+    export CFLAGS=\"-s -DSULIX -L/lib/sulin "+get_value("build:cflags")+"\"
+    export CXXFLAGS=\"-s -DSULIX -L/lib/sulin "+get_value("build:cxxflags")+"\"
     export CC=\""+get_value("build:cc")+"\"
     export LDFLAGS=\""+get_value("build:ldflags")+"\"
     ymp-meson(){
@@ -117,11 +117,16 @@ private void ympbuild_init(){
         fi
     }
     mkdir -p \"$DESTDIR\"
+    use(){
+        [[ \"$1\" == \"31\" ]]
+        return $?
+    }
     ";
-    foreach(string flag in ssplit(get_value("USE")," ")){
+    foreach(string flag in ssplit(get_value("use")," ")){
        if(flag == "" || flag == null){
            continue;
        }
+       info("USE flag: "+flag);
        ympbuild_header += "declare -r '"+flag.replace("'","\\'")+"'=31 \n";
     }
     #if debug
@@ -148,7 +153,7 @@ public string get_ympbuild_value(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return getoutput("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild ; echo ${"+variable+"[@]}'").strip();
+    return getoutput("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip();
 }
 
 //DOC: `string[] get_ympbuild_array(string variable):`
@@ -157,11 +162,15 @@ public string[] get_ympbuild_array(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return ssplit(getoutput("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild ; echo ${"+variable+"[@]}'").strip()," ");
+    return ssplit(getoutput("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
 }
 
 public bool ympbuild_has_function(string function){
     return 0 == run_silent("bash -c 'source "+ympbuild_srcpath+"/ympbuild ;declare -F "+function+"'");
+}
+
+private bool ympbuild_check(){
+    return 0 == run("bash -n "+ympbuild_srcpath+"/ympbuild");
 }
 
 //DOC: `int run_ympbuild_function(string function):`
