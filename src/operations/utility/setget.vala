@@ -19,6 +19,15 @@ public int set_main(string[] args){
 }
 
 void setget_init(){
-    add_operation(get_main,{"get"},"Get value.");
-    add_operation(set_main,{"set"},"Set value.");
+    var h1 = new helpmsg();
+    var h2 = new helpmsg();
+
+    h1.name = "get";
+    h1.description = "Get variable from name";
+
+    h2.name = "set";
+    h2.description = "Set variable from name and value";
+
+    add_operation(get_main,{"get"},h1);
+    add_operation(set_main,{"set"},h2);
 }

@@ -19,5 +19,8 @@ void progressbar(double cur, double total, string filename){
 }
 
 void fetch_init(){
-    add_operation(fetch_main,{"fetch","download","dl"}, "Download file.");
+    var h = new helpmsg();
+    h.name = "fetch";
+    h.description = "Download files from network";
+    add_operation(fetch_main,{"fetch","download","dl"}, h);
 }

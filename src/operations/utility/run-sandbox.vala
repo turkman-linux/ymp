@@ -12,5 +12,10 @@ public int run_sandbox_main(string[] args){
 }
 
 void run_sandbox_init(){
-    add_operation(run_sandbox_main,{"sandbox", "sb"},"Start sandbox environment.");
+    var h = new helpmsg();
+    h.name = "sandbox";
+    h.description = "Start sandbox environment.";
+    h.add_parameter("--shared","select shared directory");
+    h.add_parameter("--no-net","block network access");
+    add_operation(run_sandbox_main,{"sandbox", "sb"},h);
 }

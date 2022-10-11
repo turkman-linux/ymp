@@ -24,5 +24,8 @@ public int extract_main(string[] args){
 }
 
 void extract_init(){
-    add_operation(extract_main,{"extract","x"},"Extract archive file.");
+    var h = new helpmsg();
+    h.name = "extract";
+    h.description = "Extract files from archive.";
+    add_operation(extract_main,{"extract","x"},h);
 }

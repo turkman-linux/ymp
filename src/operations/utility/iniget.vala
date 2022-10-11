@@ -1,8 +1,4 @@
 public int iniget_main(string[] args){
-    if (args.length < 3){
-        print_stderr("Usage: iniget [file] [section] [variable]");
-        return 1;
-    }
     string[] new_args = argument_process(args);
     var file = new_args[0];
     var section = new_args[1];
@@ -16,5 +12,10 @@ public int iniget_main(string[] args){
     return 0;
 }
 void iniget_init(){
-    add_operation(iniget_main,{"iniget","ini"}, "Parse ini file.");
+    var h = new helpmsg();
+    h.name = "iniget";
+    h.usage = "iniget [file] [section] [variable]";
+    h.minargs = 3;
+    h.description = "Parse ini files";
+    add_operation(iniget_main,{"iniget","ini"}, h);
 }

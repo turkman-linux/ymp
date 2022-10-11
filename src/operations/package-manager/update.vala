@@ -4,5 +4,8 @@ public int update_main(string[] args){
 }
 
 void update_init(){
-    add_operation(update_main,{"update","up"}, "Update repo index cache.");
+    var h = new helpmsg();
+    h.name = "update";
+    h.description = "Update repo index cache.";
+    add_operation(update_main,{"update","up"}, h);
 }

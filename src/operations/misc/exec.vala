@@ -18,5 +18,5 @@ void exec_init(){
     h.name = "exec";
     h.description = "Execute a command";
     h.add_parameter("--quiet","run without output");
-    add_operation(exec_main,{"exec"},h.build());
+    add_operation(exec_main,{"exec"},h);
 }

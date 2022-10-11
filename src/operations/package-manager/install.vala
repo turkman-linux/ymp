@@ -81,5 +81,8 @@ public string[] calculate_leftover(package[] pkgs){
     return leftover;
 }
 void install_init(){
-    add_operation(install_main,{"install","it"},"Install package");
+    var h = new helpmsg();
+    h.name = "install";
+    h.description = "Install package from source or package file or repository";
+    add_operation(install_main,{"install","it"},h);
 }

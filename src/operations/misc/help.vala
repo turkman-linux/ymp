@@ -18,19 +18,21 @@ public int help_main(string[] args){
 }
 
 private void write_op_help(operation op){
-    print_fn(op.help,false,true);
+    print_fn(op.help.build(),false,true);
 }
 void help_init(){
     var h = new helpmsg();
     h.name = "help";
     h.description = "Write help message about ymp commands.";
-    add_operation(help_main,{"help"},h.build());
+    add_operation(help_main,{"help"},h);
 }
 
 public class helpmsg{
-    public string description;
+    public string description="";
     private string[] parameters;
-    public string name;
+    public string name="";
+    public string usage="";
+    public int minargs = 0;
     
     public void add_parameter(string arg, string desc){
         if (parameters == null){
@@ -41,7 +43,10 @@ public class helpmsg{
     }
     public string build(){
         string ret = "";
-        ret += colorize("Usage: ",green)+"ymp "+name+" [OPTION]... [ARGS]... \n";
+        if(usage == ""){
+            usage = "ymp "+name+" [OPTION]... [ARGS]... ";
+        }
+        ret += colorize("Usage: ",green)+usage+"\n";
         ret += description + "\n";
         if(parameters.length > 0){
             ret += colorize("Options:\n",green);

@@ -19,5 +19,5 @@ void cowcat_init(){
     h.name = "cowcat";
     h.description = "Write a message with cow.";
     h.add_parameter("-","write from stdin");
-    add_operation(cowcat_main,{"cow","moo","cowcat"},h.build());
+    add_operation(cowcat_main,{"cow","moo","cowcat"},h);
 }

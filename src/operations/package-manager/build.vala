@@ -260,7 +260,14 @@ private void create_binary_package(){
 }
 
 void build_init(){
-    add_operation(build_operation,{"build","bi","make"},"Build package from ympbuild file.");
+    var h = new helpmsg();
+    h.name = "build";
+    h.description = "Build package from ympbuild file.";
+    h.add_parameter("--no-source", "do not generate source package");
+    h.add_parameter("--no-binary", "do not generate binary package");
+    h.add_parameter("--no-install","do not install package after building");
+    h.add_parameter("--no-build","do not build package (only test and package)");
+    add_operation(build_operation,{"build","bi","make"},h);
 }
 
 

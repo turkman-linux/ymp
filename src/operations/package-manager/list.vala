@@ -33,6 +33,15 @@ public int list_available_main(string[] args){
 
 
 void list_init(){
-    add_operation(list_installed_main,{"list-installed","li"},"List installed packages.");
-    add_operation(list_available_main,{"list-available","la"},"List available packages.");
+    var h1 = new helpmsg();
+    var h2 = new helpmsg();
+    
+    h1.name = "list-installed";
+    h1.description = "List installed packages.";
+
+    h2.name = "list-available";
+    h2.description = "List available packages.";
+
+    add_operation(list_installed_main,{"list-installed","li"},h1);
+    add_operation(list_available_main,{"list-available","la"},h2);
 }

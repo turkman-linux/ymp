@@ -19,5 +19,5 @@ void shitcat_init(){
     h.name = "shitcat";
     h.description = "Write message with bad appearance.";
     h.add_parameter("-","read from stdin");
-    add_operation(shitcat_main,{"shitcat","shit"},h.build());
+    add_operation(shitcat_main,{"shitcat","shit"},h);
 }

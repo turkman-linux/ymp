@@ -1,10 +1,6 @@
 public int yamlget_main(string[] args){
     ymp_init(args);
     string[] new_args = argument_process(args);
-    if (new_args.length < 2){
-        print_stderr("Usage: iniget [file] [path]");
-        return 1;
-    }
     var file = new_args[0];
     var path = new_args[1];
     var yaml = new yamlfile();
@@ -26,5 +22,10 @@ public int yamlget_main(string[] args){
 }
 
 void yamlget_init(){
-    add_operation(yamlget_main,{"yamlgel","yaml"},"Parse yaml file.");
+    var h = new helpmsg();
+    h.name = "yamlget";
+    h.minargs = 2;
+    h.usage = "iniget [file] [path]";
+    h.description = "Parse yaml files";
+    add_operation(yamlget_main,{"yamlgel","yaml"},h);
 }

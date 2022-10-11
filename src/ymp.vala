@@ -17,10 +17,10 @@ private operation[] ops;
 private class operation{
     public function callback;
     public string[] names;
-    public string help;
+    public helpmsg help;
 }
 
-private void add_operation(function callback, string[] names, string help){
+private void add_operation(function callback, string[] names, helpmsg help){
     if(ops == null){
         ops = {};
     }
@@ -36,6 +36,9 @@ private int operation_main(string type, string[] args){
     foreach(operation op in ops){
         foreach(string name in op.names){
             if(type == name){
+                if(get_bool("help") || op.help.minargs > args.length){
+                    return help_main({name});
+                }        
                 set_value_readonly("operation",name);
                 return op.callback(args);
             }

@@ -30,5 +30,8 @@ public void check(string libraries){
 }
 
 void revdep_rebuild_init(){
-    add_operation(revdep_rebuild_main,{"revdep-rebuild","rbd"},"Check library for broken link.");
+    var h = new helpmsg();
+    h.name = "revdep-rebuild";
+    h.description = "Check library for broken link.";
+    add_operation(revdep_rebuild_main,{"revdep-rebuild","rbd"},h);
 }

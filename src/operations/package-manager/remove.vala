@@ -25,5 +25,8 @@ public int remove_single(package p){
 }
 
 void remove_init(){
-    add_operation(remove_main,{"remove","rm"},"Remove package.");
+    var h = new helpmsg();
+    h.name = "remove";
+    h.description = "Remove package from package name";
+    add_operation(remove_main,{"remove","rm"},h);
 }

@@ -10,5 +10,5 @@ void echo_init(){
     var h = new helpmsg();
     h.name = "echo";
     h.description = "Write a message to terminal.";
-    add_operation(echo_main,{"echo"},h.build());
+    add_operation(echo_main,{"echo"},h);
 }

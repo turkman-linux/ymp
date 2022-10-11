@@ -9,5 +9,5 @@ void exit_init(){
     var h = new helpmsg();
     h.name = "exit";
     h.description = "Exit ymp";
-    add_operation(exit_main,{"exit","bye"},h.build());
+    add_operation(exit_main,{"exit","bye"},h);
 }

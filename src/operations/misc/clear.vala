@@ -6,5 +6,5 @@ void clear_init(){
     var h = new helpmsg();
     h.name = "clear";
     h.description = "Clear terminal screen.";
-    add_operation(clear_main,{"clear"},h.build());
+    add_operation(clear_main,{"clear"},h);
 }
