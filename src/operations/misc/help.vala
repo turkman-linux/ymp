@@ -1,8 +1,8 @@
 public int help_main(string[] args){
     if (args.length == 0){
+        print_fn(colorize("Operation list: ",blue), false, false);
         foreach(operation op in ops){
-            write_op_help(op);
-            print_fn("\n",false,false);
+            print_fn(join(" ",op.names)+"\n", false, false);
         }
     }else{
         foreach(string arg in args){
@@ -18,9 +18,37 @@ public int help_main(string[] args){
 }
 
 private void write_op_help(operation op){
-    print(colorize("Operation ",blue)+join("/",op.names)+":");
-    print(op.help);
+    print_fn(op.help,false,true);
 }
 void help_init(){
-    add_operation(help_main,{"help"},"write help messages.");
+    var h = new helpmsg();
+    h.name = "help";
+    h.description = "Write help message about ymp commands.";
+    add_operation(help_main,{"help"},h.build());
+}
+
+public class helpmsg{
+    public string description;
+    private string[] parameters;
+    public string name;
+    
+    public void add_parameter(string arg, string desc){
+        if (parameters == null){
+            parameters = {};
+        }
+        string f = (colorize(arg,red)+" : "+desc);
+        parameters += f;
+    }
+    public string build(){
+        string ret = "";
+        ret += colorize("Usage: ",green)+"ymp "+name+" [OPTION]... [ARGS]... \n";
+        ret += description + "\n";
+        if(parameters.length > 0){
+            ret += colorize("Options:\n",green);
+            foreach(string param in parameters){
+                ret += "  "+param+"\n";
+            }
+        }
+        return ret;
+    }
 }

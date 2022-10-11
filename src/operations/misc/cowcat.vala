@@ -5,14 +5,19 @@ public int cowcat_main(string[] args){
         while(line != ""){
             line = stdin.read_line();
             data += line+"\n";
+            print_with_cow(data);
         }
     }else{
         data = readfile(args[0]);
+        print_with_cow(data);
     }
-    print_with_cow(data);
     return 0;
 }
 
 void cowcat_init(){
-    add_operation(cowcat_main,{"cow","moo","cowcat"},"Write message with cow.");
+    var h = new helpmsg();
+    h.name = "cowcat";
+    h.description = "Write a message with cow.";
+    h.add_parameter("-","write from stdin");
+    add_operation(cowcat_main,{"cow","moo","cowcat"},h.build());
 }

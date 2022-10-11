@@ -125,6 +125,9 @@ public string[] argument_process(string[] args){
             e = true;
             continue;
         }
+        if(arg == "-"){
+            new_args += arg;
+        }
         if(e){
             new_args += arg;
             continue;

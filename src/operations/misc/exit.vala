@@ -6,5 +6,8 @@ public int exit_main(string[] args){
     Process.exit(status);
 }
 void exit_init(){
-    add_operation(exit_main,{"exit","bye"},"Exit ymp.");
+    var h = new helpmsg();
+    h.name = "exit";
+    h.description = "Exit ymp";
+    add_operation(exit_main,{"exit","bye"},h.build());
 }

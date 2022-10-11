@@ -3,5 +3,8 @@ public int clear_main(string[] args){
     return 0;
 }
 void clear_init(){
-    add_operation(clear_main,{"clear"},"Clear terminal screen.");
+    var h = new helpmsg();
+    h.name = "clear";
+    h.description = "Clear terminal screen.";
+    add_operation(clear_main,{"clear"},h.build());
 }

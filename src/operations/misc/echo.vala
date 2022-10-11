@@ -7,5 +7,8 @@ public int echo_main(string[] args){
     return 0;
 }
 void echo_init(){
-    add_operation(echo_main,{"echo"},"Write message to terminal.");
+    var h = new helpmsg();
+    h.name = "echo";
+    h.description = "Write a message to terminal.";
+    add_operation(echo_main,{"echo"},h.build());
 }

@@ -14,5 +14,9 @@ public int exec_main(string[] args){
     return status;
 }
 void exec_init(){
-    add_operation(exec_main,{"exec"},"Execute command.");
+    var h = new helpmsg();
+    h.name = "exec";
+    h.description = "Execute a command";
+    h.add_parameter("--quiet","run without output");
+    add_operation(exec_main,{"exec"},h.build());
 }
