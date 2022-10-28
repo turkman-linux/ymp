@@ -1,4 +1,5 @@
 public int update_main(string[] args){
+    single_instance();
     update_repo();
     return 0;
 }

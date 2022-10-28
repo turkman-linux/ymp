@@ -66,4 +66,7 @@ public extern void create_dir(string path);
 //DOC: ### signal.c
 //DOC: `void block_sigint()`
 public extern void block_sigint();
+//DOC: ### process.c
+//DOC: `void single_instance()`
+public extern void single_instance();
 

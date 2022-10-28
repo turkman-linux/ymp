@@ -1,4 +1,4 @@
-# Inary source code
+# Ymp source code
 
 ## libymp documentation
 look **libymp.md** file
@@ -23,7 +23,7 @@ look **libymp.md** file
 # Exit status codes
 | Number  | Meaning               |
 |---------|-----------------------|
-| 31      | Inary init error      |
+| 31      | Ymp   init error      |
 | 3       | Archive extract error |
 | 2       | File not found        |
 | 1       | Operation failed      |

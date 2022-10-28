@@ -1,4 +1,5 @@
 public int install_main(string[] args){
+    single_instance();
     string[] pkgs = resolve_dependencies(args);
     quarantine_reset();
     package[] pkg_obj = {};

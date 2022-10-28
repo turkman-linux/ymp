@@ -1,4 +1,5 @@
 public int remove_main(string[] args){
+    single_instance();
     string[] pkgs = resolve_reverse_dependencies(args);
     if(get_bool("ignore-dependency")){
         pkgs = args;
