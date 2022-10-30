@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 void single_instance(){
     int pid_file = open("/run/ymp.pid", O_CREAT | O_RDWR, 0666);
