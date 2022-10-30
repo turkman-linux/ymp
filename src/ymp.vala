@@ -25,7 +25,7 @@ private void add_operation(function callback, string[] names, helpmsg help){
         ops = {};
     }
     operation op = new operation();
-    op.callback = callback;
+    op.callback = (function) callback;
     op.names = names;
     op.help = help;
     ops += op;

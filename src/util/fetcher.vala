@@ -73,7 +73,7 @@ private fetcher_process fetcher_proc;
 //DOC: set_fetcher_progress(progress_bar);
 //DOC: ```
 public void set_fetcher_progress(fetcher_process proc){
-    fetcher_proc = proc;
+    fetcher_proc =  (fetcher_process) proc;
 }
 
 //DOC: `bool fetch(string url, string path):`
