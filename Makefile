@@ -2,7 +2,7 @@ build: clean
 	meson build --prefix=/usr -Ddoc=true
 	ninja -C build
 
-test: clean
+test: test-clean
 	meson setup build/_test -Dtest=true -Dtools=false -Dscripts=false
 	ln -s ../test build/test
 	ninja -C build/_test
@@ -10,6 +10,10 @@ test: clean
 
 install:
 	DESTDIR=$(DESTDIR) ninja -C build install
+
+test-clean:
+	rm -rf build/_test
+
 
 clean:
 	rm -rf build
