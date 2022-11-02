@@ -74,8 +74,10 @@ public extern void single_instance();
 //DOC; ### fetcher.c
 //DOC: `bool fetch(string url, string path):`
 //DOC: fetch file from url
-public extern bool fetch(string url, string path);
 //DOC: `string fetch_string(string url):`
 //DOC: fetch string from url
+#if no_libcurl
+#else
+public extern bool fetch(string url, string path);
 public extern string fetch_string(string url);
-
+#endif

@@ -41,11 +41,7 @@ sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip
 sources += run_command('find', 'src/operations','-type','f',check:true).stdout().strip().split('\n')
 sources += run_command('find', 'src/data','-type','f',check:true).stdout().strip().split('\n')
 
-vapi_dir = meson.current_source_dir() / 'vapi'
-add_project_arguments(['--vapidir', vapi_dir], language: 'vala')
-
 add_project_arguments(['--pkg', 'posix'], language: 'vala')
-add_project_arguments(['--pkg', 'libcurl'], language: 'vala')
 foreach csource : run_command('find', 'src/ccode','-type','f',check:true).stdout().strip().split('\n')
     args += [meson.current_source_dir() / csource]
 endforeach
@@ -70,12 +66,10 @@ else
 endif
 
 if get_option('libcurl')
-    dependencies += dependency('libcurl', static:get_option('static'))
-    if get_option('libbrotli')
-        args += ['-lbrotlicommon']
-    endif
+    args +=['-X', '-lcurl']
 else
     add_project_arguments('-D', 'no_libcurl', language: 'vala')
+    args +=['-X', '-Dno_libcurl']
 endif
 
 if get_option('libreadline')

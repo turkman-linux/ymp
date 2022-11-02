@@ -1,3 +1,4 @@
+#ifndef no_libcurl
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -96,3 +97,4 @@ char* fetch_string(char* url){
     printf("%s bytes retrieved\n", (char*)s.ptr);
     return (char*)(s.ptr);
 }
+#endif
