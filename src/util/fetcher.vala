@@ -112,6 +112,7 @@ public bool fetch(string url, string path){
     handle.setopt(Curl.Option.WRITEFUNCTION, WriteFileCallback);
     handle.setopt(Curl.Option.NOPROGRESS, 0);
     handle.setopt(Curl.Option.PROGRESSFUNCTION, progress_callback);
+    handle.setopt(Curl.Option.NOSIGNAL, 1);
 
     handle.perform();
     int i;
@@ -121,6 +122,8 @@ public bool fetch(string url, string path){
             move_file(fetcher_filename,path);
             return true;
         }
+    }else{
+       warning("Failed to fetch file: "+i.to_string());
     }
     return false;
 }
@@ -140,11 +143,14 @@ public string fetch_string(string url){
     handle.setopt(Curl.Option.USERAGENT, get_value("useragent"));
 
     handle.setopt(Curl.Option.WRITEFUNCTION, WriteMemoryCallback);
+    handle.setopt(Curl.Option.NOSIGNAL, 1);
     handle.perform();
     int i;
     handle.getinfo(Curl.Info.RESPONSE_CODE, out i);
     if(i==200){
        return fetcher_data;
+    }else{
+       warning("Failed to fetch file: "+i.to_string());
     }
     return "";
 }
