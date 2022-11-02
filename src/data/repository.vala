@@ -51,7 +51,7 @@ public class repository {
         foreach(string area in sources){
             if (yaml.get_value(area,"name") == name){
                 pkg = new package();
-                pkg.load_from_data(area);
+                pkg.set_pkgarea(area,true);
                 return pkg;
             }
         }
@@ -65,7 +65,7 @@ public class repository {
         foreach(string area in packages){
             if (yaml.get_value(area,"name") == name){
                 pkg = new package();
-                pkg.load_from_data(area);
+                pkg.set_pkgarea(area,false);
                 return pkg;
             }
         }
