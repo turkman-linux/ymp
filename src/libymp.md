@@ -79,11 +79,23 @@ sync call
 
 ### signal.c
 
-`void block_sigint()`
+`void block_sigint():`
+
+block ctrl-c
 
 ### process.c
 
-`void single_instance()`
+`void single_instance():`
+
+block multiple process
+
+`bool fetch(string url, string path):`
+
+fetch file from url
+
+`string fetch_string(string url):`
+
+fetch string from url
 
 # src/color.vala
 ## Colors
@@ -562,32 +574,6 @@ ruh command from argument array
 ruh command from argument array
 
 # src/util/fetcher.vala
-`void set_fetcher_progress(fetcher_process proc):`
-
-set fetcher progressbar hanndler.
-
-For example:
-
-```vala
-
-public void progress_bar(int current, int total, string filename){
-
-   ...
-
-}
-
-set_fetcher_progress(progress_bar);
-
-```
-
-`bool fetch(string url, string path):`
-
-download file content and write to file
-
-`bool fetch_string(string url, string path):`
-
-download file content and return as string
-
 # src/util/file.vala
 ## File functions
 

@@ -64,9 +64,18 @@ public extern string getArch();
 public extern void fs_sync();
 public extern void create_dir(string path);
 //DOC: ### signal.c
-//DOC: `void block_sigint()`
+//DOC: `void block_sigint():`
+//DOC: block ctrl-c
 public extern void block_sigint();
 //DOC: ### process.c
-//DOC: `void single_instance()`
+//DOC: `void single_instance():`
+//DOC: block multiple process
 public extern void single_instance();
+//DOC; ### fetcher.c
+//DOC: `bool fetch(string url, string path):`
+//DOC: fetch file from url
+public extern bool fetch(string url, string path);
+//DOC: `string fetch_string(string url):`
+//DOC: fetch string from url
+public extern string fetch_string(string url);
 
