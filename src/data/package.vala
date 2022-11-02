@@ -201,6 +201,8 @@ public class package {
         move_file(rootfs_files+"files",get_storage()+"/quarantine/files/"+name);
         error(3);
     }
+    //DOC: `void package.build():`
+    //DOC: build source code into buildpath
     public void build(){
         if(pkgfile == null){
             error_add("Package archive missing");

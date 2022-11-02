@@ -165,6 +165,8 @@ public string[] get_ympbuild_array(string variable){
     return ssplit(getoutput("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
 }
 
+//DOC: `bool ympbuild_has_function(string function):`
+//DOC: check ympbuild file has function
 public bool ympbuild_has_function(string function){
     return 0 == run_silent("bash -c 'source "+ympbuild_srcpath+"/ympbuild ;declare -F "+function+"'");
 }
@@ -199,6 +201,8 @@ public void ymp_process_binaries(){
     }
 }
 
+//DOC: `string get_ympbuild_metadata():`
+//DOC: generate metadata.yaml content and return as string
 public string get_ympbuild_metadata(){
     return getoutput ("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild >/dev/null ; ymp_print_metadata'");
 }

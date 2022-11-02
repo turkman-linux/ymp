@@ -111,7 +111,9 @@ public string[] list_values(){
 //DOC: `void set_env(string variable, string value):`
 //DOC: add environmental variable
 public void set_env(string variable,string value){
-    GLib.Environment.set_variable(variable,value,true);
+    if(value != null){
+        GLib.Environment.set_variable(variable,value,true);
+    }
 }
 
 //DOC: `string get_env(string variable):`

@@ -57,7 +57,8 @@ public bool quarantine_validate_files(){
     }
     return true;
 }
-
+//DOC: `void quarantine_install():`
+//DOC: install quarantine files to rootfs
 public void quarantine_install(){
     string rootfs = srealpath(get_storage()+"/quarantine/rootfs/");
     string files = srealpath(get_storage()+"/quarantine/files/");

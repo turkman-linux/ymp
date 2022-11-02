@@ -110,16 +110,22 @@ public void nostdin(){
     no_stdin();
 }
 
+//DOC: `void nostdout():`
+//DOC: close stdout
 public void nostdout(){
     set_bool("no-stdout",true);
     no_stdout();
 }
 
+//DOC: `void nostderr():`
+//DOC: close stderr
 public void nostderr(){
     set_bool("no-stderr",true);
     no_stderr();
 }
 
+//DOC: `void nostd():`
+//DOC: close stdin, stdout and stderr
 public void nostd(){
     nostdin();
     nostdout();

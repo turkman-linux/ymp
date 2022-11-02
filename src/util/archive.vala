@@ -61,6 +61,8 @@ public class archive {
         }
     }
     
+    //DOC: `bool is_archive(string path):`
+    //DOC: check file is archive
     public bool is_archive(string path){
         archive = new Archive.Read();
         archive.support_filter_all ();

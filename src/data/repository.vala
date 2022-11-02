@@ -98,6 +98,7 @@ public class repository {
 //DOC: repository functions outside repository class
 
 private repository[] repos;
+
 //DOC: `repository[] get_repos():`
 //DOC: get all repositories as array
 public repository[] get_repos(){
@@ -114,6 +115,8 @@ public repository[] get_repos(){
     return repos;
 }
 
+//DOC: `bool is_available_package(string name):`
+//DOC: return true if package is available
 public bool is_available_package(string name){
     foreach(repository repo in get_repos()){
         if(repo.has_package(name)){
@@ -184,6 +187,8 @@ public package get_package_from_file(string path){
     return pkg;
 }
 
+//DOC: `string[] get_repo_address():`
+//DOC: return repository adress list
 public string[] get_repo_address(){
     string repolist = readfile(get_storage()+"/sources.list")+"\n";
     if(isdir(get_storage()+"/sources.list.d")){
@@ -194,6 +199,8 @@ public string[] get_repo_address(){
     return ssplit(repolist,"\n");
 }
 
+//DOC: `void update_repo():`
+//DOC: update local repository index
 public void update_repo(){
     remove_all(get_storage()+"/index");
     create_dir(get_storage()+"/index");
@@ -206,6 +213,8 @@ public void update_repo(){
     }
 }
 
+//DOC: `string create_index_data(string fpath):`
+//DOC: generate remote repository index data
 public string create_index_data(string fpath){
     string index = "index:\n";
     string path = srealpath(fpath);

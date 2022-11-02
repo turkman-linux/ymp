@@ -245,11 +245,15 @@ public bool is64bit(string path){
     return ctx[4] == '\x02';
 }
 
+//DOC: `bool isfile(string path)`:
+//DOC: check path is file
 public bool isfile(string path){
     return GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_REGULAR) || 
                GLib.FileUtils.test(path, GLib.FileTest.IS_SYMLINK);
 }
 
+//DOC: `bool issymlink(string path)`:
+//DOC: check path is symlink
 public bool issymlink(string path){
     return GLib.FileUtils.test(path, GLib.FileTest.IS_SYMLINK);
 }

@@ -77,6 +77,14 @@ get current cpu architecture
 
 sync call
 
+### signal.c
+
+`void block_sigint()`
+
+### process.c
+
+`void single_instance()`
+
 # src/color.vala
 ## Colors
 
@@ -108,6 +116,10 @@ resolve dependencies
 `string[] resolve_dependencies(string[] names):`
 
 return package name list with required dependencies
+
+`string[] resolve_reverse_dependencies(string[] names):`
+
+return package name list with required reverse dependencies
 
 # src/data/package.vala
 ## class package
@@ -208,6 +220,10 @@ package.ymp
 
 * **data.tar.gz** in package archive
 
+`void package.build():`
+
+build source code into buildpath
+
 `bool package.is_installed():`
 
 return true if package is installed
@@ -232,6 +248,10 @@ return true if package installed
 `bool quarantine_validate_files():`
 
 check quarantine file hashes
+
+`void quarantine_install():`
+
+install quarantine files to rootfs
 
 # src/data/repository.vala
 ## class repository
@@ -294,6 +314,10 @@ repository functions outside repository class
 
 get all repositories as array
 
+`bool is_available_package(string name):`
+
+return true if package is available
+
 `package get_package_from_repository(string name):`
 
 get package object from all repositories
@@ -309,6 +333,18 @@ return source if emerge else return package
 `package get_package_from_file(string path):`
 
 get package object from ymp file archive
+
+`string[] get_repo_address():`
+
+return repository adress list
+
+`void update_repo():`
+
+update local repository index
+
+`string create_index_data(string fpath):`
+
+generate remote repository index data
 
 # src/data/ympbuild.vala
 ## ympbuild file functions.
@@ -331,36 +367,18 @@ get a variable from ympbuild file
 
 get a array from ympbuild file
 
+`bool ympbuild_has_function(string function):`
+
+check ympbuild file has function
+
 `int run_ympbuild_function(string function):`
 
 run a build function from ympbuild file
 
-# src/operations/misc/clear.vala
-# src/operations/misc/cowcat.vala
-# src/operations/misc/dummy.vala
-# src/operations/misc/echo.vala
-# src/operations/misc/exec.vala
-# src/operations/misc/exit.vala
-# src/operations/misc/help.vala
-# src/operations/misc/shitcat.vala
-# src/operations/package-manager/build.vala
-# src/operations/package-manager/index.vala
-# src/operations/package-manager/info.vala
-# src/operations/package-manager/install.vala
-# src/operations/package-manager/list.vala
-# src/operations/package-manager/remove.vala
-# src/operations/package-manager/search.vala
-# src/operations/package-manager/update.vala
-# src/operations/package-manager/upgrade.vala
-# src/operations/utility/extract.vala
-# src/operations/utility/fetch.vala
-# src/operations/utility/iniget.vala
-# src/operations/utility/revdep-rebuild.vala
-# src/operations/utility/run-sandbox.vala
-# src/operations/utility/setget.vala
-# src/operations/utility/shell.vala
-# src/operations/utility/sysconf.vala
-# src/operations/utility/yamlget.vala
+`string get_ympbuild_metadata():`
+
+generate metadata.yaml content and return as string
+
 # src/settings.vala
 ## Settings functions
 
@@ -407,6 +425,10 @@ tar.extract_all();
 
 load archive file from **path**
 
+`bool is_archive(string path):`
+
+check file is archive
+
 `string[] archive.list_files():`
 
 Get archive file list
@@ -436,6 +458,68 @@ Read **path** file to target directory
 Extract all files to target
 
 # src/util/array.vala
+## class array
+
+fast and easy usable array library
+
+Example usage:
+
+```vala
+
+var a = new array();
+
+a.add("item1");
+
+string[] b = {"item2","item3"};
+
+a.adds(b);
+
+a.remove("item2");
+
+a.insert("item4",2);
+
+string[] aa = a.get();
+
+a.pop(0);
+
+```
+
+`void reverse():`
+
+reverse array order
+
+`void add(string item):`
+
+add item into array
+
+`void adds(string[] arr):`
+
+add item list into array
+
+`void remove(string item):`
+
+remove item from array
+
+`void pop(int index):`
+
+remove item from array by index number
+
+`void insert(string item, int index):`
+
+insert item into array by number
+
+`bool has(string item):`
+
+check item exists in array
+
+`string[] get():`
+
+return as string array
+
+`void set(string[] new_a):`
+
+replace with new array
+
 # src/util/command.vala
 ## Command functions
 
@@ -568,6 +652,14 @@ return true if file is elf binary
 `bool is64bit(string path):`
 
 return true if file is elf binary
+
+`bool isfile(string path)`:
+
+check path is file
+
+`bool issymlink(string path)`:
+
+check path is symlink
 
 `bool isdir(string path):`
 
@@ -749,6 +841,18 @@ print message with cow dialog
 `void nostdin():`
 
 close stdin. Ignore input. This function may broke application.
+
+`void nostdout():`
+
+close stdout
+
+`void nostderr():`
+
+close stderr
+
+`void nostd():`
+
+close stdin, stdout and stderr
 
 # src/util/logger.vala
 ## logging functions
