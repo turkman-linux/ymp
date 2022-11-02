@@ -43,7 +43,7 @@ public class package {
         }else if(yaml.has_area(metadata,"package") || yaml.has_area(metadata,"source")){
             ympdata = metadata;
         }else{
-            error_add("Package is broken"+metadata);
+            error_add("Package is broken:\n"+metadata);
         }
         // package area load
         if(yaml.has_area(ympdata,"package")){
@@ -53,7 +53,7 @@ public class package {
             is_source = true;
             pkgarea = yaml.get_area(ympdata,"source");
         }else{
-            error_add("Package is broken"+ympdata);
+            error_add("Package is broken:\n"+ympdata);
         }
         //read values from data
         read_values();
