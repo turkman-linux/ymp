@@ -66,7 +66,7 @@ else
 endif
 
 if get_option('libcurl')
-    args +=['-X', '-lcurl']
+    args +=['-X', run_command('pkg-config', '--libs','libcurl',check:true).stdout().strip()]
 else
     add_project_arguments('-D', 'no_libcurl', language: 'vala')
     args +=['-X', '-Dno_libcurl']
