@@ -71,6 +71,10 @@ if get_option('libcurl')
     else
         args += run_command('pkg-config', '--libs', 'libcurl',check:true).stdout().strip().split(' ')
     endif
+    if get_option('libbrotli')
+        args += ['-lbrotlicommon']
+    endif
+
 else
     add_project_arguments('-D', 'no_libcurl', language: 'vala')
     args +=['-Dno_libcurl']

@@ -10,7 +10,7 @@ debian:
     - apt full-upgrade -y
     - apt install meson gcc valac --no-install-recommends -y
     - apt install libarchive-dev libreadline-dev libcurl4-openssl-dev libbrotli-dev --no-install-recommends -y
-    - meson build -Ddebug=true -Dtools=true
+    - meson build -Ddebug=true -Dtools=true -Dlibbrotli=false
     - ninja -C build
     - cd build && ./ymp-test || true
     - ninja install
