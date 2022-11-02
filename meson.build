@@ -4,9 +4,9 @@ project('ymp', 'vala', 'c',
 
 )
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
-args = ['-X','-O3', '-flto', '-Dsulin', '-Wall']
+args = ['-X','-O3', '-flto', '-DSULIX', '-Wall']
 
-args += ['-X', '-s', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
+args += ['-s', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
 
 dependencies = [
     dependency('gio-2.0', static:get_option('static')),
@@ -66,10 +66,14 @@ else
 endif
 
 if get_option('libcurl')
-    args +=['-X', run_command('pkg-config', '--libs','libcurl',check:true).stdout().strip()]
+    if get_option('static')
+        args +=[run_command('pkg-config', '--libs', '--static','libcurl',check:true).stdout().strip()]
+    else
+        args +=[run_command('pkg-config', '--libs', 'libcurl',check:true).stdout().strip()]
+    endif
 else
     add_project_arguments('-D', 'no_libcurl', language: 'vala')
-    args +=['-X', '-Dno_libcurl']
+    args +=['-Dno_libcurl']
 endif
 
 if get_option('libreadline')
@@ -80,7 +84,7 @@ endif
 
 if get_option('static')
     lib = static_library('ymp', sources, dependencies: dependencies, link_args: args)
-    args += ['-X','-static']
+    args += ['-static']
 else
     lib = library('ymp', sources, dependencies: dependencies, link_args: args)
 endif
