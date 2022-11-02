@@ -67,9 +67,9 @@ endif
 
 if get_option('libcurl')
     if get_option('static')
-        args +=[run_command('pkg-config', '--libs', '--static','libcurl',check:true).stdout().strip()]
+        args += run_command('pkg-config', '--libs', '--static','libcurl',check:true).stdout().strip().split(' ')
     else
-        args +=[run_command('pkg-config', '--libs', 'libcurl',check:true).stdout().strip()]
+        args += run_command('pkg-config', '--libs', 'libcurl',check:true).stdout().strip().split(' ')
     endif
 else
     add_project_arguments('-D', 'no_libcurl', language: 'vala')
