@@ -17,8 +17,8 @@ private void ympbuild_init(){
     alias python=python3
     export NOCONFIGURE=1
     export NO_COLOR=1
-    export CFLAGS=\"-s -DSULIX -L/lib/sulin "+get_value("build:cflags")+"\"
-    export CXXFLAGS=\"-s -DSULIX -L/lib/sulin "+get_value("build:cxxflags")+"\"
+    export CFLAGS=\"-s -DSULIX -L/lib/sulix "+get_value("build:cflags")+"\"
+    export CXXFLAGS=\"-s -DSULIX -L/lib/sulix "+get_value("build:cxxflags")+"\"
     export CC=\""+get_value("build:cc")+"\"
     export LDFLAGS=\""+get_value("build:ldflags")+"\"
     ymp-meson(){
