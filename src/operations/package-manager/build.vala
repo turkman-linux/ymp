@@ -140,13 +140,17 @@ private void create_files_info(){
     string files_data = "";
     string links_data = "";
     foreach(string file in find(ympbuild_buildpath+"/output")){
+        if(" " in file){
+            continue;
+        }
         if(isdir(file)){
             continue;
         }
         if(issymlink(file)){
             try{
+                file = file[(ympbuild_buildpath+"/output/").length:];
                 string target = GLib.FileUtils.read_link(file);
-                links_data += file+"\t"+target+"\n";
+                links_data += file+" "+target+"\n";
             }catch(Error e){
                 warning(e.message);
             }
@@ -263,6 +267,10 @@ private void create_binary_package(){
     }
     tar.add("metadata.yaml");
     tar.add("files");
+    tar.add("symlinks");
+    if(isfile("icon.svg")){
+        tar.add("icon.svg");
+    }
     if(isfile(ympbuild_srcpath+"/postOps")){
         copy_file(ympbuild_srcpath+"/postOps","./postOps");
         tar.add("postOps");
