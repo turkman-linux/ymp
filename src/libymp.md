@@ -97,6 +97,16 @@ fetch file from url
 
 fetch string from url
 
+### string.c
+
+`string build_string(char* format, ...):`
+
+build string like printf
+
+`string run_printf(char* format, ...):`
+
+run command like printf
+
 # src/color.vala
 ## Colors
 

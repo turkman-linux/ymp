@@ -81,3 +81,10 @@ public extern void single_instance();
 public extern bool fetch(string url, string path);
 public extern string fetch_string(string url);
 #endif
+//DOC: ### string.c
+//DOC: `string build_string(char* format, ...):`
+//DOC: build string like printf
+public extern string build_string(char* format, ...);
+//DOC: `string run_printf(char* format, ...):`
+//DOC: run command like printf
+public extern string run_printf(char* format, ...);
