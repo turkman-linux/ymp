@@ -168,12 +168,14 @@ public class package {
         create_dir(get_storage()+"/quarantine/metadata");
         create_dir(get_storage()+"/quarantine/rootfs");
         create_dir(get_storage()+"/quarantine/files");
+        create_dir(get_storage()+"/quarantine/links");
         if(pkgfile == null){
             error_add("Package archive missing");
             return;
         }
         var rootfs_medatata = get_storage()+"/quarantine/metadata/";
         var rootfs_files = get_storage()+"/quarantine/files/";
+        var rootfs_links = get_storage()+"/quarantine/links/";
         if(isfile(rootfs_medatata+name+".yaml")){
             debug("skip quartine package extract:"+name);
             return;
@@ -202,11 +204,15 @@ public class package {
         }
         pkgfile.set_target(rootfs_medatata);
         pkgfile.extract("metadata.yaml");
-        move_file(rootfs_medatata+"metadata.yaml",get_storage()+"/quarantine/metadata/"+name+".yaml");
+        move_file(rootfs_medatata+"metadata.yaml",rootfs_medatata+name+".yaml");
         // extract files
         pkgfile.set_target(rootfs_files);
         pkgfile.extract("files");
-        move_file(rootfs_files+"files",get_storage()+"/quarantine/files/"+name);
+        move_file(rootfs_files+"files",rootfs_files+name);
+        // extract links
+        pkgfile.set_target(rootfs_links);
+        pkgfile.extract("symlinks");
+        move_file(rootfs_links+"symlinks",rootfs_links+name);
         error(3);
     }
     //DOC: `void package.build():`
