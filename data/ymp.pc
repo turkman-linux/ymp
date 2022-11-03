@@ -4,5 +4,5 @@ includedir=${prefix}/include
 Name: Ymp
 Description: Package manager for Sulix Project
 Version: 9999
-Cflags: -L/lib -O2 -s -g -Dsulin -flto
+Cflags: -L/lib -O2 -s -g -DSULIX -flto
 Libs: -lymp

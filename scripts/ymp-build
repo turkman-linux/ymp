@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -e
+rm -rf /tmp/ymp-build
 if [[ -f ympbuild ]] ; then
     exec ymp sandbox --allow-oem --shared="$(pwd)" -- \
     ymp build --allow-oem "$(pwd)" $@

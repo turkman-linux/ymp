@@ -103,7 +103,7 @@ if get_option('scripts')
 endif
 install_data('data/ymp.conf', install_dir : get_option('sysconfdir'), rename : 'ymp.conf')
 install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
-install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/application/')
+install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/packages/')
 if get_option('static')
     install_data(meson.current_build_dir() / 'libymp.a', install_dir : get_option('libdir'))
 else
