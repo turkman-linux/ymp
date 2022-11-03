@@ -138,8 +138,18 @@ private void create_source_archive(){
 private void create_files_info(){
     cd(ympbuild_buildpath+"/output");
     string files_data = "";
+    string links_data = "";
     foreach(string file in find(ympbuild_buildpath+"/output")){
         if(isdir(file)){
+            continue;
+        }
+        if(issymlink(file)){
+            try{
+                string target = GLib.FileUtils.read_link(file);
+                links_data += file+"\t"+target+"\n";
+            }catch(Error e){
+                warning(e.message);
+            }
             continue;
         }
         file = file[(ympbuild_buildpath+"/output/").length:];
@@ -150,6 +160,7 @@ private void create_files_info(){
         files_data += calculate_sha1sum(file)+" "+file+"\n";
     }
     writefile(ympbuild_buildpath+"/output/files",files_data);
+    writefile(ympbuild_buildpath+"/output/symlinks",links_data);
 }
 private string output_package_path;
 private void create_metadata_info(){

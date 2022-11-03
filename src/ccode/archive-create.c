@@ -17,6 +17,10 @@
 #define zip 0
 #define tar 1
 
+#ifndef get_bool
+int get_bool(char*variable);
+#endif
+
 int aformat = 1;
 
 #define filter_none 0
@@ -42,7 +46,7 @@ void write_archive(const char *outname, const char **filename) {
   if(aformat == tar)
       archive_write_set_format_pax_restricted(a);
   archive_write_open_filename(a, outname);
-  char *link = malloc(PATH_MAX*sizeof(char));
+  char link[PATH_MAX];
   #ifdef DEBUG
   char* type;
   #endif
@@ -85,17 +89,19 @@ void write_archive(const char *outname, const char **filename) {
                 #ifdef DEBUG
                 type = "symlink";
                 #endif
-                int len = readlink(*filename,(char*)link,sizeof(link));
+                len = readlink(*filename,link,sizeof(link));
                 if(len < 0){
                     fprintf(stderr,"Broken symlink: %s\n",*filename);
                     continue;
                 }
                 link[len] = '\0';
                 #ifdef DEBUG
-                fprintf(stderr,"Symlink: %s %s",filename, link);
+                if(get_bool("debug")){
+                    fprintf(stderr,"Symlink: %s %s\n",*filename, link);
+                }
                 #endif
                 archive_entry_set_filetype(entry, AE_IFLNK);
-                archive_entry_set_symlink(entry, (char*)link);
+                archive_entry_set_symlink(entry, link);
                 break;
             case S_IFREG:
                 // regular file
@@ -120,7 +126,9 @@ void write_archive(const char *outname, const char **filename) {
                 break;
     }
     #ifdef DEBUG
-    fprintf(stderr,"Compress: %s type %s (%d)\n",*filename,type,st.st_mode);
+    if(get_bool("debug")){
+        fprintf(stderr,"Compress: %s type %s (%d)\n",*filename,type,st.st_mode);
+    }
     #endif
     archive_entry_set_perm(entry, 0644);
     archive_write_header(a, entry);
@@ -136,6 +144,5 @@ void write_archive(const char *outname, const char **filename) {
   }
   archive_write_close(a);
   archive_write_free(a);
-  free(link);
 }
 #endif
