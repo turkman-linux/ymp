@@ -25,9 +25,9 @@ private void settings_init(){
         foreach(string section in ini.get_sections()){
             foreach(string variable in ini.get_variables(section)){
                 if(section == "ymp"){
-                    set_value(variable,ini.get("ymp",variable));
+                    set_value_readonly(variable,ini.get("ymp",variable));
                 }else{
-                    set_value(section+":"+variable,ini.get(section,variable));
+                    set_value_readonly(section+":"+variable,ini.get(section,variable));
                 }
             }
         }

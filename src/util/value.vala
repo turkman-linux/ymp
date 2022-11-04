@@ -25,7 +25,10 @@ public void set_value(string name, string value){
         return;
     }
     foreach(variable varx in vars){
-        if(varx.name == name.down()){
+        if(varx.name == name.up()){
+            return;
+        }
+        else if(varx.name == name.down()){
             varx.value = value;
             return;
         }
@@ -72,10 +75,12 @@ public string get_value(string name){
         return "";
     }
     #if DEBUG
-//    stderr.printf("Get value: "+name+"\n");
+    //stderr.printf("Get value: "+name+"\n");
     #endif
     foreach(variable var in vars){
-        if(var.name == name){
+        if(var.name == name.up()){
+            return var.value;
+        }else if(var.name == name){
             return var.value;
         }
     }

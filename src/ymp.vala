@@ -21,6 +21,7 @@ private class operation{
 }
 
 private void add_operation(function callback, string[] names, helpmsg help){
+    logger_init(); // logger reload
     if(ops == null){
         ops = {};
     }
@@ -168,12 +169,11 @@ public Ymp ymp_init(string[] args){
     if(ymp_activated){
         return app;
     }
-    parse_args(args);
     block_sigint();
     ctx_init();
     settings_init();
-    logger_init(); // logger reload after settings changes
     ympbuild_init();
+    parse_args(args);
     #if check_oem
         if(is_oem_available()){
             if(!get_bool("ALLOW-OEM")){
