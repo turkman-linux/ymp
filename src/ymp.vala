@@ -153,7 +153,12 @@ private void directories_init(){
     create_dir(get_storage()+"/packages/");
     create_dir(get_storage()+"/metadata/");
     create_dir(get_storage()+"/files/");
+    create_dir(get_storage()+"/links/");
+    create_dir(get_storage()+"/sources.list.d/");
     create_dir(get_storage()+"/quarantine/");
+    if(!isfile(get_storage()+"/sources.list")){
+        writefile(get_storage()+"/sources.list","");
+    }
 
 }
 
@@ -187,6 +192,7 @@ public Ymp ymp_init(string[] args){
     ymp_activated = true;
     tty_size_init();
     directories_init();
+    logger_init(); // logger reload
     return app;
 }
 

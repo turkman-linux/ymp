@@ -6,6 +6,7 @@ public void quarantine_reset(){
   remove_all(get_storage()+"/quarantine/");
   create_dir(get_storage()+"/quarantine/rootfs");
   create_dir(get_storage()+"/quarantine/files");
+  create_dir(get_storage()+"/quarantine/links");
   create_dir(get_storage()+"/quarantine/metadata");
 }
 //DOC: `bool quarantine_validate_files():`
@@ -80,27 +81,21 @@ public void quarantine_install(){
         if(isfile(get_storage()+"/files/"+fname)){
             remove_file(get_storage()+"/files/"+fname);
         }
-        if(isfile(files+fname)){
-            move_file(files+fname,get_storage()+"/files/"+fname);
-        }
+        move_file(files+"/"+fname,get_storage()+"/files/"+fname);
     }
     fs_sync();
-    foreach(string fname in listdir(files)){
+    foreach(string fname in listdir(links)){
         if(isfile(get_storage()+"/links/"+fname)){
             remove_file(get_storage()+"/links/"+fname);
         }
-        if(isfile(links+fname)){
-            move_file(links+fname,get_storage()+"/links/"+fname);
-        }
+        move_file(links+"/"+fname,get_storage()+"/links/"+fname);
     }
     fs_sync();
     foreach(string fname in listdir(metadata)){
         if(isfile(get_storage()+"/metadata/"+fname)){
             remove_file(get_storage()+"/metadata/"+fname);
         }
-        if(isfile(metadata+"/"+fname)){
-            move_file(metadata+"/"+fname,get_storage()+"/metadata/"+fname);
-        }
+        move_file(metadata+"/"+fname,get_storage()+"/metadata/"+fname);
     }
     fs_sync();
 }

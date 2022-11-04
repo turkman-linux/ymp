@@ -68,11 +68,13 @@ int fetch(char* url, char* path){
         res = curl_easy_perform(curl);
         if(res != CURLE_OK){
           fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+          return 0;
         }
         curl_easy_cleanup(curl);
+        putc('\n',stderr);
         fclose(fp);
     }
-    return 0;
+    return 1;
 }
 
 char* fetch_string(char* url){
@@ -93,9 +95,11 @@ char* fetch_string(char* url){
         res = curl_easy_perform(curl);
         if(res != CURLE_OK){
           fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+          return "";
         }
 
         curl_easy_cleanup(curl);
+        putc('\n',stderr);
     }
     printf("%lu bytes retrieved\n", (unsigned long)s.len);
     printf("%s bytes retrieved\n", (char*)s.ptr);
