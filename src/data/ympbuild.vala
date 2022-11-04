@@ -12,7 +12,8 @@ private void ympbuild_init(){
         ympbuild_srcpath = "./";
     }
     ympbuild_header = "
-    export installdir="+ympbuild_buildpath+"/output
+    export installdir=\""+ympbuild_buildpath+"/output\"
+    export HOME=\""+ympbuild_buildpath+"\"
     export DESTDIR=\"$installdir\"
     alias python=python3
     export NOCONFIGURE=1
@@ -129,8 +130,8 @@ private void ympbuild_init(){
        info("USE flag: "+flag);
        ympbuild_header += "declare -r '"+flag.replace("'","\\'")+"'=31 \n";
     }
-    #if debug
-    ympbuild_header += "set -x"
+    #if DEBUG
+    ympbuild_header += "set -x";
     #endif
 }
 //DOC: `void set_ympbuild_srcpath(string path):`
