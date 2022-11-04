@@ -130,9 +130,6 @@ private void ympbuild_init(){
        info("USE flag: "+flag);
        ympbuild_header += "declare -r '"+flag.replace("'","\\'")+"'=31 \n";
     }
-    #if DEBUG
-    ympbuild_header += "set -x";
-    #endif
 }
 //DOC: `void set_ympbuild_srcpath(string path):`
 //DOC: configure ympbuild file directory
