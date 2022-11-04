@@ -162,6 +162,7 @@ private bool ymp_activated = false;
 //DOC: start ymp application.
 //DOC: * args is program arguments
 public Ymp ymp_init(string[] args){
+    logger_init();
     wsl_block();
     Ymp app = new Ymp();
     if(ymp_activated){
@@ -171,6 +172,7 @@ public Ymp ymp_init(string[] args){
     block_sigint();
     ctx_init();
     settings_init();
+    logger_init(); // logger reload after settings changes
     ympbuild_init();
     #if check_oem
         if(is_oem_available()){

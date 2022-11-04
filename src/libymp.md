@@ -107,6 +107,18 @@ build string like printf
 
 run command like printf
 
+//DOC:// ### logger.c
+
+`void print_fn(string message, bool new_line, bool err):`
+
+Main print function. Has 3 arguments
+
+* message: log message
+
+* new_line: if set true, append new line
+
+* err: if set true, write log to stderr
+
 # src/color.vala
 ## Colors
 
@@ -856,16 +868,6 @@ close stdin, stdout and stderr
 
 # src/util/logger.vala
 ## logging functions
-
-`void print_fn(string message, bool new_line, bool err):`
-
-Main print function. Has 3 arguments
-
-* message: log message
-
-* new_line: if set true, append new line
-
-* err: if set true, write log to stderr
 
 `void print(string message):`
 

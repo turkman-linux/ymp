@@ -18,7 +18,7 @@ public int help_main(string[] args){
 }
 
 private void write_op_help(operation op){
-    print_fn(op.help.build(),false,true);
+    print(op.help.build());
 }
 void help_init(){
     add_common_parameter("--","stop argument parser");

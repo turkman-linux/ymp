@@ -30,4 +30,7 @@ int run_printf(char* format, ...){
 
 }
 
+int iseq(char* str1, char* str2){
+    return strcmp(str1,str2) == 0;
+}
 #endif

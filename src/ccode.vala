@@ -88,3 +88,13 @@ public extern string build_string(char* format, ...);
 //DOC: `string run_printf(char* format, ...):`
 //DOC: run command like printf
 public extern string run_printf(char* format, ...);
+//DOC:// ### logger.c
+//DOC: `void print_fn(string message, bool new_line, bool err):`
+//DOC: Main print function. Has 3 arguments
+//DOC: * message: log message
+//DOC: * new_line: if set true, append new line
+//DOC: * err: if set true, write log to stderr
+public extern void print_fn(string message, bool new_line, bool err);
+private extern void cprint(string message);
+private extern void cprint_stderr(string message);
+private extern void cprint_dummy(string message);

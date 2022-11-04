@@ -1,29 +1,7 @@
 private string[] errors;
 
 //DOC: ## logging functions
-//DOC: `void print_fn(string message, bool new_line, bool err):`
-//DOC: Main print function. Has 3 arguments
-//DOC: * message: log message
-//DOC: * new_line: if set true, append new line
-//DOC: * err: if set true, write log to stderr
-public void print_fn(string message, bool new_line, bool err){
-    if (message != null){
-        string nl="";
-        if(new_line){
-            nl="\n";
-        }
-        if(message == ""){
-            return;
-        }
-        if(err){
-            stderr.printf(message+nl);
-            stderr.flush();
-        }else{
-            stdout.printf(message+nl);
-            stderr.flush();
-        }
-    }
-}
+public delegate void logger(string message);
 
 //DOC: `void print(string message):`
 //DOC: write standard messages to stdout
@@ -31,49 +9,72 @@ public void print_fn(string message, bool new_line, bool err){
 //DOC: ```vala
 //DOC: print("Hello world!");
 //DOC: ```
-public void print(string message){
-    if(get_bool("quiet")){
-        return;
-    }
-    print_fn(message,true,false);
-}
+public logger print;
+
 
 //DOC: `void print_stderr(string message):`
 //DOC: same with print but write to stderr
-public void print_stderr(string message){
-    print_fn(message,true,true);
-}
+public logger print_stderr;
+
 
 //DOC: `void warning(string message):`
 //DOC: write warning message like this:
 //DOC: ```yaml
 //DOC: WARNING: message
 //DOC: ```
-public void warning(string message){
-    if(get_bool("ignore-warning")){
-        return;
-    }
-    if (message != null){
-        print_stderr(colorize("WARNING: ",yellow)+message);
-    }
-}
-#if DEBUG
+public logger warning;
+
 //DOC: `void debug(string message):`
 //DOC: write debug messages. Its only print if debug mode enabled.
-public void debug(string message){
-    if(get_bool("debug")){
-        print_fn(colorize("DEBUG: ",blue)+message,true,true);
-    }
-}
-#else
-public void debug(string message){}
-#endif
+public logger debug;
+
+
 
 //DOC: `void info(string message):`
 //DOC: write additional info messages.
-public void info(string message){
+public logger info;
+
+
+private void warning_fn(string message){
+    print_stderr(colorize("WARNING: ",yellow)+message);
+}
+
+private void debug_fn(string message){
+    print_fn(colorize("DEBUG: ",blue)+message,true,true);
+}
+
+private void info_fn(string message){
+    print(colorize("INFO: ",green)+message);
+}
+
+
+private void logger_init(){
+    if(get_bool("quiet")){
+        print = cprint_dummy;
+        print_stderr = cprint_dummy;
+    }else{
+        print = cprint;
+        print_stderr = cprint_stderr;
+        
+    }
+    if(get_bool("ignore-warning")){
+        warning = cprint_stderr;
+    }else{
+        warning = warning_fn;
+    }
+    #if DEBUG
+    if(get_bool("debug")){
+        debug = debug_fn;
+    }else{
+        debug = cprint_dummy;
+    }
+    #else
+    debug = cprint_dummy;
+    #endif
     if(get_bool("verbose")){
-        print_fn(message,true,false);
+        info = info_fn;
+    }else{
+        info = cprint_dummy;
     }
 }
 
@@ -94,7 +95,7 @@ public void error(int status){
     }
     if(!get_bool("ignore-error")){
         foreach (string error in errors){
-            stderr.printf(colorize("ERROR: ",red)+error+"\n");
+            print_stderr(colorize("ERROR: ",red)+error);
         }
     }
     errors = null;
