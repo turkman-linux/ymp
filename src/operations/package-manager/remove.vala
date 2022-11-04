@@ -8,7 +8,6 @@ public int remove_main(string[] args){
     }
     foreach(string pkg in pkgs){
         package p = get_installed_package(pkg);
-        print(p.name);
         remove_single(p);
     }
     sysconf_main(args);
@@ -21,9 +20,15 @@ public int remove_single(package p){
             file=file[41:];
             remove_file(file);
         }
+    }foreach(string file in p.list_links()){
+        if(file.length > 3){
+            file=ssplit(file," ")[0];
+            remove_file(file);
+        }
     }
     remove_file(get_storage()+"/metadata/"+p.name+".yaml");
     remove_file(get_storage()+"/files/"+p.name);
+    remove_file(get_storage()+"/links/"+p.name);
     return 0;
 }
 
