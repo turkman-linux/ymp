@@ -234,7 +234,7 @@ private void create_data_file(){
         }
         file = file[(ympbuild_buildpath+"/output/").length:];
         debug("Compress:"+file);
-        if(file == "files" || file == "metadata.yaml"){
+        if(file == "files" || file == "links" || file == "metadata.yaml"){
             continue;
         }
         tar.add(file);

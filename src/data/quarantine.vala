@@ -108,11 +108,13 @@ public void quarantine_install(){
 private void quarantine_import_from_path(string path){
     string rootfs = srealpath(get_storage()+"/quarantine/rootfs/");
     string files = srealpath(get_storage()+"/quarantine/files/");
+    string links = srealpath(get_storage()+"/quarantine/links/");
     string metadata = srealpath(get_storage()+"/quarantine/metadata/");
     package p = new package();
     p.load(path+"/metadata.yaml");
     move_file(path+"/metadata.yaml",metadata+"/"+p.name+".yaml");
     move_file(path+"/files",files+"/"+p.name);
+    move_file(path+"/links",links+"/"+p.name);
     foreach(string fname in find(path)){
         string ftarget = fname[path.length:];
         if(isfile(fname)){
