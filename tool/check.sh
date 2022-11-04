@@ -1,6 +1,7 @@
 #!/bin/bash
 set -ex
 touch "$1"/ymp.h
+touch "$1"/ymp.vapi
 touch "$1"/ymp-cli
 touch "$1"/libymp.so
 touch "$1"/libymp.a

@@ -13,6 +13,7 @@ dependencies = [
     dependency('readline', static:get_option('static')),
 ]
 
+add_project_arguments('-C', language: 'vala')
 add_project_arguments(['--disable-assert', '--hide-internal', '--nostdpkg', '--enable-checking', '--abi-stability'], language: 'vala')
 add_project_arguments('-D', '_GNU_SOURCE', '--disable-version-header', language: 'vala')
 
@@ -112,6 +113,7 @@ else
 endif
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
 install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'), rename : 'ymp.h')
+install_data(meson.current_build_dir() / 'ymp.vapi', install_dir : get_option('prefix')/'share/vala/vapi/', rename : 'libymp-'+meson.project_version()+'.vapi')
 if get_option('test')
     # Test binary
     executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
