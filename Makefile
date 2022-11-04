@@ -12,8 +12,8 @@ install:
 	DESTDIR=$(DESTDIR) ninja -C build install
 
 test-clean:
-	rm -rf build/_test
+	rm -rf build/_test ctx.vala
 
 
 clean:
-	rm -rf build
+	rm -rf build ctx.vala

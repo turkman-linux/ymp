@@ -4,15 +4,15 @@
 for i in $@ ; do
     name=$(echo $i | cut -f1 -d=)
     value=$(echo $i | cut -f2 -d=)
-    echo "public string $name;" >> ctx.vala
+    echo "private string $name;" >> ctx.vala
 done
-echo "public string[] operation_names;" >> ctx.vala
+echo "private string[] operation_names;" >> ctx.vala
 
 function list_operations(){
     find src/operations -type f -exec basename {} \; | sed "s/\..*//g" | sort
 }
 ### ctx_init function build
-echo "public void ctx_init(){" >> ctx.vala
+echo "private void ctx_init(){" >> ctx.vala
 for i in $@ ; do
     name=$(echo $i | cut -f1 -d=)
     value=$(echo $i | cut -f2 -d=)
