@@ -21,10 +21,33 @@ private void write_op_help(operation op){
     print_fn(op.help.build(),false,true);
 }
 void help_init(){
+    add_common_parameter("--","stop argument parser");
+    #if check_oem
+    add_common_parameter("--allow-oem","disable oem check");
+    #endif
+    add_common_parameter("--quiet","disable output");
+    add_common_parameter("--ignore-warning","disable warning messages");
+    #if DEBUG
+    add_common_parameter("--debug","enable debug output");
+    #endif
+    add_common_parameter("--verbose","show verbose output");
+    add_common_parameter("--interactive","enable questions");
+    add_common_parameter("--help","write help messages");
+
+
     var h = new helpmsg();
     h.name = "help";
     h.description = "Write help message about ymp commands.";
     add_operation(help_main,{"help"},h);
+    
+}
+
+private string[] common_parameters;
+private void add_common_parameter(string arg, string desc){
+    if(common_parameters == null){
+        common_parameters = {};
+    }
+    common_parameters += (colorize(arg,red)+" : "+desc);
 }
 
 public class helpmsg{
@@ -53,6 +76,9 @@ public class helpmsg{
             foreach(string param in parameters){
                 ret += "  "+param+"\n";
             }
+        }
+        foreach(string param in common_parameters){
+            ret += "  "+param+"\n";
         }
         return ret;
     }

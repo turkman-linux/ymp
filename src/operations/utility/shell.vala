@@ -15,7 +15,7 @@ public int shell_main(string[] args){
                 ymp.run();
                 ymp.clear_process();
             }else{
-                print("\n"+"Use exit or Ctrl-C");
+                exit_main(args);
             }
         }
     }else{

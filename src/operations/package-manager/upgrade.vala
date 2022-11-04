@@ -17,5 +17,6 @@ void upgrade_init(){
     var h = new helpmsg();
     h.name = "upgrade";
     h.description = "Upgrade all packages";
+    h.add_parameter("--ignore-dependency", "disable dependency check");
     add_operation(upgrade_main,{"upgrade","ug"},h);
 }

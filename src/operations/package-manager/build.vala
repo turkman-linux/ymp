@@ -286,6 +286,7 @@ void build_init(){
     h.add_parameter("--no-binary", "do not generate binary package");
     h.add_parameter("--no-install","do not install package after building");
     h.add_parameter("--no-build","do not build package (only test and package)");
+    h.add_parameter("--ignore-dependency", "disable dependency check");
     add_operation(build_operation,{"build","bi","make"},h);
 }
 

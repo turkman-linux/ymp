@@ -85,5 +85,6 @@ void install_init(){
     var h = new helpmsg();
     h.name = "install";
     h.description = "Install package from source or package file or repository";
+    h.add_parameter("--ignore-dependency", "disable dependency check");
     add_operation(install_main,{"install","it"},h);
 }
