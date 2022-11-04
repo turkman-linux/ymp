@@ -63,6 +63,9 @@ public class repository {
     public package get_package(string name){
         package pkg = null;
         foreach(string area in packages){
+            if(area == null){
+                continue;
+            }
             if (yaml.get_value(area,"name") == name){
                 pkg = new package();
                 pkg.set_pkgarea(area,false);
@@ -77,7 +80,9 @@ public class repository {
     public string[] list_packages(){
         string[] ret = {};
         foreach(string area in packages){
-            ret += yaml.get_value(area,"name");
+            if(area != ""){
+                ret += yaml.get_value(area,"name");
+            }
         }
         return ret;
     }
@@ -87,7 +92,9 @@ public class repository {
     public string[] list_sources(){
         string[] ret = {};
         foreach(string area in sources){
-            ret += yaml.get_value(area,"name");
+            if(area != ""){
+                ret += yaml.get_value(area,"name");
+            }
         }
         return ret;
     }
@@ -157,7 +164,7 @@ public package get_source_from_repository(string name){
         if(pkg != null){
             if(int.parse(pkg.get("release")) > release){
                 ret = pkg;
-                pkg.repo_address = repo.address;
+                pkg.repo_address = repo.address.replace("ymp-index.yaml","$uri");
                 release = int.parse(pkg.get("release"));
             }
         }
@@ -208,8 +215,15 @@ public void update_repo(){
         if(repo == "" || repo == null){
             continue;
         }
+        string repox = repo;
+        repo = repo.replace("$uri","ymp-index.yaml");
         string name = repo.replace("/","-");
-        fetch(repo,get_storage()+"/index/"+name);
+        string path = get_storage()+"/index/"+name;
+        fetch(repo,path);
+        string index_data = readfile(path);
+        index_data += "\n  name: "+calculate_md5sum(path);
+        index_data += "\n  address: "+repox;
+        writefile(path,index_data);
     }
 }
 

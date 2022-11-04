@@ -144,23 +144,23 @@ public class package {
         if(repo_address == null){
             return "";
         }
-        return repo_address + "/" + get("uri");
+        return repo_address.replace("$uri",get("uri"));
     }
 
 
-	//DOC: `void package.download():`
-	//DOC: download package file from repository
+    //DOC: `void package.download():`
+    //DOC: download package file from repository
     public void download(){
-		if(get_uri() != ""){
-	        if(!fetch(get_uri(),get_storage()+"/packages/"+sbasename(get_uri()))){
+        if(get_uri() != ""){
+            if(!fetch(get_uri(),get_storage()+"/packages/"+sbasename(get_uri()))){
                 error_add("failed to fetch package: "+get_uri());
             }
-	    }else{
-			error_add("package is not downloadable: "+ name);
-		}
+        }else{
+            error_add("package is not downloadable: "+ name);
+        }
         pkgfile = new archive();
         pkgfile.load(get_storage()+"/packages/"+sbasename(get_uri()));
-	}
+    }
 
     //DOC: `void package.extract():`
     //DOC: extract package to quarantine directory

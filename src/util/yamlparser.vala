@@ -50,12 +50,19 @@ public class yamlfile {
     //DOC: list all areas the name is **path**
     public string[] get_area_list(string fdata, string path){
         string[] ret = {};
+        if(fdata==null){
+            return ret;
+        }
         offset = find_first_offset(fdata,path);
         int data_length = ssplit(fdata,"\n").length;
-        while(offset < data_length-1){
+        while(offset+1 < data_length-1){
             string data = get_area_single(fdata,path);
-            ret += data;
-            offset += ssplit(data,"\n").length + 1;
+            if(data != "" && data != null){
+                ret += data;
+                offset += ssplit(data,"\n").length + 1;
+            }else{
+                offset += 1;
+            }
         }
         return ret;
     }
@@ -74,6 +81,9 @@ public class yamlfile {
     //DOC: `string yamlfile.get_value(string data, string name):`
     //DOC: get value from area data
     public string get_value(string data,string name){
+        if(data==null){
+            return "";
+        }
         foreach(string line in ssplit(trim(data),"\n")){
             if(line.length < name.length+1){
                 continue;
@@ -93,6 +103,9 @@ public class yamlfile {
     //DOC: get array from area data
     public string[] get_array(string data,string name){
         string[] array = {};
+        if(data==null){
+            return array;
+        }
         string fdata = get_area(data,name);
         foreach(string line in ssplit(fdata,"\n")){
             if(line[0:2] == "- "){
@@ -106,6 +119,9 @@ public class yamlfile {
     //DOC: get area from data
     public string get_area(string data, string path){
         string tmp = data;
+        if(data==null){
+            return "";
+        }
         foreach(string item in ssplit(path,".")){
             tmp = get_area_single(tmp,item);
         }

@@ -10,7 +10,11 @@ public int list_available_main(string[] args){
     foreach(repository repo in get_repos()){
         if(get_bool("package")){
             foreach(string name in repo.list_packages()){
-                var description = repo.get_package(name).get("description");
+                var pkg = repo.get_package(name);
+                if(pkg == null){
+                    continue;
+                }
+                var description = pkg.get("description");
                 if(is_installed_package(name)){
                     print(colorize(name,green) + " " + description);
                 }else{
