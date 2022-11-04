@@ -164,7 +164,7 @@ private void create_files_info(){
         files_data += calculate_sha1sum(file)+" "+file+"\n";
     }
     writefile(ympbuild_buildpath+"/output/files",files_data);
-    writefile(ympbuild_buildpath+"/output/symlinks",links_data);
+    writefile(ympbuild_buildpath+"/output/links",links_data);
 }
 private string output_package_path;
 private void create_metadata_info(){
@@ -267,7 +267,7 @@ private void create_binary_package(){
     }
     tar.add("metadata.yaml");
     tar.add("files");
-    tar.add("symlinks");
+    tar.add("links");
     if(isfile("icon.svg")){
         tar.add("icon.svg");
     }

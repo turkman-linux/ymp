@@ -1,8 +1,10 @@
 public int remove_main(string[] args){
     single_instance();
-    string[] pkgs = resolve_reverse_dependencies(args);
+    string[] pkgs = {};
     if(get_bool("ignore-dependency")){
         pkgs = args;
+    }else{
+        pkgs = resolve_reverse_dependencies(args);
     }
     foreach(string pkg in pkgs){
         package p = get_installed_package(pkg);

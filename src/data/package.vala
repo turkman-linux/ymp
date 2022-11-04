@@ -91,6 +91,21 @@ public class package {
         return ssplit(files,"\n");
     }
 
+    //DOC: `string[] package.list_files():`
+    //DOC: return ymp package files list
+    public string[] list_links(){
+        if(pkgfile == null){
+            if(is_installed_package(name)){
+                string links = readfile(get_storage()+"/links/"+name);
+                return ssplit(links,"\n");
+            }
+            error_add("Package archive missing");
+            return {};
+        }
+        string links = pkgfile.readfile("links");
+        return ssplit(links,"\n");
+    }
+
     private void read_values(){
         name = get("name");
         version = get("version");
@@ -211,8 +226,8 @@ public class package {
         move_file(rootfs_files+"files",rootfs_files+name);
         // extract links
         pkgfile.set_target(rootfs_links);
-        pkgfile.extract("symlinks");
-        move_file(rootfs_links+"symlinks",rootfs_links+name);
+        pkgfile.extract("links");
+        move_file(rootfs_links+"links",rootfs_links+name);
         error(3);
     }
     //DOC: `void package.build():`

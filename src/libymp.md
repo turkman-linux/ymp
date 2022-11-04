@@ -192,6 +192,10 @@ Read package information from ymp file
 
 return ymp package files list
 
+`string[] package.list_files():`
+
+return ymp package files list
+
 `string[] package.gets(string name):`
 
 Get package array value
