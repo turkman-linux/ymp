@@ -58,7 +58,9 @@ int fetch(char* url, char* path){
     if (curl){
         fp = fopen(path,"wb");
         curl_easy_setopt(curl, CURLOPT_URL, url);
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "YMP fetcher");
         curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, fetcher_process_to_vala);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_file);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
@@ -81,7 +83,9 @@ char* fetch_string(char* url){
     strcpy(fetcher_filename,"");
     if (curl){
         curl_easy_setopt(curl, CURLOPT_URL, url);
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "YMP fetcher");
         curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, fetcher_process_to_vala);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_string);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
