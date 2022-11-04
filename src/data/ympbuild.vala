@@ -118,7 +118,7 @@ private void ympbuild_init(){
     }
     mkdir -p \"$DESTDIR\"
     use(){
-        [[ \"$1\" == \"31\" ]]
+        [[ \"${!1}\" == \"31\" ]]
         return $?
     }
     ";
