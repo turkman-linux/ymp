@@ -156,7 +156,7 @@ private void directories_init(){
     create_dir(get_storage()+"/links/");
     create_dir(get_storage()+"/sources.list.d/");
     create_dir(get_storage()+"/quarantine/");
-    if(!isfile(get_storage()+"/sources.list")){
+    if(!isexists(get_storage()+"/sources.list")){
         writefile(get_storage()+"/sources.list","");
     }
 

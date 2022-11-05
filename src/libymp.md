@@ -126,22 +126,6 @@ Available colors
 
 black, red, green, yellow, blue, magenta, cyan, white
 
-`string colorize(string message, int color):`
-
-Change string color if no_color is false.
-
-Example usage:
-
-```vala
-
-var msg = colorize("Hello",red);
-
-var msg2 = colorize("world",blue);
-
-stdout.printf(msg+" "+msg2);
-
-```
-
 # src/data/dependency.vala
 ## Dependency analysis
 
@@ -902,6 +886,22 @@ write debug messages. Its only print if debug mode enabled.
 `void info(string message):`
 
 write additional info messages.
+
+`string colorize(string message, int color):`
+
+Change string color if no_color is false.
+
+Example usage:
+
+```vala
+
+var msg = colorize("Hello",red);
+
+var msg2 = colorize("world",blue);
+
+stdout.printf(msg+" "+msg2);
+
+```
 
 `void error(int status):`
 

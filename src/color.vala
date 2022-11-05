@@ -10,24 +10,3 @@ public int magenta = 35;
 public int cyan = 36;
 public int white = 37;
 
-//DOC: `string colorize(string message, int color):`
-//DOC: Change string color if no_color is false.
-//DOC: Example usage:
-//DOC: ```vala
-//DOC: var msg = colorize("Hello",red);
-//DOC: var msg2 = colorize("world",blue);
-//DOC: stdout.printf(msg+" "+msg2);
-//DOC: ```
-#if NOCOLOR
-public string colorize(string message, int color){
-    return message;
-}
-#else
-public string colorize(string message, int color){
-    if (get_bool("no-color")){
-        return message;
-    }else{
-        return "\x1b["+color.to_string()+"m"+message+"\x1b[;0m";
-    }
-}
-#endif

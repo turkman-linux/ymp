@@ -88,6 +88,8 @@ public extern string build_string(char* format, ...);
 //DOC: `string run_printf(char* format, ...):`
 //DOC: run command like printf
 public extern string run_printf(char* format, ...);
+private extern string ccolorize(string message, string color);
+
 //DOC:// ### logger.c
 //DOC: `void print_fn(string message, bool new_line, bool err):`
 //DOC: Main print function. Has 3 arguments

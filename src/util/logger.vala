@@ -2,6 +2,7 @@ private string[] errors;
 
 //DOC: ## logging functions
 public delegate void logger(string message);
+public delegate string fncolor(string msg, int color);
 
 //DOC: `void print(string message):`
 //DOC: write standard messages to stdout
@@ -35,6 +36,16 @@ public logger debug;
 public logger info;
 
 
+//DOC: `string colorize(string message, int color):`
+//DOC: Change string color if no_color is false.
+//DOC: Example usage:
+//DOC: ```vala
+//DOC: var msg = colorize("Hello",red);
+//DOC: var msg2 = colorize("world",blue);
+//DOC: stdout.printf(msg+" "+msg2);
+//DOC: ```
+public fncolor colorize;
+
 private void warning_fn(string message){
     print_stderr(colorize("WARNING: ",yellow)+message);
 }
@@ -47,6 +58,12 @@ private void info_fn(string message){
     print(colorize("INFO: ",green)+message);
 }
 
+private string colorize_fn(string msg, int color){
+    return ccolorize(msg,color.to_string());
+}
+private string colorize_dummy(string msg, int color){
+    return msg;
+}
 
 private void logger_init(){
     if(get_bool("quiet")){
@@ -76,7 +93,13 @@ private void logger_init(){
     }else{
         info = cprint_dummy;
     }
+    if (get_bool("no-color")){
+        colorize = colorize_dummy;
+    }else{
+        colorize = colorize_fn;
+    }
 }
+
 
 //DOC: `void error(int status):`
 //DOC: print error message and exit if error message list not empty and status is not 0.

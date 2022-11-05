@@ -265,6 +265,11 @@ public bool isdir(string path){
     ! GLib.FileUtils.test(path, GLib.FileTest.IS_SYMLINK);
 }
 
+public bool isexists(string path){
+    var file = File.new_for_path (path);
+    return file.query_exists();
+}
+
 //DOC: `string srealpath(string path):`
 //DOC: safe realpath function.
 public string srealpath(string path){

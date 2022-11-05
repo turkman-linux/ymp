@@ -1,15 +1,8 @@
 #include <stdio.h>
-#ifndef iseq
-int iseq(char* str1, char* str2);
-#endif
-
-#ifndef true
-#define true 1
-#define false 0
-#endif
+#include <string.h>
 
 void print_fn(char* message, int new_line, int err){
-    if(iseq(message,"")){
+    if(strcmp(message,"")==0){
         return;
     }
     FILE *fd=stdout;
@@ -24,10 +17,12 @@ void print_fn(char* message, int new_line, int err){
 }
 void cprint(char* message){
     fputs(message,stdout);
+    fputc('\n',stdout);
     fflush(stdout);
 }
 void cprint_stderr(char* message){
     fputs(message,stderr);
+    fputc('\n',stderr);
     fflush(stderr);
 }
 
