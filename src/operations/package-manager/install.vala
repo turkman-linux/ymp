@@ -40,7 +40,7 @@ public package install_single(string pkg){
     error(2);
     //If download-only finish operation
     info("Installing: "+p.name);
-    if(p.is_source){
+    if(p.is_source || get_bool("sync-single")){
         p.build();
         quarantine_validate_files();
         error(1);
@@ -86,5 +86,8 @@ void install_init(){
     h.name = "install";
     h.description = "Install package from source or package file or repository";
     h.add_parameter("--ignore-dependency", "disable dependency check");
+    h.add_parameter("--sync-single", "sync quarantine after every package installation");
+    h.add_parameter("--reinstall", "reinstall if already installed");
+    h.add_parameter("--emerge", "do not use binary packages");
     add_operation(install_main,{"install","it"},h);
 }
