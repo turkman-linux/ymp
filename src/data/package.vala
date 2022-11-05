@@ -71,7 +71,7 @@ public class package {
     //DOC: Read package information from ymp file
     public void load_from_archive(string path){
         pkgfile = new archive();
-        pkgfile.load(path);
+        pkgfile.load(srealpath(path));
         var metadata = pkgfile.readfile("metadata.yaml");
         load_from_data(metadata);
     }
@@ -237,7 +237,6 @@ public class package {
             error_add("Package archive missing");
             return;
         }
-        string curdir = pwd();
         create_dir(DESTDIR+"/tmp/ymp-build/"+name);
         pkgfile.set_target(DESTDIR+"/tmp/ymp-build/"+name);
         set_ympbuild_srcpath(DESTDIR+"/tmp/ymp-build/"+name);
@@ -245,15 +244,16 @@ public class package {
         if(!get_bool("no-clear")){
             remove_all(ympbuild_buildpath);
         }
-        cd(DESTDIR+"/tmp/ymp-build/"+name);
+        pkgfile.set_target(DESTDIR+"/tmp/ymp-build/"+name);
         pkgfile.extract_all();
+        set_build_target(DESTDIR+"/tmp/ymp-build/"+name);
+        set_ympbuild_buildpath(DESTDIR+"/tmp/ymp-build/"+name);
         create_metadata_info();
         fetch_package_sources();
         extract_package_sources();
         build_package();
         error(1);
         quarantine_import_from_path(ympbuild_buildpath+"/output");
-        cd(curdir);
     }
 
 

@@ -55,7 +55,7 @@ private void debug_fn(string message){
 }
 
 private void info_fn(string message){
-    print(colorize("INFO: ",green)+message);
+    print(colorize("INFO : ",green)+message);
 }
 
 private string colorize_fn(string msg, int color){

@@ -48,7 +48,9 @@ private void fetch_package_sources(){
             continue;
         }
         string srcfile = ympbuild_buildpath+"/"+sbasename(src);
-        if(isfile(ympbuild_srcpath+"/"+src)){
+        if(isfile(srcfile)){
+            info("Source file already exists.");
+        }else if(isfile(ympbuild_srcpath+"/"+src)){
             copy_file(ympbuild_srcpath+"/"+src, srcfile);
         }else{
             fetch(src,srcfile);
