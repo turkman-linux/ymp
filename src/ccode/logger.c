@@ -23,10 +23,12 @@ void print_fn(char* message, int new_line, int err){
     fflush(fd);
 }
 void cprint(char* message){
-    print_fn(message,true,false);
+    fputs(message,stdout);
+    fflush(stdout);
 }
 void cprint_stderr(char* message){
-    print_fn(message,true,true);
+    fputs(message,stderr);
+    fflush(stderr);
 }
 
 void cprint_dummy(char* message){}
