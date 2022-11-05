@@ -12,7 +12,7 @@ debian:
     - apt install libarchive-dev libreadline-dev libcurl4-openssl-dev libbrotli-dev --no-install-recommends -y
     - meson build -Ddebug=true -Dtools=true -Dlibbrotli=false -Dtest=true
     - ninja -C build
-    - cd build && ./ymp-test || true
+    - cd build && timeout 30 ./ymp-test || true
     - ninja install
 
 archlinux:
@@ -28,7 +28,7 @@ archlinux:
     - pacman -Sy  libarchive readline --noconfirm
     - meson build -Ddebug=true -Dtools=true  -Dtest=true
     - ninja -C build
-    - cd build && ./ymp-test || true
+    - cd build && timeout 30 ./ymp-test || true
     - ninja install
 
 alpine:
@@ -45,5 +45,5 @@ alpine:
     - meson build -Ddebug=false -Dstatic=true -Dtools=true  -Dtest=true
     - ninja -C build
     - upx -9 build/* || true
-    - cd build && ./ymp-test || true
+    - cd build && timeout 30 ./ymp-test || true
     - ninja install
