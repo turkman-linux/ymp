@@ -31,7 +31,7 @@ public package install_single(string pkg){
     if(isfile(pkg)){
         info("Installing from package file:" + pkg);
         p = new package();
-        p.load_from_archive(pkg);
+        p.load_from_archive(srealpath(pkg));
     }else{
         info("Installing from repository:" + pkg);
         p = get_package_from_repository(pkg);

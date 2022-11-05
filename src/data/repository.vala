@@ -190,7 +190,7 @@ public package get_from_repository(string name){
 //DOC: get package object from ymp file archive
 public package get_package_from_file(string path){
     package pkg = new package();
-    pkg.load_from_archive(path);
+    pkg.load_from_archive(srealpath(path));
     return pkg;
 }
 
