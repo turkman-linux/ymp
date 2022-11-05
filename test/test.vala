@@ -1,9 +1,9 @@
 
 void main(string[] args){
     // init ymp
+    Ymp ymp = ymp_init(args);
     print("Ymp test");
     set_destdir("../test/example/rootfs");
-    Ymp ymp = ymp_init(args);
     ymp.add_process("init",{"hello","world"});
     ymp.run();
 
