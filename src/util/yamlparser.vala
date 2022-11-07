@@ -59,7 +59,9 @@ public class yamlfile {
         while(offset+1 < data_length-1){
             string data = get_area_single(fdata,path);
             if(data != "" && data != null){
-                ret += data;
+                if(!(data in ret)){
+                    ret += data;
+                }
                 offset += ssplit(data,"\n").length + 1;
             }else{
                 offset += 1;
