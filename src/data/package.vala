@@ -23,6 +23,7 @@ public class package {
     public bool is_source;
     public string repo_address;
     private string pkgarea;
+    public string target;
     private archive pkgfile;
 
     //DOC: `void package.load(string path):`
@@ -151,15 +152,23 @@ public class package {
     //DOC: `void package.download():`
     //DOC: download package file from repository
     public void download(){
-        if(get_uri() != ""){
-            if(!fetch(get_uri(),get_storage()+"/packages/"+sbasename(get_uri()))){
+        target = get_storage()+"/packages/"+sbasename(get_uri());
+        download_only();
+        pkgfile = new archive();
+        pkgfile.load(target);
+    }
+
+    public void download_only(){
+        target = get_storage()+"/packages/"+sbasename(get_uri());
+        if(isfile(target)){
+            info("File already exists: "+target);
+        }else if(get_uri() != ""){
+            if(!fetch(get_uri(),target)){
                 error_add("failed to fetch package: "+get_uri());
             }
         }else{
             error_add("package is not downloadable: "+ name);
         }
-        pkgfile = new archive();
-        pkgfile.load(get_storage()+"/packages/"+sbasename(get_uri()));
     }
 
     //DOC: `void package.extract():`

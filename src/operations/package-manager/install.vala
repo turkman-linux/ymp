@@ -4,6 +4,10 @@ public int install_main(string[] args){
     quarantine_reset();
     package[] pkg_obj = {};
     foreach(string name in pkgs){
+        package p = get_package_from_repository(name);
+        p.download_only();    
+    }
+    foreach(string name in pkgs){
         package pkg = install_single(name);
         if(pkg == null){
             error(1);

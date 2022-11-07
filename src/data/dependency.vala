@@ -8,7 +8,7 @@ private void resolve_process(string[] names){
         info("Resolve dependency: "+name);
         // 1. block process packages for multiple times.
         if(name in cache_list){
-            return;
+            continue;
         }else{
             cache_list += name;
         }
@@ -22,11 +22,11 @@ private void resolve_process(string[] names){
                 pkg = get_from_repository(name);
             }
             if(pkg == null){
-                return;
+                continue;
             }
             if(!get_bool("reinstall") && is_installed_package(name)){
                 if(pkg.release <= get_installed_package(name).release){
-                    return;
+                    continue;
                 }
             }
             // run recursive function
@@ -36,20 +36,21 @@ private void resolve_process(string[] names){
             need_install += name;
         }
     }
-    return;
 }
 
 private void resolve_reverse_process(string[] names){
-    foreach(string pkgname in list_installed_packages()){
-        if(pkgname in cache_list){
-            return;
+    string[] pkgnames = list_installed_packages();
+    foreach(string name in names){
+        if(name in cache_list){
+            continue;
         }else{
-            cache_list += pkgname;
+            cache_list += name;
         }
-        // 2. process if not installed or need install
-        package pkg = get_installed_package(pkgname);
-        foreach(string name in names){
-            need_install += pkgname;
+        info("Resolve reverse dependency: "+name);
+        need_install += name;
+
+        foreach(string pkgname in pkgnames){
+            package pkg = get_installed_package(pkgname);
             if(name in pkg.dependencies){
                 string[] tmp = {pkgname};
                 resolve_reverse_process(tmp);
