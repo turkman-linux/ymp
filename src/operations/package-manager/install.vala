@@ -39,7 +39,7 @@ public package install_single(string pkg){
     }
     error(2);
     //If download-only finish operation
-    info("Installing: "+p.name);
+    print(colorize("Installing: ",yellow)+p.name);
     if(p.is_source || get_bool("sync-single")){
         p.build();
         quarantine_validate_files();
