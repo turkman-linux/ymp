@@ -77,6 +77,7 @@ public class helpmsg{
                 ret += "  "+param+"\n";
             }
         }
+        ret += colorize("Common options:\n",green);
         foreach(string param in common_parameters){
             ret += "  "+param+"\n";
         }
