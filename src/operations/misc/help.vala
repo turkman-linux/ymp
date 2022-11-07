@@ -31,7 +31,7 @@ void help_init(){
     add_common_parameter("--debug","enable debug output");
     #endif
     add_common_parameter("--verbose","show verbose output");
-    add_common_parameter("--interactive","enable questions");
+    add_common_parameter("--ask","enable questions");
     add_common_parameter("--help","write help messages");
 
 
