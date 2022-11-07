@@ -16,18 +16,22 @@ public int list_available_main(string[] args){
                 }
                 var description = pkg.get("description");
                 if(is_installed_package(name)){
-                    print(colorize(name,green) + " " + description);
+                    print(colorize("package",blue) + " "+colorize(name,green) + " " + description);
                 }else{
-                    print(colorize(name,red) + " " + description);
+                    print(colorize("package",blue) + " "+colorize(name,red) + " " + description);
                 }
             }
         } if(get_bool("source")){
            foreach(string name in repo.list_sources()){
-                var description = repo.get_source(name).get("description");
+                var pkg = repo.get_package(name);
+                if(pkg == null){
+                    continue;
+                }
+                var description = pkg.get("description");
                 if(is_installed_package(name)){
-                    print(colorize(name,green) + " " + description);
+                    print(colorize("source ",blue) + " "+colorize(name,green) + " " + description);
                 }else{
-                    print(colorize(name,red) + " " + description);
+                    print(colorize("source ",blue) + " "+colorize(name,red) + " " + description);
                 }
             }
         }
