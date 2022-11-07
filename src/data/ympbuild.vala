@@ -1,5 +1,5 @@
 //DOC: ## ympbuild file functions.
-//DOC: ymp uses archlinux ympbuild format.
+//DOC: ymp uses ympbuild format.
 
 // private variables used by functions
 private string ympbuild_srcpath;
@@ -16,70 +16,18 @@ private void ympbuild_init(){
     export HOME=\""+ympbuild_buildpath+"\"
     export DESTDIR=\"$installdir\"
     alias python=python3
+    declare -r YMPVER=\""+VERSION+"\"
     export NOCONFIGURE=1
     export NO_COLOR=1
     export CFLAGS=\"-s -DSULIX -L/lib/sulix "+get_value("build:cflags")+"\"
     export CXXFLAGS=\"-s -DSULIX -L/lib/sulix "+get_value("build:cxxflags")+"\"
     export CC=\""+get_value("build:cc")+"\"
     export LDFLAGS=\""+get_value("build:ldflags")+"\"
-    ymp-meson(){
-      meson setup \\
-        --prefix        /usr \\
-        --libexecdir    libexec \\
-        --libdir        lib \\
-        --sbindir       sbin \\
-        --bindir        bin \\
-        --buildtype     release \\
-        --debug         false \\
-        --auto-features disabled \\
-        --strip         true \\
-        --wrap-mode     nodownload \\
-        --layout        flat \\
-        -D              b_lto=true \\
-        -D              b_pie=true \\
-        -D              b_colorout=never \\
-        -D              b_pgo=true \\
-        -D              b_asneeded=true \\
-        \"$@\"
-    }
-    ymp-configure(){
-        if [[ -f \"./autogen.sh\" ]] ; then
-			NOCONFIGURE=1 ./autogen.sh
-		fi
-		if [[ -f configure ]] ; then
-            ./configure --prefix=/usr \"$@\"
-        elif [[ -f meson.build ]] ; then
-            ymp-meson build
-        elif [[ -f CMakeLists.txt ]] ; then
-            mkdir build
-            cd build
-	        cmake .. -DCMAKE_INSTALL_PREFIX=/usr \"$@\"
-	        cd ..
-        fi
-    }
-    ymp-build(){
-		if [[ -f configure ]] ; then
-            make -j`nproc`
-        elif [[ -f meson.build ]] ; then
-            ninja -C build
-        elif [[ -f CMakeLists.txt ]] ; then
-            make -j`nproc`
-        fi
 
-    }
-    ymp-install(){
-    	if [[ -f configure ]] ; then
-            make -j`nproc` install DESTDIR=$DESTDIR
-        elif [[ -f meson.build ]] ; then
-            ninja -C build install
-        elif [[ -f CMakeLists.txt ]] ; then
-            make -j`nproc` install DESTDIR=$DESTDIR
-        fi
-    }
-    _dump_variables(){
+    function _dump_variables(){
         set -o posix ; set  
     }
-    ymp_print_metadata(){
+    function ymp_print_metadata(){
         echo \"ymp:\"
         echo \"  source:\"
         echo \"    name: $name\"
@@ -104,6 +52,12 @@ private void ympbuild_init(){
                 echo \"      - ${src}\"
             done
         fi
+        if [[ \"${group[@]}\" != \"\" ]] ; then
+            echo \"    group:\"
+            for src in ${group[@]} ; do
+                echo \"      - ${src}\"
+            done
+        fi
         if [[ \"${provides[@]}\" != \"\" ]] ; then
             echo \"    provides:\"
             for pro in ${provides[@]} ; do
@@ -117,8 +71,7 @@ private void ympbuild_init(){
             done
         fi
     }
-    mkdir -p \"$DESTDIR\"
-    use(){
+    function use(){
         [[ \"${!1}\" == \"31\" ]]
         return $?
     }
@@ -142,6 +95,7 @@ public void set_ympbuild_srcpath(string path){
 //DOC: configure ympbuild file directory
 public void set_ympbuild_buildpath(string path){
     ympbuild_buildpath = srealpath(path);
+    create_dir(ympbuild_buildpath);
     ympbuild_init();
 }
 
@@ -179,9 +133,14 @@ public int run_ympbuild_function(string function){
     if(function == ""){
         return 0;
     }
-    print(colorize("Run action: ",blue)+function);
+    set_terminal_title("Run action: "+function);
     if(ympbuild_has_function(function)){
-        return run("bash -e -c '"+ympbuild_header+" \n source /etc/profile \n source "+ympbuild_srcpath+"/ympbuild ; set -e ; "+function+"'");
+        string cmd = "bash -e -c '"+ympbuild_header+" \n source /etc/profile \n source "+ympbuild_srcpath+"/ympbuild ; set -e ; "+function+"'";
+        if(get_bool("quiet")){
+            return run_silent(cmd);
+        }else{
+            return run(cmd);
+        }
     }else{
         warning("ympbuild function not exists: "+function);
     }

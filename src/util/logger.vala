@@ -100,6 +100,17 @@ private void logger_init(){
     }
 }
 
+//DOC: `void set_terminal_title(string msg):`
+//DOC: set terminal title
+public void set_terminal_title(string msg){
+    #if NOCOLOR
+       return;
+    #else
+    if (!get_bool("no-color")){
+        print_fn("\x1b]0;"+msg+"\x07",false,false);
+    }
+    #endif
+}
 
 //DOC: `void error(int status):`
 //DOC: print error message and exit if error message list not empty and status is not 0.

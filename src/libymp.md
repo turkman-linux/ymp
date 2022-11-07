@@ -371,7 +371,7 @@ generate remote repository index data
 # src/data/ympbuild.vala
 ## ympbuild file functions.
 
-ymp uses archlinux ympbuild format.
+ymp uses ympbuild format.
 
 `void set_ympbuild_srcpath(string path):`
 
@@ -902,6 +902,10 @@ var msg2 = colorize("world",blue);
 stdout.printf(msg+" "+msg2);
 
 ```
+
+`void set_terminal_title(string msg):`
+
+set terminal title
 
 `void error(int status):`
 
