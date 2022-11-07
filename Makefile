@@ -1,5 +1,5 @@
 build: clean
-	meson build --prefix=/usr -Ddoc=true -Ddebug=true
+	meson build --prefix=/usr -Ddoc=true -Ddebug=true -Dshared=true
 	ninja -C build
 
 test: test-clean

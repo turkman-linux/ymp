@@ -1,4 +1,5 @@
 option('static', type: 'boolean', value: 'false')
+option('shared', type: 'boolean', value: 'false')
 option('test', type: 'boolean', value: 'false')
 option('doc', type: 'boolean', value: 'false')
 option('tools', type: 'boolean', value: 'true')

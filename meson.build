@@ -7,15 +7,20 @@ run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
 args = ['-X','-O3', '-flto', '-DSULIX', '-Wall']
 
 args += ['-s', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
+if get_option('shared')
+    shared_dependencies = [dependency('gio-2.0', static: false)]
+endif
 
-dependencies = [
-    dependency('gio-2.0', static:get_option('static')),
-    dependency('readline', static:get_option('static')),
-]
+if get_option('static')
+    args += ['-static']
+    static_dependencies = [dependency('gio-2.0', static: true)]
+endif
 
 add_project_arguments('-C', language: 'vala')
 add_project_arguments(['--disable-assert', '--hide-internal', '--nostdpkg', '--enable-checking', '--abi-stability'], language: 'vala')
 add_project_arguments('-D', '_GNU_SOURCE', '--disable-version-header', language: 'vala')
+add_project_arguments(['--pkg', 'posix'], language: 'vala')
+
 
 run_command('bash', './tool/mkctx.sh',
     'CONFIGDIR=/'+get_option('sysconfdir'),
@@ -42,7 +47,7 @@ sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip
 sources += run_command('find', 'src/operations','-type','f',check:true).stdout().strip().split('\n')
 sources += run_command('find', 'src/data','-type','f',check:true).stdout().strip().split('\n')
 
-add_project_arguments(['--pkg', 'posix'], language: 'vala')
+
 foreach csource : run_command('find', 'src/ccode','-type','f',check:true).stdout().strip().split('\n')
     args += [meson.current_source_dir() / csource]
 endforeach
@@ -50,7 +55,7 @@ endforeach
 if get_option('debug')
     add_project_arguments('--debug', language: 'vala')
     add_project_arguments('-D', 'DEBUG', language: 'vala')
-    args += ['-DDEBUG']
+    args += ['-DDEBUG', '-g']
 endif
 
 if not get_option('colorize')
@@ -62,7 +67,12 @@ if not get_option('ignore-oem')
 endif
 
 if get_option('libarchive')
-    dependencies += dependency('libarchive', static:get_option('static'))
+    if get_option('shared')
+        shared_dependencies += dependency('libarchive', static:false)
+    endif
+    if get_option('static')
+        static_dependencies += dependency('libarchive', static:true)
+    endif
 else
     add_project_arguments('-D', 'no_libarchive', language: 'vala')
 endif
@@ -70,7 +80,8 @@ endif
 if get_option('libcurl')
     if get_option('static')
         args += run_command('pkg-config', '--libs', '--static','libcurl',check:true).stdout().strip().split(' ')
-    else
+    endif
+    if get_option('shared')
         args += run_command('pkg-config', '--libs', 'libcurl',check:true).stdout().strip().split(' ')
     endif
     if get_option('libbrotli')
@@ -83,39 +94,51 @@ else
 endif
 
 if get_option('libreadline')
-    dependencies += dependency('readline', static:get_option('static'))
+    if get_option('shared')
+        shared_dependencies += dependency('readline', static:false)
+    endif
+    if get_option('static')
+        static_dependencies += dependency('readline', static:true)
+    endif
 else
     add_project_arguments('-D', 'no_libreadline', language: 'vala')
 endif
 
+if get_option('shared')
+    lib = library('ymp-shared', sources, dependencies: shared_dependencies, link_args: args)
+    install_data(meson.current_build_dir() / 'libymp-shared.so', install_dir : get_option('libdir'), rename: 'libymp.so')
+    if get_option('tools')
+        executable('ymp-cli-shared', 'src/ymp-cli.vala', dependencies: shared_dependencies, link_args: args, link_with: lib)
+        install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
+    endif
+    if get_option('test')
+        executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
+    endif
+endif
 if get_option('static')
-    lib = static_library('ymp', sources, dependencies: dependencies, link_args: args)
-    args += ['-static']
-else
-    lib = library('ymp', sources, dependencies: dependencies, link_args: args)
+    libstatic = static_library('ymp-static', sources, dependencies: static_dependencies, link_args: args)
+    install_data(meson.current_build_dir() / 'libymp-static.a', install_dir : get_option('libdir'), rename: 'libymp.a')
+    if get_option('tools')
+        executable('ymp-cli-static', 'src/ymp-cli.vala', dependencies: static_dependencies, link_args: args, link_with: libstatic)
+        install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp-static')
+    endif
+    if get_option('test')
+        executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: libstatic)
+    endif
+
 endif
-if get_option('tools')
-    executable('ymp-cli', 'src/ymp-cli.vala', dependencies: dependencies, link_args: args, link_with: lib)
-    install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
-endif
+
 if get_option('scripts')
     foreach script : run_command('find', 'scripts','-type','f',check:true).stdout().strip().split('\n')
         install_data(script, install_dir : get_option('bindir'))
     endforeach
 endif
+
 install_data('data/ymp.conf', install_dir : get_option('sysconfdir'), rename : 'ymp.conf')
 install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
 install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/packages/')
-if get_option('static')
-    install_data(meson.current_build_dir() / 'libymp.a', install_dir : get_option('libdir'))
-else
-    install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('libdir'))
-endif
+
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
 install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'), rename : 'ymp.h')
 install_data(meson.current_build_dir() / 'ymp.vapi', install_dir : get_option('prefix')/'share/vala/vapi/', rename : 'libymp-'+meson.project_version()+'.vapi')
-if get_option('test')
-    # Test binary
-    executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
-endif
 
