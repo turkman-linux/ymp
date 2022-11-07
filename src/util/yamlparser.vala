@@ -54,6 +54,7 @@ public class yamlfile {
             return ret;
         }
         offset = find_first_offset(fdata,path);
+        debug("Get area list: offset:"+offset.to_string()+" path: "+path);
         int data_length = ssplit(fdata,"\n").length;
         while(offset+1 < data_length-1){
             string data = get_area_single(fdata,path);
@@ -129,7 +130,7 @@ public class yamlfile {
     }
 
     private string get_area_single(string fdata,string path){
-        if(fdata == null|| fdata == ""){
+        if(fdata == null || fdata == ""){
             return "";
         }
         int level = 0;

@@ -40,7 +40,7 @@ public string[] ssplit(string data, string f){
 //DOC: `string trim(string data):`
 //DOC: fixes excess indentation
 public string trim(string data){
-    if(data==null){
+    if(data==null || data == ""){
         return "";
     }
     int min = -1;
