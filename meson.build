@@ -105,10 +105,10 @@ else
 endif
 
 if get_option('shared')
-    lib = library('ymp-shared', sources, dependencies: shared_dependencies, link_args: args)
-    install_data(meson.current_build_dir() / 'libymp-shared.so', install_dir : get_option('libdir'), rename: 'libymp.so')
+    lib = library('ymp', sources, dependencies: shared_dependencies, link_args: args)
+    install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('libdir'), rename: 'libymp.so')
     if get_option('tools')
-        executable('ymp-cli-shared', 'src/ymp-cli.vala', dependencies: shared_dependencies, link_args: args, link_with: lib)
+        executable('ymp-cli', 'src/ymp-cli.vala', dependencies: shared_dependencies, link_args: args, link_with: lib)
         install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
     endif
     if get_option('test')
@@ -120,7 +120,7 @@ if get_option('static')
     install_data(meson.current_build_dir() / 'libymp-static.a', install_dir : get_option('libdir'), rename: 'libymp.a')
     if get_option('tools')
         executable('ymp-cli-static', 'src/ymp-cli.vala', dependencies: static_dependencies, link_args: args, link_with: libstatic)
-        install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp-static')
+        install_data(meson.current_build_dir() / 'ymp-cli-static', install_dir : get_option('bindir'),rename : 'ymp-static')
     endif
     if get_option('test')
         executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: libstatic)
