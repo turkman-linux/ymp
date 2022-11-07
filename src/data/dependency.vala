@@ -49,7 +49,7 @@ private string[] get_group_packages(string fname){
     string name = fname[1:];
     foreach(string pkgname in pkgnames){
         package p = get_from_repository(pkgname);
-        if(name in p.get("group")){
+        if(name in p.gets("group")){
             ret += pkgname;
         }
     }

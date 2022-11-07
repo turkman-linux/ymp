@@ -130,12 +130,12 @@ public class package {
 
     //DOC: `string package.get(string name):`
     //DOC: Get package value
-    public string get(string name){
-        if (yaml.has_area(pkgarea,name)){
-            debug(@"Package data: $name");
-            return yaml.get_value(pkgarea,name);
+    public string get(string fname){
+        if (yaml.has_area(pkgarea,fname)){
+            debug(@"Package data: $fname");
+            return yaml.get_value(pkgarea,fname);
         }
-        warning(@"Package information broken: $name");
+        warning(@"Package information broken: $fname $name");
         return "";
     }
 
