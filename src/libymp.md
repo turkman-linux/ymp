@@ -77,6 +77,14 @@ get current cpu architecture
 
 sync call
 
+`void create_dir(string path):`
+
+create directory from path
+
+`string readfile_raw (string path):`
+
+Read file from **path** and return content
+
 ### signal.c
 
 `void block_sigint():`
@@ -589,14 +597,6 @@ ruh command from argument array
 
 File & Directory functions
 
-`string readfile_raw (string path):`
-
-Read file from **path** and return content
-
-`string readfile_raw2 (string path):`
-
-Read file from **path** and return content
-
 `string readfile_byte(string path, long size):`
 
 read **n** byte from file
@@ -608,6 +608,10 @@ read file from **path** and remove commends
 `void writefile(string path, string ctx):`
 
 write **ctx** data to **path** file
+
+`string safedir(string dir):`
+
+directory safe for httpd
 
 `void cd(string path):`
 

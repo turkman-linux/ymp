@@ -62,7 +62,12 @@ public extern string getArch();
 //DOC: `void sync():`
 //DOC: sync call
 public extern void fs_sync();
+//DOC: `void create_dir(string path):`
+//DOC: create directory from path
 public extern void create_dir(string path);
+//DOC: `string readfile_raw (string path):`
+//DOC: Read file from **path** and return content
+public extern string readfile_raw(string path);
 //DOC: ### signal.c
 //DOC: `void block_sigint():`
 //DOC: block ctrl-c

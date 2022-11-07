@@ -5,14 +5,16 @@
 #include <stdbool.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
+#include <sys/mman.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>
+#include <fcntl.h>
 
 struct stat st;
 
-int filesize(char* path){
+long filesize(char* path){
     stat(path, &st);
     return st.st_size;
 }
@@ -31,13 +33,13 @@ char* getArch() {
 }
 
 void fs_sync(){
-    /*if(getuid() == 0){
+    if(getuid() == 0){
         FILE *f = fopen("/proc/sysrq-trigger","w");
         fputs("s",f);
         fclose(f);
-    }else{*/
+    }else{
         sync();
-    //}
+    }
 }
 
 void create_dir(const char *dir) {
@@ -56,6 +58,28 @@ void create_dir(const char *dir) {
             *p = '/';
         }
     mkdir(tmp, S_IRWXU);
+}
+
+char* readfile_raw(char* path){
+    char * buffer = 0;
+    long length;
+    int f = open (path, O_RDONLY);
+
+    if (f){
+
+        length = filesize(path);
+        buffer = malloc (length);
+        if (buffer){
+            int read_length = read (f, buffer, length);
+            if (length != read_length) {
+                free(buffer);
+                return "";
+            }
+        }
+        close (f);
+        return buffer;
+    }
+    return "";
 }
 
 #endif

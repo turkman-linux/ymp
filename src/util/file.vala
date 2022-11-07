@@ -1,62 +1,6 @@
 //DOC: ## File functions
 //DOC: File & Directory functions
 
-//DOC: `string readfile_raw (string path):`
-//DOC: Read file from **path** and return content
-public string readfile_raw (string path){
-    if(!isfile(path)){
-        warning("File not found: "+path);
-        return "";
-    }
-    FileStream stream = FileStream.open (path, "r");
-    if(stream == null){
-	    warning("Failed to read file: "+path);
-	    return "";
-	}
-
-	// get file size:
-	stream.seek (0, FileSeek.END);
-	long size = stream.tell ();
-	stream.rewind ();
-	if(size == 0){
-	    string data = readfile_raw2(path);
-	    if(data != ""){
-	        return data;
-	    }
-	    warning("File is empty: "+path);
-	    return data;
-	}
-
-	// load content:
-	uint8[] buf = new uint8[size];
-	size_t read = stream.read (buf, 1);
-	if (size != read){
-            return "";
-        }
-	return (string) buf;
-}
-
-//DOC: `string readfile_raw2 (string path):`
-//DOC: Read file from **path** and return content
-private string readfile_raw2 (string path){
-    File file = File.new_for_path (path);
-    string data="";
-    try {
-        FileInputStream @is = file.read ();
-        DataInputStream dis = new DataInputStream (@is);
-        string line;
-        while ((line = dis.read_line ()) != null){
-            data += line+"\n";
-            debug("Read line from:"+path);
-        }
-    } catch (Error e) {
-        error_add(e.message);
-        return "";
-    }
-    return data;
-}
-
-
 //DOC: `string readfile_byte(string path, long size):`
 //DOC: read **n** byte from file
 public string readfile_byte(string path, long n){
@@ -125,6 +69,14 @@ public void writefile(string path, string ctx){
     } catch (Error e) {
         error_add(e.message);
     }
+}
+
+//DOC: `string safedir(string dir):`
+//DOC: directory safe for httpd
+public string safedir(string dir){
+    string ret = dir;
+    ret = ret.replace("..",".");
+    return "./"+ret;
 }
 
 //DOC: `void cd(string path):`
