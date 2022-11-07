@@ -23,7 +23,6 @@ void setget_init(){
     var h2 = new helpmsg();
 
     h1.name = "get";
-    h.minargs=1;
     h1.description = "Get variable from name";
 
     h2.name = "set";
