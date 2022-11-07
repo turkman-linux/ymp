@@ -12,7 +12,6 @@ if get_option('shared')
 endif
 
 if get_option('static')
-    args += ['-static']
     static_dependencies = [dependency('gio-2.0', static: true)]
 endif
 
@@ -116,14 +115,14 @@ if get_option('shared')
     endif
 endif
 if get_option('static')
-    libstatic = static_library('ymp-static', sources, dependencies: static_dependencies, link_args: args)
+    libstatic = static_library('ymp-static', sources, dependencies: static_dependencies, link_args: args + ['-static'])
     install_data(meson.current_build_dir() / 'libymp-static.a', install_dir : get_option('libdir'), rename: 'libymp.a')
     if get_option('tools')
-        executable('ymp-cli-static', 'src/ymp-cli.vala', dependencies: static_dependencies, link_args: args, link_with: libstatic)
+        executable('ymp-cli-static', 'src/ymp-cli.vala', dependencies: static_dependencies, link_args: args + ['-static'], link_with: libstatic)
         install_data(meson.current_build_dir() / 'ymp-cli-static', install_dir : get_option('bindir'),rename : 'ymp-static')
     endif
     if get_option('test')
-        executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: libstatic)
+        executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args + ['-static'], link_with: libstatic)
     endif
 
 endif
