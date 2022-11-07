@@ -76,7 +76,7 @@ public void writefile(string path, string ctx){
 public string safedir(string dir){
     string ret = dir;
     ret = ret.replace("..",".");
-    return "./"+ret;
+    return ("./"+ret).replace("//","/");
 }
 
 //DOC: `void cd(string path):`
