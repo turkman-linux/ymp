@@ -56,8 +56,7 @@ async void process_request(SocketConnection conn) {
             dos.put_string("</body>\n</html>");
         }
     } catch (Error e) {
-        error_add(e.message);
-        error(2);
+        warning(e.message);
     }
 }
 
