@@ -84,6 +84,7 @@ public string[] calculate_leftover(package[] pkgs){
 void install_init(){
     var h = new helpmsg();
     h.name = "install";
+    h.minargs=1;
     h.description = "Install package from source or package file or repository";
     h.add_parameter("--ignore-dependency", "disable dependency check");
     h.add_parameter("--sync-single", "sync quarantine after every package installation");

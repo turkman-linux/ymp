@@ -17,6 +17,7 @@ void exec_init(){
     var h = new helpmsg();
     h.name = "exec";
     h.description = "Execute a command";
+    h.minargs=1;
     h.add_parameter("--quiet","run without output");
     add_operation(exec_main,{"exec"},h);
 }

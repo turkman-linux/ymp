@@ -18,6 +18,7 @@ public int fetch_main(string[] args){
 void fetch_init(){
     var h = new helpmsg();
     h.name = "fetch";
+    h.minargs=1;
     h.description = "Download files from network";
     add_operation(fetch_main,{"fetch","download","dl"}, h);
 }

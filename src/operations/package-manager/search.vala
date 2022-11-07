@@ -67,6 +67,7 @@ public int search_files_main(string[] args){
 void search_init(){
     var h = new helpmsg();
     h.name = "search";
+    h.minargs=1;
     h.description = "Search packages";
     h.add_parameter("--package-repo", "Search package in binary package repository.");
     h.add_parameter("--source-repo", "Search package in source package repository.");

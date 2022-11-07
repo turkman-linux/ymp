@@ -9,6 +9,7 @@ public int index_operation(string[] args){
 void index_init(){
     var h = new helpmsg();
     h.name = "index";
+    h.minargs=1;
     h.description = "Create repository index.";
     add_operation(index_operation,{"index", "ix"},h);
 }

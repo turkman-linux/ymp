@@ -14,6 +14,7 @@ public int run_sandbox_main(string[] args){
 void run_sandbox_init(){
     var h = new helpmsg();
     h.name = "sandbox";
+    h.minargs=1;
     h.description = "Start sandbox environment.";
     h.add_parameter("--shared","select shared directory");
     h.add_parameter("--no-net","block network access");

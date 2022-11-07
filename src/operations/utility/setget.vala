@@ -23,9 +23,11 @@ void setget_init(){
     var h2 = new helpmsg();
 
     h1.name = "get";
+    h.minargs=1;
     h1.description = "Get variable from name";
 
     h2.name = "set";
+    h.minargs=2;
     h2.description = "Set variable from name and value";
 
     add_operation(get_main,{"get"},h1);

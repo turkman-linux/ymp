@@ -17,6 +17,7 @@ public int shitcat_main(string[] args){
 void shitcat_init(){
     var h = new helpmsg();
     h.name = "shitcat";
+    h.minargs=1;
     h.description = "Write message with bad appearance.";
     h.add_parameter("-","read from stdin");
     add_operation(shitcat_main,{"shitcat","shit"},h);

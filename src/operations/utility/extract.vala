@@ -26,6 +26,7 @@ public int extract_main(string[] args){
 void extract_init(){
     var h = new helpmsg();
     h.name = "extract";
+    h.minargs=1;
     h.description = "Extract files from archive.";
     h.add_parameter("--listt","List archive files");
     add_operation(extract_main,{"extract","x"},h);

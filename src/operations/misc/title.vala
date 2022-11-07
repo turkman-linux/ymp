@@ -9,6 +9,7 @@ public int title_main(string[] args){
 void title_init(){
     var h = new helpmsg();
     h.name = "title";
+    h.minargs=1;
     h.description = "Set terminal title";
     add_operation(title_main,{"title"},h);
 }

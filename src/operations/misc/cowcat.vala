@@ -17,6 +17,7 @@ public int cowcat_main(string[] args){
 void cowcat_init(){
     var h = new helpmsg();
     h.name = "cowcat";
+    h.minargs=1;
     h.description = "Write a message with cow.";
     h.add_parameter("-","write from stdin");
     add_operation(cowcat_main,{"cow","moo","cowcat"},h);

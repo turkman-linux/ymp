@@ -35,6 +35,7 @@ public int remove_single(package p){
 void remove_init(){
     var h = new helpmsg();
     h.name = "remove";
+    h.minargs=1;
     h.description = "Remove package from package name";
     h.add_parameter("--ignore-dependency", "disable dependency check");
     add_operation(remove_main,{"remove","rm"},h);
