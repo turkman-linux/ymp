@@ -26,7 +26,7 @@ void setget_init(){
     h1.description = "Get variable from name";
 
     h2.name = "set";
-    h.minargs=2;
+    h2.minargs=2;
     h2.description = "Set variable from name and value";
 
     add_operation(get_main,{"get"},h1);
