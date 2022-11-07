@@ -227,6 +227,22 @@ public void update_repo(){
     }
 }
 
+public string[] list_available_packages(){
+    string[] ret = {};
+    foreach(repository repo in get_repos()){
+        if(get_bool("emerge")){
+            foreach(string name in repo.list_sources()){
+                ret += name;
+            }
+        }else{
+            foreach(string name in repo.list_packages()){
+                ret += name;
+            }
+       }
+    }
+    return ret;
+}
+
 //DOC: `string create_index_data(string fpath):`
 //DOC: generate remote repository index data
 public string create_index_data(string fpath){

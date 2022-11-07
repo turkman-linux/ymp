@@ -12,6 +12,11 @@ private void resolve_process(string[] names){
         }else{
             cache_list += name;
         }
+        if(name[0] == '@'){
+            string[] grp = get_group_packages(name);
+            resolve_process(grp);
+            continue;
+        }
         // 2. process if not installed or need install
         if (!(name in need_install)){
             // get package object
@@ -38,6 +43,19 @@ private void resolve_process(string[] names){
     }
 }
 
+private string[] get_group_packages(string fname){
+    string[] ret = {};
+    string[] pkgnames = list_available_packages();
+    string name = fname[1:];
+    foreach(string pkgname in pkgnames){
+        package p = get_from_repository(pkgname);
+        if(name in p.get("group")){
+            ret += pkgname;
+        }
+    }
+    return ret;
+}
+
 private void resolve_reverse_process(string[] names){
     string[] pkgnames = list_installed_packages();
     foreach(string name in names){
@@ -45,6 +63,11 @@ private void resolve_reverse_process(string[] names){
             continue;
         }else{
             cache_list += name;
+        }
+        if(name[0] == '@'){
+            string[] grp = get_group_packages(name);
+            resolve_reverse_process(grp);
+            continue;
         }
         info("Resolve reverse dependency: "+name);
         need_install += name;

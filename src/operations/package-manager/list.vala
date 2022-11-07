@@ -21,7 +21,7 @@ public int list_available_main(string[] args){
                     print(colorize("package",blue) + " "+colorize(name,red) + " " + description);
                 }
             }
-        } if(get_bool("source")){
+        }else if(get_bool("source")){
            foreach(string name in repo.list_sources()){
                 var pkg = repo.get_package(name);
                 if(pkg == null){
