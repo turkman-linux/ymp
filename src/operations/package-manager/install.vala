@@ -4,7 +4,7 @@ public int install_main(string[] args){
     quarantine_reset();
     package[] pkg_obj = {};
     foreach(string name in pkgs){
-        package p = get_package_from_repository(name);
+        package p = get_from_repository(name);
         p.download_only();    
     }
     foreach(string name in pkgs){
@@ -38,7 +38,7 @@ public package install_single(string pkg){
         p.load_from_archive(srealpath(pkg));
     }else{
         info("Installing from repository:" + pkg);
-        p = get_package_from_repository(pkg);
+        p = get_from_repository(pkg);
         p.download();
     }
     error(2);
