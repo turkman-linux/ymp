@@ -58,6 +58,7 @@ public class package {
         }
         //read values from data
         read_values();
+        error(2);
     }
 
     public void set_pkgarea(string area, bool is_src){
@@ -86,6 +87,7 @@ public class package {
                 return ssplit(files,"\n");
             }
             error_add("Package archive missing");
+            error(2);
             return {};
         }
         string files = pkgfile.readfile("files");
