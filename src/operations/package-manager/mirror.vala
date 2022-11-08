@@ -4,12 +4,12 @@ public int mirror_main(string[] args){
         target=srealpath(".");
     }
     create_dir(target);
-    print(target);
     foreach(string arg in args){
         foreach(repository repo in get_repos()){
             if(repo.name == arg || arg == "*"){
                 if(get_bool("package")){
                     foreach(string name in repo.list_packages()){
+                        print(colorize("Mirror :",yellow)+repo.name+" => "+name+" (binary)");
                         var pkg = repo.get_package(name);
                         mirror_download(pkg, target);
                     }
@@ -17,6 +17,7 @@ public int mirror_main(string[] args){
                 if(get_bool("source")){
                     foreach(string name in repo.list_sources()){
                         var pkg = repo.get_source(name);
+                        print(colorize("Mirror :",yellow)+repo.name+" => "+name+" (source)");
                         mirror_download(pkg, target);
                     }
                 }
