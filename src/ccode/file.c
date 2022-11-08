@@ -41,6 +41,10 @@ char* getArch() {
 void fs_sync(){
     if(getuid() == 0){
         FILE *f = fopen("/proc/sysrq-trigger","w");
+        if(f == NULL){
+            sync();
+            return;
+        }
         fputs("s",f);
         fclose(f);
     }else{

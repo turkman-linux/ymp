@@ -80,7 +80,7 @@ private void extract_package_sources(){
 }
 
 private void build_package(){
-    info("Building package from:"+ympbuild_buildpath);
+    print(colorize("Building package from:",yellow)+ympbuild_buildpath);
     cd(ympbuild_buildpath);
     int status = 0;
     if(!get_bool("no-build")){
