@@ -1,8 +1,14 @@
-project('ymp', 'vala', 'c',
+project(
+    'ymp',
+    'vala', 'c',
+    meson_version: '>= 0.49.0',
     version : '1.0',
     license: ['GplV3']
-
 )
+if meson.get_compiler('vala').version().version_compare('<0.54.9')
+    error('vala compiler version 0.54.9 or newer is required.')
+endif
+
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
 args = ['-X','-O3', '-flto', '-DSULIX', '-Wall']
 
