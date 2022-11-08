@@ -177,7 +177,6 @@ public Ymp ymp_init(string[] args){
     block_sigint();
     ctx_init();
     settings_init();
-    ympbuild_init();
     parse_args(args);
     #if check_oem
         if(is_oem_available()){

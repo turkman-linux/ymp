@@ -37,7 +37,7 @@ private void settings_init(){
     if(get_env("USE") != null){
         set_value_readonly("USE",get_env("USE"));
     }else{
-        set_value_readonly("USE",ini.get("ymp","USE"));
+        set_value_readonly("USE",ini.get("ymp","use"));
     }
     clear_env();
     set_env("LANG","C.UTF-8");
@@ -91,19 +91,24 @@ private void parse_args(string[] args){
         if(arg == "--"){
             return;
         }
+        var argname = arg[2:];
         if(startswith(arg,"--")){
-            if(arg[2:] == "allow-oem"){
+            if(argname == "allow-oem"){
                     set_value_readonly("allow-oem","true");
             }else if(arg.contains("=")){
-                if(ssplit(arg[2:],"=")[0] == "destdir"){
-                    set_destdir(ssplit(arg[2:],"=")[1]);
-                }else if(ssplit(arg[2:],"=")[0] == "config"){
-                    set_config(ssplit(arg[2:],"=")[1]);
+                var name = ssplit(argname,"=")[0];
+                var value = ssplit(argname,"=")[1];
+                if(name == "use"){
+                    set_value_readonly(name,value);
+                }else if(name == "destdir"){
+                    set_destdir(value);
+                }else if(name == "config"){
+                    set_config(value);
                 }else{
-                    set_value(ssplit(arg[2:],"=")[0],ssplit(arg[2:],"=")[1]);
+                    set_value(name,value);
                 }
             }else{
-                set_bool(arg[2:],true);
+                set_bool(argname,true);
             }
         }
     }

@@ -15,6 +15,12 @@ void progressbar(double cur, double total, string filename){
 int main (string[] args) {
     Ymp ymp = ymp_init(args);
     string[] new_args = argument_process(args);
+    if(get_bool("sandbox")){
+        var a = new array();
+        a.adds(args);
+        a.remove("--sandbox");;
+        return run_sandbox_main(a.get());
+    }
     if(new_args.length < 2){
         error_add("No command given.\nRun "+ colorize("ymp-cli help",red)+ " for more information about usage.");
         error(31);

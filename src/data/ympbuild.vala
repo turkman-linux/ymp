@@ -72,23 +72,23 @@ private void ympbuild_init(){
         fi
     }
     function use(){
-        [[ \"${!1}\" == \"31\" ]]
+        flag=\"use_$1\"
+        [[ \"${!flag}\" == \"31\" || \"${use_all}\" == \"31\" ]]
         return $?
     }
     ";
+    var use_flags = new array();
     foreach(string flag in ssplit(get_value("use")," ")){
-       if(flag == "" || flag == null){
-           continue;
-       }
-       info("USE flag: "+flag);
-       ympbuild_header += "declare -r '"+flag.replace("'","\\'")+"'=31 \n";
+       use_flags.add(flag);
+       ympbuild_header += "declare -r use_'"+flag.replace("'","\\'")+"'=31 \n";
+
     }
+    print(colorize("USE flag: ",green)+join(" ",use_flags.get()));
 }
 //DOC: `void set_ympbuild_srcpath(string path):`
 //DOC: configure ympbuild file directory
 public void set_ympbuild_srcpath(string path){
     ympbuild_srcpath = srealpath(path);
-    ympbuild_init();
 }
 
 //DOC: `void set_ympbuild_srcpath(string path):`
