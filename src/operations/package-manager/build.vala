@@ -1,10 +1,29 @@
 private bool no_src = false;
 public int build_operation(string[] args){
+    string currend_directory=srealpath(pwd());
     string[] new_args = args;
     if(new_args.length == 0){
         new_args = {"."};
     }
     foreach(string arg in new_args){
+        if(isfile(arg)){
+            string srcpath = DESTDIR+"/tmp/ymp-build/"+calculate_md5sum(arg);
+            var tar = new archive();
+            tar.load(arg);
+            tar.set_target(srcpath);
+            tar.extract_all();
+            set_build_target(srcpath);
+            create_metadata_info();
+            fetch_package_sources();
+            extract_package_sources();
+            build_package();
+            var fname = sbasename(output_package_path);
+            output_package_path=currend_directory+"/"+fname;
+            create_binary_package();
+            
+            error(1);
+            continue;
+        }
         if(!isfile(arg+"/ympbuild")){
             continue;
         }
@@ -24,6 +43,7 @@ public int build_operation(string[] args){
             create_binary_package();
         }
     }
+    cd(currend_directory);
     return 0;
 }
 
@@ -110,7 +130,7 @@ private void build_package(){
 }
 
 private void create_source_archive(){
-    debug("Create source package from :"+ympbuild_srcpath);
+    print(colorize("Create source package from :",yellow)+ympbuild_srcpath);
     cd(ympbuild_srcpath);
     string metadata = get_ympbuild_metadata();
     writefile(srealpath(ympbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
@@ -259,7 +279,7 @@ private void create_data_file(){
 }
 
 private void create_binary_package(){
-    debug("Create binary package from :"+ympbuild_buildpath);
+    print(colorize("Create binary package from :",yellow)+ympbuild_buildpath);
     cd(ympbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();
