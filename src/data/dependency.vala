@@ -1,16 +1,16 @@
 //DOC: ## Dependency analysis
 //DOC: resolve dependencies
-private string[] need_install;
-private string[] cache_list;
+private array need_install;
+private array cache_list;
 
 private void resolve_process(string[] names){
     foreach(string name in names){
         info("Resolve dependency: "+name);
         // 1. block process packages for multiple times.
-        if(name in cache_list){
+        if(cache_list.has(name)){
             continue;
         }else{
-            cache_list += name;
+            cache_list.add(name);
         }
         if(name[0] == '@'){
             string[] grp = get_group_packages(name);
@@ -18,7 +18,7 @@ private void resolve_process(string[] names){
             continue;
         }
         // 2. process if not installed or need install
-        if (!(name in need_install)){
+        if (!need_install.has(name)){
             // get package object
             package pkg = null;
             if(isfile(name)){
@@ -38,31 +38,31 @@ private void resolve_process(string[] names){
             resolve_process(pkg.dependencies);
             // add package to list
             debug(name);
-            need_install += name;
+            need_install.add(name);
         }
     }
 }
 
 private string[] get_group_packages(string fname){
-    string[] ret = {};
+    array ret = new array();
     string[] pkgnames = list_available_packages();
     string name = fname[1:];
     foreach(string pkgname in pkgnames){
         package p = get_from_repository(pkgname);
         if(name in p.gets("group")){
-            ret += pkgname;
+            ret.add(pkgname);
         }
     }
-    return ret;
+    return ret.get();
 }
 
 private void resolve_reverse_process(string[] names){
     string[] pkgnames = list_installed_packages();
     foreach(string name in names){
-        if(name in cache_list){
+        if(cache_list.has(name)){
             continue;
         }else{
-            cache_list += name;
+            cache_list.add(name);
         }
         if(name[0] == '@'){
             string[] grp = get_group_packages(name);
@@ -70,7 +70,7 @@ private void resolve_reverse_process(string[] names){
             continue;
         }
         info("Resolve reverse dependency: "+name);
-        need_install += name;
+        need_install.add(name);
 
         foreach(string pkgname in pkgnames){
             package pkg = get_installed_package(pkgname);
@@ -89,13 +89,13 @@ public string[] resolve_dependencies(string[] names){
         return names;
     }
     // reset need list
-    need_install = {};
+    need_install = new array();
     // reset cache list
-    cache_list = {};
+    cache_list = new array();
     // process
     resolve_process(names);
     error(3);
-    return need_install;
+    return need_install.get();
 }
 
 //DOC: `string[] resolve_reverse_dependencies(string[] names):`
@@ -105,10 +105,10 @@ public string[] resolve_reverse_dependencies(string[] names){
         return names;
     }
     // reset need list
-    need_install = {};
+    need_install = new array();
     // reset cache list
-    cache_list = {};
+    cache_list = new array();
     resolve_reverse_process(names);
     error(3);
-    return need_install;
+    return need_install.get();
 }
