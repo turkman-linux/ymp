@@ -165,12 +165,17 @@ public class package {
         target = get_storage()+"/packages/"+sbasename(get_uri());
         if(isfile(target)){
             info("File already exists: "+target);
+            return;
         }else if(get_uri() != ""){
             if(!fetch(get_uri(),target)){
                 error_add("failed to fetch package: "+get_uri());
             }
         }else{
             error_add("package is not downloadable: "+ name);
+        }
+        string target_sum = calculate_md5sum(target);
+        if(get("md5sum") != target_sum){
+            error_add("Package md5sum mismatch:"+target);
         }
     }
 
