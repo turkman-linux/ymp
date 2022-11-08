@@ -2,7 +2,7 @@ private bool on_incoming_connection(SocketConnection conn) {
     process_request.begin(conn);
     return true;
 }
-
+private long BUFFER_LENGTH = 1024*100;
 async void process_request(SocketConnection conn) {
     try {
         var dis = new DataInputStream(conn.input_stream);
@@ -17,29 +17,36 @@ async void process_request(SocketConnection conn) {
         string ip = local.get_address().to_string();
         string date = now.format("%H:%M %Y.%m.%d");
         if (isfile(path)) {
-            print_fn("%s -- %s %s".printf(ip,date,path),true,true);
-            if(endswith(path,".html")){
-                dos.put_string("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
-            }else{
-                dos.put_string("HTTP/1.1 200 OK\nContent-Type: text/plain\n\n");
-            }
             FileStream stream = FileStream.open(path, "r");
             long size = filesize(path);
-            // load content:
-            uint8[] buf = new uint8[size];
-            size_t read_size = stream.read(buf, 1);
-            if (size != read_size) {
-                return;
+
+            print_fn("%s -- %s %s %s".printf(ip,date,path,GLib.format_size((uint64)size)),true,true);
+
+            dos.put_string("HTTP/1.1 200 OK\n");
+            dos.put_string("Server: YMP httpd %s\n".printf(VERSION));
+            if(endswith(path.down(),".html")){
+                dos.put_string("Content-Type: text/html\n");
+            }else{
+                dos.put_string("Content-Type: text/plain\n");
             }
-            dos.write(buf);
-            dos.flush();
+            dos.put_string("Content-Length: %l\n\n".printf(size));
+            uint8[] buf = new uint8[BUFFER_LENGTH];
+            size_t read_size = 0;
+            size_t written = 0;
+            while ((read_size = stream.read (buf)) != 0) {
+               written = 0;
+               while(written < read_size){
+                   written += dos.write(buf[written:read_size]);
+               }
+               dos.flush();
+            }
         }else if(isdir(path)){
             dos.put_string("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
             dos.put_string("<html>\n<head>");
             dos.put_string("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n");
-            dos.put_string("<title>Directory listing for "+path[2:]+"</title>\n");
+            dos.put_string("<title>Directory listing for "+path[1:]+"</title>\n");
             dos.put_string("</head>\n<body>\n");
-            dos.put_string("<h1>Directory listing for "+path[2:]+"</h1>\n");
+            dos.put_string("<h1>Directory listing for "+path[1:]+"</h1>\n");
             dos.put_string("<hr>\n<ul>\n");
             dos.put_string("<li><a href=\"../\">..</a><br></li>\n");
             dos.flush();
