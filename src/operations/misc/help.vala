@@ -1,6 +1,7 @@
 public int help_main(string[] args){
     if (args.length == 0){
-        print_fn(colorize("Operation list: ",blue), false, false);
+        write_version();
+        print(colorize("Operation list: ",blue));
         foreach(operation op in ops){
             print_fn(colorize(join(" ",op.names)+" : ",green)+op.help.description+"\n", false, false);
         }
@@ -15,6 +16,33 @@ public int help_main(string[] args){
     
     }
     return 0;
+}
+
+public void write_version(){
+    print("YMP : "+colorize("Y",red)+"erli ve "+colorize("M",red)+"illi "+colorize("P",red)+"ackage manager");
+    print("Version : "+VERSION);
+    print("");
+    string flag =
+"            /#&@@@@@@&#*                              
+        *%@@@@@@@@@@@@@@@@@@@&#*                      
+     *&@@@@@@@@@@&(/*       **/#&%                    
+   /&@@@@@@@@@#*                  /(*                 
+ *#@@@@@@@@@/                            **           
+ &@@@@@@@@#*                             *%&(         
+%@@@@@@@@#                               *%@@&/*/#&@% 
+@@@@@@@@&/                             **(&@@@@@@@%*  
+@@@@@@@@&*                         *#&@@@@@@@@@@@%    
+@@@@@@@@@(                               *%@@@@@@@@#  
+(@@@@@@@@&*                              *%@@(   **(%/
+ (@@@@@@@@&/                             *##*         
+  /@@@@@@@@@&*                      *                 
+    (@@@@@@@@@@#*                /#(                  
+      *&@@@@@@@@@@@&#(//**//(%@@%                     
+          (&@@@@@@@@@@@@@@@@%/                        ";
+    foreach(string line in ssplit(flag,"\n")){
+        print("    "+line);
+    }
+    print("");
 }
 
 private void write_op_help(operation op){

@@ -21,8 +21,12 @@ int main (string[] args) {
         a.remove("--sandbox");;
         return run_sandbox_main(a.get());
     }
+    if(get_bool("version")){
+        write_version();
+        return 0;
+    }
     if(new_args.length < 2){
-        error_add("No command given.\nRun "+ colorize("ymp-cli help",red)+ " for more information about usage.");
+        error_add("No command given.\nRun "+ colorize("ymp help",red)+ " for more information about usage.");
         error(31);
     }else{
         ymp.add_process(new_args[1],new_args[2:]);
