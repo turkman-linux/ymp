@@ -12,6 +12,12 @@
 #include <limits.h>
 #include <fcntl.h>
 
+#define FILE_OK 0
+#define FILE_NOT_EXIST 1
+#define FILE_TO_LARGE 2
+#define FILE_READ_ERROR 3
+
+
 struct stat st;
 
 long filesize(char* path){
@@ -60,26 +66,67 @@ void create_dir(const char *dir) {
     mkdir(tmp, S_IRWXU);
 }
 
-char* readfile_raw(char* path){
-    char * buffer = 0;
-    long length;
-    int f = open (path, O_RDONLY);
+char * c_read_file(const char * f_name, int * err, size_t * f_size) {
+    char * buffer;
+    size_t length;
+    FILE * f = fopen(f_name, "rb");
+    size_t read_length;
 
-    if (f){
+    if (f) {
+        fseek(f, 0, SEEK_END);
+        length = ftell(f);
+        fseek(f, 0, SEEK_SET);
 
-        length = filesize(path);
-        buffer = malloc (length);
-        if (buffer){
-            int read_length = read (f, buffer, length);
+        // 1 GiB; best not to load a whole large file in one string
+        if (length > 1073741824) {
+            * err = FILE_TO_LARGE;
+
+            return NULL;
+        }
+
+        buffer = (char * ) malloc(length + 1);
+
+        if (length) {
+            read_length = fread(buffer, 1, length, f);
+
             if (length != read_length) {
-                free(buffer);
-                return "";
+                * err = FILE_READ_ERROR;
+
+                return NULL;
             }
         }
-        close (f);
-        return buffer;
+
+        fclose(f);
+
+        * err = FILE_OK;
+        buffer[length] = '\0';
+        * f_size = length;
+    } else {
+        * err = FILE_NOT_EXIST;
+
+        return NULL;
     }
-    return "";
+
+    return buffer;
 }
+char * readfile_raw(const char * filename) {
+    int err;
+    size_t f_size;
+    char * f_data;
+
+    f_data = c_read_file(filename, & err, & f_size);
+
+    if (err) {
+        if (err == FILE_NOT_EXIST) {
+            fprintf(stderr, "Error: %s (%d)\n", "file not found.", err);
+        } else if (err == FILE_READ_ERROR) {
+            fprintf(stderr, "Error: %s (%d)\n", "failed to read file.", err);
+        }
+        exit(err);
+    } else {
+        return f_data;
+    }
+}
+
 
 #endif

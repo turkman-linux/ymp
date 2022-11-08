@@ -29,8 +29,9 @@ public class package {
     //DOC: `void package.load(string path):`
     //DOC: Read package information from metadata file
     public void load(string path){
-        load_from_data(readfile(path));
-        read_values();
+        string ctx = readfile_raw(path);
+        print(ctx);
+        load_from_data(trim(ctx));
     }
 
     //DOC: `void package.load_from_data(string data):`
@@ -44,7 +45,7 @@ public class package {
         }else if(yaml.has_area(metadata,"package") || yaml.has_area(metadata,"source")){
             ympdata = metadata;
         }else{
-            error_add("Package is broken:\n"+metadata);
+            error_add("Package metadata file is broken:\n"+metadata);
         }
         // package area load
         if(yaml.has_area(ympdata,"package")){
@@ -54,11 +55,11 @@ public class package {
             is_source = true;
             pkgarea = yaml.get_area(ympdata,"source");
         }else{
-            error_add("Package is broken:\n"+ympdata);
+            error_add("Package data is broken:\n"+ympdata);
         }
+        error(2);
         //read values from data
         read_values();
-        error(2);
     }
 
     public void set_pkgarea(string area, bool is_src){
@@ -75,6 +76,7 @@ public class package {
         pkgfile = new archive();
         pkgfile.load(srealpath(path));
         var metadata = pkgfile.readfile("metadata.yaml");
+        info("Load package from:"+path);
         load_from_data(metadata);
     }
 
