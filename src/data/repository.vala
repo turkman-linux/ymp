@@ -265,9 +265,9 @@ public string create_index_data(string fpath){
                     dir=fname[:4];
                 }
                 dir = dir+"/"+ssplit(fname,"_")[0]+"/";
-                create_dir(dir);
                 string target = srealpath(path+"/"+dir+fname);
                 if(srealpath(file) != target){
+                    create_dir(path+"/"+dir);
                     move_file(file,target);
                     file = target;
                 }
