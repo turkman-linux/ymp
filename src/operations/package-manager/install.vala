@@ -15,6 +15,7 @@ public int install_main(string[] args){
             pkg_obj += pkg;
         }
     }
+    string[] leftovers = calculate_leftover(pkg_obj);
     info("Quarantine validation");
     quarantine_validate_files();
     error(1);
@@ -22,7 +23,7 @@ public int install_main(string[] args){
     quarantine_install();
     error(1);
     info("Clear leftovers");
-    foreach(string file in calculate_leftover(pkg_obj)){
+    foreach(string file in leftovers){
         remove_file(DESTDIR+"/"+file);
     }
     sysconf_main(args);

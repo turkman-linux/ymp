@@ -11,6 +11,7 @@ void index_init(){
     h.name = "index";
     h.minargs=1;
     h.add_parameter("--move", "move packages for alphabetical hierarchy");
+    h.add_parameter("--name", "new repository name (required)");
     h.description = "Create repository index.";
     add_operation(index_operation,{"index", "ix"},h);
 }

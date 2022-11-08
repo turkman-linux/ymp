@@ -64,6 +64,8 @@ void list_init(){
     h1.description = "List installed packages.";
 
     h2.name = "list-available";
+    h2.add_parameter("--package","list available binary packages");
+    h2.add_parameter("--source","list available source packages");
     h2.description = "List available packages.";
 
 

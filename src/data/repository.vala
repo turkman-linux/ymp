@@ -111,6 +111,7 @@ private repository[] repos;
 //DOC: `repository[] get_repos():`
 //DOC: get all repositories as array
 public repository[] get_repos(){
+    string force_repo = get_value("repo");
     if(repos == null){
         repos = {};
     }else{
@@ -119,7 +120,9 @@ public repository[] get_repos(){
     foreach(string file in listdir(get_storage()+"/index")){
         repository repo = new repository();
         repo.load(file);
-        repos += repo;
+        if(force_repo == "" || force_repo == repo.name){
+            repos += repo;
+        }
     }
     return repos;
 }

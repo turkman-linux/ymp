@@ -175,9 +175,9 @@ public Ymp ymp_init(string[] args){
         return app;
     }
     block_sigint();
-    ctx_init();
     settings_init();
     parse_args(args);
+    ctx_init();
     #if check_oem
         if(is_oem_available()){
             if(!get_bool("ALLOW-OEM")){
