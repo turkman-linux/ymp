@@ -251,11 +251,15 @@ public string[] list_available_packages(){
 //DOC: generate remote repository index data
 public string create_index_data(string fpath){
     string index = "index:\n";
+    string md5sum = "";
+    int size=0;
     string path = srealpath(fpath);
     var tar = new archive();
     var yaml = new yamlfile();
     foreach(string file in find(path)){
         if(endswith(file,".ymp")){
+            md5sum = calculate_md5sum(file);
+            size = filesize(file);
             tar.load(file);
             file = file[path.length:];
             info("Index: "+file);
@@ -267,6 +271,8 @@ public string create_index_data(string fpath){
                 }
                 index += "  "+line+"\n";
             }
+            index+="    md5sum: "+md5sum+"\n";
+            index+="    size: "+size.to_string()+"\n";
             index+="    uri: "+file+"\n\n";
         }
     }
