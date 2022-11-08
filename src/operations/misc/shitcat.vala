@@ -5,8 +5,8 @@ public int shitcat_main(string[] args){
         while(line != ""){
             line = stdin.read_line();
             data += line+"\n";
-            shitcat(data);
         }
+        shitcat(data);
     }else{
         data = readfile(args[0]);
         shitcat(data);
