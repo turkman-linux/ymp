@@ -30,7 +30,6 @@ public class package {
     //DOC: Read package information from metadata file
     public void load(string path){
         string ctx = readfile_raw(path);
-        print(ctx);
         load_from_data(trim(ctx));
     }
 
