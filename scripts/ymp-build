@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 set -e
-for $dir in $@ ; do
+if [[ $UID -eq 0 ]] ; then
+    echo "Error: root build is not allowed" >/dev/stderr
+    exit 1
+fi
+for dir in $@ ; do
+    fdir=$(realpath $dir)
+    echo "BUILD: $fdir"
     rm -rf /tmp/ymp-build
-    if [[ -f ympbuild ]] ; then
-        exec ymp --sandbox --allow-oem --shared="$(pwd)/$dir" build "$(pwd)/dir"
+    if [[ -f "$fdir/ympbuild" ]] ; then
+        exec ymp --sandbox --verbose --allow-oem --shared="$fdir" --use="all" build "$fdir"
     fi
 done
 
