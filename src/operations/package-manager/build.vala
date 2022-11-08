@@ -12,6 +12,11 @@ public int build_operation(string[] args){
             tar.load(arg);
             tar.set_target(srcpath);
             tar.extract_all();
+            if(!isfile(srcpath+"/ympbuild")){
+                error_add("Package is invalid");
+                remove_all(srcpath);
+                error(2);
+            }
             set_build_target(srcpath);
             create_metadata_info();
             fetch_package_sources();
@@ -28,10 +33,6 @@ public int build_operation(string[] args){
             continue;
         }
         set_build_target(arg);
-        if(!ympbuild_check()){
-            error_add("ympbuild file is invalid!");
-            error(2);
-        }
         create_metadata_info();
         fetch_package_sources();
         if(!get_bool("no-source")){
@@ -54,6 +55,10 @@ private void set_build_target(string src_path){
     set_ympbuild_buildpath(build_path);
     if(isdir(build_path)){
         remove_all(build_path);
+    }
+    if(!ympbuild_check()){
+            error_add("ympbuild file is invalid!");
+            error(2);
     }
 }
 
