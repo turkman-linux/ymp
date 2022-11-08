@@ -165,7 +165,6 @@ public class package {
         target = get_storage()+"/packages/"+sbasename(get_uri());
         if(isfile(target)){
             info("File already exists: "+target);
-            return;
         }else if(get_uri() != ""){
             if(!fetch(get_uri(),target)){
                 error_add("failed to fetch package: "+get_uri());
@@ -175,7 +174,8 @@ public class package {
         }
         string target_sum = calculate_md5sum(target);
         if(get("md5sum") != target_sum){
-            error_add("Package md5sum mismatch:"+target);
+            error_add("Package md5sum mismatch");
+            remove_file(target);
         }
     }
 
@@ -220,12 +220,18 @@ public class package {
                 // 1. data.* file extract to quarantine from ymp package
                 pkgfile.extract(data);
                 var datafile = get_storage()+"/quarantine/"+data;
-                // 2. data.* package extract to quarantine/rootfs
+                // 2. validate data archive
+                var data_hash = calculate_sha1sum(datafile);
+                if(data_hash != get("archive-hash")){
+                    error_add("Archive sha1sum mismatch");
+                    remove_file(datafile);
+                }
+                // 3. data.* package extract to quarantine/rootfs
                 var file_archive = new archive();
                 file_archive.load(datafile);
                 file_archive.set_target(get_storage()+"/quarantine/rootfs");
                 file_archive.extract_all();
-                // 3. remove data.* file
+                // 4. remove data.* file
                 remove_file(datafile);
                 break;
             }
