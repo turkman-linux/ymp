@@ -258,6 +258,20 @@ public string create_index_data(string fpath){
     var yaml = new yamlfile();
     foreach(string file in find(path)){
         if(endswith(file,".ymp")){
+            if(get_bool("move")){
+                string fname = sbasename(file);
+                string dir=fname[:1];
+                if(startswith(fname,"lib")){
+                    dir=fname[:4];
+                }
+                dir = dir+"/"+ssplit(fname,"_")[0]+"/";
+                create_dir(dir);
+                string target = srealpath(path+"/"+dir+fname);
+                if(srealpath(file) != target){
+                    move_file(file,target);
+                    file = target;
+                }
+            }
             md5sum = calculate_md5sum(file);
             size = filesize(file);
             tar.load(file);

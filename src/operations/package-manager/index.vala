@@ -10,6 +10,7 @@ void index_init(){
     var h = new helpmsg();
     h.name = "index";
     h.minargs=1;
+    h.add_parameter("--move", "move packages for alphabetical hierarchy");
     h.description = "Create repository index.";
     add_operation(index_operation,{"index", "ix"},h);
 }
