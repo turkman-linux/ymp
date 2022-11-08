@@ -52,6 +52,7 @@ public class repository {
             if (yaml.get_value(area,"name") == name){
                 pkg = new package();
                 pkg.set_pkgarea(area,true);
+                pkg.repo_address = address;
                 return pkg;
             }
         }
@@ -69,6 +70,7 @@ public class repository {
             if (yaml.get_value(area,"name") == name){
                 pkg = new package();
                 pkg.set_pkgarea(area,false);
+                pkg.repo_address = address;
                 return pkg;
             }
         }
@@ -225,7 +227,6 @@ public void update_repo(){
         string path = get_storage()+"/index/"+name;
         fetch(repo,path);
         string index_data = readfile(path);
-        index_data += "\n  name: "+calculate_md5sum(path);
         index_data += "\n  address: "+repox;
         writefile(path,index_data);
     }
@@ -254,8 +255,14 @@ public string create_index_data(string fpath){
     string md5sum = "";
     int size=0;
     string path = srealpath(fpath);
+    string index_name = get_value("name");
+    if(index_name == ""){
+        error_add("Index name not defined. Please use --name=xxx");
+        error(1);
+    }
     var tar = new archive();
     var yaml = new yamlfile();
+    index += "  name: "+index_name+"\n";
     foreach(string file in find(path)){
         if(endswith(file,".ymp")){
             if(get_bool("move")){
