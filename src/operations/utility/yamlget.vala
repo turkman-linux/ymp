@@ -27,5 +27,5 @@ void yamlget_init(){
     h.minargs = 2;
     h.usage = "iniget [file] [path]";
     h.description = "Parse yaml files";
-    add_operation(yamlget_main,{"yamlgel","yaml"},h);
+    add_operation(yamlget_main,{"yamlget","yaml"},h);
 }

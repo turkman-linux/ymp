@@ -2,7 +2,7 @@ public int help_main(string[] args){
     if (args.length == 0){
         print_fn(colorize("Operation list: ",blue), false, false);
         foreach(operation op in ops){
-            print_fn(join(" ",op.names)+"\n", false, false);
+            print_fn(colorize(join(" ",op.names)+" : ",green)+op.help.description+"\n", false, false);
         }
     }else{
         foreach(string arg in args){
