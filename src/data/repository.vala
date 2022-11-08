@@ -198,9 +198,13 @@ public package get_package_from_file(string path){
 //DOC: return repository adress list
 public string[] get_repo_address(){
     string repolist = readfile(get_storage()+"/sources.list")+"\n";
+    info("Find repo list: "+get_storage()+"/sources.list");
     if(isdir(get_storage()+"/sources.list.d")){
         foreach(string file in find(get_storage()+"/sources.list.d")){
-        repolist += readfile(file)+"\n";
+            if(isfile(file)){
+                info("Find repo list: "+file);
+                repolist += readfile(file)+"\n";
+            }
         }
     }
     return ssplit(repolist,"\n");
