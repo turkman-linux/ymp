@@ -206,7 +206,7 @@ private void create_metadata_info(){
         new_data += "    "+attr+": "+yaml.get_value(srcdata,attr)+"\n";
     }
 
-    string[] arrys = {"depends","provides","replaces"};
+    string[] arrys = {"depends","provides","replaces", "group"};
     foreach(string arr in arrys){
         if(!yaml.has_area(srcdata,arr)){
             continue;
