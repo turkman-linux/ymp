@@ -73,6 +73,10 @@ public void quarantine_install(){
         string fdir = sdirname(ftarget);
         debug("Installing: "+fname+" => "+ftarget);
         create_dir(fdir);
+        GLib.FileUtils.chmod(fdir,0755);
+        if(is_root()){
+            Posix.chown(fdir,0,0);
+        }
         if(isfile(fname)){
             move_file(fname,ftarget);
             GLib.FileUtils.chmod(ftarget,0755);

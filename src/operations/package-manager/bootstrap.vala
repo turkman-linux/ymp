@@ -18,7 +18,10 @@ public int bootstrap_main(string[] args){
     string[] base_packages = {"busybox", "glibc", "base-files"};
     foreach(string dir in basedir){
         create_dir(rootfs+"/"+dir);
+        GLib.FileUtils.chmod(rootfs+"/"+dir,0755);
+        Posix.chown(rootfs+"/"+dir,0,0);
     }
+    GLib.FileUtils.chmod(rootfs+"/tmp",0777);
     bool sysconf = get_bool("no-sysconf");
     set_bool("no-sysconf",true);
     set_destdir(rootfs);
