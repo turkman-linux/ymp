@@ -9,7 +9,7 @@ public int sysconf_main(string[] args){
             info("Run hook:"+sbasename(hook));
             if(DESTDIR != "/"){
                 hook=hook[DESTDIR.length:];
-                if(0 != run_args({"chroot", DESTDIR, hook})){
+                if(0 != run_args({"chroot", get_destdir(), hook})){
                     warning("Failed to run sysconf: "+sbasename(hook));
                 }
             }else if(0 != run(hook)){

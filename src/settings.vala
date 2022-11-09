@@ -48,6 +48,7 @@ private void settings_init(){
 //DOC: change distdir
 public void set_destdir(string rootfs){
     DESTDIR=srealpath(rootfs);
+    info("Destdir changed:"+DESTDIR);
     settings_init();
 }
 

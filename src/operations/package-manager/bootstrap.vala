@@ -3,6 +3,7 @@ public int bootstrap_main(string[] args){
         error_add("You must be root!");
     }
     string repo=get_value("mirror");
+    string rootfs=srealpath(get_value("destdir"));
     if(repo == ""){
         error_add("Mirror is not defined. Please use --mirror .");
     }if(DESTDIR=="/"){
@@ -14,13 +15,24 @@ public int bootstrap_main(string[] args){
     error(2);
     print(colorize("Creating bootstrap:",blue));
     string[] basedir = {"dev", "sys", "proc", "run"};
+    string[] base_packages = {"busybox", "glibc", "base-files"};
     foreach(string dir in basedir){
-        create_dir(DESTDIR+"/"+dir);
+        create_dir(rootfs+"/"+dir);
     }
-    writefile(DESTDIR+"/var/lib/ymp/sources.list",repo+"\n");
+    bool sysconf = get_bool("no-sysconf");
+    set_bool("no-sysconf",true);
+    set_destdir(rootfs);
+    writefile(rootfs+"/var/lib/ymp/sources.list",repo+"\n");
     update_main(args);
-    install_main({"glibc", "base-files", "busybox"});
+    install_main(base_packages);
     install_main(args);
+    foreach(string package in base_packages){
+        string hook = get_configdir()+"/sysconf.d/";
+        hook = hook[get_destdir().length:];
+        run_args({"chroot", get_destdir(), hook+package});
+    }
+    set_bool("no-sysconf",sysconf);
+    sysconf_main(args);
     return 0;
 }
 

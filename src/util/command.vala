@@ -42,12 +42,10 @@ public static int run_silent (string command) {
 //DOC: `int run_args(string[] args):`
 //DOC: ruh command from argument array
 public int run_args(string[] args){
-    string stdout;
-    string stderr;
     string[] spawn_env = Environ.get ();
     int status;
     try {
-        Process.spawn_sync ("/", args, spawn_env, SpawnFlags.SEARCH_PATH, null, out stdout, out stderr, out status);
+        Process.spawn_sync ("/", args, spawn_env, SpawnFlags.SEARCH_PATH, null, null, null, out status);
         return status/256;
     } catch (SpawnError e) {
         return 1;

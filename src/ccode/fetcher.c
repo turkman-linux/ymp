@@ -57,7 +57,10 @@ void curl_options_common(char* url){
         struct curl_slist *chunk = NULL;
         chunk = curl_slist_append(chunk, "Connection: keep-alive");
         chunk = curl_slist_append(chunk, "DNT: 1");
-        chunk = curl_slist_append(chunk, "Ymp: NE MUTLU TURKUM DIYENE");
+        chunk = curl_slist_append(chunk, "Ymp: \"NE MUTLU TURKUM DIYENE\"");
+        if(strcmp(get_value("debug"),"true")==0){
+            curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+        }
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
         curl_easy_setopt(curl, CURLOPT_URL, url);
         curl_easy_setopt(curl, CURLOPT_USERAGENT, get_value("useragent"));
