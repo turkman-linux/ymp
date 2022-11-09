@@ -7,7 +7,6 @@ fi
 for dir in $@ ; do
     fdir=$(realpath $dir)
     echo "BUILD: $fdir"
-    rm -rf /tmp/ymp-build
     if [[ -f "$fdir/ympbuild" ]] ; then
         exec ymp --sandbox --verbose --allow-oem --shared="$fdir" --use="all" build "$fdir"
     fi
