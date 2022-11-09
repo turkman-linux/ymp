@@ -12,9 +12,9 @@ public int template_main(string[] args){
     data += "depends=("    +str_or_def("depends"," ")+")\n";
     data += "makedepends=("    +str_or_def("makedepends"," ")+")\n";
     data += "md5sums=("    +"'FIXME')\n";
-    data += "arch=('"    +getArch()+"')\n";
+    data += "arch=('"    +getArch()+"')\n\n";
 
-    data += "cd $name-$version";
+    data += "cd $name-$version\n\n";
     string buildtype = get_value("build-type");
     if(buildtype == "autotool" || buildtype == ""){
         data += "setup(){\n";
