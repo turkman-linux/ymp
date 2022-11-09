@@ -3,6 +3,7 @@ public int sysconf_main(string[] args){
         return 0;
     }
     set_env("OPERATION",get_value("OPERATION"));
+    set_env("PATH","/bin:/sbin:/usr/bin:/usr/sbin");
     foreach(string hook in find(get_configdir()+"/sysconf.d")){
         if(isfile(hook)){
             info("Run hook:"+sbasename(hook));
