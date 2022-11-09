@@ -250,7 +250,7 @@ private void create_metadata_info(){
             }
         }
     }
-    output_package_path = ympbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version");
+    output_package_path = ympbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version")+"_"+yaml.get_value(srcdata,"release");
     writefile(ympbuild_buildpath+"/output/metadata.yaml",new_data);
 }
 
