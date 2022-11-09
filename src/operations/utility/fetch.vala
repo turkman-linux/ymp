@@ -8,7 +8,10 @@ public int fetch_main(string[] args){
     if(args.length > 1){
         fetch(args[0],args[1]);
     }else{
-        stdout.printf(fetch_string(args[0]));
+        string data = fetch_string(args[0]);
+        if(data!=null || data != ""){
+            stdout.printf(data);
+        }
     }
     return 0;
 }

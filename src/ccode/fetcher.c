@@ -57,6 +57,7 @@ void curl_options_common(char* url){
         struct curl_slist *chunk = NULL;
         chunk = curl_slist_append(chunk, "Connection: keep-alive");
         chunk = curl_slist_append(chunk, "DNT: 1");
+        chunk = curl_slist_append(chunk, "Ymp: NE MUTLU TURKUM DIYENE");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
         curl_easy_setopt(curl, CURLOPT_URL, url);
         curl_easy_setopt(curl, CURLOPT_USERAGENT, get_value("useragent"));
@@ -80,6 +81,7 @@ int fetch(char* url, char* path){
         res = curl_easy_perform(curl);
         if(res != CURLE_OK){
           fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+          curl_easy_cleanup(curl);
           return 0;
         }
         curl_easy_cleanup(curl);
@@ -103,14 +105,11 @@ char* fetch_string(char* url){
         res = curl_easy_perform(curl);
         if(res != CURLE_OK){
           fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-          return "";
+          return (char*)(s.ptr);
         }
-
         curl_easy_cleanup(curl);
         putc('\n',stderr);
     }
-    printf("%lu bytes retrieved\n", (unsigned long)s.len);
-    printf("%s bytes retrieved\n", (char*)s.ptr);
     return (char*)(s.ptr);
 }
 #endif

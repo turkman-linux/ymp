@@ -89,6 +89,7 @@ private void fetch_package_sources(){
         }
         string md5 = calculate_md5sum(srcfile);
         if (md5sums[i] != md5 && md5sums[i] != "SKIP"){
+            remove_all(ymp_source_cache+"/"+sbasename(src));
             error_add("md5 check failed. Excepted: "+md5sums[i]+" <> Reveiced: "+md5);
         }
         i++;
