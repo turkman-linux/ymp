@@ -44,7 +44,6 @@ void mirror_init(){
     var h = new helpmsg();
     
     h.name = "mirror";
-    h.minargs = 1;
     h.description = "Mirror repository";
     h.add_parameter("--package","Mirror binary packages");
     h.add_parameter("--source","Mirror source packages");

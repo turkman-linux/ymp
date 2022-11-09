@@ -21,6 +21,9 @@ public int help_main(string[] args){
 public void write_version(){
     print("YMP : "+colorize("Y",red)+"erli ve "+colorize("M",red)+"illi "+colorize("P",red)+"ackage manager");
     print("Version : "+VERSION);
+    if(!get_bool("flag")){
+        return;
+    }
     print("");
     string flag =
 "            /#&@@@@@@&#*                              
