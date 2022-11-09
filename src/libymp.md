@@ -1039,6 +1039,10 @@ add environmental variable
 
 get a enviranmental variable
 
+`string get_home():`
+
+get home directory location
+
 `void clear_env():`
 
 remove all environmental variable except **PATH**

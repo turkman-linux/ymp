@@ -127,6 +127,12 @@ public string get_env(string variable){
     return GLib.Environment.get_variable(variable);
 }
 
+//DOC: `string get_home():`
+//DOC: get home directory location
+public string get_home(){
+    return GLib.Environment.get_home_dir();
+}
+
 //DOC: `void clear_env():`
 //DOC: remove all environmental variable except **PATH**
 public void clear_env(){
