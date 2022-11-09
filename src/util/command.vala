@@ -9,6 +9,22 @@ using Posix;
 //DOC: string uname = getoutput("uname");
 //DOC: ```
 
+//DOC: `string getoutput (string command):`
+//DOC: Run command and return output
+//DOC: **Note:** stderr ignored.
+public static string getoutput (string command) {
+    string stdout;
+    string stderr;
+    int status;
+    try {
+        Process.spawn_command_line_sync (command, out stdout, out stderr, out status);
+        return stdout;
+    } catch (SpawnError e) {
+        return "";
+    }
+}
+
+
 //DOC: `int run_silent(string command):`
 //DOC: run command silently.
 public static int run_silent (string command) {

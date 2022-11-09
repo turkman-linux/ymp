@@ -84,10 +84,6 @@ public extern void block_sigint();
 //DOC: `void single_instance():`
 //DOC: block multiple process
 public extern void single_instance();
-//DOC: `string getoutput (string command):`
-//DOC: Run command and return output
-//DOC: **Note:** stderr ignored.
-public extern string getoutput(string command);
 //DOC: `int run(string command):`
 //DOC: run command.
 public extern int run (string command);
@@ -107,9 +103,6 @@ public extern string fetch_string(string url);
 #endif
 
 //DOC: ### string.c
-//DOC: `string build_string(char* format, ...):`
-//DOC: build string like printf
-public extern string build_string(char* format, ...);
 //DOC: `string run_printf(char* format, ...):`
 //DOC: run command like printf
 public extern string run_printf(char* format, ...);

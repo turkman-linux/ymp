@@ -97,12 +97,6 @@ block ctrl-c
 
 block multiple process
 
-`string getoutput (string command):`
-
-Run command and return output
-
-**Note:** stderr ignored.
-
 `int run(string command):`
 
 run command.
@@ -120,10 +114,6 @@ fetch file from url
 fetch string from url
 
 ### string.c
-
-`string build_string(char* format, ...):`
-
-build string like printf
 
 `string run_printf(char* format, ...):`
 
@@ -582,6 +572,12 @@ if (0 != run("ls /var/lib/ymp")){
 string uname = getoutput("uname");
 
 ```
+
+`string getoutput (string command):`
+
+Run command and return output
+
+**Note:** stderr ignored.
 
 `int run_silent(string command):`
 
