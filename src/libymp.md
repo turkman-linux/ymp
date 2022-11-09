@@ -107,6 +107,10 @@ Run command and return output
 
 run command.
 
+`long get_epoch():`
+
+get epoch time
+
 `bool fetch(string url, string path):`
 
 fetch file from url

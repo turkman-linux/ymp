@@ -91,6 +91,9 @@ public extern string getoutput(string command);
 //DOC: `int run(string command):`
 //DOC: run command.
 public extern int run (string command);
+//DOC: `long get_epoch():`
+//DOC: get epoch time
+public extern long get_epoch();
 
 //DOC; ### fetcher.c
 //DOC: `bool fetch(string url, string path):`

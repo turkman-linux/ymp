@@ -133,10 +133,6 @@ public string get_home(){
     return GLib.Environment.get_home_dir();
 }
 
-public int64 get_epoch(){
-    return new GLib.DateTime.now_local().to_unix();
-}
-
 //DOC: `void clear_env():`
 //DOC: remove all environmental variable except **PATH**
 public void clear_env(){

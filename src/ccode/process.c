@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-
+#include <sys/time.h>
 void single_instance(){
     int pid_file = open("/run/ymp.pid", O_CREAT | O_RDWR, 0666);
     int rc = flock(pid_file, LOCK_EX | LOCK_NB);
@@ -41,3 +41,8 @@ char* getoutput(char* command){
     return long_buffer;
 }
 
+long get_epoch(){
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return 1000000 * tv.tv_sec + tv.tv_usec;
+}
