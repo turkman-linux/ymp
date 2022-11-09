@@ -15,13 +15,16 @@ public int revdep_rebuild_main(string[] args){
         string binaries = getoutput("find "+path+" -type f");
         check(binaries);
     }
+    print_fn("\x1b[2K\r",false,true);
     return 0;
 }
 
 public void check(string libraries){
     foreach(string library in libraries.split("\n")){
+        print_fn("\x1b[2K\rChecking: "+library,false,true);
         foreach(string line in getoutput("ldd "+library).split("\n")){
             if(endswith(line,"not found")){
+                print_fn("\x1b[2K\r",false,true);
                 print(colorize(library,red) +" => "+ line[1:line.length-13]);
             }
         }
