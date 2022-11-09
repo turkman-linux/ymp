@@ -92,7 +92,7 @@ public class Ymp {
     //DOC: run ymp process then if succes remove
     public void run(){
         for(int i=0;i<proc.length;i++){
-            int start_time = get_epoch();
+            int64 start_time = get_epoch();
 
             int status = proc[i].run();
             if(status != 0){
@@ -100,9 +100,8 @@ public class Ymp {
                 error_add(@"Process: $type failed. Exited with $status.");
                 error(status);
             }
-            float diff = get_epoch() - start_time;
-            
-            info("Process done in : %f sec".printf( diff/1000000 ));
+            int64 diff = get_epoch() - start_time;
+            info("Process done in : %s sec".printf(diff.to_string()));
         }
         error(1);
     }

@@ -133,8 +133,8 @@ public string get_home(){
     return GLib.Environment.get_home_dir();
 }
 
-public int get_epoch(){
-    return new GLib.DateTime.now_local().get_microsecond();;
+public int64 get_epoch(){
+    return new GLib.DateTime.now_local().to_unix();
 }
 
 //DOC: `void clear_env():`
