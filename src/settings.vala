@@ -97,7 +97,7 @@ private void parse_args(string[] args){
                     set_value_readonly("allow-oem","true");
             }else if(arg.contains("=")){
                 var name = ssplit(argname,"=")[0];
-                var value = ssplit(argname,"=")[1];
+                var value = argname[name.length+1:];
                 if(name == "use"){
                     set_value_readonly(name,value);
                 }else if(name == "destdir"){

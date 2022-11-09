@@ -1,6 +1,7 @@
 public int install_main(string[] args){
     single_instance();
     string[] pkgs = resolve_dependencies(args);
+    info("Resolve dependency done: "+join(" ",pkgs));
     quarantine_reset();
     package[] pkg_obj = {};
     foreach(string name in pkgs){
