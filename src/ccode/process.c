@@ -5,9 +5,15 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/time.h>
+
+int locked=0;
 void single_instance(){
+    if(locked){
+        return;
+    }
     int pid_file = open("/run/ymp.pid", O_CREAT | O_RDWR, 0666);
     int rc = flock(pid_file, LOCK_EX | LOCK_NB);
+    locked = 1;
     if(rc) {
         if(EWOULDBLOCK == errno){
             puts("Another ymp instance is already running");
