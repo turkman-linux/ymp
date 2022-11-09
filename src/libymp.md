@@ -97,6 +97,16 @@ block ctrl-c
 
 block multiple process
 
+`string getoutput (string command):`
+
+Run command and return output
+
+**Note:** stderr ignored.
+
+`int run(string command):`
+
+run command.
+
 `bool fetch(string url, string path):`
 
 fetch file from url
@@ -569,19 +579,9 @@ string uname = getoutput("uname");
 
 ```
 
-`string getoutput (string command):`
-
-Run command and return output
-
-**Note:** stderr ignored.
-
 `int run_silent(string command):`
 
 run command silently.
-
-`int run(string command):`
-
-run command.
 
 `int run_args(string[] args):`
 

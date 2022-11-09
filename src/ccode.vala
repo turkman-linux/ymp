@@ -9,10 +9,12 @@ public extern int get_tty_width ();
 //DOC: `int get_tty_heigth():`
 //DOC: return tty line size
 public extern int get_tty_height ();
+
 //DOC: ### which.c
 //DOC: `string which(string cmd):`
 //DOC: get command file location
 public extern string which(string cmd);
+
 //DOC: ### users.c
 //DOC: `void switch_user(string username):`
 //DOC: change current user
@@ -23,11 +25,13 @@ public extern int get_uid_by_user(string username);
 //DOC: ` bool is_root():`
 //DOC: chech root user
 public extern bool is_root();
+
 // ### nostd.c 
 // All private functions. please look util/interface.vala
 private extern void no_stdin();
 private extern void no_stdout();
 private extern void no_stderr();
+
 //DOC: ### sandbox.c
 //DOC: `void sandbox(string[] args):`
 //DOC: run command in sandboxed area
@@ -45,6 +49,7 @@ public extern int sandbox_uid;
 //DOC: `int sandbox_gid:`
 //DOC: sandbox user gid value (default: 0)
 public extern int sandbox_gid;
+
 //DOC: ### archive-create.c
 //DOC: `void write_archive(string output,string[] files):`
 //DOC: create archive file
@@ -52,6 +57,7 @@ public extern int sandbox_gid;
 public extern void write_archive(string output,string[] files);
 private extern int afilter;
 private extern int aformat;
+
 //DOC: ### file.c
 //DOC: `int filesize(string path):`
 //DOC: calculate file size
@@ -68,14 +74,24 @@ public extern void create_dir(string path);
 //DOC: `string readfile_raw (string path):`
 //DOC: Read file from **path** and return content
 public extern string readfile_raw(string path);
+
 //DOC: ### signal.c
 //DOC: `void block_sigint():`
 //DOC: block ctrl-c
 public extern void block_sigint();
+
 //DOC: ### process.c
 //DOC: `void single_instance():`
 //DOC: block multiple process
 public extern void single_instance();
+//DOC: `string getoutput (string command):`
+//DOC: Run command and return output
+//DOC: **Note:** stderr ignored.
+public extern string getoutput(string command);
+//DOC: `int run(string command):`
+//DOC: run command.
+public extern int run (string command);
+
 //DOC; ### fetcher.c
 //DOC: `bool fetch(string url, string path):`
 //DOC: fetch file from url
@@ -86,6 +102,7 @@ public extern void single_instance();
 public extern bool fetch(string url, string path);
 public extern string fetch_string(string url);
 #endif
+
 //DOC: ### string.c
 //DOC: `string build_string(char* format, ...):`
 //DOC: build string like printf

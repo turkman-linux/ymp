@@ -9,12 +9,6 @@ using Posix;
 //DOC: string uname = getoutput("uname");
 //DOC: ```
 
-
-//DOC: `string getoutput (string command):`
-//DOC: Run command and return output
-//DOC: **Note:** stderr ignored.
-public extern string getoutput(string command);
-
 //DOC: `int run_silent(string command):`
 //DOC: run command silently.
 public static int run_silent (string command) {
@@ -28,10 +22,6 @@ public static int run_silent (string command) {
         return 1;
     }
 }
-
-//DOC: `int run(string command):`
-//DOC: run command.
-public extern int run (string command);
 
 //DOC: `int run_args(string[] args):`
 //DOC: ruh command from argument array
