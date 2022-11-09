@@ -25,12 +25,12 @@ public int bootstrap_main(string[] args){
     writefile(rootfs+"/var/lib/ymp/sources.list",repo+"\n");
     update_main(args);
     install_main(base_packages);
-    install_main(args);
     foreach(string package in base_packages){
         string hook = get_configdir()+"/sysconf.d/";
         hook = hook[get_destdir().length:];
         run_args({"chroot", get_destdir(), hook+package});
     }
+    install_main(args);
     set_bool("no-sysconf",sysconf);
     sysconf_main(args);
     return 0;
