@@ -61,6 +61,7 @@ void help_init(){
     add_common_parameter("--verbose","show verbose output");
     add_common_parameter("--ask","enable questions");
     add_common_parameter("--no-color","disable color output");
+    add_common_parameter("--no-sysconf","disable sysconf triggers");
     add_common_parameter("--sandbox","run ymp actions at sandbox environment");
     add_common_parameter("--help","write help messages");
 

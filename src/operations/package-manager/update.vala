@@ -1,4 +1,8 @@
 public int update_main(string[] args){
+    if(!is_root()){
+        error_add("You must be root!");
+        error(1);
+    }
     single_instance();
     update_repo();
     return 0;

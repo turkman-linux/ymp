@@ -1,4 +1,8 @@
 public int install_main(string[] args){
+    if(!is_root()){
+        error_add("You must be root!");
+        error(1);
+    }
     single_instance();
     string[] pkgs = resolve_dependencies(args);
     info("Resolve dependency done: "+join(" ",pkgs));

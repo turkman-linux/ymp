@@ -1,4 +1,8 @@
 public int remove_main(string[] args){
+    if(!is_root()){
+        error_add("You must be root!");
+        error(1);
+    }
     single_instance();
     string[] pkgs = {};
     if(get_bool("ignore-dependency")){

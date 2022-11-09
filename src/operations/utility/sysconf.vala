@@ -1,14 +1,18 @@
 public int sysconf_main(string[] args){
+    if(!is_root() || get_bool("no-sysconf")){
+        return 0;
+    }
     set_env("OPERATION",get_value("OPERATION"));
     foreach(string hook in find(get_configdir()+"/sysconf.d")){
         if(isfile(hook)){
+            info("Run hook:"+sbasename(hook));
             if(DESTDIR != "/"){
                 hook=hook[DESTDIR.length:];
                 if(0 != run_args({"chroot", DESTDIR, hook})){
-                    warning("Failed to run hook: "+hook);
+                    warning("Failed to run sysconf: "+sbasename(hook));
                 }
             }else if(0 != run(hook)){
-                warning("Failed to run hook: "+hook);
+                warning("Failed to run sysconf: "+sbasename(hook));
             }
         }
     }

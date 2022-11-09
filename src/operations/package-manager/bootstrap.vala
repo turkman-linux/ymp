@@ -1,4 +1,7 @@
 public int bootstrap_main(string[] args){
+    if(!is_root()){
+        error_add("You must be root!");
+    }
     string repo=get_value("mirror");
     if(repo == ""){
         error_add("Mirror is not defined. Please use --mirror .");
