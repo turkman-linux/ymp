@@ -73,12 +73,18 @@ private void fetch_package_sources(){
             continue;
         }
         string srcfile = ympbuild_buildpath+"/"+sbasename(src);
+        string ymp_source_cache = DESTDIR+"/tmp/ymp-build/cache/"+get_ympbuild_value("name")+"/";
+        create_dir(ymp_source_cache);
         if(isfile(srcfile)){
             info("Source file already exists.");
+        }else if(isfile(ymp_source_cache+"/"+sbasename(src))){
+            info("Source file import from cache.");
+            copy_file(ymp_source_cache+"/"+sbasename(src), srcfile);
         }else if(isfile(ympbuild_srcpath+"/"+src)){
             copy_file(ympbuild_srcpath+"/"+src, srcfile);
         }else{
-            fetch(src,srcfile);
+            fetch(src,ymp_source_cache+"/"+sbasename(src));
+            copy_file(ymp_source_cache+"/"+sbasename(src), srcfile);
         }
         string md5 = calculate_md5sum(srcfile);
         if (md5sums[i] != md5 && md5sums[i] != "SKIP"){
