@@ -10,10 +10,12 @@ public int bootstrap_main(string[] args){
     }
     error(2);
     print(colorize("Creating bootstrap:",blue));
-    create_dir(DESTDIR+"/var/lib/ymp/");
+    foreach(string dir in {"dev", "sys", "proc", "run"}){
+        create_dir(DESTDIR+"/var/lib/ymp/"+dir);
+    }
     writefile(DESTDIR+"/var/lib/ymp/sources.list",repo+"\n");
     update_main(args);
-    install_main({"glibc", "base-files"});
+    install_main({"glibc", "base-files", "busybox"});
     install_main(args);
     return 0;
 }
