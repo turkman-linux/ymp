@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <fcntl.h>
 
 void single_instance(){
@@ -14,3 +15,29 @@ void single_instance(){
         }
     }
 }
+
+int run(char* command){
+    return system(command);
+}
+
+
+FILE* process;
+char long_buffer[1024*1024*1024];
+char medium_buffer[1024*1024];
+
+char* getoutput(char* command){
+    process = popen(command,"r");
+    size_t len = 0;
+    char *line = NULL;
+    ssize_t read;
+    strcpy(long_buffer,"");
+    fprintf(stderr,"%s\n",command);
+    if(process == NULL){
+        return "";
+    }
+    while ((read = getline(&line, &len, process)) != -1) {
+        strcat(long_buffer,line);
+    }
+    return long_buffer;
+}
+

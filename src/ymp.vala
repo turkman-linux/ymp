@@ -33,7 +33,7 @@ private void add_operation(function callback, string[] names, helpmsg help){
 }
 
 private int operation_main(string type, string[] args){
-    debug("RUN:"+type + ":" + join(" ",args));
+    info("RUN:"+type + ":" + join(" ",args));
     foreach(operation op in ops){
         foreach(string name in op.names){
             if(type == name){
@@ -92,12 +92,17 @@ public class Ymp {
     //DOC: run ymp process then if succes remove
     public void run(){
         for(int i=0;i<proc.length;i++){
+            int start_time = get_epoch();
+
             int status = proc[i].run();
             if(status != 0){
                 string type = proc[i].type;
                 error_add(@"Process: $type failed. Exited with $status.");
                 error(status);
             }
+            float diff = get_epoch() - start_time;
+            
+            info("Process done in : %f sec".printf( diff/1000000 ));
         }
         error(1);
     }
@@ -168,6 +173,7 @@ private bool ymp_activated = false;
 //DOC: start ymp application.
 //DOC: * args is program arguments
 public Ymp ymp_init(string[] args){
+    
     logger_init();
     wsl_block();
     Ymp app = new Ymp();
@@ -192,6 +198,7 @@ public Ymp ymp_init(string[] args){
     tty_size_init();
     directories_init();
     logger_init(); // logger reload
+
     return app;
 }
 

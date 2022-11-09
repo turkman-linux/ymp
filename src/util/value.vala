@@ -133,6 +133,10 @@ public string get_home(){
     return GLib.Environment.get_home_dir();
 }
 
+public int get_epoch(){
+    return new GLib.DateTime.now_local().get_microsecond();;
+}
+
 //DOC: `void clear_env():`
 //DOC: remove all environmental variable except **PATH**
 public void clear_env(){

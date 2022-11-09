@@ -13,17 +13,7 @@ using Posix;
 //DOC: `string getoutput (string command):`
 //DOC: Run command and return output
 //DOC: **Note:** stderr ignored.
-public static string getoutput (string command) {
-    string stdout;
-    string stderr;
-    int status;
-    try {
-        Process.spawn_command_line_sync (command, out stdout, out stderr, out status);
-        return stdout;
-    } catch (SpawnError e) {
-        return "";
-    }
-}
+public extern string getoutput(string command);
 
 //DOC: `int run_silent(string command):`
 //DOC: run command silently.
@@ -41,9 +31,7 @@ public static int run_silent (string command) {
 
 //DOC: `int run(string command):`
 //DOC: run command.
-public int run (string command){
-    return Posix.system(command)/256;
-}
+public extern int run (string command);
 
 //DOC: `int run_args(string[] args):`
 //DOC: ruh command from argument array
