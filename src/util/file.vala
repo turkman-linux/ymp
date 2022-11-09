@@ -155,19 +155,27 @@ public void copy_file(string src, string desc){
     debug("Copy: "+src +" => "+desc);
     File file1 = File.new_for_path (src);
     File file2 = File.new_for_path (desc);
+    create_dir(sdirname(desc));
+    int64 sync_bytes = 0;
     if(isfile(desc)){
         remove_file(desc);
     }
     try {
         file1.copy (file2, 0, null, (cur, total) => {
+            // call sync every 20mb
+            if(cur - sync_bytes > 20*1024*1024){
+                fs_sync();
+                sync_bytes = cur;
+            }
             #if no_libcurl
             #else
             fetcher_vala(cur, total, desc);
             #endif
         });
         print_stderr("");
+        fs_sync();
     } catch (Error e) {
-        print ("Error: %s\n".printf(e.message));
+        error_add(e.message);
     }
 }
 
