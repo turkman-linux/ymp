@@ -10,7 +10,8 @@ public int bootstrap_main(string[] args){
     }
     error(2);
     print(colorize("Creating bootstrap:",blue));
-    foreach(string dir in {"dev", "sys", "proc", "run"}){
+    string[] basedir = {"dev", "sys", "proc", "run"};
+    foreach(string dir in basedir){
         create_dir(DESTDIR+"/var/lib/ymp/"+dir);
     }
     writefile(DESTDIR+"/var/lib/ymp/sources.list",repo+"\n");

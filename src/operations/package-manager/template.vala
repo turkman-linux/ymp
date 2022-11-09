@@ -45,7 +45,7 @@ public int template_main(string[] args){
 
     }else if(buildtype == "meson" || buildtype == ""){
         data += "setup(){\n";
-        data += "    meson build --prefix=/usr\n";
+        data += "    meson setup build --prefix=/usr\n";
         data += "}\n\n";
         data += "build(){\n";
         data += "    ninja -C build\n";
