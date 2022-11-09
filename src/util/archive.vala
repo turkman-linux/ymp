@@ -156,8 +156,8 @@ public class archive {
     //DOC: `string archive.readfile(string path):`
     //DOC: Read **path** file to target directory
     public string readfile (string path) {
+        debug("Reading from archive: "+path);
         load_archive(archive_path);
-
         string ret="";
         unowned Archive.Entry entry;
         Archive.Result last_result;
@@ -169,7 +169,7 @@ public class archive {
             uint8[] buffer = null;
             Posix.off_t offset;
             while (archive.read_data_block (out buffer, out offset) == Archive.Result.OK) {
-                ret+=@"$((string) buffer)";
+                ret+=(string) buffer;
             }
             if(ret.length > offset){
                 return ret[:(long)offset];
