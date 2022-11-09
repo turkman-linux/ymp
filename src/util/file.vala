@@ -155,17 +155,15 @@ public void copy_file(string src, string desc){
     debug("Copy: "+src +" => "+desc);
     File file1 = File.new_for_path (src);
     File file2 = File.new_for_path (desc);
-    int percent = 0;
+    if(isfile(desc)){
+        remove_file(desc);
+    }
     try {
         file1.copy (file2, 0, null, (cur, total) => {
-            percent = (int)(cur*100/total);
-            print_fn("\x1b[2K\r%s%d\t%s\t%s\t%s".printf(
-            "%",
-            percent,
-            sbasename(desc),
-            GLib.format_size((uint64)cur),
-            GLib.format_size((uint64)total)
-            ),false,true); 
+            #if no_libcurl
+            #else
+            fetcher_vala(cur, total, desc);
+            #endif
         });
         print_stderr("");
     } catch (Error e) {
