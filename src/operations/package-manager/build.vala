@@ -83,6 +83,7 @@ private void fetch_package_sources(){
         }else if(isfile(ympbuild_srcpath+"/"+src)){
             copy_file(ympbuild_srcpath+"/"+src, srcfile);
         }else{
+            info("Download: "+src);
             fetch(src,ymp_source_cache+"/"+sbasename(src));
             copy_file(ymp_source_cache+"/"+sbasename(src), srcfile);
         }

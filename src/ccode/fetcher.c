@@ -73,7 +73,7 @@ int fetch(char* url, char* path){
     curl=curl_easy_init();
     if (curl){
         fp = fopen(path,"wb");
-        curl_options_common(path);
+        curl_options_common(url);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_file);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
         CURLcode res;
@@ -90,13 +90,13 @@ int fetch(char* url, char* path){
 }
 
 
-char* fetch_string(char* path){
+char* fetch_string(char* url){
     curl=curl_easy_init();
     struct string s;
     init_string(&s);
     strcpy(fetcher_filename,"");
     if (curl){
-        curl_options_common(path);
+        curl_options_common(url);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_string);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
         CURLcode res;
