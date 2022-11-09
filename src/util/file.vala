@@ -8,33 +8,33 @@ public string readfile_byte(string path, long n){
         return "";
     }
     FileStream stream = FileStream.open (path, "r");
-	if(stream == null){
-	    warning("Failed to read file: "+path);
-	    return "";
-	}
+    if(stream == null){
+        warning("Failed to read file: "+path);
+        return "";
+    }
 
-	// get file size:
-	stream.seek (0, FileSeek.END);
-	long size = stream.tell ();
-	stream.rewind ();
-	if(size == 0){
-	    warning("File is empty: "+path);
-	    return "";
-	}else if(size < n){
-	    warning("Read byte size bigger than file size: "+path);
-	    print(size.to_string()+ " "+ n.to_string());
-	    return "";
-	}else if(n == 0){
-	    n = size;
-	}
+    // get file size:
+    stream.seek (0, FileSeek.END);
+    long size = stream.tell ();
+    stream.rewind ();
+    if(size == 0){
+        warning("File is empty: "+path);
+        return "";
+    }else if(size < n){
+        warning("Read byte size bigger than file size: "+path);
+        print(size.to_string()+ " "+ n.to_string());
+        return "";
+    }else if(n == 0){
+        n = size;
+    }
 
-	// load content:
-	uint8[] buf = new uint8[n];
-	size_t read = stream.read (buf, 1);
-	if (n != read){
-	    return "";
-	}
-	return (string) buf;
+    // load content:
+    uint8[] buf = new uint8[n];
+    size_t read = stream.read (buf, 1);
+    if (n != read){
+        return "";
+    }
+    return (string) buf;
 }
 
 
@@ -153,7 +153,24 @@ public void move_file(string src, string desc){
 //DOC: copy **src** file to **desc**. File permissions and owners are ignored.
 public void copy_file(string src, string desc){
     debug("Copy: "+src +" => "+desc);
-    writefile(desc,readfile_raw(src));
+    File file1 = File.new_for_path (src);
+    File file2 = File.new_for_path (desc);
+    int percent = 0;
+    try {
+        file1.copy (file2, 0, null, (cur, total) => {
+            percent = (int)(cur*100/total);
+            print_fn("\x1b[2K\r%s%d\t%s\t%s\t%s".printf(
+            "%",
+            percent,
+            sbasename(desc),
+            GLib.format_size((uint64)cur),
+            GLib.format_size((uint64)total)
+            ),false,true); 
+        });
+        print_stderr("");
+    } catch (Error e) {
+        print ("Error: %s\n".printf(e.message));
+    }
 }
 
 //DOC: `string[] listdir(string path):`
@@ -288,11 +305,11 @@ public string calculate_checksum(string path, ChecksumType type){
     }
     info("Calculating checksum: "+path);
     Checksum checksum = new Checksum (type);
-	FileStream stream = FileStream.open (path, "rb");
-	uint8 fbuf[100];
-	size_t size;
-	while ((size = stream.read (fbuf)) > 0) {
-		checksum.update (fbuf, size);
-	}
-	return checksum.get_string ();
+    FileStream stream = FileStream.open (path, "rb");
+    uint8 fbuf[100];
+    size_t size;
+    while ((size = stream.read (fbuf)) > 0) {
+        checksum.update (fbuf, size);
+    }
+    return checksum.get_string ();
 }
