@@ -3,6 +3,7 @@ public int sysconf_main(string[] args){
     foreach(string hook in find(get_configdir()+"/sysconf.d")){
         if(isfile(hook)){
             if(DESTDIR != "/"){
+                hook=hook[DESTDIR.length:];
                 if(0 != run_args({"chroot", DESTDIR, hook})){
                     warning("Failed to run hook: "+hook);
                 }
