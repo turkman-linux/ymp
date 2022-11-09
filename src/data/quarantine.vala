@@ -12,6 +12,7 @@ public void quarantine_reset(){
 //DOC: `bool quarantine_validate_files():`
 //DOC: check quarantine file hashes
 public bool quarantine_validate_files(){
+    print(colorize("Quarantine validation",yellow));
     // reset lists
     quarantine_file_cache_list = {};
     quarantine_file_conflict_list = {};
@@ -61,6 +62,7 @@ public bool quarantine_validate_files(){
 //DOC: `void quarantine_install():`
 //DOC: install quarantine files to rootfs
 public void quarantine_install(){
+    print(colorize("Quarantine installation",yellow));
     string rootfs = srealpath(get_storage()+"/quarantine/rootfs/");
     string files = srealpath(get_storage()+"/quarantine/files/");
     string links = srealpath(get_storage()+"/quarantine/links/");
@@ -74,6 +76,9 @@ public void quarantine_install(){
         if(isfile(fname)){
             move_file(fname,ftarget);
             GLib.FileUtils.chmod(ftarget,0755);
+            if(is_root()){
+                Posix.chown(ftarget,0,0);
+            }
         }
     }
     fs_sync();
@@ -101,6 +106,7 @@ public void quarantine_install(){
 }
 
 private void quarantine_import_from_path(string path){
+    print(colorize("Quarantine import",yellow));
     string rootfs = srealpath(get_storage()+"/quarantine/rootfs/");
     string files = srealpath(get_storage()+"/quarantine/files/");
     string links = srealpath(get_storage()+"/quarantine/links/");

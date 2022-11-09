@@ -168,12 +168,12 @@ public class archive {
 
             uint8[] buffer = null;
             Posix.off_t offset;
-            long len = 0;
             while (archive.read_data_block (out buffer, out offset) == Archive.Result.OK) {
                 ret+=@"$((string) buffer)";
-                len += buffer.length;
             }
-            ret = ret[:len]; // fix string for buffer length;
+            if(ret.length > offset){
+                return ret[:(long)offset];
+            }
             return ret;
         }
         return ret;

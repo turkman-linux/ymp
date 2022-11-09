@@ -16,10 +16,8 @@ public int install_main(string[] args){
         }
     }
     string[] leftovers = calculate_leftover(pkg_obj);
-    info("Quarantine validation");
     quarantine_validate_files();
     error(1);
-    info("Quarantine installation");
     quarantine_install();
     error(1);
     info("Clear leftovers");
@@ -56,35 +54,35 @@ public package install_single(string pkg){
     return p;
 }
 public string[] calculate_leftover(package[] pkgs){
-    string[] installed_files = {};
-    string[] new_files = {};
-    string[] leftover = {};
+    print(colorize("Calculating leftovers",yellow));
+    var files = new array();
     // Fetch installed and new files list
     foreach(package p in pkgs){
         if(is_installed_package(p.name) && !p.is_source ){
-             //new files list
-             foreach(string file in p.list_files()){
-                 if(file.length > 41){
-                     new_files += file[41:];
-                 }
-             }
              // installed files
              package pi = get_installed_package(p.name);
              foreach(string file in pi.list_files()){
                  if(file.length > 41){
-                     installed_files += file[41:];
+                     files.add(file[41:]);
                  }
+             }
+             // installed symlinks
+             foreach(string link in pi.list_links()){
+                 files.add(ssplit(link," ")[0]);
+             }
+             // new files
+             foreach(string file in p.list_files()){
+                 if(file.length > 41){
+                     files.remove(file[41:]);
+                 }
+             }
+             //new symlinks
+             foreach(string link in p.list_links()){
+                 files.remove(ssplit(link," ")[0]);
              }
         }
     }
-    // Calculate leftover files
-    foreach(string file in installed_files){
-        if(!(file in new_files)){
-            leftover += file;
-            debug("Leftover file detected: "+file);
-        }
-    }
-    return leftover;
+    return files.get();
 }
 void install_init(){
     var h = new helpmsg();

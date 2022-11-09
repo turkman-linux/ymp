@@ -126,6 +126,7 @@ public class package {
     //DOC: Get package array value
     public string[] gets(string name){
         if (yaml.has_area(pkgarea,name)){
+            debug(@"Package data: $name");
             return yaml.get_array(pkgarea,name);
         }
         return {};

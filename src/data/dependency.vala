@@ -44,12 +44,17 @@ private void resolve_process(string[] names){
 }
 
 private string[] get_group_packages(string fname){
+    info("Resolve group: "+fname);
     array ret = new array();
     string[] pkgnames = list_available_packages();
     string name = fname[1:];
     foreach(string pkgname in pkgnames){
         package p = get_from_repository(pkgname);
+        if(p == null){
+            continue;
+        }
         if(name in p.gets("group")){
+            debug("Group "+name+": add "+pkgname);
             ret.add(pkgname);
         }
     }
