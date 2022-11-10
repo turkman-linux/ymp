@@ -42,6 +42,7 @@ private void settings_init(){
     clear_env();
     set_env("LANG","C.UTF-8");
     set_env("LC_ALL","C.UTF-8");
+    set_env("PATH","/bin:/sbin:/usr/bin:/usr/sbin");
     #if DEBUG
     set_env("G_MESSAGES_DEBUG", "all");
     #endif
