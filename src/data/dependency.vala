@@ -92,15 +92,22 @@ private void resolve_reverse_process(string[] names){
 //DOC: `string[] resolve_dependencies(string[] names):`
 //DOC: return package name list with required dependencies
 public string[] resolve_dependencies(string[] names){
-    if(get_bool("ignore-dependency")){
-        return names;
-    }
     // reset need list
     need_install = new array();
     // reset cache list
     cache_list = new array();
-    // process
-    resolve_process(names);
+    if(get_bool("ignore-dependency")){
+        foreach(string name in names){
+            if(name[0] == '@'){
+                need_install.adds(get_group_packages(name));
+            }else{
+                need_install.add(name);
+            }
+        }
+    }else{
+        // process
+        resolve_process(names);
+    }
     error(3);
     return need_install.get();
 }
@@ -108,14 +115,21 @@ public string[] resolve_dependencies(string[] names){
 //DOC: `string[] resolve_reverse_dependencies(string[] names):`
 //DOC: return package name list with required reverse dependencies
 public string[] resolve_reverse_dependencies(string[] names){
-    if(get_bool("ignore-dependency")){
-        return names;
-    }
     // reset need list
     need_install = new array();
     // reset cache list
     cache_list = new array();
-    resolve_reverse_process(names);
+    if(get_bool("ignore-dependency")){
+        foreach(string name in names){
+            if(name[0] == '@'){
+                need_install.adds(get_group_packages(name));
+            }else{
+                need_install.add(name);
+            }
+        }
+    }else{
+        resolve_reverse_process(names);
+    }
     error(3);
     return need_install.get();
 }
