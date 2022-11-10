@@ -42,6 +42,9 @@ private void settings_init(){
     clear_env();
     set_env("LANG","C.UTF-8");
     set_env("LC_ALL","C.UTF-8");
+    #if DEBUG
+    set_env("G_MESSAGES_DEBUG", "all");
+    #endif
 }
 
 //DOC: `void set_destdir(string rootfs):`

@@ -303,8 +303,9 @@ private void create_metadata_info(){
     if(yaml.has_area(srcdata,"use-flags")){
         foreach(string flag in use_flags){
             info("Add use flag dependency: "+flag);
-            foreach(string dep in yaml.get_array(srcdata,flag+"-depends")){
-                deps.add(dep);
+            string[] fdeps = yaml.get_array(srcdata,flag+"-depends");
+            if(fdeps.length > 0){
+                deps.adds(fdeps);
             }
         }
     }

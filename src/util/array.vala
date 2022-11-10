@@ -38,6 +38,9 @@ public class array{
     //DOC: `void adds(string[] arr):`
     //DOC: add item list into array
     public void adds(string[] arr){
+        if (arr == null || arr.length == 0){
+            return;
+        }
         foreach(string item in arr){
             add(item);
         }

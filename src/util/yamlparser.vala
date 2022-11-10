@@ -84,15 +84,16 @@ public class yamlfile {
     //DOC: `string yamlfile.get_value(string data, string name):`
     //DOC: get value from area data
     public string get_value(string data,string name){
-        if(data==null){
+        if(data == null || data==""){
             return "";
         }
+        debug("Get value:"+name);
         foreach(string line in ssplit(trim(data),"\n")){
             if(line.length < name.length+1){
                 continue;
             }
             int level = count_tab(line);
-            if(level == 0 && line[0:name.length+1] == name+":"){
+            if(level == 0 && startswith(line, name+":")){
                 if(line.length == name.length+1){
                     return "";
                 }
@@ -106,12 +107,13 @@ public class yamlfile {
     //DOC: get array from area data
     public string[] get_array(string data,string name){
         string[] array = {};
-        if(data==null){
+        if(data==null|| data == ""){
             return array;
         }
+        debug("Get array:"+name);
         string fdata = get_area(data,name);
         foreach(string line in ssplit(fdata,"\n")){
-            if(line[0:2] == "- "){
+            if(startswith(line,"- ")){
                 array += line[1:].strip();
             }
         }
@@ -122,7 +124,7 @@ public class yamlfile {
     //DOC: get area from data
     public string get_area(string data, string path){
         string tmp = data;
-        if(data==null){
+        if(data==null || data == ""){
             return "";
         }
         foreach(string item in ssplit(path,".")){
