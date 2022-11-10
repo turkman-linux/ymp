@@ -4,20 +4,28 @@ version=master
 release=1
 description="Package manager for Sulix Project"
 arch=(i686 x86_64)
-url='https://sulinos.gitlab.io'
+url='https://gitlab.com/sulix/'
 license=('GPL')
 source=(https://gitlab.com/sulix/devel/sources/ymp/-/archive/master/ymp-master.zip)
 md5sums=(SKIP)
+group=(system.base)
+uses=(libarchive libcurl)
+depends=(readline glibc glib2.0)
+libarchive_depends=(libarchive)
+libcurl_depends=(curl)
 
-cd ymp-new-master
+cd ymp-master
 
 build(){
-    rm -rf build || true
-    mkdir -p build
-    ymp-meson build
+    meson setup build --prefix=/usr \
+        -Ddoc=true \
+        -Dshared=true \
+        -Dscripts=true
+        $(use_opt libarchive "" "-Dlibarchive=false") \
+        $(use_opt libcurl "" "-Dlibcurl=false") \
     ninja -C build
 }
 install(){
-    DESTDIR=$installdir ninja install -C build
+    DESTDIR=$(DESTDIR) ninja -C build install
 }
 
