@@ -156,7 +156,7 @@ private void build_package(){
     cd(ympbuild_buildpath);
     int status = 0;
     if(!get_bool("no-build")){
-        string[] build_actions = {"setup", "build"};
+        string[] build_actions = {"prepare","setup", "build"};
         foreach(string func in build_actions){
             info("Running build action: "+func);
             status = run_ympbuild_function(func);
