@@ -53,9 +53,11 @@ private string[] get_group_packages(string fname){
         if(p == null){
             continue;
         }
-        if(name in p.gets("group")){
-            debug("Group "+name+": add "+pkgname);
-            ret.add(pkgname);
+        foreach(string grp in p.gets("group")){
+            if(name == grp || startswith(grp,name+".")){
+                debug("Group "+grp+": add "+pkgname);
+                ret.add(pkgname);
+            }
         }
     }
     return ret.get();
