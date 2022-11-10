@@ -315,7 +315,20 @@ private void create_metadata_info(){
             new_data += "      - "+dep+"\n";
         }
     }
-    output_package_path = ympbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version")+"_"+yaml.get_value(srcdata,"release");
+    string release = yaml.get_value(srcdata,"release");
+    string version = yaml.get_value(srcdata,"version");
+    string name = yaml.get_value(srcdata,"name");
+    if(release == ""){
+        error_add("Release is not defined.");
+    }
+    if(version == ""){
+        error_add("Version is not defined.");
+    }
+    if(name == ""){
+        error_add("Name is not defined.");
+    }
+    error(1);
+    output_package_path = ympbuild_srcpath+"/"+name+"_"+version+"_"+release;
     writefile(ympbuild_buildpath+"/output/metadata.yaml",new_data);
 }
 
