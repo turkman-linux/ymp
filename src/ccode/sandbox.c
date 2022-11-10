@@ -35,6 +35,7 @@ int sandbox(char** args){
     int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER;
     pid_t pid = fork();
     if(pid == 0) {
+        write_to_file("/proc/self/comm", "ymp-sandbox");
         uid_t uid = getuid();
         gid_t gid = getgid();
         unshare(flag);
