@@ -25,6 +25,7 @@ public int bootstrap_main(string[] args){
     bool sysconf = get_bool("no-sysconf");
     set_bool("no-sysconf",true);
     set_destdir(rootfs);
+    copy_file("/etc/resolv.conf",rootfs+"/etc/resolv.conf");
     writefile(rootfs+"/var/lib/ymp/sources.list",repo+"\n");
     update_main(args);
     install_main(base_packages);
