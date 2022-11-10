@@ -87,6 +87,10 @@ private void ympbuild_init(){
         fi
     }
     function use(){
+        if ! echo ${uses[@]} | grep \"$1\" >/dev/null; then
+            echo \"Use flag \\\"$1\\\" is unknown!\"
+            exit 1
+        fi
         for use in ${uses[@]} ; do
             if [[ \"${use}\" == \"$1\" ]] ; then
                 flag=\"use_$1\"
@@ -94,8 +98,6 @@ private void ympbuild_init(){
                 return $?
             fi
         done
-        echo \"Use flag \\\"$1\\\" is unknown!\"
-        exit 1
     }
     function use_opt(){
         if use \"$1\" ; then
@@ -163,7 +165,7 @@ public int run_ympbuild_function(string function){
     }
     set_terminal_title("Run action: "+function);
     if(ympbuild_has_function(function)){
-        string cmd = "bash -e -c '"+ympbuild_header+" \n source /etc/profile \n source "+ympbuild_srcpath+"/ympbuild ; set -e ; "+function+"'";
+        string cmd = "bash -e -c '"+ympbuild_header+" \n source "+ympbuild_srcpath+"/ympbuild ; set -e ; "+function+"'";
         if(get_bool("quiet")){
             return run_silent(cmd);
         }else{
