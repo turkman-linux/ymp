@@ -103,4 +103,10 @@ public class array{
     public void set(string[] new_a){
         a = new_a;
     }
+    
+    //DOC: `long size()`;
+    //DOC: return array length
+    public long length(){
+        return a.length;
+    }
 }

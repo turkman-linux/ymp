@@ -117,6 +117,16 @@ public class package {
         a.adds(gets("depends"));
         if(is_source){
             a.adds(gets("makedepends"));
+            string[] use_flags = ssplit(get_value("use")," ");
+            if("all" in use_flags){
+                foreach(string flag in gets("use-flags")){
+                   a.adds(gets(flag+"-depends"));
+                }
+            }else{
+                foreach(string flag in use_flags){
+                   a.adds(gets(flag+"-depends"));
+                }            
+            }
         }
         dependencies = a.get();
         release = int.parse(get("release"));

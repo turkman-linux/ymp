@@ -19,6 +19,7 @@ public int build_operation(string[] args){
             }
             set_build_target(srcpath);
             create_metadata_info();
+            check_build_dependencies(new_args);
             fetch_package_sources();
             extract_package_sources();
             build_package();
@@ -34,6 +35,7 @@ public int build_operation(string[] args){
         }
         set_build_target(arg);
         create_metadata_info();
+        check_build_dependencies(new_args);
         fetch_package_sources();
         if(!get_bool("no-source")){
             create_source_archive();
@@ -46,6 +48,43 @@ public int build_operation(string[] args){
     }
     cd(currend_directory);
     return 0;
+}
+
+private void check_build_dependencies(string[] args){
+    if(get_bool("ignore-dependency")){
+        return;
+    }
+    string metadata = get_ympbuild_metadata();
+    var yaml = new yamlfile();
+    yaml.data = metadata;
+    yaml.data = yaml.get("ymp.source");
+    var deps = new array();
+    deps.adds(yaml.get_array(yaml.data,"makedepends"));
+    deps.adds(yaml.get_array(yaml.data,"depends"));
+    string name = yaml.get_value(yaml.data,"name");
+    string[] use_flags = ssplit(get_value("use")," ");
+    if("all" in use_flags){
+        use_flags=yaml.get_array(yaml.data,"use-flags");
+    }
+    foreach(string flag in use_flags){
+        deps.adds(yaml.get_array(yaml.data,flag+"-depends"));
+    }
+    string[] pkgs = resolve_dependencies(deps.get());
+    string[] need_install = {};
+    foreach(string pkg in pkgs){
+        info(join(" ",pkgs));
+        if(pkg in args || pkg == name){
+            continue;
+        }else if(is_installed_package(pkg)){
+            continue;
+        }else{
+            need_install += pkg;
+        }
+    }
+    if(need_install.length > 0){
+        error_add("Packages is not installed: "+join(" ",need_install));
+    }
+    error(1);
 }
 
 private void set_build_target(string src_path){
@@ -239,7 +278,7 @@ private void create_metadata_info(){
         new_data += "    "+attr+": "+yaml.get_value(srcdata,attr)+"\n";
     }
 
-    string[] arrys = {"depends","provides","replaces", "group"};
+    string[] arrys = {"provides","replaces", "group"};
     foreach(string arr in arrys){
         if(!yaml.has_area(srcdata,arr)){
             continue;
@@ -250,6 +289,29 @@ private void create_metadata_info(){
             foreach(string dep in deps){
                 new_data += "      - "+dep+"\n";
             }
+        }
+    }
+    // calculate dependency list by use flag and base dependencies
+    var deps = new array();
+    if(yaml.has_area(srcdata,"depends")){
+        deps.adds(yaml.get_array(srcdata,"depends"));
+    }
+    string[] use_flags = ssplit(get_value("use")," ");
+    if("all" in use_flags){
+        use_flags = yaml.get_array(srcdata,"use-flags");
+    }
+    if(yaml.has_area(srcdata,"use-flags")){
+        foreach(string flag in use_flags){
+            info("Add use flag dependency: "+flag);
+            foreach(string dep in yaml.get_array(srcdata,flag+"-depends")){
+                deps.add(dep);
+            }
+        }
+    }
+    if(deps.length() > 0){
+        new_data += "    depends:\n";
+        foreach(string dep in deps.get()){
+            new_data += "      - "+dep+"\n";
         }
     }
     output_package_path = ympbuild_srcpath+"/"+yaml.get_value(srcdata,"name")+"_"+yaml.get_value(srcdata,"version")+"_"+yaml.get_value(srcdata,"release");

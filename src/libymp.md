@@ -554,6 +554,10 @@ return as string array
 
 replace with new array
 
+`long size()`;
+
+return array length
+
 # src/util/command.vala
 ## Command functions
 
