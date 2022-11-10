@@ -97,6 +97,13 @@ private void ympbuild_init(){
         echo \"Use flag \\\"$1\\\" is unknown!\"
         exit 1
     }
+    function use_opt(){
+        if use \"$1\" ; then
+            echo $2
+        else
+            echo $3
+        fi
+    }
     ";
     var use_flags = new array();
     foreach(string flag in ssplit(get_value("use")," ")){
