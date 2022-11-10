@@ -64,10 +64,10 @@ void create_dir(const char *dir) {
     for (p = tmp + 1; *p; p++)
         if (*p == '/') {
             *p = 0;
-            mkdir(tmp, S_IRWXU);
+            mkdir(tmp, 0755);
             *p = '/';
         }
-    mkdir(tmp, S_IRWXU);
+    mkdir(tmp, 0755);
 }
 
 char * c_read_file(const char * f_name, int * err, size_t * f_size) {

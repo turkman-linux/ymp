@@ -153,6 +153,7 @@ public string[] argument_process(string[] args){
 
 private void directories_init(){
     create_dir(get_build_dir());
+    GLib.FileUtils.chmod(get_build_dir(),0777);
     create_dir(get_storage()+"/index/");
     create_dir(get_storage()+"/packages/");
     create_dir(get_storage()+"/metadata/");
@@ -163,7 +164,12 @@ private void directories_init(){
     if(!isexists(get_storage()+"/sources.list")){
         writefile(get_storage()+"/sources.list","");
     }
-
+    foreach(string path in find(get_storage())){
+        GLib.FileUtils.chmod(path,0755);
+        if(is_root()){
+            Posix.chown(path,0,0);
+        }
+    }
 }
 
 private bool ymp_activated = false;
