@@ -50,8 +50,6 @@ int sandbox(char** args){
         sandbox_bind("/bin");
         sandbox_bind("/lib");
         sandbox_bind("/lib64");
-        sandbox_bind("/etc");
-        sandbox_bind("/bin");
         sandbox_bind("/sbin");
         sandbox_bind("/var");
         sandbox_bind("/dev");
