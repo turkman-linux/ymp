@@ -11,7 +11,7 @@ Basics of ympbuild
 ==================
 **ymp** package manager uses **ympbuild** file. **ympbuild** file is simple bash script and call by ymp. You should define variables and functions. Minimal example ympbuild look like this:
 
-.. code-blockj:: shell
+.. code-block:: shell
 
 	#!/usr/bin/env bash
 	name=example
