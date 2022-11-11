@@ -49,10 +49,12 @@ public fncolor colorize;
 private void warning_fn(string message){
     print_stderr(colorize("WARNING: ",yellow)+message);
 }
-
+#if DEBUG
 private void debug_fn(string message){
     print_fn(colorize("DEBUG: ",blue)+message,true,true);
 }
+#else
+#endif
 
 private void info_fn(string message){
     print(colorize("INFO : ",green)+message);
