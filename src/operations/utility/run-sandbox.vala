@@ -7,6 +7,7 @@ public int run_sandbox_main(string[] args){
     sandbox_rootfs = get_destdir();
     sandbox_uid = int.parse(get_value("uid"));
     sandbox_gid = int.parse(get_value("gid"));
+    debug("Execute sandbox :"+join(" ",args));
     int status = sandbox(args);
     return status/256;
 }

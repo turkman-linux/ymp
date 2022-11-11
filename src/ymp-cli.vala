@@ -14,17 +14,17 @@ void progressbar(double cur, double total, string filename){
 
 int main (string[] args) {
     Ymp ymp = ymp_init(args);
-    string[] new_args = argument_process(args);
     if(get_bool("sandbox")){
         var a = new array();
         a.adds(args);
-        a.remove("--sandbox");;
+        a.remove("--sandbox");
         return run_sandbox_main(a.get());
     }
     if(get_bool("version")){
         write_version();
         return 0;
     }
+    string[] new_args = argument_process(args);
     if(new_args.length < 2){
         error_add("No command given.\nRun "+ colorize("ymp help",red)+ " for more information about usage.");
         error(31);
