@@ -9,12 +9,16 @@ async void process_request(SocketConnection conn) {
         var dos = new DataOutputStream(conn.output_stream);
         var now = new DateTime.now_local ();
         string req = "";
-        string path = "";
+        string path = "/";
         while(!startswith(req,"GET")){
             req = yield dis.read_line_async(Priority.HIGH_IDLE);
             debug(req);
         }
-        path = safedir(req.split(" ")[1]);
+        if(req!=""){
+            path = safedir(ssplit(req," ")[1]);
+        }else{
+            return;
+        }
         if(isdir(path) && isfile(path+"/index.html")){
             path = path+"/index.html";
         }
