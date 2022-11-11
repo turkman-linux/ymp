@@ -11,7 +11,7 @@ Basics of ympbuild
 ==================
 **ymp** package manager uses **ympbuild** file. **ympbuild** file is simple bash script and call by ymp. You should define variables and functions. Minimal example ympbuild look like this:
 
-.. code-block:: shell
+.. code-blockj:: shell
 
 	#!/usr/bin/env bash
 	name=example
@@ -109,7 +109,7 @@ You can pass use flags with **--use="foo bar"** argument or **USE="foo bar"** en
 
 	# --use parameter method.
 	$ ymp build --use="foo bar" ./repo/foo-package/
-	# envitormental variablemethod.
+	# envitormental variable method.
 	$ USE="foo bar" ymp build  ./repo/foo-package/
 	# or you can define use flags into /etc/ymp.conf file
 
