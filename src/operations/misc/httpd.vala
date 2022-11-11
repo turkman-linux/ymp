@@ -23,9 +23,13 @@ async void process_request(SocketConnection conn) {
         string date = now.format("%H:%M %Y.%m.%d");
         if (isfile("./"+path)) {
             FileStream stream = FileStream.open("./"+path, "r");
-            long size = filesize("./"+path);
+            if(stream == null){
+                dos.put_string("HTTP/1.1 403 Forbidden\n");
+                return;
+            }
+            long size = filesize(srealpath("./"+path));
 
-            print_fn("%s -- %s %s %s".printf(ip,date,path,GLib.format_size((uint64)size)),true,true);
+            print_fn("%s -- %s %s %s".printf(ip,date,srealpath("./"+path),GLib.format_size((uint64)size)),true,true);
 
             dos.put_string("HTTP/1.1 200 OK\n");
             dos.put_string("Server: YMP httpd %s\n".printf(VERSION));
@@ -43,7 +47,7 @@ async void process_request(SocketConnection conn) {
                dos.flush();
             }
         }else if(isdir("./"+path)){
-            print_fn("%s -- %s /%s 0b".printf(ip,date,path),true,true);
+            print_fn("%s -- %s %s 0 bytes".printf(ip,date,srealpath("./"+path)),true,true);
             dos.put_string("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
             dos.put_string("<html>\n<head>");
             dos.put_string("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n");
