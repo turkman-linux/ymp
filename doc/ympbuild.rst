@@ -73,7 +73,7 @@ ympbuild directories
 ====================
 Every build has own build directory in **/tmp/ymp-build/<build-id>**. **build-id** is actually md5sum of **ympbuild** file so if you modify ympbuild, build-id will changed. Build directory defined as **HOME** environmental variable. You can simply use `cd` instead of `cd /tmp/ymp-build/<build-id>`.
 
-Source archive extract into build directory and ympbuild call from build directory. Packaging directory is **/tmp/ymp-build/<build-id>/output**. If you insert a file into this directory, ymp will add this file into package. also packaging directory defined as **installdir** and **DESTDIR** environmental variable. You can use simply `make install` instead of `make install DESTDIR=${installdir}`. 
+Source archive extracted into build directory and ympbuild called from build directory. Packaging directory is **/tmp/ymp-build/<build-id>/output**. If you insert a file into this directory, ymp will add this file into package. also packaging directory defined as **installdir** and **DESTDIR** environmental variable. You can use simply `make install` instead of `make install DESTDIR=${installdir}`. 
 
 Note: Generally **/tmp** directory is **tmpfs** so has limited space. If you want more space you must remove **/tmp/ymp-build** and symlink from other location. (location must have read, write and executable permission)
 
