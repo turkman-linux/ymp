@@ -75,8 +75,15 @@ public void writefile(string path, string ctx){
 //DOC: directory safe for httpd
 public string safedir(string dir){
     string ret = dir;
-    ret = ret.replace("..",".");
-    return ("./"+ret).replace("//","/");
+    while(".." in ret){
+        ret = ret.replace("..","./");
+    }
+    while("//" in ret){
+        ret = ret.replace("//","/");
+    }while(ret.length > 0 && ret[0] == '/'){
+        ret = ret[1:];
+    }
+    return ret;
 }
 
 //DOC: `void cd(string path):`

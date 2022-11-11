@@ -26,7 +26,7 @@ public class array{
         }
         a = new_a;
     }
-    
+
     //DOC: `void add(string item):`
     //DOC: add item into array
     public void add(string item){

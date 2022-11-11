@@ -21,19 +21,15 @@ async void process_request(SocketConnection conn) {
         InetSocketAddress local = conn.get_remote_address() as InetSocketAddress;
         string ip = local.get_address().to_string();
         string date = now.format("%H:%M %Y.%m.%d");
-        if (isfile(path)) {
-            FileStream stream = FileStream.open(path, "r");
+        if (isfile("./"+path)) {
+            FileStream stream = FileStream.open("./"+path, "r");
             long size = filesize(path);
 
             print_fn("%s -- %s %s %s".printf(ip,date,path,GLib.format_size((uint64)size)),true,true);
 
             dos.put_string("HTTP/1.1 200 OK\n");
             dos.put_string("Server: YMP httpd %s\n".printf(VERSION));
-            if(endswith(path.down(),".html")){
-                dos.put_string("Content-Type: text/html\n");
-            }else{
-                dos.put_string("Content-Type: text/plain\n");
-            }
+            dos.put_string("Content-Type: "+get_content_type(path)+"\n");
             dos.put_string("Content-Length: %s\n\n".printf(size.to_string()));
             uint8[] buf = new uint8[BUFFER_LENGTH];
             size_t read_size = 0;
@@ -45,24 +41,31 @@ async void process_request(SocketConnection conn) {
                }
                dos.flush();
             }
-        }else if(isdir(path)){
+        }else if(isdir("./"+path)){
             dos.put_string("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
             dos.put_string("<html>\n<head>");
             dos.put_string("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n");
-            dos.put_string("<title>Directory listing for "+path[1:]+"</title>\n");
+            dos.put_string("<title>Directory listing for "+path+"</title>\n");
             dos.put_string("</head>\n<body>\n");
-            dos.put_string("<h1>Directory listing for "+path[1:]+"</h1>\n");
+            dos.put_string("<h1>Directory listing for "+path+"</h1>\n");
             dos.put_string("<hr>\n<ul>\n");
             dos.put_string("<li><a href=\"../\">..</a><br></li>\n");
             dos.flush();
-            foreach(string f in listdir(path)){
-                string v="";
+            var node = new array();
+            node.adds(listdir("./"+path));
+            foreach(string f in node.get()){
                 if(isdir(f)){
-                    v="/";
+                    string ff = f.replace(">","&gt;").replace("<","&lt;");
+                    dos.put_string("<li><a href=\""+path+"/"+f+"/\">"+ff+"/</a><br></li>\n");
+                    dos.flush();
                 }
-                string ff = f.replace(">","&gt;").replace("<","&lt;")+v;
-                dos.put_string("<li><a href=\""+path+"/"+f+"\">"+ff+"</a><br></li>\n");
-                dos.flush();
+            }
+            foreach(string f in node.get()){
+                if(isfile(f)){
+                    string ff = f.replace(">","&gt;").replace("<","&lt;");
+                    dos.put_string("<li><a href=\""+path+"/"+f+"\">"+ff+"</a><br></li>\n");
+                    dos.flush();
+                }
             }
             dos.put_string("</ul>\n<hr>\n");
             dos.put_string("</body>\n</html>");
@@ -72,6 +75,24 @@ async void process_request(SocketConnection conn) {
         }
     } catch (Error e) {
         warning(e.message);
+    }
+}
+
+private string get_content_type(string path){
+    if(endswith(path.down(),".html")){
+        return "text/html";
+    }else if(endswith(path.down(),".css")){
+        return "text/css";
+    }else if(endswith(path.down(),".js")){
+        return "text/javascript";
+    }else if(endswith(path.down(),".png")){
+        return "image/png";
+    }else if(endswith(path.down(),".jpeg") || endswith(path.down(),".jpg")){
+        return "image/jpeg";
+    }else if(endswith(path.down(),".svg")){
+        return "image/svg+xml";
+    }else{
+        return "text/plain";
     }
 }
 
