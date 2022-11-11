@@ -42,28 +42,38 @@ async void process_request(SocketConnection conn) {
                dos.flush();
             }
         }else if(isdir("./"+path)){
+            print_fn("%s -- %s /%s 0b".printf(ip,date,path),true,true);
             dos.put_string("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
             dos.put_string("<html>\n<head>");
             dos.put_string("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n");
             dos.put_string("<title>Directory listing for "+path+"</title>\n");
+            dos.put_string("<style>.link { text-decoration: none;}</style>\n");
             dos.put_string("</head>\n<body>\n");
             dos.put_string("<h1>Directory listing for "+path+"</h1>\n");
             dos.put_string("<hr>\n<ul>\n");
-            dos.put_string("<li><a href=\"../\">..</a><br></li>\n");
+            dos.put_string("&#x1F4C1; <a href=\"../\">..</a><br></li>\n");
             dos.flush();
             var node = new array();
             node.adds(listdir("./"+path));
+            node.sort();
             foreach(string f in node.get()){
-                if(isdir(f)){
+                if(startswith(f,".")){
+                    continue;
+                }
+                if(isdir("./"+path+"/"+f)){
                     string ff = f.replace(">","&gt;").replace("<","&lt;");
-                    dos.put_string("<li><a href=\""+path+"/"+f+"/\">"+ff+"/</a><br></li>\n");
+                    dos.put_string("&#x1F4C1; <a class=\"link\" href=\""+path+f+"/\">"+ff+"/</a><br></li>\n");
                     dos.flush();
                 }
             }
             foreach(string f in node.get()){
-                if(isfile(f)){
+                if(startswith(f,".")){
+                    continue;
+                }
+                if(isfile("./"+path+"/"+f)){
                     string ff = f.replace(">","&gt;").replace("<","&lt;");
-                    dos.put_string("<li><a href=\""+path+"/"+f+"\">"+ff+"</a><br></li>\n");
+                    long size = filesize("./"+path+"/"+f);
+                    dos.put_string("&#x1F4C4; <a class=\"link\" href=\""+path+f+"\">"+ff+"</a> ("+GLib.format_size((uint64)size)+")<br></li>\n");
                     dos.flush();
                 }
             }

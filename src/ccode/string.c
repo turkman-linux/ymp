@@ -26,4 +26,13 @@ char* ccolorize(char* msg, char* num){
 }
 #endif
 
+static int string_compare(const void* a, const void* b){
+ 
+    return strcmp(*(const char**)a, *(const char**)b);
+}
+ 
+void csort(const char* arr[], int n){
+    qsort(arr, n, sizeof(const char*), string_compare);
+}
+
 #endif

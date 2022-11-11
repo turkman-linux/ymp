@@ -107,6 +107,7 @@ public extern string fetch_string(string url);
 //DOC: run command like printf
 public extern string run_printf(char* format, ...);
 private extern string ccolorize(string message, string color);
+public extern void csort(string[] arr, int n);
 
 //DOC:// ### logger.c
 //DOC: `void print_fn(string message, bool new_line, bool err):`

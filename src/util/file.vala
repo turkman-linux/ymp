@@ -83,6 +83,7 @@ public string safedir(string dir){
     }while(ret.length > 0 && ret[0] == '/'){
         ret = ret[1:];
     }
+    ret="/"+ret;
     return ret;
 }
 
