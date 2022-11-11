@@ -34,7 +34,7 @@ async void process_request(SocketConnection conn) {
             }else{
                 dos.put_string("Content-Type: text/plain\n");
             }
-            dos.put_string("Content-Length: %l\n\n".printf(size));
+            dos.put_string("Content-Length: %s\n\n".printf(size.to_string()));
             uint8[] buf = new uint8[BUFFER_LENGTH];
             size_t read_size = 0;
             size_t written = 0;
