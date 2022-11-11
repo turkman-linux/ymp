@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="application/x-rfp-ymp">
-    <_comment>Ymp RFP package</_comment>
+  <mime-type type="application/x-ymp">
+    <comment>Ymp package</comment>
     <icon name="application-x-ymp"/>
+    <glob-deleteall/>
+    <glob pattern="*.ymp"/>
+  </mime-type>
+  <mime-type type="application/x-rfp-ymp">
+    <comment>Ymp RFP package</comment>
+    <icon name="application-x-rfp-ymp"/>
+    <glob-deleteall/>
     <glob pattern="*.rfp.ymp"/>
   </mime-type>
   <mime-type type="application/x-src-ymp">
-    <_comment>Ymp Source package</_comment>
-    <icon name="application-x-ymp"/>
+    <comment>Ymp Source package</comment>
+    <icon name="application-x-src-ymp"/>
+    <glob-deleteall/>
     <glob pattern="*.source.ymp"/>
   </mime-type>
   <mime-type type="application/x-ymp-script">
-    <_comment>Ymp script</_comment>
-    <icon name="application-x-ymp"/>
+    <comment>Ymp script</comment>
+    <icon name="application/x-ymp-script"/>
+    <glob-deleteall/>
     <glob pattern="*.ympsh"/>
-  </mime-type>
-    <mime-type type="application/x-ymp">
-    <_comment>Ymp package</_comment>
-    <icon name="application-x-ymp"/>
-    <glob pattern="*.ymp"/>
   </mime-type>
 </mime-info>
