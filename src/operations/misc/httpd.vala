@@ -23,7 +23,7 @@ async void process_request(SocketConnection conn) {
         string date = now.format("%H:%M %Y.%m.%d");
         if (isfile("./"+path)) {
             FileStream stream = FileStream.open("./"+path, "r");
-            long size = filesize(path);
+            long size = filesize("./"+path);
 
             print_fn("%s -- %s %s %s".printf(ip,date,path,GLib.format_size((uint64)size)),true,true);
 
@@ -31,6 +31,7 @@ async void process_request(SocketConnection conn) {
             dos.put_string("Server: YMP httpd %s\n".printf(VERSION));
             dos.put_string("Content-Type: "+get_content_type(path)+"\n");
             dos.put_string("Content-Length: %s\n\n".printf(size.to_string()));
+            debug("Content-Length: %s\n\n".printf(size.to_string()));
             uint8[] buf = new uint8[BUFFER_LENGTH];
             size_t read_size = 0;
             size_t written = 0;
