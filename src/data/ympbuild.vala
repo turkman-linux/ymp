@@ -70,12 +70,12 @@ private void ympbuild_init(){
                 echo \"      - $rep\"
             done
         fi
-        if [[ \"${uses[@]}\" != \"\" ]] ; then
+        if [[ \"${uses[@]}\" != \"\" || \"${uses_extra[@]}\" != \"\" ]] ; then
             echo \"    use-flags:\"
             for use in ${uses[@]} ; do
                 echo \"      - $use\"
             done
-            for flag in ${uses[@]} ; do
+            for flag in ${uses[@]} ${uses_extra[@]} ; do
                 flag_dep=\"${flag}_depends\"
                 if [[ \"$(eval echo \\${${flag_dep}[@]})\" != \"\" ]] ; then
                     echo \"    ${flag}-depends:\"
@@ -87,11 +87,11 @@ private void ympbuild_init(){
         fi
     }
     function use(){
-        if ! echo ${uses[@]} | grep \"$1\" >/dev/null; then
+        if ! echo ${uses[@]} ${uses_extra[@]} | grep \"$1\" >/dev/null; then
             echo \"Use flag \\\"$1\\\" is unknown!\"
             exit 1
         fi
-        for use in ${uses[@]} ; do
+        for use in ${uses[@]} ${uses_extra[@]}; do
             if [[ \"${use}\" == \"$1\" ]] ; then
                 flag=\"use_$1\"
                 [[ \"${!flag}\" == \"31\" || \"${use_all}\" == \"31\" ]]
