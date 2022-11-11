@@ -75,6 +75,7 @@ int fetch(char* url, char* path){
     FILE *fp;
     strcpy(fetcher_filename,path);
     curl=curl_easy_init();
+    printf("Downloading: %s\n",path);
     if (curl){
         fp = fopen(path,"wb");
         curl_options_common(url);
@@ -88,7 +89,6 @@ int fetch(char* url, char* path){
           return 0;
         }
         curl_easy_cleanup(curl);
-        putc('\n',stderr);
         fclose(fp);
     }
     return 1;
@@ -111,7 +111,6 @@ char* fetch_string(char* url){
           return (char*)(s.ptr);
         }
         curl_easy_cleanup(curl);
-        putc('\n',stderr);
     }
     return (char*)(s.ptr);
 }

@@ -1,15 +1,23 @@
+private string old_line;
 void progressbar(double cur, double total, string filename){
     int percent = (int)(cur*100/total);
     if(percent < 0 || percent > 100){
         return;
     }
-    print_fn("\x1b[2K\r%s%d\t%s\t%s\t%s".printf(
+    string del="";
+    if(!get_bool("no-color")){
+        del = "\x1b[A\x1b[2K\r";
+    }
+    string line = del+"%s%d  %s  %s  %s".printf(
         "%",
         percent,
         sbasename(filename),
         GLib.format_size((uint64)cur),
-        GLib.format_size((uint64)total)
-    ),false,true);
+        GLib.format_size((uint64)total));
+    if(line != old_line){
+        print_stderr(line);
+        old_line = line;
+    }
 }
 
 int main (string[] args) {
