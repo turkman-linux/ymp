@@ -128,7 +128,7 @@ if get_option('static')
         install_data(meson.current_build_dir() / 'ymp-cli-static', install_dir : get_option('bindir'),rename : 'ymp-static')
     endif
     if get_option('test')
-        executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args + ['-static'], link_with: libstatic)
+        executable('ymp-test', 'test/test.vala', dependencies: static_dependencies, link_args: args + ['-static'], link_with: libstatic)
     endif
 
 endif
