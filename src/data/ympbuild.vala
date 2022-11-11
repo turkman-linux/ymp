@@ -91,10 +91,20 @@ private void ympbuild_init(){
             echo \"Use flag \\\"$1\\\" is unknown!\"
             exit 1
         fi
+        if [[ \"${use_all}\" == \"31\" ]] ; then
+            if echo ${uses[@]} | grep \"$1\" >/dev/null; then
+                return 0
+            fi
+        fi
+        if [[ \"${use_extra}\" == \"31\" ]] ; then
+            if echo ${uses_extra[@]} | grep \"$1\" >/dev/null; then
+                return 0
+            fi
+        fi
         for use in ${uses[@]} ${uses_extra[@]}; do
             if [[ \"${use}\" == \"$1\" ]] ; then
                 flag=\"use_$1\"
-                [[ \"${!flag}\" == \"31\" || \"${use_all}\" == \"31\" ]]
+                [[ \"${!flag}\" == \"31\" ]]
                 return $?
             fi
         done
