@@ -8,8 +8,13 @@ async void process_request(SocketConnection conn) {
         var dis = new DataInputStream(conn.input_stream);
         var dos = new DataOutputStream(conn.output_stream);
         var now = new DateTime.now_local ();
-        string req = yield dis.read_line_async(Priority.HIGH_IDLE);
-        string path = safedir(req.split(" ")[1]);
+        string req = "";
+        string path = "";
+        while(!startswith(req,"GET")){
+            req = yield dis.read_line_async(Priority.HIGH_IDLE);
+            debug(req);
+        }
+        path = safedir(req.split(" ")[1]);
         if(isdir(path) && isfile(path+"/index.html")){
             path = path+"/index.html";
         }
@@ -61,6 +66,9 @@ async void process_request(SocketConnection conn) {
             }
             dos.put_string("</ul>\n<hr>\n");
             dos.put_string("</body>\n</html>");
+        }else{
+            dos.put_string("HTTP/1.1 404 Not Found\nContent-Type: text/html\n");
+            dos.flush();
         }
     } catch (Error e) {
         warning(e.message);
