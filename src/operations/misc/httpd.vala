@@ -10,11 +10,11 @@ async void process_request(SocketConnection conn) {
         var now = new DateTime.now_local ();
         string req = "";
         string path = "/";
-        while(!startswith(req,"GET")){
-            req = yield dis.read_line_async(Priority.HIGH_IDLE);
-            debug(req);
+        req = yield dis.read_line_async(Priority.HIGH_IDLE);
+        if(!startswith(req,"GET")){
+            return;
         }
-        if(req!=""){
+        if(req!=null && req.length>=4){
             path = safedir(ssplit(req," ")[1]);
         }else{
             return;
@@ -25,7 +25,7 @@ async void process_request(SocketConnection conn) {
         InetSocketAddress local = conn.get_remote_address() as InetSocketAddress;
         string ip = local.get_address().to_string();
         string date = now.format("%H:%M %Y.%m.%d");
-        if (isfile("./"+path)) {
+        if (isfile("./"+path) && !(" " in path)) {
             FileStream stream = FileStream.open("./"+path, "r");
             if(stream == null){
                 dos.put_string("HTTP/1.1 403 Forbidden\n");
@@ -60,13 +60,15 @@ async void process_request(SocketConnection conn) {
             dos.put_string("</head>\n<body>\n");
             dos.put_string("<h1>Directory listing for "+path+"</h1>\n");
             dos.put_string("<hr>\n<ul>\n");
-            dos.put_string("&#x1F4C1; <a href=\"../\">..</a><br></li>\n");
+            if(path != "/"){
+                dos.put_string("&#x1F4C1; <a href=\"../\">..</a><br></li>\n");
+            }
             dos.flush();
             var node = new array();
             node.adds(listdir("./"+path));
             node.sort();
             foreach(string f in node.get()){
-                if(startswith(f,".")){
+                if(startswith(f,".") || " " in f){
                     continue;
                 }
                 if(isdir("./"+path+"/"+f)){
