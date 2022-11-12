@@ -21,6 +21,10 @@ private void resolve_process(string[] names){
         if (!need_install.has(name)){
             // get package object
             package pkg = null;
+            if(startswith(name,"http://") || startswith(name,"https://")){
+                fetch(name,get_storage()+"/packages/"+sbasename(name));
+                name = get_storage()+"/packages/"+sbasename(name);
+            }
             if(isfile(name)){
                 pkg = get_package_from_file(name);
             }else{
