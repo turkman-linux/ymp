@@ -136,7 +136,6 @@ public string get_home(){
 //DOC: `void clear_env():`
 //DOC: remove all environmental variable except **PATH**
 public void clear_env(){
-    string path = get_env("PATH");
     foreach(string name in GLib.Environment.list_variables()){
         GLib.Environment.unset_variable(name);
     }
