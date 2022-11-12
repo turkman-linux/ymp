@@ -140,5 +140,4 @@ public void clear_env(){
     foreach(string name in GLib.Environment.list_variables()){
         GLib.Environment.unset_variable(name);
     }
-    set_env("PATH",path);
 }
