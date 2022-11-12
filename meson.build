@@ -30,6 +30,7 @@ add_project_arguments(['--pkg', 'posix'], language: 'vala')
 run_command('bash', './tool/mkctx.sh',
     'CONFIGDIR=/'+get_option('sysconfdir'),
     'STORAGEDIR=/'+get_option('storagedir'),
+    'DISTRODIR=/'+get_option('distrodir'),
     'VERSION='+meson.project_version(),
     check:true)
 

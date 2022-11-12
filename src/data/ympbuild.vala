@@ -19,8 +19,8 @@ private void ympbuild_init(){
     declare -r YMPVER=\""+VERSION+"\"
     export NOCONFIGURE=1
     export NO_COLOR=1
-    export CFLAGS=\"-s -DSULIX -L/lib/sulix "+get_value("build:cflags")+"\"
-    export CXXFLAGS=\"-s -DSULIX -L/lib/sulix "+get_value("build:cxxflags")+"\"
+    export CFLAGS=\"-s -DSULIX -L"+DISTRODIR+" "+get_value("build:cflags")+"\"
+    export CXXFLAGS=\"-s -DSULIX -L"+DISTRODIR+" "+get_value("build:cxxflags")+"\"
     export CC=\""+get_value("build:cc")+"\"
     export LDFLAGS=\""+get_value("build:ldflags")+"\"
 
