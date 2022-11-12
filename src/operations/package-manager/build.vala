@@ -178,7 +178,7 @@ private void build_package(){
             }
         }
     }
-    if(!get_bool("no-install")){
+    if(!get_bool("no-package")){
         string[] install_actions = {"test","package"};
         foreach(string func in install_actions){
             info("Running build action: "+func);
@@ -226,12 +226,23 @@ private void create_files_info(){
     cd(ympbuild_buildpath+"/output");
     string files_data = "";
     string links_data = "";
+    foreach(string path in listdir(ympbuild_buildpath+"/output")){
+        if(path == "metadata.yaml" || path == "icon.svg"){
+            continue;
+        }
+        if(isfile(ympbuild_buildpath+"/output/"+path)){
+            error_add("Files are not allowed in root directory: /"+path);
+        }
+    }
     foreach(string file in find(ympbuild_buildpath+"/output")){
         if(" " in file){
             continue;
         }
         if(isdir(file)){
             continue;
+        }
+        if(filesize(file)==0){
+            warning("Empty file detected: "+file);
         }
         if(issymlink(file)){
             file = file[(ympbuild_buildpath+"/output/").length:];
@@ -244,7 +255,7 @@ private void create_files_info(){
             continue;
         }
         file = file[(ympbuild_buildpath+"/output/").length:];
-        if(file == "metadata.yaml"){
+        if(file == "metadata.yaml" || file == "icon.svg"){
             continue;
         }
         debug("File info add: "+ file);
@@ -359,7 +370,7 @@ private void create_data_file(){
         }
         file = file[(ympbuild_buildpath+"/output/").length:];
         debug("Compress:"+file);
-        if(file == "files" || file == "links" || file == "metadata.yaml"){
+        if(file == "files" || file == "links" || file == "metadata.yaml"|| file == "icon.svg"){
             continue;
         }
         tar.add(file);
@@ -410,10 +421,11 @@ void build_init(){
     h.description = "Build package from ympbuild file.";
     h.add_parameter("--no-source", "do not generate source package");
     h.add_parameter("--no-binary", "do not generate binary package");
-    h.add_parameter("--no-install","do not install package after building");
     h.add_parameter("--no-build","do not build package (only test and package)");
+    h.add_parameter("--no-package","do not install package after building");
     h.add_parameter("--ignore-dependency", "disable dependency check");
     h.add_parameter("--emerge", "do not use binary packages");
+    h.add_parameter("--install", "install binary package after building");
     add_operation(build_operation,{"build","bi","make"},h);
 }
 
