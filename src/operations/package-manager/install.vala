@@ -9,8 +9,10 @@ public int install_main(string[] args){
     quarantine_reset();
     package[] pkg_obj = {};
     foreach(string name in pkgs){
-        package p = get_from_repository(name);
-        p.download_only();    
+        if(!isfile(name)){
+            package p = get_from_repository(name);
+            p.download_only();
+        }
     }
     foreach(string name in pkgs){
         package pkg = install_single(name);

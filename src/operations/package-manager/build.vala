@@ -6,8 +6,25 @@ public int build_operation(string[] args){
         new_args = {"."};
     }
     foreach(string arg in new_args){
-        if(isfile(arg)){
-            string srcpath = DESTDIR+"/tmp/ymp-build/"+calculate_md5sum(arg);
+        string srcpath=arg;
+        if(startswith(arg,"git://") || endswith(arg,".git")){
+            srcpath=DESTDIR+"/tmp/ymp-build/"+sbasename(arg);
+            if(run("git clone '"+arg+"' "+srcpath) != 0){
+                error_add("Failed to fetch git package.");
+                error(2);
+            }
+        }else if(startswith(arg,"http://") || startswith(arg,"https://")){
+            string file=DESTDIR+"/tmp/ymp-build/cache/"+sbasename(arg);
+            create_dir(file);
+            string farg = file+"/"+sbasename(arg);
+            if(!isfile(farg)){
+                fetch(arg,farg);
+            }
+            arg=farg;
+            srcpath=farg;
+        }
+        if(isfile(srcpath)){
+            srcpath = DESTDIR+"/tmp/ymp-build/"+calculate_md5sum(srcpath);
             var tar = new archive();
             tar.load(arg);
             tar.set_target(srcpath);
@@ -17,33 +34,28 @@ public int build_operation(string[] args){
                 remove_all(srcpath);
                 error(2);
             }
-            set_build_target(srcpath);
-            create_metadata_info();
-            check_build_dependencies(new_args);
-            fetch_package_sources();
-            extract_package_sources();
-            build_package();
-            var fname = sbasename(output_package_path);
-            output_package_path=currend_directory+"/"+fname;
-            create_binary_package();
-            
-            error(1);
+        }
+        if(!isfile(srcpath+"/ympbuild")){
             continue;
         }
-        if(!isfile(arg+"/ympbuild")){
-            continue;
-        }
-        set_build_target(arg);
+        set_build_target(srcpath);
         create_metadata_info();
         check_build_dependencies(new_args);
         fetch_package_sources();
-        if(!get_bool("no-source")){
+        if(! isfile(arg) && !get_bool("no-source")){
             create_source_archive();
         }
         if(!get_bool("no-binary")){
             extract_package_sources();
+            if(isfile(arg)){
+                var fname = sbasename(output_package_path);
+                output_package_path=currend_directory+"/"+fname;
+            }
             build_package();
             create_binary_package();
+            if(get_bool("install")){
+                install_main({output_package_path+"_"+getArch()+".ymp"});
+            }
         }
     }
     cd(currend_directory);
