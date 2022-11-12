@@ -45,6 +45,7 @@ private void settings_init(){
     set_env("PATH","/usr/bin:/usr/sbin:/bin:/sbin");
     #if DEBUG
     set_env("G_MESSAGES_DEBUG", "all");
+    set_env("G_DEBUG","fatal_warnings");
     #endif
 }
 
