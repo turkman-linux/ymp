@@ -187,7 +187,7 @@ private void create_source_archive(){
     string metadata = get_ympbuild_metadata();
     writefile(srealpath(ympbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
     var tar = new archive();
-    tar.load(output_package_path+"_source.ymp");
+    tar.load(ympbuild_buildpath+"/source.zip");
     foreach(string file in find(ympbuild_srcpath)){
         if(!endswith(file,".ymp") && isfile(file)){
             file = file[(ympbuild_srcpath).length:];
@@ -207,6 +207,7 @@ private void create_source_archive(){
         tar.add(file);
     }
     tar.create();
+    move_file(ympbuild_buildpath+"/source.zip",output_package_path+"_source.ymp");
 }
 
 private void create_files_info(){
@@ -372,7 +373,7 @@ private void create_binary_package(){
     cd(ympbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();
-    tar.load(output_package_path+"_"+getArch()+".ymp");
+    tar.load(ympbuild_buildpath+"/package.zip");
     if(isfile("data.tar.gz")){
         tar.add("data.tar.gz");
     }
@@ -387,6 +388,7 @@ private void create_binary_package(){
         tar.add("postOps");
     }
     tar.create();
+    move_file(ympbuild_buildpath+"/package.zip",output_package_path+"_"+getArch()+".ymp");
 }
 
 void build_init(){

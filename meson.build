@@ -80,6 +80,7 @@ if get_option('libarchive')
     endif
 else
     add_project_arguments('-D', 'no_libarchive', language: 'vala')
+    args += ['-Dno_libarchive']
 endif
 
 if get_option('libcurl')

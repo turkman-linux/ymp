@@ -10,23 +10,49 @@ public class archive {
         }
     }
 
+    private string[] archive_add_list;
+    public void add(string path){
+        if(archive_add_list == null){
+            archive_add_list = {};
+        }
+        archive_add_list += path;
+    }
+
     public void load(string path){
-        archive_path = path;
+        archive_path = srealpath(path);
     }
     public string[] list_files (){
-        return split(getoutput("tar -f --list '"+archive_path+"'"),"\n");
+        return ssplit(getoutput("7z l -ba '"+archive_path+"' | tr -s \" \" | cut -f6 -d\" \""),"\n");
     }
     public void extract_all(){
         if (target_path == null){
             target_path = "./";
         }
-        run_silent("tar -xf -C '"+target_path+"' '"+archive_path+"'");
+        run("cd '"+target_path+"' && 7z x '"+archive_path+"'");
     }
     public void extract(string path){
         if (target_path == null){
             target_path = "./";
         }
-        run_silent("tar -xf -C '"+target_path+"' '"+archive_path+"' '"+path+"'");
+        run("cd '"+target_path+"' && 7z x '"+archive_path+"' '"+path+"'");
+    }
+
+    public string readfile (string path) {
+        create_dir("/tmp/.ymp/");
+        run_silent("tar -xf -C /tmp/.ymp/ '"+archive_path+"' '"+path+"'");
+        string data = readfile("/tmp/.ymp/"+path);
+        remove_file("/tmp/.ymp/"+path);
+        return data;
+    }
+    
+    public bool is_archive(string path){
+        return true;
+    }
+    
+    public void create(){
+        foreach(string item in archive_add_list){
+            run("cd '"+target_path+"' && 7z a '"+archive_path+"' '"+item+"'");
+        }
     }
 }
 #else

@@ -1,5 +1,6 @@
 #ifndef _archive
 #define _archive
+#ifndef no_libarchive
 #include <sys/types.h>
 
 #include <sys/stat.h>
@@ -145,4 +146,13 @@ void write_archive(const char *outname, const char **filename) {
   archive_write_close(a);
   archive_write_free(a);
 }
+#else
+int aformat = 1;
+
+#define filter_none 0
+#define filter_gzip 1
+
+int afilter = 0;
+
+#endif
 #endif
