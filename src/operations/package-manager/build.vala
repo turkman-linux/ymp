@@ -222,13 +222,13 @@ private void create_files_info(){
             continue;
         }
         if(issymlink(file)){
-            try{
-                file = file[(ympbuild_buildpath+"/output/").length:];
-                string target = GLib.FileUtils.read_link(file);
-                links_data += file+" "+target+"\n";
-            }catch(Error e){
-                warning(e.message);
+            file = file[(ympbuild_buildpath+"/output/").length:];
+            var link = sreadlink(file);
+            if(!isfile(sdirname(file)+"/"+link)){
+                error_add("Broken symlink detected:\n"+file+" => "+link);
+                continue;
             }
+            links_data += file+" "+link+"\n";
             continue;
         }
         file = file[(ympbuild_buildpath+"/output/").length:];
@@ -238,6 +238,7 @@ private void create_files_info(){
         debug("File info add: "+ file);
         files_data += calculate_sha1sum(file)+" "+file+"\n";
     }
+    error(1);
     writefile(ympbuild_buildpath+"/output/files",files_data);
     writefile(ympbuild_buildpath+"/output/links",links_data);
 }

@@ -26,6 +26,7 @@ int run(char* command){
     return system(command);
 }
 
+
 long get_epoch(){
     struct timeval tv;
     gettimeofday(&tv, NULL);

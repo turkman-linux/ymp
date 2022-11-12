@@ -300,22 +300,27 @@ public string calculate_md5sum(string path){
     return  calculate_checksum(path, ChecksumType.MD5);
 }
 
+public string sreadlink(string path){
+    if(issymlink(path)){
+       try{
+          string link = GLib.FileUtils.read_link(path);
+           return link;
+       }catch(Error e){
+           warning(e.message);
+           return "";
+       }
+    }
+    return "";
+}
+
 //DOC: `string calculate_checksum(string path, ChecksumType type):`
 //DOC: calculate checksum value from file path and checksum type
 public string calculate_checksum(string path, ChecksumType type){
     if(!isfile(path)){
         return "";
     }
-    if(issymlink(path)){
-        try{
-            if(!isfile(GLib.FileUtils.read_link(path))){
-                warning("broken symlink detected:\n"+path+" => "+GLib.FileUtils.read_link(path));
-                return "";
-            }
-        }catch(Error e){
-            warning(e.message);
-            return "";
-        }
+    if(issymlink(path) && sreadlink(path)==""){
+        return "";
     }
     info("Calculating checksum: "+path);
     Checksum checksum = new Checksum (type);

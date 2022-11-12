@@ -51,13 +51,13 @@ private void warning_fn(string message){
 }
 #if DEBUG
 private void debug_fn(string message){
-    print_fn(colorize("DEBUG: ",blue)+message,true,true);
+    print_stderr(colorize("DEBUG: ",blue)+message);
 }
 #else
 #endif
 
 private void info_fn(string message){
-    print(colorize("INFO : ",green)+message);
+    print_stderr(colorize("INFO : ",green)+message);
 }
 
 private string colorize_fn(string msg, int color){
@@ -78,6 +78,8 @@ private void logger_init(){
     }
     if(get_bool("ignore-warning")){
         warning = cprint_stderr;
+    }else if(get_bool("warning-as-error")){
+        warning = error_add;
     }else{
         warning = warning_fn;
     }

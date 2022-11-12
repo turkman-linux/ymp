@@ -283,6 +283,10 @@ public string create_index_data(string fpath){
                     file = target;
                 }
             }
+        }
+    }
+    foreach(string file in find(path)){
+        if(endswith(file,".ymp")){
             md5sum = calculate_md5sum(file);
             size = filesize(file);
             tar.load(file);

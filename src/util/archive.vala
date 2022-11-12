@@ -73,7 +73,7 @@ public class archive {
     //DOC: `void archive.load(string path):`
     //DOC: load archive file from **path**
     public void load(string path){
-        archive_path = path;
+        archive_path = srealpath(path);
         afilter = 0;
         aformat = 0;
     }

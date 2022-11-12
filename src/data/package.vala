@@ -185,7 +185,7 @@ public class package {
         }
         string target_sum = calculate_md5sum(target);
         if(get("md5sum") != target_sum){
-            error_add("Package md5sum mismatch");
+            error_add("Package md5sum mismatch:"+target);
             remove_file(target);
         }
     }
