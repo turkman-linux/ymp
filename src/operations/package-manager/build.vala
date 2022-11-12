@@ -223,7 +223,7 @@ private void create_files_info(){
         }
         if(issymlink(file)){
             file = file[(ympbuild_buildpath+"/output/").length:];
-            var link = sreadlink(file);
+            var link = sreadlink(srealpath(file));
             if(!isexists(sdirname(file)+"/"+link)){
                 error_add("Broken symlink detected:\n"+file+" => "+link);
                 continue;
