@@ -1,5 +1,5 @@
 public int kill_main(string[] args){
-    string self_hash = calculate_md5sum("/proc/self/exe");
+    string self_link = sreadlink("/proc/self/exe");
     int self_pid = Posix.getpid();
     foreach(string dir in listdir("/proc")){
         if(int.parse(dir) != 0){
@@ -11,16 +11,16 @@ public int kill_main(string[] args){
                     }catch(Error e){
                         continue;
                     }
-                    string hash = calculate_md5sum("/proc/"+dir+"/exe");
-                    if(hash == self_hash){
+                    string link = sreadlink("/proc/"+dir+"/exe");
+                    if(link == self_link){
                         info("Kill: "+pid.to_string());
                         ckill(pid);
                     }
+
                 }
             }
         }
     }
-    print(self_hash);
     return 0;
 }
 void kill_init(){
