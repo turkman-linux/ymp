@@ -189,6 +189,8 @@ public int run_ympbuild_function(string function){
     return 0;
 }
 public void ymp_process_binaries(){
+    #if DEBUG
+    #else
     foreach(string file in find(ympbuild_buildpath+"/output")){
         if(iself(file)){
             info("Binary process: "+file);
@@ -197,6 +199,10 @@ public void ymp_process_binaries(){
             -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\
             -R .debug_ranges -R .debug_loc '"+file+"'");
         }
+    }
+    #endif
+    if(isfile(ympbuild_buildpath+"/output/usr/share/info/dir")){
+        remove_file(ympbuild_buildpath+"/output/usr/share/info/dir");
     }
 }
 

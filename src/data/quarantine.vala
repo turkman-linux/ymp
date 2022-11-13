@@ -97,7 +97,7 @@ public bool quarantine_validate_files(){
                     continue;
                 }
                 foreach(string restricted in restricted_list){
-                    if(startswith(sdirname(path),restricted)){
+                    if(restricted.length>0 &&startswith(sdirname(path),restricted)){
                         warning("Symlink in restricted path is not allowed: /%s (%s)".printf(path,links_list));
                         quarantine_file_broken_list += link_path;
                         continue;
