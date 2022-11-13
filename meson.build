@@ -119,7 +119,7 @@ if get_option('shared')
         install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
     endif
     if get_option('test')
-        executable('ymp-test', 'test/test.vala', dependencies: dependencies, link_args: args, link_with: lib)
+        executable('ymp-test', 'test/test.vala', dependencies: shared_dependencies, link_args: args, link_with: lib)
     endif
 endif
 if get_option('static')
