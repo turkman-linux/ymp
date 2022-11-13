@@ -231,12 +231,9 @@ private void create_files_info(){
             continue;
         }
         string fpath = ympbuild_buildpath+"/output/"+path;
-        if(isfile(fpath)){
-            if(issymlink(fpath)){
-                if(!isfile(sdirname(fpath)+"/"+sreadlink(fpath))){
-                    continue;
-                }
-            }
+        if(issymlink(fpath)){
+            continue;
+        }else if(isfile(fpath)){
             error_add("Files are not allowed in root directory: /"+path);
         }
     }
