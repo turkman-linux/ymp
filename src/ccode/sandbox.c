@@ -41,6 +41,17 @@ int sandbox(char** args){
     int privileged = (0 == getuid()) && get_bool("privileged");
     if(pid == 0) {
         write_to_file("/proc/self/comm", "ymp-sandbox");
+        uid_t uid = getuid();
+        gid_t gid = getgid();
+        if(!privileged){
+            unshare(flag);
+            // remap uid
+            write_to_file("/proc/self/uid_map", "%d %d 1", sandbox_uid, uid);
+            // deny setgroups (see user_namespaces(7))
+            write_to_file("/proc/self/setgroups", "deny");
+           // remap gid
+            write_to_file("/proc/self/gid_map", "%d %d 1", sandbox_gid, gid);
+        }
         mount("tmpfs","/root","tmpfs",0,NULL);
         sandbox_bind("/usr");
         sandbox_bind("/etc");
@@ -57,17 +68,6 @@ int sandbox(char** args){
         sandbox_bind("/tmp/ymp-build");
         sandbox_bind("/proc/");
         sandbox_bind_shared(sandbox_shared);
-        uid_t uid = getuid();
-        gid_t gid = getgid();
-        if(!privileged){
-            unshare(flag);
-            // remap uid
-            write_to_file("/proc/self/uid_map", "%d %d 1", sandbox_uid, uid);
-            // deny setgroups (see user_namespaces(7))
-            write_to_file("/proc/self/setgroups", "deny");
-           // remap gid
-            write_to_file("/proc/self/gid_map", "%d %d 1", sandbox_gid, gid);
-        }
         if (0 == chroot("/root")){
             if(0 == chdir("/")){
                 unshare(CLONE_NEWUTS);
