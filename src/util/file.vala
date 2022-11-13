@@ -42,7 +42,14 @@ public string readfile_byte(string path, long n){
 //DOC: read file from **path** and remove commends
 public string readfile(string path){
     string new_data = "";
-    foreach(string line in ssplit(readfile_raw(path),"\n")){
+    if(!isfile(path)){
+        return new_data;
+    }
+    string data = readfile_raw(path);
+    if(data.length==0){
+        return new_data;
+    }
+    foreach(string line in ssplit(data,"\n")){
         if(line.length > 0){
             new_data += ssplit(line,"#")[0]+"\n";
         }

@@ -15,7 +15,7 @@ public int bootstrap_main(string[] args){
     error(2);
     print(colorize("Creating bootstrap:",blue));
     string[] basedir = {"dev", "sys", "proc", "run"};
-    string[] base_packages = {"busybox", "glibc", "base-files"};
+    string[] base_packages = {"busybox", "base-files", "glibc"};
     foreach(string dir in basedir){
         create_dir(rootfs+"/"+dir);
         GLib.FileUtils.chmod(rootfs+"/"+dir,0755);
@@ -26,7 +26,8 @@ public int bootstrap_main(string[] args){
     set_bool("no-sysconf",true);
     set_destdir(rootfs);
     copy_file("/etc/resolv.conf",rootfs+"/etc/resolv.conf");
-    writefile(rootfs+"/var/lib/ymp/sources.list",repo+"\n");
+    writefile(rootfs+"/"+STORAGEDIR+"/sources.list",repo+"\n");
+    writefile(rootfs+"/"+STORAGEDIR+"/restricted.list","/data/user\n");
     update_main(args);
     install_main(base_packages);
     foreach(string package in base_packages){

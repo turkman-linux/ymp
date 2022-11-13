@@ -85,7 +85,7 @@ char * c_read_file(const char * f_name, int * err, size_t * f_size) {
         if (length > 1073741824) {
             * err = FILE_TO_LARGE;
 
-            return NULL;
+            return "";
         }
 
         buffer = (char * ) malloc(length + 1);
@@ -96,7 +96,7 @@ char * c_read_file(const char * f_name, int * err, size_t * f_size) {
             if (length != read_length) {
                 * err = FILE_READ_ERROR;
 
-                return NULL;
+                return "";
             }
         }
 
@@ -108,7 +108,7 @@ char * c_read_file(const char * f_name, int * err, size_t * f_size) {
     } else {
         * err = FILE_NOT_EXIST;
 
-        return NULL;
+        return "";
     }
 
     return buffer;
@@ -126,7 +126,7 @@ char * readfile_raw(const char * filename) {
         } else if (err == FILE_READ_ERROR) {
             fprintf(stderr, "Error: %s (%d)\n", "failed to read file.", err);
         }
-        exit(err);
+        return "";
     } else {
         return f_data;
     }
