@@ -52,7 +52,7 @@ public bool quarantine_validate_files(){
                     continue;
                 }
                 foreach(string restricted in restricted_list){
-                    if(startswith(sdirname(path),restricted)){
+                    if(restricted.length>0 && startswith(path+"/",restricted)){
                         warning("File in restricted path is not allowed: /%s (%s)".printf(path,files_list));
                         quarantine_file_broken_list += file_path;
                         continue;
@@ -79,7 +79,8 @@ public bool quarantine_validate_files(){
                 string link_path = get_storage()+"/quarantine/rootfs/"+path;
                 // check broken symlink
                 info("Validating: "+path);
-                if(target != sreadlink(link_path)){
+                string link_target = sreadlink(link_path);
+                if(target != link_target){
                     warning("Broken symlink detected: /%s (%s)".printf(path,links_list));
                     quarantine_file_broken_list += link_path;
                     continue;

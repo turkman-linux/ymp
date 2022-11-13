@@ -311,7 +311,8 @@ public string sreadlink(string path){
     if(issymlink(path)){
        try{
           string link = GLib.FileUtils.read_link(path);
-           return link;
+          debug("Read symlink: "+path+" "+link);
+          return link;
        }catch(Error e){
            warning(e.message);
            return "";

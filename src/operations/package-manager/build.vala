@@ -245,21 +245,23 @@ private void create_files_info(){
             warning("Empty file detected: "+file);
         }
         if(issymlink(file)){
-            file = file[(ympbuild_buildpath+"/output/").length:];
-            var link = sreadlink(srealpath(file));
-            if(!isexists(sdirname(file)+"/"+link)){
+            var link = sreadlink(file);
+            if(!isexists(sdirname(file)+"/"+link) && link.length > 0){
                 error_add("Broken symlink detected:\n"+file+" => "+link);
                 continue;
             }
+            file = file[(ympbuild_buildpath+"/output/").length:];
+            debug("Link info add: "+ file);
             links_data += file+" "+link+"\n";
             continue;
+        }else{
+            file = file[(ympbuild_buildpath+"/output/").length:];
+            if(file == "metadata.yaml" || file == "icon.svg"){
+                continue;
+            }
+            debug("File info add: "+ file);
+            files_data += calculate_sha1sum(file)+" "+file+"\n";
         }
-        file = file[(ympbuild_buildpath+"/output/").length:];
-        if(file == "metadata.yaml" || file == "icon.svg"){
-            continue;
-        }
-        debug("File info add: "+ file);
-        files_data += calculate_sha1sum(file)+" "+file+"\n";
     }
     error(1);
     writefile(ympbuild_buildpath+"/output/files",files_data);
