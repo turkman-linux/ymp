@@ -230,7 +230,13 @@ private void create_files_info(){
         if(path == "metadata.yaml" || path == "icon.svg"){
             continue;
         }
-        if(isfile(ympbuild_buildpath+"/output/"+path)){
+        string fpath = ympbuild_buildpath+"/output/"+path;
+        if(isfile(fpath)){
+            if(issymlink(fpath)){
+                if(!isfile(sdirname(fpath)+"/"+sreadlink(fpath))){
+                    continue;
+                }
+            }
             error_add("Files are not allowed in root directory: /"+path);
         }
     }
