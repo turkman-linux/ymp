@@ -20,6 +20,10 @@ int sandbox_network = 0;
 int sandbox_uid = 0;
 int sandbox_gid = 0;
 
+#ifndef get_bool
+int get_bool(char* variable);
+#endif
+
 char* which(char* cmd);
 void write_to_file(const char *which, const char *format, ...);
 void sandbox_bind(char* dir);
@@ -34,17 +38,9 @@ char* sandbox_rootfs;
 int sandbox(char** args){
     int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER;
     pid_t pid = fork();
+    int privileged = (0 == getuid()) && get_bool("privileged");
     if(pid == 0) {
         write_to_file("/proc/self/comm", "ymp-sandbox");
-        uid_t uid = getuid();
-        gid_t gid = getgid();
-        unshare(flag);
-        // remap uid
-        write_to_file("/proc/self/uid_map", "%d %d 1", sandbox_uid, uid);
-        // deny setgroups (see user_namespaces(7))
-        write_to_file("/proc/self/setgroups", "deny");
-        // remap gid
-        write_to_file("/proc/self/gid_map", "%d %d 1", sandbox_gid, gid);
         mount("tmpfs","/root","tmpfs",0,NULL);
         sandbox_bind("/usr");
         sandbox_bind("/etc");
@@ -55,12 +51,23 @@ int sandbox(char** args){
         sandbox_bind("/var");
         sandbox_bind("/dev");
         sandbox_bind("/sys");
-        sandbox_bind("/proc");
         sandbox_create_tmpfs("/root/root");
         sandbox_create_tmpfs("/root/tmp");
         sandbox_create_tmpfs("/root/run");
         sandbox_bind("/tmp/ymp-build");
+        sandbox_bind("/proc/");
         sandbox_bind_shared(sandbox_shared);
+        uid_t uid = getuid();
+        gid_t gid = getgid();
+        if(!privileged){
+            unshare(flag);
+            // remap uid
+            write_to_file("/proc/self/uid_map", "%d %d 1", sandbox_uid, uid);
+            // deny setgroups (see user_namespaces(7))
+            write_to_file("/proc/self/setgroups", "deny");
+           // remap gid
+            write_to_file("/proc/self/gid_map", "%d %d 1", sandbox_gid, gid);
+        }
         if (0 == chroot("/root")){
             if(0 == chdir("/")){
                 unshare(CLONE_NEWUTS);
@@ -69,6 +76,7 @@ int sandbox(char** args){
                 }
                 unshare(CLONE_NEWIPC);
                 unshare(CLONE_VM);
+                unshare(CLONE_NEWPID| CLONE_VFORK | SIGCHLD);
                 setenv("PATH","/bin:/usr/bin:/sbin:/usr/sbin",1);
                 setenv("TERM","linux",1);
                 _exit(execvpe(which(args[0]),args,NULL));
@@ -107,7 +115,7 @@ void sandbox_create_tmpfs(char* dir){
     strcpy(source,sandbox_rootfs);
     strcat(source,"/");
     strcat(source,dir);
-    
+    create_dir(source);
     mount("tmpfs",source,"tmpfs",0,NULL);
 }
 
