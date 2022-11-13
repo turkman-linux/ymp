@@ -34,6 +34,7 @@ public string readfile_byte(string path, long n){
     if (n != read){
         return "";
     }
+    debug("Read file bytes: "+path);
     return (string) buf;
 }
 
@@ -54,6 +55,7 @@ public string readfile(string path){
             new_data += ssplit(line,"#")[0]+"\n";
         }
     }
+    debug("Read file: "+path);
     return new_data;
 }
 
@@ -73,6 +75,7 @@ public void writefile(string path, string ctx){
         while (written < data.length) {
             written += dos.write (data[written:data.length]);
         }
+        debug("Write file: "+path);
     } catch (Error e) {
         error_add(e.message);
     }
@@ -100,6 +103,7 @@ public void cd(string path){
     if(!isdir(path)){
         create_dir(path);
     }
+    debug("cd: "+path);
     GLib.Environment.set_current_dir(path);
 }
 
@@ -209,6 +213,7 @@ public string[] listdir(string path){
         warning(e.message);
         return {};
     }
+    debug("List directory: "+path);
     return ret;
 }
 
@@ -220,6 +225,7 @@ public bool iself(string path){
     if(ctx == ""){
         return false;
     }
+    debug("Check elf: "+path);
     return startswith(ctx,"\x7F\x45\x4C\x46");
 }
 
@@ -232,6 +238,7 @@ public bool is64bit(string path){
     if(ctx == ""){
         return false;
     }
+    debug("Check 64bit: "+path);
     return ctx[4] == '\x02';
 }
 
@@ -264,6 +271,7 @@ public bool isexists(string path){
 //DOC: safe realpath function.
 public string srealpath(string path){
     string real = Posix.realpath(path);
+    debug("Realpath: "+real);
     if(real == null){
         return path;
     }
@@ -330,7 +338,7 @@ public string calculate_checksum(string path, ChecksumType type){
     if(issymlink(path) && sreadlink(path)==""){
         return "";
     }
-    info("Calculating checksum: "+path);
+    debug("Calculating checksum: "+path);
     Checksum checksum = new Checksum (type);
     FileStream stream = FileStream.open (path, "rb");
     uint8 fbuf[100];
