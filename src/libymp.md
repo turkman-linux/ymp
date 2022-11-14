@@ -89,6 +89,10 @@ Read file from **path** and return content
 
 Check **path** is directory
 
+`bool issymlink(string path)`:
+
+check path is symlink
+
 ### signal.c
 
 `void block_sigint():`
@@ -668,10 +672,6 @@ return true if file is elf binary
 `bool isfile(string path)`:
 
 check path is file
-
-`bool issymlink(string path)`:
-
-check path is symlink
 
 `string srealpath(string path):`
 

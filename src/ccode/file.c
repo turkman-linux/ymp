@@ -57,7 +57,18 @@ void fs_sync(){
     }
 }
 
+int issymlink(const char *filename){
+    struct stat p_statbuf;
+    if(lstat(filename, &p_statbuf) < 0) {
+        return FALSE;
+    }
+    return S_ISLNK(p_statbuf.st_mode);
+}
+
 int isdir(char *path){
+    if(issymlink(path)){
+        return FALSE;
+    }
     DIR* dir = opendir(path);
     if(dir){
         closedir(dir);

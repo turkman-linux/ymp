@@ -77,6 +77,9 @@ public extern string readfile_raw(string path);
 //DOC: `bool isdir(string path):`
 //DOC: Check **path** is directory
 public extern bool isdir(string path);
+//DOC: `bool issymlink(string path)`:
+//DOC: check path is symlink
+public extern bool issymlink(string path);
 
 //DOC: ### signal.c
 //DOC: `void block_sigint():`
