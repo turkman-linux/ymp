@@ -178,7 +178,7 @@ private bool ymp_activated = false;
 //DOC: start ymp application.
 //DOC: * args is program arguments
 public Ymp ymp_init(string[] args){
-    
+    Posix.umask(022);
     logger_init();
     wsl_block();
     Ymp app = new Ymp();

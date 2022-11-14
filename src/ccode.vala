@@ -74,6 +74,9 @@ public extern void create_dir(string path);
 //DOC: `string readfile_raw (string path):`
 //DOC: Read file from **path** and return content
 public extern string readfile_raw(string path);
+//DOC: `bool isdir(string path):`
+//DOC: Check **path** is directory
+public extern bool isdir(string path);
 
 //DOC: ### signal.c
 //DOC: `void block_sigint():`

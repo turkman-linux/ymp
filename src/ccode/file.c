@@ -11,12 +11,17 @@
 #include <unistd.h>
 #include <limits.h>
 #include <fcntl.h>
+#include <dirent.h>
 
 #define FILE_OK 0
 #define FILE_NOT_EXIST 1
 #define FILE_TO_LARGE 2
 #define FILE_READ_ERROR 3
 
+#ifndef TRUE
+#define TRUE 1
+#define FALSE 0
+#endif
 
 struct stat st;
 
@@ -52,6 +57,16 @@ void fs_sync(){
     }
 }
 
+int isdir(char *path){
+    DIR* dir = opendir(path);
+    if(dir){
+        closedir(dir);
+        return TRUE;
+    }else{
+        return FALSE;
+    }
+}
+
 void create_dir(const char *dir) {
     char tmp[PATH_MAX];
     char *p = NULL;
@@ -64,10 +79,12 @@ void create_dir(const char *dir) {
     for (p = tmp + 1; *p; p++)
         if (*p == '/') {
             *p = 0;
-            mkdir(tmp, 0755);
+            if(!isdir(tmp))
+                mkdir(tmp, 0755);
             *p = '/';
         }
-    mkdir(tmp, 0755);
+    if(!isdir(tmp))
+        mkdir(tmp, 0755);
 }
 
 char * c_read_file(const char * f_name, int * err, size_t * f_size) {

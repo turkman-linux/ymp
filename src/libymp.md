@@ -85,6 +85,10 @@ create directory from path
 
 Read file from **path** and return content
 
+`bool isdir(string path):`
+
+Check **path** is directory
+
 ### signal.c
 
 `void block_sigint():`
@@ -668,10 +672,6 @@ check path is file
 `bool issymlink(string path)`:
 
 check path is symlink
-
-`bool isdir(string path):`
-
-Check **path** is directory
 
 `string srealpath(string path):`
 

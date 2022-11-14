@@ -255,12 +255,6 @@ public bool issymlink(string path){
     return GLib.FileUtils.test(path, GLib.FileTest.IS_SYMLINK);
 }
 
-//DOC: `bool isdir(string path):`
-//DOC: Check **path** is directory
-public bool isdir(string path){
-    return GLib.FileUtils.test(path, GLib.FileTest.IS_DIR) &&
-    ! GLib.FileUtils.test(path, GLib.FileTest.IS_SYMLINK);
-}
 
 public bool isexists(string path){
     var file = File.new_for_path (path);
@@ -291,7 +285,7 @@ public string[] find(string path){
 }
 private string[] find_ret;
 private void find_operation(string path){
-    if(path == "" || path == null){
+    if(path == "" || path == null || path == ".." || path == "."){
         return;
     }
     find_ret += path;
