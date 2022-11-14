@@ -2,6 +2,8 @@ private string[] quarantine_file_cache_list;
 private string[] quarantine_file_conflict_list;
 private string[] quarantine_file_broken_list;
 
+//DOC: `void quarantine_reset():`
+//DOC: remove quarantine directories and create new ones
 public void quarantine_reset(){
   remove_all(get_storage()+"/quarantine/");
   create_dir(get_storage()+"/quarantine/rootfs");
@@ -57,7 +59,7 @@ public bool quarantine_validate_files(){
     // get quarantine file store and list
     string rootfs_files = get_storage()+"/quarantine/files/";
     string rootfs_links = get_storage()+"/quarantine/links/";
-    string rootfs_metadatas = get_storage()+"/quarantine/links/";
+    string rootfs_metadatas = get_storage()+"/quarantine/metadata/";
     string[] restricted_list = ssplit(readfile(get_storage()+"/restricted.list"),"\n");
     // add package db into restricted_list
     restricted_list += STORAGEDIR;
@@ -87,7 +89,11 @@ public bool quarantine_validate_files(){
         var pkgarea = yaml.get("ymp.package");
         if(yaml.has_area(pkgarea,"replaces")){
             foreach(string path in yaml.get_array(pkgarea,"replaces")){
-                new_files.remove(path);
+                if(path.length > 1 && path[0] == '/'){
+                    new_files.remove(path[1:]);
+                }else{
+                    warning("Invalid replaces path: %s (%s)".printf(path,files_list));
+                }
             };
         }
         foreach(string path in new_files.get()){
@@ -158,7 +164,11 @@ public bool quarantine_validate_files(){
         var pkgarea = yaml.get("ymp.package");
         if(yaml.has_area(pkgarea,"replaces")){
             foreach(string path in yaml.get_array(pkgarea,"replaces")){
-                new_links.remove(path);
+                if(path.length > 1 && path[0] == '/'){
+                    new_links.remove(path[1:]);
+                }else{
+                    warning("Invalid replaces path: %s (%s)".printf(path,links_list));
+                }
             };
         }
         foreach(string path in new_links.get()){

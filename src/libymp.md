@@ -279,6 +279,10 @@ get package object from installed package name
 return true if package installed
 
 # src/data/quarantine.vala
+`void quarantine_reset():`
+
+remove quarantine directories and create new ones
+
 `bool quarantine_validate_files():`
 
 check quarantine file hashes
