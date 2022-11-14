@@ -204,6 +204,11 @@ public void ymp_process_binaries(){
     if(isfile(ympbuild_buildpath+"/output/usr/share/info/dir")){
         remove_file(ympbuild_buildpath+"/output/usr/share/info/dir");
     }
+    foreach(string path in find(ympbuild_buildpath+"/output")){
+        if(endswith(path,".pyc")){
+            remove_file(path);
+        }
+    }
 }
 
 //DOC: `string get_ympbuild_metadata():`
