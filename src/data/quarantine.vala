@@ -24,9 +24,11 @@ public bool quarantine_validate_files(){
     // get quarantine file store and list
     string rootfs_files = get_storage()+"/quarantine/files/";
     string rootfs_links = get_storage()+"/quarantine/links/";
+    string rootfs_metadatas = get_storage()+"/quarantine/links/";
     string[] restricted_list = ssplit(readfile(get_storage()+"/restricted.list"),"\n");
     // add package db into restricted_list
     restricted_list += STORAGEDIR;
+    var yaml = new yamlfile();
     foreach(string files_list in listdir(rootfs_files)){
         info("Validate quarantine for: "+files_list);
         // file list format xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /path/to/file
@@ -47,6 +49,13 @@ public bool quarantine_validate_files(){
                     new_files.remove(path);
                 }
             }
+        }
+        yaml.load(rootfs_metadatas+files_list+".yaml");
+        var pkgarea = yaml.get("ymp.package");
+        if(yaml.has_area(pkgarea,"replaces")){
+            foreach(string path in yaml.get_array(pkgarea,"replaces")){
+                new_files.remove(path);
+            };
         }
         foreach(string path in new_files.get()){
             if(isexists(DESTDIR+"/"+path)){
@@ -110,6 +119,13 @@ public bool quarantine_validate_files(){
                     new_links.remove(path);
                 }
             }
+        }
+        yaml.load(rootfs_metadatas+links_list+".yaml");
+        var pkgarea = yaml.get("ymp.package");
+        if(yaml.has_area(pkgarea,"replaces")){
+            foreach(string path in yaml.get_array(pkgarea,"replaces")){
+                new_links.remove(path);
+            };
         }
         foreach(string path in new_links.get()){
             if(isexists(DESTDIR+"/"+path)){
