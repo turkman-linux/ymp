@@ -9,6 +9,39 @@ public void quarantine_reset(){
   create_dir(get_storage()+"/quarantine/links");
   create_dir(get_storage()+"/quarantine/metadata");
 }
+
+private string[] get_quarantine_conflict_packages(string path,bool symlink){
+    string rootfs_files = get_storage()+"/quarantine/files/";
+    string rootfs_links = get_storage()+"/quarantine/links/";
+    var ret = new array();
+    if(symlink){
+        foreach(string files_list in listdir(rootfs_files)){
+            string file_data = readfile(rootfs_files+files_list);
+            foreach(string line in ssplit(file_data,"\n")){
+                if(line.length > 41){
+                    string fpath = line[41:];
+                    if (path == fpath){
+                        ret.add(files_list);
+                    }
+                }
+            }
+        }
+    }else{
+        foreach(string links_list in listdir(rootfs_links)){
+            string link_data = readfile(rootfs_links+links_list);
+            foreach(string line in ssplit(link_data,"\n")){
+                if(" " in line){
+                    string fpath = ssplit(line," ")[0];
+                    if (path == fpath){
+                        ret.add(links_list);
+                    }
+                }
+            }
+        }
+    }
+    return ret.get();
+}
+
 //DOC: `bool quarantine_validate_files():`
 //DOC: check quarantine file hashes
 public bool quarantine_validate_files(){
@@ -73,7 +106,8 @@ public bool quarantine_validate_files(){
                 // check file conflict
                 info("Validating: "+path);
                 if(file_path in quarantine_file_cache_list){
-                    warning("File conflict detected: /%s (%s)".printf(path,files_list));
+                    string[] conflict_packages = get_quarantine_conflict_packages(file_path,false);
+                    warning("File conflict detected: /%s (%s)".printf(path,join(" ",conflict_packages)));
                     quarantine_file_conflict_list += file_path;
                     continue;
                 }
@@ -106,16 +140,16 @@ public bool quarantine_validate_files(){
         string link_data = readfile(rootfs_links+links_list);
         var new_links = new array();
         foreach(string line in ssplit(link_data,"\n")){
-            if(line.length > 41){
-                string path = line[41:];
+            if(" " in line){
+                string path = ssplit(line," ")[0];
                 new_links.add(path);
             }
         }
         if(isfile(get_storage()+"/links/"+links_list)){
             string exists_link_data = readfile(get_storage()+"/links/"+links_list);
             foreach(string line in ssplit(exists_link_data,"\n")){
-                if(line.length > 41){
-                    string path = line[41:];
+                if(" " in line){
+                    string path = ssplit(line," ")[0];
                     new_links.remove(path);
                 }
             }
@@ -149,7 +183,8 @@ public bool quarantine_validate_files(){
                 }
                 // check file conflict
                 if(link_path in quarantine_file_cache_list){
-                    warning("Symlink conflict detected: /%s (%s)".printf(path,links_list));
+                    string[] conflict_packages = get_quarantine_conflict_packages(link_path,true);
+                    warning("Symlink conflict detected: /%s (%s)".printf(path,join(" ",conflict_packages)));
                     quarantine_file_conflict_list += link_path;
                     continue;
                 }
