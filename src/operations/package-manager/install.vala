@@ -25,6 +25,7 @@ public int install_main(string[] args){
     string[] leftovers = calculate_leftover(pkg_obj);
     if(!quarantine_validate_files()){
         error_add("Quarantine validation failed");
+        quarantine_reset();
     }
     error(1);
     quarantine_install();
@@ -56,6 +57,7 @@ public package install_single(string pkg){
         p.build();
         if(!quarantine_validate_files()){
             error_add("Quarantine validation failed");
+            quarantine_reset();
         }
         error(1);
         quarantine_install();
