@@ -54,6 +54,9 @@ public class array{
     //DOC: remove item from array
     public void remove(string item){
         string[] new_a = {};
+        if(item == "" || item == null){
+            return;
+        }
         int i=0;
         while(i < a.length){
             if(a[i] != item){

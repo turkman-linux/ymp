@@ -32,6 +32,29 @@ public bool quarantine_validate_files(){
         // file list format xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /path/to/file
         // uses sha1sum
         string file_data = readfile(rootfs_files+files_list);
+        var new_files = new array();
+        foreach(string line in ssplit(file_data,"\n")){
+            if(line.length > 41){
+                string path = line[41:];
+                new_files.add(path);
+            }
+        }
+        if(isfile(get_storage()+"/files/"+files_list)){
+            string exists_file_data = readfile(get_storage()+"/files/"+files_list);
+            foreach(string line in ssplit(exists_file_data,"\n")){
+                if(line.length > 41){
+                    string path = line[41:];
+                    new_files.remove(path);
+                }
+            }
+        }
+        foreach(string path in new_files.get()){
+            if(isexists(DESTDIR+"/"+path)){
+                string file_path = get_storage()+"/quarantine/rootfs/"+path;
+                warning("File already exists in filesystem: /%s (%s)".printf(path,files_list));
+                quarantine_file_conflict_list += file_path;
+            }
+        }
         foreach(string line in ssplit(file_data,"\n")){
             if(line.length > 41){
                 // fetch absolute file path
@@ -72,6 +95,29 @@ public bool quarantine_validate_files(){
     foreach(string links_list in listdir(rootfs_links)){
         info("Validate quarantine for: "+links_list);
         string link_data = readfile(rootfs_links+links_list);
+        var new_links = new array();
+        foreach(string line in ssplit(link_data,"\n")){
+            if(line.length > 41){
+                string path = line[41:];
+                new_links.add(path);
+            }
+        }
+        if(isfile(get_storage()+"/links/"+links_list)){
+            string exists_link_data = readfile(get_storage()+"/links/"+links_list);
+            foreach(string line in ssplit(exists_link_data,"\n")){
+                if(line.length > 41){
+                    string path = line[41:];
+                    new_links.remove(path);
+                }
+            }
+        }
+        foreach(string path in new_links.get()){
+            if(isexists(DESTDIR+"/"+path)){
+                string file_path = get_storage()+"/quarantine/rootfs/"+path;
+                warning("Symlink already exists in filesystem: /%s (%s)".printf(path,links_list));
+                quarantine_file_conflict_list += file_path;
+            }
+        }
         foreach(string line in ssplit(link_data,"\n")){
             if(" " in line){
                 string path = ssplit(line," ")[0];

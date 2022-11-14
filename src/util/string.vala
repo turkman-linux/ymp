@@ -31,7 +31,7 @@ public string[] ssplit(string data, string f){
     if(data == null || f == null){
         debug("empty data");
         return {};
-    }else if(! data.contains(f)){
+    }else if(!data.contains(f)){
         return {data};
     }
     return data.split(f);
