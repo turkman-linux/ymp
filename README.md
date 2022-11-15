@@ -19,7 +19,7 @@ A package manager for Sulix Project
 ## Building from source
 
 ```bash
-meson build <options>
+meson build -Dshared=true <options>
 ninja -C build
 ```
 
