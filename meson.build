@@ -111,6 +111,10 @@ else
     add_project_arguments('-D', 'no_libreadline', language: 'vala')
 endif
 
+if not get_option('shared') and not get_option('static')
+    error('Build type not detected.\n=> Please Use -Dshared=true or -Dstatic=true')
+endif
+
 if get_option('shared')
     lib = library('ymp', sources, dependencies: shared_dependencies, link_args: args)
     install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('libdir'), rename: 'libymp.so')
