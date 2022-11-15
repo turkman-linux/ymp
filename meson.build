@@ -112,7 +112,7 @@ else
 endif
 
 if not get_option('shared') and not get_option('static')
-    error('Build type not detected.\n=> Please Use -Dshared=true or -Dstatic=true')
+    error('Build format not detected.\n=> Please Use -Dshared=true or -Dstatic=true')
 endif
 
 if get_option('shared')
