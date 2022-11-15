@@ -83,7 +83,7 @@ int fetch(char* url, char* path){
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
         CURLcode res;
         res = curl_easy_perform(curl);
-        if(res != CURLE_OK){
+        if(res != CURLE_OK || res == CURLE_HTTP_RETURNED_ERROR){
           fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
           curl_easy_cleanup(curl);
           return 0;

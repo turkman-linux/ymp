@@ -231,9 +231,15 @@ public void update_repo(){
         string path = get_storage()+"/index/"+name;
         fetch(repo,path);
         string index_data = readfile(path);
+        if(!startswith(index_data,"index:")){
+            error_add("Invalid repository index: %s".printf(name));
+            remove_file(path);
+            continue;
+        }
         index_data += "\n  address: "+repox;
         writefile(path,index_data);
     }
+    error(2);
 }
 
 public string[] list_available_packages(){
