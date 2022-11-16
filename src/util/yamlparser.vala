@@ -50,21 +50,22 @@ public class yamlfile {
     //DOC: list all areas the name is **path**
     public string[] get_area_list(string fdata, string path){
         string[] ret = {};
-        if(fdata==null){
-            return ret;
-        }
-        offset = find_first_offset(fdata,path);
-        debug("Get area list: offset:"+offset.to_string()+" path: "+path);
-        int data_length = ssplit(fdata,"\n").length;
-        while(offset+1 < data_length-1){
-            string data = get_area_single(fdata,path);
-            if(data != "" && data != null){
-                if(!(data in ret)){
-                    ret += data;
+        string data="";
+        bool e=false;
+        foreach(string line in ssplit(trim(fdata),"\n")){
+            if(!startswith(line," ") && ":" in line){
+                string name = ssplit(line,":")[0];
+                if(name==path){
+                    e=true;
+                    continue;
+                }else{
+                    ret+=trim(data);
+                    data="";
+                    e=false;
                 }
-                offset += ssplit(data,"\n").length + 1;
-            }else{
-                offset += 1;
+            }
+            if(e){
+                data += line+"\n";
             }
         }
         return ret;
@@ -81,17 +82,6 @@ public class yamlfile {
             }
         }
         return ret;
-    }
-
-    private int find_first_offset(string fdata, string name){
-        int i=0;
-        foreach(string line in ssplit(trim(fdata),"\n")){
-            i+=1;
-            if(startswith(line, name+":")){
-                return i-1;
-            }
-        }
-        return i-1;
     }
 
     //DOC: `string yamlfile.get_value(string data, string name):`
