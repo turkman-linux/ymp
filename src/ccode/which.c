@@ -34,7 +34,7 @@ char* which(char* cmd){
 
         token = strtok(NULL, ":"); /* next token */
     }
-    return cmd;
+    return (char*)cmd;
 }
 
 #endif

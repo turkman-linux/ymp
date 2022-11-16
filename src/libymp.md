@@ -113,6 +113,38 @@ run command.
 
 get epoch time
 
+## Command functions
+
+This functions call shell commands
+
+Example usage
+
+```vala
+
+if (0 != run("ls /var/lib/ymp")){
+
+    stdout.printf("Command failed");
+
+}
+
+string uname = getoutput("uname");
+
+```
+
+`string getoutput (string command):`
+
+Run command and return output
+
+**Note:** stderr ignored.
+
+`int run_silent(string command):`
+
+run command silently.
+
+`int run_args(string[] args):`
+
+ruh command from argument array
+
 `bool fetch(string url, string path):`
 
 fetch file from url
@@ -573,43 +605,6 @@ replace with new array
 `long size()`;
 
 return array length
-
-# src/util/command.vala
-## Command functions
-
-This functions call shell commands
-
-Example usage
-
-```vala
-
-if (0 != run("ls /var/lib/ymp")){
-
-    stdout.printf("Command failed");
-
-}
-
-string uname = getoutput("uname");
-
-```
-
-`string getoutput (string command):`
-
-Run command and return output
-
-**Note:** stderr ignored.
-
-`int run_silent(string command):`
-
-run command silently.
-
-`int run_args(string[] args):`
-
-ruh command from argument array
-
-`int run_args(string[] args):`
-
-ruh command from argument array
 
 # src/util/fetcher.vala
 # src/util/file.vala

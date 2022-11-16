@@ -22,6 +22,10 @@ void clear_env();
 void create_dir(const char *dir);
 #endif
 
+#ifndef which
+char* which(char* path);
+#endif
+
 int sandbox_network = 0;
 int sandbox_uid = 0;
 int sandbox_gid = 0;

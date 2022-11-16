@@ -97,6 +97,32 @@ public extern int run (string command);
 //DOC: get epoch time
 public extern long get_epoch();
 private extern int ckill(int pid);
+//DOC: ## Command functions
+//DOC: This functions call shell commands
+//DOC: Example usage
+//DOC: ```vala
+//DOC: if (0 != run("ls /var/lib/ymp")){
+//DOC:     stdout.printf("Command failed");
+//DOC: }
+//DOC: string uname = getoutput("uname");
+//DOC: ```
+
+//DOC: `string getoutput (string command):`
+//DOC: Run command and return output
+//DOC: **Note:** stderr ignored.
+public extern string getoutput (string command) ;
+
+
+//DOC: `int run_silent(string command):`
+//DOC: run command silently.
+public static int run_silent (string command) {
+    return run(command+" |& :");
+}
+
+//DOC: `int run_args(string[] args):`
+//DOC: ruh command from argument array
+public extern int run_args(string[] args);
+
 
 //DOC; ### fetcher.c
 //DOC: `bool fetch(string url, string path):`
