@@ -206,11 +206,12 @@ public int run_ympbuild_function(string function){
 public void ymp_process_binaries(){
     foreach(string file in find(ympbuild_buildpath+"/output")){
         if(iself(file)){
-            info("Binary process: "+file);
+            print(colorize("Binary process: ",magenta)+file);
             run_silent("objcopy -R .comment \\
             -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
             -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\
             -R .debug_ranges -R .debug_loc '"+file+"'");
+            run_silent("strip '"+file+"'");
         }
     }
     if(isfile(ympbuild_buildpath+"/output/usr/share/info/dir")){
