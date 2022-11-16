@@ -1,7 +1,17 @@
+public int list_main(string[] args){
+    if(get_bool("installed")){
+        return list_installed_main(args);
+    }else if(get_bool("repository")){
+        return list_repository_main(args);
+    }else{
+        return list_available_main(args);
+    }
+}
+
 public int list_installed_main(string[] args){
     foreach(string pkg in list_installed_packages()){
         var p = get_installed_package(pkg);
-        print(pkg+"\t"+p.get("description"));
+        print(colorize(pkg,green)+"\t"+p.get("description"));
     }
     return 0;
 }
@@ -11,20 +21,7 @@ public int list_available_main(string[] args){
         if(args.length > 0 && !(repo.name in args)){
             continue;
         }
-        if(get_bool("package")){
-            foreach(string name in repo.list_packages()){
-                var pkg = repo.get_package(name);
-                if(pkg == null){
-                    continue;
-                }
-                var description = pkg.get("description");
-                if(is_installed_package(name)){
-                    print(repo.name+":"+colorize("package",blue) + " "+colorize(name,green) + " " + description);
-                }else{
-                    print(repo.name+":"+colorize("package",blue) + " "+colorize(name,red) + " " + description);
-                }
-            }
-        }if(get_bool("source")){
+        if(get_bool("source")){
            foreach(string name in repo.list_sources()){
                 var pkg = repo.get_package(name);
                 if(pkg == null){
@@ -35,6 +32,19 @@ public int list_available_main(string[] args){
                     print(repo.name+":"+colorize("source ",blue) + " "+colorize(name,green) + " " + description);
                 }else{
                     print(repo.name+":"+colorize("source ",blue) + " "+colorize(name,red) + " " + description);
+                }
+            }
+        }else{
+            foreach(string name in repo.list_packages()){
+                var pkg = repo.get_package(name);
+                if(pkg == null){
+                    continue;
+                }
+                var description = pkg.get("description");
+                if(is_installed_package(name)){
+                    print(repo.name+":"+colorize("package",blue) + " "+colorize(name,green) + "\t" + description);
+                }else{
+                    print(repo.name+":"+colorize("package",blue) + " "+colorize(name,red) + "\t" + description);
                 }
             }
         }
@@ -56,23 +66,13 @@ public int list_repository_main(string[] args){
 }
 
 void list_init(){
-    var h1 = new helpmsg();
-    var h2 = new helpmsg();
-    var h3 = new helpmsg();
+    var h = new helpmsg();
     
-    h1.name = "list-installed";
-    h1.description = "List installed packages.";
+    h.name = "list";
+    h.description = "List installed packages.";
+    h.add_parameter("--installed","list installed packages");
+    h.add_parameter("--repository","list repositories");
+    h.add_parameter("--source","list available source packages");
 
-    h2.name = "list-available";
-    h2.add_parameter("--package","list available binary packages");
-    h2.add_parameter("--source","list available source packages");
-    h2.description = "List available packages.";
-
-
-    h3.name = "list-repository";
-    h3.description = "List available repositories.";
-
-    add_operation(list_installed_main,{"list-installed","li"},h1);
-    add_operation(list_available_main,{"list-available","la"},h2);
-    add_operation(list_repository_main,{"list-repository","lr"},h3);
+    add_operation(list_main,{"list","ls"},h);
 }

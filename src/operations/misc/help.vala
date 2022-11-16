@@ -3,7 +3,7 @@ public int help_main(string[] args){
         write_version();
         print(colorize("Operation list: ",blue));
         foreach(operation op in ops){
-            print_fn(colorize(join(" ",op.names)+" : ",green)+op.help.description+"\n", false, false);
+            print_fn(colorize(op.help.name+" : ",green)+op.help.description+"\n", false, false);
         }
     }else{
         foreach(string arg in args){
