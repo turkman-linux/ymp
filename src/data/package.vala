@@ -163,7 +163,9 @@ public class package {
         if(repo_address == null){
             return "";
         }
-        return repo_address.replace("$uri",get("uri"));
+        string uri = get("uri");
+        debug("Get package uri: "+uri);
+        return repo_address.replace("$uri",uri);
     }
 
 

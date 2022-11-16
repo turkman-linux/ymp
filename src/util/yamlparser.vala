@@ -49,24 +49,27 @@ public class yamlfile {
     //DOC: `string[] yamlfile.get_area_list(string fdata, string path):`
     //DOC: list all areas the name is **path**
     public string[] get_area_list(string fdata, string path){
+        debug("Get area list:"+path);
         string[] ret = {};
         string data="";
         bool e=false;
         foreach(string line in ssplit(trim(fdata),"\n")){
             if(!startswith(line," ") && ":" in line){
                 string name = ssplit(line,":")[0];
-                if(name==path){
-                    e=true;
-                    continue;
-                }else{
+                //flush memory to array
+                if(data != ""){
                     ret+=trim(data);
-                    data="";
-                    e=false;
                 }
+                //reset memory
+                data="";
+                e=(name==path);
+            }else if(e && line.strip() != ""){
+                    data += line+"\n";
             }
-            if(e){
-                data += line+"\n";
-            }
+        }
+        // flush memory for last item
+        if(e && data != ""){
+            ret+=trim(data);
         }
         return ret;
     }
@@ -95,11 +98,7 @@ public class yamlfile {
             if(line.length < name.length+1){
                 continue;
             }
-            int level = count_tab(line);
-            if(level == 0 && startswith(line, name+":")){
-                if(line.length == name.length+1){
-                    return "";
-                }
+            if(startswith(line, name+":")){
                 return line[name.length+1:].strip();
             }
         }

@@ -63,6 +63,9 @@ public class repository {
     //DOC: get package object from repository by package name
     public package get_package(string name){
         package pkg = null;
+        if(!has_package(name)){
+            return pkg;
+        }
         foreach(string area in packages){
             if(area == null){
                 continue;
@@ -143,6 +146,7 @@ public bool is_available_package(string name){
 public package get_package_from_repository(string name){
     int release = 0;
     package ret = null;
+
     foreach(repository repo in get_repos()){
         package pkg = repo.get_package(name);
         if(pkg != null){

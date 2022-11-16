@@ -266,7 +266,7 @@ public bool isexists(string path){
 public string srealpath(string path){
     string real = Posix.realpath(path);
     debug("Realpath: "+real);
-    if(real == null){
+    if(real == null || real == ""){
         return path;
     }
     return real;
