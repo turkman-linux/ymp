@@ -17,6 +17,11 @@ private void resolve_process(string[] names){
             resolve_process(grp);
             continue;
         }
+        if(name[0] == '!'){
+            string[] matches = get_match_packages(name);
+            resolve_process(matches);
+            continue;
+        }
         // 2. process if not installed or need install
         if (!need_install.has(name)){
             // get package object
@@ -62,6 +67,24 @@ private string[] get_group_packages(string fname){
                 debug("Group "+grp+": add "+pkgname);
                 ret.add(pkgname);
             }
+        }
+    }
+    return ret.get();
+}
+
+private string[] get_match_packages(string fname){
+    info("Resolve regex: "+fname);
+    array ret = new array();
+    string rule = fname[1:];
+    string[] pkgnames = list_available_packages();
+    foreach(string pkgname in pkgnames){
+        package p = get_from_repository(pkgname);
+        if(p == null){
+            continue;
+        }
+        if(Regex.match_simple(rule,pkgname)){
+            info("Match "+pkgname+": rule "+rule);
+            ret.add(pkgname);
         }
     }
     return ret.get();

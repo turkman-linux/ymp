@@ -46,8 +46,10 @@ private void settings_init(){
         set_value_readonly("USE", config_yaml.get_value(area,"use"));
     }
     #if DEBUG
-    set_env("G_MESSAGES_DEBUG", "all");
-    set_env("G_DEBUG","fatal_warnings");
+    if(get_bool("debug")){
+        set_env("G_MESSAGES_DEBUG", "all");
+        set_env("G_DEBUG","fatal_warnings");
+    }
     #endif
 }
 
