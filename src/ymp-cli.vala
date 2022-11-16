@@ -42,5 +42,5 @@ int main (string[] args) {
     set_fetcher_progress(progressbar);
     ymp.run();
     error(1);
-    return 0;
+    return 31;
 }

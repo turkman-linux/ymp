@@ -11,7 +11,7 @@ public int build_operation(string[] args){
             srcpath=DESTDIR+"/tmp/ymp-build/"+sbasename(arg);
             if(run("git clone '"+arg+"' "+srcpath) != 0){
                 error_add("Failed to fetch git package.");
-                error(2);
+                return 2;
             }
         }else if(startswith(arg,"http://") || startswith(arg,"https://")){
             string file=DESTDIR+"/tmp/ymp-build/cache/"+sbasename(arg);
@@ -32,29 +32,45 @@ public int build_operation(string[] args){
             if(!isfile(srcpath+"/ympbuild")){
                 error_add("Package is invalid");
                 remove_all(srcpath);
-                error(2);
+                return 2;
             }
         }
         if(!isfile(srcpath+"/ympbuild")){
             continue;
         }
-        set_build_target(srcpath);
-        create_metadata_info();
-        check_build_dependencies(new_args);
-        fetch_package_sources();
+        if(!set_build_target(srcpath)){
+            return 1;
+        }
+        if(!create_metadata_info()){
+            return 1;
+        }
+        if(!check_build_dependencies(new_args)){
+            return 1;
+        }
+        if(!fetch_package_sources()){
+            return 2;
+        }
         if(! isfile(arg) && !get_bool("no-source")){
-            create_source_archive();
+            if(!create_source_archive()){
+                return 1;
+            }
         }
         if(!get_bool("no-binary")){
-            extract_package_sources();
+            if(!extract_package_sources()){
+                return 3;
+            }
             if(isfile(arg)){
                 var fname = sbasename(output_package_path);
                 output_package_path=currend_directory+"/"+fname;
             }
-            build_package();
+            if(!build_package()){
+                return 1;
+            }
             create_binary_package();
             if(get_bool("install")){
-                install_main({output_package_path+"_"+getArch()+".ymp"});
+                if(0 != install_main({output_package_path+"_"+getArch()+".ymp"})){
+                    return 1;
+                }
             }
         }
     }
@@ -62,9 +78,9 @@ public int build_operation(string[] args){
     return 0;
 }
 
-private void check_build_dependencies(string[] args){
+private bool check_build_dependencies(string[] args){
     if(get_bool("ignore-dependency")){
-        return;
+        return true;
     }
     string metadata = get_ympbuild_metadata();
     var yaml = new yamlfile();
@@ -100,10 +116,10 @@ private void check_build_dependencies(string[] args){
     if(need_install.length > 0){
         error_add("Packages is not installed: "+join(" ",need_install));
     }
-    error(1);
+    return (!has_error());
 }
 
-private void set_build_target(string src_path){
+private bool set_build_target(string src_path){
     set_ympbuild_srcpath(src_path);
     string build_path = srealpath(get_build_dir()+calculate_md5sum(ympbuild_srcpath+"/ympbuild"));
     remove_all(build_path);
@@ -112,15 +128,16 @@ private void set_build_target(string src_path){
         remove_all(build_path);
     }
     if(!ympbuild_check()){
-            error_add("ympbuild file is invalid!");
-            error(2);
+        error_add("ympbuild file is invalid!");
+        return false;
     }
+    return true;
 }
 
-private void fetch_package_sources(){
+private bool fetch_package_sources(){
     int i = 0;
     if(no_src){
-        return;
+        return true;
     }
     string[] md5sums = get_ympbuild_array("md5sums");
     foreach(string src in get_ympbuild_array("source")){
@@ -149,10 +166,10 @@ private void fetch_package_sources(){
         }
         i++;
     }
-    error(2);
+    return (!has_error());
 }
 
-private void extract_package_sources(){
+private bool extract_package_sources(){
     cd(ympbuild_buildpath);
     var tar = new archive();
     foreach(string src in get_ympbuild_array("source")){
@@ -165,9 +182,10 @@ private void extract_package_sources(){
             tar.extract_all();
         }
     }
+    return true;
 }
 
-private void build_package(){
+private bool build_package(){
     print(colorize("Building package from:",yellow)+ympbuild_buildpath);
     cd(ympbuild_buildpath);
     int status = 0;
@@ -178,7 +196,7 @@ private void build_package(){
             status = run_ympbuild_function(func);
             if(status != 0){
                 error_add("Failed to build package. Action: "+func);
-                error(status);
+                return false;
             }
         }
     }
@@ -189,15 +207,16 @@ private void build_package(){
             status = run_ympbuild_function(func);
             if(status != 0){
                 error_add("Failed to build package. Action: "+func);
-                error(status);
+                return false;
             }
         }
         ymp_process_binaries();
     }
     create_files_info();
+    return true;
 }
 
-private void create_source_archive(){
+private bool create_source_archive(){
     print(colorize("Create source package from :",yellow)+ympbuild_srcpath);
     cd(ympbuild_srcpath);
     string metadata = get_ympbuild_metadata();
@@ -224,9 +243,10 @@ private void create_source_archive(){
     }
     tar.create();
     move_file(ympbuild_buildpath+"/source.zip",output_package_path+"_source.ymp");
+    return true;
 }
 
-private void create_files_info(){
+private bool create_files_info(){
     cd(ympbuild_buildpath+"/output");
     string files_data = "";
     string links_data = "";
@@ -270,12 +290,15 @@ private void create_files_info(){
             files_data += calculate_sha1sum(file)+" "+file+"\n";
         }
     }
-    error(1);
+    if(has_error()){
+        return false;
+    }
     writefile(ympbuild_buildpath+"/output/files",files_data);
     writefile(ympbuild_buildpath+"/output/links",links_data);
+    return true;
 }
 private string output_package_path;
-private void create_metadata_info(){
+private bool create_metadata_info(){
     string metadata = get_ympbuild_metadata();
     debug("Create metadata info: "+ympbuild_buildpath+"/output/metadata.yaml");
     var yaml = new yamlfile();
@@ -301,7 +324,9 @@ private void create_metadata_info(){
                 }
             }
         }
-        error(2);
+        if(has_error()){
+            return false;
+        }
     }
     no_src = false;
     if(!yaml.has_area(srcdata,"archive")){
@@ -365,9 +390,12 @@ private void create_metadata_info(){
     if(name == ""){
         error_add("Name is not defined.");
     }
-    error(1);
+    if(has_error()){
+        return false;
+    }
     output_package_path = ympbuild_srcpath+"/"+name+"_"+version+"_"+release;
     writefile(ympbuild_buildpath+"/output/metadata.yaml",new_data);
+    return true;
 }
 
 private void create_data_file(){

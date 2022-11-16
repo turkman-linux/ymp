@@ -10,6 +10,7 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include <sys/prctl.h> 
 #include <unistd.h>
 
 
@@ -67,12 +68,16 @@ char* getoutput(char* command){
 int run_args(char* args[]){
     pid_t pid = fork();
     if(pid == 0){
+        int r = prctl(PR_SET_PDEATHSIG, SIGHUP);
+        if (r == -1){
+            exit(1);
+        }
         char *envp[] = {"TERM=linux", "PATH=/usr/bin:/bin:/usr/sbin:/sbin", NULL};
-        _exit(execvpe(which(args[0]),args,envp));
+        exit(execvpe(which(args[0]),args,envp));
         return 127;
     }else{
         int status;
-        wait(&status);
+        kill(wait(&status),9);
         return status;
     }
     return 127;

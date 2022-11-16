@@ -128,7 +128,7 @@ public void set_terminal_title(string msg){
 //DOC: error(1);
 //DOC: ```
 public void error(int status){
-    if(errors.length == 0){
+    if(!has_error()){
         return;
     }
     if(!get_bool("ignore-error")){
@@ -142,6 +142,10 @@ public void error(int status){
     }
 
 }
+private bool has_error(){
+    return errors.length != 0;
+}
+
 //DOC: `void error_add(string message):`
 //DOC: add error message to error message list
 public void error_add(string message){
