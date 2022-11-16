@@ -25,7 +25,7 @@ public int repository_main(string[] args){
     }else if(get_bool("index")){
         return index_main(args);
     }
-    return 31;
+    return 0;
 }
 
 public int mirror_main(string[] args){
