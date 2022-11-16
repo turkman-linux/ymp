@@ -101,18 +101,6 @@ block ctrl-c
 
 ### process.c
 
-`void single_instance():`
-
-block multiple process
-
-`int run(string command):`
-
-run command.
-
-`long get_epoch():`
-
-get epoch time
-
 ## Command functions
 
 This functions call shell commands
@@ -130,6 +118,18 @@ if (0 != run("ls /var/lib/ymp")){
 string uname = getoutput("uname");
 
 ```
+
+`void single_instance():`
+
+block multiple process
+
+`int run(string command):`
+
+run command.
+
+`long get_epoch():`
+
+get epoch time
 
 `string getoutput (string command):`
 

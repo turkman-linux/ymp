@@ -38,6 +38,13 @@ int run(char* command){
     return system(command);
 }
 
+int run_silent(char* command){
+    char* buf = malloc((strlen(command)+10)*sizeof(char));
+    strcpy(buf,command);
+    strcat(buf," >/dev/null");
+    return system(buf);
+}
+
 FILE* process;
 
 char* getoutput(char* command){

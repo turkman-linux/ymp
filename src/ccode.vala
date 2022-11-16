@@ -87,16 +87,6 @@ public extern bool issymlink(string path);
 public extern void block_sigint();
 
 //DOC: ### process.c
-//DOC: `void single_instance():`
-//DOC: block multiple process
-public extern void single_instance();
-//DOC: `int run(string command):`
-//DOC: run command.
-public extern int run (string command);
-//DOC: `long get_epoch():`
-//DOC: get epoch time
-public extern long get_epoch();
-private extern int ckill(int pid);
 //DOC: ## Command functions
 //DOC: This functions call shell commands
 //DOC: Example usage
@@ -107,6 +97,17 @@ private extern int ckill(int pid);
 //DOC: string uname = getoutput("uname");
 //DOC: ```
 
+//DOC: `void single_instance():`
+//DOC: block multiple process
+public extern void single_instance();
+//DOC: `int run(string command):`
+//DOC: run command.
+public extern int run (string command);
+//DOC: `long get_epoch():`
+//DOC: get epoch time
+public extern long get_epoch();
+private extern int ckill(int pid);
+
 //DOC: `string getoutput (string command):`
 //DOC: Run command and return output
 //DOC: **Note:** stderr ignored.
@@ -115,9 +116,7 @@ public extern string getoutput (string command) ;
 
 //DOC: `int run_silent(string command):`
 //DOC: run command silently.
-public static int run_silent (string command) {
-    return run(command+" |& :");
-}
+public extern int run_silent (string command);
 
 //DOC: `int run_args(string[] args):`
 //DOC: ruh command from argument array
