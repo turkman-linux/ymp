@@ -118,6 +118,10 @@ public class package {
         if(is_source){
             a.adds(gets("makedepends"));
             string[] use_flags = ssplit(get_value("use")," ");
+            string[] package_use = ssplit(get_config("package.use",name)," ");
+            if(package_use.length > 0){
+                use_flags = package_use;
+            }
             if("all" in use_flags){
                 foreach(string flag in gets("use-flags")){
                    a.adds(gets(flag+"-depends"));

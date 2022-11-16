@@ -75,6 +75,10 @@ private void check_build_dependencies(string[] args){
     deps.adds(yaml.get_array(yaml.data,"depends"));
     string name = yaml.get_value(yaml.data,"name");
     string[] use_flags = ssplit(get_value("use")," ");
+    string package_use = get_config("package.use",name);
+    if(package_use.length > 0){
+        use_flags = ssplit(package_use," ");
+    }
     if("all" in use_flags){
         use_flags=yaml.get_array(yaml.data,"use-flags");
     }
@@ -277,20 +281,23 @@ private void create_metadata_info(){
     var yaml = new yamlfile();
     yaml.data = metadata;
     string srcdata = yaml.get("ymp.source");
+    string name = yaml.get_value(srcdata,"name");
+    string release = yaml.get_value(srcdata,"release");
+    string version = yaml.get_value(srcdata,"version");
     if(get_bool("ignore-dependency")){
         warning("Dependency check disabled");
     }else{
         if(yaml.has_area(srcdata,"depends")){
             foreach(string dep in yaml.get_array(srcdata,"depends")){
                 if(!is_installed_package(dep)){
-                    error_add("Package "+dep+" in not satisfied. Required by: "+yaml.get_value(srcdata,"name"));
+                    error_add("Package "+dep+" in not satisfied. Required by: "+name);
                 }
             }
         }
         if(yaml.has_area(srcdata,"makedepends")){
             foreach(string dep in yaml.get_array(srcdata,"makedepends")){
                 if(!is_installed_package(dep)){
-                    error_add("Package "+dep+" in not satisfied. Required by: "+yaml.get_value(srcdata,"name"));
+                    error_add("Package "+dep+" in not satisfied. Required by: "+name);
                 }
             }
         }
@@ -327,6 +334,10 @@ private void create_metadata_info(){
         deps.adds(yaml.get_array(srcdata,"depends"));
     }
     string[] use_flags = ssplit(get_value("use")," ");
+    string package_use = get_config("package.use",name);
+    if(package_use.length > 0){
+        use_flags = ssplit(package_use," ");
+    }
     if("all" in use_flags){
         use_flags = yaml.get_array(srcdata,"use-flags");
     }
@@ -345,9 +356,6 @@ private void create_metadata_info(){
             new_data += "      - "+dep+"\n";
         }
     }
-    string release = yaml.get_value(srcdata,"release");
-    string version = yaml.get_value(srcdata,"version");
-    string name = yaml.get_value(srcdata,"name");
     if(release == ""){
         error_add("Release is not defined.");
     }

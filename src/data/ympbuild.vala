@@ -126,7 +126,13 @@ private void ympbuild_init(){
     }
     ";
     var use_flags = new array();
-    foreach(string flag in ssplit(get_value("use")," ")){
+    string[] flags = ssplit(get_value("use")," ");
+    string name = get_ympbuild_value("name");
+    string package_use = get_config("package.use",name);
+    if(package_use.length > 0){
+        flags = ssplit(package_use," ");
+    }
+    foreach(string flag in flags){
        use_flags.add(flag);
        ympbuild_header += "declare -r use_'"+flag.replace("'","\\'")+"'=31 \n";
 
@@ -153,7 +159,7 @@ public string get_ympbuild_value(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return getoutput("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip();
+    return getoutput("bash -c 'source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip();
 }
 
 //DOC: `string[] get_ympbuild_array(string variable):`
@@ -162,7 +168,7 @@ public string[] get_ympbuild_array(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return ssplit(getoutput("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
+    return ssplit(getoutput("bash -c 'source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
 }
 
 //DOC: `bool ympbuild_has_function(string function):`

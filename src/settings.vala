@@ -4,8 +4,8 @@
 private string CONFIG;
 private string DESTDIR;
 
+private yamlfile config_yaml;
 private void settings_init(){
-    var yaml = new yamlfile();
     if(DESTDIR == null){
         DESTDIR = "/";
     }
@@ -15,6 +15,7 @@ private void settings_init(){
     if (CONFIG == null){
         CONFIG = srealpath(DESTDIR+"/"+CONFIGDIR+"/ymp.conf");
     }
+    config_yaml = new yamlfile();
     set_value_readonly("destdir",DESTDIR);
     set_value_readonly("config",CONFIG);
     if(VERSION != null){
@@ -23,11 +24,11 @@ private void settings_init(){
     string area = "";
     string value = "";
     if(isfile(CONFIG)){
-        yaml.load(CONFIG);
-        foreach(string section in yaml.get_area_names(yaml.data)){
-            area = yaml.get_area(yaml.data,section);
-            foreach(string variable in yaml.get_area_names(area)){
-                value = yaml.get_value(area,variable);
+        config_yaml.load(CONFIG);
+        foreach(string section in config_yaml.get_area_names(config_yaml.data)){
+            area = config_yaml.get_area(config_yaml.data,section);
+            foreach(string variable in config_yaml.get_area_names(area)){
+                value = config_yaml.get_value(area,variable);
                 if(section == "ymp"){
                     set_value_readonly(variable,value);
                 }else{
@@ -41,14 +42,22 @@ private void settings_init(){
     if(get_env("USE") != null){
         set_value_readonly("USE",get_env("USE"));
     }else{
-        area = yaml.get_area(yaml.data,"ymp");
-        set_value_readonly("USE",yaml.get_value(area,"use"));
+        area = config_yaml.get_area(config_yaml.data,"ymp");
+        set_value_readonly("USE", config_yaml.get_value(area,"use"));
     }
     #if DEBUG
     set_env("G_MESSAGES_DEBUG", "all");
     set_env("G_DEBUG","fatal_warnings");
     #endif
 }
+
+//DOC: `string get_config(string section,string path):`
+//DOC: get config variable from ymp config
+public string get_config(string section,string path){
+    string fdata = config_yaml.get_area(config_yaml.data,section);
+    return config_yaml.get_value(fdata,path);
+}
+
 
 //DOC: `void set_destdir(string rootfs):`
 //DOC: change distdir

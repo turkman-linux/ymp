@@ -430,6 +430,10 @@ generate metadata.yaml content and return as string
 
 ymp configuration functions
 
+`string get_config(string section,string path):`
+
+get config variable from ymp config
+
 `void set_destdir(string rootfs):`
 
 change distdir
