@@ -12,6 +12,12 @@ private void ympbuild_init(){
         ympbuild_srcpath = "./";
     }
     ympbuild_header = "
+    for e in $(env | sed \"s/=.*//g\")
+    do
+        unset \"$e\" |& :
+    done
+    export PATH=\"/usr/bin:/bin:/usr/sbin:/sbin\"
+
     declare -r installdir=\""+ympbuild_buildpath+"/output\"
     export HOME=\""+ympbuild_buildpath+"\"
     export DESTDIR=\"$installdir\"

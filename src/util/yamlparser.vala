@@ -70,6 +70,19 @@ public class yamlfile {
         return ret;
     }
 
+    public string[] get_area_names(string fdata){
+        string[] ret = {};
+        foreach(string line in ssplit(trim(fdata),"\n")){
+            if(!startswith(line," ") && ":" in line){
+                string name = ssplit(line,":")[0];
+                if(!(name in ret)){
+                    ret += name;
+                }
+            }
+        }
+        return ret;
+    }
+
     private int find_first_offset(string fdata, string name){
         int i=0;
         foreach(string line in ssplit(trim(fdata),"\n")){

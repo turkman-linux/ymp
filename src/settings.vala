@@ -5,7 +5,7 @@ private string CONFIG;
 private string DESTDIR;
 
 private void settings_init(){
-    inifile ini = new inifile();
+    var yaml = new yamlfile();
     if(DESTDIR == null){
         DESTDIR = "/";
     }
@@ -20,14 +20,18 @@ private void settings_init(){
     if(VERSION != null){
         set_value_readonly("version",VERSION);
     }
+    string area = "";
+    string value = "";
     if(isfile(CONFIG)){
-        ini.load(CONFIG);
-        foreach(string section in ini.get_sections()){
-            foreach(string variable in ini.get_variables(section)){
+        yaml.load(CONFIG);
+        foreach(string section in yaml.get_area_names(yaml.data)){
+            area = yaml.get_area(yaml.data,section);
+            foreach(string variable in yaml.get_area_names(area)){
+                value = yaml.get_value(area,variable);
                 if(section == "ymp"){
-                    set_value_readonly(variable,ini.get("ymp",variable));
+                    set_value_readonly(variable,value);
                 }else{
-                    set_value_readonly(section+":"+variable,ini.get(section,variable));
+                    set_value_readonly(section+":"+variable,value);
                 }
             }
         }
@@ -37,12 +41,9 @@ private void settings_init(){
     if(get_env("USE") != null){
         set_value_readonly("USE",get_env("USE"));
     }else{
-        set_value_readonly("USE",ini.get("ymp","use"));
+        area = yaml.get_area(yaml.data,"ymp");
+        set_value_readonly("USE",yaml.get_value(area,"use"));
     }
-    clear_env();
-    set_env("LANG","C.UTF-8");
-    set_env("LC_ALL","C.UTF-8");
-    set_env("PATH","/usr/bin:/usr/sbin:/bin:/sbin");
     #if DEBUG
     set_env("G_MESSAGES_DEBUG", "all");
     set_env("G_DEBUG","fatal_warnings");

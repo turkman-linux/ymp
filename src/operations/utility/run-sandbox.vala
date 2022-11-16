@@ -2,7 +2,6 @@ public int run_sandbox_main(string[] args){
     if(!get_bool("no-net")){
         sandbox_network = true;
     }
-    clear_env();
     sandbox_shared = get_value("shared");
     sandbox_rootfs = get_destdir();
     sandbox_uid = int.parse(get_value("uid"));

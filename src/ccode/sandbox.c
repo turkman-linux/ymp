@@ -14,7 +14,13 @@
 #include <sys/stat.h>
 #include <sys/mount.h>
 
+#ifndef clear_env
+void clear_env();
+#endif
+
+#ifndef create_dir
 void create_dir(const char *dir);
+#endif
 
 int sandbox_network = 0;
 int sandbox_uid = 0;
@@ -77,9 +83,8 @@ int sandbox(char** args){
                 unshare(CLONE_NEWIPC);
                 unshare(CLONE_VM);
                 unshare(CLONE_NEWPID| CLONE_VFORK | SIGCHLD);
-                setenv("PATH","/bin:/usr/bin:/sbin:/usr/sbin",1);
-                setenv("TERM","linux",1);
-                _exit(execvpe(which(args[0]),args,NULL));
+                char *envp[] = {"TERM=linux", "PATH=/usr/bin:/bin:/usr/sbin:/sbin", NULL};
+                _exit(execvpe(which(args[0]),args,envp));
             }
         }
         _exit(127);
