@@ -75,7 +75,7 @@ private void mirror_download(package pkg,string target){
 void repository_init(){
     var h = new helpmsg();
     h.name = "repository";
-    h.description = "Update / Index repository";
+    h.description = "Update / Index / Mirror repository";
     h.add_parameter("--update", "update repository");
     h.add_parameter("--index", "index repository");
     h.add_parameter("--mirror", "mirror repository");
