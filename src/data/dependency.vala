@@ -103,6 +103,11 @@ private void resolve_reverse_process(string[] names){
             resolve_reverse_process(grp);
             continue;
         }
+        if(name[0] == '!'){
+            string[] matches = get_match_packages(name);
+            resolve_process(matches);
+            continue;
+        }
         info("Resolve reverse dependency: "+name);
         need_install.add(name);
 
