@@ -159,7 +159,7 @@ public string get_ympbuild_value(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return getoutput("bash -c 'source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip();
+    return getoutput("bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; echo ${"+variable+"[@]}'").strip();
 }
 
 //DOC: `string[] get_ympbuild_array(string variable):`
@@ -168,13 +168,13 @@ public string[] get_ympbuild_array(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return ssplit(getoutput("bash -c 'source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
+    return ssplit(getoutput("bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
 }
 
 //DOC: `bool ympbuild_has_function(string function):`
 //DOC: check ympbuild file has function
 public bool ympbuild_has_function(string function){
-    return 0 == run("bash -c 'source "+ympbuild_srcpath+"/ympbuild ;declare -F "+function+"' 2>/dev/null");
+    return 0 == run_silent("bash -c 'source "+ympbuild_srcpath+"/ympbuild ;declare -F "+function+"'");
 }
 
 private bool ympbuild_check(){
@@ -187,9 +187,12 @@ public int run_ympbuild_function(string function){
     if(function == ""){
         return 0;
     }
-    set_terminal_title("Run action: "+function);
+    set_terminal_title("Run action (%s) %s => %s".printf(
+        sbasename(ympbuild_buildpath),
+        get_ympbuild_value("name"),
+        function));
     if(ympbuild_has_function(function)){
-        string cmd = "bash -e -c '"+ympbuild_header+" \n source "+ympbuild_srcpath+"/ympbuild ; set -e ; "+function+"'";
+        string cmd = "bash -c '"+ympbuild_header+" \n source "+ympbuild_srcpath+"/ympbuild ; set -e ; "+function+"'";
         if(get_bool("quiet")){
             return run_silent(cmd);
         }else{
@@ -201,8 +204,6 @@ public int run_ympbuild_function(string function){
     return 0;
 }
 public void ymp_process_binaries(){
-    #if DEBUG
-    #else
     foreach(string file in find(ympbuild_buildpath+"/output")){
         if(iself(file)){
             info("Binary process: "+file);
@@ -212,7 +213,6 @@ public void ymp_process_binaries(){
             -R .debug_ranges -R .debug_loc '"+file+"'");
         }
     }
-    #endif
     if(isfile(ympbuild_buildpath+"/output/usr/share/info/dir")){
         remove_file(ympbuild_buildpath+"/output/usr/share/info/dir");
     }
