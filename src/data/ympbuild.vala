@@ -174,7 +174,7 @@ public string[] get_ympbuild_array(string variable){
 //DOC: `bool ympbuild_has_function(string function):`
 //DOC: check ympbuild file has function
 public bool ympbuild_has_function(string function){
-    return 0 == run_silent("bash -c 'source "+ympbuild_srcpath+"/ympbuild ;declare -F "+function+"'");
+    return 0 == run("bash -c 'source "+ympbuild_srcpath+"/ympbuild ;declare -F "+function+"' 2>/dev/null");
 }
 
 private bool ympbuild_check(){

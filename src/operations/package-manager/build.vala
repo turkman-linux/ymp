@@ -14,7 +14,7 @@ public int build_operation(string[] args){
                 return 2;
             }
         }else if(startswith(arg,"http://") || startswith(arg,"https://")){
-            string file=DESTDIR+"/tmp/ymp-build/cache/"+sbasename(arg);
+            string file=DESTDIR+"/tmp/ymp-build/.cache/"+sbasename(arg);
             create_dir(file);
             string farg = file+"/"+sbasename(arg);
             if(!isfile(farg)){
@@ -145,7 +145,7 @@ private bool fetch_package_sources(){
             continue;
         }
         string srcfile = ympbuild_buildpath+"/"+sbasename(src);
-        string ymp_source_cache = DESTDIR+"/tmp/ymp-build/cache/"+get_ympbuild_value("name")+"/";
+        string ymp_source_cache = DESTDIR+"/tmp/ymp-build/.cache/"+get_ympbuild_value("name")+"/";
         create_dir(ymp_source_cache);
         if(isfile(srcfile)){
             info("Source file already exists.");
