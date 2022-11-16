@@ -13,7 +13,7 @@ private void settings_init(){
         CONFIGDIR = "/etc/";
     }
     if (CONFIG == null){
-        CONFIG = srealpath(DESTDIR+"/"+CONFIGDIR+"/ymp.conf");
+        CONFIG = srealpath(DESTDIR+"/"+CONFIGDIR+"/ymp.yaml");
     }
     config_yaml = new yamlfile();
     set_value_readonly("destdir",DESTDIR);
@@ -97,7 +97,7 @@ private string get_metadata_path(string name){
 }
 
 //DOC: `void set_config(string path):`
-//DOC: change ymp config file (default /etc/ymp.conf)
+//DOC: change ymp config file (default /etc/ymp.yaml)
 public void set_config(string path){
     CONFIG=srealpath(path);
     settings_init();

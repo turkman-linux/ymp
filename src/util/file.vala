@@ -51,8 +51,15 @@ public string readfile(string path){
         return new_data;
     }
     foreach(string line in ssplit(data,"\n")){
-        if(line.length > 0){
-            new_data += ssplit(line,"#")[0]+"\n";
+        if("#" in line){
+            if(line.length > 0){
+                line = ssplit(line,"#")[0];
+                if(line.strip() != ""){
+                    new_data += line+"\n";
+                }
+            }
+        }else{
+            new_data += line+"\n";
         }
     }
     debug("Read file: "+path);

@@ -1,0 +1,24 @@
+# Main ymp config
+ymp:
+  allow-oem: false
+  # default use flag settings
+  use: all
+  # ymp fetcher useragent
+  useragent: Ymp fetcher
+
+# Config about build
+build:
+  # if jobs 0 use all cpu cores
+  jobs: 0
+  debug: false
+  cflags: -flto
+  cxxflags: -flto
+  ldflags: 
+  cc: gcc
+
+#Package section
+package:
+  # Config about package spesific use flags
+  use:
+    #example: example_flag
+

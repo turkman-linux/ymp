@@ -145,7 +145,7 @@ if get_option('scripts')
     endforeach
 endif
 
-install_data('data/ymp.conf', install_dir : get_option('sysconfdir'), rename : 'ymp.conf')
+install_data('data/ymp.yaml', install_dir : get_option('sysconfdir'), rename : 'ymp.yaml')
 install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
 install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/packages/')
 

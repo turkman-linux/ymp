@@ -452,7 +452,7 @@ get ymp storage directory. (default: /var/lib/ymp)
 
 `void set_config(string path):`
 
-change ymp config file (default /etc/ymp.conf)
+change ymp config file (default /etc/ymp.yaml)
 
 # src/util/archive.vala
 ## class archive()
