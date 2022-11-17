@@ -36,6 +36,7 @@ int get_bool(char* variable);
 #endif
 
 int isdir(char* target);
+int isfile(char* target);
 void remove_all(char* target);
 
 char* which(char* cmd);
@@ -51,8 +52,10 @@ char* sandbox_rootfs;
 
 int sandbox(char** args){
     int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER;
+    if(isfile("/.sandbox")){
+        exit(31);
+    }
     pid_t pid = fork();
-    int privileged = (0 == getuid()) && get_bool("privileged");
     if(pid == 0) {
         int r = prctl(PR_SET_PDEATHSIG, SIGHUP);
         if (r == -1){
@@ -62,15 +65,13 @@ int sandbox(char** args){
         write_to_file("/proc/self/comm", "ymp-sandbox");
         uid_t uid = getuid();
         gid_t gid = getgid();
-        if(!privileged){
-            unshare(flag);
-            // remap uid
-            write_to_file("/proc/self/uid_map", "%d %d 1", sandbox_uid, uid);
-            // deny setgroups (see user_namespaces(7))
-            write_to_file("/proc/self/setgroups", "deny");
-           // remap gid
-            write_to_file("/proc/self/gid_map", "%d %d 1", sandbox_gid, gid);
-        }
+        unshare(flag);
+        // remap uid
+        write_to_file("/proc/self/uid_map", "%d %d 1", sandbox_uid, uid);
+        // deny setgroups (see user_namespaces(7))
+        write_to_file("/proc/self/setgroups", "deny");
+        // remap gid
+        write_to_file("/proc/self/gid_map", "%d %d 1", sandbox_gid, gid);
         sandbox_create_tmpfs("/tmp/ymp-root/");
         sandbox_bind("/usr");
         sandbox_bind("/etc");
@@ -87,6 +88,7 @@ int sandbox(char** args){
         sandbox_bind("/tmp/ymp-build");
         sandbox_bind("/proc/");
         sandbox_bind_shared(sandbox_shared);
+        write_to_file("/tmp/ymp-root/.sandbox", "%d",getpid());
         if (0 == chroot("/tmp/ymp-root")){
             if(0 == chdir("/")){
                 unshare(CLONE_NEWUTS);
