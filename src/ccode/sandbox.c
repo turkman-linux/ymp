@@ -35,6 +35,9 @@ int sandbox_gid = 0;
 int get_bool(char* variable);
 #endif
 
+int isdir(char* target);
+void remove_all(char* target);
+
 char* which(char* cmd);
 void write_to_file(const char *which, const char *format, ...);
 void sandbox_bind(char* dir);
@@ -107,8 +110,6 @@ int sandbox(char** args){
     }
 }
 
-int isdir(char* target);
-void remove_all(char* target);
 
 void sandbox_bind(char* dir){
     char target[(strlen(dir)+20)*sizeof(char)];
