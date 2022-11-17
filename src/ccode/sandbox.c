@@ -68,7 +68,7 @@ int sandbox(char** args){
            // remap gid
             write_to_file("/proc/self/gid_map", "%d %d 1", sandbox_gid, gid);
         }
-        mount("tmpfs","/root","tmpfs",0,NULL);
+        sandbox_create_tmpfs("/tmp/ymp-root/");
         sandbox_bind("/usr");
         sandbox_bind("/etc");
         sandbox_bind("/bin");
@@ -78,13 +78,13 @@ int sandbox(char** args){
         sandbox_bind("/var");
         sandbox_bind("/dev");
         sandbox_bind("/sys");
-        sandbox_create_tmpfs("/root/root");
-        sandbox_create_tmpfs("/root/tmp");
-        sandbox_create_tmpfs("/root/run");
+        sandbox_create_tmpfs("/tmp/ymp-root/root");
+        sandbox_create_tmpfs("/tmp/ymp-root/tmp");
+        sandbox_create_tmpfs("/tmp/ymp-root/run");
         sandbox_bind("/tmp/ymp-build");
         sandbox_bind("/proc/");
         sandbox_bind_shared(sandbox_shared);
-        if (0 == chroot("/root")){
+        if (0 == chroot("/tmp/ymp-root")){
             if(0 == chdir("/")){
                 unshare(CLONE_NEWUTS);
                 if(sandbox_network == 0){
@@ -102,24 +102,30 @@ int sandbox(char** args){
     }else{
         int status;
         kill(wait(&status),9);
+        remove_all("/tmp/ymp-root/");
         return status;
     }
 }
 
+int isdir(char* target);
+void remove_all(char* target);
+
 void sandbox_bind(char* dir){
-    char target[(strlen(dir)+10)*sizeof(char)];
-    char source[(strlen(dir)+strlen(sandbox_rootfs)+10)*sizeof(char)];
-    strcpy(target,"/root/");
+    char target[(strlen(dir)+20)*sizeof(char)];
+    char source[(strlen(dir)+strlen(sandbox_rootfs)+20)*sizeof(char)];
+    strcpy(target,"/tmp/ymp-root/");
     strcat(target,dir);
     strcpy(source,sandbox_rootfs);
     strcat(source,"/");
     strcat(source,dir);
-    create_dir(target);
-    mount(source, target, NULL, MS_SILENT | MS_BIND | MS_REC, NULL);
+    if(!isdir(target)){
+        create_dir(target);
+        mount(source, target, NULL, MS_SILENT | MS_BIND | MS_REC, NULL);
+    }
 }
 void sandbox_bind_shared(char* dir){
-    char target[(strlen(dir)+10)*sizeof(char)];
-    strcpy(target,"/root/");
+    char target[(strlen(dir)+20)*sizeof(char)];
+    strcpy(target,"/tmp/ymp-root/");
     strcat(target,dir);
     create_dir(target);
     mount(dir, target, NULL, MS_SILENT | MS_BIND | MS_REC, NULL);
