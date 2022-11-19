@@ -137,6 +137,7 @@ private void ympbuild_init(){
        ympbuild_header += "declare -r use_'"+flag.replace("'","\\'")+"'=31 \n";
 
     }
+    ympbuild_header += "declare -r use_'"+getArch()+"'=31 \n";
     print(colorize("USE flag: ",green)+join(" ",use_flags.get()));
 }
 //DOC: `void set_ympbuild_srcpath(string path):`

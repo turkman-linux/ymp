@@ -105,6 +105,7 @@ void install_init(){
     h.minargs=1;
     h.description = "Install package from source or package file or repository";
     h.add_parameter("--ignore-dependency", "disable dependency check");
+    h.add_parameter("--ignore-satisfied", "ignore not satisfied packages");
     h.add_parameter("--sync-single", "sync quarantine after every package installation");
     h.add_parameter("--reinstall", "reinstall if already installed");
     h.add_parameter("--emerge", "do not use binary packages");

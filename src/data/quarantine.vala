@@ -51,7 +51,6 @@ public bool quarantine_validate_files(){
         warning("Quarantine validation disabled");
         return true;
     }
-    print(colorize("Quarantine validation",yellow));
     // reset lists
     quarantine_file_cache_list = {};
     quarantine_file_conflict_list = {};

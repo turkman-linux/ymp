@@ -11,7 +11,8 @@ public int template_main(string[] args){
     data += "source=('"    +str_or_def("source","")+"')\n";
     data += "depends=("    +str_or_def("depends"," ")+")\n";
     data += "makedepends=("    +str_or_def("makedepends"," ")+")\n";
-    data += "md5sums=("    +"'FIXME')\n";
+    data += "md5sums=('FIXME')\n";
+    data += "uses=()\n";
     data += "arch=('"    +getArch()+"')\n\n";
 
     data += "cd $name-$version\n\n";
@@ -19,7 +20,8 @@ public int template_main(string[] args){
     if(buildtype == "autotool" || buildtype == ""){
         data += "setup(){\n";
         data += "    [[ -f ./autogen.sh ]] && ./autogen.sh\n";
-        data += "    ./configure --prefix=/usr\n";
+        data += "    ./configure --prefix=/usr \\\n";
+        data += "        --libdir=/usr/lib64\n";
         data += "}\n\n";
         data += "build(){\n";
         data += "    make -j`nproc`\n";
@@ -86,11 +88,11 @@ private string get_gitconfig_variable(string variable){
         info("Reading gitconfig:"+gitconfig);
         foreach(string line in readfile(gitconfig).split("\n")){
             if(variable+" =" in line){
-                return ssplit(line,"=")[1];
+                return ssplit(line,"=")[1].strip();
             }
         }
     }
-    return "user@example.org";
+    return "";
 }
 
 private string str_or_def(string val,string def){
