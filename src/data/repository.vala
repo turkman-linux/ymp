@@ -158,6 +158,9 @@ public package get_package_from_repository(string name){
         }
     }
     if(ret == null){
+        if(get_bool("ignore-satisfied")){
+            return ret;
+        }
         error_add("Package not satisfied from repository: "+name);
     }
     return ret;
@@ -179,6 +182,9 @@ public package get_source_from_repository(string name){
         }
     }
     if(ret == null){
+        if(get_bool("ignore-satisfied")){
+            return ret;
+        }
         error_add("Package not satisfied from repository: "+name);
     }
     return ret;
