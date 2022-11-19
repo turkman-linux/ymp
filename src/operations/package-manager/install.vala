@@ -29,6 +29,7 @@ public int install_main(string[] args){
     }
     error(1);
     quarantine_install();
+    quarantine_reset();
     error(1);
     info("Clear leftovers");
     foreach(string file in leftovers){
@@ -61,6 +62,7 @@ public package install_single(string pkg){
         }
         error(1);
         quarantine_install();
+        quarantine_reset();
     }else{
         p.extract();
     }
