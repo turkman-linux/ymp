@@ -204,22 +204,21 @@ public int run_ympbuild_function(string function){
     return 0;
 }
 public void ymp_process_binaries(){
-    if (get_ympbuild_value("dontstrip") != ""){
-        return;
-    }
-    foreach(string file in find(ympbuild_buildpath+"/output")){
-        if(endswith(file,".a") || endswith(file,".o")){
-            // skip static library
-            info("Binary process skip for: "+file);
-            continue;
-        }
-        if(iself(file)){
-            print(colorize("Binary process: ",magenta)+file[(ympbuild_buildpath+"/output").length:]);
-            run("objcopy -R .comment \\
-            -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
-            -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\
-            -R .debug_ranges -R .debug_loc '"+file+"'");
-            run("strip '"+file+"'");
+    if (get_ympbuild_value("dontstrip") == ""){
+        foreach(string file in find(ympbuild_buildpath+"/output")){
+            if(endswith(file,".a") || endswith(file,".o")){
+                // skip static library
+                info("Binary process skip for: "+file);
+                continue;
+            }
+            if(iself(file)){
+                print(colorize("Binary process: ",magenta)+file[(ympbuild_buildpath+"/output").length:]);
+                run("objcopy -R .comment \\
+                -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
+                -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\
+                -R .debug_ranges -R .debug_loc '"+file+"'");
+                run("strip '"+file+"'");
+            }
         }
     }
     if(isfile(ympbuild_buildpath+"/output/usr/share/info/dir")){
