@@ -8,6 +8,7 @@ public int sysconf_main(string[] args){
             info("Run hook:"+sbasename(hook));
             if(DESTDIR != "/"){
                 hook=hook[DESTDIR.length:];
+                create_dir(get_storage()+"/sysconf/"+hook);
                 if(0 != run_args({"chroot", get_destdir(), hook})){
                     warning("Failed to run sysconf: "+sbasename(hook));
                 }
@@ -16,6 +17,7 @@ public int sysconf_main(string[] args){
             }
         }
     }
+    set_env("STORAGE","");
     return 0;
 }
 
