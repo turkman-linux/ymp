@@ -109,7 +109,11 @@ private void resolve_reverse_process(string[] names){
             continue;
         }
         info("Resolve reverse dependency: "+name);
-        need_install.add(name);
+        if(name in pkgnames){
+            need_install.add(name);
+        }else{
+            continue;
+        }
 
         foreach(string pkgname in pkgnames){
             package pkg = get_installed_package(pkgname);

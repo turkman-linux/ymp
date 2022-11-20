@@ -34,6 +34,9 @@ public int remove_single(package p){
     remove_file(get_storage()+"/metadata/"+p.name+".yaml");
     remove_file(get_storage()+"/files/"+p.name);
     remove_file(get_storage()+"/links/"+p.name);
+    if(isdir(get_storage()+"/sysconf/"+p.name)){
+        remove_all(get_storage()+"/sysconf/"+p.name);
+    }
     return 0;
 }
 
