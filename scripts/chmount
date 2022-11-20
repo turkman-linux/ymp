@@ -1,0 +1,15 @@
+#!/bin/bash
+for i in /dev /sys /proc /run
+do
+	mkdir -p $1/$i 2>/dev/null || true
+	umount -R -lf $1/$i &>/dev/null || true
+	mount --bind $i $1/$i
+done
+chroot $1
+q=$?
+for i in /dev /sys /proc /run ; do
+    while umount -lf -R $1/$i 2>/dev/null ; do
+        :
+    done
+done
+exit $q
