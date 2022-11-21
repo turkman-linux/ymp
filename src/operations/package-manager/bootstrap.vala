@@ -44,5 +44,6 @@ void bootstrap_init(){
     h.name = "bootstrap";
     h.description = "Create new rootfs filesystem.";
     h.add_parameter("--mirror", "bootstrap mirror uri");
+    h.add_parameter("--no-emerge", "use binary packages");
     add_operation(bootstrap_main,{"bootstrap","bst"},h);
 }

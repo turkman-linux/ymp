@@ -191,12 +191,12 @@ public package get_source_from_repository(string name){
 }
 
 //DOC: `package get_from_repositony(stning name):`
-//DOC: return source if emerge else return package
+//DOC: return package if no-emerge else return source
 public package get_from_repository(string name){
-    if(get_bool("emerge")){
-        return get_source_from_repository(name);
-    }else{
+    if(get_bool("no-emerge")){
         return get_package_from_repository(name);
+    }else{
+        return get_source_from_repository(name);
     }
 }
 
@@ -255,12 +255,12 @@ public void update_repo(){
 public string[] list_available_packages(){
     string[] ret = {};
     foreach(repository repo in get_repos()){
-        if(get_bool("emerge")){
-            foreach(string name in repo.list_sources()){
+        if(get_bool("no-emerge")){
+            foreach(string name in repo.list_packages()){
                 ret += name;
             }
         }else{
-            foreach(string name in repo.list_packages()){
+            foreach(string name in repo.list_sources()){
                 ret += name;
             }
        }

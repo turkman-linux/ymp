@@ -108,6 +108,6 @@ void install_init(){
     h.add_parameter("--ignore-satisfied", "ignore not satisfied packages");
     h.add_parameter("--sync-single", "sync quarantine after every package installation");
     h.add_parameter("--reinstall", "reinstall if already installed");
-    h.add_parameter("--emerge", "do not use binary packages");
+    h.add_parameter("--no-emerge", "use binary packages");
     add_operation(install_main,{"install","it"},h);
 }

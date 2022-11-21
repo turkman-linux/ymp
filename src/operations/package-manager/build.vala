@@ -465,7 +465,7 @@ void build_init(){
     h.add_parameter("--no-build","do not build package (only test and package)");
     h.add_parameter("--no-package","do not install package after building");
     h.add_parameter("--ignore-dependency", "disable dependency check");
-    h.add_parameter("--emerge", "do not use binary packages");
+    h.add_parameter("--no-emerge", "use binary packages");
     h.add_parameter("--install", "install binary package after building");
     add_operation(build_operation,{"build","bi","make"},h);
 }

@@ -406,7 +406,7 @@ get source package object from all repositories
 
 `package get_from_repositony(stning name):`
 
-return source if emerge else return package
+return package if no-emerge else return source
 
 `package get_package_from_file(string path):`
 
