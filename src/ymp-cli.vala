@@ -6,7 +6,7 @@ void progressbar(double cur, double total, string filename){
     }
     string del="";
     if(!get_bool("no-color")){
-        del = "\x1b[A\x1b[2K\r";
+        del = "\b\x1b[A\b\x1b[2K\r";
     }
     string line = del+"%s%d  %s  %s  %s".printf(
         "%",
@@ -39,7 +39,9 @@ int main (string[] args) {
     }else{
         ymp.add_process(new_args[1],new_args[2:]);
     }
-    set_fetcher_progress(progressbar);
+    if(!get_bool("no-processbar")){
+        set_fetcher_progress(progressbar);
+    }
     ymp.run();
     error(1);
     return 0;
