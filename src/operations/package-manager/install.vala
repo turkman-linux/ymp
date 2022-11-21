@@ -109,5 +109,5 @@ void install_init(){
     h.add_parameter("--sync-single", "sync quarantine after every package installation");
     h.add_parameter("--reinstall", "reinstall if already installed");
     h.add_parameter("--no-emerge", "use binary packages");
-    add_operation(install_main,{"install","it"},h);
+    add_operation(install_main,{"install","it","add"},h);
 }

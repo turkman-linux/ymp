@@ -193,6 +193,11 @@ public package get_source_from_repository(string name){
 //DOC: `package get_from_repositony(stning name):`
 //DOC: return package if no-emerge else return source
 public package get_from_repository(string name){
+    if (startswith(name,"src:")){
+        return get_source_from_repository(name[4:]);
+    }else if (startswith(name,"pkg:")){
+        return get_package_from_repository(name[4:]);
+    }
     if(get_bool("no-emerge")){
         return get_package_from_repository(name);
     }else{
