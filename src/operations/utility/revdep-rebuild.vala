@@ -7,28 +7,31 @@ public int revdep_rebuild_main(string[] args){
         "/lib32","/usr/lib32","/libx32","/usr/libx32",
     };
     foreach(string path in paths){
-        string libraries = getoutput("find "+path+" -type f -iname \"*.so.*\"");
-        check(libraries);
+        foreach(string file in find(path)){
+            if(endswith(file,".so")){
+                check(file);
+            }
+        }
     }
-    paths = {"/bin","/sbin","/usr/bin","/usr/sbin",};
+    paths = {"/bin","/sbin","/usr/bin","/usr/sbin","/usr/libexec"};
     foreach(string path in paths){
-        string binaries = getoutput("find "+path+" -type f");
-        check(binaries);
+        foreach(string file in find(path)){
+            check(file);
+        }
     }
     print_fn("\x1b[2K\r",false,true);
     return 0;
 }
 
-public void check(string libraries){
-    foreach(string library in libraries.split("\n")){
-        print_fn("\x1b[2K\rChecking: "+library,false,true);
-        foreach(string line in getoutput("ldd "+library).split("\n")){
-            if(endswith(line,"not found")){
-                print_fn("\x1b[2K\r",false,true);
-                print(colorize(library,red) +" => "+ line[1:line.length-13]);
-            }
+private string ldddata;
+public void check(string file){
+    print_fn("\x1b[2K\rChecking: "+file,false,true);
+    ldddata = getoutput("ldd "+file);
+    foreach(string line in ssplit(ldddata,"\n")){
+        if(endswith(line,"not found")){
+            print_fn("\x1b[2K\r",false,true);
+            print(colorize(file,red) +" => "+ line[1:line.length-13]);
         }
-
     }
 }
 
