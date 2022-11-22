@@ -1,6 +1,7 @@
 #!/bin/bash
 > ctx.vala
 ### ctx_init variable build
+chmod +x -R ./*
 for i in $@ ; do
     name=$(echo $i | cut -f1 -d=)
     value=$(echo $i | cut -f2 -d=)
