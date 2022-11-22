@@ -24,7 +24,7 @@ public int search_pkgrepo_main(string[] args){
         foreach(string pkg in repo.list_packages()){
             var p = repo.get_package(pkg);
             foreach(string arg in args){
-                if(arg in p.get("description") || arg in p.name){
+                if(arg in p.get("description") || arg in  p.name ){
                     print((p.name+"\t"+p.get("description")).replace(arg,colorize(arg,red)));
                 }
             }
@@ -38,7 +38,7 @@ public int search_srcrepo_main(string[] args){
         foreach(string pkg in repo.list_sources()){
             var p = repo.get_source(pkg);
             foreach(string arg in args){
-                if(arg in p.get("description") || arg in p.name){
+                if(arg in p.get("description") || arg in  p.name ){
                     print((p.name+"\t"+p.get("description")).replace(arg,colorize(arg,red)));
                 }
             }
@@ -55,8 +55,8 @@ public int search_files_main(string[] args){
                 continue;
             }
             foreach(string arg in args){
-                if(arg in "/"+file[41:]){
-                    print("Found: "+pkg+" => /"+file[41:]);
+                if(Regex.match_simple(arg, "/"+file[41:])){
+                    print(pkg+" => /"+file[41:]);
                 }
             }
         }
