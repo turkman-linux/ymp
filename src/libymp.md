@@ -344,6 +344,10 @@ load repository data from repo name
 
 return true if package exists in repository
 
+`bool repository.has_package(string name):`
+
+return true if package exists in repository
+
 `package repository.get_source(string name):`
 
 get package object from repository by source name

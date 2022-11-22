@@ -44,16 +44,32 @@ public class repository {
         return false;
     }
 
+    //DOC: `bool repository.has_package(string name):`
+    //DOC: return true if package exists in repository
+    public bool has_source(string name){
+        foreach(string area in sources){
+            if (yaml.get_value(area,"name") == name){
+                return true;
+            }
+        }
+        return false;
+    }
+
     //DOC: `package repository.get_source(string name):`
     //DOC: get package object from repository by source name
     public package get_source(string name){
         package pkg = null;
+        int currel = 0;
         foreach(string area in sources){
             if (yaml.get_value(area,"name") == name){
+                int release = int.parse(yaml.get_value(area,"release"));
+                if(release <= currel){
+                    continue;
+                }
+                currel = release;
                 pkg = new package();
                 pkg.set_pkgarea(area,true);
                 pkg.repo_address = address;
-                return pkg;
             }
         }
         return pkg;
@@ -63,18 +79,20 @@ public class repository {
     //DOC: get package object from repository by package name
     public package get_package(string name){
         package pkg = null;
-        if(!has_package(name)){
-            return pkg;
-        }
+        int currel = 0;
         foreach(string area in packages){
             if(area == null){
                 continue;
             }
             if (yaml.get_value(area,"name") == name){
+                int release = int.parse(yaml.get_value(area,"release"));
+                if(release <= currel){
+                    continue;
+                }
+                currel = release;
                 pkg = new package();
                 pkg.set_pkgarea(area,false);
                 pkg.repo_address = address;
-                return pkg;
             }
         }
         return pkg;
@@ -151,9 +169,9 @@ public package get_package_from_repository(string name){
         package pkg = repo.get_package(name);
         if(pkg != null){
             if(int.parse(pkg.get("release")) > release){
-                ret = pkg;
                 pkg.repo_address = repo.address;
                 release = int.parse(pkg.get("release"));
+                ret = pkg;
             }
         }
     }
@@ -175,9 +193,9 @@ public package get_source_from_repository(string name){
         package pkg = repo.get_source(name);
         if(pkg != null){
             if(int.parse(pkg.get("release")) > release){
-                ret = pkg;
                 pkg.repo_address = repo.address.replace("ymp-index.yaml","$uri");
                 release = int.parse(pkg.get("release"));
+                ret = pkg;
             }
         }
     }
