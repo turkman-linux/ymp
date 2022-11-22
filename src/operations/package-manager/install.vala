@@ -4,7 +4,13 @@ public int install_main(string[] args){
         error(1);
     }
     single_instance();
-    string[] pkgs = resolve_dependencies(args);
+    var a = new array();
+    a.adds(resolve_dependencies(args));
+    if(get_bool("upgrade")){
+        string[] up_pkgs = get_upgradable_packages();
+        a.adds(resolve_dependencies(up_pkgs));
+    }
+    string[] pkgs = a.get();
     info("Resolve dependency done: "+join(" ",pkgs));
     quarantine_reset();
     package[] pkg_obj = {};
@@ -102,12 +108,12 @@ public string[] calculate_leftover(package[] pkgs){
 void install_init(){
     var h = new helpmsg();
     h.name = "install";
-    h.minargs=1;
     h.description = "Install package from source or package file or repository";
     h.add_parameter("--ignore-dependency", "disable dependency check");
     h.add_parameter("--ignore-satisfied", "ignore not satisfied packages");
     h.add_parameter("--sync-single", "sync quarantine after every package installation");
     h.add_parameter("--reinstall", "reinstall if already installed");
+    h.add_parameter("--upgrade", "upgrade all packages");
     h.add_parameter("--no-emerge", "use binary packages");
     add_operation(install_main,{"install","it","add"},h);
 }

@@ -1,13 +1,20 @@
 public int search_main(string[] args){
-    if(get_bool("package-repo")){
+    if(get_bool("package")){
         return search_pkgrepo_main(args);
     }
-    if(get_bool("source-repo")){
+    if(get_bool("source")){
         return search_srcrepo_main(args);
     }
     if(get_bool("file")){
         return search_files_main(args);
     }
+    if(get_bool("installed")){
+        return search_installed_main(args);
+    }
+    return 0;
+}
+
+public int search_installed_main(string[] args){
     foreach(string pkg in list_installed_packages()){
         var p = get_installed_package(pkg);
         foreach(string arg in args){
@@ -18,6 +25,7 @@ public int search_main(string[] args){
     }
     return 0;
 }
+
 
 public int search_pkgrepo_main(string[] args){
     foreach(repository repo in get_repos()){
@@ -69,8 +77,9 @@ void search_init(){
     h.name = "search";
     h.minargs=1;
     h.description = "Search packages";
-    h.add_parameter("--package-repo", "Search package in binary package repository.");
-    h.add_parameter("--source-repo", "Search package in source package repository.");
+    h.add_parameter("--package", "Search package in binary package repository.");
+    h.add_parameter("--source", "Search package in source package repository.");
+    h.add_parameter("--installed", "Search package in installed packages.");
     h.add_parameter("--file", "Searches for packages by package file.");
     add_operation(search_main,{"search","sr"},h);
 }

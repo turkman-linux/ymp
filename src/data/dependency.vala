@@ -90,6 +90,21 @@ private string[] get_match_packages(string fname){
     return ret.get();
 }
 
+private string[] get_upgradable_packages(){
+    string[] need_upgrade = {};
+    foreach(string name in list_installed_packages()){
+        if(!is_available_package(name)){
+            continue;
+        }
+        package pi = get_installed_package(name);
+        package pr = get_package_from_repository(name);
+        if(pi.release < pr.release){
+            need_upgrade += name;
+        }
+    }
+    return need_upgrade;
+}
+
 private void resolve_reverse_process(string[] names){
     string[] pkgnames = list_installed_packages();
     foreach(string name in names){
