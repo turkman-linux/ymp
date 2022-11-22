@@ -314,6 +314,7 @@ public string[] list_installed_packages(){
     foreach(string fname in listdir(get_storage()+"/metadata")){
         pkgs += ssplit(fname,".")[0];
     }
+    csort(pkgs,pkgs.length);
     return pkgs;
 }
 //DOC: `package get_installed_package(string name):`
