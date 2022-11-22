@@ -26,7 +26,7 @@ public int revdep_rebuild_main(string[] args){
 private string ldddata;
 public void check(string file){
     print_fn("\x1b[2K\rChecking: "+file,false,true);
-    ldddata = getoutput("ldd "+file);
+    ldddata = getoutput("ldd "+file+" 2>/dev/null");
     foreach(string line in ssplit(ldddata,"\n")){
         if(endswith(line,"not found")){
             print_fn("\x1b[2K\r",false,true);

@@ -101,24 +101,6 @@ block ctrl-c
 
 ### process.c
 
-## Command functions
-
-This functions call shell commands
-
-Example usage
-
-```vala
-
-if (0 != run("ls /var/lib/ymp")){
-
-    stdout.printf("Command failed");
-
-}
-
-string uname = getoutput("uname");
-
-```
-
 `void single_instance():`
 
 block multiple process
@@ -130,12 +112,6 @@ run command.
 `long get_epoch():`
 
 get epoch time
-
-`string getoutput (string command):`
-
-Run command and return output
-
-**Note:** stderr ignored.
 
 `int run_silent(string command):`
 
@@ -897,6 +873,28 @@ safe basename. return filename
 `string sdirname(string path):`
 
 safe dirname. return path name
+
+## Command functions
+
+This functions call shell commands
+
+Example usage
+
+```vala
+
+if (0 != run("ls /var/lib/ymp")){
+
+    stdout.printf("Command failed");
+
+}
+
+string uname = getoutput("uname");
+
+```
+
+`string getoutput (string command):`
+
+Run command and return output
 
 # src/util/value.vala
 ## Variable functions

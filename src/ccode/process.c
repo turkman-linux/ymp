@@ -44,25 +44,6 @@ int run_silent(char* command){
     return run(command);
 }
 
-FILE* process;
-
-char* getoutput(char* command){
-    char* long_buffer = malloc(sizeof(char)*1024*1024);
-    process = popen(command,"r");
-    size_t len = 0;
-    char *line = NULL;
-    ssize_t read;
-    strcpy(long_buffer,"");
-    if(process == NULL){
-        return "";
-    }
-    while ((read = getline(&line, &len, process)) != -1) {
-        strcat(long_buffer,line);
-    }
-    return long_buffer;
-}
-
-
 int run_args(char* args[]){
     pid_t pid = fork();
     if(pid == 0){

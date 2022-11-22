@@ -87,16 +87,6 @@ public extern bool issymlink(string path);
 public extern void block_sigint();
 
 //DOC: ### process.c
-//DOC: ## Command functions
-//DOC: This functions call shell commands
-//DOC: Example usage
-//DOC: ```vala
-//DOC: if (0 != run("ls /var/lib/ymp")){
-//DOC:     stdout.printf("Command failed");
-//DOC: }
-//DOC: string uname = getoutput("uname");
-//DOC: ```
-
 //DOC: `void single_instance():`
 //DOC: block multiple process
 public extern void single_instance();
@@ -107,12 +97,6 @@ public extern int run (string command);
 //DOC: get epoch time
 public extern long get_epoch();
 private extern int ckill(int pid);
-
-//DOC: `string getoutput (string command):`
-//DOC: Run command and return output
-//DOC: **Note:** stderr ignored.
-public extern string getoutput (string command) ;
-
 
 //DOC: `int run_silent(string command):`
 //DOC: run command silently.
