@@ -12,16 +12,11 @@ private void ympbuild_init(){
         ympbuild_srcpath = "./";
     }
     ympbuild_header = "
-    for e in $(env | sed \"s/=.*//g\")
-    do
-        unset \"$e\" |& :
-    done
     export PATH=\"/usr/bin:/bin:/usr/sbin:/sbin\"
 
     declare -r installdir=\""+ympbuild_buildpath+"/output\"
     export HOME=\""+ympbuild_buildpath+"\"
     export DESTDIR=\"$installdir\"
-    alias python=python3
     declare -r YMPVER=\""+VERSION+"\"
     export NOCONFIGURE=1
     export NO_COLOR=1
@@ -160,7 +155,7 @@ public string get_ympbuild_value(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return getoutput("bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; echo ${"+variable+"[@]}'").strip();
+    return getoutput("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; echo ${"+variable+"[@]}'").strip();
 }
 
 //DOC: `string[] get_ympbuild_array(string variable):`
@@ -169,17 +164,17 @@ public string[] get_ympbuild_array(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return ssplit(getoutput("bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
+    return ssplit(getoutput("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
 }
 
 //DOC: `bool ympbuild_has_function(string function):`
 //DOC: check ympbuild file has function
 public bool ympbuild_has_function(string function){
-    return 0 == run_silent("bash -c 'source "+ympbuild_srcpath+"/ympbuild ;declare -F "+function+"'");
+    return 0 == run_silent("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; declare -F "+function+"'");
 }
 
 private bool ympbuild_check(){
-    return 0 == run("bash -n "+ympbuild_srcpath+"/ympbuild");
+    return 0 == run("env -i bash -n "+ympbuild_srcpath+"/ympbuild");
 }
 
 //DOC: `int run_ympbuild_function(string function):`
@@ -193,7 +188,7 @@ public int run_ympbuild_function(string function){
         get_ympbuild_value("name"),
         function));
     if(ympbuild_has_function(function)){
-        string cmd = "bash -c '"+ympbuild_header+" \n source "+ympbuild_srcpath+"/ympbuild ; set -e ; "+function+"'";
+        string cmd = "env -i bash -c '"+ympbuild_header+" \n source "+ympbuild_srcpath+"/ympbuild ; export ACTION="+function+" ; set -e ; "+function+"'";
         if(get_bool("quiet")){
             return run_silent(cmd);
         }else{
@@ -235,5 +230,5 @@ public void ymp_process_binaries(){
 //DOC: `string get_ympbuild_metadata():`
 //DOC: generate metadata.yaml content and return as string
 public string get_ympbuild_metadata(){
-    return getoutput ("bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild >/dev/null ; ymp_print_metadata'");
+    return getoutput ("env -i bash -c '"+ympbuild_header+" source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; ymp_print_metadata'");
 }
