@@ -3,6 +3,10 @@ public int install_main(string[] args){
         error_add("You must be root!");
         error(1);
     }
+    if(!get_bool("no-emerge") && usr_is_merged()){
+        error_add("Install (from source) operation with usrmerge is not allowed!");
+        error(31);
+    }
     single_instance();
     var a = new array();
     a.adds(resolve_dependencies(args));
