@@ -197,6 +197,9 @@ public Ymp ymp_init(string[] args){
             }
         }
     #endif
+    if(usr_is_merged()){
+        warning("UsrMerge detected! Ymp may not working good.");
+    }
     set_env("G_DEBUG","fatal-criticals");
     error(31);
     ymp_activated = true;

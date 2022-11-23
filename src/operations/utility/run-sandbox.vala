@@ -1,4 +1,8 @@
 public int run_sandbox_main(string[] args){
+    if(usr_is_merged()){
+        error_add("Sandbox operation with usrmerge is not allowed!");
+        error(31);
+    }
     if(!get_bool("no-net")){
         sandbox_network = true;
     }

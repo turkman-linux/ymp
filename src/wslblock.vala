@@ -32,3 +32,7 @@ private void fuck(){
 public bool is_oem_available(){
     return isfile("/sys/firmware/acpi/tables/MSDM");
 }
+
+public bool usr_is_merged(){
+    return issymlink("/lib") || issymlink("/bin") || issymlink("/sbin");
+}

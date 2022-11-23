@@ -2,6 +2,10 @@ private bool no_src = false;
 public int build_operation(string[] args){
     string currend_directory=srealpath(pwd());
     string[] new_args = args;
+    if(usr_is_merged()){
+        error_add("Build operation with usrmerge is not allowed!");
+        error(31);
+    }
     if(new_args.length == 0){
         new_args = {"."};
     }
