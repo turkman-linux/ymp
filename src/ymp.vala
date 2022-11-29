@@ -34,6 +34,7 @@ private void add_operation(function callback, string[] names, helpmsg help){
 
 private int operation_main(string type, string[] args){
     info("RUN:"+type + ":" + join(" ",args));
+    directories_init();
     foreach(operation op in ops){
         foreach(string name in op.names){
             if(type == name){
@@ -225,7 +226,6 @@ public Ymp ymp_init(string[] args){
     error(31);
     ymp_activated = true;
     tty_size_init();
-    directories_init();
     logger_init(); // logger reload
 
     return app;
