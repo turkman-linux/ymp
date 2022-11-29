@@ -11,7 +11,7 @@ public int shell_main(string[] args){
                 string line = Readline.readline(prompt);
             #endif
             if(line != null){
-                ymp.add_script(line.strip());
+                ymp.add_script(line);
                 ymp.run();
                 ymp.clear_process();
             }else{

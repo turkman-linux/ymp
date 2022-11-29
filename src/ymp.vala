@@ -132,6 +132,7 @@ public class Ymp {
             return;
         }
         foreach(string line in ssplit(data,"\n")){
+            line = line.strip();
             if(line.length == 0){
                 continue;
             }
