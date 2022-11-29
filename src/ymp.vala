@@ -41,7 +41,7 @@ private int operation_main(string type, string[] args){
                     return help_main({name});
                 }        
                 set_value_readonly("operation",name);
-                return op.callback(args);
+                return op.callback(argument_process(args));
             }
         }
     }
@@ -65,6 +65,7 @@ private class process{
 }
 public class Ymp {
     process[] proc;
+    private int iflevel = 0;
 
     //DOC: `void Ymp.add_process(string type, string[] args):`
     //DOC: add ymp process using **type** and **args**
@@ -94,6 +95,24 @@ public class Ymp {
         for(int i=0;i<proc.length;i++){
             long start_time = get_epoch();
 
+            if (proc[i].type == "if"){
+                process op = new process();
+                op.type = proc[i].args[0].strip();
+                op.args = proc[i].args[1:];
+                int status = op.run();
+                if (status != 0){
+                    iflevel += 1;
+                }
+                continue;
+            }else if (proc[i].type == "endif"){
+                iflevel -= 1;
+                continue;
+            }
+            if(iflevel < 0){
+                error_add("Syntax error. Unexceped endif detected.");
+            }else if(iflevel != 0){
+                continue;
+            }
             int status = proc[i].run();
             if(status != 0){
                 string type = proc[i].type;
@@ -116,7 +135,8 @@ public class Ymp {
             if(line.length == 0){
                 continue;
             }
-            string[] proc_args = argument_process(ssplit(line," "));
+            parse_args(ssplit(line," "));
+            string[] proc_args = ssplit(line," ");
             if(proc_args[0] != null){
                 add_process(proc_args[0],proc_args[1:]);
             }
