@@ -10,6 +10,7 @@ void title_init(){
     var h = new helpmsg();
     h.name = "title";
     h.minargs=1;
+    h.shell_only = true;
     h.description = "Set terminal title";
     add_operation(title_main,{"title"},h);
 }

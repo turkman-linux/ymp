@@ -18,6 +18,7 @@ void shitcat_init(){
     var h = new helpmsg();
     h.name = "shitcat";
     h.minargs=1;
+    h.shell_only = true;
     h.description = "Write message with bad appearance.";
     h.add_parameter("!!!","FUCK LGBT");
     h.add_parameter("-","read from stdin");

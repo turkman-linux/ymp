@@ -9,5 +9,6 @@ void exit_init(){
     var h = new helpmsg();
     h.name = "exit";
     h.description = "Exit ymp";
+    h.shell_only = true;
     add_operation(exit_main,{"exit","bye"},h);
 }

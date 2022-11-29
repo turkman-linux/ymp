@@ -1,9 +1,18 @@
 public int help_main(string[] args){
     if (args.length == 0){
-        write_version();
         print(colorize("Operation list: ",blue));
         foreach(operation op in ops){
-            print_fn(colorize(op.help.name+" : ",green)+op.help.description+"\n", false, false);
+            if(!op.help.shell_only){
+                print_fn(colorize(op.help.name+" : ",green)+op.help.description+"\n", false, false);
+            }
+        }
+        if(get_bool("all")){
+            print(colorize("Shell only operation list: ",blue));
+            foreach(operation op in ops){
+                if(op.help.shell_only){
+                    print_fn(colorize(op.help.name+" : ",green)+op.help.description+"\n", false, false);
+                }
+            }
         }
     }else{
         foreach(string arg in args){
@@ -90,6 +99,7 @@ public class helpmsg{
     public string name="";
     public string usage="";
     public int minargs = 0;
+    public bool shell_only = false;
     
     public void add_parameter(string arg, string desc){
         if (parameters == null){

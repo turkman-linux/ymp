@@ -20,6 +20,7 @@ void exec_init(){
     h.name = "exec";
     h.description = "Execute a command";
     h.minargs=1;
+    h.shell_only = true;
     h.add_parameter("--quiet","run without output");
     add_operation(exec_main,{"exec"},h);
 }

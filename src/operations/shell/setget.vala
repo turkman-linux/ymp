@@ -46,18 +46,22 @@ void setget_init(){
     var h4 = new helpmsg();
 
     h1.name = "get";
+    h1.shell_only = true;
     h1.description = "Get variable from name";
 
     h2.name = "set";
     h2.minargs=2;
+    h2.shell_only = true;
     h2.description = "Set variable from name and value";
 
     h3.name = "equal";
     h3.minargs=2;
+    h3.shell_only = true;
     h3.description = "Compare arguments equality";
     
     h4.name = "read";
     h4.minargs=1;
+    h4.shell_only = true;
     h4.description = "Read value from terminal";
 
     add_operation(get_main,{"get"},h1);
