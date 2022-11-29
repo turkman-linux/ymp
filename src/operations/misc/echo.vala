@@ -7,5 +7,5 @@ void echo_init(){
     h.name = "echo";
     h.minargs=1;
     h.description = "Write a message to terminal.";
-    add_operation(echo_main,{"echo"},h);
+    add_operation(echo_main,{"echo","print"},h);
 }
