@@ -41,6 +41,7 @@ private int operation_main(string type, string[] args){
                     return help_main({name});
                 }        
                 set_value_readonly("operation",name);
+                parse_args(args);
                 return op.callback(argument_process(args));
             }
         }
@@ -136,7 +137,6 @@ public class Ymp {
             if(line.length == 0){
                 continue;
             }
-            parse_args(ssplit(line," "));
             string[] proc_args = ssplit(line," ");
             if(proc_args[0] != null){
                 add_process(proc_args[0],proc_args[1:]);
