@@ -138,6 +138,7 @@ public int remove_file(string path){
         file.delete();
         return 0;
     }catch (Error e){
+        error_add(e.message);
         return -1;
     }
 }
@@ -203,6 +204,7 @@ public void copy_file(string src, string desc){
         print_stderr("");
         fs_sync();
     } catch (Error e) {
+        error_add("Failed to copy file: "+src + " => "+desc);
         error_add(e.message);
     }
 }
