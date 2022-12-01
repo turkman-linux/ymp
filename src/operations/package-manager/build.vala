@@ -398,7 +398,7 @@ private bool create_metadata_info(){
         return false;
     }
     output_package_path = ympbuild_srcpath+"/"+name+"_"+version+"_"+release;
-    writefile(ympbuild_buildpath+"/output/metadata.yaml",new_data);
+    writefile(ympbuild_buildpath+"/output/metadata.yaml",trim(new_data));
     return true;
 }
 
@@ -433,7 +433,7 @@ private void create_data_file(){
     new_data += "    archive-hash: "+hash+"\n";
     new_data += "    arch: "+getArch()+"\n";
     new_data += "    archive-size: "+size.to_string()+"\n";
-    writefile(ympbuild_buildpath+"/output/metadata.yaml",new_data);
+    writefile(ympbuild_buildpath+"/output/metadata.yaml",trim(new_data));
     
 }
 

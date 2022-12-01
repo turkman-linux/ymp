@@ -120,7 +120,7 @@ private void resolve_reverse_process(string[] names){
         }
         if(name[0] == '!'){
             string[] matches = get_match_packages(name);
-            resolve_process(matches);
+            resolve_reverse_process(matches);
             continue;
         }
         info("Resolve reverse dependency: "+name);

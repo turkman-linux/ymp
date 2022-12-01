@@ -57,8 +57,8 @@ private void ympbuild_init(){
         fi
         if [[ \"${group[@]}\" != \"\" ]] ; then
             echo \"    group:\"
-            for src in ${group[@]} ; do
-                echo \"      - ${src}\"
+            for grp in ${group[@]} ; do
+                echo \"      - ${grp}\"
             done
         fi
         if [[ \"${provides[@]}\" != \"\" ]] ; then
@@ -155,7 +155,7 @@ public string get_ympbuild_value(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return getoutput("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; echo ${"+variable+"[@]}'").strip();
+    return getoutput("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip();
 }
 
 //DOC: `string[] get_ympbuild_array(string variable):`
@@ -164,13 +164,13 @@ public string[] get_ympbuild_array(string variable){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
-    return ssplit(getoutput("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
+    return ssplit(getoutput("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild >/dev/null ; echo ${"+variable+"[@]}'").strip()," ");
 }
 
 //DOC: `bool ympbuild_has_function(string function):`
 //DOC: check ympbuild file has function
 public bool ympbuild_has_function(string function){
-    return 0 == run_silent("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild &>/dev/null ; declare -F "+function+"'");
+    return 0 == run_silent("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild >/dev/null ; declare -F "+function+"'");
 }
 
 private bool ympbuild_check(){
