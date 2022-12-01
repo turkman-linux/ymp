@@ -39,11 +39,22 @@ public int equal_main(string[] args){
     return 1;
 }
 
+public int match_main(string[] args){
+    if(args.length < 2){
+        return 1;
+    }
+    if(Regex.match_simple(args[0],args[1])){
+        return 0;
+    }
+    return 1;
+}
+
 void setget_init(){
     var h1 = new helpmsg();
     var h2 = new helpmsg();
     var h3 = new helpmsg();
     var h4 = new helpmsg();
+    var h5 = new helpmsg();
 
     h1.name = "get";
     h1.shell_only = true;
@@ -64,8 +75,14 @@ void setget_init(){
     h4.shell_only = true;
     h4.description = "Read value from terminal";
 
+    h5.name = "match";
+    h5.minargs=2;
+    h5.shell_only = true;
+    h5.description = "Match arguments regex";
+
     add_operation(get_main,{"get"},h1);
     add_operation(set_main,{"set"},h2);
     add_operation(equal_main,{"equal","eq"},h3);
     add_operation(read_main,{"read","input"},h4);
+    add_operation(match_main,{"match","regex"},h5);
 }
