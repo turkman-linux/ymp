@@ -22,6 +22,9 @@ private void resolve_process(string[] names){
             resolve_process(matches);
             continue;
         }
+        if("|" in name){
+            name = get_ordep_package(name);
+        }
         // 2. process if not installed or need install
         if (!need_install.has(name)){
             // get package object
@@ -70,6 +73,23 @@ private string[] get_group_packages(string fname){
         }
     }
     return ret.get();
+}
+
+private string get_ordep_package(string fname){
+    info("Resolve ordep packages: "+fname);
+    string name = fname[1:];
+    foreach(string pkgname in ssplit(name,"|")){
+        if(is_installed_package(pkgname)){
+            return pkgname;
+        }
+    }
+    foreach(string pkgname in ssplit(name,"|")){
+        package p = get_from_repository(pkgname);
+        if(p != null){
+            return pkgname;
+        }
+    }
+    return ssplit(name,"|")[0];
 }
 
 private string[] get_match_packages(string fname){
