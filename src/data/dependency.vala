@@ -63,7 +63,7 @@ private string[] get_group_packages(string fname){
     if(name == "universe"){
         return pkgnames;
     }else if (name == "world"){
-        return list_available_packages();
+        return list_installed_packages();
     }
     foreach(string pkgname in pkgnames){
         package p = get_from_repository(pkgname);
