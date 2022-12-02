@@ -36,14 +36,6 @@ void main(string[] args){
     remove_all("uuu");
     pwd();
 
-    //inifile test
-    print("Ini test");
-    var ini = new inifile();
-    ini.load("../test/example/test.ini");
-    ini.get("main","test");
-    ini.get_sections()[0];
-    ini.get_variables("devel")[0];
-
     // logger test
     print("Logging test");
     error_add("Hello World");
