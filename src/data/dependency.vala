@@ -60,6 +60,11 @@ private string[] get_group_packages(string fname){
     array ret = new array();
     string[] pkgnames = list_available_packages();
     string name = fname[1:];
+    if(name == "universe"){
+        return pkgnames;
+    }else if (name == "world"){
+        return list_available_packages();
+    }
     foreach(string pkgname in pkgnames){
         package p = get_from_repository(pkgname);
         if(p == null){
