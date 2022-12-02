@@ -77,19 +77,18 @@ private string[] get_group_packages(string fname){
 
 private string get_ordep_package(string fname){
     info("Resolve ordep packages: "+fname);
-    string name = fname[1:];
-    foreach(string pkgname in ssplit(name,"|")){
+    foreach(string pkgname in ssplit(fname,"|")){
         if(is_installed_package(pkgname)){
             return pkgname;
         }
     }
-    foreach(string pkgname in ssplit(name,"|")){
+    foreach(string pkgname in ssplit(fname,"|")){
         package p = get_from_repository(pkgname);
         if(p != null){
             return pkgname;
         }
     }
-    return ssplit(name,"|")[0];
+    return ssplit(fname,"|")[0];
 }
 
 private string[] get_match_packages(string fname){
