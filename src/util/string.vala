@@ -137,3 +137,13 @@ public static string getoutput (string command) {
         return "";
     }
 }
+
+public string[] uniq(string[] array){
+    string[] ret = {};
+    foreach(string item in array){
+        if(!(item in ret)){
+            ret += item;
+        }
+    }
+    return ret;
+}

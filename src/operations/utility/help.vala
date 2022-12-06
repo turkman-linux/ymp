@@ -18,6 +18,7 @@ public int help_main(string[] args){
         foreach(string arg in args){
             foreach(operation op in ops){
                 if(arg in op.names){
+                    print(colorize("Aliases: ",green)+join(" / ",uniq(op.names)));
                     write_op_help(op);
                 }
             }
@@ -58,7 +59,7 @@ public void write_version(){
 }
 
 private void write_op_help(operation op){
-    print(op.help.build());
+    print_stderr(op.help.build());
 }
 void help_init(){
     add_common_parameter("--","stop argument parser");
