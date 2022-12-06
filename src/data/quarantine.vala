@@ -64,7 +64,7 @@ public bool quarantine_validate_files(){
     restricted_list += STORAGEDIR;
     var yaml = new yamlfile();
     foreach(string files_list in listdir(rootfs_files)){
-        info(_("Validate quarantine for: %s").printf(files_list));
+        print(colorize(_("Validate quarantine for: %s"),yellow).printf(files_list));
         // file list format xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /path/to/file
         // uses sha1sum
         string file_data = readfile(rootfs_files+files_list);
@@ -141,7 +141,7 @@ public bool quarantine_validate_files(){
         }
     }
     foreach(string links_list in listdir(rootfs_links)){
-        info(_("Validate quarantine for: %s").printf(links_list));
+        print(colorize(_("Validate quarantine for: %s"),yellow).printf(links_list));
         string link_data = readfile(rootfs_links+links_list);
         var new_links = new array();
         foreach(string line in ssplit(link_data,"\n")){
@@ -221,7 +221,7 @@ public bool quarantine_validate_files(){
 //DOC: `void quarantine_install():`
 //DOC: install quarantine files to rootfs
 public void quarantine_install(){
-    info(_("Quarantine installation"));
+    print(colorize(_("Quarantine installation"),yellow));
     string rootfs = srealpath(get_storage()+"/quarantine/rootfs/");
     string files = srealpath(get_storage()+"/quarantine/files/");
     string links = srealpath(get_storage()+"/quarantine/links/");
@@ -265,7 +265,7 @@ public void quarantine_install(){
 }
 
 private void quarantine_import_from_path(string path){
-    info("Quarantine import");
+    print(colorize(_("Quarantine import"),yellow));
     string rootfs = srealpath(get_storage()+"/quarantine/rootfs/");
     string files = srealpath(get_storage()+"/quarantine/files/");
     string links = srealpath(get_storage()+"/quarantine/links/");
