@@ -15,9 +15,11 @@ public class array{
     //DOC: ```
 
     private string[] a;
+    private int rmsize=0;
     //DOC: `void reverse():`
     //DOC: reverse array order
     public void reverse(){
+        a = get();
         int i = a.length;
         string[] new_a = {};
         while(i > 0){
@@ -28,6 +30,7 @@ public class array{
     }
     
     public void sort(){
+        a = get();
         csort(a,a.length);
     }
 
@@ -53,32 +56,28 @@ public class array{
     //DOC: `void remove(string item):`
     //DOC: remove item from array
     public void remove(string item){
-        string[] new_a = {};
         if(item == "" || item == null){
             return;
         }
         int i=0;
         while(i < a.length){
-            if(a[i] != item){
-                new_a += a[i];
+            if(a[i] == item){
+                a[i] = null;
+                rmsize++;
+                break;
             }
             i++;
         }
-        a = new_a;
     }
     
     //DOC: `void pop(int index):`
     //DOC: remove item from array by index number
     public void pop(int index){
-        string[] new_a = {};
-        int i=0;
-        while(i < a.length){
-            if(i != index){
-                new_a += a[i];
-            }
-            i++;
+        if(index >= a.length){
+            return;
         }
-        a = new_a;
+        a[index] = null;
+        rmsize++;
     }
     
     //DOC: `void insert(string item, int index):`
@@ -87,7 +86,7 @@ public class array{
         string[] new_a = {};
         int i=0;
         while(i < a.length){
-            if(i == index){
+            if(i == index && item != null){
                 new_a += item;
             }
             new_a += a[i];
@@ -105,7 +104,17 @@ public class array{
     //DOC: `string[] get():`
     //DOC: return as string array
     public string[] get(){
-        return a;
+        if(rmsize == 0){
+            return a;
+        }else{
+            string[] new_a = {};
+            foreach(string item in a){
+                if(item != null){
+                    new_a+=item;
+                }
+            }
+            return new_a;
+        }
     }
     
     //DOC: `void set(string[] new_a):`
@@ -117,6 +126,6 @@ public class array{
     //DOC: `long size()`;
     //DOC: return array length
     public long length(){
-        return a.length;
+        return a.length-rmsize;
     }
 }
