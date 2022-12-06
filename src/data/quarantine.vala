@@ -64,7 +64,7 @@ public bool quarantine_validate_files(){
     restricted_list += STORAGEDIR;
     var yaml = new yamlfile();
     foreach(string files_list in listdir(rootfs_files)){
-        print(colorize(_("Validating:")),yellow) +" "+ files_list+ " (files)");
+        print(colorize(_("Validating:"),yellow) +" "+ files_list+ " (files)");
         // file list format xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /path/to/file
         // uses sha1sum
         string file_data = readfile(rootfs_files+files_list);
@@ -141,7 +141,7 @@ public bool quarantine_validate_files(){
         }
     }
     foreach(string links_list in listdir(rootfs_links)){
-        print(colorize(_("Validating:")),yellow) +" "+ links_list+" (links)");
+        print(colorize(_("Validating:"),yellow) +" "+ links_list+" (links)");
         string link_data = readfile(rootfs_links+links_list);
         var new_links = new array();
         foreach(string line in ssplit(link_data,"\n")){
