@@ -6,3 +6,4 @@ debian/ymp
 debian/.debhelper
 debian/debhelper-build-stamp
 debian/files
+po/*.mo

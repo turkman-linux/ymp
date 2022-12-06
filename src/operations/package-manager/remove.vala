@@ -1,6 +1,6 @@
 public int remove_main(string[] args){
     if(!is_root()){
-        error_add("You must be root!");
+        error_add(_("You must be root!"));
         error(1);
     }
     single_instance();
@@ -19,7 +19,7 @@ public int remove_main(string[] args){
 }
 
 public int remove_single(package p){
-    print(colorize("Removing: ",yellow)+p.name);
+    print(colorize(_("Removing:"),yellow)+" "+p.name);
     foreach(string file in p.list_files()){
         if(file.length > 41){
             file=file[41:];
@@ -42,9 +42,9 @@ public int remove_single(package p){
 
 void remove_init(){
     var h = new helpmsg();
-    h.name = "remove";
+    h.name = _("remove");
     h.minargs=1;
-    h.description = "Remove package from package name";
-    h.add_parameter("--ignore-dependency", "disable dependency check");
-    add_operation(remove_main,{"remove","rm"},h);
+    h.description = _("Remove package from package name");
+    h.add_parameter("--ignore-dependency", _("disable dependency check"));
+    add_operation(remove_main,{_("remove"),"remove","rm"},h);
 }

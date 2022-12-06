@@ -3,8 +3,8 @@ public int dummy_operation(string[] args){
 }
 void dummy_init(){
     var h = new helpmsg();
-    h.name = "init";
+    h.name = _("init");
     h.shell_only = true;
-    h.description = "Do nothing.";
-    add_operation(dummy_operation,{"init",":", "#"},h);
+    h.description = _("Do nothing.");
+    add_operation(dummy_operation,{_("init"),"init",":", "#"},h);
 }

@@ -9,7 +9,7 @@ public int index_main(string[] args){
 
 public int update_main(string[] args){
     if(!is_root()){
-        error_add("You must be root!");
+        error_add(_("You must be root!"));
         error(1);
     }
     single_instance();
@@ -19,14 +19,14 @@ public int update_main(string[] args){
 
 public int repo_add_main(string[] args){
     if(get_value("name") == "" ){
-        error_add("name not defined.");
+        error_add(_("name not defined."));
     }else{
         string data = "";
         foreach(string arg in args){
             data += arg + "\n";
         }
         if(args.length == 0){
-            error_add("Repository uri not defined.");
+            error_add(_("Repository uri not defined."));
         }
         create_dir(get_storage()+"/sources.list.d/");
         writefile(get_storage()+"/sources.list.d/"+get_value("name"),data);
@@ -87,7 +87,7 @@ public int mirror_main(string[] args){
             if(repo.name == arg || arg == "*"){
                 if(!get_bool("no-package")){
                     foreach(string name in repo.list_packages()){
-                        print(colorize("Mirror :",yellow)+repo.name+" => "+name+" (binary)");
+                        print(colorize(_("Mirror:"),yellow)+" "+repo.name+" => "+name+" " +_("(binary)"));
                         var pkg = repo.get_package(name);
                         mirror_download(pkg, target);
                     }
@@ -95,7 +95,7 @@ public int mirror_main(string[] args){
                 if(!get_bool("no-source")){
                     foreach(string name in repo.list_sources()){
                         var pkg = repo.get_source(name);
-                        print(colorize("Mirror :",yellow)+repo.name+" => "+name+" (source)");
+                        print(colorize(_("Mirror:"),yellow)+" "+repo.name+" => "+name+" " +_("(source)"));
                         mirror_download(pkg, target);
                     }
                 }
@@ -122,23 +122,23 @@ private void mirror_download(package pkg,string target){
 
 void repository_init(){
     var h = new helpmsg();
-    h.name = "repository";
-    h.description = "Update / Index / Mirror repository";
-    h.add_parameter("--update", "update repository");
-    h.add_parameter("--index", "index repository");
-    h.add_parameter("--add", "add new repository file");
-    h.add_parameter("--remove", "remove repository file");
-    h.add_parameter("--list", "list repository files");
-    h.add_parameter("--mirror", "mirror repository");
-    h.add_parameter(colorize("Index options",magenta),"");
-    h.add_parameter("--move", "move packages for alphabetical hierarchy");
-    h.add_parameter("--name", "new repository name (required)");
-    h.add_parameter(colorize("Add options",magenta),"");
-    h.add_parameter("--name","new file name");
-    h.add_parameter(colorize("Mirror options",magenta),"");
-    h.add_parameter("--no-package","Do not mirror binary packages");
-    h.add_parameter("--no-source","Do not mirror source packages");
-    h.add_parameter("--index","Index after mirror.");
-    h.add_parameter("--destdir","Target mirror directory");
-    add_operation(repository_main,{"repository","repo"}, h);
+    h.name = _("repository");
+    h.description = _("Update / Index / Mirror repository");
+    h.add_parameter("--update", _("update repository"));
+    h.add_parameter("--index", _("index repository"));
+    h.add_parameter("--add", _("add new repository file"));
+    h.add_parameter("--remove", _("remove repository file"));
+    h.add_parameter("--list", _("list repository files"));
+    h.add_parameter("--mirror", _("mirror repository"));
+    h.add_parameter(colorize(_("Index options"),magenta),"");
+    h.add_parameter("--move", _("move packages for alphabetical hierarchy"));
+    h.add_parameter("--name", _("new repository name (required)"));
+    h.add_parameter(colorize(_("Add options"),magenta),"");
+    h.add_parameter("--name",_("new file name"));
+    h.add_parameter(colorize(_("Mirror options"),magenta),"");
+    h.add_parameter("--no-package",_("Do not mirror binary packages"));
+    h.add_parameter("--no-source",_("Do not mirror source packages"));
+    h.add_parameter("--index",_("Index after mirror."));
+    h.add_parameter("--destdir",_("Target mirror directory"));
+    add_operation(repository_main,{_("repository"),"repository","repo"}, h);
 }

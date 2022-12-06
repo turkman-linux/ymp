@@ -8,9 +8,9 @@ public int title_main(string[] args){
 }
 void title_init(){
     var h = new helpmsg();
-    h.name = "title";
+    h.name = _("title");
     h.minargs=1;
     h.shell_only = true;
-    h.description = "Set terminal title";
-    add_operation(title_main,{"title"},h);
+    h.description = _("Set terminal title");
+    add_operation(title_main,{_("title"),"title"},h);
 }

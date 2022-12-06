@@ -1,10 +1,10 @@
 public int install_main(string[] args){
     if(!is_root()){
-        error_add("You must be root!");
+        error_add(_("You must be root!"));
         error(1);
     }
     if(!get_bool("no-emerge") && usr_is_merged()){
-        error_add("Install (from source) operation with usrmerge is not allowed!");
+        error_add(_("Install (from source) operation with usrmerge is not allowed!"));
         error(31);
     }
     single_instance();
@@ -15,7 +15,7 @@ public int install_main(string[] args){
         a.adds(resolve_dependencies(up_pkgs));
     }
     string[] pkgs = a.get();
-    info("Resolve dependency done: "+join(" ",pkgs));
+    info(_("Resolve dependency done: %s").printf(join(" ",pkgs)));
     quarantine_reset();
     package[] pkg_obj = {};
     foreach(string name in pkgs){
@@ -34,14 +34,14 @@ public int install_main(string[] args){
     }
     string[] leftovers = calculate_leftover(pkg_obj);
     if(!quarantine_validate_files()){
-        error_add("Quarantine validation failed");
+        error_add(_("Quarantine validation failed"));
         quarantine_reset();
     }
     error(1);
     quarantine_install();
     quarantine_reset();
     error(1);
-    info("Clear leftovers");
+    info(_("Clear leftovers"));
     foreach(string file in leftovers){
         remove_file(DESTDIR+"/"+file);
     }
@@ -53,21 +53,21 @@ public package install_single(string pkg){
     package p = null;
     // Download package files from repository
     if(isfile(pkg)){
-        info("Installing from package file:" + pkg);
+        info(_("Installing from package file: %s").printf(pkg));
         p = new package();
         p.load_from_archive(srealpath(pkg));
     }else{
-        info("Installing from repository:" + pkg);
+        info(_("Installing from repository: %s").printf(pkg));
         p = get_from_repository(pkg);
         p.download();
     }
     error(2);
     //If download-only finish operation
-    print(colorize("Installing: ",yellow)+p.name);
+    print(colorize(_("Installing:"),yellow)+" "+p.name);
     if(p.is_source || get_bool("sync-single")){
         p.build();
         if(!quarantine_validate_files()){
-            error_add("Quarantine validation failed");
+            error_add(_("Quarantine validation failed"));
             quarantine_reset();
         }
         error(1);
@@ -79,7 +79,7 @@ public package install_single(string pkg){
     return p;
 }
 public string[] calculate_leftover(package[] pkgs){
-    print(colorize("Calculating leftovers",yellow));
+    print(colorize(_("Calculating leftovers"),yellow));
     var files = new array();
     // Fetch installed and new files list
     foreach(package p in pkgs){
@@ -111,13 +111,13 @@ public string[] calculate_leftover(package[] pkgs){
 }
 void install_init(){
     var h = new helpmsg();
-    h.name = "install";
-    h.description = "Install package from source or package file or repository";
-    h.add_parameter("--ignore-dependency", "disable dependency check");
-    h.add_parameter("--ignore-satisfied", "ignore not satisfied packages");
-    h.add_parameter("--sync-single", "sync quarantine after every package installation");
-    h.add_parameter("--reinstall", "reinstall if already installed");
-    h.add_parameter("--upgrade", "upgrade all packages");
-    h.add_parameter("--no-emerge", "use binary packages");
-    add_operation(install_main,{"install","it","add"},h);
+    h.name = _("install");
+    h.description = _("Install package from source or package file or repository");
+    h.add_parameter("--ignore-dependency", _("disable dependency check"));
+    h.add_parameter("--ignore-satisfied", _("ignore not satisfied packages"));
+    h.add_parameter("--sync-single", _("sync quarantine after every package installation"));
+    h.add_parameter("--reinstall", _("reinstall if already installed"));
+    h.add_parameter("--upgrade", _("upgrade all packages"));
+    h.add_parameter("--no-emerge", _("use binary packages"));
+    add_operation(install_main,{_("install"),"install","it","add"},h);
 }

@@ -7,8 +7,8 @@ public int exit_main(string[] args){
 }
 void exit_init(){
     var h = new helpmsg();
-    h.name = "exit";
-    h.description = "Exit ymp";
+    h.name = _("exit");
+    h.description = _("Exit ymp");
     h.shell_only = true;
-    add_operation(exit_main,{"exit","bye"},h);
+    add_operation(exit_main,{_("exit"),"exit","bye"},h);
 }

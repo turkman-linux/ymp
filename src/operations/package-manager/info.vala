@@ -17,9 +17,9 @@ public int info_main(string[] args){
 
 void info_init(){
     var h = new helpmsg();
-    h.name = "info";
-    h.description = "Get informations from package manager databases.";
-    h.add_parameter("--deps", "list required packages");
-    h.add_parameter("--revdeps", "list packages required by package");
-    add_operation(info_main,{"info","i"},h);
+    h.name = _("info");
+    h.description = _("Get informations from package manager databases.");
+    h.add_parameter("--deps", _("list required packages"));
+    h.add_parameter("--revdeps", _("list packages required by package"));
+    add_operation(info_main,{_("info"),"info","i"},h);
 }

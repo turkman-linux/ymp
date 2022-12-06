@@ -70,15 +70,15 @@ public int template_main(string[] args){
     data += "}\n\n";
 
     if(get_bool("ask")){
-        print(colorize("Please check ympbuild:",blue));
+        print(colorize(_("Please check ympbuild:"),blue));
         print(data);
-        if(!yesno(colorize("Is it OK ?",red))){
+        if(!yesno(colorize(_("Is it OK ?"),red))){
             return 1;
         };
     }
     string target=srealpath(str_or_def("output",""));
     error(1);
-    print(colorize("Creating template: ",yellow)+target);
+    print(colorize(_("Creating template:"),yellow)+" "+target);
     create_dir(target);
     writefile(target+"/ympbuild",data);
     return 0;
@@ -87,7 +87,7 @@ public int template_main(string[] args){
 private string get_gitconfig_variable(string variable){
     string gitconfig = srealpath(get_home()+"/.gitconfig");
     if(isfile(gitconfig)){
-        info("Reading gitconfig:"+gitconfig);
+        info(_("Reading gitconfig: %s").printf(gitconfig));
         foreach(string line in readfile(gitconfig).split("\n")){
             if(variable+" =" in line){
                 return ssplit(line,"=")[1].strip();
@@ -103,26 +103,26 @@ private string str_or_def(string val,string def){
         return f;
     }
     if(def==""){
-        error_add("Variable '"+val+"' is not defined. please use --"+val);
+        error_add(_("Variable '%s' is not defined. please use --%s").printf(val,val));
     }
     return def;
 }
 
 void template_init(){
     var h = new helpmsg();
-    h.name = "template";
-    h.description = "Create ympbuild from template";
-    h.add_parameter("--name", "package name");
-    h.add_parameter("--version", "package version");
-    h.add_parameter("--homepage", "package homepage");
-    h.add_parameter("--description", "package description");
-    h.add_parameter("--depends", "package dependencies");
-    h.add_parameter("--makedepends", "package build dependencies");
-    h.add_parameter("--email", "package creator email");
-    h.add_parameter("--maintainer", "package maintainer");
-    h.add_parameter("--license", "package license");
-    h.add_parameter("--source", "package source");
-    h.add_parameter("--build-type", "package build-type (autotool cmake meson)");
-    h.add_parameter("--output", "ympbuild output directory");
-    add_operation(template_main,{"template","t"},h);
+    h.name = _("template");
+    h.description = _("Create ympbuild from template");
+    h.add_parameter("--name", _("package name"));
+    h.add_parameter("--version", _("package version"));
+    h.add_parameter("--homepage", _("package homepage"));
+    h.add_parameter("--description", _("package description"));
+    h.add_parameter("--depends", _("package dependencies"));
+    h.add_parameter("--makedepends", _("package build dependencies"));
+    h.add_parameter("--email", _("package creator email"));
+    h.add_parameter("--maintainer", _("package maintainer"));
+    h.add_parameter("--license", _("package license"));
+    h.add_parameter("--source", _("package source"));
+    h.add_parameter("--build-type", _("package build-type (autotool cmake meson)"));
+    h.add_parameter("--output", _("ympbuild output directory"));
+    add_operation(template_main,{_("template"),"template","t"},h);
 }

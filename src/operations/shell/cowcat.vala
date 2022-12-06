@@ -16,10 +16,10 @@ public int cowcat_main(string[] args){
 
 void cowcat_init(){
     var h = new helpmsg();
-    h.name = "cowcat";
+    h.name = _("cowcat");
     h.minargs=1;
     h.shell_only = true;
-    h.description = "Write a message with cow.";
-    h.add_parameter("-","write from stdin");
-    add_operation(cowcat_main,{"cow","moo","cowcat"},h);
+    h.description = _("Write a message with cow.");
+    h.add_parameter("-",_("write from stdin"));
+    add_operation(cowcat_main,{_("cow"),"cow","moo","cowcat"},h);
 }

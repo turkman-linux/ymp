@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-06 12:55+0000\n"
+"POT-Creation-Date: 2022-12-06 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,53 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/data/repository.vala:182 src/data/repository.vala:206
+#: src/settings.vala:40
 #, c-format
-msgid "Package not satisfied from repository: %s"
+msgid "Config file not exists: %s"
 msgstr ""
 
-#: src/data/repository.vala:239 src/data/repository.vala:243
+#: src/settings.vala:68
 #, c-format
-msgid "Find repo list: %s"
+msgid "Destdir changed: %s"
 msgstr ""
 
-#: src/data/repository.vala:268
-#, c-format
-msgid "Invalid repository index: %s"
+#: src/ymp.vala:38
+msgid "RUN:"
 msgstr ""
 
-#: src/data/repository.vala:303
-msgid "Index name not defined. Please use --name=xxx"
+#: src/ymp.vala:52
+#, c-format
+msgid "Invalid operation name: %s"
+msgstr ""
+
+#: src/ymp.vala:116
+msgid "Syntax error. Unexceped endif detected."
+msgstr ""
+
+#: src/ymp.vala:123
+#, c-format
+msgid "Process: %s failed. Exited with %d."
+msgstr ""
+
+#: src/ymp.vala:127
+#, c-format
+msgid "Process done in : %f sec"
+msgstr ""
+
+#: src/ymp.vala:224
+msgid "OEM detected! Ymp may not working good."
+msgstr ""
+
+#: src/ymp.vala:225
+msgid "OEM is not allowed! Please use --allow-oem to allow oem."
+msgstr ""
+
+#: src/ymp.vala:230
+msgid "UsrMerge detected! Ymp may not working good."
+msgstr ""
+
+#: src/wslblock.vala:28
+msgid "Using ymp in Fucking WSL environment is not allowed."
 msgstr ""
 
 #: src/data/package.vala:47
@@ -102,41 +132,6 @@ msgstr ""
 #: src/data/package.vala:325
 #, c-format
 msgid "Loading package metadata from: %s"
-msgstr ""
-
-#: src/data/dependency.vala:8
-#, c-format
-msgid "Resolve dependency: %s"
-msgstr ""
-
-#: src/data/dependency.vala:59
-#, c-format
-msgid "Resolve group: %s"
-msgstr ""
-
-#: src/data/dependency.vala:75
-#, c-format
-msgid "Group %s: add %s"
-msgstr ""
-
-#: src/data/dependency.vala:84
-#, c-format
-msgid "Resolve ordep packages: %s"
-msgstr ""
-
-#: src/data/dependency.vala:100
-#, c-format
-msgid "Resolve regex: %s"
-msgstr ""
-
-#: src/data/dependency.vala:110
-#, c-format
-msgid "Match %s: rule %s"
-msgstr ""
-
-#: src/data/dependency.vala:150
-#, c-format
-msgid "Resolve reverse dependency: %s"
 msgstr ""
 
 #: src/data/ympbuild.vala:136
@@ -240,94 +235,200 @@ msgstr ""
 msgid "Installing: %s => %s"
 msgstr ""
 
-#: src/ymp-cli.vala:37
-msgid "No command given."
-msgstr ""
-
-#: src/ymp-cli.vala:37
+#: src/data/dependency.vala:8
 #, c-format
-msgid "Run %s for more information about usage."
+msgid "Resolve dependency: %s"
 msgstr ""
 
-#: src/ymp.vala:38
-msgid "RUN:"
-msgstr ""
-
-#: src/ymp.vala:52
+#: src/data/dependency.vala:59
 #, c-format
-msgid "Invalid operation name: %s"
+msgid "Resolve group: %s"
 msgstr ""
 
-#: src/ymp.vala:116
-msgid "Syntax error. Unexceped endif detected."
-msgstr ""
-
-#: src/ymp.vala:123
+#: src/data/dependency.vala:75
 #, c-format
-msgid "Process: %s failed. Exited with %d."
+msgid "Group %s: add %s"
 msgstr ""
 
-#: src/ymp.vala:127
+#: src/data/dependency.vala:84
 #, c-format
-msgid "Process done in : %f sec"
+msgid "Resolve ordep packages: %s"
 msgstr ""
 
-#: src/ymp.vala:224
-msgid "OEM detected! Ymp may not working good."
-msgstr ""
-
-#: src/ymp.vala:225
-msgid "OEM is not allowed! Please use --allow-oem to allow oem."
-msgstr ""
-
-#: src/ymp.vala:230
-msgid "UsrMerge detected! Ymp may not working good."
-msgstr ""
-
-#: src/settings.vala:40
+#: src/data/dependency.vala:100
 #, c-format
-msgid "Config file not exists: %s"
+msgid "Resolve regex: %s"
 msgstr ""
 
-#: src/settings.vala:68
+#: src/data/dependency.vala:110
 #, c-format
-msgid "Destdir changed: %s"
+msgid "Match %s: rule %s"
 msgstr ""
 
-#: src/wslblock.vala:28
-msgid "Using ymp in Fucking WSL environment is not allowed."
+#: src/data/dependency.vala:150
+#, c-format
+msgid "Resolve reverse dependency: %s"
 msgstr ""
 
-#: src/operations/package-manager/clean.vala:2
-#: src/operations/package-manager/clean.vala:4
-#: src/operations/package-manager/clean.vala:6
-#: src/operations/package-manager/clean.vala:8
-msgid "Clean: "
+#: src/data/repository.vala:182 src/data/repository.vala:206
+#, c-format
+msgid "Package not satisfied from repository: %s"
 msgstr ""
 
-#: src/operations/package-manager/clean.vala:2
-msgid "package cache"
+#: src/data/repository.vala:239 src/data/repository.vala:243
+#, c-format
+msgid "Find repo list: %s"
 msgstr ""
 
-#: src/operations/package-manager/clean.vala:4
-msgid "repository index cache"
+#: src/data/repository.vala:268
+#, c-format
+msgid "Invalid repository index: %s"
 msgstr ""
 
-#: src/operations/package-manager/clean.vala:6
-msgid "build directory"
+#: src/data/repository.vala:303
+msgid "Index name not defined. Please use --name=xxx"
 msgstr ""
 
-#: src/operations/package-manager/clean.vala:8
-msgid "quarantine"
+#: src/operations/shell/setget.vala:59 src/operations/shell/setget.vala:83
+msgid "get"
 msgstr ""
 
-#: src/operations/package-manager/clean.vala:15
-#: src/operations/package-manager/clean.vala:17
-msgid "clean"
+#: src/operations/shell/setget.vala:61
+msgid "Get variable from name"
 msgstr ""
 
-#: src/operations/package-manager/clean.vala:16
-msgid "Remove all caches "
+#: src/operations/shell/setget.vala:63 src/operations/shell/setget.vala:84
+msgid "set"
+msgstr ""
+
+#: src/operations/shell/setget.vala:66
+msgid "Set variable from name and value"
+msgstr ""
+
+#: src/operations/shell/setget.vala:68 src/operations/shell/setget.vala:85
+msgid "equal"
+msgstr ""
+
+#: src/operations/shell/setget.vala:71
+msgid "Compare arguments equality"
+msgstr ""
+
+#: src/operations/shell/setget.vala:73 src/operations/shell/setget.vala:86
+msgid "read"
+msgstr ""
+
+#: src/operations/shell/setget.vala:76
+msgid "Read value from terminal"
+msgstr ""
+
+#: src/operations/shell/setget.vala:78 src/operations/shell/setget.vala:87
+msgid "match"
+msgstr ""
+
+#: src/operations/shell/setget.vala:81
+msgid "Match arguments regex"
+msgstr ""
+
+#: src/operations/shell/clear.vala:7 src/operations/shell/clear.vala:10
+msgid "clear"
+msgstr ""
+
+#: src/operations/shell/clear.vala:8
+msgid "Clear terminal screen."
+msgstr ""
+
+#: src/operations/shell/exec.vala:3
+msgid "Executing: =>"
+msgstr ""
+
+#: src/operations/shell/exec.vala:13
+#, c-format
+msgid "Failed to run command: %s"
+msgstr ""
+
+#: src/operations/shell/exec.vala:15
+#, c-format
+msgid "Command %s done."
+msgstr ""
+
+#: src/operations/shell/exec.vala:20 src/operations/shell/exec.vala:25
+msgid "exec"
+msgstr ""
+
+#: src/operations/shell/exec.vala:21
+msgid "Execute a command"
+msgstr ""
+
+#: src/operations/shell/exec.vala:24
+msgid "run without output"
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:19
+msgid "cowcat"
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:22
+msgid "Write a message with cow."
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:23
+msgid "write from stdin"
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:24
+msgid "cow"
+msgstr ""
+
+#: src/operations/shell/echo.vala:7 src/operations/shell/echo.vala:11
+msgid "echo"
+msgstr ""
+
+#: src/operations/shell/echo.vala:9
+msgid "Write a message to terminal."
+msgstr ""
+
+#: src/operations/shell/exit.vala:10 src/operations/shell/exit.vala:13
+msgid "exit"
+msgstr ""
+
+#: src/operations/shell/exit.vala:11
+msgid "Exit ymp"
+msgstr ""
+
+#: src/operations/shell/title.vala:11 src/operations/shell/title.vala:15
+msgid "title"
+msgstr ""
+
+#: src/operations/shell/title.vala:14
+msgid "Set terminal title"
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:19
+msgid "shitcat"
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:22
+msgid "Write message with bad appearance."
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:23
+msgid "FUCK LGBT"
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:24
+msgid "read from stdin"
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:25
+msgid "shit"
+msgstr ""
+
+#: src/operations/shell/dummy.vala:6 src/operations/shell/dummy.vala:9
+msgid "init"
+msgstr ""
+
+#: src/operations/shell/dummy.vala:8
+msgid "Do nothing."
 msgstr ""
 
 #: src/operations/package-manager/build.vala:6
@@ -483,11 +584,14 @@ msgid "do not install package after building"
 msgstr ""
 
 #: src/operations/package-manager/build.vala:475
+#: src/operations/package-manager/install.vala:116
+#: src/operations/package-manager/remove.vala:48
 msgid "disable dependency check"
 msgstr ""
 
 #: src/operations/package-manager/build.vala:476
 #: src/operations/package-manager/bootstrap.vala:47
+#: src/operations/package-manager/install.vala:121
 msgid "use binary packages"
 msgstr ""
 
@@ -495,7 +599,135 @@ msgstr ""
 msgid "install binary package after building"
 msgstr ""
 
+#: src/operations/package-manager/list.vala:71
+#: src/operations/package-manager/list.vala:77
+msgid "list"
+msgstr ""
+
+#: src/operations/package-manager/list.vala:72
+msgid "List installed packages."
+msgstr ""
+
+#: src/operations/package-manager/list.vala:73
+msgid "list installed packages"
+msgstr ""
+
+#: src/operations/package-manager/list.vala:74
+msgid "list repositories"
+msgstr ""
+
+#: src/operations/package-manager/list.vala:75
+msgid "list available source packages"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:73
+msgid "Please check ympbuild:"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:75
+msgid "Is it OK ?"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:81
+msgid "Creating template:"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:90
+#, c-format
+msgid "Reading gitconfig: %s"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:106
+#, c-format
+msgid "Variable '%s' is not defined. please use --%s"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:113
+#: src/operations/package-manager/template.vala:127
+msgid "template"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:114
+msgid "Create ympbuild from template"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:115
+msgid "package name"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:116
+msgid "package version"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:117
+msgid "package homepage"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:118
+msgid "package description"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:119
+msgid "package dependencies"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:120
+msgid "package build dependencies"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:121
+msgid "package creator email"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:122
+msgid "package maintainer"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:123
+msgid "package license"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:124
+msgid "package source"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:125
+msgid "package build-type (autotool cmake meson)"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:126
+msgid "ympbuild output directory"
+msgstr ""
+
+#: src/operations/package-manager/search.vala:77
+#: src/operations/package-manager/search.vala:84
+msgid "search"
+msgstr ""
+
+#: src/operations/package-manager/search.vala:79
+msgid "Search packages"
+msgstr ""
+
+#: src/operations/package-manager/search.vala:80
+msgid "Search package in binary package repository."
+msgstr ""
+
+#: src/operations/package-manager/search.vala:81
+msgid "Search package in source package repository."
+msgstr ""
+
+#: src/operations/package-manager/search.vala:82
+msgid "Search package in installed packages."
+msgstr ""
+
+#: src/operations/package-manager/search.vala:83
+msgid "Searches for packages by package file."
+msgstr ""
+
 #: src/operations/package-manager/bootstrap.vala:3
+#: src/operations/package-manager/install.vala:3
+#: src/operations/package-manager/repository.vala:12
+#: src/operations/package-manager/remove.vala:3
 msgid "You must be root!"
 msgstr ""
 
@@ -527,4 +759,230 @@ msgstr ""
 
 #: src/operations/package-manager/bootstrap.vala:46
 msgid "bootstrap mirror uri"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:2
+#: src/operations/package-manager/clean.vala:4
+#: src/operations/package-manager/clean.vala:6
+#: src/operations/package-manager/clean.vala:8
+msgid "Clean: "
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:2
+msgid "package cache"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:4
+msgid "repository index cache"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:6
+msgid "build directory"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:8
+msgid "quarantine"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:15
+#: src/operations/package-manager/clean.vala:17
+msgid "clean"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:16
+msgid "Remove all caches "
+msgstr ""
+
+#: src/operations/package-manager/install.vala:7
+msgid "Install (from source) operation with usrmerge is not allowed!"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:18
+#, c-format
+msgid "Resolve dependency done: %s"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:37
+#: src/operations/package-manager/install.vala:70
+msgid "Quarantine validation failed"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:44
+msgid "Clear leftovers"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:56
+#, c-format
+msgid "Installing from package file: %s"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:60
+#, c-format
+msgid "Installing from repository: %s"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:66
+msgid "Installing:"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:82
+msgid "Calculating leftovers"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:114
+#: src/operations/package-manager/install.vala:122
+msgid "install"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:115
+msgid "Install package from source or package file or repository"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:117
+msgid "ignore not satisfied packages"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:118
+msgid "sync quarantine after every package installation"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:119
+msgid "reinstall if already installed"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:120
+msgid "upgrade all packages"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:22
+msgid "name not defined."
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:29
+msgid "Repository uri not defined."
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:90
+#: src/operations/package-manager/repository.vala:98
+msgid "Mirror:"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:90
+msgid "(binary)"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:98
+msgid "(source)"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:125
+#: src/operations/package-manager/repository.vala:143
+msgid "repository"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:126
+msgid "Update / Index / Mirror repository"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:127
+msgid "update repository"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:128
+msgid "index repository"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:129
+msgid "add new repository file"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:130
+msgid "remove repository file"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:131
+msgid "list repository files"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:132
+msgid "mirror repository"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:133
+msgid "Index options"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:134
+msgid "move packages for alphabetical hierarchy"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:135
+msgid "new repository name (required)"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:136
+msgid "Add options"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:137
+msgid "new file name"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:138
+msgid "Mirror options"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:139
+msgid "Do not mirror binary packages"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:140
+msgid "Do not mirror source packages"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:141
+msgid "Index after mirror."
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:142
+msgid "Target mirror directory"
+msgstr ""
+
+#: src/operations/package-manager/remove.vala:22
+msgid "Removing:"
+msgstr ""
+
+#: src/operations/package-manager/remove.vala:45
+#: src/operations/package-manager/remove.vala:49
+msgid "remove"
+msgstr ""
+
+#: src/operations/package-manager/remove.vala:47
+msgid "Remove package from package name"
+msgstr ""
+
+#: src/operations/package-manager/info.vala:20
+#: src/operations/package-manager/info.vala:24
+msgid "info"
+msgstr ""
+
+#: src/operations/package-manager/info.vala:21
+msgid "Get informations from package manager databases."
+msgstr ""
+
+#: src/operations/package-manager/info.vala:22
+msgid "list required packages"
+msgstr ""
+
+#: src/operations/package-manager/info.vala:23
+msgid "list packages required by package"
+msgstr ""
+
+#: src/ymp-cli.vala:37
+msgid "No command given."
+msgstr ""
+
+#: src/ymp-cli.vala:37
+#, c-format
+msgid "Run %s for more information about usage."
 msgstr ""

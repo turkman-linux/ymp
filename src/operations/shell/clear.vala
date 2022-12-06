@@ -4,8 +4,8 @@ public int clear_main(string[] args){
 }
 void clear_init(){
     var h = new helpmsg();
-    h.name = "clear";
-    h.description = "Clear terminal screen.";
+    h.name = _("clear");
+    h.description = _("Clear terminal screen.");
     h.shell_only = true;
-    add_operation(clear_main,{"clear"},h);
+    add_operation(clear_main,{_("clear"),"clear"},h);
 }

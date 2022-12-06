@@ -68,11 +68,11 @@ public int list_repository_main(string[] args){
 void list_init(){
     var h = new helpmsg();
     
-    h.name = "list";
-    h.description = "List installed packages.";
-    h.add_parameter("--installed","list installed packages");
-    h.add_parameter("--repository","list repositories");
-    h.add_parameter("--source","list available source packages");
+    h.name = _("list");
+    h.description = _("List installed packages.");
+    h.add_parameter("--installed", _("list installed packages"));
+    h.add_parameter("--repository", _("list repositories"));
+    h.add_parameter("--source", _("list available source packages"));
 
-    add_operation(list_main,{"list","ls"},h);
+    add_operation(list_main,{_("list"),"list","ls"},h);
 }

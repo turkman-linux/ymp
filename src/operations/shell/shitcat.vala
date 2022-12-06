@@ -16,11 +16,11 @@ public int shitcat_main(string[] args){
 
 void shitcat_init(){
     var h = new helpmsg();
-    h.name = "shitcat";
+    h.name = _("shitcat");
     h.minargs=1;
     h.shell_only = true;
-    h.description = "Write message with bad appearance.";
-    h.add_parameter("!!!","FUCK LGBT");
-    h.add_parameter("-","read from stdin");
-    add_operation(shitcat_main,{"shitcat","shit"},h);
+    h.description = _("Write message with bad appearance.");
+    h.add_parameter("!!!",_("FUCK LGBT"));
+    h.add_parameter("-",_("read from stdin"));
+    add_operation(shitcat_main,{_("shit"),"shitcat","shit"},h);
 }

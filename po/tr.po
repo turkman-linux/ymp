@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-06 12:55+0000\n"
+"POT-Creation-Date: 2022-12-06 14:43+0000\n"
 "PO-Revision-Date: 2022-12-06 13:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,24 +17,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: src/data/repository.vala:182 src/data/repository.vala:206
+#: src/settings.vala:40
 #, c-format
-msgid "Package not satisfied from repository: %s"
-msgstr "Paket depodan sağlanamadı: %s"
+msgid "Config file not exists: %s"
+msgstr "Ayar dosyası mevcut değil: %s"
 
-#: src/data/repository.vala:239 src/data/repository.vala:243
+#: src/settings.vala:68
 #, c-format
-msgid "Find repo list: %s"
-msgstr "Depo listesi bul: %s"
+msgid "Destdir changed: %s"
+msgstr "Destdir değişti: %s"
 
-#: src/data/repository.vala:268
+#: src/ymp.vala:38
+msgid "RUN:"
+msgstr "Çalıştır:"
+
+#: src/ymp.vala:52
 #, c-format
-msgid "Invalid repository index: %s"
-msgstr "Geçersiz depo indexi: %s"
+msgid "Invalid operation name: %s"
+msgstr "Geçersiz işlem adı: %s"
 
-#: src/data/repository.vala:303
-msgid "Index name not defined. Please use --name=xxx"
-msgstr "Index adı tanımlanmadı. Lütfen --name=xxx kullanın"
+#: src/ymp.vala:116
+msgid "Syntax error. Unexceped endif detected."
+msgstr "Syntax hatası: Beklenmedik endif tespit edildi."
+
+#: src/ymp.vala:123
+#, c-format
+msgid "Process: %s failed. Exited with %d."
+msgstr "Süreç başarısız: %s. %d ile çıktı."
+
+#: src/ymp.vala:127
+#, c-format
+msgid "Process done in : %f sec"
+msgstr "Süreç %f sn içinde tamamlandı"
+
+#: src/ymp.vala:224
+msgid "OEM detected! Ymp may not working good."
+msgstr "OEM despit edildi! Ymp iyi çalışmayabilir."
+
+#: src/ymp.vala:225
+msgid "OEM is not allowed! Please use --allow-oem to allow oem."
+msgstr ""
+"OEM'e izin verilmez! Oem'e izin vermek için lütfen --allow-oem kullanın."
+
+#: src/ymp.vala:230
+msgid "UsrMerge detected! Ymp may not working good."
+msgstr "UsrMerge despit edildi! Ymp iyi çalışmayabilir."
+
+#: src/wslblock.vala:28
+msgid "Using ymp in Fucking WSL environment is not allowed."
+msgstr "Siktiğimin WSL ortamında ymp kullanımına izin verilmez."
 
 #: src/data/package.vala:47
 #, c-format
@@ -103,41 +134,6 @@ msgstr "Arşiv sha1su tutarsız"
 #, c-format
 msgid "Loading package metadata from: %s"
 msgstr "Paket metadatası şuradan yükleniyor: %s"
-
-#: src/data/dependency.vala:8
-#, c-format
-msgid "Resolve dependency: %s"
-msgstr "Bağımlılık çözme: %s"
-
-#: src/data/dependency.vala:59
-#, c-format
-msgid "Resolve group: %s"
-msgstr "Gurup çözme: %s"
-
-#: src/data/dependency.vala:75
-#, c-format
-msgid "Group %s: add %s"
-msgstr "%s gurubuna %s ekle"
-
-#: src/data/dependency.vala:84
-#, c-format
-msgid "Resolve ordep packages: %s"
-msgstr "Ordep paketleri çözme: %s"
-
-#: src/data/dependency.vala:100
-#, c-format
-msgid "Resolve regex: %s"
-msgstr "Regex çözme: %s"
-
-#: src/data/dependency.vala:110
-#, c-format
-msgid "Match %s: rule %s"
-msgstr "Eşleşme %s: kural %s"
-
-#: src/data/dependency.vala:150
-#, c-format
-msgid "Resolve reverse dependency: %s"
-msgstr "Ters bağımlılık çözme: %s"
 
 #: src/data/ympbuild.vala:136
 msgid "USE flag:"
@@ -240,95 +236,202 @@ msgstr "Karantina kurulumu"
 msgid "Installing: %s => %s"
 msgstr "Kuruluyor: %s => %s"
 
-#: src/ymp-cli.vala:37
-msgid "No command given."
-msgstr "Komut girilmedi."
-
-#: src/ymp-cli.vala:37
+#: src/data/dependency.vala:8
 #, c-format
-msgid "Run %s for more information about usage."
-msgstr "Daha fazla bilgi için %s çalıştırın."
+msgid "Resolve dependency: %s"
+msgstr "Bağımlılık çözme: %s"
 
-#: src/ymp.vala:38
-msgid "RUN:"
-msgstr "Çalıştır:"
-
-#: src/ymp.vala:52
+#: src/data/dependency.vala:59
 #, c-format
-msgid "Invalid operation name: %s"
-msgstr "Geçersiz işlem adı: %s"
+msgid "Resolve group: %s"
+msgstr "Gurup çözme: %s"
 
-#: src/ymp.vala:116
-msgid "Syntax error. Unexceped endif detected."
-msgstr "Syntax hatası: Beklenmedik endif tespit edildi."
-
-#: src/ymp.vala:123
+#: src/data/dependency.vala:75
 #, c-format
-msgid "Process: %s failed. Exited with %d."
-msgstr "Süreç başarısız: %s. %d ile çıktı."
+msgid "Group %s: add %s"
+msgstr "%s gurubuna %s ekle"
 
-#: src/ymp.vala:127
+#: src/data/dependency.vala:84
 #, c-format
-msgid "Process done in : %f sec"
-msgstr "Süreç %f sn içinde tamamlandı"
+msgid "Resolve ordep packages: %s"
+msgstr "Ordep paketleri çözme: %s"
 
-#: src/ymp.vala:224
-msgid "OEM detected! Ymp may not working good."
-msgstr "OEM despit edildi! Ymp iyi çalışmayabilir."
-
-#: src/ymp.vala:225
-msgid "OEM is not allowed! Please use --allow-oem to allow oem."
-msgstr "OEM'e izin verilmez! Oem'e izin vermek için lütfen --allow-oem kullanın."
-
-#: src/ymp.vala:230
-msgid "UsrMerge detected! Ymp may not working good."
-msgstr "UsrMerge despit edildi! Ymp iyi çalışmayabilir."
-
-#: src/settings.vala:40
+#: src/data/dependency.vala:100
 #, c-format
-msgid "Config file not exists: %s"
-msgstr "Ayar dosyası mevcut değil: %s"
+msgid "Resolve regex: %s"
+msgstr "Regex çözme: %s"
 
-#: src/settings.vala:68
+#: src/data/dependency.vala:110
 #, c-format
-msgid "Destdir changed: %s"
-msgstr "Destdir değişti: %s"
+msgid "Match %s: rule %s"
+msgstr "Eşleşme %s: kural %s"
 
-#: src/wslblock.vala:28
-msgid "Using ymp in Fucking WSL environment is not allowed."
-msgstr "Siktiğimin WSL ortamında ymp kullanımına izin verilmez."
+#: src/data/dependency.vala:150
+#, c-format
+msgid "Resolve reverse dependency: %s"
+msgstr "Ters bağımlılık çözme: %s"
 
-#: src/operations/package-manager/clean.vala:2
-#: src/operations/package-manager/clean.vala:4
-#: src/operations/package-manager/clean.vala:6
-#: src/operations/package-manager/clean.vala:8
-msgid "Clean: "
-msgstr "Temizle: "
+#: src/data/repository.vala:182 src/data/repository.vala:206
+#, c-format
+msgid "Package not satisfied from repository: %s"
+msgstr "Paket depodan sağlanamadı: %s"
 
-#: src/operations/package-manager/clean.vala:2
-msgid "package cache"
-msgstr "paket önbelleği"
+#: src/data/repository.vala:239 src/data/repository.vala:243
+#, c-format
+msgid "Find repo list: %s"
+msgstr "Depo listesi bul: %s"
 
-#: src/operations/package-manager/clean.vala:4
-msgid "repository index cache"
-msgstr "depo index önbelleği"
+#: src/data/repository.vala:268
+#, c-format
+msgid "Invalid repository index: %s"
+msgstr "Geçersiz depo indexi: %s"
 
-#: src/operations/package-manager/clean.vala:6
-msgid "build directory"
-msgstr "derleme dizini"
+#: src/data/repository.vala:303
+msgid "Index name not defined. Please use --name=xxx"
+msgstr "Index adı tanımlanmadı. Lütfen --name=xxx kullanın"
 
-#: src/operations/package-manager/clean.vala:8
-msgid "quarantine"
-msgstr "karantina"
+#: src/operations/shell/setget.vala:59 src/operations/shell/setget.vala:83
+msgid "get"
+msgstr ""
 
-#: src/operations/package-manager/clean.vala:15
-#: src/operations/package-manager/clean.vala:17
-msgid "clean"
+#: src/operations/shell/setget.vala:61
+msgid "Get variable from name"
+msgstr ""
+
+#: src/operations/shell/setget.vala:63 src/operations/shell/setget.vala:84
+msgid "set"
+msgstr ""
+
+#: src/operations/shell/setget.vala:66
+msgid "Set variable from name and value"
+msgstr ""
+
+#: src/operations/shell/setget.vala:68 src/operations/shell/setget.vala:85
+msgid "equal"
+msgstr ""
+
+#: src/operations/shell/setget.vala:71
+msgid "Compare arguments equality"
+msgstr ""
+
+#: src/operations/shell/setget.vala:73 src/operations/shell/setget.vala:86
+msgid "read"
+msgstr ""
+
+#: src/operations/shell/setget.vala:76
+msgid "Read value from terminal"
+msgstr ""
+
+#: src/operations/shell/setget.vala:78 src/operations/shell/setget.vala:87
+msgid "match"
+msgstr ""
+
+#: src/operations/shell/setget.vala:81
+msgid "Match arguments regex"
+msgstr ""
+
+#: src/operations/shell/clear.vala:7 src/operations/shell/clear.vala:10
+#, fuzzy
+msgid "clear"
 msgstr "temizle"
 
-#: src/operations/package-manager/clean.vala:16
-msgid "Remove all caches "
-msgstr "Tüm önbelleği sil "
+#: src/operations/shell/clear.vala:8
+msgid "Clear terminal screen."
+msgstr ""
+
+#: src/operations/shell/exec.vala:3
+msgid "Executing: =>"
+msgstr ""
+
+#: src/operations/shell/exec.vala:13
+#, fuzzy, c-format
+msgid "Failed to run command: %s"
+msgstr "Paket indirmesi başarısız: %s"
+
+#: src/operations/shell/exec.vala:15
+#, c-format
+msgid "Command %s done."
+msgstr ""
+
+#: src/operations/shell/exec.vala:20 src/operations/shell/exec.vala:25
+msgid "exec"
+msgstr ""
+
+#: src/operations/shell/exec.vala:21
+msgid "Execute a command"
+msgstr ""
+
+#: src/operations/shell/exec.vala:24
+msgid "run without output"
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:19
+msgid "cowcat"
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:22
+msgid "Write a message with cow."
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:23
+msgid "write from stdin"
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:24
+msgid "cow"
+msgstr ""
+
+#: src/operations/shell/echo.vala:7 src/operations/shell/echo.vala:11
+msgid "echo"
+msgstr ""
+
+#: src/operations/shell/echo.vala:9
+msgid "Write a message to terminal."
+msgstr ""
+
+#: src/operations/shell/exit.vala:10 src/operations/shell/exit.vala:13
+msgid "exit"
+msgstr ""
+
+#: src/operations/shell/exit.vala:11
+msgid "Exit ymp"
+msgstr ""
+
+#: src/operations/shell/title.vala:11 src/operations/shell/title.vala:15
+msgid "title"
+msgstr ""
+
+#: src/operations/shell/title.vala:14
+msgid "Set terminal title"
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:19
+msgid "shitcat"
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:22
+msgid "Write message with bad appearance."
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:23
+msgid "FUCK LGBT"
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:24
+msgid "read from stdin"
+msgstr ""
+
+#: src/operations/shell/shitcat.vala:25
+msgid "shit"
+msgstr ""
+
+#: src/operations/shell/dummy.vala:6 src/operations/shell/dummy.vala:9
+msgid "init"
+msgstr ""
+
+#: src/operations/shell/dummy.vala:8
+msgid "Do nothing."
+msgstr ""
 
 #: src/operations/package-manager/build.vala:6
 msgid "Build operation with usrmerge is not allowed!"
@@ -483,11 +586,14 @@ msgid "do not install package after building"
 msgstr "derleme sonrası paketi yükleme"
 
 #: src/operations/package-manager/build.vala:475
+#: src/operations/package-manager/install.vala:116
+#: src/operations/package-manager/remove.vala:48
 msgid "disable dependency check"
 msgstr "bağımlılık kontrolünü kapat"
 
 #: src/operations/package-manager/build.vala:476
 #: src/operations/package-manager/bootstrap.vala:47
+#: src/operations/package-manager/install.vala:121
 msgid "use binary packages"
 msgstr "ikili paketler kullan"
 
@@ -495,7 +601,151 @@ msgstr "ikili paketler kullan"
 msgid "install binary package after building"
 msgstr "ikili paketi derleme sonrası yükle"
 
+#: src/operations/package-manager/list.vala:71
+#: src/operations/package-manager/list.vala:77
+msgid "list"
+msgstr ""
+
+#: src/operations/package-manager/list.vala:72
+#, fuzzy
+msgid "List installed packages."
+msgstr "ikili paketler kullan"
+
+#: src/operations/package-manager/list.vala:73
+#, fuzzy
+msgid "list installed packages"
+msgstr "ikili paketler kullan"
+
+#: src/operations/package-manager/list.vala:74
+#, fuzzy
+msgid "list repositories"
+msgstr "Geçersiz depo indexi: %s"
+
+#: src/operations/package-manager/list.vala:75
+#, fuzzy
+msgid "list available source packages"
+msgstr "kaynak paket oluşturma"
+
+#: src/operations/package-manager/template.vala:73
+msgid "Please check ympbuild:"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:75
+msgid "Is it OK ?"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:81
+#, fuzzy
+msgid "Creating template:"
+msgstr "Bootstrap oluştur:"
+
+#: src/operations/package-manager/template.vala:90
+#, c-format
+msgid "Reading gitconfig: %s"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:106
+#, fuzzy, c-format
+msgid "Variable '%s' is not defined. please use --%s"
+msgstr "Destdir tanımlanmadı. Lütfen --destdir kullanın."
+
+#: src/operations/package-manager/template.vala:113
+#: src/operations/package-manager/template.vala:127
+msgid "template"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:114
+msgid "Create ympbuild from template"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:115
+#, fuzzy
+msgid "package name"
+msgstr "paket önbelleği"
+
+#: src/operations/package-manager/template.vala:116
+#, fuzzy
+msgid "package version"
+msgstr "paket önbelleği"
+
+#: src/operations/package-manager/template.vala:117
+#, fuzzy
+msgid "package homepage"
+msgstr "paket önbelleği"
+
+#: src/operations/package-manager/template.vala:118
+msgid "package description"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:119
+#, fuzzy
+msgid "package dependencies"
+msgstr "paket önbelleği"
+
+#: src/operations/package-manager/template.vala:120
+msgid "package build dependencies"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:121
+#, fuzzy
+msgid "package creator email"
+msgstr "paket önbelleği"
+
+#: src/operations/package-manager/template.vala:122
+#, fuzzy
+msgid "package maintainer"
+msgstr "paket önbelleği"
+
+#: src/operations/package-manager/template.vala:123
+#, fuzzy
+msgid "package license"
+msgstr "paket önbelleği"
+
+#: src/operations/package-manager/template.vala:124
+#, fuzzy
+msgid "package source"
+msgstr "paket önbelleği"
+
+#: src/operations/package-manager/template.vala:125
+msgid "package build-type (autotool cmake meson)"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:126
+#, fuzzy
+msgid "ympbuild output directory"
+msgstr "derleme dizini"
+
+#: src/operations/package-manager/search.vala:77
+#: src/operations/package-manager/search.vala:84
+msgid "search"
+msgstr ""
+
+#: src/operations/package-manager/search.vala:79
+#, fuzzy
+msgid "Search packages"
+msgstr "ikili paketler kullan"
+
+#: src/operations/package-manager/search.vala:80
+msgid "Search package in binary package repository."
+msgstr ""
+
+#: src/operations/package-manager/search.vala:81
+msgid "Search package in source package repository."
+msgstr ""
+
+#: src/operations/package-manager/search.vala:82
+#, fuzzy
+msgid "Search package in installed packages."
+msgstr "Paket kurulu değil: %s"
+
+#: src/operations/package-manager/search.vala:83
+msgid "Searches for packages by package file."
+msgstr ""
+
 #: src/operations/package-manager/bootstrap.vala:3
+#: src/operations/package-manager/install.vala:3
+#: src/operations/package-manager/repository.vala:12
+#: src/operations/package-manager/remove.vala:3
 msgid "You must be root!"
 msgstr "Root olmanız gerekiyor!"
 
@@ -528,3 +778,244 @@ msgstr "Yeni kök dizin oluştur."
 #: src/operations/package-manager/bootstrap.vala:46
 msgid "bootstrap mirror uri"
 msgstr "bootstrap yansı urisi"
+
+#: src/operations/package-manager/clean.vala:2
+#: src/operations/package-manager/clean.vala:4
+#: src/operations/package-manager/clean.vala:6
+#: src/operations/package-manager/clean.vala:8
+msgid "Clean: "
+msgstr "Temizle: "
+
+#: src/operations/package-manager/clean.vala:2
+msgid "package cache"
+msgstr "paket önbelleği"
+
+#: src/operations/package-manager/clean.vala:4
+msgid "repository index cache"
+msgstr "depo index önbelleği"
+
+#: src/operations/package-manager/clean.vala:6
+msgid "build directory"
+msgstr "derleme dizini"
+
+#: src/operations/package-manager/clean.vala:8
+msgid "quarantine"
+msgstr "karantina"
+
+#: src/operations/package-manager/clean.vala:15
+#: src/operations/package-manager/clean.vala:17
+msgid "clean"
+msgstr "temizle"
+
+#: src/operations/package-manager/clean.vala:16
+msgid "Remove all caches "
+msgstr "Tüm önbelleği sil "
+
+#: src/operations/package-manager/install.vala:7
+#, fuzzy
+msgid "Install (from source) operation with usrmerge is not allowed!"
+msgstr "Usrmerge ile derleme eylemine izin verilmiyor!"
+
+#: src/operations/package-manager/install.vala:18
+#, fuzzy, c-format
+msgid "Resolve dependency done: %s"
+msgstr "Bağımlılık çözme: %s"
+
+#: src/operations/package-manager/install.vala:37
+#: src/operations/package-manager/install.vala:70
+#, fuzzy
+msgid "Quarantine validation failed"
+msgstr "Karantina doğrulaması kapalı"
+
+#: src/operations/package-manager/install.vala:44
+msgid "Clear leftovers"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:56
+#, fuzzy, c-format
+msgid "Installing from package file: %s"
+msgstr "ikili paketi derleme sonrası yükle"
+
+#: src/operations/package-manager/install.vala:60
+#, fuzzy, c-format
+msgid "Installing from repository: %s"
+msgstr "Geçersiz depo indexi: %s"
+
+#: src/operations/package-manager/install.vala:66
+#, fuzzy
+msgid "Installing:"
+msgstr "Kuruluyor: %s => %s"
+
+#: src/operations/package-manager/install.vala:82
+msgid "Calculating leftovers"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:114
+#: src/operations/package-manager/install.vala:122
+msgid "install"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:115
+msgid "Install package from source or package file or repository"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:117
+#, fuzzy
+msgid "ignore not satisfied packages"
+msgstr "kaynak paket oluşturma"
+
+#: src/operations/package-manager/install.vala:118
+#, fuzzy
+msgid "sync quarantine after every package installation"
+msgstr "Karantina kurulumu"
+
+#: src/operations/package-manager/install.vala:119
+msgid "reinstall if already installed"
+msgstr ""
+
+#: src/operations/package-manager/install.vala:120
+#, fuzzy
+msgid "upgrade all packages"
+msgstr "ikili paketler kullan"
+
+#: src/operations/package-manager/repository.vala:22
+#, fuzzy
+msgid "name not defined."
+msgstr "Name tanımlanmadı."
+
+#: src/operations/package-manager/repository.vala:29
+#, fuzzy
+msgid "Repository uri not defined."
+msgstr "Versıon tanımlanmadı."
+
+#: src/operations/package-manager/repository.vala:90
+#: src/operations/package-manager/repository.vala:98
+msgid "Mirror:"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:90
+msgid "(binary)"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:98
+msgid "(source)"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:125
+#: src/operations/package-manager/repository.vala:143
+#, fuzzy
+msgid "repository"
+msgstr "depo index önbelleği"
+
+#: src/operations/package-manager/repository.vala:126
+msgid "Update / Index / Mirror repository"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:127
+msgid "update repository"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:128
+msgid "index repository"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:129
+#, fuzzy
+msgid "add new repository file"
+msgstr "Geçersiz depo indexi: %s"
+
+#: src/operations/package-manager/repository.vala:130
+#, fuzzy
+msgid "remove repository file"
+msgstr "Geçersiz depo indexi: %s"
+
+#: src/operations/package-manager/repository.vala:131
+#, fuzzy
+msgid "list repository files"
+msgstr "Geçersiz depo indexi: %s"
+
+#: src/operations/package-manager/repository.vala:132
+msgid "mirror repository"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:133
+msgid "Index options"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:134
+msgid "move packages for alphabetical hierarchy"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:135
+msgid "new repository name (required)"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:136
+msgid "Add options"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:137
+msgid "new file name"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:138
+msgid "Mirror options"
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:139
+#, fuzzy
+msgid "Do not mirror binary packages"
+msgstr "ikili paket oluşturma"
+
+#: src/operations/package-manager/repository.vala:140
+#, fuzzy
+msgid "Do not mirror source packages"
+msgstr "kaynak paket oluşturma"
+
+#: src/operations/package-manager/repository.vala:141
+msgid "Index after mirror."
+msgstr ""
+
+#: src/operations/package-manager/repository.vala:142
+msgid "Target mirror directory"
+msgstr ""
+
+#: src/operations/package-manager/remove.vala:22
+msgid "Removing:"
+msgstr ""
+
+#: src/operations/package-manager/remove.vala:45
+#: src/operations/package-manager/remove.vala:49
+msgid "remove"
+msgstr ""
+
+#: src/operations/package-manager/remove.vala:47
+msgid "Remove package from package name"
+msgstr ""
+
+#: src/operations/package-manager/info.vala:20
+#: src/operations/package-manager/info.vala:24
+msgid "info"
+msgstr ""
+
+#: src/operations/package-manager/info.vala:21
+msgid "Get informations from package manager databases."
+msgstr ""
+
+#: src/operations/package-manager/info.vala:22
+#, fuzzy
+msgid "list required packages"
+msgstr "ikili paketler kullan"
+
+#: src/operations/package-manager/info.vala:23
+msgid "list packages required by package"
+msgstr ""
+
+#: src/ymp-cli.vala:37
+msgid "No command given."
+msgstr "Komut girilmedi."
+
+#: src/ymp-cli.vala:37
+#, c-format
+msgid "Run %s for more information about usage."
+msgstr "Daha fazla bilgi için %s çalıştırın."

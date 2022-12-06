@@ -74,12 +74,12 @@ public int search_files_main(string[] args){
 
 void search_init(){
     var h = new helpmsg();
-    h.name = "search";
+    h.name = _("search");
     h.minargs=1;
-    h.description = "Search packages";
-    h.add_parameter("--package", "Search package in binary package repository.");
-    h.add_parameter("--source", "Search package in source package repository.");
-    h.add_parameter("--installed", "Search package in installed packages.");
-    h.add_parameter("--file", "Searches for packages by package file.");
-    add_operation(search_main,{"search","sr"},h);
+    h.description = _("Search packages");
+    h.add_parameter("--package", _("Search package in binary package repository."));
+    h.add_parameter("--source", _("Search package in source package repository."));
+    h.add_parameter("--installed", _("Search package in installed packages."));
+    h.add_parameter("--file", _("Searches for packages by package file."));
+    add_operation(search_main,{_("search"),"search","sr"},h);
 }

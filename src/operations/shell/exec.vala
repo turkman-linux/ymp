@@ -1,6 +1,6 @@
 public int exec_main(string[] args){
     string cmd = join(" ",args);
-    print_stderr(colorize("Executing: =>",blue)+cmd);
+    print_stderr(colorize(_("Executing: =>"),blue)+cmd);
     int status = 0;
     if(get_destdir() != "/"){
         status = run_args({"chroot", get_destdir(), cmd}) /256;
@@ -10,17 +10,17 @@ public int exec_main(string[] args){
         status = run(cmd)/256;
     }
     if(status != 0){
-        error_add(@"Failed to run command $cmd");
+        error_add(_("Failed to run command: %s").printf(cmd));
     }
-    print_fn("Command "+colorize(@"$cmd",blue)+" done.",true,true);
+    print_stderr(_("Command %s done.".printf(colorize(cmd,blue))));
     return status;
 }
 void exec_init(){
     var h = new helpmsg();
-    h.name = "exec";
-    h.description = "Execute a command";
+    h.name = _("exec");
+    h.description = _("Execute a command");
     h.minargs=1;
     h.shell_only = true;
-    h.add_parameter("--quiet","run without output");
-    add_operation(exec_main,{"exec"},h);
+    h.add_parameter("--quiet",_("run without output"));
+    add_operation(exec_main,{_("exec"),"exec"},h);
 }
