@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-06 21:19+0000\n"
+"POT-Creation-Date: 2022-12-06 21:32+0000\n"
 "PO-Revision-Date: 2022-12-06 15:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1076,6 +1076,7 @@ msgstr "Hook çalıştır: %s"
 
 #: src/operations/utility/sysconf.vala:18
 #: src/operations/utility/sysconf.vala:21
+#, c-format
 msgid "Failed to run sysconf: %s"
 msgstr "Sysconf çalıştırması başarısız oldu: %s"
 
@@ -1094,7 +1095,7 @@ msgstr "Usrmerge ile sandbox eylemine izin verilmiyor!"
 
 #: src/operations/utility/run-sandbox.vala:13
 msgid "Execute sandbox :%s"
-msgstr "Sandbox çalıştır"
+msgstr "Sandbox çalıştır: %s"
 
 #: src/operations/utility/run-sandbox.vala:20
 #: src/operations/utility/run-sandbox.vala:25
@@ -1221,6 +1222,18 @@ msgstr "yardım"
 #: src/operations/utility/help.vala:84
 msgid "Write help message about ymp commands."
 msgstr "Yml komutları hakkında yardım iletisi yazar."
+
+#: src/operations/utility/help.vala:117
+msgid "Usage:"
+msgstr ""
+
+#: src/operations/utility/help.vala:120
+msgid "Options:"
+msgstr "Seçenekler:"
+
+#: src/operations/utility/help.vala:125
+msgid "Common options:"
+msgstr "Ortak seçenekler:"
 
 #: src/wslblock.vala:28
 msgid "Using ymp in Fucking WSL environment is not allowed."

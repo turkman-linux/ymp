@@ -114,15 +114,15 @@ public class helpmsg{
         if(usage == ""){
             usage = "ymp "+name+" [OPTION]... [ARGS]... ";
         }
-        ret += colorize("Usage: ",green)+usage+"\n";
+        ret += colorize(_("Usage:"),green)+" "+usage+"\n";
         ret += description + "\n";
         if(parameters.length > 0){
-            ret += colorize("Options:\n",green);
+            ret += colorize(_("Options:")+"\n",green);
             foreach(string param in parameters){
                 ret += "  "+param+"\n";
             }
         }
-        ret += colorize("Common options:\n",green);
+        ret += colorize(_("Common options:")+"\n",green);
         foreach(string param in common_parameters){
             ret += "  "+param+"\n";
         }
