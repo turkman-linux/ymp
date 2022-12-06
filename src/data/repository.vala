@@ -179,7 +179,7 @@ public package get_package_from_repository(string name){
         if(get_bool("ignore-satisfied")){
             return ret;
         }
-        error_add("Package not satisfied from repository: "+name);
+        error_add(_("Package not satisfied from repository: %s").printf(name));
     }
     return ret;
 }
@@ -203,7 +203,7 @@ public package get_source_from_repository(string name){
         if(get_bool("ignore-satisfied")){
             return ret;
         }
-        error_add("Package not satisfied from repository: "+name);
+        error_add(_("Package not satisfied from repository: %s").printf(name));
     }
     return ret;
 }
@@ -236,11 +236,11 @@ public package get_package_from_file(string path){
 //DOC: return repository adress list
 public string[] get_repo_address(){
     string repolist = "";
-    info("Find repo list: "+get_storage()+"/sources.list");
+    info(_("Find repo list: %s").printf(get_storage()+"/sources.list"));
     if(isdir(get_storage()+"/sources.list.d")){
         foreach(string file in find(get_storage()+"/sources.list.d")){
             if(isfile(file)){
-                info("Find repo list: "+file);
+                info(_("Find repo list: %s").printf(file));
                 repolist += readfile(file)+"\n";
             }
         }
@@ -265,7 +265,7 @@ public void update_repo(){
         fetch(repo,path);
         string index_data = readfile(path);
         if(!startswith(index_data,"index:")){
-            error_add("Invalid repository index: %s".printf(name));
+            error_add(_("Invalid repository index: %s").printf(name));
             remove_file(path);
             continue;
         }
@@ -300,7 +300,7 @@ public string create_index_data(string fpath){
     string path = srealpath(fpath);
     string index_name = get_value("name");
     if(index_name == ""){
-        error_add("Index name not defined. Please use --name=xxx");
+        error_add(_("Index name not defined. Please use --name=xxx"));
         error(1);
     }
     var tar = new archive();

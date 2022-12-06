@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-06 11:36+0000\n"
+"POT-Creation-Date: 2022-12-06 12:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,8 @@ msgid "RUN:"
 msgstr ""
 
 #: src/ymp.vala:52
-msgid "Invalid operation name: "
+#, c-format
+msgid "Invalid operation name: %s"
 msgstr ""
 
 #: src/ymp.vala:116
@@ -63,6 +64,229 @@ msgstr ""
 
 #: src/wslblock.vala:28
 msgid "Using ymp in Fucking WSL environment is not allowed."
+msgstr ""
+
+#: src/data/package.vala:47
+#, c-format
+msgid "Package metadata file is broken:%s"
+msgstr ""
+
+#: src/data/package.vala:57
+#, c-format
+msgid "Package data is broken:%s"
+msgstr ""
+
+#: src/data/package.vala:78
+#, c-format
+msgid "Load package from:%s"
+msgstr ""
+
+#: src/data/package.vala:90 src/data/package.vala:106 src/data/package.vala:277
+msgid "Package archive missing"
+msgstr ""
+
+#: src/data/package.vala:143 src/data/package.vala:153
+#, c-format
+msgid "Package data: %s"
+msgstr ""
+
+#: src/data/package.vala:156
+#, c-format
+msgid "Package information broken: %s %s"
+msgstr ""
+
+#: src/data/package.vala:167
+#, c-format
+msgid "Get package uri: %s"
+msgstr ""
+
+#: src/data/package.vala:184
+#, c-format
+msgid "File already exists: %s"
+msgstr ""
+
+#: src/data/package.vala:187
+#, c-format
+msgid "Failed to fetch package: %s"
+msgstr ""
+
+#: src/data/package.vala:190
+#, c-format
+msgid "Package is not downloadable: %s"
+msgstr ""
+
+#: src/data/package.vala:194
+#, c-format
+msgid "Package md5sum mismatch: %s"
+msgstr ""
+
+#: src/data/package.vala:229
+#, c-format
+msgid "Skip quartine package extract: %s"
+msgstr ""
+
+#: src/data/package.vala:243
+msgid "Archive sha1sum mismatch"
+msgstr ""
+
+#: src/data/package.vala:325
+#, c-format
+msgid "Loading package metadata from: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:136
+msgid "USE flag:"
+msgstr ""
+
+#: src/data/ympbuild.vala:186
+#, c-format
+msgid "Run action (%s) %s => %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:198
+#, c-format
+msgid "ympbuild function not exists: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:207
+#, c-format
+msgid "Binary process skip for: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:211
+msgid "Binary process:"
+msgstr ""
+
+#: src/data/quarantine.vala:51
+msgid "Quarantine validation disabled"
+msgstr ""
+
+#: src/data/quarantine.vala:67 src/data/quarantine.vala:144
+#, c-format
+msgid "Validate quarantine for: %s"
+msgstr ""
+
+#: src/data/quarantine.vala:94 src/data/quarantine.vala:169
+#, c-format
+msgid "Invalid replaces path: %s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:101
+#, c-format
+msgid "File already exists in filesystem: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:112
+#, c-format
+msgid "Validating: %s"
+msgstr ""
+
+#: src/data/quarantine.vala:115
+#, c-format
+msgid "File conflict detected: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:121
+#, c-format
+msgid "Package file missing: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:127
+#, c-format
+msgid "File in restricted path is not allowed: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:136
+#, c-format
+msgid "Broken file detected: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:176
+#, c-format
+msgid "Symlink already exists in filesystem: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:189
+#, c-format
+msgid "Broken symlink detected: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:196
+#, c-format
+msgid "Symlink conflict detected: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:201
+#, c-format
+msgid "Package symlink missing: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:207
+#, c-format
+msgid "Symlink in restricted path is not allowed: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:224
+msgid "Quarantine installation"
+msgstr ""
+
+#: src/data/quarantine.vala:232
+#, c-format
+msgid "Installing: %s => %s"
+msgstr ""
+
+#: src/data/dependency.vala:8
+#, c-format
+msgid "Resolve dependency: %s"
+msgstr ""
+
+#: src/data/dependency.vala:59
+#, c-format
+msgid "Resolve group: %s"
+msgstr ""
+
+#: src/data/dependency.vala:75
+#, c-format
+msgid "Group %s: add %s"
+msgstr ""
+
+#: src/data/dependency.vala:84
+#, c-format
+msgid "Resolve ordep packages: %s"
+msgstr ""
+
+#: src/data/dependency.vala:100
+#, c-format
+msgid "Resolve regex: %s"
+msgstr ""
+
+#: src/data/dependency.vala:110
+#, c-format
+msgid "Match %s: rule %s"
+msgstr ""
+
+#: src/data/dependency.vala:150
+#, c-format
+msgid "Resolve reverse dependency: %s"
+msgstr ""
+
+#: src/data/repository.vala:182 src/data/repository.vala:206
+#, c-format
+msgid "Package not satisfied from repository: %s"
+msgstr ""
+
+#: src/data/repository.vala:239 src/data/repository.vala:243
+#, c-format
+msgid "Find repo list: %s"
+msgstr ""
+
+#: src/data/repository.vala:268
+#, c-format
+msgid "Invalid repository index: %s"
+msgstr ""
+
+#: src/data/repository.vala:303
+msgid "Index name not defined. Please use --name=xxx"
 msgstr ""
 
 #: src/ymp-cli.vala:37

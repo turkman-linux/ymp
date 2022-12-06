@@ -133,7 +133,7 @@ private void ympbuild_init(){
 
     }
     ympbuild_header += "declare -r use_'"+getArch()+"'=31 \n";
-    print(colorize("USE flag: ",green)+join(" ",use_flags.get()));
+    print(colorize(_("USE flag:"),green)+" "+join(" ",use_flags.get()));
 }
 //DOC: `void set_ympbuild_srcpath(string path):`
 //DOC: configure ympbuild file directory
@@ -183,7 +183,7 @@ public int run_ympbuild_function(string function){
     if(function == ""){
         return 0;
     }
-    set_terminal_title("Run action (%s) %s => %s".printf(
+    set_terminal_title(_("Run action (%s) %s => %s").printf(
         sbasename(ympbuild_buildpath),
         get_ympbuild_value("name"),
         function));
@@ -195,7 +195,7 @@ public int run_ympbuild_function(string function){
             return run(cmd);
         }
     }else{
-        warning("ympbuild function not exists: "+function);
+        warning(_("ympbuild function not exists: %s").printf(function));
     }
     return 0;
 }
@@ -204,11 +204,11 @@ public void ymp_process_binaries(){
         foreach(string file in find(ympbuild_buildpath+"/output")){
             if(endswith(file,".a") || endswith(file,".o")){
                 // skip static library
-                info("Binary process skip for: "+file);
+                info(_("Binary process skip for: %s").printf(file));
                 continue;
             }
             if(iself(file)){
-                print(colorize("Binary process: ",magenta)+file[(ympbuild_buildpath+"/output").length:]);
+                print(colorize(_("Binary process:"),magenta)+" "+file[(ympbuild_buildpath+"/output").length:]);
                 run("objcopy -R .comment \\
                 -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
                 -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\

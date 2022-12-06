@@ -5,7 +5,7 @@ private array cache_list;
 
 private void resolve_process(string[] names){
     foreach(string name in names){
-        info("Resolve dependency: "+name);
+        info(_("Resolve dependency: %s").printf(name));
         // 1. block process packages for multiple times.
         if(cache_list.has(name)){
             continue;
@@ -56,7 +56,7 @@ private void resolve_process(string[] names){
 }
 
 private string[] get_group_packages(string fname){
-    info("Resolve group: "+fname);
+    info(_("Resolve group: %s").printf(fname));
     array ret = new array();
     string[] pkgnames = list_available_packages();
     string name = fname[1:];
@@ -72,7 +72,7 @@ private string[] get_group_packages(string fname){
         }
         foreach(string grp in p.gets("group")){
             if(name == grp || startswith(grp,name+".")){
-                debug("Group "+grp+": add "+pkgname);
+                debug(_("Group %s: add %s").printf(grp, pkgname));
                 ret.add(pkgname);
             }
         }
@@ -81,7 +81,7 @@ private string[] get_group_packages(string fname){
 }
 
 private string get_ordep_package(string fname){
-    info("Resolve ordep packages: "+fname);
+    info(_("Resolve ordep packages: %s").printf(fname));
     foreach(string pkgname in ssplit(fname,"|")){
         if(is_installed_package(pkgname)){
             return pkgname;
@@ -97,7 +97,7 @@ private string get_ordep_package(string fname){
 }
 
 private string[] get_match_packages(string fname){
-    info("Resolve regex: "+fname);
+    info(_("Resolve regex: %s").printf(fname));
     array ret = new array();
     string rule = fname[1:];
     string[] pkgnames = list_available_packages();
@@ -107,7 +107,7 @@ private string[] get_match_packages(string fname){
             continue;
         }
         if(Regex.match_simple(rule,pkgname)){
-            info("Match "+pkgname+": rule "+rule);
+            info(_("Match %s: rule %s").printf(pkgname,rule));
             ret.add(pkgname);
         }
     }
@@ -147,7 +147,7 @@ private void resolve_reverse_process(string[] names){
             resolve_reverse_process(matches);
             continue;
         }
-        info("Resolve reverse dependency: "+name);
+        info(_("Resolve reverse dependency: %s").printf(name));
         if(name in pkgnames){
             need_install.add(name);
         }else{

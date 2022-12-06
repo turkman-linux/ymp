@@ -44,7 +44,7 @@ public class package {
         }else if(yaml.has_area(metadata,"package") || yaml.has_area(metadata,"source")){
             ympdata = metadata;
         }else{
-            error_add("Package metadata file is broken:\n"+metadata);
+            error_add(_("Package metadata file is broken:%s").printf(metadata));
         }
         // package area load
         if(yaml.has_area(ympdata,"package")){
@@ -54,7 +54,7 @@ public class package {
             is_source = true;
             pkgarea = yaml.get_area(ympdata,"source");
         }else{
-            error_add("Package data is broken:\n"+ympdata);
+            error_add(_("Package data is broken:%s").printf(ympdata));
         }
         error(2);
         //read values from data
@@ -75,7 +75,7 @@ public class package {
         pkgfile = new archive();
         pkgfile.load(srealpath(path));
         var metadata = pkgfile.readfile("metadata.yaml");
-        info("Load package from:"+path);
+        info(_("Load package from:%s").printf(path));
         load_from_data(metadata);
     }
 
@@ -87,7 +87,7 @@ public class package {
                 string files = readfile(get_storage()+"/files/"+name);
                 return ssplit(files,"\n");
             }
-            error_add("Package archive missing");
+            error_add(_("Package archive missing"));
             error(2);
             return {};
         }
@@ -103,7 +103,7 @@ public class package {
                 string links = readfile(get_storage()+"/links/"+name);
                 return ssplit(links,"\n");
             }
-            error_add("Package archive missing");
+            error_add(_("Package archive missing"));
             return {};
         }
         string links = pkgfile.readfile("links");
@@ -140,7 +140,7 @@ public class package {
     //DOC: Get package array value
     public string[] gets(string name){
         if (yaml.has_area(pkgarea,name)){
-            debug(@"Package data: $name");
+            debug(_("Package data: %s").printf(name));
             return yaml.get_array(pkgarea,name);
         }
         return {};
@@ -150,10 +150,10 @@ public class package {
     //DOC: Get package value
     public string get(string fname){
         if (yaml.has_area(pkgarea,fname)){
-            debug(@"Package data: $fname");
+            debug(_("Package data: %s").printf(name));
             return yaml.get_value(pkgarea,fname);
         }
-        warning(@"Package information broken: $fname $name");
+        warning(_("Package information broken: %s %s").printf(fname,name));
         return "";
     }
 
@@ -164,7 +164,7 @@ public class package {
             return "";
         }
         string uri = get("uri");
-        debug("Get package uri: "+uri);
+        debug(_("Get package uri: %s").printf(uri));
         return repo_address.replace("$uri",uri);
     }
 
@@ -181,17 +181,17 @@ public class package {
     public void download_only(){
         target = get_storage()+"/packages/"+sbasename(get_uri());
         if(isfile(target)){
-            info("File already exists: "+target);
+            info(_("File already exists: %s").printf(target));
         }else if(get_uri() != ""){
             if(!fetch(get_uri(),target)){
-                error_add("failed to fetch package: "+get_uri());
+                error_add(_("Failed to fetch package: %s").printf(get_uri()));
             }
         }else{
-            error_add("package is not downloadable: "+ name);
+            error_add(_("Package is not downloadable: %s").printf(name));
         }
         string target_sum = calculate_md5sum(target);
         if(get("md5sum") != target_sum){
-            error_add("Package md5sum mismatch:"+target);
+            error_add(_("Package md5sum mismatch: %s").printf(target));
             remove_file(target);
         }
     }
@@ -226,7 +226,7 @@ public class package {
         var rootfs_files = get_storage()+"/quarantine/files/";
         var rootfs_links = get_storage()+"/quarantine/links/";
         if(isfile(rootfs_medatata+name+".yaml")){
-            debug("skip quartine package extract:"+name);
+            debug(_("Skip quartine package extract: %s").printf(name));
             return;
         }
         // extract data archive
@@ -240,7 +240,7 @@ public class package {
                 // 2. validate data archive
                 var data_hash = calculate_sha1sum(datafile);
                 if(data_hash != get("archive-hash")){
-                    error_add("Archive sha1sum mismatch");
+                    error_add(_("Archive sha1sum mismatch"));
                     remove_file(datafile);
                 }
                 // 3. data.* package extract to quarantine/rootfs
@@ -274,7 +274,7 @@ public class package {
     //DOC: build source code into buildpath
     public void build(){
         if(pkgfile == null){
-            error_add("Package archive missing");
+            error_add(_("Package archive missing"));
             return;
         }
         create_dir(DESTDIR+"/tmp/ymp-build/"+name);
@@ -322,7 +322,7 @@ public string[] list_installed_packages(){
 public package get_installed_package(string name){
     package pkg = new package();
     string metadata = get_metadata_path(name);
-    debug("Loading package metadata from: "+metadata);
+    debug(_("Loading package metadata from: %s").printf(metadata));
     pkg.load(metadata);
     return pkg;
 }
