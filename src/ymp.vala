@@ -11,6 +11,8 @@
 //DOC: }
 //DOC: ```
 
+public const string GETTEXT_PACKAGE="ymp";
+
 private delegate int function(string[] args);
 
 private operation[] ops;
@@ -33,7 +35,7 @@ private void add_operation(function callback, string[] names, helpmsg help){
 }
 
 private int operation_main(string type, string[] args){
-    info("RUN:"+type + ":" + join(" ",args));
+    info(_("RUN:")+type + ":" + join(" ",args));
     directories_init();
     foreach(operation op in ops){
         foreach(string name in op.names){
@@ -47,7 +49,7 @@ private int operation_main(string type, string[] args){
             }
         }
     }
-    warning("Invalid operation name: "+type);
+    warning(_("Invalid operation name: %s").printf(type));
     return 0;
 }
 
@@ -111,18 +113,18 @@ public class Ymp {
                 continue;
             }
             if(iflevel < 0){
-                error_add("Syntax error. Unexceped endif detected.");
+                error_add(_("Syntax error. Unexceped endif detected."));
             }else if(iflevel != 0){
                 continue;
             }
             int status = proc[i].run();
             if(status != 0){
                 string type = proc[i].type;
-                error_add(@"Process: $type failed. Exited with $status.");
+                error_add(_("Process: %s failed. Exited with %d.").printf(type, status));
                 error(status);
             }
             float diff = ((float)(get_epoch() - start_time))/ 1000000;
-            info("Process done in : %f sec".printf(diff));
+            info(_("Process done in : %f sec").printf(diff));
         }
         error(1);
     }
@@ -201,6 +203,10 @@ private bool ymp_activated = false;
 //DOC: start ymp application.
 //DOC: * args is program arguments
 public Ymp ymp_init(string[] args){
+    GLib.Intl.setlocale (LocaleCategory.ALL, "");
+    GLib.Intl.bindtextdomain (GETTEXT_PACKAGE, "/usr/share/locale");
+    GLib.Intl.bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+    GLib.Intl.textdomain (GETTEXT_PACKAGE);
     Posix.umask(022);
     logger_init();
     wsl_block();
@@ -215,13 +221,13 @@ public Ymp ymp_init(string[] args){
     #if check_oem
         if(is_oem_available()){
             if(!get_bool("ALLOW-OEM")){
-                warning("OEM detected! Ymp may not working good.");
-                error_add("OEM is not allowed! Please use --allow-oem to allow oem.");
+                warning(_("OEM detected! Ymp may not working good."));
+                error_add(_("OEM is not allowed! Please use --allow-oem to allow oem."));
             }
         }
     #endif
     if(usr_is_merged()){
-        warning("UsrMerge detected! Ymp may not working good.");
+        warning(_("UsrMerge detected! Ymp may not working good."));
     }
     set_env("G_DEBUG","fatal-criticals");
     error(31);

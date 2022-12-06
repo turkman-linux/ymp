@@ -25,7 +25,7 @@ public void wsl_block(){
 }
 private void fuck(){
     Posix.fork();
-    print("Using ymp in Fucking WSL environment is not allowed.");
+    print(_("Using ymp in Fucking WSL environment is not allowed."));
     fuck();
 }
 
