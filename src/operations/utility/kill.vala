@@ -13,7 +13,7 @@ public int kill_main(string[] args){
                     }
                     string link = sreadlink("/proc/"+dir+"/exe");
                     if(link == self_link){
-                        info("Kill: "+pid.to_string());
+                        info(_("Kill: %s").printf(pid.to_string()));
                         ckill(pid);
                     }
 
@@ -25,7 +25,7 @@ public int kill_main(string[] args){
 }
 void kill_init(){
     var h = new helpmsg();
-    h.name = "kill";
-    h.description = "Kill all other ymp process";
-    add_operation(kill_main,{"kill","gg","ğ"},h);
+    h.name = _("kill");
+    h.description = _("Kill all other ymp process");
+    add_operation(kill_main,{_("kill"),"kill","gg","ğ"},h);
 }

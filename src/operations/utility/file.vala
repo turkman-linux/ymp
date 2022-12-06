@@ -20,7 +20,7 @@ public int remove_file_main(string[] args){
 
 public int copy_file_main(string[] args){
     if(args.length < 2){
-        error_add("Source or Target not defined.");
+        error_add(_("Source or Target not defined."));
         error(1);
     }
     string src = srealpath(args[0]);
@@ -41,7 +41,7 @@ public int copy_file_main(string[] args){
 
 public int move_file_main(string[] args){
     if(args.length < 2){
-        error_add("Source or Target not defined.");
+        error_add(_("Source or Target not defined."));
         error(1);
     }
     string src = srealpath(args[0]);
@@ -62,12 +62,12 @@ public int move_file_main(string[] args){
 
 void file_init(){
     var h = new helpmsg();
-    h.name = "file";
+    h.name = _("file");
     h.minargs=1;
-    h.description = "Copy / Move / Remove files or directories";
-    h.add_parameter("--remove","remove file or directories");
-    h.add_parameter("--copy","copy file or directories");
-    h.add_parameter("--move","move file or directories");
-    h.add_parameter("--extract","extract archive file (same as extract operation)");
-    add_operation(file_main,{"f", "file"},h);
+    h.description = _("Copy / Move / Remove files or directories");
+    h.add_parameter("--remove",_("remove file or directories"));
+    h.add_parameter("--copy",_("copy file or directories"));
+    h.add_parameter("--move",_("move file or directories"));
+    h.add_parameter("--extract",_("extract archive file (same as extract operation)"));
+    add_operation(file_main,{_("file"),"f", "file"},h);
 }

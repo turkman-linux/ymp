@@ -1,13 +1,13 @@
 public int help_main(string[] args){
     if (args.length == 0){
-        print(colorize("Operation list: ",blue));
+        print(colorize(_("Operation list:"),blue));
         foreach(operation op in ops){
             if(!op.help.shell_only){
                 print_fn(colorize(op.help.name+" : ",green)+op.help.description+"\n", false, false);
             }
         }
         if(get_bool("all")){
-            print(colorize("Shell only operation list: ",blue));
+            print(colorize(_("Shell only operation list:"),blue));
             foreach(operation op in ops){
                 if(op.help.shell_only){
                     print_fn(colorize(op.help.name+" : ",green)+op.help.description+"\n", false, false);
@@ -18,7 +18,7 @@ public int help_main(string[] args){
         foreach(string arg in args){
             foreach(operation op in ops){
                 if(arg in op.names){
-                    print(colorize("Aliases: ",green)+join(" / ",uniq(op.names)));
+                    print(colorize(_("Aliases:"),green)+join(" / ",uniq(op.names)));
                     write_op_help(op);
                 }
             }
@@ -30,7 +30,7 @@ public int help_main(string[] args){
 
 public void write_version(){
     print("YMP : "+colorize("Y",red)+"erli ve "+colorize("M",red)+"illi "+colorize("P",red)+"ackage manager");
-    print("Version : "+VERSION);
+    print(_("Version")+" : "+VERSION);
     if(!get_bool("flag")){
         return;
     }
@@ -62,27 +62,27 @@ private void write_op_help(operation op){
     print_stderr(op.help.build());
 }
 void help_init(){
-    add_common_parameter("--","stop argument parser");
+    add_common_parameter("--",_("stop argument parser"));
     #if check_oem
-    add_common_parameter("--allow-oem","disable oem check");
+    add_common_parameter("--allow-oem",_("disable oem check"));
     #endif
-    add_common_parameter("--quiet","disable output");
-    add_common_parameter("--ignore-warning","disable warning messages");
+    add_common_parameter("--quiet",_("disable output"));
+    add_common_parameter("--ignore-warning",_("disable warning messages"));
     #if DEBUG
-    add_common_parameter("--debug","enable debug output");
+    add_common_parameter("--debug",_("enable debug output"));
     #endif
-    add_common_parameter("--verbose","show verbose output");
-    add_common_parameter("--ask","enable questions");
-    add_common_parameter("--no-color","disable color output");
-    add_common_parameter("--no-sysconf","disable sysconf triggers");
-    add_common_parameter("--sandbox","run ymp actions at sandbox environment");
-    add_common_parameter("--help","write help messages");
+    add_common_parameter("--verbose",_("show verbose output"));
+    add_common_parameter("--ask",_("enable questions"));
+    add_common_parameter("--no-color",_("disable color output"));
+    add_common_parameter("--no-sysconf",_("disable sysconf triggers"));
+    add_common_parameter("--sandbox",_("run ymp actions at sandbox environment"));
+    add_common_parameter("--help",_("write help messages"));
 
 
     var h = new helpmsg();
-    h.name = "help";
-    h.description = "Write help message about ymp commands.";
-    add_operation(help_main,{"help"},h);
+    h.name = _("help");
+    h.description = _("Write help message about ymp commands.");
+    add_operation(help_main,{_("help"),"help"},h);
     
 }
 

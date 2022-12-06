@@ -1,7 +1,7 @@
 public int extract_main(string[] args){
     ymp_init(args);
     if(args.length < 1){
-        error_add("Archive Missing");
+        error_add(_("Archive Missing"));
         error(2);
     }
     var tar = new archive();
@@ -25,9 +25,9 @@ public int extract_main(string[] args){
 
 void extract_init(){
     var h = new helpmsg();
-    h.name = "extract";
+    h.name = _("extract");
     h.minargs=1;
-    h.description = "Extract files from archive.";
-    h.add_parameter("--listt","List archive files");
-    add_operation(extract_main,{"extract","x"},h);
+    h.description = _("Extract files from archive.");
+    h.add_parameter("--list",_("List archive files"));
+    add_operation(extract_main,{_("extract"),"extract","x"},h);
 }

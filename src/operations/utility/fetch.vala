@@ -1,7 +1,7 @@
 public int fetch_main(string[] args){
     ymp_init(args);
     if(args.length < 1){
-        error_add("URL missing");
+        error_add(_("URL missing"));
         error(2);
     }
     
@@ -20,8 +20,8 @@ public int fetch_main(string[] args){
 
 void fetch_init(){
     var h = new helpmsg();
-    h.name = "fetch";
+    h.name = _("fetch");
     h.minargs=1;
-    h.description = "Download files from network";
-    add_operation(fetch_main,{"fetch","download","dl"}, h);
+    h.description = _("Download files from network");
+    add_operation(fetch_main,{_("fetch"),"fetch","download","dl"}, h);
 }

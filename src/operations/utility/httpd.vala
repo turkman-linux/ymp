@@ -55,10 +55,10 @@ async void process_request(SocketConnection conn) {
             dos.put_string("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
             dos.put_string("<html>\n<head>");
             dos.put_string("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n");
-            dos.put_string("<title>Directory listing for "+path+"</title>\n");
+            dos.put_string("<title>"+_("Directory listing for %s").printf(path)+"</title>\n");
             dos.put_string("<style>.link { text-decoration: none;}</style>\n");
             dos.put_string("</head>\n<body>\n");
-            dos.put_string("<h1>Directory listing for "+path+"</h1>\n");
+            dos.put_string("<h1>"+_("Directory listing for %s").printf(path)+"</h1>\n");
             dos.put_string("<hr>\n<ul>\n");
             if(path != "/"){
                 dos.put_string("&#x1F4C1; <a href=\"../\">..</a><br></li>\n");
@@ -127,7 +127,7 @@ public int httpd_main(string[] args) {
         srv.add_inet_port((uint16)port, null);
         srv.incoming.connect(on_incoming_connection);
         srv.start();
-        print_fn("Servering HTTP on 0.0.0.0 port %s".printf(port.to_string()),true,true);
+        print_fn(_("Servering HTTP on 0.0.0.0 port %s").printf(port.to_string()),true,true);
         new MainLoop().run();
     } catch (Error e) {
         error_add(e.message);
@@ -137,7 +137,7 @@ public int httpd_main(string[] args) {
 }
 void httpd_init() {
     var h = new helpmsg();
-    h.name = "httpd";
-    h.description = "Simple http server";
-    add_operation(httpd_main, {"httpd"}, h);
+    h.name = _("httpd");
+    h.description = _("Simple http server");
+    add_operation(httpd_main, {_("httpd"),"httpd"}, h);
 }

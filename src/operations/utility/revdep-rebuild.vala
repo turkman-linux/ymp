@@ -25,7 +25,7 @@ public int revdep_rebuild_main(string[] args){
 
 private string ldddata;
 public void check(string file){
-    print_fn("\x1b[2K\rChecking: "+file,false,true);
+    print_fn("\x1b[2K\r"+_("Checking: %s").printf(file),false,true);
     ldddata = getoutput("ldd "+file+" 2>/dev/null");
     foreach(string line in ssplit(ldddata,"\n")){
         if(endswith(line,"not found")){
@@ -37,7 +37,7 @@ public void check(string file){
 
 void revdep_rebuild_init(){
     var h = new helpmsg();
-    h.name = "revdep-rebuild";
-    h.description = "Check library for broken link.";
-    add_operation(revdep_rebuild_main,{"revdep-rebuild","rbd"},h);
+    h.name = _("revdep-rebuild");
+    h.description = _("Check library for broken link.");
+    add_operation(revdep_rebuild_main,{_("revdep-rebuild"),"revdep-rebuild","rbd"},h);
 }

@@ -23,9 +23,9 @@ public int yamlget_main(string[] args){
 
 void yamlget_init(){
     var h = new helpmsg();
-    h.name = "yamlget";
+    h.name = _("yamlget");
     h.minargs = 2;
-    h.usage = "iniget [file] [path]";
-    h.description = "Parse yaml files";
-    add_operation(yamlget_main,{"yamlget","yaml"},h);
+    h.usage = _("yamlget [file] [path]");
+    h.description = _("Parse yaml files");
+    add_operation(yamlget_main,{_("yamlget"),"yamlget","yaml"},h);
 }
