@@ -21,20 +21,20 @@ public int template_main(string[] args){
         data += "setup(){\n";
         data += "    [[ -f ./autogen.sh ]] && ./autogen.sh\n";
         data += "    ./configure --prefix=/usr \\\n";
-        data += "        --libdir=/usr/lib64\n";
+        data += "        --libdir=/usr/lib64/"+str_or_def("name","")+"\n";
         data += "}\n\n";
         data += "build(){\n";
         data += "    make -j`nproc`\n";
         data += "}\n\n";
         data += "package(){\n";
         data += "    make install -j`nproc`\n";
-        data += "}\n\n";
 
     }else if(buildtype == "cmake" || buildtype == ""){
         data += "setup(){\n";
         data += "    mkdir build\n";
         data += "    cd build\n";
-        data += "    cmake -DCMAKE_INSTALL_PREFIX=/usr ..\n";
+        data += "    cmake -DCMAKE_INSTALL_PREFIX=/usr \\\n";
+        data += "        -DCMAKE_INSTALL_LIBDIR=lib64/"+str_or_def("name","")+" ..\n";
         data += "}\n\n";
         data += "build(){\n";
         data += "    cd build\n";
@@ -43,18 +43,17 @@ public int template_main(string[] args){
         data += "package(){\n";
         data += "    cd build\n";
         data += "    make install -j`nproc`\n";
-        data += "}\n\n";
 
     }else if(buildtype == "meson" || buildtype == ""){
         data += "setup(){\n";
-        data += "    meson setup build --prefix=/usr\n";
+        data += "    meson setup build --prefix=/usr \\\n";
+        data += "        --libdir=/usr/lib64/"+str_or_def("name","")+"\n";
         data += "}\n\n";
         data += "build(){\n";
         data += "    ninja -C build\n";
         data += "}\n\n";
         data += "package(){\n";
         data += "    ninja install -C build\n";
-        data += "}\n\n";
 
     }else{
         data += "setup(){\n";
@@ -65,8 +64,11 @@ public int template_main(string[] args){
         data += "}\n\n";
         data += "package(){\n";
         data += "    :\n";
-        data += "}\n\n";
     }
+    data += "    mkdir -p ${DESTDIR}/etc/ld.so.conf.d/\n";
+    data += "    echo \"/usr/lib64/"+str_or_def("name","")+"\" > ${DESTDIR}/etc/ld.so.conf.d/"+str_or_def("name","")+".conf\n";
+    data += "}\n\n";
+
     if(get_bool("ask")){
         print(colorize("Please check ympbuild:",blue));
         print(data);
