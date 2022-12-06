@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-06 14:43+0000\n"
-"PO-Revision-Date: 2022-12-06 15:06+0000\n"
+"PO-Revision-Date: 2022-12-06 15:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: tr\n"
@@ -233,7 +233,7 @@ msgstr "Karantina kurulumu"
 #: src/data/quarantine.vala:232
 #, c-format
 msgid "Installing: %s => %s"
-msgstr "Kuruluyor: %s => %s"
+msgstr "Yükleniyor: %s => %s"
 
 #: src/data/dependency.vala:8
 #, c-format
@@ -823,7 +823,7 @@ msgstr "Depodan yükleniyor: %s"
 
 #: src/operations/package-manager/install.vala:66
 msgid "Installing:"
-msgstr "Kuruluyor:"
+msgstr "Yükleniyor:"
 
 #: src/operations/package-manager/install.vala:82
 msgid "Calculating leftovers"
