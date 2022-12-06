@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-06 14:43+0000\n"
+"POT-Creation-Date: 2022-12-06 16:50+0000\n"
 "PO-Revision-Date: 2022-12-06 15:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -56,7 +56,8 @@ msgstr "OEM despit edildi! Ymp iyi çalışmayabilir."
 
 #: src/ymp.vala:225
 msgid "OEM is not allowed! Please use --allow-oem to allow oem."
-msgstr "OEM'e izin verilmez! Oem'e izin vermek için lütfen --allow-oem kullanın."
+msgstr ""
+"OEM'e izin verilmez! Oem'e izin vermek için lütfen --allow-oem kullanın."
 
 #: src/ymp.vala:230
 msgid "UsrMerge detected! Ymp may not working good."
@@ -162,9 +163,8 @@ msgid "Quarantine validation disabled"
 msgstr "Karantina doğrulaması kapalı"
 
 #: src/data/quarantine.vala:67 src/data/quarantine.vala:144
-#, c-format
-msgid "Validate quarantine for: %s"
-msgstr "Şunun için karantina doğrulaması: %s"
+msgid "Validating:"
+msgstr "Doğrulanıyor:"
 
 #: src/data/quarantine.vala:94 src/data/quarantine.vala:169
 #, c-format
@@ -176,7 +176,7 @@ msgstr "Geçersiz replaces yolu: %s (%s)"
 msgid "File already exists in filesystem: /%s (%s)"
 msgstr "Dosya zaten dosya sisteminde mevcut: /%s (%s)"
 
-#: src/data/quarantine.vala:112
+#: src/data/quarantine.vala:112 src/data/quarantine.vala:186
 #, c-format
 msgid "Validating: %s"
 msgstr "Doğrulanıyor: %s"
@@ -234,6 +234,10 @@ msgstr "Karantina kurulumu"
 #, c-format
 msgid "Installing: %s => %s"
 msgstr "Yükleniyor: %s => %s"
+
+#: src/data/quarantine.vala:268
+msgid "Quarantine import"
+msgstr "Karantina içeri aktarma"
 
 #: src/data/dependency.vala:8
 #, c-format
@@ -986,3 +990,4 @@ msgstr "Komut girilmedi."
 #, c-format
 msgid "Run %s for more information about usage."
 msgstr "Daha fazla bilgi için %s çalıştırın."
+

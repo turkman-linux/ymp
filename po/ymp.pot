@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-06 14:43+0000\n"
+"POT-Creation-Date: 2022-12-06 16:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,8 +162,7 @@ msgid "Quarantine validation disabled"
 msgstr ""
 
 #: src/data/quarantine.vala:67 src/data/quarantine.vala:144
-#, c-format
-msgid "Validate quarantine for: %s"
+msgid "Validating:"
 msgstr ""
 
 #: src/data/quarantine.vala:94 src/data/quarantine.vala:169
@@ -176,7 +175,7 @@ msgstr ""
 msgid "File already exists in filesystem: /%s (%s)"
 msgstr ""
 
-#: src/data/quarantine.vala:112
+#: src/data/quarantine.vala:112 src/data/quarantine.vala:186
 #, c-format
 msgid "Validating: %s"
 msgstr ""
@@ -233,6 +232,10 @@ msgstr ""
 #: src/data/quarantine.vala:232
 #, c-format
 msgid "Installing: %s => %s"
+msgstr ""
+
+#: src/data/quarantine.vala:268
+msgid "Quarantine import"
 msgstr ""
 
 #: src/data/dependency.vala:8
