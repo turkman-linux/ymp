@@ -41,7 +41,7 @@ public int install_main(string[] args){
     quarantine_install();
     quarantine_reset();
     error(1);
-    info(_("Clear leftovers"));
+    print(colorize(_("Clear leftovers"),yellow));
     foreach(string file in leftovers){
         remove_file(DESTDIR+"/"+file);
     }
