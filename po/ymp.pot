@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-06 12:02+0000\n"
+"POT-Creation-Date: 2022-12-06 12:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,53 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/settings.vala:40
+#: src/data/repository.vala:182 src/data/repository.vala:206
 #, c-format
-msgid "Config file not exists: %s"
+msgid "Package not satisfied from repository: %s"
 msgstr ""
 
-#: src/settings.vala:68
+#: src/data/repository.vala:239 src/data/repository.vala:243
 #, c-format
-msgid "Destdir changed: %s"
+msgid "Find repo list: %s"
 msgstr ""
 
-#: src/ymp.vala:38
-msgid "RUN:"
-msgstr ""
-
-#: src/ymp.vala:52
+#: src/data/repository.vala:268
 #, c-format
-msgid "Invalid operation name: %s"
+msgid "Invalid repository index: %s"
 msgstr ""
 
-#: src/ymp.vala:116
-msgid "Syntax error. Unexceped endif detected."
-msgstr ""
-
-#: src/ymp.vala:123
-#, c-format
-msgid "Process: %s failed. Exited with %d."
-msgstr ""
-
-#: src/ymp.vala:127
-#, c-format
-msgid "Process done in : %f sec"
-msgstr ""
-
-#: src/ymp.vala:224
-msgid "OEM detected! Ymp may not working good."
-msgstr ""
-
-#: src/ymp.vala:225
-msgid "OEM is not allowed! Please use --allow-oem to allow oem."
-msgstr ""
-
-#: src/ymp.vala:230
-msgid "UsrMerge detected! Ymp may not working good."
-msgstr ""
-
-#: src/wslblock.vala:28
-msgid "Using ymp in Fucking WSL environment is not allowed."
+#: src/data/repository.vala:303
+msgid "Index name not defined. Please use --name=xxx"
 msgstr ""
 
 #: src/data/package.vala:47
@@ -132,6 +102,41 @@ msgstr ""
 #: src/data/package.vala:325
 #, c-format
 msgid "Loading package metadata from: %s"
+msgstr ""
+
+#: src/data/dependency.vala:8
+#, c-format
+msgid "Resolve dependency: %s"
+msgstr ""
+
+#: src/data/dependency.vala:59
+#, c-format
+msgid "Resolve group: %s"
+msgstr ""
+
+#: src/data/dependency.vala:75
+#, c-format
+msgid "Group %s: add %s"
+msgstr ""
+
+#: src/data/dependency.vala:84
+#, c-format
+msgid "Resolve ordep packages: %s"
+msgstr ""
+
+#: src/data/dependency.vala:100
+#, c-format
+msgid "Resolve regex: %s"
+msgstr ""
+
+#: src/data/dependency.vala:110
+#, c-format
+msgid "Match %s: rule %s"
+msgstr ""
+
+#: src/data/dependency.vala:150
+#, c-format
+msgid "Resolve reverse dependency: %s"
 msgstr ""
 
 #: src/data/ympbuild.vala:136
@@ -235,60 +240,6 @@ msgstr ""
 msgid "Installing: %s => %s"
 msgstr ""
 
-#: src/data/dependency.vala:8
-#, c-format
-msgid "Resolve dependency: %s"
-msgstr ""
-
-#: src/data/dependency.vala:59
-#, c-format
-msgid "Resolve group: %s"
-msgstr ""
-
-#: src/data/dependency.vala:75
-#, c-format
-msgid "Group %s: add %s"
-msgstr ""
-
-#: src/data/dependency.vala:84
-#, c-format
-msgid "Resolve ordep packages: %s"
-msgstr ""
-
-#: src/data/dependency.vala:100
-#, c-format
-msgid "Resolve regex: %s"
-msgstr ""
-
-#: src/data/dependency.vala:110
-#, c-format
-msgid "Match %s: rule %s"
-msgstr ""
-
-#: src/data/dependency.vala:150
-#, c-format
-msgid "Resolve reverse dependency: %s"
-msgstr ""
-
-#: src/data/repository.vala:182 src/data/repository.vala:206
-#, c-format
-msgid "Package not satisfied from repository: %s"
-msgstr ""
-
-#: src/data/repository.vala:239 src/data/repository.vala:243
-#, c-format
-msgid "Find repo list: %s"
-msgstr ""
-
-#: src/data/repository.vala:268
-#, c-format
-msgid "Invalid repository index: %s"
-msgstr ""
-
-#: src/data/repository.vala:303
-msgid "Index name not defined. Please use --name=xxx"
-msgstr ""
-
 #: src/ymp-cli.vala:37
 msgid "No command given."
 msgstr ""
@@ -296,4 +247,284 @@ msgstr ""
 #: src/ymp-cli.vala:37
 #, c-format
 msgid "Run %s for more information about usage."
+msgstr ""
+
+#: src/ymp.vala:38
+msgid "RUN:"
+msgstr ""
+
+#: src/ymp.vala:52
+#, c-format
+msgid "Invalid operation name: %s"
+msgstr ""
+
+#: src/ymp.vala:116
+msgid "Syntax error. Unexceped endif detected."
+msgstr ""
+
+#: src/ymp.vala:123
+#, c-format
+msgid "Process: %s failed. Exited with %d."
+msgstr ""
+
+#: src/ymp.vala:127
+#, c-format
+msgid "Process done in : %f sec"
+msgstr ""
+
+#: src/ymp.vala:224
+msgid "OEM detected! Ymp may not working good."
+msgstr ""
+
+#: src/ymp.vala:225
+msgid "OEM is not allowed! Please use --allow-oem to allow oem."
+msgstr ""
+
+#: src/ymp.vala:230
+msgid "UsrMerge detected! Ymp may not working good."
+msgstr ""
+
+#: src/settings.vala:40
+#, c-format
+msgid "Config file not exists: %s"
+msgstr ""
+
+#: src/settings.vala:68
+#, c-format
+msgid "Destdir changed: %s"
+msgstr ""
+
+#: src/wslblock.vala:28
+msgid "Using ymp in Fucking WSL environment is not allowed."
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:2
+#: src/operations/package-manager/clean.vala:4
+#: src/operations/package-manager/clean.vala:6
+#: src/operations/package-manager/clean.vala:8
+msgid "Clean: "
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:2
+msgid "package cache"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:4
+msgid "repository index cache"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:6
+msgid "build directory"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:8
+msgid "quarantine"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:15
+#: src/operations/package-manager/clean.vala:17
+msgid "clean"
+msgstr ""
+
+#: src/operations/package-manager/clean.vala:16
+msgid "Remove all caches "
+msgstr ""
+
+#: src/operations/package-manager/build.vala:6
+msgid "Build operation with usrmerge is not allowed!"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:17
+msgid "Failed to fetch git package."
+msgstr ""
+
+#: src/operations/package-manager/build.vala:37
+#, c-format
+msgid "Package is invalid: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:121
+#, c-format
+msgid "Packages is not installed: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:135
+msgid "ympbuild file is invalid!"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:155
+msgid "Source file already exists."
+msgstr ""
+
+#: src/operations/package-manager/build.vala:157
+msgid "Source file import from cache."
+msgstr ""
+
+#: src/operations/package-manager/build.vala:162
+#, c-format
+msgid "Download: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:169
+#, c-format
+msgid "md5sum check failed. Excepted: %s <> Reveiced: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:193
+msgid "Building package from:"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:199
+#, c-format
+msgid "Running build action: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:202
+#: src/operations/package-manager/build.vala:213
+#, c-format
+msgid "Failed to build package. Action: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:224
+msgid "Create source package from :"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:269
+#, c-format
+msgid "Files are not allowed in root directory: /%s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:280
+#, c-format
+msgid "Empty file detected: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:285
+msgid "Broken symlink detected:"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:289
+#, c-format
+msgid "Link info add: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:297
+#, c-format
+msgid "File info add: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:319
+msgid "Dependency check disabled"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:324
+#: src/operations/package-manager/build.vala:331
+#, c-format
+msgid "Package %s in not satisfied. Required by: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:342
+msgid "Source array not defined"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:379
+#, c-format
+msgid "Add use flag dependency: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:393
+msgid "Release is not defined."
+msgstr ""
+
+#: src/operations/package-manager/build.vala:396
+msgid "Version is not defined."
+msgstr ""
+
+#: src/operations/package-manager/build.vala:399
+msgid "Name is not defined."
+msgstr ""
+
+#: src/operations/package-manager/build.vala:410
+msgid "Create data file: "
+msgstr ""
+
+#: src/operations/package-manager/build.vala:421
+#, c-format
+msgid "Compress: %s"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:445
+msgid "Create binary package from :"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:469
+#: src/operations/package-manager/build.vala:478
+msgid "build"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:470
+msgid "Build package from ympbuild file."
+msgstr ""
+
+#: src/operations/package-manager/build.vala:471
+msgid "do not generate source package"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:472
+msgid "do not generate binary package"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:473
+msgid "do not build package (only test and package)"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:474
+msgid "do not install package after building"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:475
+msgid "disable dependency check"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:476
+#: src/operations/package-manager/bootstrap.vala:47
+msgid "use binary packages"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:477
+msgid "install binary package after building"
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:3
+msgid "You must be root!"
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:8
+msgid "Mirror is not defined. Please use --mirror ."
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:10
+msgid "Destdir is not defined. Please use --destdir ."
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:13
+#, c-format
+msgid "Target rootfs already exists: %s"
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:16
+msgid "Creating bootstrap:"
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:44
+#: src/operations/package-manager/bootstrap.vala:48
+msgid "bootstrap"
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:45
+msgid "Create new rootfs filesystem."
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:46
+msgid "bootstrap mirror uri"
 msgstr ""

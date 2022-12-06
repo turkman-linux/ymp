@@ -1,18 +1,18 @@
 public int clean_main(string[] args){
-    print(colorize("Clean: ",yellow)+"package cache");
+    print(colorize(_("Clean: "),yellow)+_("package cache"));
     remove_all(get_storage()+"/packages");
-    print(colorize("Clean: ",yellow)+"repository index cache");
+    print(colorize(_("Clean: "),yellow)+_("repository index cache"));
     remove_all(get_storage()+"/index");
-    print(colorize("Clean: ",yellow)+"build directory");
+    print(colorize(_("Clean: "),yellow)+_("build directory"));
     remove_all(DESTDIR+"/tmp/ymp-build/");
-    print(colorize("Clean: ",yellow)+"quarantine");
+    print(colorize(_("Clean: "),yellow)+_("quarantine"));
     quarantine_reset();
     return 0;
 }
 
 void clean_init(){
     var h = new helpmsg();
-    h.name = "clean";
-    h.description = "Remove all caches ";
-    add_operation(clean_main,{"clean","cc"},h);
+    h.name = _("clean");
+    h.description = _("Remove all caches ");
+    add_operation(clean_main,{_("clean"), "clean","cc"},h);
 }

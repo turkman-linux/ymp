@@ -1,19 +1,19 @@
 public int bootstrap_main(string[] args){
     if(!is_root()){
-        error_add("You must be root!");
+        error_add(_("You must be root!"));
     }
     string repo=get_value("mirror");
     string rootfs=srealpath(get_value("destdir"));
     if(repo == ""){
-        error_add("Mirror is not defined. Please use --mirror .");
+        error_add(_("Mirror is not defined. Please use --mirror ."));
     }if(DESTDIR=="/"){
-        error_add("Destdir is not defined. Please use --destdir .");
+        error_add(_("Destdir is not defined. Please use --destdir ."));
     }
     if(isfile(DESTDIR+"/etc/os-release")){
-        error_add("Target rootfs already exists: "+DESTDIR);
+        error_add(_("Target rootfs already exists: %s").printf(DESTDIR));
     }
     error(2);
-    print(colorize("Creating bootstrap:",blue));
+    print(colorize(_("Creating bootstrap:"),blue));
     string[] basedir = {"dev", "sys", "proc", "run"};
     string[] base_packages = {"busybox", "base-files", "glibc"};
     foreach(string dir in basedir){
@@ -41,9 +41,9 @@ public int bootstrap_main(string[] args){
 
 void bootstrap_init(){
     var h = new helpmsg();
-    h.name = "bootstrap";
-    h.description = "Create new rootfs filesystem.";
-    h.add_parameter("--mirror", "bootstrap mirror uri");
-    h.add_parameter("--no-emerge", "use binary packages");
-    add_operation(bootstrap_main,{"bootstrap","bst"},h);
+    h.name = _("bootstrap");
+    h.description = _("Create new rootfs filesystem.");
+    h.add_parameter("--mirror", _("bootstrap mirror uri"));
+    h.add_parameter("--no-emerge", _("use binary packages"));
+    add_operation(bootstrap_main,{_("bootstrap"),"bootstrap","bst"},h);
 }

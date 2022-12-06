@@ -3,7 +3,7 @@ public int build_operation(string[] args){
     string currend_directory=srealpath(pwd());
     string[] new_args = args;
     if(usr_is_merged()){
-        error_add("Build operation with usrmerge is not allowed!");
+        error_add(_("Build operation with usrmerge is not allowed!"));
         error(31);
     }
     if(new_args.length == 0){
@@ -14,7 +14,7 @@ public int build_operation(string[] args){
         if(startswith(arg,"git://") || endswith(arg,".git")){
             srcpath=DESTDIR+"/tmp/ymp-build/"+sbasename(arg);
             if(run("git clone '"+arg+"' "+srcpath) != 0){
-                error_add("Failed to fetch git package.");
+                error_add(_("Failed to fetch git package."));
                 return 2;
             }
         }else if(startswith(arg,"http://") || startswith(arg,"https://")){
@@ -34,7 +34,7 @@ public int build_operation(string[] args){
             tar.set_target(srcpath);
             tar.extract_all();
             if(!isfile(srcpath+"/ympbuild")){
-                error_add("Package is invalid");
+                error_add(_("Package is invalid: %s").printf(arg));
                 remove_all(srcpath);
                 return 2;
             }
@@ -118,7 +118,7 @@ private bool check_build_dependencies(string[] args){
         }
     }
     if(need_install.length > 0){
-        error_add("Packages is not installed: "+join(" ",need_install));
+        error_add(_("Packages is not installed: %s").printf(join(" ",need_install)));
     }
     return (!has_error());
 }
@@ -132,7 +132,7 @@ private bool set_build_target(string src_path){
         remove_all(build_path);
     }
     if(!ympbuild_check()){
-        error_add("ympbuild file is invalid!");
+        error_add(_("ympbuild file is invalid!"));
         return false;
     }
     return true;
@@ -152,21 +152,21 @@ private bool fetch_package_sources(){
         string ymp_source_cache = DESTDIR+"/tmp/ymp-build/.cache/"+get_ympbuild_value("name")+"/";
         create_dir(ymp_source_cache);
         if(isfile(srcfile)){
-            info("Source file already exists.");
+            info(_("Source file already exists."));
         }else if(isfile(ymp_source_cache+"/"+sbasename(src))){
-            info("Source file import from cache.");
+            info(_("Source file import from cache."));
             copy_file(ymp_source_cache+"/"+sbasename(src), srcfile);
         }else if(isfile(ympbuild_srcpath+"/"+src)){
             copy_file(ympbuild_srcpath+"/"+src, srcfile);
         }else{
-            info("Download: "+src);
+            info(_("Download: %s").printf(src));
             fetch(src,ymp_source_cache+"/"+sbasename(src));
             copy_file(ymp_source_cache+"/"+sbasename(src), srcfile);
         }
         string md5 = calculate_md5sum(srcfile);
         if (md5sums[i] != md5 && md5sums[i] != "SKIP"){
             remove_all(ymp_source_cache+"/"+sbasename(src));
-            error_add("md5 check failed. Excepted: "+md5sums[i]+" <> Reveiced: "+md5);
+            error_add(_("md5sum check failed. Excepted: %s <> Reveiced: %s").printf(md5sums[i],md5));
         }
         i++;
     }
@@ -190,16 +190,16 @@ private bool extract_package_sources(){
 }
 
 private bool build_package(){
-    print(colorize("Building package from:",yellow)+ympbuild_buildpath);
+    print(colorize(_("Building package from:"),yellow)+ympbuild_buildpath);
     cd(ympbuild_buildpath);
     int status = 0;
     if(!get_bool("no-build")){
         string[] build_actions = {"prepare","setup", "build"};
         foreach(string func in build_actions){
-            info("Running build action: "+func);
+            info(_("Running build action: %s").printf(func));
             status = run_ympbuild_function(func);
             if(status != 0){
-                error_add("Failed to build package. Action: "+func);
+                error_add(_("Failed to build package. Action: %s").printf(func));
                 return false;
             }
         }
@@ -210,7 +210,7 @@ private bool build_package(){
             info("Running build action: "+func);
             status = run_ympbuild_function(func);
             if(status != 0){
-                error_add("Failed to build package. Action: "+func);
+                error_add(_("Failed to build package. Action: %s").printf(func));
                 return false;
             }
         }
@@ -221,7 +221,7 @@ private bool build_package(){
 }
 
 private bool create_source_archive(){
-    print(colorize("Create source package from :",yellow)+ympbuild_srcpath);
+    print(colorize(_("Create source package from :"),yellow)+ympbuild_srcpath);
     cd(ympbuild_srcpath);
     string metadata = get_ympbuild_metadata();
     writefile(srealpath(ympbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
@@ -266,7 +266,7 @@ private bool create_files_info(){
         if(issymlink(fpath)){
             continue;
         }else if(isfile(fpath)){
-            error_add("Files are not allowed in root directory: /"+path);
+            error_add(_("Files are not allowed in root directory: /%s").printf(path));
         }
     }
     foreach(string file in find(ympbuild_buildpath+"/output")){
@@ -277,16 +277,16 @@ private bool create_files_info(){
             continue;
         }
         if(filesize(file)==0){
-            warning("Empty file detected: "+file);
+            warning(_("Empty file detected: %s").printf(file));
         }
         if(issymlink(file)){
             var link = sreadlink(file);
             if(!isexists(sdirname(file)+"/"+link) && link.length > 0){
-                error_add("Broken symlink detected:\n"+file+" => "+link);
+                error_add(_("Broken symlink detected:")+"\n"+file+" => "+link);
                 continue;
             }
             file = file[(ympbuild_buildpath+"/output/").length:];
-            debug("Link info add: "+ file);
+            debug(_("Link info add: %s").printf(file));
             links_data += file+" "+link+"\n";
             continue;
         }else{
@@ -294,7 +294,7 @@ private bool create_files_info(){
             if(file == "metadata.yaml" || file == "icon.svg"){
                 continue;
             }
-            debug("File info add: "+ file);
+            debug(_("File info add: %s").printf(file));
             files_data += calculate_sha1sum(file)+" "+file+"\n";
         }
     }
@@ -316,19 +316,19 @@ private bool create_metadata_info(){
     string release = yaml.get_value(srcdata,"release");
     string version = yaml.get_value(srcdata,"version");
     if(get_bool("ignore-dependency")){
-        warning("Dependency check disabled");
+        warning(_("Dependency check disabled"));
     }else{
         if(yaml.has_area(srcdata,"depends")){
             foreach(string dep in yaml.get_array(srcdata,"depends")){
                 if(!is_installed_package(dep)){
-                    error_add("Package "+dep+" in not satisfied. Required by: "+name);
+                    error_add(_("Package %s in not satisfied. Required by: %s").printf(dep,name));
                 }
             }
         }
         if(yaml.has_area(srcdata,"makedepends")){
             foreach(string dep in yaml.get_array(srcdata,"makedepends")){
                 if(!is_installed_package(dep)){
-                    error_add("Package "+dep+" in not satisfied. Required by: "+name);
+                    error_add(_("Package %s in not satisfied. Required by: %s").printf(dep,name));
                 }
             }
         }
@@ -339,7 +339,7 @@ private bool create_metadata_info(){
     no_src = false;
     if(!yaml.has_area(srcdata,"archive")){
         no_src = true;
-        warning("Source array not defined");
+        warning(_("Source array not defined"));
     }
     string new_data = "ymp:\n";
     new_data += "  package:\n";
@@ -376,7 +376,7 @@ private bool create_metadata_info(){
     }
     if(yaml.has_area(srcdata,"use-flags")){
         foreach(string flag in use_flags){
-            info("Add use flag dependency: "+flag);
+            info(_("Add use flag dependency: %s").printf(flag));
             string[] fdeps = yaml.get_array(srcdata,flag+"-depends");
             if(fdeps.length > 0){
                 deps.adds(fdeps);
@@ -390,13 +390,13 @@ private bool create_metadata_info(){
         }
     }
     if(release == ""){
-        error_add("Release is not defined.");
+        error_add(_("Release is not defined."));
     }
     if(version == ""){
-        error_add("Version is not defined.");
+        error_add(_("Version is not defined."));
     }
     if(name == ""){
-        error_add("Name is not defined.");
+        error_add(_("Name is not defined."));
     }
     if(has_error()){
         return false;
@@ -407,7 +407,7 @@ private bool create_metadata_info(){
 }
 
 private void create_data_file(){
-    debug("Create data file: "+ympbuild_buildpath+"/output/data.tar.gz");
+    debug(_("Create data file: ")+ympbuild_buildpath+"/output/data.tar.gz");
     var tar = new archive();
     tar.load(ympbuild_buildpath+"/output/data.tar.gz");
     aformat=1;
@@ -418,7 +418,7 @@ private void create_data_file(){
             continue;
         }
         file = file[(ympbuild_buildpath+"/output/").length:];
-        debug("Compress:"+file);
+        debug(_("Compress: %s").printf(file));
         if(file == "files" || file == "links" || file == "metadata.yaml"|| file == "icon.svg"){
             continue;
         }
@@ -442,7 +442,7 @@ private void create_data_file(){
 }
 
 private void create_binary_package(){
-    print(colorize("Create binary package from :",yellow)+ympbuild_buildpath);
+    print(colorize(_("Create binary package from :"),yellow)+ympbuild_buildpath);
     cd(ympbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();
@@ -466,16 +466,16 @@ private void create_binary_package(){
 
 void build_init(){
     var h = new helpmsg();
-    h.name = "build";
-    h.description = "Build package from ympbuild file.";
-    h.add_parameter("--no-source", "do not generate source package");
-    h.add_parameter("--no-binary", "do not generate binary package");
-    h.add_parameter("--no-build","do not build package (only test and package)");
-    h.add_parameter("--no-package","do not install package after building");
-    h.add_parameter("--ignore-dependency", "disable dependency check");
-    h.add_parameter("--no-emerge", "use binary packages");
-    h.add_parameter("--install", "install binary package after building");
-    add_operation(build_operation,{"build","bi","make"},h);
+    h.name = _("build");
+    h.description = _("Build package from ympbuild file.");
+    h.add_parameter("--no-source", _("do not generate source package"));
+    h.add_parameter("--no-binary", _("do not generate binary package"));
+    h.add_parameter("--no-build", _("do not build package (only test and package)"));
+    h.add_parameter("--no-package",_("do not install package after building"));
+    h.add_parameter("--ignore-dependency", _("disable dependency check"));
+    h.add_parameter("--no-emerge", _("use binary packages"));
+    h.add_parameter("--install", _("install binary package after building"));
+    add_operation(build_operation,{_("build"),"build","bi","make"},h);
 }
 
 
