@@ -113,6 +113,7 @@ public class array{
                     new_a+=item;
                 }
             }
+            rmsize = 0;
             return new_a;
         }
     }
