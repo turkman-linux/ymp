@@ -11,8 +11,13 @@
 //DOC: }
 //DOC: ```
 
+#if no_locale
+public string _(string msg){
+    return msg;
+}
+#else
 public const string GETTEXT_PACKAGE="ymp";
-
+#endif
 private delegate int function(string[] args);
 
 private operation[] ops;
@@ -203,10 +208,13 @@ private bool ymp_activated = false;
 //DOC: start ymp application.
 //DOC: * args is program arguments
 public Ymp ymp_init(string[] args){
+    #if no_locale
+    #else
     GLib.Intl.setlocale (LocaleCategory.ALL, "");
     GLib.Intl.bindtextdomain (GETTEXT_PACKAGE, "/usr/share/locale");
     GLib.Intl.bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     GLib.Intl.textdomain (GETTEXT_PACKAGE);
+    #endif
     Posix.umask(022);
     logger_init();
     wsl_block();
