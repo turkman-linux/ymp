@@ -59,6 +59,9 @@ if get_option('locale')
 else
     add_project_arguments('-D', 'no_locale', language: 'vala')
 endif
+if get_option('experimental')
+    add_project_arguments('-D', 'experimental', language: 'vala')
+endif
 
 foreach csource : run_command('find', 'src/ccode','-type','f',check:true).stdout().strip().split('\n')
     args += [meson.current_source_dir() / csource]

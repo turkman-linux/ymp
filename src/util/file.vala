@@ -133,10 +133,12 @@ public int remove_file(string path){
     debug("Remove file: "+path);
     File file = File.new_for_path(path);
     try {
+        #if experimental
         // remove file content on disk
         if(!issymlink(path)){
             file.replace_contents("\0x00".data, null, false, FileCreateFlags.NONE, null);
         }
+        #endif
         file.delete();
         return 0;
     }catch (Error e){
