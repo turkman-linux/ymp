@@ -3,7 +3,14 @@ public int revdep_rebuild_main(string[] args){
     set_env("LANG","C");
     set_env("LC_ALL","C");
     if(get_bool("pkgconfig")){
+        writefile("/tmp/.empty.c","");
         string[] paths = {
+            "/lib64/pkgconfig",
+            "/usr/lib64/pkgconfig",
+            "/lib32/pkgconfig",
+            "/usr/lib32/pkgconfig",
+            "/lib/pkgconfig",
+            "/usr/lib/pkgconfig",
             "/lib64/pkgconfig",
             "/usr/lib64/pkgconfig",
             "/usr/share/pkgconfig"
@@ -15,9 +22,9 @@ public int revdep_rebuild_main(string[] args){
                 }
             }
         }
+        remove_file("/tmp/.empty.c");
         print_fn("\x1b[2K\r",false,true);
     }else{
-        writefile("/tmp/.empty.c","");
         string[] paths = {
             "/lib","/lib64","/usr/lib","/usr/lib64",
             "/lib32","/usr/lib32","/libx32","/usr/libx32",
@@ -35,7 +42,6 @@ public int revdep_rebuild_main(string[] args){
                 check(file);
             }
         }
-        remove_file("/tmp/.empty.c");
         print_fn("\x1b[2K\r",false,true);
     }
     return 0;
@@ -54,7 +60,7 @@ public void check(string file){
 }
 public void check_pkgconfig(string file){
     print_fn("\x1b[2K\r"+_("Checking: %s").printf(file),false,true);
-    int status = run("gcc `pkg-config --cflags --libs "+file+"` /tmp/.empty.c -shared -o /dev/null 2>/dev/null");
+    int status = run("gcc `pkg-config --cflags --libs "+file+" 2>/dev/null` /tmp/.empty.c -shared -o /dev/null 2>/dev/null");
     if(status != 0){
         print_fn("\x1b[2K\r",false,true);
         print(colorize(file,red)+" "+"broken.");
