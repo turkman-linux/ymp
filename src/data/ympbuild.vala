@@ -21,6 +21,7 @@ private void ympbuild_init(){
     export NOCONFIGURE=1
     export NO_COLOR=1
     export VERBOSE=1
+    export FORCE_UNSAFE_CONFIGURE=1
     export V=1
     export CFLAGS=\"-s -DSULIX -L"+DISTRODIR+" "+get_value("build:cflags")+"\"
     export CXXFLAGS=\"-s -DSULIX -L"+DISTRODIR+" "+get_value("build:cxxflags")+"\"
