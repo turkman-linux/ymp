@@ -1,7 +1,23 @@
 #!/usr/bin/make -f
 
+SHELL=/bin/bash
+
 %:
-	dh $@
+	dh $@ --buildsystem=meson
+
+override_dh_auto_configure:
+	mkdir -p obj-`uname -m`-linux-gnu
+	cd obj-`uname -m`-linux-gnu && \
+	    LC_ALL=C.UTF-8 meson setup ..\
+	        --wrap-mode=nodownload \
+	        --buildtype=plain \
+	        --prefix=/usr \
+	        --sysconfdir=/etc \
+	        --localstatedir=/var \
+	        --libdir=lib/`uname -m`-linux-gnu \
+	        -Dshared=true \
+	        -Dlibbrotli=false
+
 
 override_dh_builddeb:
 	dh_builddeb -- -Zgzip

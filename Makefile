@@ -16,7 +16,7 @@ test-clean:
 
 
 clean:
-	rm -rf build ctx.vala po/*.mo
+	rm -rf build ctx.vala po/*.mo obj-*-linux-gnu
 
 pot:
 	xgettext -o po/ymp.pot --from-code="utf-8" `find src -type f -iname "*.vala"` `find src -type f -iname "*.c"` 2>/dev/null
