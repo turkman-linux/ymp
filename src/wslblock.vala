@@ -34,5 +34,13 @@ public bool is_oem_available(){
 }
 
 public bool usr_is_merged(){
-    return issymlink("/lib") || issymlink("/bin") || issymlink("/sbin");
+    if(issymlink("/bin") || issymlink("/sbin")){
+        return true;
+    }
+    if(issymlink("/lib") || issymlink("/lib64")){
+        if("usr" in sreadlink("/lib") || "usr" in sreadlink("/lib64")){
+            return true;
+        }
+    }
+    return false;
 }
