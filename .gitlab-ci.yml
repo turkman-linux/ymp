@@ -24,8 +24,8 @@ archlinux:
       - build
   script:
     - pacman -Syyu --noconfirm
-    - pacman -Sy meson gcc vala --noconfirm
-    - pacman -Sy  libarchive readline --noconfirm
+    - pacman -Sy gcc vala --noconfirm
+    - pacman -Sy meson curl libarchive readline --noconfirm
     - meson build -Ddebug=true -Dtools=true  -Dtest=true -Dshared=true
     - ninja -C build
     - cd build && timeout 30 ./ymp-test || true
