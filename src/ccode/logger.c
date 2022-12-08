@@ -9,7 +9,7 @@ void print_fn(char* message, int new_line, int err){
     if(err){
         fd=stderr;
     }
-    fprintf(fd,message);
+    fprintf(fd,"%s",message);
     if(new_line){
         fputc('\n',fd);
     }
