@@ -77,7 +77,7 @@ if not get_option('colorize')
     add_project_arguments('-D', 'NOCOLOR', language: 'vala')
 endif
 
-if not get_option('ignore-oem')
+if get_option('check_oem')
     add_project_arguments('-D', 'check_oem', language: 'vala')
 endif
 
