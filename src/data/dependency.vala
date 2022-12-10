@@ -35,16 +35,20 @@ private void resolve_process(string[] names){
             }
             if(isfile(name)){
                 pkg = get_package_from_file(name);
-            }else{
+            }else if(is_available_from_repository(name)){
                 pkg = get_from_repository(name);
+                if(!get_bool("reinstall") && is_installed_package(name)){
+                    if(pkg.release <= get_installed_package(name).release){
+                        continue;
+                    }
+                }
+            }else if(is_installed_package(name)){
+                pkg = get_installed_package(name);
+            }else{
+                error_add(_("Package is not installable: %s").printf(name));
             }
             if(pkg == null){
                 continue;
-            }
-            if(!get_bool("reinstall") && is_installed_package(name)){
-                if(pkg.release <= get_installed_package(name).release){
-                    continue;
-                }
             }
             // run recursive function
             resolve_process(pkg.dependencies);

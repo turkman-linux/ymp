@@ -376,6 +376,14 @@ get all repositories as array
 
 return true if package is available
 
+`bool is_available_source(string name):`
+
+return true if package is available
+
+`package is_available_from_repository(string name):`
+
+return true if package/source is available
+
 `package get_package_from_repository(string name):`
 
 get package object from all repositories
@@ -384,7 +392,7 @@ get package object from all repositories
 
 get source package object from all repositories
 
-`package get_from_repositony(stning name):`
+`package get_from_repository(string name):`
 
 return package if no-emerge else return source
 

@@ -159,6 +159,28 @@ public bool is_available_package(string name){
     return false;
 }
 
+
+//DOC: `bool is_available_source(string name):`
+//DOC: return true if package is available
+public bool is_available_source(string name){
+    foreach(repository repo in get_repos()){
+        if(repo.has_source(name)){
+            return true;
+        }
+    }
+    return false;
+}
+
+//DOC: `package is_available_from_repository(string name):`
+//DOC: return true if package/source is available
+public bool is_available_from_repository(string name){
+    if(get_bool("no-emerge")){
+        return is_available_source(name);
+    }else{
+        return is_available_package(name);
+    }
+}
+
 //DOC: `package get_package_from_repository(string name):`
 //DOC: get package object from all repositories
 public package get_package_from_repository(string name){
@@ -208,7 +230,7 @@ public package get_source_from_repository(string name){
     return ret;
 }
 
-//DOC: `package get_from_repositony(stning name):`
+//DOC: `package get_from_repository(string name):`
 //DOC: return package if no-emerge else return source
 public package get_from_repository(string name){
     if (startswith(name,"src:")){
