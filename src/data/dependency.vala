@@ -42,7 +42,7 @@ private void resolve_process(string[] names){
                         continue;
                     }
                 }
-            }else if(is_installed_package(name)){
+            }else if(!get_bool("reinstall") && is_installed_package(name)){
                 continue;
             }else{
                 error_add(_("Package is not installable: %s").printf(name));

@@ -19,7 +19,7 @@ public int install_main(string[] args){
     quarantine_reset();
     package[] pkg_obj = {};
     foreach(string name in pkgs){
-        if(!isfile(name)){
+        if(is_available_from_repository(name)){
             package p = get_from_repository(name);
             p.download_only();
         }
