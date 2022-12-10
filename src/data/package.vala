@@ -312,7 +312,7 @@ public class package {
 public string[] list_installed_packages(){
     string[] pkgs = {};
     foreach(string fname in listdir(get_storage()+"/metadata")){
-        pkgs += ssplit(fname,".")[0];
+        pkgs += fname[:-5];
     }
     csort(pkgs,pkgs.length);
     return pkgs;
