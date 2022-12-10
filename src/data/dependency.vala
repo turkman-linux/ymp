@@ -43,7 +43,7 @@ private void resolve_process(string[] names){
                     }
                 }
             }else if(is_installed_package(name)){
-                pkg = get_installed_package(name);
+                continue;
             }else{
                 error_add(_("Package is not installable: %s").printf(name));
             }
