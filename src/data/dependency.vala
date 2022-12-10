@@ -154,7 +154,7 @@ private void resolve_reverse_process(string[] names){
             continue;
         }
         info(_("Resolve reverse dependency: %s").printf(name));
-        if(name in pkgnames){
+        if(is_installed_package(name)){
             need_install.add(name);
         }else{
             continue;

@@ -11,8 +11,10 @@ public int remove_main(string[] args){
         pkgs = resolve_reverse_dependencies(args);
     }
     foreach(string pkg in pkgs){
-        package p = get_installed_package(pkg);
-        remove_single(p);
+        if(is_installed_package(pkg)){
+            package p = get_installed_package(pkg);
+            remove_single(p);
+        }
     }
     sysconf_main(args);
     return 0;
