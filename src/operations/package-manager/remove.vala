@@ -14,6 +14,8 @@ public int remove_main(string[] args){
         if(is_installed_package(pkg)){
             package p = get_installed_package(pkg);
             remove_single(p);
+        }else{
+            warning(_("Package %s is not installed. Skip removing.").printf(pkg));
         }
     }
     sysconf_main(args);
