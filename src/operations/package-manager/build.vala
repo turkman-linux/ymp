@@ -409,9 +409,21 @@ private bool create_metadata_info(){
 private void create_data_file(){
     debug(_("Create data file: ")+ympbuild_buildpath+"/output/data.tar.gz");
     var tar = new archive();
-    tar.load(ympbuild_buildpath+"/output/data.tar.gz");
     aformat=1;
-    afilter=1;
+    if(get_value("compress")=="none"){
+        afilter=0;
+        tar.load(ympbuild_buildpath+"/output/data.tar");
+    }else if(get_value("compress")=="gzip"){
+        afilter=1;
+        tar.load(ympbuild_buildpath+"/output/data.tar.gz");
+    }else if(get_value("compress")=="xz"){
+        afilter=2;
+        tar.load(ympbuild_buildpath+"/output/data.tar.xz");
+    }else{
+        // Default format (gzip)
+        afilter=1;
+        tar.load(ympbuild_buildpath+"/output/data.tar.gz");
+    }
     int fnum = 0;
     foreach(string file in find(ympbuild_buildpath+"/output")){
         if(isdir(file)){
@@ -453,12 +465,10 @@ private void create_binary_package(){
     if(isfile("icon.svg")){
         tar.add("icon.svg");
     }
-    if(isfile(ympbuild_srcpath+"/postOps")){
-        copy_file(ympbuild_srcpath+"/postOps","./postOps");
-        tar.add("postOps");
-    }
-    if(isfile("data.tar.gz")){
-        tar.add("data.tar.gz");
+    foreach(string path in listdir(".")){
+        if(isfile(path) && startswith(path,"data")){
+            tar.add(path);
+        }
     }
     tar.create();
     move_file(ympbuild_buildpath+"/package.zip",output_package_path+"_"+getArch()+".ymp");
@@ -474,6 +484,7 @@ void build_init(){
     h.add_parameter("--no-package",_("do not install package after building"));
     h.add_parameter("--ignore-dependency", _("disable dependency check"));
     h.add_parameter("--no-emerge", _("use binary packages"));
+    h.add_parameter("--compress", _("compress format"));
     h.add_parameter("--install", _("install binary package after building"));
     add_operation(build_operation,{_("build"),"build","bi","make"},h);
 }

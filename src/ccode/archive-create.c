@@ -1,5 +1,18 @@
 #ifndef _archive
 #define _archive
+
+
+#define zip 0
+#define tar 1
+
+#define filter_none 0
+#define filter_gzip 1
+#define filter_xz 2
+
+int aformat = 1;
+int afilter = 0;
+
+
 #ifndef no_libarchive
 #include <sys/types.h>
 
@@ -15,19 +28,10 @@
 
 #include <limits.h>
 
-#define zip 0
-#define tar 1
 
 #ifndef get_bool
 int get_bool(char*variable);
 #endif
-
-int aformat = 1;
-
-#define filter_none 0
-#define filter_gzip 1
-
-int afilter = 0;
 
 void write_archive(const char *outname, const char **filename) {
   struct archive *a;
@@ -42,6 +46,8 @@ void write_archive(const char *outname, const char **filename) {
       archive_write_add_filter_none(a);
   if(afilter == filter_gzip)
       archive_write_add_filter_gzip(a);
+  if(afilter == filter_xz)
+      archive_write_add_filter_xz(a);
   if(aformat == zip)
       archive_write_set_format_zip(a);
   if(aformat == tar)
@@ -146,13 +152,5 @@ void write_archive(const char *outname, const char **filename) {
   archive_write_close(a);
   archive_write_free(a);
 }
-#else
-int aformat = 1;
-
-#define filter_none 0
-#define filter_gzip 1
-
-int afilter = 0;
-
 #endif
 #endif
