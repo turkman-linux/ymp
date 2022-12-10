@@ -150,9 +150,9 @@ char * readfile_raw(const char * filename) {
 
     if (err) {
         if (err == FILE_NOT_EXIST) {
-            fprintf(stderr, "Error: %s (%d)\n", "file not found.", err);
+            fprintf(stderr, "Error: %s (%d) %s\n", "file not found.", err, filename);
         } else if (err == FILE_READ_ERROR) {
-            fprintf(stderr, "Error: %s (%d)\n", "failed to read file.", err);
+            fprintf(stderr, "Error: %s (%d) %s\n", "failed to read file.", err,filename);
         }
         return "";
     } else {
