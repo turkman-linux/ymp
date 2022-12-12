@@ -147,6 +147,8 @@ Main print function. Has 3 arguments
 
 * err: if set true, write log to stderr
 
+# src/cli/main.vala
+# src/cli/shell.vala
 # src/color.vala
 ## Colors
 
@@ -1088,4 +1090,3 @@ start ymp application.
 
 * args is program arguments
 
-# src/ymp-cli.vala
