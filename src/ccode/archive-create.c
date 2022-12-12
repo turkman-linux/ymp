@@ -4,6 +4,8 @@
 
 #define zip 0
 #define tar 1
+#define p7zip 2
+#define cpio 3
 
 #define filter_none 0
 #define filter_gzip 1
@@ -42,16 +44,24 @@ void write_archive(const char *outname, const char **filename) {
   int fd;
 
   a = archive_write_new();
-  if(afilter == filter_none)
-      archive_write_add_filter_none(a);
-  if(afilter == filter_gzip)
+  // compress format
+  if(afilter == filter_gzip){
       archive_write_add_filter_gzip(a);
-  if(afilter == filter_xz)
+  }else if(afilter == filter_xz){
       archive_write_add_filter_xz(a);
-  if(aformat == zip)
+  }else{
+      archive_write_add_filter_none(a);
+  }
+  // archive format
+  if(aformat == tar){
+      archive_write_set_format_gnutar(a);
+  }else if (aformat == p7zip){
+      archive_write_set_format_7zip(a);
+  }else if (aformat == cpio){
+      archive_write_set_format_cpio(a);
+  }else{
       archive_write_set_format_zip(a);
-  if(aformat == tar)
-      archive_write_set_format_pax_restricted(a);
+  }
   archive_write_open_filename(a, outname);
   char link[PATH_MAX];
   #ifdef DEBUG

@@ -226,6 +226,7 @@ private bool create_source_archive(){
     string metadata = get_ympbuild_metadata();
     writefile(srealpath(ympbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
     var tar = new archive();
+    aformat=0;
     tar.load(ympbuild_buildpath+"/source.zip");
     foreach(string file in find(ympbuild_srcpath)){
         if(!endswith(file,".ymp") && isfile(file)){
@@ -458,6 +459,7 @@ private void create_binary_package(){
     cd(ympbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();
+    aformat=0;
     tar.load(ympbuild_buildpath+"/package.zip");
     tar.add("metadata.yaml");
     tar.add("files");
