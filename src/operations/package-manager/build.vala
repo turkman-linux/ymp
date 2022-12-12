@@ -226,7 +226,6 @@ private bool create_source_archive(){
     string metadata = get_ympbuild_metadata();
     writefile(srealpath(ympbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
     var tar = new archive();
-    aformat=0;
     tar.load(ympbuild_buildpath+"/source.zip");
     foreach(string file in find(ympbuild_srcpath)){
         if(!endswith(file,".ymp") && isfile(file)){
@@ -250,6 +249,7 @@ private bool create_source_archive(){
         }
         tar.add(file);
     }
+    aformat=0;
     tar.create();
     move_file(ympbuild_buildpath+"/source.zip",output_package_path+"_source.ymp");
     return true;
@@ -410,7 +410,6 @@ private bool create_metadata_info(){
 private void create_data_file(){
     debug(_("Create data file: ")+ympbuild_buildpath+"/output/data.tar.gz");
     var tar = new archive();
-    aformat=1;
     if(get_value("compress")=="none"){
         afilter=0;
         tar.load(ympbuild_buildpath+"/output/data.tar");
@@ -442,6 +441,7 @@ private void create_data_file(){
         remove_file(ympbuild_buildpath+"/output/data.tar.gz");
     }
     if(fnum != 0){
+        aformat=1;
         tar.create();
     }
     string hash = calculate_sha1sum(ympbuild_buildpath+"/output/data.tar.gz");
@@ -459,7 +459,6 @@ private void create_binary_package(){
     cd(ympbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();
-    aformat=0;
     tar.load(ympbuild_buildpath+"/package.zip");
     tar.add("metadata.yaml");
     tar.add("files");
@@ -472,6 +471,7 @@ private void create_binary_package(){
             tar.add(path);
         }
     }
+    aformat=0;
     tar.create();
     move_file(ympbuild_buildpath+"/package.zip",output_package_path+"_"+getArch()+".ymp");
 }
