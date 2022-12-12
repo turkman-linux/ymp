@@ -5,6 +5,14 @@ ymp:
   use: all
   # ymp fetcher useragent
   useragent: Ymp fetcher
+  # default package format
+  compress: gzip
+  # emerge mode
+  no-emerge: false
+  # debug mode
+  debug: false
+  # verbose output
+  verbose: false
 
 # Config about build
 build:

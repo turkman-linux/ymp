@@ -159,17 +159,17 @@ public string[] argument_process(string[] args){
      string[] new_args = {};
      bool e = false;
      foreach (string arg in args){
-        if(arg == "--"){
-            e = true;
-            continue;
-        }
-        if(arg == "-"){
-            new_args += arg;
-        }
-        if(e){
-            new_args += arg;
-            continue;
-        }
+         if(arg == "--"){
+             e = true;
+             continue;
+         }
+         if(e){
+             new_args += arg;
+             continue;
+         }
+         if(arg == "-"){
+             new_args += arg;
+         }
          if(arg.length > 1 && arg[0] == '$'){
              arg = get_value(arg[1:]);
          }

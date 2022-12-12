@@ -18,9 +18,7 @@ private void settings_init(){
     config_yaml = new yamlfile();
     set_value_readonly("destdir",DESTDIR);
     set_value_readonly("config",CONFIG);
-    if(VERSION != null){
-        set_value_readonly("version",VERSION);
-    }
+    set_value_readonly("version",VERSION);
     string area = "";
     string value = "";
     if(isfile(CONFIG)){
@@ -30,9 +28,9 @@ private void settings_init(){
             foreach(string variable in config_yaml.get_area_names(area)){
                 value = config_yaml.get_value(area,variable);
                 if(section == "ymp"){
-                    set_value_readonly(variable,value);
+                    set_value(variable,value);
                 }else{
-                    set_value_readonly(section+":"+variable,value);
+                    set_value(section+":"+variable,value);
                 }
             }
         }
@@ -40,10 +38,10 @@ private void settings_init(){
         warning(_("Config file not exists: %s").printf(CONFIG));
     }
     if(get_env("USE") != null){
-        set_value_readonly("USE",get_env("USE"));
+        set_value("USE",get_env("USE"));
     }else{
         area = config_yaml.get_area(config_yaml.data,"ymp");
-        set_value_readonly("USE", config_yaml.get_value(area,"use"));
+        set_value("USE", config_yaml.get_value(area,"use"));
     }
     #if DEBUG
     if(get_bool("debug")){
@@ -117,7 +115,7 @@ private void parse_args(string[] args){
                 var name = ssplit(argname,"=")[0];
                 var value = argname[name.length+1:];
                 if(name == "use"){
-                    set_value_readonly(name,value);
+                    set_value(name,value);
                 }else if(name == "destdir"){
                     set_destdir(value);
                 }else if(name == "config"){

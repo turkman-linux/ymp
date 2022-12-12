@@ -27,8 +27,7 @@ public void set_value(string name, string value){
     foreach(variable varx in vars){
         if(varx.name == name.up()){
             return;
-        }
-        else if(varx.name == name.down()){
+        }else if(varx.name == name.down()){
             varx.value = value;
             return;
         }
@@ -58,6 +57,7 @@ private void set_value_readonly(string name, string value){
             return;
         }
     }
+    set_value(name,"");
     variable varx = new variable();
     varx.name = name.up();
     varx.value = value;
@@ -90,7 +90,7 @@ public string get_value(string name){
 //DOC: `bool get_bool(string name):`
 //DOC: get a ymp global variable as bool
 public bool get_bool(string name){
-    return get_value(name) == "true";
+    return get_value(name).down() == "true";
 }
 
 //DOC: `void set_bool(string name, bool value):`
@@ -108,7 +108,9 @@ public void set_bool(string name,bool value){
 public string[] list_values(){
     string[] ret = {};
     foreach(variable var in vars){
-        ret += var.name;
+        if(var.value != ""){
+            ret += var.name;
+        }
     }
     return ret;
 }
