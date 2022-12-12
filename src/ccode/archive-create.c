@@ -130,7 +130,8 @@ void write_archive(const char *outname, const char **filename) {
                 type = "unknown";
                 #endif
                 archive_entry_set_filetype(entry, AE_IFREG);
-                break;
+                fprintf(stderr,"Unknown enty detected: %s (%d)\n",*filename,st.st_mode);
+                continue;
     }
     #ifdef DEBUG
     if(get_bool("debug")){
