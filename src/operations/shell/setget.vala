@@ -49,12 +49,20 @@ public int match_main(string[] args){
     return 1;
 }
 
+public int cd_main(string[] args){
+    foreach(string arg in args){
+        cd(arg);
+    }
+    return 0;
+}
+
 void setget_init(){
     var h1 = new helpmsg();
     var h2 = new helpmsg();
     var h3 = new helpmsg();
     var h4 = new helpmsg();
     var h5 = new helpmsg();
+    var h6 = new helpmsg();
 
     h1.name = _("get");
     h1.shell_only = true;
@@ -80,9 +88,14 @@ void setget_init(){
     h5.shell_only = true;
     h5.description = _("Match arguments regex");
 
+    h6.name = _("cd");
+    h6.shell_only = true;
+    h6.description = _("Change directory");
+
     add_operation(get_main,{_("get"),"get"},h1);
     add_operation(set_main,{_("set"),"set"},h2);
     add_operation(equal_main,{_("equal"),"equal","eq"},h3);
     add_operation(read_main,{_("read"),"read","input"},h4);
     add_operation(match_main,{_("match"),"match","regex"},h5);
+    add_operation(cd_main,{_("cd"),"cd"},h6);
 }
