@@ -91,7 +91,7 @@ private void ympbuild_init(){
         fi
     }
     function use(){
-        if ! echo ${uses[@]} ${uses_extra[@]} | grep \"$1\" >/dev/null; then
+        if ! echo ${uses[@]} ${uses_extra[@]} `uname -m` all extra | grep \"$1\" >/dev/null; then
             echo \"Use flag \\\"$1\\\" is unknown!\"
             exit 1
         fi
@@ -133,7 +133,7 @@ private void ympbuild_init(){
        ympbuild_header += "declare -r use_'"+flag.replace("'","\\'")+"'=31 \n";
 
     }
-    ympbuild_header += "declare -r use_'"+getArch()+"'=31 \n";
+    ympbuild_header += "declare -r use_"+getArch()+"=31 \n";
     print(colorize(_("USE flag:"),green)+" "+join(" ",use_flags.get()));
 }
 //DOC: `void set_ympbuild_srcpath(string path):`
