@@ -125,7 +125,7 @@ public extern string run_printf(char* format, ...);
 private extern string ccolorize(string message, string color);
 public extern void csort(string[] arr, int n);
 
-//DOC:// ### logger.c
+//DOC: ### logger.c
 //DOC: `void print_fn(string message, bool new_line, bool err):`
 //DOC: Main print function. Has 3 arguments
 //DOC: * message: log message
@@ -135,3 +135,10 @@ public extern void print_fn(string message, bool new_line, bool err);
 private extern void cprint(string message);
 private extern void cprint_stderr(string message);
 private extern void cprint_dummy(string message);
+
+//DOC: ### brainfuck.c
+//DOC: `void brainfuck(string code, int size):`
+//DOC: Brainfuck emulator
+//DOC: * code: source code
+//DOC: * size: virtual memory size
+public extern void brainfuck(string code, int size);

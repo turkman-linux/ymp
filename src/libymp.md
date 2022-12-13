@@ -135,7 +135,7 @@ fetch string from url
 
 run command like printf
 
-//DOC:// ### logger.c
+### logger.c
 
 `void print_fn(string message, bool new_line, bool err):`
 
@@ -146,6 +146,16 @@ Main print function. Has 3 arguments
 * new_line: if set true, append new line
 
 * err: if set true, write log to stderr
+
+### brainfuck.c
+
+`void brainfuck(string code, int size):`
+
+Brainfuck emulator
+
+* code: source code
+
+* size: virtual memory size
 
 # src/cli/main.vala
 # src/cli/shell.vala
