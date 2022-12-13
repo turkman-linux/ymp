@@ -19,8 +19,8 @@ build:
   # if jobs 0 use all cpu cores
   jobs: 0
   debug: false
-  cflags: -flto
-  cxxflags: -flto
+  cflags: -O2 -s
+  cxxflags: -O2 -s
   ldflags: 
   cc: gcc
 
