@@ -41,7 +41,6 @@ private void add_operation(function callback, string[] names, helpmsg help){
 
 private int operation_main(string type, string[] args){
     info(_("RUN:")+type + ":" + join(" ",args));
-    directories_init();
     foreach(operation op in ops){
         foreach(string name in op.names){
             if(type == name){
@@ -108,8 +107,12 @@ public class Ymp {
                 process op = new process();
                 op.type = proc[i].args[0].strip();
                 op.args = proc[i].args[1:];
-                int status = op.run();
-                if (status != 0){
+                if(iflevel == 0){
+                    int status = op.run();
+                    if (status != 0){
+                        iflevel += 1;
+                    }
+                }else{
                     iflevel += 1;
                 }
                 continue;
@@ -226,6 +229,7 @@ public Ymp ymp_init(string[] args){
     settings_init();
     parse_args(args);
     ctx_init();
+    directories_init();
     #if check_oem
         if(is_oem_available()){
             if(!get_bool("ALLOW-OEM")){
@@ -242,7 +246,6 @@ public Ymp ymp_init(string[] args){
     ymp_activated = true;
     tty_size_init();
     logger_init(); // logger reload
-
     return app;
 }
 

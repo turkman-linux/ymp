@@ -70,13 +70,13 @@ public void set_destdir(string rootfs){
 //DOC: `string get_storage():`
 //DOC: get ymp storage directory. (default: /var/lib/ymp)
 public string get_storage(){
-    return srealpath(DESTDIR+"/"+STORAGEDIR);
+    return DESTDIR+"/"+STORAGEDIR;
 }
 
 //DOC: `string get_configdir():`
 //DOC: get ymp storage directory. (default: /etc/)
 public string get_configdir(){
-    return srealpath(DESTDIR+"/"+CONFIGDIR);
+    return DESTDIR+"/"+CONFIGDIR;
 }
 
 public string get_destdir(){
@@ -89,7 +89,7 @@ public string get_destdir(){
 //DOC: `string get_storage():`
 //DOC: get ymp storage directory. (default: /var/lib/ymp)
 public string get_build_dir(){
-    return srealpath(DESTDIR+"/tmp/ymp-build")+"/";
+    return DESTDIR+"/tmp/ymp-build/";
 }
 
 private string get_metadata_path(string name){
