@@ -71,6 +71,11 @@ private class process{
         return operation_main(type,args);
     }
 }
+
+private class script_label{
+    public string name;
+    public int line;
+}
 public class Ymp {
     process[] proc;
     private int iflevel = 0;
@@ -100,8 +105,17 @@ public class Ymp {
     //DOC: `void Ymp.run():`
     //DOC: run ymp process then if succes remove
     public void run(){
+        script_label[] labels = {};
         for(int i=0;i<proc.length;i++){
             long start_time = get_epoch();
+            if (proc[i].type == "label"){
+                script_label l = new script_label();
+                l.name = proc[i].args[0];
+                l.line = i;
+                if(!(l in labels)){
+                    labels += l;
+                }
+            }
 
             if (proc[i].type == "if"){
                 process op = new process();
@@ -123,6 +137,17 @@ public class Ymp {
             if(iflevel < 0){
                 error_add(_("Syntax error. Unexceped endif detected."));
             }else if(iflevel != 0){
+                continue;
+            }
+            if (proc[i].type == "goto"){
+                string name = proc[i].args[0];
+                foreach(script_label l in labels){
+                    if(l.name  == name){
+                        i = l.line;
+                        iflevel = 0;
+                        break;
+                    }
+                }
                 continue;
             }
             int status = proc[i].run();
