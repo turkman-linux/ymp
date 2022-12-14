@@ -218,6 +218,26 @@ public void ymp_process_binaries(){
             }
         }
     }
+    foreach(string file in find(ympbuild_buildpath+"/lib64")){
+        if(iself(file) && !is64bit(file)){
+            warning(_("File is not 64bit: %s").printf(file));
+        }
+    }
+    foreach(string file in find(ympbuild_buildpath+"/usr/lib64")){
+        if(iself(file) && !is64bit(file)){
+            warning(_("File is not 64bit: %s").printf(file));
+        }
+    }
+    foreach(string file in find(ympbuild_buildpath+"/lib32")){
+        if(iself(file) && is64bit(file)){
+            warning(_("File is not 32bit: %s").printf(file));
+        }
+    }
+    foreach(string file in find(ympbuild_buildpath+"/usr/lib32")){
+        if(iself(file) && is64bit(file)){
+            warning(_("File is not 32bit: %s").printf(file));
+        }
+    }
     if(isfile(ympbuild_buildpath+"/output/usr/share/info/dir")){
         remove_file(ympbuild_buildpath+"/output/usr/share/info/dir");
     }

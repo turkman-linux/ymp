@@ -1,6 +1,7 @@
-private string[] quarantine_file_cache_list;
-private string[] quarantine_file_conflict_list;
-private string[] quarantine_file_broken_list;
+private array quarantine_file_cache_list;
+private array quarantine_file_conflict_list;
+private array quarantine_file_replaces_list;
+private array quarantine_file_broken_list;
 
 //DOC: `void quarantine_reset():`
 //DOC: remove quarantine directories and create new ones
@@ -52,9 +53,10 @@ public bool quarantine_validate_files(){
         return true;
     }
     // reset lists
-    quarantine_file_cache_list = {};
-    quarantine_file_conflict_list = {};
-    quarantine_file_broken_list = {};
+    quarantine_file_cache_list = new array();
+    quarantine_file_conflict_list = new array();
+    quarantine_file_broken_list = new array();
+    quarantine_file_replaces_list = new array();
     // get quarantine file store and list
     string rootfs_files = get_storage()+"/quarantine/files/";
     string rootfs_links = get_storage()+"/quarantine/links/";
@@ -89,7 +91,7 @@ public bool quarantine_validate_files(){
         if(yaml.has_area(pkgarea,"replaces")){
             foreach(string path in yaml.get_array(pkgarea,"replaces")){
                 if(path.length > 1 && path[0] == '/'){
-                    new_files.remove(path[1:]);
+                    quarantine_file_replaces_list.add(path[1:]);
                 }else{
                     warning(_("Invalid replaces path: %s (%s)").printf(path,files_list));
                 }
@@ -99,7 +101,7 @@ public bool quarantine_validate_files(){
             if(isexists(DESTDIR+"/"+path)){
                 string file_path = get_storage()+"/quarantine/rootfs/"+path;
                 warning(_("File already exists in filesystem: /%s (%s)").printf(path,files_list));
-                quarantine_file_conflict_list += file_path;
+                quarantine_file_conflict_list.add(file_path);
             }
         }
         foreach(string line in ssplit(file_data,"\n")){
@@ -110,22 +112,22 @@ public bool quarantine_validate_files(){
                 string file_path = get_storage()+"/quarantine/rootfs/"+path;
                 // check file conflict
                 info(_("Validating: %s").printf(path));
-                if(!(file_path in quarantine_file_conflict_list) && file_path in quarantine_file_cache_list){
+                if(!quarantine_file_conflict_list.has(file_path) && quarantine_file_cache_list.has(file_path)){
                     string[] conflict_packages = get_quarantine_conflict_packages(path,false);
                     warning(_("File conflict detected: /%s (%s)").printf(path,join(" ",conflict_packages)));
-                    quarantine_file_conflict_list += file_path;
+                    quarantine_file_conflict_list.add(file_path);
                     continue;
                 }
-                quarantine_file_cache_list += file_path;
+                quarantine_file_cache_list.add(file_path);
                 if(!isfile(file_path)){
                     warning(_("Package file missing: /%s (%s)").printf(path,files_list));
-                    quarantine_file_broken_list += file_path;
+                    quarantine_file_broken_list.add(file_path);
                     continue;
                 }
                 foreach(string restricted in restricted_list){
-                    if(restricted.length>0 && startswith(path+"/",restricted)){
+                    if(restricted.length>0 && Regex.match_simple(restricted,path)){
                         warning(_("File in restricted path is not allowed: /%s (%s)").printf(path,files_list));
-                        quarantine_file_broken_list += file_path;
+                        quarantine_file_broken_list.add(file_path);
                         continue;
                     }
                 }
@@ -134,7 +136,7 @@ public bool quarantine_validate_files(){
                 string calculated_sha1sum = calculate_sha1sum(file_path);
                 if(sha1sum != calculated_sha1sum){
                     warning(_("Broken file detected: /%s (%s)").printf(path,files_list));
-                    quarantine_file_broken_list += file_path;
+                    quarantine_file_broken_list.add(file_path);
                     continue;
                 }
             }
@@ -164,7 +166,7 @@ public bool quarantine_validate_files(){
         if(yaml.has_area(pkgarea,"replaces")){
             foreach(string path in yaml.get_array(pkgarea,"replaces")){
                 if(path.length > 1 && path[0] == '/'){
-                    new_links.remove(path[1:]);
+                    quarantine_file_replaces_list.add(path[1:]);
                 }else{
                     warning(_("Invalid replaces path: %s (%s)").printf(path,links_list));
                 }
@@ -174,7 +176,7 @@ public bool quarantine_validate_files(){
             if(isexists(DESTDIR+"/"+path)){
                 string file_path = get_storage()+"/quarantine/rootfs/"+path;
                 warning(_("Symlink already exists in filesystem: /%s (%s)").printf(path,links_list));
-                quarantine_file_conflict_list += file_path;
+                quarantine_file_conflict_list.add(file_path);
             }
         }
         foreach(string line in ssplit(link_data,"\n")){
@@ -187,33 +189,36 @@ public bool quarantine_validate_files(){
                 string link_target = sreadlink(link_path);
                 if(target != link_target){
                     warning(_("Broken symlink detected: /%s (%s)").printf(path,links_list));
-                    quarantine_file_broken_list += link_path;
+                    quarantine_file_broken_list.add(link_path);
                     continue;
                 }
                 // check file conflict
-                if(!(link_path in quarantine_file_conflict_list) && link_path in quarantine_file_cache_list){
+                if(!quarantine_file_conflict_list.has(link_path) && quarantine_file_cache_list.has(link_path)){
                     string[] conflict_packages = get_quarantine_conflict_packages(path,true);
                     warning(_("Symlink conflict detected: /%s (%s)").printf(path,join(" ",conflict_packages)));
-                    quarantine_file_conflict_list += link_path;
+                    quarantine_file_conflict_list.add(link_path);
                     continue;
                 }
                 if(!issymlink(link_path)){
                     warning(_("Package symlink missing: /%s (%s)").printf(path,links_list));
-                    quarantine_file_broken_list += link_path;
+                    quarantine_file_broken_list.add(link_path);
                     continue;
                 }
                 foreach(string restricted in restricted_list){
-                    if(restricted.length>0 &&startswith(sdirname(path),restricted)){
+                    if(restricted.length>0 && Regex.match_simple(restricted,path)){
                         warning(_("Symlink in restricted path is not allowed: /%s (%s)").printf(path,links_list));
-                        quarantine_file_broken_list += link_path;
+                        quarantine_file_broken_list.add(link_path);
                         continue;
                     }
                 }
-                quarantine_file_cache_list += link_path;
+                quarantine_file_cache_list.add(link_path);
             }
         }
     }
-    if(quarantine_file_conflict_list.length>0 || quarantine_file_broken_list.length >0){
+    foreach(string path in quarantine_file_replaces_list.get()){
+        quarantine_file_conflict_list.remove(path);
+    }
+    if(quarantine_file_conflict_list.length()>0 || quarantine_file_broken_list.length() >0){
         return false;
     }
     return true;
