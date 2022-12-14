@@ -3,7 +3,7 @@ public int bootstrap_main(string[] args){
         error_add(_("You must be root!"));
     }
     string repo=get_value("mirror");
-    string rootfs=srealpath(get_value("destdir"));
+    string rootfs=get_destdir();
     if(repo == ""){
         error_add(_("Mirror is not defined. Please use --mirror ."));
     }if(DESTDIR=="/"){
