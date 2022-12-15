@@ -10,7 +10,7 @@ source=(https://gitlab.com/sulix/devel/sources/ymp/-/archive/master/ymp-master.z
 md5sums=(SKIP)
 group=(sys.apps)
 uses=(libarchive libcurl)
-depends=(readline glibc glib2.0)
+depends=(readline ncurses glib)
 libarchive_depends=(libarchive)
 libcurl_depends=(curl)
 
