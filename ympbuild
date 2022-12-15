@@ -8,7 +8,7 @@ url='https://gitlab.com/sulix/'
 license=('GPL')
 source=(https://gitlab.com/sulix/devel/sources/ymp/-/archive/master/ymp-master.zip)
 md5sums=(SKIP)
-group=(system.base)
+group=(sys.apps)
 uses=(libarchive libcurl)
 depends=(readline glibc glib2.0)
 libarchive_depends=(libarchive)
@@ -16,13 +16,17 @@ libcurl_depends=(curl)
 
 cd ymp-master
 
-build(){
+setup(){
     meson setup build --prefix=/usr \
         -Ddoc=true \
         -Dshared=true \
-        -Dscripts=true
+        -Dscripts=true \
+        -Dlibbrotli=false \
         $(use_opt libarchive "" "-Dlibarchive=false") \
-        $(use_opt libcurl "" "-Dlibcurl=false") \
+        $(use_opt libcurl "" "-Dlibcurl=false")
+}
+
+build(){
     ninja -C build
 }
 install(){
