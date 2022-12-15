@@ -120,6 +120,11 @@ private void ympbuild_init(){
             echo $3
         fi
     }
+    function eapply(){
+        for aa in $* ; do
+            patch -Np1 \"$aa\"
+        done
+    }
     ";
     var use_flags = new array();
     string[] flags = ssplit(get_value("use")," ");
