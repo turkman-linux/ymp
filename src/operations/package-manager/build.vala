@@ -1,6 +1,6 @@
 private bool no_src = false;
 public int build_operation(string[] args){
-    string currend_directory=srealpath(pwd());
+    string current_directory=srealpath(pwd());
     string[] new_args = args;
     if(usr_is_merged()){
         error_add(_("Build operation with usrmerge is not allowed!"));
@@ -13,6 +13,9 @@ public int build_operation(string[] args){
         string srcpath=arg;
         if(startswith(arg,"git://") || endswith(arg,".git")){
             srcpath=DESTDIR+"/tmp/ymp-build/"+sbasename(arg);
+            if(isdir(srcpath)){
+                remove_all(srcpath);
+            }
             if(run("git clone '"+arg+"' "+srcpath) != 0){
                 error_add(_("Failed to fetch git package."));
                 return 2;
@@ -65,7 +68,7 @@ public int build_operation(string[] args){
             }
             if(isfile(arg)){
                 var fname = sbasename(output_package_path);
-                output_package_path=currend_directory+"/"+fname;
+                output_package_path=current_directory+"/"+fname;
             }
             if(!build_package()){
                 return 1;
@@ -78,7 +81,7 @@ public int build_operation(string[] args){
             }
         }
     }
-    cd(currend_directory);
+    cd(current_directory);
     return 0;
 }
 
@@ -227,7 +230,7 @@ private bool create_source_archive(){
     writefile(srealpath(ympbuild_buildpath+"/metadata.yaml"),metadata.strip()+"\n");
     var tar = new archive();
     tar.load(ympbuild_buildpath+"/source.zip");
-    foreach(string file in find(ympbuild_srcpath)){
+    foreach(string file in get_ympbuild_array("source")){
         if(!endswith(file,".ymp") && isfile(file)){
             file = file[(ympbuild_srcpath).length:];
             create_dir(sdirname(ympbuild_buildpath+"/"+file));
