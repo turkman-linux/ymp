@@ -41,8 +41,12 @@ public int list_digraph_main(string[] args) {
                 continue;
             }
             string[] deps = pkg.gets("depends");
+            string color = "#";
+            color += GLib.Random.int_range(31, 99).to_string();
+            color += GLib.Random.int_range(31, 99).to_string();
+            color += GLib.Random.int_range(31, 99).to_string();
             foreach(string dep in deps) {
-                print("\"%s\" -> \"%s\" ;".printf(name, dep));
+                print("\"%s\" -> \"%s\" [color=\"%s\"];".printf(name, dep, color));
             }
             string[] grp = pkg.gets("group");
             foreach(string g in grp) {
@@ -51,7 +55,9 @@ public int list_digraph_main(string[] args) {
                 }
             }
             if (is_installed_package(name)) {
-                print("\"%s\" [style=filled fillcolor=green]".printf(name));
+                print("\"%s\" [style=filled fillcolor=\"%s\"]".printf(name,color));
+            } else {
+                print("\"%s\" [style=filled fillcolor=white]".printf(name));
             }
         }
     }
