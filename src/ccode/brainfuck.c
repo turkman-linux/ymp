@@ -1,13 +1,22 @@
 #include <stdio.h>
 #include <string.h>
-void brainfuck(char * code, int size) {
-  int ptr = 0;
+
+#ifndef get_bool
+int get_bool(char* msg);
+#endif
+
+void brainfuck(char * code, unsigned int size) {
+  unsigned int ptr = 0;
   int tmp = 0;
   int values[size];
   for(int i=0;i < size;i++){
       values[i] = 0;
   }
   for (int i = 0; i < strlen(code); i++) {
+    if(ptr >=size){
+        fprintf(stderr,"Failed to run brainfuck code:  %s\n","Out of memory");
+        return;
+    }  
     if (code[i] == '>') {
       ptr++;
     } else if (code[i] == '<') {
