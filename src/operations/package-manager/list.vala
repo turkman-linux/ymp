@@ -19,7 +19,9 @@ public int list_installed_main(string[] args){
 public int list_available_main(string[] args){
     if(get_bool("digraph")){
         print("digraph {");
+        print("beautify=\"sfdp\";");
     }
+    string[] group_names = {};
     foreach(repository repo in get_repos()){
         if(args.length > 0 && !(repo.name in args)){
             continue;
@@ -38,7 +40,13 @@ public int list_available_main(string[] args){
                 }
                 string[] deps = pkg.gets("depends");
                 foreach(string dep in deps){
-                    print("\"%s\" -> \"%s\"".printf(dep,name));
+                    print("\"%s\" -> \"%s\" ;".printf(name,dep));
+                }
+                string[] grp = pkg.gets("group");
+                foreach(string g in grp){
+                    if(!(g in group_names)){
+                        group_names += g;
+                    }
                 }
                 if(is_installed_package(name)){
                     print("\"%s\" [style=filled fillcolor=green]".printf(name));
@@ -73,7 +81,32 @@ public int list_available_main(string[] args){
         }
     }
     if(get_bool("digraph")){
-        print("}");
+        if(get_bool("group")){
+            foreach(string grp in group_names){
+                print("subgraph cluster_%s {".printf(grp.replace(".","_")));
+                print("label = \"%s\";".printf(grp.replace(".","_")));
+                foreach(repository repo in get_repos()){
+                    string[] names = {};
+                    if(get_bool("source")){
+                        names = repo.list_sources();
+                    }else{
+                        names = repo.list_packages();
+                    }
+                    foreach(string name in names){
+                        var pkg = repo.get_package(name);
+                        if(pkg == null){
+                            continue;
+                        }
+                        string[] gnames = pkg.gets("group");
+                        if(grp in gnames){
+                            print("\"%s\";".printf(name));
+                        }
+                    }
+                print("}");
+               }
+           }
+       }
+       print("}");
     }
     return 0;
 }
