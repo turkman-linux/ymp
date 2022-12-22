@@ -91,7 +91,7 @@ public bool quarantine_validate_files(){
         if(yaml.has_area(pkgarea,"replaces")){
             foreach(string path in yaml.get_array(pkgarea,"replaces")){
                 if(path.length > 1 && path[0] == '/'){
-                    quarantine_file_replaces_list.add(path[1:]);
+                    quarantine_file_replaces_list.add(get_storage()+"/quarantine/rootfs/"+path[1:]);
                 }else{
                     warning(_("Invalid replaces path: %s (%s)").printf(path,files_list));
                 }
@@ -166,7 +166,7 @@ public bool quarantine_validate_files(){
         if(yaml.has_area(pkgarea,"replaces")){
             foreach(string path in yaml.get_array(pkgarea,"replaces")){
                 if(path.length > 1 && path[0] == '/'){
-                    quarantine_file_replaces_list.add(path[1:]);
+                    quarantine_file_replaces_list.add(get_storage()+"/quarantine/rootfs/"+path[1:]);
                 }else{
                     warning(_("Invalid replaces path: %s (%s)").printf(path,links_list));
                 }

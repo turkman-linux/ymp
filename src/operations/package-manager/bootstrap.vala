@@ -22,14 +22,15 @@ public int bootstrap_main(string[] args){
     GLib.FileUtils.chmod(rootfs+"/tmp",0777);
     bool sysconf = get_bool("no-sysconf");
     set_bool("no-sysconf",true);
-    set_destdir(rootfs);
     copy_file("/etc/resolv.conf",rootfs+"/etc/resolv.conf");
     writefile(rootfs+"/"+STORAGEDIR+"/sources.list",repo+"\n");
     writefile(rootfs+"/"+STORAGEDIR+"/restricted.list","/data/user\n");
+    get_main({});
     update_main(args);
     install_main(base_packages);
     foreach(string package in base_packages){
         string hook = get_configdir()+"/sysconf.d/";
+        create_dir(get_destdir()+"/var/lib/ymp/sysconf/"+package);
         hook = hook[get_destdir().length:];
         run_args({"chroot", get_destdir(), hook+package});
     }
