@@ -160,6 +160,7 @@ private bool fetch_package_sources(){
             info(_("Source file import from cache."));
             copy_file(ymp_source_cache+"/"+sbasename(src), srcfile);
         }else if(isfile(ympbuild_srcpath+"/"+src)){
+            info(_("Source file copy from cache."));
             copy_file(ympbuild_srcpath+"/"+src, srcfile);
         }else{
             info(_("Download: %s").printf(src));
@@ -178,12 +179,14 @@ private bool fetch_package_sources(){
 
 private bool extract_package_sources(){
     cd(ympbuild_buildpath);
+    print(colorize(_("Extracting package resources from:"),yellow)+ympbuild_buildpath);
     var tar = new archive();
     foreach(string src in get_ympbuild_array("source")){
         if(src == ""){
             continue;
         }
         string srcfile = sbasename(src);
+        print(srcfile);
         if(tar.is_archive(srcfile)){
             tar.load(srcfile);
             tar.extract_all();

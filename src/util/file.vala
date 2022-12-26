@@ -131,6 +131,9 @@ public int remove_dir(string path){
 //DOC: remove **path** file
 public int remove_file(string path){
     debug("Remove file: "+path);
+    if(!isfile(path)){
+        return 0;
+    }
     File file = File.new_for_path(path);
     try {
         #if experimental
@@ -174,6 +177,9 @@ public void move_file(string src, string desc){
     if(isfile(desc)){
         remove_file(desc);
     }
+    if(!isfile(src)){
+        return;
+    }
     try {
         dest_file.move(src_file, FileCopyFlags.NONE, null);
     } catch (Error e) {
@@ -192,6 +198,9 @@ public void copy_file(string src, string desc){
     int64 sync_bytes = 0;
     if(isfile(desc)){
         remove_file(desc);
+    }
+    if(!isfile(src)){
+        return;
     }
     try {
         file1.copy (file2, 0, null, (cur, total) => {
