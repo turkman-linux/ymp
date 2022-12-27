@@ -240,9 +240,9 @@ private bool create_source_archive(){
             copy_file(ympbuild_srcpath+file,ympbuild_buildpath+file);
         }
     }
+    copy_file(ympbuild_srcpath+"/ympbuild",ympbuild_buildpath+"/ympbuild");
     cd(ympbuild_buildpath);
     tar.add("metadata.yaml");
-    tar.add("ympbuild");
     foreach(string file in find(ympbuild_buildpath)){
         file = file[(ympbuild_buildpath).length:];
         if(file[0] == '/'){
