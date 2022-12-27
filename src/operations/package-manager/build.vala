@@ -242,6 +242,7 @@ private bool create_source_archive(){
     }
     cd(ympbuild_buildpath);
     tar.add("metadata.yaml");
+    tar.add("ympbuild");
     foreach(string file in find(ympbuild_buildpath)){
         file = file[(ympbuild_buildpath).length:];
         if(file[0] == '/'){
