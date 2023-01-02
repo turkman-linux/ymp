@@ -34,6 +34,9 @@ run_command('bash', './tool/mkctx.sh',
     'VERSION='+meson.project_version(),
     check:true)
 
+run_command('install', 'data/ymp.pc', meson.current_build_dir())
+run_command('sed', '-i', 's/@version@/'+meson.project_version()+'/g', meson.current_build_dir()+'/ymp.pc')
+
 if get_option('doc')
     run_command('bash', '-c',
         'find src -type f -iname "*.vala" | sort -V | bash ./tool/mkdoc.sh > src/libymp.md',
@@ -159,7 +162,7 @@ if get_option('scripts')
 endif
 
 install_data('data/ymp.yaml', install_dir : get_option('sysconfdir'), rename : 'ymp.yaml')
-install_data('data/ymp.pc', install_dir : get_option('libdir')/ 'pkgconfig', rename : 'ymp.pc')
+install_data(meson.current_build_dir()+'/ymp.pc', install_dir : get_option('libdir')/ 'pkgconfig', rename : 'ymp.pc')
 install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
 install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/packages/')
 
