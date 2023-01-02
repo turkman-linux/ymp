@@ -12,6 +12,7 @@ public int template_main(string[] args){
     data += "depends=("    +str_or_def("depends"," ")+")\n";
     data += "makedepends=("    +str_or_def("makedepends"," ")+")\n";
     data += "md5sums=('FIXME')\n";
+    data += "group=()\n";
     data += "uses=()\n";
     data += "arch=('"    +getArch()+"')\n\n";
 
@@ -19,7 +20,6 @@ public int template_main(string[] args){
     string buildtype = get_value("build-type");
     if(buildtype == "autotool" || buildtype == ""){
         data += "setup(){\n";
-        data += "    [[ -f ./autogen.sh ]] && ./autogen.sh\n";
         data += "    ./configure --prefix=/usr \\\n";
         data += "        --libdir=/usr/lib64/\n";
         data += "}\n\n";

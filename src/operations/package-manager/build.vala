@@ -406,6 +406,17 @@ private bool create_metadata_info(){
     if(name == ""){
         error_add(_("Name is not defined."));
     }
+    string arch = getArch();
+    bool arch_is_supported = false;
+    foreach(string a in yaml.get_array(srcdata,"arch")){
+        if(a == arch){
+            arch_is_supported = true;
+            break;
+        }
+    }
+    if(!arch_is_supported){
+        error_add(_("Package architecture is not supported"));
+    }
     if(has_error()){
         return false;
     }

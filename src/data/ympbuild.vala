@@ -44,6 +44,12 @@ private void ympbuild_init(){
                 echo \"      - $dep\"
             done
         fi
+        if [[ \"${arch[@]}\" != \"\" ]] ; then
+            echo \"    arch:\"
+            for dep in ${arch[@]} ; do
+                echo \"      - $dep\"
+            done
+        fi
         if [[ \"${depends[@]}\" != \"\" ]] ; then
             echo \"    depends:\"
             for dep in ${depends[@]} ; do
