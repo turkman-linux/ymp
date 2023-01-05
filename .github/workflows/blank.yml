@@ -19,10 +19,11 @@ jobs:
                 image: debian:latest
                 options: -v ${{ github.workspace }}:/root -v /output:/output
                 run: |
+                    set -ex
                     cd /root
                     apt update
                     apt install devscripts equivs -y
-                    mk-build-deps --install
+                    yes | mk-build-deps --install
                     debuild -us -uc -b
                     mkdir -p /output/
                     mv ../*.deb /output/
