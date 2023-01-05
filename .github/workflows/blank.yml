@@ -16,7 +16,7 @@ jobs:
           - name: Run the build process with Docker
             uses: addnab/docker-run-action@v3
             with:
-                image: debian:latest
+                image: debian:testing
                 options: -v ${{ github.workspace }}:/root -v /output:/output
                 run: |
                     set -ex
