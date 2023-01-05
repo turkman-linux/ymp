@@ -7,28 +7,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    compile:
+        name: Create deb package
+        runs-on: ubuntu-latest
+        steps:
+          - name: Check out the repo
+            uses: actions/checkout@v2
+          - name: Run the build process with Docker
+            uses: addnab/docker-run-action@v3
+            with:
+                image: debian:latest
+                options: -v ${{ github.workspace }}:/root -v /output:/output
+                run: |
+                    cd /root
+                    apt update
+                    apt install devscripts equivs -y
+                    mk-build-deps --install
+                    debuild -us -uc -b
+                    mkdir -p /output/
+                    mv ../*.deb /output/
+                    mv ./*.deb /output/
 
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Building deb package
-        run: |
-          sudo apt update
-          sudo apt install devscripts equivs -y
-          sudo mk-build-deps --install
-          sudo debuild -us -uc -b
-          sudo mkdir -p /output/
-          sudo mv ../*.deb /output/
-          sudo mv ./*.deb /output/
-
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "current"
-          prerelease: false
-          title: "Latest release"
-          files: |
-            /output/*
+            - uses: "marvinpinto/action-automatic-releases@latest"
+                with:
+                repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                automatic_release_tag: "current"
+                prerelease: false
+                title: "Latest release"
+                files: |
+                  /output/*
 
