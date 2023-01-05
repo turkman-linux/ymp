@@ -267,7 +267,10 @@ public Ymp ymp_init(string[] args){
         warning(_("UsrMerge detected! Ymp may not working good."));
     }
     set_env("G_DEBUG","fatal-criticals");
-    error(31);
+    if(has_error()){
+        error(31);
+    }
+    
     ymp_activated = true;
     tty_size_init();
     logger_init(); // logger reload

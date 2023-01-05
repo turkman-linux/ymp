@@ -128,19 +128,17 @@ public void set_terminal_title(string msg){
 //DOC: error(1);
 //DOC: ```
 public void error(int status){
-    if(!has_error()){
-        return;
-    }
-    if(!get_bool("ignore-error")){
-        foreach (string error in errors){
-            print_stderr(colorize("ERROR: ",red)+error);
+    if(has_error()){
+         if(!get_bool("ignore-error")){
+            foreach (string error in errors){
+                print_stderr(colorize("ERROR: ",red)+error);
+            }
+        }
+        errors = null;
+        if (status != 0 && !get_bool("shellmode")){
+            Process.exit (status);
         }
     }
-    errors = null;
-    if (status != 0 && !get_bool("shellmode")){
-        Process.exit (status);
-    }
-
 }
 private bool has_error(){
     return errors.length != 0;
