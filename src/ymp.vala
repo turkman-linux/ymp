@@ -154,10 +154,12 @@ public class Ymp {
             if(status != 0){
                 string type = proc[i].type;
                 error_add(_("Process: %s failed. Exited with %d.").printf(type, status));
+                set_terminal_title("");
                 error(status);
             }
             float diff = ((float)(get_epoch() - start_time))/ 1000000;
             info(_("Process done in : %f sec").printf(diff));
+            set_terminal_title("");
         }
         error(1);
     }
