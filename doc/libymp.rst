@@ -108,7 +108,8 @@ An example array library usage in here:
 	#include <ymp.h>
 	#include <glib/gprintf.h>
 
-	int main(){
+	int main(int argc, char* argv[]){
+	    ymp_init(argv, argc);
 	    array *a = array_new();
 	    array_add(a,"hello");
 	    array_add(a,"world");
@@ -121,4 +122,21 @@ An example array library usage in here:
 	}
 
 **Note:** Array library uses glib types. You can use standard types but it is not recommended.
+
+Yaml parser
+^^^^^^^^^^^
+An example yaml parser usage in here:
+
+.. code-block:: C
+	#include <ymp.h>
+	#include <glib/gprintf.h>
+	
+	int main(int argc, char* argv[]){
+	    ymp_init(argv, argc);
+	    yamlfile *y = yamlfile_new();
+	    yamlfile_load(y, "/etc/ymp.yaml");
+	    gchar* data = yamlfile_get(y, "ymp");
+	    g_printf("%s\n", yamlfile_get_value(y, data, "compress"));
+	    return 0;
+	}
 
