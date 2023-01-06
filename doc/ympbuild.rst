@@ -25,6 +25,7 @@ Basics of ympbuild
 	source=("https://example.org/source.zip"
 	"some-stuff.patch"
 	)
+	arch=(x86_64 aarch64)
 	md5sums=('bb91a17fd6c9032c26d0b2b78b50aff5'
 	'SKIP'
 	)
@@ -61,6 +62,7 @@ arrays
 * **md5sums** array is package source hash list. ymp checks sources with this hashes.
 * **uses** and **uses_extra** arrays are use flag definitions.
 * **license** array is package licenses list.
+* **arch** array is supported architectures list.
 
 functions
 ^^^^^^^^^

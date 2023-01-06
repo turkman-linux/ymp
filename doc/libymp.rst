@@ -53,4 +53,72 @@ Example hello world program with ymp operation manager like this:
 
 For all ymp function please see **/usr/include/ymp.h** header.
 
+Using libymp with vala
+^^^^^^^^^^^^^^^^^^^^^^
+
+You can use ymp with vala using vapi. For example:
+
+.. code-block:: java
+
+	int main(string[] argv){
+	    Ymp y = ymp_init(argv);
+	    string[] args = {"Hello","World"};
+	    y.add_process("echo",args);
+	    y.run();
+	    return 0;
+	}
+
+You can build code with this command:
+
+.. code-block:: shell
+
+	valac main.vala --pkg ymp
+
+An alternative method you can use C based library on vala.
+
+.. code-block:: java
+
+	extern void ymp_init(string[] args);
+	extern int echo_main(string[] args);
+	int main(string[] argv){
+        ymp_init(argv);
+        string[] args={"Hello"};
+        echo_main(args);
+        return 0;}
+	}
+
+And compile program with this command.
+
+.. code-block:: shell
+
+	valac main.vala -X -lymp
+
+**Note:** This method is a bad idea but working :)
+
+Usefull library parts of libymp
+===============================
+libymp provide some usefull functions.
+
+The array library of libymp
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+An example array library usage in here:
+
+.. code-block:: shell
+
+	#include <ymp.h>
+	#include <glib/gprintf.h>
+
+	int main(){
+    	array *a = array_new();
+	    array_add(a,"hello");
+	    array_add(a,"world");
+	    gint len=0;
+	    for(int i=0;i<array_length(a);i++){
+	        g_printf("%s ",array_get(a,&len)[i]);
+	        g_printf("%d\n",len);
+	    }
+	    return 0;
+	}
+
+**Note:** Array library uses glib types. You can use standard types but it is not recommended.
 

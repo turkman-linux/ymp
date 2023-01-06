@@ -161,14 +161,14 @@ if get_option('scripts')
     endforeach
 endif
 
-install_data('data/ymp.yaml', install_dir : get_option('sysconfdir'), rename : 'ymp.yaml')
-install_data(meson.current_build_dir()+'/ymp.pc', install_dir : get_option('libdir')/ 'pkgconfig', rename : 'ymp.pc')
+install_data('data/ymp.yaml', install_dir : get_option('sysconfdir'))
+install_data(meson.current_build_dir()+'/ymp.pc', install_dir : get_option('libdir')/ 'pkgconfig')
 install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
 install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/packages/')
 
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
-install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'), rename : 'ymp.h')
-install_data(meson.current_build_dir() / 'ymp.vapi', install_dir : get_option('prefix')/'share/vala/vapi/', rename : 'libymp-'+meson.project_version()+'.vapi')
+install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'))
+install_data(meson.current_build_dir() / 'ymp.vapi', install_dir : get_option('prefix')/'share/vala/vapi/')
 if get_option('gobject')
     libgir = library('ymp-gobject', 'src/gobject.vala', dependencies: shared_dependencies, link_args: args, link_with: lib,install: true)
     gir=custom_target('gobject',
