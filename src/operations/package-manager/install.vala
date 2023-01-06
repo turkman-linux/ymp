@@ -61,8 +61,14 @@ public package install_single(string pkg){
         p = get_from_repository(pkg);
         p.download();
     }
-    if (p.get("arch") != getArch()){
-        error_add(_("Package architecture is not supported"));
+    if(p.is_source){
+        if (!(getArch() in p.gets("arch"))){
+            error_add(_("Package architecture is not supported"));
+        }
+    }else{
+        if (p.get("arch") != getArch()){
+            error_add(_("Package architecture is not supported"));
+        }
     }
     error(2);
     print(colorize(_("Installing:"),yellow)+" "+p.name);
