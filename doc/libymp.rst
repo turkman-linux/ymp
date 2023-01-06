@@ -109,7 +109,7 @@ An example array library usage in here:
 	#include <glib/gprintf.h>
 
 	int main(){
-		array *a = array_new();
+	    array *a = array_new();
 	    array_add(a,"hello");
 	    array_add(a,"world");
 	    gint len=0;
