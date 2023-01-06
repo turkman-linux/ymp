@@ -84,7 +84,7 @@ An alternative method you can use C based library on vala.
 	    ymp_init(argv);
 	    string[] args={"Hello"};
 	    echo_main(args);
-	    return 0;}
+	    return 0;
 	}
 
 And compile program with this command.
