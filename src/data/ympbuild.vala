@@ -11,10 +11,15 @@ private void ympbuild_init(){
     if(ympbuild_srcpath == null){
         ympbuild_srcpath = "./";
     }
+    string jobs = get_value("build:jobs");
+    if(jobs == "0"){
+        jobs = "`nproc`";
+    }
     ympbuild_header = "
     export PATH=\"/usr/bin:/bin:/usr/sbin:/sbin\"
 
     declare -r installdir=\""+ympbuild_buildpath+"/output\"
+    declare -r jobs=\"-j"+jobs+"\"
     export HOME=\""+ympbuild_buildpath+"\"
     export DESTDIR=\"$installdir\"
     declare -r YMPVER=\""+VERSION+"\"
