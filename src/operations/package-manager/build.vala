@@ -289,6 +289,10 @@ private bool create_files_info(){
         }
         if(issymlink(file)){
             var link = sreadlink(file);
+            if(link[0] == '/'){
+                error_add(_("Absolute path symlink is not allowed:")+"\n"+file+" => "+link);
+                continue;
+            }
             if(!isexists(sdirname(file)+"/"+link) && link.length > 0){
                 error_add(_("Broken symlink detected:")+"\n"+file+" => "+link);
                 continue;
