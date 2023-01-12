@@ -607,6 +607,11 @@ replace with new array
 
 return array length
 
+# src/util/debian.vala
+`int deb_extract(string file, string output):`
+
+extract debian packages
+
 # src/util/fetcher.vala
 # src/util/file.vala
 ## File functions
