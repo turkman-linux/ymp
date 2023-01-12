@@ -1,0 +1,10 @@
+#!/bin/bash
+export LANG=C
+cat /var/lib/ymp/files/$1 | while read line ; do
+### find elf file list
+    path=/${line:41}
+    ldd $path |& grep "=>" | cut -f3 -d" "
+done | sort | uniq | while read line ; do
+### find package names
+    ymp search --file $line
+done
