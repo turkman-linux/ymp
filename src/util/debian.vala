@@ -66,7 +66,14 @@ public int deb_create(string fpath, string output){
     cd(output);
     string target="%s/%s.deb".printf(output,sbasename(path));
     print(colorize(_("Creating debian package to:"),yellow)+" "+target);
-    run("ar r '"+target+"' debian-binary control.tar.gz data.tar.gz");
+    var debfile = new archive();
+    debfile.load(target);
+    debfile.add("debian-binary");
+    debfile.add("control.tar.gz");
+    debfile.add("data.tar.gz");
+    afilter=0; // uncompressed
+    aformat=4; // ar
+    debfile.create();
     remove_file("debian-binary");
     remove_file("control.tar.gz");
     remove_file("data.tar.gz");

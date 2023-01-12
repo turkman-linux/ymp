@@ -6,6 +6,7 @@
 #define tar 1
 #define p7zip 2
 #define cpio 3
+#define ar 4
 
 #define filter_none 0
 #define filter_gzip 1
@@ -59,6 +60,8 @@ void write_archive(const char *outname, const char **filename) {
       archive_write_set_format_7zip(a);
   }else if (aformat == cpio){
       archive_write_set_format_cpio(a);
+  }else if (aformat == ar){
+      archive_write_set_format_ar_bsd(a);
   }else{
       archive_write_set_format_zip(a);
   }
