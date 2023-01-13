@@ -36,6 +36,26 @@ int afilter = 0;
 int get_bool(char*variable);
 #endif
 
+void set_archive_type(char* form, char* filt){
+    if(strcmp(form,"zip")==0)
+        aformat=zip;
+    else if(strcmp(form,"tar")==0)
+        aformat=tar;
+    else if(strcmp(form,"p7zip")==0)
+        aformat=p7zip;
+    else if(strcmp(form,"cpio")==0)
+        aformat=cpio;
+    else if(strcmp(form,"ar")==0)
+        aformat=ar;
+
+    if(strcmp(filt,"none")==0)
+        afilter=filter_none;
+    else if(strcmp(filt,"gzip")==0)
+        afilter=filter_gzip;
+    else if(strcmp(filt,"xz")==0)
+        afilter=filter_xz;
+}
+
 void write_archive(const char *outname, const char **filename) {
   struct archive *a;
   struct archive_entry *entry;

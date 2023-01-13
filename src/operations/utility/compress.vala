@@ -1,13 +1,7 @@
 public int compress_main(string[] args){
     var tar = new archive();
     tar.load(args[0]);
-    if(get_value("compress")=="none"){
-        afilter=0;
-    }else if(get_value("compress")=="gzip"){
-        afilter=1;
-    }else if(get_value("compress")=="xz"){
-        afilter=2;
-    }
+    set_archive_type(get_value("type"), get_value("algorithm"));
     if(args.length > 1){
         foreach(string file in args[1:]){
             if(isdir(file)){
@@ -28,6 +22,7 @@ void compress_init(){
     h.name = _("compress");
     h.minargs=1;
     h.description = _("Compress file or directories.");
-    h.add_parameter("--compress",_("Compress format"));
+    h.add_parameter("--algorithm",_("Compress algorithm"));
+    h.add_parameter("--type",_("Archive format"));
     add_operation(compress_main,{_("compress"),"compress","prs"},h);
 }

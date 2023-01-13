@@ -256,7 +256,7 @@ private bool create_source_archive(){
         }
         tar.add(file);
     }
-    aformat=0;
+    set_archive_type("zip","none");
     tar.create();
     move_file(ympbuild_buildpath+"/source.zip",output_package_path+"_source.ymp");
     return true;
@@ -433,17 +433,17 @@ private void create_data_file(){
     debug(_("Create data file: ")+ympbuild_buildpath+"/output/data.tar.gz");
     var tar = new archive();
     if(get_value("compress")=="none"){
-        afilter=0;
+        set_archive_type("tar","none");
         tar.load(ympbuild_buildpath+"/output/data.tar");
     }else if(get_value("compress")=="gzip"){
-        afilter=1;
+        set_archive_type("tar","gzip");
         tar.load(ympbuild_buildpath+"/output/data.tar.gz");
     }else if(get_value("compress")=="xz"){
-        afilter=2;
+        set_archive_type("tar","xz");
         tar.load(ympbuild_buildpath+"/output/data.tar.xz");
     }else{
         // Default format (gzip)
-        afilter=1;
+        set_archive_type("tar","gzip");
         tar.load(ympbuild_buildpath+"/output/data.tar.gz");
     }
     int fnum = 0;
@@ -463,7 +463,7 @@ private void create_data_file(){
         remove_file(ympbuild_buildpath+"/output/data.tar.gz");
     }
     if(fnum != 0){
-        aformat=1;
+        set_archive_type("tar","gzip");
         tar.create();
     }
     string hash = calculate_sha1sum(ympbuild_buildpath+"/output/data.tar.gz");
@@ -493,7 +493,7 @@ private void create_binary_package(){
             tar.add(path);
         }
     }
-    aformat=0;
+    set_archive_type("zip","none");
     tar.create();
     move_file(ympbuild_buildpath+"/package.zip",output_package_path+"_"+getArch()+".ymp");
 }

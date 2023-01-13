@@ -74,8 +74,7 @@ public class archive {
     //DOC: load archive file from **path**
     public void load(string path){
         archive_path = srealpath(path);
-        aformat=0;
-        afilter=0;
+        set_archive_type("zip","none");
     }
     private void load_archive(string path){
         archive = new Archive.Read();

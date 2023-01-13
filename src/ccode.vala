@@ -55,8 +55,7 @@ public extern int sandbox_gid;
 //DOC: create archive file
 //this functions and values used by util/archive.vala
 public extern void write_archive(string output,string[] files);
-private extern int afilter;
-private extern int aformat;
+public extern void set_archive_type(string filt, string form);
 
 //DOC: ### file.c
 //DOC: `int filesize(string path):`

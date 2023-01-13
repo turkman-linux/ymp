@@ -46,8 +46,7 @@ public int deb_create(string fpath, string output){
             data.add(file);
         }
     }
-    afilter=1; // gzip
-    aformat=1; // tar
+    set_archive_type("tar","gzip");
     data.create();
     cd(curdir);
     // update md5sums
@@ -59,8 +58,7 @@ public int deb_create(string fpath, string output){
     foreach(string file in find("DEBIAN")){
         control.add(file);
     }
-    afilter=1; // gzip
-    aformat=1; // tar
+    set_archive_type("tar","gzip");
     control.create();
     writefile(output+"/debian-binary","2.0\n");
     cd(output);
@@ -71,8 +69,7 @@ public int deb_create(string fpath, string output){
     debfile.add("debian-binary");
     debfile.add("control.tar.gz");
     debfile.add("data.tar.gz");
-    afilter=0; // uncompressed
-    aformat=4; // ar
+    set_archive_type("ar","none");
     debfile.create();
     remove_file("debian-binary");
     remove_file("control.tar.gz");
