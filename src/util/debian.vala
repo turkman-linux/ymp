@@ -52,10 +52,10 @@ public int deb_create(string fpath, string output){
     // update md5sums
     writefile(path+"/DEBIAN/md5sums",md5sum_data);
     // create control.tar.gz
-    cd(path);
+    cd(path+"/DEBIAN");
     var control = new archive();
     control.load(output+"/control.tar.gz");
-    foreach(string file in find("DEBIAN")){
+    foreach(string file in listdir(".")){
         control.add(file);
     }
     set_archive_type("tar","gzip");
