@@ -16,7 +16,7 @@ private void ympbuild_init(){
         jobs = "`nproc`";
     }
     ympbuild_header = "
-    export PATH=\"/usr/bin:/bin:/usr/sbin:/sbin\"
+    export PATH=\":/usr/sbin:/usr/bin:/bin:/sbin\"
 
     declare -r installdir=\""+ympbuild_buildpath+"/output\"
     declare -r jobs=\"-j"+jobs+"\"
