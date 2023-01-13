@@ -25,7 +25,6 @@ public int bootstrap_main(string[] args){
     copy_file("/etc/resolv.conf",rootfs+"/etc/resolv.conf");
     writefile(rootfs+"/"+STORAGEDIR+"/sources.list",repo+"\n");
     writefile(rootfs+"/"+STORAGEDIR+"/restricted.list","/data/user\n");
-    get_main({});
     update_main(args);
     install_main(base_packages);
     foreach(string package in base_packages){
