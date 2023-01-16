@@ -83,6 +83,9 @@ private string[] get_group_packages(string fname){
             }
         }
     }
+    if(ret.length() == 0){
+        error_add(_("Group is unknown: %s").printf(fname));
+    }
     return ret.get();
 }
 
@@ -116,6 +119,9 @@ private string[] get_match_packages(string fname){
             info(_("Match %s: rule %s").printf(pkgname,rule));
             ret.add(pkgname);
         }
+    }
+    if(ret.length() == 0){
+        error_add(_("Regex match is not available: %s").printf(fname));
     }
     return ret.get();
 }
