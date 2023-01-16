@@ -11,9 +11,9 @@ public int sysconf_main(string[] args){
     foreach(string hook in find(get_configdir()+"/sysconf.d")){
         if(isfile(hook)){
             info(_("Run hook: %s").printf(sbasename(hook)));
+            create_dir(get_storage()+"/sysconf/"+sbasename(hook));
             if(DESTDIR != "/"){
                 hook=hook[DESTDIR.length:];
-                create_dir(get_storage()+"/sysconf/"+sbasename(hook));
                 if(0 != run_args({"chroot", get_destdir(), hook})){
                     warning(_("Failed to run sysconf: %s").printf(sbasename(hook)));
                 }
