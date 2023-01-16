@@ -11,6 +11,12 @@ public int debian_main(string[] args){
         foreach(string arg in args){
             deb_create(arg,output);
         }
+    }else if(get_bool("update-catalog")){
+        debian_update_catalog();
+    }else if(get_bool("get-pkgname")){
+        foreach(string arg in args){
+            print(find_debian_pkgname_from_catalog(arg));
+        }
     }
     return 0;
 }
