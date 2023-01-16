@@ -27,12 +27,12 @@ public int info_main(string[] args){
                 }else{
                     print("package:");
                 }
-                print("  "+_("name: %s").printf(p.name));
-                print("  "+_("version: %s").printf(p.version));
-                print("  "+_("release: %d").printf(p.release));
-                print("  "+_("depends: %s").printf(join(" ",p.dependencies)));
-                print("  "+_("remote_url: %s").printf(p.get_uri()));
-                print("  "+_("is_installed: %s").printf(p.is_installed().to_string()));
+                print("  name: %s".printf(p.name));
+                print("  version: %s".printf(p.version));
+                print("  release: %d".printf(p.release));
+                print("  depends: %s".printf(join(" ",p.dependencies)));
+                print("  remote_url: %s".printf(p.get_uri()));
+                print("  is_installed: %s".printf(p.is_installed().to_string()));
              }
          }
     }
