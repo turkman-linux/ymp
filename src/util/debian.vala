@@ -91,6 +91,7 @@ public int debian_convert(string file){
     create_files_info();
     create_binary_package();
     if(get_bool("install")){
+        set_bool("no-emerge",true);
         install_main({file+"_"+getArch()+".ymp"});
     }
     return 0;
