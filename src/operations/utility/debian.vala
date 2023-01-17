@@ -11,11 +11,22 @@ public int debian_main(string[] args){
         foreach(string arg in args){
             deb_create(arg,output);
         }
-    }else if(get_bool("update-catalog")){
+    }
+    
+    
+    if(get_bool("update-catalog")){
         debian_update_catalog();
-    }else if(get_bool("get-pkgname")){
+    }if(get_bool("get-pkgname")){
         foreach(string arg in args){
             print(find_debian_pkgname_from_catalog(arg));
+        }
+    }
+    
+    if(get_bool("install")){
+        set_bool("convert",true);
+    }if(get_bool("convert")){
+        foreach(string arg in args){
+            debian_convert(srealpath(arg));
         }
     }
     return 0;

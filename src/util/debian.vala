@@ -78,6 +78,25 @@ public int deb_create(string fpath, string output){
     return 0;
 }
 
+public int debian_convert(string file){
+    string output = "/tmp/ymp-build/"+sbasename(file);
+    if(isdir(output)){
+        remove_all(output);
+    }
+    set_ympbuild_buildpath(output);
+    deb_extract(file,output+"/output");
+    create_debian_metadata(output+"/output");
+    remove_all(output+"/DEBIAN/");
+    output_package_path=file;
+    create_files_info();
+    create_data_file();
+    create_binary_package();
+    if(get_bool("install")){
+        install_main({file+"_"+getArch()+".ymp"});
+    }
+    return 0;
+}
+
 public int debian_update_catalog(){
     string mirror = "https://ftp.debian.org/debian/";
     if(get_value("mirror") != ""){
@@ -110,14 +129,58 @@ public int debian_update_catalog(){
 }
 
 private string[] catalog_cache = null;
-public string find_debian_pkgname_from_catalog(string name){
+public string find_debian_pkgname_from_catalog(string fname){
+    string name = fname;
+    if("|" in name){
+        name=ssplit(name,"|")[0];
+    }
+    if("(" in name){
+        name=ssplit(name,"(")[0];
+    }
+    name = name.strip();
     if(catalog_cache == null){
+        if(!isfile(get_storage()+"/debian/catalog")){
+            error_add("Debian catalog not found. Please use --update-catalog to update.");
+        }
+        error(2);
         catalog_cache = ssplit(readfile_raw(get_storage()+"/debian/catalog"),"\n");
     }
     foreach(string line in catalog_cache){
-        if(name+" " in line){
+        if(" %s ".printf(name) in line+" "){
             return ssplit(line,":")[0].strip();
         }
     }
     return "";
+}
+
+public void create_debian_metadata(string path){
+    string control = readfile_raw(path+"/DEBIAN/control");
+    string data = "ymp:\n";
+    data+="  package:\n";
+    foreach(string line in control.split("\n")){
+        if(":" in line){
+           string var = line.split(":")[0].strip();
+           string val = line.split(":")[1].strip();
+           if(var=="Package"){
+               data+="    name: %s\n".printf(val);
+           }else if(var=="Version"){
+               data+="    version: %s\n".printf(val);
+               data+="    release: 1\n";
+           }else if(var=="Description"){
+               data+="    description: %s\n".printf(val);
+           }else if(var=="Depends"){
+               data+="    depends:\n";
+               foreach(string deb in ssplit(val,",")){
+                   string fdep = find_debian_pkgname_from_catalog(deb);
+                   if(fdep.strip()!=""){
+                       data+="      - %s\n".printf(fdep);
+                   }
+               }
+           }
+        } 
+    }
+    data+="    arch: %s\n".printf(getArch());
+    data+="    group:\n";
+    data+="      - debian\n";
+    writefile(path+"/metadata.yaml",data);
 }
