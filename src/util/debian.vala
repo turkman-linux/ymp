@@ -86,7 +86,6 @@ public int debian_convert(string file){
     set_ympbuild_buildpath(output);
     deb_extract(file,output+"/output");
     create_debian_metadata(output+"/output");
-    remove_all(output+"/DEBIAN/");
     output_package_path=file;
     create_files_info();
     create_binary_package();
@@ -185,4 +184,5 @@ public void create_debian_metadata(string path){
     data+="    group:\n";
     data+="      - debian\n";
     writefile(path+"/metadata.yaml",data);
+    remove_all(path+"/DEBIAN/");
 }
