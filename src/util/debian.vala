@@ -160,7 +160,7 @@ public void create_debian_metadata(string path){
     foreach(string line in control.split("\n")){
         if(":" in line){
            string var = line.split(":")[0].strip();
-           string val = line.split(":")[1].strip();
+           string val = line[var.length+1:].strip();
            if(var=="Package"){
                name=val;
                data+="    name: %s\n".printf(val);
