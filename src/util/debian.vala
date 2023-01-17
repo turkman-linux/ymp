@@ -89,7 +89,6 @@ public int debian_convert(string file){
     remove_all(output+"/DEBIAN/");
     output_package_path=file;
     create_files_info();
-    create_data_file();
     create_binary_package();
     if(get_bool("install")){
         install_main({file+"_"+getArch()+".ymp"});
