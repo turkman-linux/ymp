@@ -23,5 +23,6 @@ void fetch_init(){
     h.name = _("fetch");
     h.minargs=1;
     h.description = _("Download files from network");
+    h.add_parameter("--ignore-ssl",_("Disable ssl check"));
     add_operation(fetch_main,{_("fetch"),"fetch","download","dl"}, h);
 }

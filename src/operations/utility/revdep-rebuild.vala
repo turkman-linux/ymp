@@ -49,7 +49,7 @@ public int revdep_rebuild_main(string[] args){
 
 private string ldddata;
 public void check(string file){
-    print_fn("\x1b[2K\r"+_("Checking: %s").printf(file),false,true);
+    print_fn("\x1b[2K\r"+_("Checking: %s").printf(sbasename(file)),false,true);
     ldddata = getoutput("ldd "+file+" 2>/dev/null");
     foreach(string line in ssplit(ldddata,"\n")){
         if(endswith(line,"not found")){
@@ -59,7 +59,7 @@ public void check(string file){
     }
 }
 public void check_pkgconfig(string file){
-    print_fn("\x1b[2K\r"+_("Checking: %s").printf(file),false,true);
+    print_fn("\x1b[2K\r"+_("Checking: %s").printf(sbasename(file)),false,true);
     int status = run("gcc `pkg-config --cflags --libs "+file+" 2>/dev/null` /tmp/.empty.c -shared -o /dev/null 2>/dev/null");
     if(status != 0){
         print_fn("\x1b[2K\r",false,true);
