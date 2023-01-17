@@ -156,11 +156,13 @@ public void create_debian_metadata(string path){
     string control = readfile_raw(path+"/DEBIAN/control");
     string data = "ymp:\n";
     data+="  package:\n";
+    string name="";
     foreach(string line in control.split("\n")){
         if(":" in line){
            string var = line.split(":")[0].strip();
            string val = line.split(":")[1].strip();
            if(var=="Package"){
+               name=val;
                data+="    name: %s\n".printf(val);
            }else if(var=="Version"){
                data+="    version: %s\n".printf(val);
@@ -171,7 +173,7 @@ public void create_debian_metadata(string path){
                data+="    depends:\n";
                foreach(string deb in ssplit(val,",")){
                    string fdep = find_debian_pkgname_from_catalog(deb);
-                   if(fdep.strip()!=""){
+                   if(fdep.strip()!="" && fdep != name){
                        data+="      - %s\n".printf(fdep);
                    }
                }
