@@ -36,12 +36,13 @@ void single_instance(){
 }
 
 int run(char* command){
-    return system(command);
+    char* cmd[] = {"sh","-c",command};
+    return run_args(cmd);
 }
 
 int run_silent(char* command){
-    //FIXME: reimplement run_silent
-    return run(command);
+    char* cmd[] = {"sh","-c",command};
+    return run_args(cmd);
 }
 
 int run_args(char* args[]){
