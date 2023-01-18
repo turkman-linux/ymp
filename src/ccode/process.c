@@ -35,16 +35,6 @@ void single_instance(){
     }
 }
 
-int run(char* command){
-    char* cmd[] = {"sh","-c",command};
-    return run_args(cmd);
-}
-
-int run_silent(char* command){
-    char* cmd[] = {"sh","-c",command};
-    return run_args(cmd);
-}
-
 int run_args(char* args[]){
     pid_t pid = fork();
     if(pid == 0){
@@ -61,6 +51,16 @@ int run_args(char* args[]){
         return status;
     }
     return 127;
+}
+
+int run(char* command){
+    char* cmd[] = {"sh","-c",command};
+    return run_args(cmd);
+}
+
+int run_silent(char* command){
+    char* cmd[] = {"sh","-c",command};
+    return run_args(cmd);
 }
 
 long get_epoch(){
