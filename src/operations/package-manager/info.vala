@@ -13,15 +13,25 @@ public int info_main(string[] args){
         set_bool("reinstall",ri);
     }else if(get_value("get") != ""){
         foreach(string name in args){
+            package p = null;
             if(is_available_from_repository(name)){
-                package p = get_from_repository(name);
+                p = get_from_repository(name);
+            }else if(is_installed_package(name)){
+                p = get_installed_package(name);
+            }
+            if(p != null){
                 print("%s: %s".printf(get_value("get"), p.get(get_value("get"))));
             }
         }
     }else{
         foreach(string name in args){
+            package p = null;
             if(is_available_from_repository(name)){
-                package p = get_from_repository(name);
+                p = get_from_repository(name);
+            }else if(is_installed_package(name)){
+                p = get_installed_package(name);
+            }
+            if(p != null){
                 if(p.is_source){
                     print("source:");
                 }else{

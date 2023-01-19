@@ -42,8 +42,12 @@ private void resolve_process(string[] names){
                         continue;
                     }
                 }
-            }else if(!get_bool("reinstall") && is_installed_package(name)){
-                continue;
+            }else if(is_installed_package(name)){
+                if(!get_bool("reinstall")){
+                    continue;
+                }else{
+                    pkg = get_installed_package(name);
+                }
             }else{
                 error_add(_("Package is not installable: %s").printf(name));
             }
