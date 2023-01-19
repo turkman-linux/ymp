@@ -264,10 +264,10 @@ public Ymp ymp_init(string[] args){
                 error_add(_("OEM is not allowed! Please use --allow-oem to allow oem."));
             }
         }
-    #endif
     if(usr_is_merged()){
         warning(_("UsrMerge detected! Ymp may not working good."));
     }
+    #endif
     set_env("G_DEBUG","fatal-criticals");
     if(has_error()){
         error(31);

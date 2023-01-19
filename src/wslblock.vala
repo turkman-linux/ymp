@@ -34,7 +34,6 @@ public bool is_oem_available(){
 }
 
 public bool usr_is_merged(){
-    #if check_oem
     if(issymlink("/bin") || issymlink("/sbin")){
         return true;
     }
@@ -43,6 +42,5 @@ public bool usr_is_merged(){
             return true;
         }
     }
-    #endif
     return false;
 }
