@@ -84,6 +84,9 @@ public extern bool issymlink(string path);
 //DOC: `void block_sigint():`
 //DOC: block ctrl-c
 public extern void block_sigint();
+//DOC: `void unblock_sigint():`
+//DOC: unblock ctrl-c
+public extern void unblock_sigint();
 
 //DOC: ### process.c
 //DOC: `void single_instance():`

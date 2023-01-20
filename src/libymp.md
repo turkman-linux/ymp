@@ -99,6 +99,10 @@ check path is symlink
 
 block ctrl-c
 
+`void unblock_sigint():`
+
+unblock ctrl-c
+
 ### process.c
 
 `void single_instance():`

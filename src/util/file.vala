@@ -4,6 +4,7 @@
 //DOC: `string readfile_byte(string path, long size):`
 //DOC: read **n** byte from file
 public string readfile_byte(string path, long n){
+    debug("Read file bytes: "+path);
     if(!isfile(path)){
         return "";
     }
@@ -34,7 +35,6 @@ public string readfile_byte(string path, long n){
     if (n != read){
         return "";
     }
-    debug("Read file bytes: "+path);
     return (string) buf;
 }
 
@@ -42,6 +42,7 @@ public string readfile_byte(string path, long n){
 //DOC: `string readfile(string path):`
 //DOC: read file from **path** and remove commends
 public string readfile(string path){
+    debug("Read file: "+path);
     string new_data = "";
     if(!isfile(path)){
         return new_data;
@@ -62,13 +63,13 @@ public string readfile(string path){
             new_data += line+"\n";
         }
     }
-    debug("Read file: "+path);
     return new_data;
 }
 
 //DOC: `void writefile(string path, string ctx):`
 //DOC: write **ctx** data to **path** file
 public void writefile(string path, string ctx){
+    debug("Write file: "+path);
     string dir = sdirname(path);
     create_dir(dir);
     try {
@@ -82,7 +83,6 @@ public void writefile(string path, string ctx){
         while (written < data.length) {
             written += dos.write (data[written:data.length]);
         }
-        debug("Write file: "+path);
     } catch (Error e) {
         error_add(e.message);
     }
@@ -91,6 +91,7 @@ public void writefile(string path, string ctx){
 //DOC: `string safedir(string dir):`
 //DOC: directory safe for httpd
 public string safedir(string dir){
+    debug("safedir: "+dir);
     string ret = dir;
     while(".." in ret){
         ret = ret.replace("..","./");
@@ -107,10 +108,10 @@ public string safedir(string dir){
 //DOC: `void cd(string path):`
 //DOC: change current directory to **path**
 public void cd(string path){
+    debug("cd: "+path);
     if(!isdir(path)){
         create_dir(path);
     }
-    debug("cd: "+path);
     GLib.Environment.set_current_dir(path);
 }
 
@@ -225,6 +226,7 @@ public void copy_file(string src, string desc){
 //DOC: `string[] listdir(string path):`
 //DOC: list directory content and result as array
 public string[] listdir(string path){
+    debug("List directory: "+path);
     string[] ret = {};
     string name;
     try{
@@ -237,43 +239,44 @@ public string[] listdir(string path){
         warning(e.message);
         return {};
     }
-    debug("List directory: "+path);
     return ret;
 }
 
 //DOC: `bool iself(string path):`
 //DOC: return true if file is elf binary
 public bool iself(string path){
+    debug("Check elf: "+path);
     var ctx = readfile_byte(path,4);
     // .ELF magic bytes
     if(ctx == ""){
         return false;
     }
-    debug("Check elf: "+path);
     return startswith(ctx,"\x7F\x45\x4C\x46");
 }
 
 //DOC: `bool is64bit(string path):`
 //DOC: return true if file is elf binary
 public bool is64bit(string path){
+    debug("Check 64bit: "+path);
     var ctx = readfile_byte(path,4);
     // first byte after magic is bit size flag
     // 01 = 32bit 02 = 64bit
     if(ctx == ""){
         return false;
     }
-    debug("Check 64bit: "+path);
     return ctx[4] == '\x02';
 }
 
 //DOC: `bool isfile(string path)`:
 //DOC: check path is file
 public bool isfile(string path){
-    return GLib.FileUtils.test(srealpath(path), GLib.FileTest.IS_REGULAR) || issymlink(path);
+    debug("Check file: "+path);
+    return GLib.FileUtils.test(path, GLib.FileTest.IS_REGULAR) || issymlink(path);
 }
 
 
 public bool isexists(string path){
+    debug("Check exists: "+path);
     var file = File.new_for_path (path);
     return file.query_exists();
 }
@@ -281,8 +284,11 @@ public bool isexists(string path){
 //DOC: `string srealpath(string path):`
 //DOC: safe realpath function.
 public string srealpath(string path){
+    debug("Realpath: "+path);
+    if(path == "/"){
+        return path;
+    }
     string real = Posix.realpath(path);
-    debug("Realpath: "+real);
     if(real == null || real == ""){
         return path;
     }

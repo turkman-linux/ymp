@@ -39,6 +39,16 @@ private void add_operation(function callback, string[] names, helpmsg help){
     ops += op;
 }
 
+private void lock_operation(){
+    block_sigint();
+    if(get_bool("unblock")){
+        unblock_sigint();
+    }
+}
+private void unlock_operation(){
+    unblock_sigint();
+}
+
 private int operation_main(string type, string[] args){
     info(_("RUN:")+type + ":" + join(" ",args));
     foreach(operation op in ops){
@@ -122,7 +132,9 @@ public class Ymp {
                 op.type = proc[i].args[0].strip();
                 op.args = proc[i].args[1:];
                 if(iflevel == 0){
+                    lock_operation();
                     int status = op.run();
+                    unlock_operation();
                     if (status != 0){
                         iflevel += 1;
                     }
@@ -150,7 +162,9 @@ public class Ymp {
                 }
                 continue;
             }
+            lock_operation();
             int status = proc[i].run();
+            unlock_operation();
             if(status != 0){
                 string type = proc[i].type;
                 error_add(_("Process: %s failed. Exited with %d.").printf(type, status));
@@ -252,7 +266,6 @@ public Ymp ymp_init(string[] args){
     if(ymp_activated){
         return app;
     }
-    block_sigint();
     settings_init();
     parse_args(args);
     ctx_init();
@@ -268,7 +281,7 @@ public Ymp ymp_init(string[] args){
         warning(_("UsrMerge detected! Ymp may not working good."));
     }
     #endif
-    set_env("G_DEBUG","fatal-criticals");
+    //set_env("G_DEBUG","fatal-criticals");
     if(has_error()){
         error(31);
     }

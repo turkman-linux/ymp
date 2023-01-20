@@ -87,7 +87,10 @@ public void detect_dep(string pkgname){
             string lddout=getoutput("ldd '%s'".printf(path));
             foreach(string ldline in ssplit(lddout,"\n")){
                 if("=>" in ldline){
-                    depfiles.add(ldline.strip().split(" ")[2]);
+                    string fdep = ldline.strip().split(" ")[2];
+                    if(!depfiles.has(fdep)){
+                        depfiles.add(fdep);
+                    }
                 }
             }
         }
