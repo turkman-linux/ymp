@@ -24,6 +24,10 @@ public int revdep_rebuild_main(string[] args){
         }
         remove_file("/tmp/.empty.c");
         print_fn("\x1b[2K\r",false,true);
+    }else if(get_bool("detect-dep")){
+        foreach(string arg in args){
+            detect_dep(arg);
+        }
     }else{
         string[] paths = {
             "/lib","/lib64","/usr/lib","/usr/lib64",
@@ -66,6 +70,29 @@ public void check_pkgconfig(string file){
         print(colorize(file,red)+" "+"broken.");
     }
 
+}
+
+
+public void detect_dep(string pkgname){
+    if(!is_installed_package(pkgname)){
+        error_add(_("%s is not an installed package.").printf(pkgname));
+        return;
+    }
+    print(colorize(_("Detect dependencies for:"),green)+" %s".printf(pkgname));
+    var depfiles = new array();
+    string files=readfile("%s/files/%s".printf(get_storage(), pkgname));
+    foreach(string line in ssplit(files,"\n")){
+        string path="/"+line[41:];
+        if(iself(path)){
+            string lddout=getoutput("ldd '%s'".printf(path));
+            foreach(string ldline in ssplit(lddout,"\n")){
+                if("=>" in ldline){
+                    depfiles.add(ldline.strip().split(" ")[2]);
+                }
+            }
+        }
+    }
+    search_files_main(depfiles.get());
 }
 
 void revdep_rebuild_init(){
