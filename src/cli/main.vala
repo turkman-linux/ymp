@@ -32,12 +32,11 @@ int main (string[] args) {
         write_version();
         return 0;
     }
-    string[] new_args = argument_process(args);
-    if(new_args.length < 2){
+    if(args.length < 2){
         error_add(_("No command given.")+"\n"+_("Run %s for more information about usage.").printf(colorize(" ymp help",red)));
         error(31);
     }else{
-        ymp.add_process(new_args[1],new_args[2:]);
+        ymp.add_process(args[1],args[2:]);
     }
     if(!get_bool("no-processbar")){
         set_fetcher_progress(progressbar);

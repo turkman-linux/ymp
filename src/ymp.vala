@@ -211,13 +211,10 @@ public string[] argument_process(string[] args){
              new_args += arg;
              continue;
          }
-         if(arg == "-"){
-             new_args += arg;
-         }
          if(arg.length > 1 && arg[0] == '$'){
              arg = get_value(arg[1:]);
          }
-         if(arg[0] == '-'){
+         if(!e && startswith(arg,"--")){
              continue;
          }
          new_args += arg;

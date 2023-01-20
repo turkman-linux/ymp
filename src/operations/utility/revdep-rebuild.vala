@@ -1,5 +1,4 @@
 public int revdep_rebuild_main(string[] args){
-    ymp_init(args);
     set_env("LANG","C");
     set_env("LC_ALL","C");
     if(get_bool("pkgconfig")){

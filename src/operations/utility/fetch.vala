@@ -1,5 +1,4 @@
 public int fetch_main(string[] args){
-    ymp_init(args);
     if(args.length < 1){
         error_add(_("URL missing"));
         error(2);
