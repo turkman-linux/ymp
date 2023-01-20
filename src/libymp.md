@@ -57,6 +57,12 @@ sandbox user uid value (default: 0)
 
 sandbox user gid value (default: 0)
 
+### daemon.c
+
+`void skeleton_daemon():`
+
+daemonize current process
+
 ### archive-create.c
 
 `void write_archive(string output,string[] files):`

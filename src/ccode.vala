@@ -51,6 +51,11 @@ public extern int sandbox_uid;
 //DOC: sandbox user gid value (default: 0)
 public extern int sandbox_gid;
 
+//DOC: ### daemon.c
+//DOC: `void skeleton_daemon():`
+//DOC: daemonize current process
+public extern void skeleton_daemon();
+
 //DOC: ### archive-create.c
 //DOC: `void write_archive(string output,string[] files):`
 //DOC: create archive file
