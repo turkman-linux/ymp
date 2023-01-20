@@ -4,8 +4,8 @@ public int exec_main(string[] args){
     int status = 0;
     if(get_destdir() != "/"){
         status = run_args({"chroot", get_destdir(), cmd}) /256;
-    }else if(get_bool("quiet")){
-        status = run_silent(cmd) /256;
+    }else if(get_bool("silent")){
+        status = run(cmd+" 2>/dev/null | :") /256;
     }else{
         status = run(cmd)/256;
     }
@@ -21,6 +21,6 @@ void exec_init(){
     h.description = _("Execute a command");
     h.minargs=1;
     h.shell_only = true;
-    h.add_parameter("--quiet",_("run without output"));
+    h.add_parameter("--silent",_("run without output"));
     add_operation(exec_main,{_("exec"),"exec"},h);
 }

@@ -770,6 +770,10 @@ close stdout
 
 close stderr
 
+`void resetstd():`
+
+restore stdout and stdin
+
 `void nostd():`
 
 close stdin, stdout and stderr

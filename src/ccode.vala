@@ -31,6 +31,7 @@ public extern bool is_root();
 private extern void no_stdin();
 private extern void no_stdout();
 private extern void no_stderr();
+private extern void reset_std();
 
 //DOC: ### sandbox.c
 //DOC: `void sandbox(string[] args):`

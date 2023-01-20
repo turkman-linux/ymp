@@ -106,22 +106,30 @@ public void print_with_cow(string data){
 //DOC: close stdin. Ignore input. This function may broke application.
 public void nostdin(){
     nostdin_enabled = true;
-    set_bool("ask",false);
+    set_value_readonly("ask","false");
     no_stdin();
 }
 
 //DOC: `void nostdout():`
 //DOC: close stdout
 public void nostdout(){
-    set_bool("no-stdout",true);
+    set_value_readonly("no-stdout","true");
     no_stdout();
 }
 
 //DOC: `void nostderr():`
 //DOC: close stderr
 public void nostderr(){
-    set_bool("no-stderr",true);
+    set_value_readonly("no-stderr","true");
     no_stderr();
+}
+
+//DOC: `void resetstd():`
+//DOC: restore stdout and stdin
+public void resetstd(){
+    set_value_readonly("no-stdout","false");
+    set_value_readonly("no-stderr","false");
+    reset_std();
 }
 
 //DOC: `void nostd():`

@@ -4,6 +4,10 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
+
+int saved_stdout = -1;
+int saved_stderr = -1;
 
 int devnull;
 void no_stdin(){
@@ -11,13 +15,28 @@ void no_stdin(){
 }
 
 void no_stdout(){
-     devnull = fileno(fopen("/dev/null","r"));
-     dup2(devnull, STDOUT_FILENO);
+    if(saved_stdout == -1){
+        saved_stdout = dup(1);
+    }
+    devnull = open("/dev/null", O_WRONLY);
+    dup2(devnull, STDOUT_FILENO);
 }
 
 void no_stderr(){
-    devnull = fileno(fopen("/dev/null","r"));
+    if(saved_stderr == -1){
+        saved_stderr = dup(2);
+    }
+    devnull = open("/dev/null", O_WRONLY);
     dup2(devnull, STDERR_FILENO);
+}
+
+void reset_std(){
+    if(saved_stderr != -1){
+        dup2(saved_stderr, STDERR_FILENO);
+    }
+    if(saved_stdout != -1){
+        dup2(saved_stdout, STDOUT_FILENO);
+    }
 }
 
 #endif

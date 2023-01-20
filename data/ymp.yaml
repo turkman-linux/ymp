@@ -3,6 +3,8 @@ ymp:
   allow-oem: false
   # default use flag settings
   use: all
+  # unblock sigint when operation running
+  unblock: false
   # ymp fetcher useragent
   useragent: Ymp fetcher
   # default package format
@@ -24,7 +26,7 @@ build:
   ldflags: 
   cc: gcc
 
-#Package section
+# Package section
 package:
   # Config about package spesific use flags
   use:
