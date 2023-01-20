@@ -330,22 +330,34 @@ private bool create_metadata_info(){
     if(get_bool("ignore-dependency")){
         warning(_("Dependency check disabled"));
     }else{
+        var need_install = new array();
         if(yaml.has_area(srcdata,"depends")){
             foreach(string dep in yaml.get_array(srcdata,"depends")){
                 if(!is_installed_package(dep)){
-                    error_add(_("Package %s in not satisfied. Required by: %s").printf(dep,name));
+                    if(get_bool("install")){
+                        need_install.add(dep);
+                    }else{
+                        error_add(_("Package %s in not satisfied. Required by: %s").printf(dep,name));
+                    }
                 }
             }
         }
         if(yaml.has_area(srcdata,"makedepends")){
             foreach(string dep in yaml.get_array(srcdata,"makedepends")){
                 if(!is_installed_package(dep)){
-                    error_add(_("Package %s in not satisfied. Required by: %s").printf(dep,name));
+                    if(get_bool("install")){
+                        need_install.add(dep);
+                    }else{
+                        error_add(_("Package %s in not satisfied. Required by: %s").printf(dep,name));
+                    }
                 }
             }
         }
         if(has_error()){
             return false;
+        }
+        if(get_bool("install")){
+            install_main(need_install.get());
         }
     }
     no_src = false;
