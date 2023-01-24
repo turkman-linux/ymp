@@ -1,7 +1,12 @@
 #!/bin/bash
 set -e
 umask 022
+if [[ $UID -ne 0 ]] ; then
+    echo "You must be root!"
+    exit 1
+fi
 repo='https://gitlab.com/sulix/packages/binary-repo/-/raw/master/$uri'
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 output=$(realpath rootfs)
 basepkgs=(busybox base-files glibc)
 ympdep=(acl attr bzip2 curl glib libarchive libcap-ng libffi libidn2 libnghttp2
@@ -10,29 +15,16 @@ ympdep=(acl attr bzip2 curl glib libarchive libcap-ng libffi libidn2 libnghttp2
 )
 arch=$(uname -m)
 function get_uri(){
-    e=false
-    cat "$output"/var/lib/ymp/index/main | while read line ; do
-        echo $line >/dev/stderr
-        if echo $line | grep "name: $1$" >/dev/null; then
-            e=true
-        fi
-        if [[ "$e" == "true" ]] && echo "$line" | grep "uri" | grep "$arch" >/dev/null ; then
-            echo $line | cut -f2 -d" "
-            return 0
-        fi
-    done
-    return 1
+    cat "$output"/var/lib/ymp/index/main | grep "uri: .*/$1_.*$arch.ymp" | cut -f2 -d":" | tr -d " " | head -n 1
 }
 function fetch_pkg(){
     for arg in $@ ; do
-        if [[ ! -f "$output/var/lib/ymp/package/$arg.done" ]] ; then
             uri=$(get_uri $arg)
-            pkg="$output"/var/lib/ymp/package/"$(basename $uri)"
-            wget ${repo/\$uri/$uri} -O "$pkg"
+            pkg="$output"/var/lib/ymp/packages/"$(basename $uri)"
+            mkdir -p "$output"/var/lib/ymp/sysconf/"$arg"
+            wget -c ${repo/\$uri/$uri} -O "$pkg"
             pkginst "$pkg"
             chmod 755 -R "$output"
-            touch "$output/var/lib/ymp/package/$arg.done"
-        fi
     done
 }
 
@@ -45,17 +37,18 @@ function pkginst(){
     rm -rf "$output"/tmp
 }
 # Stage 1 download repo
-mkdir "$output"/var/lib/ymp/{index,package}/ -p
+mkdir "$output"/var/lib/ymp/{index,packages}/ -p
 echo "$repo" > "$output"/var/lib/ymp/sources.list
-wget -O "$output"/var/lib/ymp/index/main ${repo/\$uri/ymp-index.yaml}
+wget -O - ${repo/\$uri/ymp-index.yaml} | grep "uri: " > "$output"/var/lib/ymp/index/main
 # Stage 2 install base
 fetch_pkg ${basepkgs[@]}
+mkdir -p "$output"/var/lib/ymp/sysconf/{glibc,busybox,base-files}
 chroot "$output" /etc/sysconf.d/busybox
 chroot "$output" /etc/sysconf.d/glibc
 chroot "$output" /etc/sysconf.d/base-files
 # Stage 3 install ymp
 fetch_pkg ${ympdep[@]}
-chroot "$output" ldconfig
+chroot "$output" /sbin/ldconfig
 # Stage 4 bind rootfs
 mkdir "$output"/{dev,sys,proc,run} -p
 mount -t proc proc "$output"/proc
