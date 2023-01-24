@@ -5,9 +5,18 @@ if [[ $UID -ne 0 ]] ; then
     echo "You must be root!"
     exit 1
 fi
-repo='https://gitlab.com/sulix/packages/binary-repo/-/raw/master/$uri'
+repo="$REPO"
+if [[ "$repo" == "" ]] ; then
+    repo='https://gitlab.com/sulix/packages/binary-repo/-/raw/master/$uri'
+fi
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-output=$(realpath rootfs)
+output="$1"
+if [[ "$output" == "" ]] ; then
+    echo "Usage: ympstrap <target-path> (extra packages)"
+    exit 1
+fi
+shift
+output=$(realpath $output)
 basepkgs=(busybox base-files glibc)
 ympdep=(acl attr bzip2 curl glib libarchive libcap-ng libffi libidn2 libnghttp2
         libpcre2 libpsl libssh libunistring libxml2 lz4 lzo ncurses openssl readline
@@ -57,6 +66,6 @@ mount -t sysfs sysfs "$output"/sys
 cat /etc/resolv.conf > "$output"/etc/resolv.conf
 # Stage 5 install ymp from ymp
 chroot "$output" ymp repo --update --allow-oem
-chroot "$output" ymp it ${basepkgs[@]} ${ympdep[@]} --ignore-quarantine --no-emerge --allow-oem
+chroot "$output" ymp it ${basepkgs[@]} ${ympdep[@]} $@ --ignore-quarantine --no-emerge --allow-oem
 # Stage 6 unbind
 while umount "$output"/{dev,sys,proc} ; do : ; done
