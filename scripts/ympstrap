@@ -1,0 +1,69 @@
+#!/bin/bash
+set -e
+umask 022
+repo='https://gitlab.com/sulix/packages/binary-repo/-/raw/master/$uri'
+output=$(realpath rootfs)
+basepkgs=(busybox base-files glibc)
+ympdep=(acl attr bzip2 curl glib libarchive libcap-ng libffi libidn2 libnghttp2
+        libpcre2 libpsl libssh libunistring libxml2 lz4 lzo ncurses openssl readline
+        util-linux xz-utils ymp zlib
+)
+arch=$(uname -m)
+function get_uri(){
+    e=false
+    cat "$output"/var/lib/ymp/index/main | while read line ; do
+        echo $line >/dev/stderr
+        if echo $line | grep "name: $1$" >/dev/null; then
+            e=true
+        fi
+        if [[ "$e" == "true" ]] && echo "$line" | grep "uri" | grep "$arch" >/dev/null ; then
+            echo $line | cut -f2 -d" "
+            return 0
+        fi
+    done
+    return 1
+}
+function fetch_pkg(){
+    for arg in $@ ; do
+        if [[ ! -f "$output/var/lib/ymp/package/$arg.done" ]] ; then
+            uri=$(get_uri $arg)
+            pkg="$output"/var/lib/ymp/package/"$(basename $uri)"
+            wget ${repo/\$uri/$uri} -O "$pkg"
+            pkginst "$pkg"
+            chmod 755 -R "$output"
+            touch "$output/var/lib/ymp/package/$arg.done"
+        fi
+    done
+}
+
+function pkginst(){
+    mkdir "$output"/tmp/ -p
+    cd "$output"/tmp/
+    unzip "$1"
+    cd "$output"
+    tar -xvf "$output"/tmp/data.tar.*
+    rm -rf "$output"/tmp
+}
+# Stage 1 download repo
+mkdir "$output"/var/lib/ymp/{index,package}/ -p
+echo "$repo" > "$output"/var/lib/ymp/sources.list
+wget -O "$output"/var/lib/ymp/index/main ${repo/\$uri/ymp-index.yaml}
+# Stage 2 install base
+fetch_pkg ${basepkgs[@]}
+chroot "$output" /etc/sysconf.d/busybox
+chroot "$output" /etc/sysconf.d/glibc
+chroot "$output" /etc/sysconf.d/base-files
+# Stage 3 install ymp
+fetch_pkg ${ympdep[@]}
+chroot "$output" ldconfig
+# Stage 4 bind rootfs
+mkdir "$output"/{dev,sys,proc,run} -p
+mount -t proc proc "$output"/proc
+mount -t devtmpfs devtmpfs "$output"/dev
+mount -t sysfs sysfs "$output"/sys
+cat /etc/resolv.conf > "$output"/etc/resolv.conf
+# Stage 5 install ymp from ymp
+chroot "$output" ymp repo --update --allow-oem
+chroot "$output" ymp it ${basepkgs[@]} ${ympdep[@]} --ignore-quarantine --no-emerge --allow-oem
+# Stage 6 unbind
+while umount "$output"/{dev,sys,proc} ; do : ; done
