@@ -7,7 +7,7 @@ if [[ $UID -ne 0 ]] ; then
 fi
 repo="$REPO"
 if [[ "$repo" == "" ]] ; then
-    repo='https://gitlab.com/sulix/packages/binary-repo/-/raw/master/$uri'
+    repo='https://gitlab.com/turkman/packages/binary-repo/-/raw/master/$uri'
 fi
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 output="$1"

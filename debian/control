@@ -9,10 +9,10 @@ Build-Depends: make,
                libbrotli-dev,
                meson, gcc, valac
 Standards-Version: 4.3.0
-Homepage: https://sulix.gitlab.io
+Homepage: https://turkman.gitlab.io
 
 Package: ymp
 Architecture: any
 Depends: ${misc:Depends}, libc6, libarchive13, libreadline8, libcurl4
 Description: Yerli ve Milli Package manager (ymp)
- A package manager for Sulix project
+ A package manager for Turkish

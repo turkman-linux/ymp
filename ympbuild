@@ -2,11 +2,11 @@
 name=ymp
 version=master
 release=1
-description="Package manager for Sulix Project"
+description="Package manager for Turkish"
 arch=(i686 x86_64)
-url='https://gitlab.com/sulix/'
+url='https://gitlab.com/turkman/'
 license=('GPL')
-source=(https://gitlab.com/sulix/devel/sources/ymp/-/archive/master/ymp-master.zip)
+source=(https://gitlab.com/turkman/devel/sources/ymp/-/archive/master/ymp-master.zip)
 md5sums=(SKIP)
 group=(sys.apps)
 uses=(libarchive libcurl)
