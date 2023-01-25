@@ -5,7 +5,7 @@ public void sign_file(string path){
     if(!isfile(path)){
         return;
     }
-    run_args({"gpg", "--batch", "--yes", "--detach-sign","-r", get_value("gpg:repicent"), path});
+    run_args({"gpg", "--batch", "--yes", "--sign","-r", get_value("gpg:repicent"), path});
 }
 
 //DOC: # sign & verify file
@@ -22,10 +22,13 @@ public void gpg_export_file(string path){
 //DOC: `bool verify_file(string path):`
 //DOC: verify a file with gpg signature
 public bool verify_file(string path){
+    if(get_bool("ignore-gpg")){
+        return true;
+    }
     if(!isfile(path)){
         return false;
     }
-    return 0 == run_args({"gpg","--verify", path+".sig", path});
+    return 0 == run("sh -c \"gpg --verify %s'\" 2>/dev/null".printf(path+".gpg'"));
 }
 
 //DOC: `void sign_elf(string path):`
@@ -35,8 +38,8 @@ public void sign_elf(string path){
         return;
     }
     sign_file(path);
-    run_args({"objcopy", "--add-section", ".gpg="+path+".sig", path});
-    remove_file(path+".sig");
+    run_args({"objcopy", "--add-section", ".gpg="+path+".gpg", path});
+    remove_file(path+".gpg");
 }
 
 //DOC: `bool verify_elf(string path):`
@@ -47,11 +50,11 @@ public bool verify_elf(string path){
     }
     int status = 0;
     status += run_args({"objcopy", "-R", ".gpg", path, "/tmp/ymp-elf"});
-    status += run_args({"objcopy", "--dump-section", ".gpg=/tmp/ymp-elf.sig", "path"});
+    status += run_args({"objcopy", "--dump-section", ".gpg=/tmp/ymp-elf.gpg", "path"});
     if(!verify_file("/tmp/ymp-elf")){
         status += 1;
     }
-    remove_file("/tmp/ymp-elf.sig");
+    remove_file("/tmp/ymp-elf.gpg");
     remove_file("/tmp/ymp-elf");
     return status == 0;
 }

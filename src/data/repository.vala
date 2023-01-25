@@ -293,7 +293,7 @@ public void update_repo(){
         }
         index_data += "\n  address: "+repox;
         writefile(path,index_data);
-        fetch(repo+".sig",path+".sig");
+        fetch(repo+".gpg",path+".gpg");
         if(!verify_file(path)){
             error_add("Gpg check failed.");
         }
