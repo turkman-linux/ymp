@@ -15,7 +15,8 @@ public void gpg_export_file(string path){
     if(isfile(path)){
         return;
     }
-    run_args({"gpg", "--output", path, "--batch", "--yes", "--armor","--export", get_value("gpg:repicent")});
+    string data = getoutput("gpg --armor --export '%s'".printf(get_value("gpg:repicent")));
+    writefile(path,data);
 }
 
 //DOC: `bool verify_file(string path):`
