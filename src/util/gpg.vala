@@ -5,8 +5,19 @@ public void sign_file(string path){
     if(!isfile(path)){
         return;
     }
-    run_args({"gpg", "--detach-sign","-r", get_value("gpg:repicent"), path});
+    run_args({"gpg", "--batch", "--yes", "--detach-sign","-r", get_value("gpg:repicent"), path});
 }
+
+//DOC: # sign & verify file
+//DOC: `void sign_file(string path):`
+//DOC: sign a file with gpg key
+public void gpg_export_file(string path){
+    if(isfile(path)){
+        return;
+    }
+    run_args({"gpg", "--output", path, "--batch", "--yes", "--armor","--export", get_value("gpg:repicent")});
+}
+
 //DOC: `bool verify_file(string path):`
 //DOC: verify a file with gpg signature
 public bool verify_file(string path){

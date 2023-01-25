@@ -715,6 +715,12 @@ calculate checksum value from file path and checksum type
 
 sign a file with gpg key
 
+# sign & verify file
+
+`void sign_file(string path):`
+
+sign a file with gpg key
+
 `bool verify_file(string path):`
 
 verify a file with gpg signature

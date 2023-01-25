@@ -293,6 +293,8 @@ public void update_repo(){
         }
         index_data += "\n  address: "+repox;
         writefile(path,index_data);
+        fetch(repo+".sig",path);
+        verify_file(path);
     }
     error(2);
 }

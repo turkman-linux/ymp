@@ -3,6 +3,8 @@ public int index_main(string[] args){
         string path = srealpath(arg);
         string index = create_index_data(path);
         writefile(path+"/ymp-index.yaml",index);
+        sign_file(path+"/ymp-index.yaml");
+        gpg_export_file(path+"/ymp-index.yaml.key");
     }
     return 0;
 }
