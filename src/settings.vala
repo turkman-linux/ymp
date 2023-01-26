@@ -107,8 +107,8 @@ private void parse_args(string[] args){
         if(arg == "--"){
             return;
         }
-        var argname = arg[2:];
         if(startswith(arg,"--")){
+            var argname = arg[2:];
             if(argname == "allow-oem"){
                     set_value_readonly("allow-oem","true");
             }else if(arg.contains("=")){
