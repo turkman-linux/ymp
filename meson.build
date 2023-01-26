@@ -169,30 +169,3 @@ install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mi
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
 install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'))
 install_data(meson.current_build_dir() / 'ymp.vapi', install_dir : get_option('prefix')/'share/vala/vapi/')
-if get_option('gobject')
-    libgir = library('ymp-gobject', 'src/gobject.vala', dependencies: shared_dependencies, link_args: args, link_with: lib,install: true)
-    gir=custom_target('gobject',
-        depends: [libgir],
-        output: 'ymp_gobject-'+meson.project_version()+'.gir',
-        command: ['valac', '-C','../src/gobject.vala',
-        '--library', 'ymp_gobject', '--gir=ymp_gobject-'+meson.project_version()+'.gir',
-        '--pkg', 'ymp',
-        '--header', 'ymp_gobject.h',
-        '--vapidir',meson.current_build_dir(),
-        '--girdir',meson.current_build_dir()],
-        install_dir : get_option('prefix') / 'share/gir-1.0/',
-        install: true,
-        build_by_default: true
-    )
-    custom_target('gir-typelib',
-        depends: [gir],
-        output: 'ymp_gobject-'+meson.project_version()+'.typelib',
-        command: ['g-ir-compiler', 
-            'ymp_gobject-'+meson.project_version()+'.gir',
-            '--shared-library=libymp-gobject',
-            '-o', meson.current_build_dir()/'ymp_gobject-'+meson.project_version()+'.typelib'],
-        install_dir : get_option('libdir') / 'girepository-1.0/',
-        install: true,
-        build_by_default: true
-    )
-endif

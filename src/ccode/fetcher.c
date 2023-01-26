@@ -68,7 +68,7 @@ void curl_options_common(char* url){
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
         curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, "");
-        curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, fetcher_process_to_vala);
+        curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_vala);
         if(strcmp(get_value("ignore-ssl"),"true")==0){
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);

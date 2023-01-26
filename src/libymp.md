@@ -467,7 +467,6 @@ run a build function from ympbuild file
 
 generate metadata.yaml content and return as string
 
-# src/gobject.vala
 # src/settings.vala
 ## Settings functions
 
