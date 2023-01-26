@@ -286,9 +286,6 @@ public Ymp ymp_init(string[] args){
     ymp_activated = true;
     tty_size_init();
     logger_init(); // logger reload
-    if(get_bool("daemon")){
-        skeleton_daemon();
-    }
     return app;
 }
 
