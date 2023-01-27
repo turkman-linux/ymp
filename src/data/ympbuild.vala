@@ -191,7 +191,8 @@ public bool ympbuild_has_function(string function){
 }
 
 private bool ympbuild_check(){
-    return 0 == run("env -i bash -n "+ympbuild_srcpath+"/ympbuild");
+    info("Check ympbuild: "+ympbuild_srcpath+"/ympbuild");
+    return 0 == run("bash -n "+ympbuild_srcpath+"/ympbuild");
 }
 
 //DOC: `int run_ympbuild_function(string function):`
