@@ -65,7 +65,7 @@ mount -t devtmpfs devtmpfs "$output"/dev
 mount -t sysfs sysfs "$output"/sys
 cat /etc/resolv.conf > "$output"/etc/resolv.conf
 # Stage 5 install ymp from ymp
-chroot "$output" ymp repo --update --allow-oem
+chroot "$output" ymp repo --update --allow-oem --ignore-gpg
 chroot "$output" ymp it ${basepkgs[@]} ${ympdep[@]} $@ --ignore-quarantine --no-emerge --allow-oem
 chroot "$output" ymp clean --no-emerge --allow-oem
 # Stage 6 unbind
