@@ -1,0 +1,4 @@
+#!/bin/sh
+git diff $1 | grep "^+++" | \
+    sed "s/[a-z]*$//g;s/+++ b\//ymp build --install --no-emerge /g" | \
+    bash -e

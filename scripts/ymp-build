@@ -12,7 +12,7 @@ for dir in $@ ; do
     fdir=$(realpath $dir)
     echo "BUILD: $fdir"
     if [[ -f "$fdir/ympbuild" ]] ; then
-        exec ymp --sandbox --verbose --allow-oem --shared="$fdir" --use="all" build "$fdir" ${ignore:+--ignore-dependency}
+        exec ymp build --sandbox --verbose --allow-oem --shared="$fdir" --use="all" "$fdir" ${ignore:+--ignore-dependency}
     fi
 done
 
