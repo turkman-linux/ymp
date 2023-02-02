@@ -18,7 +18,7 @@ public bool yesno(string message){
         return true;
     }
     if(nostdin_enabled){
-        return true;
+        return false;
     }
     #if no_libreadline
        print_fn(message+" [y/n]",false,true);
@@ -26,6 +26,9 @@ public bool yesno(string message){
     #else
        var response = Readline.readline(message+" [y/n]");
     #endif
+    if (response == null || response == ""){
+        return false;
+    }
     return (response[0] == 'y' || response[0] == 'Y');
 }
 

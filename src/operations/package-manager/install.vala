@@ -15,7 +15,15 @@ public int install_main(string[] args){
         a.adds(resolve_dependencies(up_pkgs));
     }
     string[] pkgs = a.get();
-    info(_("Resolve dependency done: %s").printf(join(" ",pkgs)));
+    if(get_bool("ask")){
+        print(_("The following additional packages will be installed:"));
+        print(join(" ",pkgs));
+        if(!yesno(colorize(_("Do you want to continue?"),red))){
+            return 1;
+        }
+    }else{
+        info(_("Resolve dependency done: %s").printf(join(" ",pkgs)));
+    }
     quarantine_reset();
     package[] pkg_obj = {};
     foreach(string name in pkgs){

@@ -10,6 +10,15 @@ public int remove_main(string[] args){
     }else{
         pkgs = resolve_reverse_dependencies(args);
     }
+    if(get_bool("ask")){
+        print(_("The following additional packages will be removed:"));
+        print(join(" ",pkgs));
+        if(!yesno(colorize(_("Do you want to continue?"),red))){
+            return 1;
+        }
+    }else{
+        info(_("Resolve reverse dependency done: %s").printf(join(" ",pkgs)));
+    }
     foreach(string pkg in pkgs){
         if(is_installed_package(pkg)){
             package p = get_installed_package(pkg);

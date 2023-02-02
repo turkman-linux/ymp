@@ -24,36 +24,36 @@ public int template_main(string[] args){
         data += "        --libdir=/usr/lib64/\n";
         data += "}\n\n";
         data += "build(){\n";
-        data += "    make -j`nproc`\n";
+        data += "    make $jobs\n";
         data += "}\n\n";
         data += "package(){\n";
-        data += "    make install -j`nproc`\n";
+        data += "    make install $jobs\n";
 
-    }else if(buildtype == "cmake" || buildtype == ""){
+    }else if(buildtype == "cmake"){
         data += "setup(){\n";
         data += "    mkdir build\n";
         data += "    cd build\n";
         data += "    cmake -DCMAKE_INSTALL_PREFIX=/usr \\\n";
-        data += "        -DCMAKE_INSTALL_LIBDIR=lib64 ..\n";
+        data += "        -DCMAKE_INSTALL_LIBDIR=/usr/lib64 ..\n";
         data += "}\n\n";
         data += "build(){\n";
         data += "    cd build\n";
-        data += "    make -j`nproc`\n";
+        data += "    make $jobs\n";
         data += "}\n\n";
         data += "package(){\n";
         data += "    cd build\n";
-        data += "    make install -j`nproc`\n";
+        data += "    make install $jobs\n";
 
-    }else if(buildtype == "meson" || buildtype == ""){
+    }else if(buildtype == "meson"){
         data += "setup(){\n";
         data += "    meson setup build --prefix=/usr \\\n";
         data += "        --libdir=/usr/lib64/\n";
         data += "}\n\n";
         data += "build(){\n";
-        data += "    ninja -C build\n";
+        data += "    ninja -C build $jobs\n";
         data += "}\n\n";
         data += "package(){\n";
-        data += "    ninja install -C build\n";
+        data += "    ninja -C build install $jobs\n";
 
     }else{
         data += "setup(){\n";
