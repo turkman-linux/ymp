@@ -32,8 +32,12 @@ public int search_pkgrepo_main(string[] args){
         foreach(string pkg in repo.list_packages()){
             var p = repo.get_package(pkg);
             foreach(string arg in args){
-                if(arg in p.get("description") || arg in  p.name ){
-                    print((p.name+"\t"+p.get("description")).replace(arg,colorize(arg,red)));
+                if(arg in p.get("description") || arg in p.name ){
+                    int color = red;
+                    if (is_installed_package(p.name)) {
+                        color = green;
+                    }
+                    print((p.name+"\t"+p.get("description")).replace(arg,colorize(arg,color)));
                 }
             }
         }
@@ -46,8 +50,12 @@ public int search_srcrepo_main(string[] args){
         foreach(string pkg in repo.list_sources()){
             var p = repo.get_source(pkg);
             foreach(string arg in args){
-                if(arg in p.get("description") || arg in  p.name ){
-                    print((p.name+"\t"+p.get("description")).replace(arg,colorize(arg,red)));
+                if(arg in p.get("description") || arg in p.name ){
+                    int color = red;
+                    if (is_installed_package(p.name)) {
+                        color = green;
+                    }
+                    print((p.name+"\t"+p.get("description")).replace(arg,colorize(arg,color)));
                 }
             }
         }
