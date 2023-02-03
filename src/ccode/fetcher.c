@@ -47,10 +47,10 @@ static size_t write_data_to_string(void *ptr, size_t size, size_t nmemb, void *s
 char fetcher_filename[PATH_MAX];
 
 int fetcher_vala(double current, double total, char* filename);
-int fetcher_process_to_vala(void* ptr, double total, double current, double TotalToUpload, double NowUploaded){
+
+int fetcher_process_to_vala(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded){
     return fetcher_vala(current, total, fetcher_filename);
 }
-
 
 CURL *curl;
 void curl_options_common(char* url){
