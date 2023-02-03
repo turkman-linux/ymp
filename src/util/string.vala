@@ -15,7 +15,7 @@ public string join(string f,string[] array){
         return "";
     }
     foreach(string item in array){
-        if(item != null){
+        if(item.length>0 && item != null){
             tmp += item + f;
         }
     }
@@ -28,13 +28,19 @@ public string join(string f,string[] array){
 //DOC: safe split function. If data null or empty return empty array.
 //DOC: if **f** not in data, return single item array.
 public string[] ssplit(string data, string f){
-    if(data == null || f == null){
+    if(data == null || f == null || data.length == 0){
         debug("empty data");
         return {};
-    }else if(!data.contains(f)){
+    }else if(!data.contains(f) || f.length == 0){
         return {data};
     }
-    return data.split(f);
+    string[] ret = {};
+    foreach(string i in data.split(f)){
+        if(i.length>0 && i != null){
+            ret += i;
+        }
+    }
+    return ret;
 }
 
 //DOC: `string trim(string data):`

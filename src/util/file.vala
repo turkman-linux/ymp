@@ -53,14 +53,17 @@ public string readfile(string path){
     }
     foreach(string line in ssplit(data,"\n")){
         if("#" in line){
-            if(line.length > 0){
-                line = ssplit(line,"#")[0];
-                if(line.strip() != ""){
-                    new_data += line+"\n";
-                }
+            if(line.strip()[0] == '#'){
+                continue;
+            }
+            line = ssplit(line,"#")[0];
+            if(line.strip() != ""){
+                new_data += line+"\n";
             }
         }else{
-            new_data += line+"\n";
+            if(line.length > 0){
+                new_data += line+"\n";
+            }
         }
     }
     return new_data;
