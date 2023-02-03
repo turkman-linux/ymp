@@ -129,8 +129,8 @@ public int list_repository_main(string[] args) {
     foreach(repository repo in get_repos()) {
         print_fn(colorize(repo.name, green) + " :: ", false, false);
         print_fn(repo.address + " :: ", false, false);
-        print_fn(colorize("(" + repo.packages.length.to_string() + " binary)", cyan) + " :: ", false, false);
-        print_fn(colorize("(" + repo.sources.length.to_string() + " source) ", magenta), false, false);
+        print_fn(colorize("(" + repo.list_packages().length.to_string() + " binary)", cyan) + " :: ", false, false);
+        print_fn(colorize("(" + repo.list_sources().length.to_string() + " source) ", magenta), false, false);
         print("");
 
     }

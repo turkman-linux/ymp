@@ -893,6 +893,10 @@ stdout.printf(bb);
 
 ```
 
+`public int sindex(string f, string[] array)`:
+
+Get item index number in string array. if not exists return -1
+
 `string[] ssplit(string data, string f):`
 
 safe split function. If data null or empty return empty array.

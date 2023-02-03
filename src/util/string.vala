@@ -24,6 +24,17 @@ public string join(string f,string[] array){
     }
     return tmp[0:tmp.length-f.length];
 }
+//DOC: `public int sindex(string f, string[] array)`:
+//DOC: Get item index number in string array. if not exists return -1
+public int sindex(string f, string[] array){
+    for(int i=0;i<array.length;i++){
+        if(array[i] == f){
+            return i;
+        }
+    }
+    return -1;
+}
+
 //DOC: `string[] ssplit(string data, string f):`
 //DOC: safe split function. If data null or empty return empty array.
 //DOC: if **f** not in data, return single item array.

@@ -17,8 +17,10 @@ public class repository {
     public string name;
     public string address;
     private string indexarea;
-    public string[] packages;
-    public string[] sources;
+    private string[] packages;
+    private string[] sources;
+    private string[] package_names;
+    private string[] source_names;
 
     //DOC: `void repository.load(string repo_name):`
     //DOC: load repository data from repo name
@@ -30,29 +32,28 @@ public class repository {
         address = yaml.get_value(indexarea,"address");
         packages = yaml.get_area_list(indexarea,"package");
         sources = yaml.get_area_list(indexarea,"source");
-
+        var a = new array();
+        foreach(string area in packages){
+            a.add(yaml.get_value(area,"name"));
+        }
+        package_names = a.get();
+        a = new array();
+        foreach(string area in sources){
+            a.add(yaml.get_value(area,"name"));
+        }
+        source_names = a.get();
     }
 
     //DOC: `bool repository.has_package(string name):`
     //DOC: return true if package exists in repository
     public bool has_package(string name){
-        foreach(string area in packages){
-            if (yaml.get_value(area,"name") == name){
-                return true;
-            }
-        }
-        return false;
+        return name in package_names;
     }
 
     //DOC: `bool repository.has_package(string name):`
     //DOC: return true if package exists in repository
     public bool has_source(string name){
-        foreach(string area in sources){
-            if (yaml.get_value(area,"name") == name){
-                return true;
-            }
-        }
-        return false;
+        return name in source_names;
     }
 
     //DOC: `package repository.get_source(string name):`
@@ -60,10 +61,12 @@ public class repository {
     public package get_source(string name){
         package pkg = null;
         int currel = 0;
-        foreach(string area in sources){
-            if (yaml.get_value(area,"name") == name){
+        foreach(string fname in source_names){
+            if (fname == name){
+                string area = sources[sindex(fname, source_names)];
                 int release = int.parse(yaml.get_value(area,"release"));
                 if(release <= currel){
+                    print("%s".printf(name));
                     continue;
                 }
                 currel = release;
@@ -71,6 +74,8 @@ public class repository {
                 pkg.set_pkgarea(area,true);
                 pkg.repo_address = address;
             }
+        }
+        foreach(string area in sources){
         }
         return pkg;
     }
@@ -80,11 +85,9 @@ public class repository {
     public package get_package(string name){
         package pkg = null;
         int currel = 0;
-        foreach(string area in packages){
-            if(area == null){
-                continue;
-            }
-            if (yaml.get_value(area,"name") == name){
+        foreach(string fname in package_names){
+            if (fname == name){
+                string area = packages[sindex(fname, source_names)];
                 int release = int.parse(yaml.get_value(area,"release"));
                 if(release <= currel){
                     continue;
@@ -101,25 +104,13 @@ public class repository {
     //DOC: `string[] repository.list_packages():`
     //DOC: get all available package names from repository
     public string[] list_packages(){
-        string[] ret = {};
-        foreach(string area in packages){
-            if(area != ""){
-                ret += yaml.get_value(area,"name");
-            }
-        }
-        return ret;
+        return package_names;
     }
 
     //DOC: `string[] repository.list_sources():`
     //DOC: get all available source names from repository
     public string[] list_sources(){
-        string[] ret = {};
-        foreach(string area in sources){
-            if(area != ""){
-                ret += yaml.get_value(area,"name");
-            }
-        }
-        return ret;
+        return source_names;
     }
 
 }

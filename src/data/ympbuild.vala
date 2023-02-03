@@ -28,8 +28,8 @@ private void ympbuild_init(){
     export VERBOSE=1
     export FORCE_UNSAFE_CONFIGURE=1
     export V=1
-    export CFLAGS=\"-s -DSULIX -L"+DISTRODIR+" "+get_value("build:cflags")+"\"
-    export CXXFLAGS=\"-s -DSULIX -L"+DISTRODIR+" "+get_value("build:cxxflags")+"\"
+    export CFLAGS=\"-s -DTURKMAN -L"+DISTRODIR+" "+get_value("build:cflags")+"\"
+    export CXXFLAGS=\"-s -DTURKMAN -L"+DISTRODIR+" "+get_value("build:cxxflags")+"\"
     export CC=\""+get_value("build:cc")+"\"
     export LDFLAGS=\""+get_value("build:ldflags")+"\"
 
