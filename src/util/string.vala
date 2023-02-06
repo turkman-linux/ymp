@@ -120,6 +120,7 @@ public string sbasename(string path){
 //DOC: `string sdirname(string path):`
 //DOC: safe dirname. return path name
 public string sdirname(string path){
+    debug("Dir name: "+path);
     string[] f = ssplit(path,"/");
     string ret = "";
     if(f.length == 0){
@@ -127,6 +128,9 @@ public string sdirname(string path){
     }
     foreach(string g in f[:f.length-1]){
         ret +=g+"/";
+    }
+    if(path[0] == '/'){
+        ret = "/"+ret;
     }
     return ret;
 }

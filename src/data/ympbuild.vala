@@ -155,6 +155,7 @@ private void ympbuild_init(){
 //DOC: `void set_ympbuild_srcpath(string path):`
 //DOC: configure ympbuild file directory
 public void set_ympbuild_srcpath(string path){
+    debug("Set ympbuild src path :"+path);
     ympbuild_srcpath = srealpath(path);
 }
 
@@ -163,6 +164,7 @@ public void set_ympbuild_srcpath(string path){
 public void set_ympbuild_buildpath(string path){
     ympbuild_buildpath = srealpath(path);
     create_dir(ympbuild_buildpath);
+    debug("Set ympbuild build path :"+ympbuild_buildpath);
     ympbuild_init();
 }
 
