@@ -330,6 +330,14 @@ public package get_installed_package(string name){
 //DOC: `bool is_installed_package():`
 //DOC: return true if package installed
 public bool is_installed_package(string name){
+    if("|" in name){
+        foreach(string f in ssplit(name,"|")){
+            if(isfile(get_metadata_path(f))){
+                return true;
+            }
+        }
+        return false;
+    }
     return isfile(get_metadata_path(name));
 }
 
