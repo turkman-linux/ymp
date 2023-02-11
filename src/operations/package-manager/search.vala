@@ -1,15 +1,15 @@
 public int search_main(string[] args){
     if(get_bool("package")){
         return search_pkgrepo_main(args);
-    }
-    if(get_bool("source")){
+    }else if(get_bool("source")){
         return search_srcrepo_main(args);
-    }
-    if(get_bool("file")){
+    }else if(get_bool("file")){
         return search_files_main(args);
-    }
-    if(get_bool("installed")){
+    }else if(get_bool("installed")){
         return search_installed_main(args);
+    }else {
+        error_add(_("No options given. Please use --source or --package or --file or --installed ."));
+        return 1;
     }
     return 0;
 }

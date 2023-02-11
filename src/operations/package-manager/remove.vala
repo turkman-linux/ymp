@@ -10,6 +10,12 @@ public int remove_main(string[] args){
     }else{
         pkgs = resolve_reverse_dependencies(args);
     }
+    if("ymp" in pkgs){
+        if(!get_bool("ignore-safety")){
+            error_add(_("You cannot remove package manager! If you really want, must use --ignore-safety"));
+            return 1;
+        }
+    }
     if(get_bool("ask")){
         print(_("The following additional packages will be removed:"));
         print(join(" ",pkgs));
