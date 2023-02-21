@@ -14,5 +14,3 @@ option('libcurl', type: 'boolean', value: 'true')
 option('libbrotli', type: 'boolean', value: 'true')
 option('storagedir', type: 'string', value: 'var/lib/ymp')
 option('distrodir', type: 'string', value: 'lib/turkman')
-option('gobject', type: 'boolean', value: 'false')
-
