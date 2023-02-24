@@ -167,6 +167,12 @@ Brainfuck emulator
 
 * size: virtual memory size
 
+### plugin.c
+
+`void load_plugin(string path):`
+
+ymp plugin load function
+
 # src/cli/main.vala
 # src/cli/shell.vala
 # src/color.vala
@@ -467,6 +473,7 @@ run a build function from ympbuild file
 
 generate metadata.yaml content and return as string
 
+# src/plugin/template.vala
 # src/settings.vala
 ## Settings functions
 

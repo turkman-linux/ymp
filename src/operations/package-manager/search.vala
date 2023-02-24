@@ -11,7 +11,6 @@ public int search_main(string[] args){
         error_add(_("No options given. Please use --source or --package or --file or --installed ."));
         return 1;
     }
-    return 0;
 }
 
 public int search_installed_main(string[] args){

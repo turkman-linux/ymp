@@ -14,10 +14,12 @@ args = ['-X','-O3', '-flto', '-DSULIX', '-Wall']
 
 args += ['-s', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
 if get_option('shared')
+    add_project_arguments('-D', 'SHARED', language: 'vala')
     shared_dependencies = [dependency('gio-2.0', static: false)]
 endif
 
 if get_option('static')
+    add_project_arguments('-D', 'STATIC', language: 'vala')
     static_dependencies = [dependency('gio-2.0', static: true)]
 endif
 

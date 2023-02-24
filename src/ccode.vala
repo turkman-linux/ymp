@@ -150,3 +150,7 @@ private extern void cprint_dummy(string message);
 //DOC: * code: source code
 //DOC: * size: virtual memory size
 public extern void brainfuck(string code, int size);
+//DOC: ### plugin.c
+//DOC: `void load_plugin(string path):`
+//DOC: ymp plugin load function
+public extern void load_plugin(string path);
