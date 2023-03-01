@@ -1,4 +1,6 @@
 #!/bin/sh
-git diff $1 | grep "^+++ b/" | grep ympbuild | sort |\
-    sed "s/[a-z]*$//g;s/+++ b\//ymp build --install --no-emerge --allow-oem /g" | \
-    bash -ex
+arg="$1"
+shift
+git diff "$arg" | grep "^+++ b/" | grep ympbuild | sort |\
+    sed "s/[a-z]*$//g;s/+++ b\//ymp build $@ /g" | \
+    sh -e

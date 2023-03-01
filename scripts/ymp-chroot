@@ -1,4 +1,8 @@
 #!/bin/sh
+if [ ! -d "$1" ] ; then
+    echo "ymp-chroot: missing rootfs"
+    exit 1
+fi
 for i in /dev /sys /proc /run
 do
 	mkdir -p $1/$i 2>/dev/null || true
