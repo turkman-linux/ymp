@@ -10,7 +10,7 @@ if meson.get_compiler('vala').version().version_compare('<0.54.9')
 endif
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
-args = ['-X','-O3', '-flto', '-DSULIX', '-Wall']
+args = ['-X','-O3', '-flto', '-DTURKMAN', '-Wall']
 
 args += ['-s', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
 if get_option('shared')
@@ -22,7 +22,6 @@ if get_option('static')
     add_project_arguments('-D', 'STATIC', language: 'vala')
     static_dependencies = [dependency('gio-2.0', static: true)]
 endif
-incdir = include_directories('data')
 add_project_arguments('-C', language: 'vala')
 add_project_arguments(['--disable-assert', '--hide-internal', '--nostdpkg', '--enable-checking', '--abi-stability'], language: 'vala')
 add_project_arguments('-D', '_GNU_SOURCE', '--disable-version-header', language: 'vala')
@@ -131,29 +130,29 @@ if not get_option('shared') and not get_option('static')
 endif
 
 if get_option('shared')
-    lib = library('ymp', sources, dependencies: shared_dependencies, link_args: args, include_directories : incdir)
+    lib = library('ymp', sources, dependencies: shared_dependencies, link_args: args)
     install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('libdir'), rename: 'libymp.so')
     if get_option('tools')
-        executable('ymp-cli', 'src/cli/main.vala', dependencies: shared_dependencies, link_args: args, link_with: lib, include_directories : incdir)
-        executable('ymp-shell', 'src/cli/shell.vala', dependencies: shared_dependencies, link_args: args, link_with: lib, include_directories : incdir)
+        executable('ymp-cli', 'src/cli/main.vala', dependencies: shared_dependencies, link_args: args, link_with: lib)
+        executable('ymp-shell', 'src/cli/shell.vala', dependencies: shared_dependencies, link_args: args, link_with: lib)
         install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
         install_data(meson.current_build_dir() / 'ymp-shell', install_dir : get_option('bindir'),rename : 'ympsh')
     endif
     if get_option('test')
-        executable('ymp-test', 'test/test.vala', dependencies: shared_dependencies, link_args: args, link_with: lib, include_directories : incdir)
+        executable('ymp-test', 'test/test.vala', dependencies: shared_dependencies, link_args: args, link_with: lib)
     endif
 endif
 if get_option('static')
     libstatic = static_library('ymp-static', sources, dependencies: static_dependencies, link_args: args + ['-static'])
     install_data(meson.current_build_dir() / 'libymp-static.a', install_dir : get_option('libdir'), rename: 'libymp.a')
     if get_option('tools')
-        executable('ymp-cli-static', 'src/cli/main.vala', dependencies: static_dependencies, link_args: args + ['-static'], link_with: libstatic, include_directories : incdir)
-        executable('ymp-shell-static', 'src/cli/shell.vala', dependencies: static_dependencies, link_args: args + ['-static'], link_with: libstatic, include_directories : incdir)
+        executable('ymp-cli-static', 'src/cli/main.vala', dependencies: static_dependencies, link_args: args + ['-static'], link_with: libstatic)
+        executable('ymp-shell-static', 'src/cli/shell.vala', dependencies: static_dependencies, link_args: args + ['-static'], link_with: libstatic)
         install_data(meson.current_build_dir() / 'ymp-cli-static', install_dir : get_option('bindir'),rename : 'ymp-static')
         install_data(meson.current_build_dir() / 'ymp-shell-static', install_dir : get_option('bindir'),rename : 'ympsh-static')
     endif
     if get_option('test')
-        executable('ymp-test', 'test/test.vala', dependencies: static_dependencies, link_args: args + ['-static'], link_with: libstatic, include_directories : incdir)
+        executable('ymp-test', 'test/test.vala', dependencies: static_dependencies, link_args: args + ['-static'], link_with: libstatic)
     endif
 
 endif
