@@ -50,7 +50,7 @@ public void info_fn(string message){
     print_stderr(colorize("INFO : ",green)+message);
 }
 
-public string colorize_fnx(string msg, int color){
+public string colorize_fn(string msg, int color){
     return ccolorize(msg,color.to_string());
 }
 public string colorize_dummy(string msg, int color){

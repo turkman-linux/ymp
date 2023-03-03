@@ -1,12 +1,35 @@
 #include <stdio.h>
 #include <string.h>
 
+// functions from vala source
 void print(char* msg);
 void print_stderr(char* msg);
 void error_add(char* msg);
 char* colorize(char* msg, char* num);
 char* ccolorize(char* msg, char* num);
+int get_bool(char* val);
 
+//headers of functions
+void warning_fn(char* msg);
+void debug_fn(char* msg);
+void info_fn(char* msg);
+char* colorize_fn(char* msg, int color);
+char* colorize_dummy(char* msg, int color);
+
+
+// function pointer type definitions
+typedef void (*fn_logger)(char*);
+typedef char* (*fn_colorize)(char*,int);
+
+// logger function pointer
+fn_logger print_ptr;
+fn_logger print_stderr_ptr;
+fn_logger warning_ptr;
+fn_logger info_ptr;
+fn_logger debug_ptr;
+fn_colorize colorize_ptr;
+
+// print functions area
 void print_fn(char* message, int new_line, int err){
     if(strcmp(message,"")==0){
         return;
@@ -21,6 +44,7 @@ void print_fn(char* message, int new_line, int err){
     }
     fflush(fd);
 }
+
 void cprint(char* message){
     fputs(message,stdout);
     fputc('\n',stdout);
@@ -34,28 +58,6 @@ void cprint_stderr(char* message){
 
 void cprint_dummy(char* message){}
 
-void warning_fn(char* msg);
-void debug_fn(char* msg);
-
-void info_fn(char* msg);
-
-char* colorize_fnx(char* msg, int color);
-char* colorize_dummy(char* msg, int color);
-
-int get_bool(char* val);
-
-
-// logger function pointer type
-typedef void (*logger_fn)(char*);
-typedef char* (*colorize_fn)(char*,int);
-
-// logger function pointer
-logger_fn print_ptr;
-logger_fn print_stderr_ptr;
-logger_fn warning_ptr;
-logger_fn info_ptr;
-logger_fn debug_ptr;
-colorize_fn colorize_ptr;
 
 // logger functions
 void print(char* msg){
@@ -107,6 +109,6 @@ void logger_init(){
     if (get_bool("no-color")){
         colorize_ptr = colorize_dummy;
     }else{
-        colorize_ptr = colorize_fnx;
+        colorize_ptr = colorize_fn;
     }
 }
