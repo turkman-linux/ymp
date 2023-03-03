@@ -52,6 +52,7 @@ sources = files('src/ymp.vala',
                 'src/wslblock.vala',
                 'src/ccode.vala',
                 'ctx.vala',
+                'data/ymp-extra.h'
                )
 
 sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip().split('\n')
@@ -167,6 +168,7 @@ install_data('data/ymp.yaml', install_dir : get_option('sysconfdir'))
 install_data(meson.current_build_dir()+'/ymp.pc', install_dir : get_option('libdir')/ 'pkgconfig')
 install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
 install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/packages/')
+install_data('data/ymp-extra.h', install_dir : get_option('includedir'))
 
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
 install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'))

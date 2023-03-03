@@ -1,2 +1,0 @@
-echo hello world
-exec uname -a

@@ -140,7 +140,7 @@ public void error(int status){
         }
     }
 }
-private bool has_error(){
+public bool has_error(){
     return errors.length != 0;
 }
 

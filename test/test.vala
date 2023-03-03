@@ -1,9 +1,10 @@
 
+string tmp;
 void main(string[] args){
     // init ymp
     Ymp ymp = ymp_init(args);
     print("Ymp test");
-    set_destdir("../test/example/rootfs");
+    set_destdir("../test/rootfs");
     ymp.add_process("init",{"hello","world"});
     ymp.run();
 
@@ -14,44 +15,48 @@ void main(string[] args){
     // archive test
     print("Archive test");
     var tar = new archive();
-    tar.load("../test/example/main.tar.gz");
+    tar.load("../test/data/main.tar.gz");
     tar.list_files();
-    tar.extract("aaa");
-    tar.readfile("aaa");
-    tar.set_target("./ffff/");
+    tar.set_target("./test/");
+    tar.extract("main.c");
+    tar.readfile("main.c");
     tar.extract_all();
 
     // file test
     print("File test");
-    readfile("/proc/cmdline");
+    readfile("./test/main.c");
     string curdir = pwd();
     cd("..");
 
-    create_dir("uuu");
-    remove_dir("uuu");
+    // directory test
+    create_dir("test/dir");
+    remove_dir("test/dir");
     cd(curdir);
-    find(".");
-    create_dir("uuu/aaa/fff");
-    writefile("uuu/aaa/fff/ggg","ymp");
-    remove_all("uuu");
+    find("./test");
+    create_dir("test/dir");
+    writefile("test/dir/test.txt","ymp");
+    remove_all("test");
     pwd();
 
     // logger test
     print("Logging test");
-    error_add("Hello World");
     debug("debug test");
 
     // command test
     print("Command test");
-    getoutput("echo -n hmmm");
+    tmp = getoutput("echo -n hmmm");
     run_silent("non-command -non-parameter");
     run("false");
 
     // package test
     print("Package test");
     var pkg1 = new package();
-    pkg1.load("../test/example/metadata-binary.yaml");
-    join(", ",{"aaa","bbb"});
+    pkg1.load("../test/data/metadata-binary.yaml");
+    
+    // string test
+    tmp = join(", ",{"aaa","bbb"});
+    sbasename("test/dir");
+    sdirname("test/dir");
 
     // index test
     print("Repository test");
@@ -74,8 +79,8 @@ void main(string[] args){
     // Binary test
     print("Binary test");
     iself("ymp-test");
-    is64bit("ymp");
-    print(calculate_sha1sum("/bin/bash"));
+    is64bit("libymp.so");
+    print(calculate_sha1sum("ymp-cli"));
 
     // ttysize test
     print("C functions test");
@@ -93,7 +98,13 @@ void main(string[] args){
     // value test
     print("value test");
     get_value("interactive");
+    set_bool("shellmode",true);
     error_add("Error test");
-    error(0);
-
+    has_error();
+    
+    // brainfuck test
+    print("Brainfuck test");
+    string bfcode = readfile("../test/data/hello.bf");
+    brainfuck(bfcode,102400);
+    print("done");
 }

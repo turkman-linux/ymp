@@ -1,0 +1,11 @@
+ymp:
+  package:
+    name: hello
+    version: 2.12
+    release: 1
+    description: Hello world Package
+    group:
+      - app.misc
+    archive-hash: d9da81eaea6b9e6c572d38b800025269f010dd9d
+    arch: x86_64
+    archive-size: 185856
