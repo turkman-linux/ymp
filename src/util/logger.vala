@@ -1,8 +1,6 @@
 private string[] errors;
 
 //DOC: ## logging functions
-public delegate void logger(string message);
-public delegate string fncolor(string msg, int color);
 
 //DOC: `void print(string message):`
 //DOC: write standard messages to stdout
@@ -10,31 +8,19 @@ public delegate string fncolor(string msg, int color);
 //DOC: ```vala
 //DOC: print("Hello world!");
 //DOC: ```
-public logger print;
-
-
-//DOC: `void print_stderr(string message):`
-//DOC: same with print but write to stderr
-public logger print_stderr;
-
-
+public extern void print(string msg);
 //DOC: `void warning(string message):`
 //DOC: write warning message like this:
 //DOC: ```yaml
 //DOC: WARNING: message
 //DOC: ```
-public logger warning;
-
+public extern void warning(string msg);
 //DOC: `void debug(string message):`
 //DOC: write debug messages. Its only print if debug mode enabled.
-public logger debug;
-
-
-
+public extern void debug(string msg);
 //DOC: `void info(string message):`
 //DOC: write additional info messages.
-public logger info;
-
+public extern void info(string msg);
 
 //DOC: `string colorize(string message, int color):`
 //DOC: Change string color if no_color is false.
@@ -44,65 +30,36 @@ public logger info;
 //DOC: var msg2 = colorize("world",blue);
 //DOC: stdout.printf(msg+" "+msg2);
 //DOC: ```
-public fncolor colorize;
+public string colorize(string msg, int color){
+    return ccolorize(msg, color.to_string());
+}
 
-private void warning_fn(string message){
+//DOC: `void print_stderr(string message):`
+//DOC: same with print but write to stderr
+public extern void print_stderr(string msg);
+
+public void warning_fn(string message){
     print_stderr(colorize("WARNING: ",yellow)+message);
 }
-#if DEBUG
-private void debug_fn(string message){
+
+public void debug_fn(string message){
     print_stderr(colorize("DEBUG: ",blue)+message);
 }
-#else
-#endif
 
-private void info_fn(string message){
+public void info_fn(string message){
     print_stderr(colorize("INFO : ",green)+message);
 }
 
-private string colorize_fn(string msg, int color){
+public string colorize_fnx(string msg, int color){
     return ccolorize(msg,color.to_string());
 }
-private string colorize_dummy(string msg, int color){
+public string colorize_dummy(string msg, int color){
     return msg;
 }
 
-private void logger_init(){
-    if(get_bool("quiet")){
-        print = cprint_dummy;
-        print_stderr = cprint_dummy;
-    }else{
-        print = cprint;
-        print_stderr = cprint_stderr;
-        
-    }
-    if(get_bool("ignore-warning")){
-        warning = cprint_stderr;
-    }else if(get_bool("warning-as-error")){
-        warning = error_add;
-    }else{
-        warning = warning_fn;
-    }
-    #if DEBUG
-    if(get_bool("debug")){
-        debug = debug_fn;
-    }else{
-        debug = cprint_dummy;
-    }
-    #else
-    debug = cprint_dummy;
-    #endif
-    if(get_bool("verbose")){
-        info = info_fn;
-    }else{
-        info = cprint_dummy;
-    }
-    if (get_bool("no-color")){
-        colorize = colorize_dummy;
-    }else{
-        colorize = colorize_fn;
-    }
-}
+
+public extern void logger_init();
+
 
 //DOC: `void set_terminal_title(string msg):`
 //DOC: set terminal title

@@ -811,10 +811,6 @@ print("Hello world!");
 
 ```
 
-`void print_stderr(string message):`
-
-same with print but write to stderr
-
 `void warning(string message):`
 
 write warning message like this:
@@ -848,6 +844,10 @@ var msg2 = colorize("world",blue);
 stdout.printf(msg+" "+msg2);
 
 ```
+
+`void print_stderr(string message):`
+
+same with print but write to stderr
 
 `void set_terminal_title(string msg):`
 

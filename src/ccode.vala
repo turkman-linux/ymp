@@ -140,9 +140,6 @@ public extern void csort(string[] arr, int n);
 //DOC: * new_line: if set true, append new line
 //DOC: * err: if set true, write log to stderr
 public extern void print_fn(string message, bool new_line, bool err);
-private extern void cprint(string message);
-private extern void cprint_stderr(string message);
-private extern void cprint_dummy(string message);
 
 //DOC: ### brainfuck.c
 //DOC: `void brainfuck(string code, int size):`
