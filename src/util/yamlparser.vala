@@ -90,10 +90,10 @@ public class yamlfile {
     //DOC: `string yamlfile.get_value(string data, string name):`
     //DOC: get value from area data
     public string get_value(string data,string name){
+        debug("Yaml get value: %s".printf(name));
         if(data == null || data==""){
             return "";
         }
-        debug("Get value:"+name);
         foreach(string line in ssplit(trim(data),"\n")){
             if(line.length < name.length+1){
                 continue;
@@ -108,11 +108,11 @@ public class yamlfile {
     //DOC: `string[] yamlfile.get_array(string data, string name):`
     //DOC: get array from area data
     public string[] get_array(string data,string name){
+        debug("Yaml get array: %s".printf(name));
         string[] array = {};
         if(data==null|| data == ""){
             return array;
         }
-        debug("Get array:"+name);
         string fdata = get_area(data,name);
         foreach(string line in ssplit(fdata,"\n")){
             if(startswith(line,"- ")){

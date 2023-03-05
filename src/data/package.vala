@@ -149,6 +149,7 @@ public class package {
     //DOC: `string package.get(string name):`
     //DOC: Get package value
     public string get(string fname){
+        debug("Get package data %s:%s".printf(name, fname));
         if (yaml.has_area(pkgarea,fname)){
             debug(_("Package data: %s").printf(name));
             return yaml.get_value(pkgarea,fname);
