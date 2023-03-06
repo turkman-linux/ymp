@@ -63,19 +63,19 @@ public class repository {
         int currel = 0;
         foreach(string fname in source_names){
             if (fname == name){
-                string area = sources[sindex(fname, source_names)];
-                int release = int.parse(yaml.get_value(area,"release"));
-                if(release <= currel){
-                    print("%s".printf(name));
-                    continue;
+                foreach(int index in sindex(fname, source_names)){
+		            string area = sources[index];
+		            int release = int.parse(yaml.get_value(area,"release"));
+		            if(release <= currel){
+		                print("%s".printf(name));
+		                continue;
+		            }
+		            currel = release;
+		            pkg = new package();
+		            pkg.set_pkgarea(area,true);
+		            pkg.repo_address = address;
                 }
-                currel = release;
-                pkg = new package();
-                pkg.set_pkgarea(area,true);
-                pkg.repo_address = address;
             }
-        }
-        foreach(string area in sources){
         }
         return pkg;
     }
@@ -87,15 +87,17 @@ public class repository {
         int currel = 0;
         foreach(string fname in package_names){
             if (fname == name){
-                string area = packages[sindex(fname, source_names)];
-                int release = int.parse(yaml.get_value(area,"release"));
-                if(release <= currel){
-                    continue;
+                foreach(int index in sindex(fname, package_names)){
+		            string area = packages[index];
+		            int release = int.parse(yaml.get_value(area,"release"));
+		            if(release <= currel){
+		                continue;
+		            }
+		            currel = release;
+		            pkg = new package();
+		            pkg.set_pkgarea(area,false);
+		            pkg.repo_address = address;
                 }
-                currel = release;
-                pkg = new package();
-                pkg.set_pkgarea(area,false);
-                pkg.repo_address = address;
             }
         }
         return pkg;

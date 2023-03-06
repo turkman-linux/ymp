@@ -26,13 +26,14 @@ public string join(string f,string[] array){
 }
 //DOC: `public int sindex(string f, string[] array)`:
 //DOC: Get item index number in string array. if not exists return -1
-public int sindex(string f, string[] array){
+public int[] sindex(string f, string[] array){
+    int[] ret = {};
     for(int i=0;i<array.length;i++){
         if(array[i] == f){
-            return i;
+            ret += i;
         }
     }
-    return -1;
+    return ret;
 }
 
 //DOC: `string[] ssplit(string data, string f):`
