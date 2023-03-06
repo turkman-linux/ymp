@@ -24,8 +24,8 @@ public string join(string f,string[] array){
     }
     return tmp[0:tmp.length-f.length];
 }
-//DOC: `public int sindex(string f, string[] array)`:
-//DOC: Get item index number in string array. if not exists return -1
+//DOC: `public int[] sindex(string f, string[] array)`:
+//DOC: Get item index number array in string array.
 public int[] sindex(string f, string[] array){
     int[] ret = {};
     for(int i=0;i<array.length;i++){
