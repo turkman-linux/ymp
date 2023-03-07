@@ -13,7 +13,7 @@ private void settings_init(){
         CONFIGDIR = "/etc/";
     }
     if (CONFIG == null){
-        CONFIG = srealpath(DESTDIR+"/"+CONFIGDIR+"/ymp.yaml");
+        CONFIG = DESTDIR+"/"+CONFIGDIR+"/ymp.yaml";
     }
     config_yaml = new yamlfile();
     set_value_readonly("destdir",DESTDIR);

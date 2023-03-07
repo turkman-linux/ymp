@@ -288,8 +288,8 @@ public bool isexists(string path){
 //DOC: safe realpath function.
 public string srealpath(string path){
     debug("Realpath: "+path);
-    if(path == "/"){
-        return path;
+    if(path == null || path == "" || path == "/"){
+        return "/";
     }
     string real = Posix.realpath(path);
     if(real == null || real == ""){
