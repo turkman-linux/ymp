@@ -92,6 +92,7 @@ public package install_single(string pkg){
         error(1);
         quarantine_install();
         quarantine_reset();
+        sysconf_main(args);
     }else{
         p.extract();
     }
