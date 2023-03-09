@@ -194,7 +194,7 @@ public package get_package_from_repository(string name){
         if(get_bool("ignore-satisfied")){
             return ret;
         }
-        error_add(_("Package not satisfied from repository: %s").printf(name));
+        error_add(_("Package is not satisfied from repository: %s").printf(name));
     }
     return ret;
 }
@@ -218,7 +218,7 @@ public package get_source_from_repository(string name){
         if(get_bool("ignore-satisfied")){
             return ret;
         }
-        error_add(_("Package not satisfied from repository: %s").printf(name));
+        error_add(_("Package is not satisfied from repository: %s").printf(name));
     }
     return ret;
 }
@@ -321,7 +321,7 @@ public string create_index_data(string fpath){
     string path = srealpath(fpath);
     string index_name = get_value("name");
     if(index_name == ""){
-        error_add(_("Index name not defined. Please use --name=xxx"));
+        error_add(_("Index name is not defined. Please use --name=xxx"));
         error(1);
     }
     var tar = new archive();

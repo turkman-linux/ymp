@@ -44,7 +44,7 @@ public class package {
         }else if(yaml.has_area(metadata,"package") || yaml.has_area(metadata,"source")){
             ympdata = metadata;
         }else{
-            error_add(_("Package metadata file is broken:%s").printf(metadata));
+            error_add(_("Package metadata file is broken: %s").printf(metadata));
         }
         // package area load
         if(yaml.has_area(ympdata,"package")){
@@ -54,7 +54,7 @@ public class package {
             is_source = true;
             pkgarea = yaml.get_area(ympdata,"source");
         }else{
-            error_add(_("Package data is broken:%s").printf(ympdata));
+            error_add(_("Package data is broken: %s").printf(ympdata));
         }
         error(2);
         //read values from data
@@ -75,7 +75,7 @@ public class package {
         pkgfile = new archive();
         pkgfile.load(srealpath(path));
         var metadata = pkgfile.readfile("metadata.yaml");
-        info(_("Load package from:%s").printf(path));
+        info(_("Load package from: %s").printf(path));
         load_from_data(metadata);
     }
 
@@ -87,7 +87,7 @@ public class package {
                 string files = readfile(get_storage()+"/files/"+name);
                 return ssplit(files,"\n");
             }
-            error_add(_("Package archive missing"));
+            error_add(_("Package archive is missing."));
             error(2);
             return {};
         }
@@ -103,7 +103,7 @@ public class package {
                 string links = readfile(get_storage()+"/links/"+name);
                 return ssplit(links,"\n");
             }
-            error_add(_("Package archive missing"));
+            error_add(_("Package archive is missing."));
             return {};
         }
         string links = pkgfile.readfile("links");
@@ -149,12 +149,12 @@ public class package {
     //DOC: `string package.get(string name):`
     //DOC: Get package value
     public string get(string fname){
-        debug("Get package data %s:%s".printf(name, fname));
+        debug(_("Get package data %s:%s").printf(name, fname));
         if (yaml.has_area(pkgarea,fname)){
             debug(_("Package data: %s").printf(name));
             return yaml.get_value(pkgarea,fname);
         }
-        warning(_("Package information broken: %s %s").printf(fname,name));
+        warning(_("Package information is broken: %s %s").printf(fname,name));
         return "";
     }
 
@@ -220,7 +220,7 @@ public class package {
         create_dir(get_storage()+"/quarantine/files");
         create_dir(get_storage()+"/quarantine/links");
         if(pkgfile == null){
-            error_add("Package archive missing");
+            error_add(_("Package archive is missing."));
             return;
         }
         var rootfs_medatata = get_storage()+"/quarantine/metadata/";
@@ -241,7 +241,7 @@ public class package {
                 // 2. validate data archive
                 var data_hash = calculate_sha1sum(datafile);
                 if(data_hash != get("archive-hash")){
-                    error_add(_("Archive sha1sum mismatch"));
+                    error_add(_("Archive sha1sum mismatch."));
                     remove_file(datafile);
                 }
                 // 3. data.* package extract to quarantine/rootfs
@@ -275,7 +275,7 @@ public class package {
     //DOC: build source code into buildpath
     public void build(){
         if(pkgfile == null){
-            error_add(_("Package archive missing"));
+            error_add(_("Package archive is missing."));
             return;
         }
         create_dir(DESTDIR+"/tmp/ymp-build/"+name);

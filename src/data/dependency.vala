@@ -82,7 +82,7 @@ private string[] get_group_packages(string fname){
         }
         foreach(string grp in p.gets("group")){
             if(name == grp || startswith(grp,name+".")){
-                debug(_("Group %s: add %s").printf(grp, pkgname));
+                debug(_("Group %s: add: %s").printf(grp, pkgname));
                 ret.add(pkgname);
             }
         }
@@ -120,7 +120,7 @@ private string[] get_match_packages(string fname){
             continue;
         }
         if(Regex.match_simple(rule,pkgname)){
-            info(_("Match %s: rule %s").printf(pkgname,rule));
+            info(_("Match %s: rule: %s").printf(pkgname,rule));
             ret.add(pkgname);
         }
     }

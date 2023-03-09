@@ -35,7 +35,7 @@ private void settings_init(){
             }
         }
     }else{
-        warning(_("Config file not exists: %s").printf(CONFIG));
+        warning(_("Config file does not exists: %s").printf(CONFIG));
     }
     if(get_env("USE") != null){
         set_value("USE",get_env("USE"));
@@ -63,7 +63,7 @@ public string get_config(string section,string path){
 //DOC: change distdir
 public void set_destdir(string rootfs){
     DESTDIR=srealpath(rootfs);
-    info(_("Destdir changed: %s").printf(DESTDIR));
+    info(_("Destination directory has been changed: %s").printf(DESTDIR));
     settings_init();
 }
 

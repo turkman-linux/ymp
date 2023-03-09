@@ -49,7 +49,7 @@ private string[] get_quarantine_conflict_packages(string path,bool symlink){
 //DOC: check quarantine file hashes
 public bool quarantine_validate_files(){
     if(get_bool("ignore-quarantine")){
-        warning(_("Quarantine validation disabled"));
+        warning(_("Quarantine validation disabled."));
         return true;
     }
     // reset lists
@@ -93,7 +93,7 @@ public bool quarantine_validate_files(){
                 if(path.length > 1 && path[0] == '/'){
                     quarantine_file_replaces_list.add(get_storage()+"/quarantine/rootfs/"+path[1:]);
                 }else{
-                    warning(_("Invalid replaces path: %s (%s)").printf(path,files_list));
+                    warning(_("Invalid replaces files path: %s (%s)").printf(path,files_list));
                 }
             };
         }
@@ -120,7 +120,7 @@ public bool quarantine_validate_files(){
                 }
                 quarantine_file_cache_list.add(file_path);
                 if(!isfile(file_path)){
-                    warning(_("Package file missing: /%s (%s)").printf(path,files_list));
+                    warning(_("Package file is missing: /%s (%s)").printf(path,files_list));
                     quarantine_file_broken_list.add(file_path);
                     continue;
                 }
@@ -168,7 +168,7 @@ public bool quarantine_validate_files(){
                 if(path.length > 1 && path[0] == '/'){
                     quarantine_file_replaces_list.add(get_storage()+"/quarantine/rootfs/"+path[1:]);
                 }else{
-                    warning(_("Invalid replaces path: %s (%s)").printf(path,links_list));
+                    warning(_("Invalid replaces symlink path: %s (%s)").printf(path,links_list));
                 }
             };
         }
@@ -200,7 +200,7 @@ public bool quarantine_validate_files(){
                     continue;
                 }
                 if(!issymlink(link_path)){
-                    warning(_("Package symlink missing: /%s (%s)").printf(path,links_list));
+                    warning(_("Package symlink is missing: /%s (%s)").printf(path,links_list));
                     quarantine_file_broken_list.add(link_path);
                     continue;
                 }

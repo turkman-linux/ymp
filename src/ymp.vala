@@ -29,7 +29,7 @@ private class operation{
 
 private void add_operation(function callback, string[] names, helpmsg help){
     logger_init(); // logger reload
-    debug("Add operation: "+join(":",names));
+    debug(_("Add operation: %s").printf(join(":",names)));
     if(ops == null){
         ops = {};
     }
@@ -148,7 +148,7 @@ public class Ymp {
                 continue;
             }
             if(iflevel < 0){
-                error_add(_("Syntax error. Unexceped endif detected."));
+                error_add(_("Syntax error: Unexceped endif detected."));
             }else if(iflevel != 0){
                 continue;
             }
@@ -268,11 +268,11 @@ public Ymp ymp_init(string[] args){
     parse_args(args);
     ctx_init();
     #if SHARED
-    info("Plugin manager init");
+    info(_("Plugin manager init"));
     foreach(string lib in find(DISTRODIR)){
         string libname = sbasename(lib);
         if(startswith(libname,"libymp_") && endswith(libname,".so")){
-            info("Load plugin: "+libname);
+            info(_("Load plugin: %s").printf(libname));
             load_plugin(lib);
         }
     }
