@@ -20,7 +20,7 @@ public int remove_file_main(string[] args){
 
 public int copy_file_main(string[] args){
     if(args.length < 2){
-        error_add(_("Source or Target not defined."));
+        error_add(_("Source or Target is not defined."));
         error(1);
     }
     string src = srealpath(args[0]);
@@ -41,7 +41,7 @@ public int copy_file_main(string[] args){
 
 public int move_file_main(string[] args){
     if(args.length < 2){
-        error_add(_("Source or Target not defined."));
+        error_add(_("Source or Target is not defined."));
         error(1);
     }
     string src = srealpath(args[0]);

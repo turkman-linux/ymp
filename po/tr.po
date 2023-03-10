@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-10 11:01+0000\n"
+"POT-Creation-Date: 2023-03-10 15:21+0000\n"
 "PO-Revision-Date: 2022-12-06 15:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -298,419 +298,419 @@ msgstr "Bagimlilik coz: %s"
 #: src/data/dependency.vala:52
 #, c-format
 msgid "Package is not installable: %s"
-msgstr ""
+msgstr "Paket kurulabilir degil: %s"
 
 #: src/data/dependency.vala:69
 #, c-format
 msgid "Resolve group: %s"
-msgstr ""
+msgstr "Gurubu cop: %s"
 
 #: src/data/dependency.vala:85
 #, c-format
 msgid "Group %s: add: %s"
-msgstr ""
+msgstr "Gurup %s: add: %s"
 
 #: src/data/dependency.vala:91
 #, c-format
 msgid "Group is unknown: %s"
-msgstr ""
+msgstr "Gurup bilinmiyor: %s"
 
 #: src/data/dependency.vala:97
 #, c-format
 msgid "Resolve ordep packages: %s"
-msgstr ""
+msgstr "ordep paketleri coz: %s"
 
 #: src/data/dependency.vala:113
 #, c-format
 msgid "Resolve regex: %s"
-msgstr ""
+msgstr "regex coz : %s"
 
 #: src/data/dependency.vala:123
 #, c-format
 msgid "Match %s: rule: %s"
-msgstr ""
+msgstr "Eslesme %s: kural: %s"
 
 #: src/data/dependency.vala:128
 #, c-format
 msgid "Regex match is not available: %s"
-msgstr ""
+msgstr "Regex eslesmesi bulunamadi: %s"
 
 #: src/data/dependency.vala:166
 #, c-format
 msgid "Resolve reverse dependency: %s"
-msgstr ""
+msgstr "Ters bagimlilik coz: %s"
 
 #: src/data/repository.vala:197 src/data/repository.vala:221
 #, c-format
 msgid "Package is not satisfied from repository: %s"
-msgstr ""
+msgstr "Paket depodan saglanamadi: %s"
 
 #: src/data/repository.vala:254 src/data/repository.vala:258
 #, c-format
 msgid "Find repo list: %s"
-msgstr ""
+msgstr "Depo listesi bul: %s"
 
 #: src/data/repository.vala:283
 #, c-format
 msgid "Invalid repository index: %s"
-msgstr ""
+msgstr "Gecersiz depo indexi: %s"
 
 #: src/data/repository.vala:324
 msgid "Index name is not defined. Please use --name=xxx"
-msgstr ""
+msgstr "Index adi tanimlanmadi. Lutfen --name=xxx kullanin"
 
 #: src/operations/utility/compress.vala:22
 #: src/operations/utility/compress.vala:27
 msgid "compress"
-msgstr ""
+msgstr "sikistir"
 
 #: src/operations/utility/compress.vala:24
 msgid "Compress file or directories."
-msgstr ""
+msgstr "Dosya veya dizinleri sikistir."
 
 #: src/operations/utility/compress.vala:25
 msgid "compress algorithm"
-msgstr ""
+msgstr "sikistirma algoritmasi"
 
 #: src/operations/utility/compress.vala:26
 msgid "archive format"
-msgstr ""
+msgstr "arsiv turu"
 
 #: src/operations/utility/file.vala:23 src/operations/utility/file.vala:44
-msgid "Source or Target not defined."
-msgstr ""
+msgid "Source or Target is not defined."
+msgstr "Kaynak veya hedef tanimlanmadi."
 
 #: src/operations/utility/file.vala:65 src/operations/utility/file.vala:72
 msgid "file"
-msgstr ""
+msgstr "dosya"
 
 #: src/operations/utility/file.vala:67
 msgid "Copy / Move / Remove files or directories."
-msgstr ""
+msgstr "dosyalari veya dizinleri Kopyala / Tasi / Sil"
 
 #: src/operations/utility/file.vala:68
 msgid "remove file or directories"
-msgstr ""
+msgstr "dosyalari veya dizinleri sil"
 
 #: src/operations/utility/file.vala:69
 msgid "copy file or directories"
-msgstr ""
+msgstr "dosyalari veya dizinleri kopyala"
 
 #: src/operations/utility/file.vala:70
 msgid "move file or directories"
-msgstr ""
+msgstr "dosyalari veya dizinleri tasi"
 
 #: src/operations/utility/file.vala:71
 msgid "extract archive file (same as extract operation)"
-msgstr ""
+msgstr "arsiv dosyasini cikart (cikart eylemi ile aynidir)"
 
 #: src/operations/utility/extract.vala:22
 #: src/operations/utility/extract.vala:26
 msgid "extract"
-msgstr ""
+msgstr "cikart"
 
 #: src/operations/utility/extract.vala:24
 msgid "Extract files from archive."
-msgstr ""
+msgstr "Arsivden dosyalari cikart."
 
 #: src/operations/utility/extract.vala:25
 msgid "list archive files"
-msgstr ""
+msgstr "arsiv dosyalarini listele"
 
 #: src/operations/utility/httpd.vala:58 src/operations/utility/httpd.vala:61
 #, c-format
 msgid "Directory listing for %s"
-msgstr ""
+msgstr "%s icin dizin listeleniyor."
 
 #: src/operations/utility/httpd.vala:130
 #, c-format
 msgid "Servering HTTP on 0.0.0.0 port %s"
-msgstr ""
+msgstr "HTTP 0.0.0.0 uzerinde %s portundan sunuluyor"
 
 #: src/operations/utility/httpd.vala:140 src/operations/utility/httpd.vala:142
 msgid "httpd"
-msgstr ""
+msgstr "httpd"
 
 #: src/operations/utility/httpd.vala:141
 msgid "Simple http server."
-msgstr ""
+msgstr "Basit http sunucusu."
 
 #: src/operations/utility/revdep-rebuild.vala:55
 #: src/operations/utility/revdep-rebuild.vala:65
 #, c-format
 msgid "Checking: %s"
-msgstr ""
+msgstr "Gozden geciriliyor: %s"
 
 #: src/operations/utility/revdep-rebuild.vala:77
 #, c-format
 msgid "%s is not an installed package."
-msgstr ""
+msgstr "%s kurulu bir paket degil."
 
 #: src/operations/utility/revdep-rebuild.vala:80
 msgid "Detect dependencies for:"
-msgstr ""
+msgstr "Bagimliliklar sunun icin tespit ediliyor:"
 
 #: src/operations/utility/revdep-rebuild.vala:102
 #: src/operations/utility/revdep-rebuild.vala:106
 msgid "revdep-rebuild"
-msgstr ""
+msgstr "revdep-rebuild"
 
 #: src/operations/utility/revdep-rebuild.vala:103
 msgid "Check library for broken links."
-msgstr ""
+msgstr "Kutuphaneleri bozuk baglar icin gozden gecir."
 
 #: src/operations/utility/revdep-rebuild.vala:104
 msgid "check pkgconfig files"
-msgstr ""
+msgstr "pkgconfig dosyalarini gozden gecir"
 
 #: src/operations/utility/revdep-rebuild.vala:105
 msgid "detect package dependencies"
-msgstr ""
+msgstr "paket bagimliliklarini gozden gecir"
 
 #: src/operations/utility/sysconf.vala:13
 #, c-format
 msgid "Run hook: %s"
-msgstr ""
+msgstr "Hook calistir: %s"
 
 #: src/operations/utility/sysconf.vala:18
 #: src/operations/utility/sysconf.vala:21
 #, c-format
 msgid "Failed to run sysconf: %s"
-msgstr ""
+msgstr "Sysconf calistirmasi basarisiz: %s"
 
 #: src/operations/utility/sysconf.vala:31
 #: src/operations/utility/sysconf.vala:33
 msgid "sysconf"
-msgstr ""
+msgstr "sysconf"
 
 #: src/operations/utility/sysconf.vala:32
 msgid "Trigger sysconf operations."
-msgstr ""
+msgstr "Sysconf eylemi tetikle."
 
 #: src/operations/utility/shell.vala:32 src/operations/utility/shell.vala:34
 msgid "shell"
-msgstr ""
+msgstr "kabuk"
 
 #: src/operations/utility/shell.vala:33
 msgid "Create a ymp shell or execute ympsh script."
-msgstr ""
+msgstr "ymp kabugu olustur veya ympsh calistir."
 
 #: src/operations/utility/brainfuck.vala:8
 #: src/operations/utility/brainfuck.vala:11
 msgid "brainfuck"
-msgstr ""
+msgstr "brainfuck"
 
 #: src/operations/utility/brainfuck.vala:10
 msgid "Run a brainfuck script."
-msgstr ""
+msgstr "Brainfuck betigi calistir."
 
 #: src/operations/utility/run-sandbox.vala:3
 msgid "Sandbox operation with usrmerge is not allowed!"
-msgstr ""
+msgstr "Sandbox eylemi usrmerge ile kabul edilmiyor!"
 
 #: src/operations/utility/run-sandbox.vala:13
 #, c-format
 msgid "Execute sandbox :%s"
-msgstr ""
+msgstr "Sandbox calistir: %s"
 
 #: src/operations/utility/run-sandbox.vala:20
 #: src/operations/utility/run-sandbox.vala:25
 msgid "sandbox"
-msgstr ""
+msgstr "sandbox"
 
 #: src/operations/utility/run-sandbox.vala:22
 msgid "Start sandbox environment."
-msgstr ""
+msgstr "Sandbox ortami baslat."
 
 #: src/operations/utility/run-sandbox.vala:23
 msgid "select shared directory"
-msgstr ""
+msgstr "paylasilan dizin sec"
 
 #: src/operations/utility/run-sandbox.vala:24
 msgid "block network access"
-msgstr ""
+msgstr "ag erisimini engelle"
 
 #: src/operations/utility/yamlget.vala:24
 #: src/operations/utility/yamlget.vala:28
 msgid "yamlget"
-msgstr ""
+msgstr "yamlget"
 
 #: src/operations/utility/yamlget.vala:26
 msgid "yamlget [file] [path]"
-msgstr ""
+msgstr "yamlget [dosya] [yol]"
 
 #: src/operations/utility/yamlget.vala:27
 msgid "Parse yaml files"
-msgstr ""
+msgstr "Yaml dosyalarini isle"
 
 #: src/operations/utility/debian.vala:37 src/operations/utility/debian.vala:49
 msgid "debian"
-msgstr ""
+msgstr "debian"
 
 #: src/operations/utility/debian.vala:38
 msgid "Debian package operations."
-msgstr ""
+msgstr "Debian paket eylemleri."
 
 #: src/operations/utility/debian.vala:39
 msgid "Package options"
-msgstr ""
+msgstr "Paket eylemleri"
 
 #: src/operations/utility/debian.vala:40
 msgid "extract debian package"
-msgstr ""
+msgstr "debian paketi cikart"
 
 #: src/operations/utility/debian.vala:41
 msgid "create debian package"
-msgstr ""
+msgstr "debian paketi olustur"
 
 #: src/operations/utility/debian.vala:42
 msgid "convert debian package to ymp package"
-msgstr ""
+msgstr "debian paketini ymp paketine donustur"
 
 #: src/operations/utility/debian.vala:43
 msgid "Install options"
-msgstr ""
+msgstr "Kurulum eylemleri"
 
 #: src/operations/utility/debian.vala:44
 msgid "install debian package"
-msgstr ""
+msgstr "debian paketi kur"
 
 #: src/operations/utility/debian.vala:44
 msgid "Dangerous"
-msgstr ""
+msgstr "Tehlikeli"
 
 #: src/operations/utility/debian.vala:45
 msgid "Catalog options"
-msgstr ""
+msgstr "Catalog secenekleri"
 
 #: src/operations/utility/debian.vala:46
 msgid "update debian catalog from debian repository"
-msgstr ""
+msgstr "debian deposundan catalog guncelle"
 
 #: src/operations/utility/debian.vala:47
 msgid "get source package name from catalog"
-msgstr ""
+msgstr "kaynak dosya adini catalog icinden al"
 
 #: src/operations/utility/debian.vala:48
 msgid "debian mirror url"
-msgstr ""
+msgstr "debian yansi baglantisi"
 
 #: src/operations/utility/kill.vala:16
 #, c-format
 msgid "Kill: %s"
-msgstr ""
+msgstr "Oldur: %s"
 
 #: src/operations/utility/kill.vala:28 src/operations/utility/kill.vala:30
 msgid "kill"
-msgstr ""
+msgstr "oldur"
 
 #: src/operations/utility/kill.vala:29
 msgid "Kill all other ymp process."
-msgstr ""
+msgstr "Diger ym psureclerini oldurur."
 
 #: src/operations/utility/help.vala:3
 msgid "Operation list:"
-msgstr ""
+msgstr "Eylem listesi:"
 
 #: src/operations/utility/help.vala:10
 msgid "Shell only operation list:"
-msgstr ""
+msgstr "Kabuga ozel eylem listesi:"
 
 #: src/operations/utility/help.vala:21
 msgid "Aliases:"
-msgstr ""
+msgstr "Aliaslar"
 
 #: src/operations/utility/help.vala:33
 msgid "Version"
-msgstr ""
+msgstr "Surum"
 
 #: src/operations/utility/help.vala:65
 msgid "stop argument parser"
-msgstr ""
+msgstr "argument isleyiciyi durdur"
 
 #: src/operations/utility/help.vala:68
 msgid "disable oem check"
-msgstr ""
+msgstr "oem gozden gecirmesini kapat"
 
 #: src/operations/utility/help.vala:71
 msgid "disable output"
-msgstr ""
+msgstr "ciktiyi kapat"
 
 #: src/operations/utility/help.vala:72
 msgid "disable warning messages"
-msgstr ""
+msgstr "uyari iletilerini kapat"
 
 #: src/operations/utility/help.vala:74
 msgid "enable debug output"
-msgstr ""
+msgstr "hata ayiklamayi etkinlestir"
 
 #: src/operations/utility/help.vala:76
 msgid "show verbose output"
-msgstr ""
+msgstr "ayrintili cikti goster"
 
 #: src/operations/utility/help.vala:77
 msgid "enable questions"
-msgstr ""
+msgstr "sorgulari etkinlestir"
 
 #: src/operations/utility/help.vala:78
 msgid "disable color output"
-msgstr ""
+msgstr "renkli ciktiyi kapat"
 
 #: src/operations/utility/help.vala:79
 msgid "disable sysconf triggers"
-msgstr ""
+msgstr "sysconf tetiklemelerini kapat"
 
 #: src/operations/utility/help.vala:80
 msgid "run ymp actions at sandbox environment"
-msgstr ""
+msgstr "ymp eylemlerini sandbox ortaminda calistir"
 
 #: src/operations/utility/help.vala:81
 msgid "write help messages"
-msgstr ""
+msgstr "yardim iletisi yaz"
 
 #: src/operations/utility/help.vala:85 src/operations/utility/help.vala:87
 msgid "help"
-msgstr ""
+msgstr "yardim"
 
 #: src/operations/utility/help.vala:86
 msgid "Write help message about ymp commands."
-msgstr ""
+msgstr "Ymp komutlari ile ilgili yardim iletisi yaz"
 
 #: src/operations/utility/help.vala:117
 msgid " [OPTION]... [ARGS]... "
-msgstr ""
+msgstr " [SECENEK]... [ARGS]..."
 
 #: src/operations/utility/help.vala:119
 msgid "Usage:"
-msgstr ""
+msgstr "Kullanim:"
 
 #: src/operations/utility/help.vala:122
 msgid "Options:"
-msgstr ""
+msgstr "Secenek:"
 
 #: src/operations/utility/help.vala:127
 msgid "Common options:"
-msgstr ""
+msgstr "Ortak secenekler:"
 
 #: src/operations/utility/fetch.vala:3
 msgid "URL missing"
-msgstr ""
+msgstr "Baglanti eksik"
 
 #: src/operations/utility/fetch.vala:22 src/operations/utility/fetch.vala:26
 msgid "fetch"
-msgstr ""
+msgstr "indir"
 
 #: src/operations/utility/fetch.vala:24
 msgid "Download files from network."
-msgstr ""
+msgstr "Agdan dosya indir."
 
 #: src/operations/utility/fetch.vala:25
 msgid "disable ssl check"
-msgstr ""
+msgstr "ssl gozden gecirmesini kapat"
 
 #: src/operations/shell/setget.vala:67 src/operations/shell/setget.vala:95
 msgid "get"
-msgstr ""
+msgstr "get"
 
 #: src/operations/shell/setget.vala:69
 msgid "Get variable from name."
