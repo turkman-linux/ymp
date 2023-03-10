@@ -64,7 +64,7 @@ void file_init(){
     var h = new helpmsg();
     h.name = _("file");
     h.minargs=1;
-    h.description = _("Copy / Move / Remove files or directories");
+    h.description = _("Copy / Move / Remove files or directories.");
     h.add_parameter("--remove",_("remove file or directories"));
     h.add_parameter("--copy",_("copy file or directories"));
     h.add_parameter("--move",_("move file or directories"));

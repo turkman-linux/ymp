@@ -4,13 +4,13 @@
 //DOC: `string readfile_byte(string path, long size):`
 //DOC: read **n** byte from file
 public string readfile_byte(string path, long n){
-    debug("Read file bytes: "+path);
+    debug(_("Read file bytes: %s").printf(path));
     if(!isfile(path)){
         return "";
     }
     FileStream stream = FileStream.open (path, "r");
     if(stream == null){
-        warning("Failed to read file: "+path);
+        warning(_("Failed to read file: %s").printf(path));
         return "";
     }
 
@@ -19,10 +19,10 @@ public string readfile_byte(string path, long n){
     long size = stream.tell ();
     stream.rewind ();
     if(size == 0){
-        warning("File is empty: "+path);
+        warning(_("File is empty: %s").printf(path));
         return "";
     }else if(size < n){
-        warning("Read byte size bigger than file size: "+path);
+        warning(_("Read byte size is bigger than file size: %s").printf(path));
         print(size.to_string()+ " "+ n.to_string());
         return "";
     }else if(n == 0){
@@ -42,7 +42,7 @@ public string readfile_byte(string path, long n){
 //DOC: `string readfile(string path):`
 //DOC: read file from **path** and remove commends
 public string readfile(string path){
-    debug("Read file: "+path);
+    debug(_("Read file: %s").printf(path));
     string new_data = "";
     if(!isfile(path)){
         return new_data;
@@ -72,7 +72,7 @@ public string readfile(string path){
 //DOC: `void writefile(string path, string ctx):`
 //DOC: write **ctx** data to **path** file
 public void writefile(string path, string ctx){
-    debug("Write file: "+path);
+    debug(_("Write file: %s").printf(path));
     string dir = sdirname(path);
     create_dir(dir);
     try {
@@ -94,7 +94,7 @@ public void writefile(string path, string ctx){
 //DOC: `string safedir(string dir):`
 //DOC: directory safe for httpd
 public string safedir(string dir){
-    debug("safedir: "+dir);
+    debug(_("Safedir: %s").printf(dir));
     string ret = dir;
     while(".." in ret){
         ret = ret.replace("..","./");
@@ -111,7 +111,7 @@ public string safedir(string dir){
 //DOC: `void cd(string path):`
 //DOC: change current directory to **path**
 public void cd(string path){
-    debug("cd: "+path);
+    debug(_("Change directory: %s").printf(path));
     if(!isdir(path)){
         create_dir(path);
     }
@@ -127,14 +127,14 @@ public string pwd(){
 //DOC: `int remove_dir(string path)`
 //DOC: remove **path** directory
 public int remove_dir(string path){
-    debug("Remove directory: "+path);
+    debug(_("Remove directory: %s").printf(path));
     return GLib.DirUtils.remove(path);
 }
 
 //DOC: `int remove_file(string path)`
 //DOC: remove **path** file
 public int remove_file(string path){
-    debug("Remove file: "+path);
+    debug(_("Remove file: %s").printf(path));
     if(!isfile(path)){
         return 0;
     }
@@ -175,7 +175,7 @@ public int remove_all(string path){
 //DOC: `void move_file(stirg src, string desc):`
 //DOC: move **src** file to **desc**
 public void move_file(string src, string desc){
-    debug("Move: "+src +" => "+desc);
+    debug(_("Move: %s => %s").printf(src, desc));
     GLib.File dest_file = GLib.File.new_for_path(src);
     GLib.File src_file = GLib.File.new_for_path(desc);
     if(isfile(desc)){
@@ -187,7 +187,7 @@ public void move_file(string src, string desc){
     try {
         dest_file.move(src_file, FileCopyFlags.NONE, null);
     } catch (Error e) {
-        error_add("Failed to move file: "+src + " => "+desc);
+        error_add(_("Failed to move file: %s => %s").printf(src, desc));
         error_add(e.message);
     }
 }
@@ -195,7 +195,7 @@ public void move_file(string src, string desc){
 //DOC: `void copy_file(string src, string desc):`
 //DOC: copy **src** file to **desc**. File permissions and owners are ignored.
 public void copy_file(string src, string desc){
-    debug("Copy: "+src +" => "+desc);
+    debug(_("Copy: %s => %s").printf(src, desc));
     File file1 = File.new_for_path (src);
     File file2 = File.new_for_path (desc);
     create_dir(sdirname(desc));
@@ -221,7 +221,7 @@ public void copy_file(string src, string desc){
         print_stderr("");
         fs_sync();
     } catch (Error e) {
-        error_add("Failed to copy file: "+src + " => "+desc);
+        error_add(_("Failed to copy file: %s => %s").printf(src, desc));
         error_add(e.message);
     }
 }
@@ -229,7 +229,7 @@ public void copy_file(string src, string desc){
 //DOC: `string[] listdir(string path):`
 //DOC: list directory content and result as array
 public string[] listdir(string path){
-    debug("List directory: "+path);
+    debug(_("List directory: %s").printf(path));
     string[] ret = {};
     string name;
     try{
@@ -248,7 +248,7 @@ public string[] listdir(string path){
 //DOC: `bool iself(string path):`
 //DOC: return true if file is elf binary
 public bool iself(string path){
-    debug("Check elf: "+path);
+    debug(_("Check elf: %s").printf(path));
     var ctx = readfile_byte(path,4);
     // .ELF magic bytes
     if(ctx == ""){
@@ -260,7 +260,7 @@ public bool iself(string path){
 //DOC: `bool is64bit(string path):`
 //DOC: return true if file is elf binary
 public bool is64bit(string path){
-    debug("Check 64bit: "+path);
+    debug(_("Check 64bit: %s").printf(path));
     var ctx = readfile_byte(path,4);
     // first byte after magic is bit size flag
     // 01 = 32bit 02 = 64bit
@@ -273,13 +273,13 @@ public bool is64bit(string path){
 //DOC: `bool isfile(string path)`:
 //DOC: check path is file
 public bool isfile(string path){
-    debug("Check file: "+path);
+    debug(_("Check file: %s").printf(path));
     return GLib.FileUtils.test(path, GLib.FileTest.IS_REGULAR) || issymlink(path);
 }
 
 
 public bool isexists(string path){
-    debug("Check exists: "+path);
+    debug(_("Check exists: %s").printf(path));
     var file = File.new_for_path (path);
     return file.query_exists();
 }
@@ -287,7 +287,7 @@ public bool isexists(string path){
 //DOC: `string srealpath(string path):`
 //DOC: safe realpath function.
 public string srealpath(string path){
-    debug("Realpath: "+path);
+    debug(_("Realpath: %s").printf(path));
     if(path == null || path == "" || path == "/"){
         return "/";
     }
@@ -301,7 +301,7 @@ public string srealpath(string path){
 //DOC: `string[] find(string path):`
 //DOC: find file and directories with parents
 public string[] find(string path){
-    debug("Search: "+path);
+    debug(_("Search: %s").printf(path));
     find_ret = {};
     if(path == "" || path == null){
         return {};
@@ -316,7 +316,7 @@ private void find_operation(string path){
     }
     find_ret += path;
     if(isdir(path)){
-        debug("Search subdir: "+path);
+        debug(_("Search subdir: %s").printf(path));
         foreach(string p in listdir(path)){
             find_operation(path+"/"+p);
         }
@@ -339,7 +339,7 @@ public string sreadlink(string path){
     if(issymlink(path)){
        try{
           string link = GLib.FileUtils.read_link(path);
-          debug("Read symlink: "+path+" "+link);
+          debug(_("Read symlink: %s => %s").printf(path,link));
           return link;
        }catch(Error e){
            warning(e.message);
@@ -358,7 +358,7 @@ public string calculate_checksum(string path, ChecksumType type){
     if(issymlink(path) && sreadlink(path)==""){
         return "";
     }
-    debug("Calculating checksum: "+path);
+    debug(_("Calculating checksum: %s").printf(path));
     Checksum checksum = new Checksum (type);
     FileStream stream = FileStream.open (path, "rb");
     uint8 fbuf[100];

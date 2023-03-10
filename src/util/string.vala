@@ -41,7 +41,7 @@ public int[] sindex(string f, string[] array){
 //DOC: if **f** not in data, return single item array.
 public string[] ssplit(string data, string f){
     if(data == null || f == null || data.length == 0){
-        debug("empty data");
+        debug(_("empty data"));
         return {};
     }else if(!data.contains(f) || f.length == 0){
         return {data};
@@ -114,6 +114,7 @@ public bool endswith(string data,string f){
 //DOC: `string sbasename(string path):`
 //DOC: safe basename. return filename
 public string sbasename(string path){
+    debug(_("Basename: %s").printf(path));
     string[] f = ssplit(path,"/");
     return f[f.length-1];
 }
@@ -121,7 +122,7 @@ public string sbasename(string path){
 //DOC: `string sdirname(string path):`
 //DOC: safe dirname. return path name
 public string sdirname(string path){
-    debug("Dir name: "+path);
+    debug(_("Dirname: %s").printf(path));
     string[] f = ssplit(path,"/");
     string ret = "";
     if(f.length == 0){
@@ -149,6 +150,7 @@ public string sdirname(string path){
 //DOC: `string getoutput (string command):`
 //DOC: Run command and return output
 public static string getoutput (string command) {
+    debug(_("getoutput: %s").printf(command));
     string stdout;
     string stderr;
     int status;

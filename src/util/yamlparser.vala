@@ -21,7 +21,7 @@ public class yamlfile {
     //DOC: `void yamlfile.load(string path):`
     //DOC: load yaml from file
     public void load(string path){
-        debug("Loading yaml from: "+path);
+        debug(_("Loading yaml from: %s").printf(path));
         data = readfile(path);
     }
 
@@ -49,7 +49,7 @@ public class yamlfile {
     //DOC: `string[] yamlfile.get_area_list(string fdata, string path):`
     //DOC: list all areas the name is **path**
     public string[] get_area_list(string fdata, string path){
-        debug("Get area list:"+path);
+        debug(_("Get area list: %s").printf(path));
         string[] ret = {};
         string data="";
         bool e=false;
@@ -90,7 +90,7 @@ public class yamlfile {
     //DOC: `string yamlfile.get_value(string data, string name):`
     //DOC: get value from area data
     public string get_value(string data,string name){
-        debug("Yaml get value: %s".printf(name));
+        debug(_("Yaml get value: %s").printf(name));
         if(data == null || data==""){
             return "";
         }
@@ -108,7 +108,7 @@ public class yamlfile {
     //DOC: `string[] yamlfile.get_array(string data, string name):`
     //DOC: get array from area data
     public string[] get_array(string data,string name){
-        debug("Yaml get array: %s".printf(name));
+        debug(_("Yaml get array: %s").printf(name));
         string[] array = {};
         if(data==null|| data == ""){
             return array;

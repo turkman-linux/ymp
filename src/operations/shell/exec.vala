@@ -18,7 +18,7 @@ public int exec_main(string[] args){
 void exec_init(){
     var h = new helpmsg();
     h.name = _("exec");
-    h.description = _("Execute a command");
+    h.description = _("Execute a command.");
     h.minargs=1;
     h.shell_only = true;
     h.add_parameter("--silent",_("run without output"));

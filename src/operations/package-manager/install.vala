@@ -45,14 +45,14 @@ public int install_main(string[] args){
     }
     string[] leftovers = calculate_leftover(pkg_obj);
     if(!quarantine_validate_files()){
-        error_add(_("Quarantine validation failed"));
+        error_add(_("Quarantine validation failed."));
         quarantine_reset();
     }
     error(1);
     quarantine_install();
     quarantine_reset();
     error(1);
-    print(colorize(_("Clear leftovers"),yellow));
+    print(colorize(_("Clearing leftovers"),yellow));
     foreach(string file in leftovers){
         remove_file(DESTDIR+"/"+file);
     }
@@ -74,19 +74,19 @@ public package install_single(string pkg){
     }
     if(p.is_source){
         if (!(getArch() in p.gets("arch"))){
-            error_add(_("Package architecture is not supported"));
+            error_add(_("Package architecture is not supported."));
         }
     }else{
         if (p.get("arch") != getArch()){
-            error_add(_("Package architecture is not supported"));
+            error_add(_("Package architecture is not supported."));
         }
     }
     error(2);
-    print(colorize(_("Installing:"),yellow)+" "+p.name);
+    print(colorize(_("Installing: %s"),yellow).printf(p.name));
     if(p.is_source || get_bool("sync-single")){
         p.build();
         if(!quarantine_validate_files()){
-            error_add(_("Quarantine validation failed"));
+            error_add(_("Quarantine validation failed."));
             quarantine_reset();
         }
         error(1);

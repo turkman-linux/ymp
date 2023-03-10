@@ -63,7 +63,7 @@ public int deb_create(string fpath, string output){
     writefile(output+"/debian-binary","2.0\n");
     cd(output);
     string target="%s/%s.deb".printf(output,sbasename(path));
-    print(colorize(_("Creating debian package to:"),yellow)+" "+target);
+    print(colorize(_("Creating debian package to: %s"),yellow).printf(target));
     var debfile = new archive();
     debfile.load(target);
     debfile.add("debian-binary");
@@ -106,7 +106,7 @@ public int debian_update_catalog(){
         remove_file("/tmp/.debian-catalog");
     }
     if (0 != run("gzip -d /tmp/.debian-catalog.gz")){
-        error_add(_("Failed to decompress debian index."));
+        error_add(_("Failed to decompress debian repository index."));
     }
     string data = readfile_raw("/tmp/.debian-catalog");
     string src="";
@@ -139,7 +139,7 @@ public string find_debian_pkgname_from_catalog(string fname){
     name = name.strip();
     if(catalog_cache == null){
         if(!isfile(get_storage()+"/debian/catalog")){
-            error_add("Debian catalog not found. Please use --update-catalog to update.");
+            error_add(_("Debian catalog does not found. Please use --update-catalog to update."));
         }
         error(2);
         catalog_cache = ssplit(readfile_raw(get_storage()+"/debian/catalog"),"\n");

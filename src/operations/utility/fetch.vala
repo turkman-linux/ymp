@@ -21,7 +21,7 @@ void fetch_init(){
     var h = new helpmsg();
     h.name = _("fetch");
     h.minargs=1;
-    h.description = _("Download files from network");
-    h.add_parameter("--ignore-ssl",_("Disable ssl check"));
+    h.description = _("Download files from network.");
+    h.add_parameter("--ignore-ssl",_("disable ssl check"));
     add_operation(fetch_main,{_("fetch"),"fetch","download","dl"}, h);
 }

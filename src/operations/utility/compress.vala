@@ -22,7 +22,7 @@ void compress_init(){
     h.name = _("compress");
     h.minargs=1;
     h.description = _("Compress file or directories.");
-    h.add_parameter("--algorithm",_("Compress algorithm"));
-    h.add_parameter("--type",_("Archive format"));
+    h.add_parameter("--algorithm",_("compress algorithm"));
+    h.add_parameter("--type",_("archive format"));
     add_operation(compress_main,{_("compress"),"compress","prs"},h);
 }

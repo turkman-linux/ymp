@@ -114,7 +114,7 @@ public class helpmsg{
     public string build(){
         string ret = "";
         if(usage == ""){
-            usage = "ymp "+name+" [OPTION]... [ARGS]... ";
+            usage = "ymp "+name+_(" [OPTION]... [ARGS]... ");
         }
         ret += colorize(_("Usage:"),green)+" "+usage+"\n";
         ret += description + "\n";

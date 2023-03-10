@@ -64,6 +64,7 @@ if get_option('locale')
 else
     add_project_arguments('-D', 'no_locale', language: 'vala')
 endif
+
 if get_option('experimental')
     add_project_arguments('-D', 'experimental', language: 'vala')
 endif
@@ -166,6 +167,7 @@ endif
 install_data('data/ymp.yaml', install_dir : get_option('sysconfdir'))
 install_data(meson.current_build_dir()+'/ymp.pc', install_dir : get_option('libdir')/ 'pkgconfig')
 install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
+install_data('data/fix-turkish.sed', install_dir : get_option('prefix') / 'share/ymp/')
 install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/packages/')
 install_data('data/ymp-extra.h', install_dir : get_option('includedir'))
 

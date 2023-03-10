@@ -21,10 +21,10 @@ public bool yesno(string message){
         return false;
     }
     #if no_libreadline
-       print_fn(message+" [y/n]",false,true);
+       print_fn(_("%s [y/n]").printf(message),false,true);
        var response = stdin.read_line();
     #else
-       var response = Readline.readline(message+" [y/n]");
+       var response = Readline.readline(_("%s [y/n]").printf(message));
     #endif
     if (response == null || response == ""){
         return false;

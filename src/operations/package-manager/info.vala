@@ -42,6 +42,7 @@ public int info_main(string[] args){
                 print("  release: %d".printf(p.release));
                 print("  depends: %s".printf(join(" ",p.dependencies)));
                 print("  use_flags: %s".printf(join(" ",p.gets("use-flags"))));
+                print("  groups: %s".printf(join(" ",p.gets("group"))));
                 print("  is_installed: %s".printf(p.is_installed().to_string()));
                 print("  remote_url: %s".printf(p.get_uri()));
              }

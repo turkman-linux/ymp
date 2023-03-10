@@ -38,7 +38,7 @@ public int remove_main(string[] args){
 }
 
 public int remove_single(package p){
-    print(colorize(_("Removing:"),yellow)+" "+p.name);
+    print(colorize(_("Removing: %s"),yellow).printf(p.name));
     foreach(string file in p.list_files()){
         if(file.length > 41){
             file=file[41:];
@@ -63,7 +63,7 @@ void remove_init(){
     var h = new helpmsg();
     h.name = _("remove");
     h.minargs=1;
-    h.description = _("Remove package from package name");
+    h.description = _("Remove package from package name.");
     h.add_parameter("--ignore-dependency", _("disable dependency check"));
     add_operation(remove_main,{_("remove"),"remove","rm"},h);
 }

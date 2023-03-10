@@ -150,12 +150,12 @@ private void ympbuild_init(){
 
     }
     ympbuild_header += "declare -r use_"+getArch()+"=31 \n";
-    print(colorize(_("USE flag:"),green)+" "+join(" ",use_flags.get()));
+    print(colorize(_("USE flag: %s"),green).printf(join(" ",use_flags.get())));
 }
 //DOC: `void set_ympbuild_srcpath(string path):`
 //DOC: configure ympbuild file directory
 public void set_ympbuild_srcpath(string path){
-    debug("Set ympbuild src path :"+path);
+    debug(_("Set ympbuild src path : %s").printf(path));
     ympbuild_srcpath = srealpath(path);
 }
 
@@ -164,7 +164,7 @@ public void set_ympbuild_srcpath(string path){
 public void set_ympbuild_buildpath(string path){
     ympbuild_buildpath = srealpath(path);
     create_dir(ympbuild_buildpath);
-    debug("Set ympbuild build path :"+ympbuild_buildpath);
+    debug(_("Set ympbuild build path : %s").printf(ympbuild_buildpath));
     ympbuild_init();
 }
 
@@ -193,7 +193,7 @@ public bool ympbuild_has_function(string function){
 }
 
 private bool ympbuild_check(){
-    info("Check ympbuild: "+ympbuild_srcpath+"/ympbuild");
+    info(_("Check ympbuild: %s/ympbuild").printf(ympbuild_srcpath));
     return 0 == run("bash -n "+ympbuild_srcpath+"/ympbuild");
 }
 
@@ -228,7 +228,7 @@ public void ymp_process_binaries(){
                 continue;
             }
             if(iself(file)){
-                print(colorize(_("Binary process:"),magenta)+" "+file[(ympbuild_buildpath+"/output").length:]);
+                print(colorize(_("Binary process: %s"),magenta).printf(file[(ympbuild_buildpath+"/output").length:]));
                 run("objcopy -R .comment \\
                 -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
                 -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\

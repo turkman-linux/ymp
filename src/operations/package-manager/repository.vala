@@ -28,7 +28,7 @@ public int repo_add_main(string[] args){
             data += arg + "\n";
         }
         if(args.length == 0){
-            error_add(_("Repository uri not defined."));
+            error_add(_("Repository uri is not defined."));
         }
         create_dir(get_storage()+"/sources.list.d/");
         writefile(get_storage()+"/sources.list.d/"+get_value("name"),data);
@@ -125,7 +125,7 @@ private void mirror_download(package pkg,string target){
 void repository_init(){
     var h = new helpmsg();
     h.name = _("repository");
-    h.description = _("Update / Index / Mirror repository");
+    h.description = _("Update / Index / Mirror repository.");
     h.add_parameter("--update", _("update repository"));
     h.add_parameter("--index", _("index repository"));
     h.add_parameter("--add", _("add new repository file"));
@@ -138,9 +138,9 @@ void repository_init(){
     h.add_parameter(colorize(_("Add options"),magenta),"");
     h.add_parameter("--name",_("new file name"));
     h.add_parameter(colorize(_("Mirror options"),magenta),"");
-    h.add_parameter("--no-package",_("Do not mirror binary packages"));
-    h.add_parameter("--no-source",_("Do not mirror source packages"));
-    h.add_parameter("--index",_("Index after mirror."));
-    h.add_parameter("--destdir",_("Target mirror directory"));
+    h.add_parameter("--no-package",_("do not mirror binary packages"));
+    h.add_parameter("--no-source",_("do not mirror source packages"));
+    h.add_parameter("--index",_("index after mirror."));
+    h.add_parameter("--destdir",_("target mirror directory"));
     add_operation(repository_main,{_("repository"),"repository","repo"}, h);
 }

@@ -22,6 +22,6 @@ void extract_init(){
     h.name = _("extract");
     h.minargs=1;
     h.description = _("Extract files from archive.");
-    h.add_parameter("--list",_("List archive files"));
+    h.add_parameter("--list",_("list archive files"));
     add_operation(extract_main,{_("extract"),"extract","x"},h);
 }

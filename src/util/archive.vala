@@ -81,7 +81,7 @@ public class archive {
         archive.support_filter_all ();
         archive.support_format_all ();
         if (archive.open_filename (archive_path, 10240) != Archive.Result.OK) {
-            error_add("Error: " + archive.error_string ());
+            error_add(archive.error_string ());
             error(archive.errno ());
         }
     }
@@ -155,7 +155,7 @@ public class archive {
             if (entry.pathname() != path){
                 continue;
             }
-            debug("Extracting: "+path);
+            debug("Extracting: %s".printf(path));
 
             if (target_path == null){
                 target_path = "./";
@@ -163,7 +163,7 @@ public class archive {
             entry.set_pathname(target_path+"/"+path);
 
             if (extractor.write_header (entry) != Archive.Result.OK) {
-                error_add("Failed to write file: "+entry.pathname());
+                error_add("Failed to write file: %s".printf(entry.pathname()));
                 continue;
             }
 
@@ -181,7 +181,7 @@ public class archive {
     //DOC: `string archive.readfile(string path):`
     //DOC: Read **path** file to target directory
     public string readfile (string path) {
-        debug("Reading from archive: "+path);
+        debug("Reading from archive: %s".printf(path));
         load_archive(archive_path);
         string ret="";
         unowned Archive.Entry entry;
@@ -228,7 +228,7 @@ public class archive {
             info("Extracting: "+entry.pathname());
             entry.set_pathname(target_path+"/"+entry.pathname());
             if (extractor.write_header (entry) != Archive.Result.OK) {
-                error_add("Failed to write file: "+entry.pathname());
+                error_add("Failed to write file: %s".printf(entry.pathname()));
                 continue;
             }
 

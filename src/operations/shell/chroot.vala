@@ -28,7 +28,7 @@ public int chroot_main(string[] args){
 void chroot_init(){
     var h = new helpmsg();
     h.name = _("chroot");
-    h.description = _("Execute a command in chroot");
+    h.description = _("Execute a command in chroot.");
     h.minargs=1;
     h.shell_only = true;
     add_operation(chroot_main,{_("chroot"),"chroot"},h);

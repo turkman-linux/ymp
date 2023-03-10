@@ -66,31 +66,31 @@ void setget_init(){
 
     h1.name = _("get");
     h1.shell_only = true;
-    h1.description = _("Get variable from name");
+    h1.description = _("Get variable from name.");
 
     h2.name = _("set");
     h2.minargs=2;
     h2.shell_only = true;
-    h2.description = _("Set variable from name and value");
+    h2.description = _("Set variable from name and value.");
 
     h3.name = _("equal");
     h3.minargs=2;
     h3.shell_only = true;
-    h3.description = _("Compare arguments equality");
+    h3.description = _("Compare arguments equality.");
     
     h4.name = _("read");
     h4.minargs=1;
     h4.shell_only = true;
-    h4.description = _("Read value from terminal");
+    h4.description = _("Read value from terminal.");
 
     h5.name = _("match");
     h5.minargs=2;
     h5.shell_only = true;
-    h5.description = _("Match arguments regex");
+    h5.description = _("Match arguments regex.");
 
     h6.name = _("cd");
     h6.shell_only = true;
-    h6.description = _("Change directory");
+    h6.description = _("Change directory.");
 
     add_operation(get_main,{_("get"),"get"},h1);
     add_operation(set_main,{_("set"),"set"},h2);

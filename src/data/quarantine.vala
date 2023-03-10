@@ -93,14 +93,14 @@ public bool quarantine_validate_files(){
                 if(path.length > 1 && path[0] == '/'){
                     quarantine_file_replaces_list.add(get_storage()+"/quarantine/rootfs/"+path[1:]);
                 }else{
-                    warning(_("Invalid replaces files path: %s (%s)").printf(path,files_list));
+                    error_add(_("Invalid replaces files path: %s (%s)").printf(path,files_list));
                 }
             };
         }
         foreach(string path in new_files.get()){
             if(isexists(DESTDIR+"/"+path)){
                 string file_path = get_storage()+"/quarantine/rootfs/"+path;
-                warning(_("File already exists in filesystem: /%s (%s)").printf(path,files_list));
+                error_add(_("File already exists in filesystem: /%s (%s)").printf(path,files_list));
                 quarantine_file_conflict_list.add(file_path);
             }
         }
@@ -114,19 +114,19 @@ public bool quarantine_validate_files(){
                 info(_("Validating: %s").printf(path));
                 if(!quarantine_file_conflict_list.has(file_path) && quarantine_file_cache_list.has(file_path)){
                     string[] conflict_packages = get_quarantine_conflict_packages(path,false);
-                    warning(_("File conflict detected: /%s (%s)").printf(path,join(" ",conflict_packages)));
+                    error_add(_("File conflict detected: /%s (%s)").printf(path,join(" ",conflict_packages)));
                     quarantine_file_conflict_list.add(file_path);
                     continue;
                 }
                 quarantine_file_cache_list.add(file_path);
                 if(!isfile(file_path)){
-                    warning(_("Package file is missing: /%s (%s)").printf(path,files_list));
+                    error_add(_("Package file is missing: /%s (%s)").printf(path,files_list));
                     quarantine_file_broken_list.add(file_path);
                     continue;
                 }
                 foreach(string restricted in restricted_list){
                     if(restricted.length>0 && Regex.match_simple(restricted,path)){
-                        warning(_("File in restricted path is not allowed: /%s (%s)").printf(path,files_list));
+                        error_add(_("File in restricted path is not allowed: /%s (%s)").printf(path,files_list));
                         quarantine_file_broken_list.add(file_path);
                         continue;
                     }
@@ -135,7 +135,7 @@ public bool quarantine_validate_files(){
                 string sha1sum = line[0:40];
                 string calculated_sha1sum = calculate_sha1sum(file_path);
                 if(sha1sum != calculated_sha1sum){
-                    warning(_("Broken file detected: /%s (%s)").printf(path,files_list));
+                    error_add(_("Broken file detected: /%s (%s)").printf(path,files_list));
                     quarantine_file_broken_list.add(file_path);
                     continue;
                 }
@@ -168,14 +168,14 @@ public bool quarantine_validate_files(){
                 if(path.length > 1 && path[0] == '/'){
                     quarantine_file_replaces_list.add(get_storage()+"/quarantine/rootfs/"+path[1:]);
                 }else{
-                    warning(_("Invalid replaces symlink path: %s (%s)").printf(path,links_list));
+                    error_add(_("Invalid replaces symlink path: %s (%s)").printf(path,links_list));
                 }
             };
         }
         foreach(string path in new_links.get()){
             if(isexists(DESTDIR+"/"+path)){
                 string file_path = get_storage()+"/quarantine/rootfs/"+path;
-                warning(_("Symlink already exists in filesystem: /%s (%s)").printf(path,links_list));
+                error_add(_("Symlink already exists in filesystem: /%s (%s)").printf(path,links_list));
                 quarantine_file_conflict_list.add(file_path);
             }
         }
@@ -188,25 +188,25 @@ public bool quarantine_validate_files(){
                 info(_("Validating: %s").printf(path));
                 string link_target = sreadlink(link_path);
                 if(target != link_target){
-                    warning(_("Broken symlink detected: /%s (%s)").printf(path,links_list));
+                    error_add(_("Broken symlink detected: /%s (%s)").printf(path,links_list));
                     quarantine_file_broken_list.add(link_path);
                     continue;
                 }
                 // check file conflict
                 if(!quarantine_file_conflict_list.has(link_path) && quarantine_file_cache_list.has(link_path)){
                     string[] conflict_packages = get_quarantine_conflict_packages(path,true);
-                    warning(_("Symlink conflict detected: /%s (%s)").printf(path,join(" ",conflict_packages)));
+                    error_add(_("Symlink conflict detected: /%s (%s)").printf(path,join(" ",conflict_packages)));
                     quarantine_file_conflict_list.add(link_path);
                     continue;
                 }
                 if(!issymlink(link_path)){
-                    warning(_("Package symlink is missing: /%s (%s)").printf(path,links_list));
+                    error_add(_("Package symlink is missing: /%s (%s)").printf(path,links_list));
                     quarantine_file_broken_list.add(link_path);
                     continue;
                 }
                 foreach(string restricted in restricted_list){
                     if(restricted.length>0 && Regex.match_simple(restricted,path)){
-                        warning(_("Symlink in restricted path is not allowed: /%s (%s)").printf(path,links_list));
+                        error_add(_("Symlink in restricted path is not allowed: /%s (%s)").printf(path,links_list));
                         quarantine_file_broken_list.add(link_path);
                         continue;
                     }

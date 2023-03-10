@@ -13,7 +13,7 @@ public int bootstrap_main(string[] args){
         error_add(_("Target rootfs already exists: %s").printf(DESTDIR));
     }
     error(2);
-    print(colorize(_("Creating bootstrap:"),blue));
+    info(colorize(_("Creating bootstrap."),blue));
     string[] basedir = {"dev", "sys", "proc", "run"};
     string[] base_packages = {"busybox", "base-files", "glibc"};
     foreach(string dir in basedir){

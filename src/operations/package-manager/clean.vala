@@ -13,6 +13,6 @@ public int clean_main(string[] args){
 void clean_init(){
     var h = new helpmsg();
     h.name = _("clean");
-    h.description = _("Remove all caches ");
+    h.description = _("Remove all caches.");
     add_operation(clean_main,{_("clean"), "clean","cc"},h);
 }

@@ -36,7 +36,7 @@ public int search_pkgrepo_main(string[] args){
                     if (is_installed_package(p.name)) {
                         color = green;
                     }
-                    print((p.name+"\t"+p.get("description")).replace(arg,colorize(arg,color)));
+                    print("%s\t%s".printf(p.name,p.get("description")).replace(arg,colorize(arg,color)));
                 }
             }
         }
@@ -54,7 +54,7 @@ public int search_srcrepo_main(string[] args){
                     if (is_installed_package(p.name)) {
                         color = green;
                     }
-                    print((p.name+"\t"+p.get("description")).replace(arg,colorize(arg,color)));
+                    print("%s\t%s".printf(p.name,p.get("description")).replace(arg,colorize(arg,color)));
                 }
             }
         }
@@ -64,14 +64,14 @@ public int search_srcrepo_main(string[] args){
 
 public int search_files_main(string[] args){
     foreach(string pkg in list_installed_packages()){
-        string files = readfile(get_storage()+"/files/"+pkg);
+        string files = readfile("%s/files/%s".printf(get_storage(),pkg));
         foreach(string file in files.split("\n")){
             if(file.length < 41){
                 continue;
             }
             foreach(string arg in args){
                 if(Regex.match_simple(arg, "/"+file[41:])){
-                    print(pkg+" => /"+file[41:]);
+                    print("%s => /%s".printf(pkg, file[41:]));
                 }
             }
         }
@@ -83,10 +83,10 @@ void search_init(){
     var h = new helpmsg();
     h.name = _("search");
     h.minargs=1;
-    h.description = _("Search packages");
-    h.add_parameter("--package", _("Search package in binary package repository."));
-    h.add_parameter("--source", _("Search package in source package repository."));
-    h.add_parameter("--installed", _("Search package in installed packages."));
-    h.add_parameter("--file", _("Searches for packages by package file."));
+    h.description = _("Search packages.");
+    h.add_parameter("--package", _("search package in binary package repository"));
+    h.add_parameter("--source", _("search package in source package repository"));
+    h.add_parameter("--installed", _("search package in installed packages"));
+    h.add_parameter("--file", _("searches for packages by package file"));
     add_operation(search_main,{_("search"),"search","sr"},h);
 }

@@ -39,15 +39,15 @@ public string colorize(string msg, int color){
 public extern void print_stderr(string msg);
 
 public void warning_fn(string message){
-    print_stderr(colorize("WARNING: ",yellow)+message);
+    print_stderr("%s: %s".printf(colorize(_("WARNING"),yellow),message));
 }
 
 public void debug_fn(string message){
-    print_stderr(colorize("DEBUG: ",blue)+message);
+    print_stderr("%s: %s".printf(colorize(_("DEBUG"),blue),message));
 }
 
 public void info_fn(string message){
-    print_stderr(colorize("INFO : ",green)+message);
+    print_stderr("%s: %s".printf(colorize(_("INFO"),green),message));
 }
 
 public string colorize_fn(string msg, int color){
@@ -88,7 +88,7 @@ public void error(int status){
     if(has_error()){
          if(!get_bool("ignore-error")){
             foreach (string error in errors){
-                print_stderr(colorize("ERROR: ",red)+error);
+                print_stderr("%s: %s".printf(colorize(_("ERROR"),red),error));
             }
         }
         errors = null;

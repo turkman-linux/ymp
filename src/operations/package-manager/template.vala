@@ -76,7 +76,7 @@ public int template_main(string[] args){
     }
     string target=srealpath(str_or_def("output",""));
     error(1);
-    print(colorize(_("Creating template:"),yellow)+" "+target);
+    print(colorize(_("Creating template: %s"),yellow).printf(target));
     create_dir(target);
     writefile(target+"/ympbuild",data);
     return 0;
@@ -109,7 +109,7 @@ private string str_or_def(string val,string def){
 void template_init(){
     var h = new helpmsg();
     h.name = _("template");
-    h.description = _("Create ympbuild from template");
+    h.description = _("Create ympbuild from template.");
     h.add_parameter("--name", _("package name"));
     h.add_parameter("--version", _("package version"));
     h.add_parameter("--homepage", _("package homepage"));

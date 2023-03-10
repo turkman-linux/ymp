@@ -138,6 +138,6 @@ public int httpd_main(string[] args) {
 void httpd_init() {
     var h = new helpmsg();
     h.name = _("httpd");
-    h.description = _("Simple http server");
+    h.description = _("Simple http server.");
     add_operation(httpd_main, {_("httpd"),"httpd"}, h);
 }

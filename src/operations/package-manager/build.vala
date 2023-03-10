@@ -290,11 +290,11 @@ private bool create_files_info(){
         if(issymlink(file)){
             var link = sreadlink(file);
             if(link[0] == '/'){
-                error_add(_("Absolute path symlink is not allowed:")+"\n"+file+" => "+link);
+                error_add(_("Absolute path symlink is not allowed:%s%s => %s").printf("\n    ",file,link));
                 continue;
             }
             if(!isexists(sdirname(file)+"/"+link) && link.length > 0){
-                error_add(_("Broken symlink detected:")+"\n"+file+" => "+link);
+                error_add(_("Broken symlink detected:%s%s => %s").printf("\n    ",file,link));
                 continue;
             }
             file = file[(ympbuild_buildpath+"/output/").length:];
@@ -363,7 +363,7 @@ private bool create_metadata_info(){
     no_src = false;
     if(!yaml.has_area(srcdata,"archive")){
         no_src = true;
-        warning(_("Source array not defined"));
+        warning(_("Source array is not defined."));
     }
     string new_data = "ymp:\n";
     new_data += "  package:\n";
@@ -431,7 +431,7 @@ private bool create_metadata_info(){
         }
     }
     if(!arch_is_supported){
-        error_add(_("Package architecture is not supported"));
+        error_add(_("Package architecture is not supported."));
     }
     if(has_error()){
         return false;
@@ -442,7 +442,7 @@ private bool create_metadata_info(){
 }
 
 private void create_data_file(){
-    debug(_("Create data file: ")+ympbuild_buildpath+"/output/data.tar.gz");
+    debug(_("Create data file: %s/output/data.tar.gz").printf(ympbuild_buildpath));
     var tar = new archive();
     if(get_value("compress")=="none"){
         set_archive_type("tar","none");
@@ -489,7 +489,7 @@ private void create_data_file(){
 }
 
 private void create_binary_package(){
-    print(colorize(_("Create binary package from :"),yellow)+ympbuild_buildpath);
+    print(colorize(_("Create binary package from: %s"),yellow).printf(ympbuild_buildpath));
     cd(ympbuild_buildpath+"/output");
     create_data_file();
     var tar = new archive();
