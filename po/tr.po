@@ -606,7 +606,7 @@ msgstr "oldur"
 
 #: src/operations/utility/kill.vala:29
 msgid "Kill all other ymp process."
-msgstr "Diger ym psureclerini oldurur."
+msgstr "Diger ymp sureclerini oldurur."
 
 #: src/operations/utility/help.vala:3
 msgid "Operation list:"
