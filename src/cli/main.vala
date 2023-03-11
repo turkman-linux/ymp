@@ -21,6 +21,14 @@ void progressbar(double cur, double total, string filename){
 }
 
 int main (string[] args) {
+    /*
+    ██████╗  ██╗
+    ╚════██╗███║
+     █████╔╝╚██║
+     ╚═══██╗ ██║
+    ██████╔╝ ██║
+    ╚═════╝  ╚═╝
+    */
     Ymp ymp = ymp_init(args);
     if(get_bool("sandbox")){
         var a = new array();
