@@ -20,7 +20,7 @@ output=$(realpath $output)
 basepkgs=(busybox base-files glibc)
 ympdep=(acl attr bzip2 curl glib libarchive libcap-ng libffi libidn2 libnghttp2
         libpcre2 libpsl libssh libunistring libxml2 lz4 lzo ncurses openssl readline
-        util-linux xz-utils ymp zlib
+        util-linux xz-utils ymp zlib bash
 )
 arch=$(uname -m)
 function get_uri(){
