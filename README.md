@@ -3,6 +3,12 @@
 
 A package manager for Turkish
 
+## Other Pages
+* [**ymp source code document**](src/README.md)
+* [**Building a ympbuild file**](doc/ympbuild.rst)
+* [**Create application with libymp**](doc/libymp.rst)
+
+
 ## Features
 * 🇹🇷 Made in Turkiye 🇹🇷
 * Binary / Source package support
