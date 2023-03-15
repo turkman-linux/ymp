@@ -8,3 +8,4 @@ debian/debhelper-build-stamp
 debian/files
 po/*.mo
 obj-*-linux-gnu
+.idea
