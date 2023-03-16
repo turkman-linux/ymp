@@ -27,6 +27,11 @@ void create_dir(const char *dir);
 char* which(char* path);
 #endif
 
+
+#ifndef info
+char* info(char* message);
+#endif
+
 int sandbox_network = 0;
 int sandbox_uid = 0;
 int sandbox_gid = 0;
@@ -47,6 +52,7 @@ void sandbox_create_tmpfs(char* dir);
 void sandbox_mount_shared();
 
 char* sandbox_shared;
+char* sandbox_tmpfs;
 
 char* sandbox_rootfs;
 
@@ -87,7 +93,16 @@ int sandbox(char** args){
         sandbox_create_tmpfs("/tmp/ymp-root/run");
         sandbox_bind("/tmp/ymp-build");
         sandbox_bind("/proc/");
-        sandbox_bind_shared(sandbox_shared);
+        char *token = strtok(sandbox_shared,":");
+        while(token != NULL){
+            sandbox_bind_shared(token);
+            token = strtok(NULL,":");
+        }
+        token = strtok(sandbox_tmpfs,":");
+        while(token != NULL){
+            sandbox_bind_shared(token);
+            token = strtok(NULL,":");
+        }
         write_to_file("/tmp/ymp-root/.sandbox", "%d",getpid());
         if (0 == chroot("/tmp/ymp-root")){
             if(0 == chdir("/")){

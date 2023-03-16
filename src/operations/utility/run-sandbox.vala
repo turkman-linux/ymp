@@ -7,6 +7,7 @@ public int run_sandbox_main(string[] args){
         sandbox_network = true;
     }
     sandbox_shared = get_value("shared");
+    sandbox_tmpfs = get_value("tmpfs");
     sandbox_rootfs = get_destdir();
     sandbox_uid = int.parse(get_value("uid"));
     sandbox_gid = int.parse(get_value("gid"));
@@ -21,6 +22,7 @@ void run_sandbox_init(){
     h.minargs=1;
     h.description = _("Start sandbox environment.");
     h.add_parameter("--shared",_("select shared directory"));
+    h.add_parameter("--tmpfs",_("select tmpfs directory"));
     h.add_parameter("--no-net",_("block network access"));
     add_operation(run_sandbox_main,{_("sandbox"),"sandbox", "sb"},h);
 }
