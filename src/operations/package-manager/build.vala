@@ -51,6 +51,11 @@ public int build_operation(string[] args){
         if(!create_metadata_info()){
             return 1;
         }
+        // Set build target again (emerge change build target)
+        if(!set_build_target(srcpath)){
+            return 1;
+        }
+        
         if(!check_build_dependencies(new_args)){
             return 1;
         }
