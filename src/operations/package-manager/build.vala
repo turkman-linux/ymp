@@ -52,9 +52,9 @@ public int build_operation(string[] args){
             return 1;
         }
         // Set build target again (emerge change build target)
-        if(!set_build_target(srcpath)){
-            return 1;
-        }
+        set_ympbuild_srcpath(srcpath);
+        string build_path = srealpath(get_build_dir()+calculate_md5sum(ympbuild_srcpath+"/ympbuild"));
+        set_ympbuild_buildpath(build_path);
         
         if(!check_build_dependencies(new_args)){
             return 1;
