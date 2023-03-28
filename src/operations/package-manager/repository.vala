@@ -123,24 +123,27 @@ private void mirror_download(package pkg,string target){
 }
 
 void repository_init(){
-    var h = new helpmsg();
-    h.name = _("repository");
-    h.description = _("Update / Index / Mirror repository.");
-    h.add_parameter("--update", _("update repository"));
-    h.add_parameter("--index", _("index repository"));
-    h.add_parameter("--add", _("add new repository file"));
-    h.add_parameter("--remove", _("remove repository file"));
-    h.add_parameter("--list", _("list repository files"));
-    h.add_parameter("--mirror", _("mirror repository"));
-    h.add_parameter(colorize(_("Index options"),magenta),"");
-    h.add_parameter("--move", _("move packages for alphabetical hierarchy"));
-    h.add_parameter("--name", _("new repository name (required)"));
-    h.add_parameter(colorize(_("Add options"),magenta),"");
-    h.add_parameter("--name",_("new file name"));
-    h.add_parameter(colorize(_("Mirror options"),magenta),"");
-    h.add_parameter("--no-package",_("do not mirror binary packages"));
-    h.add_parameter("--no-source",_("do not mirror source packages"));
-    h.add_parameter("--index",_("index after mirror."));
-    h.add_parameter("--destdir",_("target mirror directory"));
-    add_operation(repository_main,{_("repository"),"repository","repo"}, h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(repository_main);
+    op.names = {_("repository"),"repository","repo"};
+    op.help.name = _("repository");
+    op.help.description = _("Update / Index / Mirror repository.");
+    op.help.add_parameter("--update", _("update repository"));
+    op.help.add_parameter("--index", _("index repository"));
+    op.help.add_parameter("--add", _("add new repository file"));
+    op.help.add_parameter("--remove", _("remove repository file"));
+    op.help.add_parameter("--list", _("list repository files"));
+    op.help.add_parameter("--mirror", _("mirror repository"));
+    op.help.add_parameter(colorize(_("Index options"),magenta),"");
+    op.help.add_parameter("--move", _("move packages for alphabetical hierarchy"));
+    op.help.add_parameter("--name", _("new repository name (required)"));
+    op.help.add_parameter(colorize(_("Add options"),magenta),"");
+    op.help.add_parameter("--name",_("new file name"));
+    op.help.add_parameter(colorize(_("Mirror options"),magenta),"");
+    op.help.add_parameter("--no-package",_("do not mirror binary packages"));
+    op.help.add_parameter("--no-source",_("do not mirror source packages"));
+    op.help.add_parameter("--index",_("index after mirror."));
+    op.help.add_parameter("--destdir",_("target mirror directory"));
+    add_operation(op);
 }

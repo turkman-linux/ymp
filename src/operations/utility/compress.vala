@@ -18,11 +18,14 @@ public int compress_main(string[] args){
 }
 
 void compress_init(){
-    var h = new helpmsg();
-    h.name = _("compress");
-    h.minargs=1;
-    h.description = _("Compress file or directories.");
-    h.add_parameter("--algorithm",_("compress algorithm"));
-    h.add_parameter("--type",_("archive format"));
-    add_operation(compress_main,{_("compress"),"compress","prs"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(compress_main);
+    op.names = {_("compress"),"compress","prs"};
+    op.help.name = _("compress");
+    op.help.minargs=1;
+    op.help.description = _("Compress file or directories.");
+    op.help.add_parameter("--algorithm",_("compress algorithm"));
+    op.help.add_parameter("--type",_("archive format"));
+    add_operation(op);
 }

@@ -26,10 +26,13 @@ public int chroot_main(string[] args){
     return status;
 }
 void chroot_init(){
-    var h = new helpmsg();
-    h.name = _("chroot");
-    h.description = _("Execute a command in chroot.");
-    h.minargs=1;
-    h.shell_only = true;
-    add_operation(chroot_main,{_("chroot"),"chroot"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(chroot_main);
+    op.names = {_("chroot"),"chroot"};
+    op.help.name = _("chroot");
+    op.help.description = _("Execute a command in chroot.");
+    op.help.minargs=1;
+    op.help.shell_only = true;
+    add_operation(op);
 }

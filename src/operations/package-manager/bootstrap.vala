@@ -40,10 +40,13 @@ public int bootstrap_main(string[] args){
 }
 
 void bootstrap_init(){
-    var h = new helpmsg();
-    h.name = _("bootstrap");
-    h.description = _("Create new rootfs filesystem.");
-    h.add_parameter("--mirror", _("bootstrap mirror uri"));
-    h.add_parameter("--no-emerge", _("use binary packages"));
-    add_operation(bootstrap_main,{_("bootstrap"),"bootstrap","bst"},h);
+    operation op = new operation();
+    op.callback.connect(bootstrap_main);
+    op.names = {_("bootstrap"),"bootstrap","bst"};
+    op.help = new helpmsg();
+    op.help.name = _("bootstrap");
+    op.help.description = _("Create new rootfs filesystem.");
+    op.help.add_parameter("--mirror", _("bootstrap mirror uri"));
+    op.help.add_parameter("--no-emerge", _("use binary packages"));
+    add_operation(op);
 }

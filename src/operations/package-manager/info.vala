@@ -52,10 +52,13 @@ public int info_main(string[] args){
 }
 
 void info_init(){
-    var h = new helpmsg();
-    h.name = _("info");
-    h.description = _("Get informations from package manager databases.");
-    h.add_parameter("--deps", _("list required packages"));
-    h.add_parameter("--revdeps", _("list packages required by package"));
-    add_operation(info_main,{_("info"),"info","i"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(info_main);
+    op.names = {_("info"),"info","i"};
+    op.help.name = _("info");
+    op.help.description = _("Get informations from package manager databases.");
+    op.help.add_parameter("--deps", _("list required packages"));
+    op.help.add_parameter("--revdeps", _("list packages required by package"));
+    add_operation(op);
 }

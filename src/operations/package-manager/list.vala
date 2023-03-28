@@ -138,18 +138,16 @@ public int list_repository_main(string[] args) {
 }
 
 void list_init() {
-    var h = new helpmsg();
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(list_main);
+    op.names = {_("list"),"list", "ls"};
+    op.help.name = _("list");
+    op.help.description = _("List installed packages.");
+    op.help.add_parameter("--installed", _("list installed packages"));
+    op.help.add_parameter("--digraph", _("write as graphwiz format"));
+    op.help.add_parameter("--repository", _("list repositories"));
+    op.help.add_parameter("--source", _("list available source packages"));
 
-    h.name = _("list");
-    h.description = _("List installed packages.");
-    h.add_parameter("--installed", _("list installed packages"));
-    h.add_parameter("--digraph", _("write as graphwiz format"));
-    h.add_parameter("--repository", _("list repositories"));
-    h.add_parameter("--source", _("list available source packages"));
-
-    add_operation(list_main, {
-        _("list"),
-        "list",
-        "ls"
-    }, h);
+    add_operation(op);
 }

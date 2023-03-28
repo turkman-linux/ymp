@@ -18,25 +18,17 @@ public string _(string msg){
 #else
 public const string GETTEXT_PACKAGE="ymp";
 #endif
-private delegate int function(string[] args);
 
 private operation[] ops;
 private class operation{
-    public function callback;
+    public signal int callback(string[] args);
     public string[] names;
     public helpmsg help;
 }
 
-private void add_operation(function callback, string[] names, helpmsg help){
+private void add_operation(operation op){
     logger_init(); // logger reload
-    debug(_("Add operation: %s").printf(join(":",names)));
-    if(ops == null){
-        ops = {};
-    }
-    operation op = new operation();
-    op.callback = (function) callback;
-    op.names = names;
-    op.help = help;
+    debug(_("Add operation: %s").printf(join(":",op.names)));
     ops += op;
 }
 

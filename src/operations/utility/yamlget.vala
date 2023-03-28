@@ -20,10 +20,13 @@ public int yamlget_main(string[] args){
 }
 
 void yamlget_init(){
-    var h = new helpmsg();
-    h.name = _("yamlget");
-    h.minargs = 2;
-    h.usage = _("yamlget [file] [path]");
-    h.description = _("Parse yaml files");
-    add_operation(yamlget_main,{_("yamlget"),"yamlget","yaml"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(yamlget_main);
+    op.names = {_("yamlget"),"yamlget","yaml"};
+    op.help.name = _("yamlget");
+    op.help.minargs = 2;
+    op.help.usage = _("yamlget [file] [path]");
+    op.help.description = _("Parse yaml files");
+    add_operation(op);
 }

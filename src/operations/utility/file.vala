@@ -61,13 +61,16 @@ public int move_file_main(string[] args){
 }
 
 void file_init(){
-    var h = new helpmsg();
-    h.name = _("file");
-    h.minargs=1;
-    h.description = _("Copy / Move / Remove files or directories.");
-    h.add_parameter("--remove",_("remove file or directories"));
-    h.add_parameter("--copy",_("copy file or directories"));
-    h.add_parameter("--move",_("move file or directories"));
-    h.add_parameter("--extract",_("extract archive file (same as extract operation)"));
-    add_operation(file_main,{_("file"),"f", "file"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(file_main);
+    op.names = {_("file"),"f", "file"};
+    op.help.name = _("file");
+    op.help.minargs=1;
+    op.help.description = _("Copy / Move / Remove files or directories.");
+    op.help.add_parameter("--remove",_("remove file or directories"));
+    op.help.add_parameter("--copy",_("copy file or directories"));
+    op.help.add_parameter("--move",_("move file or directories"));
+    op.help.add_parameter("--extract",_("extract archive file (same as extract operation)"));
+    add_operation(op);
 }

@@ -98,10 +98,13 @@ public void detect_dep(string pkgname){
 }
 
 void revdep_rebuild_init(){
-    var h = new helpmsg();
-    h.name = _("revdep-rebuild");
-    h.description = _("Check library for broken links.");
-    h.add_parameter("--pkgconfig",_("check pkgconfig files"));
-    h.add_parameter("--detect-dep",_("detect package dependencies"));
-    add_operation(revdep_rebuild_main,{_("revdep-rebuild"),"revdep-rebuild","rbd"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(revdep_rebuild_main);
+    op.names = {_("revdep-rebuild"),"revdep-rebuild","rbd"};
+    op.help.name = _("revdep-rebuild");
+    op.help.description = _("Check library for broken links.");
+    op.help.add_parameter("--pkgconfig",_("check pkgconfig files"));
+    op.help.add_parameter("--detect-dep",_("detect package dependencies"));
+    add_operation(op);
 }

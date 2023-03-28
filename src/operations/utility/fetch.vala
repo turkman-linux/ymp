@@ -18,10 +18,13 @@ public int fetch_main(string[] args){
 
 
 void fetch_init(){
-    var h = new helpmsg();
-    h.name = _("fetch");
-    h.minargs=1;
-    h.description = _("Download files from network.");
-    h.add_parameter("--ignore-ssl",_("disable ssl check"));
-    add_operation(fetch_main,{_("fetch"),"fetch","download","dl"}, h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(fetch_main);
+    op.names = {_("fetch"),"fetch","download","dl"};
+    op.help.name = _("fetch");
+    op.help.minargs=1;
+    op.help.description = _("Download files from network.");
+    op.help.add_parameter("--ignore-ssl",_("disable ssl check"));
+    add_operation(op);
 }

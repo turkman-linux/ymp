@@ -516,18 +516,21 @@ private void create_binary_package(){
 }
 
 void build_init(){
-    var h = new helpmsg();
-    h.name = _("build");
-    h.description = _("Build package from ympbuild file.");
-    h.add_parameter("--no-source", _("do not generate source package"));
-    h.add_parameter("--no-binary", _("do not generate binary package"));
-    h.add_parameter("--no-build", _("do not build package (only test and package)"));
-    h.add_parameter("--no-package",_("do not install package after building"));
-    h.add_parameter("--ignore-dependency", _("disable dependency check"));
-    h.add_parameter("--no-emerge", _("use binary packages"));
-    h.add_parameter("--compress", _("compress format"));
-    h.add_parameter("--install", _("install binary package after building"));
-    add_operation(build_operation,{_("build"),"build","bi","make"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(build_operation);
+    op.names = {_("build"),"build","bi","make"};
+    op.help.name = _("build");
+    op.help.description = _("Build package from ympbuild file.");
+    op.help.add_parameter("--no-source", _("do not generate source package"));
+    op.help.add_parameter("--no-binary", _("do not generate binary package"));
+    op.help.add_parameter("--no-build", _("do not build package (only test and package)"));
+    op.help.add_parameter("--no-package",_("do not install package after building"));
+    op.help.add_parameter("--ignore-dependency", _("disable dependency check"));
+    op.help.add_parameter("--no-emerge", _("use binary packages"));
+    op.help.add_parameter("--compress", _("compress format"));
+    op.help.add_parameter("--install", _("install binary package after building"));
+    add_operation(op);
 }
 
 

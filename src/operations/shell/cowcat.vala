@@ -15,11 +15,14 @@ public int cowcat_main(string[] args){
 }
 
 void cowcat_init(){
-    var h = new helpmsg();
-    h.name = _("cowcat");
-    h.minargs=1;
-    h.shell_only = true;
-    h.description = _("Write a message with cow.");
-    h.add_parameter("-",_("write from stdin"));
-    add_operation(cowcat_main,{_("cow"),"cow","moo","cowcat"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(cowcat_main);
+    op.names = {_("cow"),"cow","moo","cowcat"};
+    op.help.name = _("cowcat");
+    op.help.minargs=1;
+    op.help.shell_only = true;
+    op.help.description = _("Write a message with cow.");
+    op.help.add_parameter("-",_("write from stdin"));
+    add_operation(op);
 }

@@ -24,8 +24,11 @@ public int kill_main(string[] args){
     return 0;
 }
 void kill_init(){
-    var h = new helpmsg();
-    h.name = _("kill");
-    h.description = _("Kill all other ymp process.");
-    add_operation(kill_main,{_("kill"),"kill","gg","ğ"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(kill_main);
+    op.names = {_("kill"),"kill","gg","ğ"};
+    op.help.name = _("kill");
+    op.help.description = _("Kill all other ymp process.");
+    add_operation(op);
 }

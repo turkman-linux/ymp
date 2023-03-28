@@ -81,10 +81,13 @@ void help_init(){
     add_common_parameter("--help",_("write help messages"));
 
 
-    var h = new helpmsg();
-    h.name = _("help");
-    h.description = _("Write help message about ymp commands.");
-    add_operation(help_main,{_("help"),"help"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(help_main);
+    op.names = {_("help"),"help"};
+    op.help.name = _("help");
+    op.help.description = _("Write help message about ymp commands.");
+    add_operation(op);
     
 }
 

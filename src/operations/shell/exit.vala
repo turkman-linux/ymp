@@ -6,9 +6,12 @@ public int exit_main(string[] args){
     Process.exit(status);
 }
 void exit_init(){
-    var h = new helpmsg();
-    h.name = _("exit");
-    h.description = _("Exit ymp");
-    h.shell_only = true;
-    add_operation(exit_main,{_("exit"),"exit","bye"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(exit_main);
+    op.names = {_("exit"),"exit","bye"};
+    op.help.name = _("exit");
+    op.help.description = _("Exit ymp");
+    op.help.shell_only = true;
+    add_operation(op);
 }

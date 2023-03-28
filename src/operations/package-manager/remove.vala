@@ -60,10 +60,13 @@ public int remove_single(package p){
 }
 
 void remove_init(){
-    var h = new helpmsg();
-    h.name = _("remove");
-    h.minargs=1;
-    h.description = _("Remove package from package name.");
-    h.add_parameter("--ignore-dependency", _("disable dependency check"));
-    add_operation(remove_main,{_("remove"),"remove","rm"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(remove_main);
+    op.names = {_("remove"),"remove","rm"};
+    op.help.name = _("remove");
+    op.help.minargs=1;
+    op.help.description = _("Remove package from package name.");
+    op.help.add_parameter("--ignore-dependency", _("disable dependency check"));
+    add_operation(op);
 }

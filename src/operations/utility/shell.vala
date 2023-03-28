@@ -28,8 +28,11 @@ public int shell_main(string[] args){
 }
 
 void shell_init(){
-    var h = new helpmsg();
-    h.name = _("shell");
-    h.description = _("Create a ymp shell or execute ympsh script.");
-    add_operation(shell_main,{_("shell"),"shell","sh"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(shell_main);
+    op.names = {_("shell"),"shell","sh"};
+    op.help.name = _("shell");
+    op.help.description = _("Create a ymp shell or execute ympsh script.");
+    add_operation(op);
 }

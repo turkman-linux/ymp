@@ -15,12 +15,15 @@ public int shitcat_main(string[] args){
 }
 
 void shitcat_init(){
-    var h = new helpmsg();
-    h.name = _("shitcat");
-    h.minargs=1;
-    h.shell_only = true;
-    h.description = _("Write message with bad appearance.");
-    h.add_parameter("!!!",_("FUCK LGBT"));
-    h.add_parameter("-",_("read from stdin"));
-    add_operation(shitcat_main,{_("shit"),"shitcat","shit"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(shitcat_main);
+    op.names = {_("shit"),"shitcat","shit"};
+    op.help.name = _("shitcat");
+    op.help.minargs=1;
+    op.help.shell_only = true;
+    op.help.description = _("Write message with bad appearance.");
+    op.help.add_parameter("!!!",_("FUCK LGBT"));
+    op.help.add_parameter("-",_("read from stdin"));
+    add_operation(op);
 }

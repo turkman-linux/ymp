@@ -107,20 +107,23 @@ private string str_or_def(string val,string def){
 }
 
 void template_init(){
-    var h = new helpmsg();
-    h.name = _("template");
-    h.description = _("Create ympbuild from template.");
-    h.add_parameter("--name", _("package name"));
-    h.add_parameter("--version", _("package version"));
-    h.add_parameter("--homepage", _("package homepage"));
-    h.add_parameter("--description", _("package description"));
-    h.add_parameter("--depends", _("package dependencies"));
-    h.add_parameter("--makedepends", _("package build dependencies"));
-    h.add_parameter("--email", _("package creator email"));
-    h.add_parameter("--maintainer", _("package maintainer"));
-    h.add_parameter("--license", _("package license"));
-    h.add_parameter("--source", _("package source"));
-    h.add_parameter("--build-type", _("package build-type (autotool cmake meson)"));
-    h.add_parameter("--output", _("ympbuild output directory"));
-    add_operation(template_main,{_("template"),"template","t"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(template_main);
+    op.names = {_("template"),"template","t"};
+    op.help.name = _("template");
+    op.help.description = _("Create ympbuild from template.");
+    op.help.add_parameter("--name", _("package name"));
+    op.help.add_parameter("--version", _("package version"));
+    op.help.add_parameter("--homepage", _("package homepage"));
+    op.help.add_parameter("--description", _("package description"));
+    op.help.add_parameter("--depends", _("package dependencies"));
+    op.help.add_parameter("--makedepends", _("package build dependencies"));
+    op.help.add_parameter("--email", _("package creator email"));
+    op.help.add_parameter("--maintainer", _("package maintainer"));
+    op.help.add_parameter("--license", _("package license"));
+    op.help.add_parameter("--source", _("package source"));
+    op.help.add_parameter("--build-type", _("package build-type (autotool cmake meson)"));
+    op.help.add_parameter("--output", _("ympbuild output directory"));
+    add_operation(op);
 }

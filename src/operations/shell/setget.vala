@@ -57,45 +57,62 @@ public int cd_main(string[] args){
 }
 
 void setget_init(){
-    var h1 = new helpmsg();
-    var h2 = new helpmsg();
-    var h3 = new helpmsg();
-    var h4 = new helpmsg();
-    var h5 = new helpmsg();
-    var h6 = new helpmsg();
+    operation op_get = new operation();
+    op_get.help = new helpmsg();
+    op_get.callback.connect(get_main);
+    op_get.names = {_("get"),"get"};
+    op_get.help.name = _("get");
+    op_get.help.shell_only = true;
+    op_get.help.description = _("Get variable from name.");
 
-    h1.name = _("get");
-    h1.shell_only = true;
-    h1.description = _("Get variable from name.");
+    operation op_set = new operation();
+    op_set.help = new helpmsg();
+    op_set.callback.connect(set_main);
+    op_set.names = {_("set"),"set"} ;
+    op_set.help.name = _("set");
+    op_set.help.minargs=2;
+    op_set.help.shell_only = true;
+    op_set.help.description = _("Set variable from name and value.");
 
-    h2.name = _("set");
-    h2.minargs=2;
-    h2.shell_only = true;
-    h2.description = _("Set variable from name and value.");
+    operation op_equal = new operation();
+    op_equal.help = new helpmsg();
+    op_equal.callback.connect(equal_main);
+    op_equal.names = {_("equal"),"equal","eq"};
+    op_equal.help.name = _("equal");
+    op_equal.help.minargs=2;
+    op_equal.help.shell_only = true;
+    op_equal.help.description = _("Compare arguments equality.");
 
-    h3.name = _("equal");
-    h3.minargs=2;
-    h3.shell_only = true;
-    h3.description = _("Compare arguments equality.");
-    
-    h4.name = _("read");
-    h4.minargs=1;
-    h4.shell_only = true;
-    h4.description = _("Read value from terminal.");
+    operation op_read = new operation();
+    op_read.help = new helpmsg();
+    op_read.callback.connect(read_main);
+    op_read.names = {_("read"),"read","input"};
+    op_read.help.name = _("read");
+    op_read.help.minargs=1;
+    op_read.help.shell_only = true;
+    op_read.help.description = _("Read value from terminal.");
 
-    h5.name = _("match");
-    h5.minargs=2;
-    h5.shell_only = true;
-    h5.description = _("Match arguments regex.");
+    operation op_match = new operation();
+    op_match.help = new helpmsg();
+    op_match.callback.connect(match_main);
+    op_match.names = {_("match"),"match","regex"};
+    op_match.help.name = _("match");
+    op_match.help.minargs=2;
+    op_match.help.shell_only = true;
+    op_match.help.description = _("Match arguments regex.");
 
-    h6.name = _("cd");
-    h6.shell_only = true;
-    h6.description = _("Change directory.");
+    operation op_cd = new operation();
+    op_cd.help = new helpmsg();
+    op_cd.callback.connect(cd_main);
+    op_cd.names = {_("cd"),"cd"};
+    op_cd.help.name = _("cd");
+    op_cd.help.shell_only = true;
+    op_cd.help.description = _("Change directory.");
 
-    add_operation(get_main,{_("get"),"get"},h1);
-    add_operation(set_main,{_("set"),"set"},h2);
-    add_operation(equal_main,{_("equal"),"equal","eq"},h3);
-    add_operation(read_main,{_("read"),"read","input"},h4);
-    add_operation(match_main,{_("match"),"match","regex"},h5);
-    add_operation(cd_main,{_("cd"),"cd"},h6);
+    add_operation(op_get);
+    add_operation(op_set);
+    add_operation(op_equal);
+    add_operation(op_read);
+    add_operation(op_match);
+    add_operation(op_cd);
 }

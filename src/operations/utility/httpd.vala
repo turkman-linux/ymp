@@ -148,10 +148,13 @@ public int httpd_main(string[] args) {
     return 0;
 }
 void httpd_init() {
-    var h = new helpmsg();
-    h.name = _("httpd");
-    h.description = _("Simple http server.");
-    h.add_parameter("--port",_("port number"));
-    h.add_parameter("--allow",_("allowed clients (0.0.0.0 for allow everyone)"));
-    add_operation(httpd_main, {_("httpd"),"httpd"}, h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(httpd_main);
+    op.names = {_("httpd"),"httpd"};
+    op.help.name = _("httpd");
+    op.help.description = _("Simple http server.");
+    op.help.add_parameter("--port",_("port number"));
+    op.help.add_parameter("--allow",_("allowed clients (0.0.0.0 for allow everyone)"));
+    add_operation(op);
 }

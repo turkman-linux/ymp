@@ -33,18 +33,21 @@ public int debian_main(string[] args){
 }
 
 void debian_init(){
-    var h = new helpmsg();
-    h.name = _("debian");
-    h.description = _("Debian package operations.");
-    h.add_parameter(colorize(_("Package options"),magenta),"");
-    h.add_parameter("--extract",_("extract debian package"));
-    h.add_parameter("--create",_("create debian package"));
-    h.add_parameter("--convert",_("convert debian package to ymp package"));
-    h.add_parameter(colorize(_("Install options"),magenta),"");
-    h.add_parameter("--install",_("install debian package")+colorize(colorize(colorize(" (%s)",red),5),1).printf(_("Dangerous")));
-    h.add_parameter(colorize(_("Catalog options"),magenta),"");
-    h.add_parameter("--update-catalog",_("update debian catalog from debian repository"));
-    h.add_parameter("--get-pkgname",_("get source package name from catalog"));
-    h.add_parameter("--mirror",_("debian mirror url"));
-    add_operation(debian_main, {_("debian"),"deb","debian"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(debian_main);
+    op.names =  {_("debian"),"deb","debian"};
+    op.help.name = _("debian");
+    op.help.description = _("Debian package operations.");
+    op.help.add_parameter(colorize(_("Package options"),magenta),"");
+    op.help.add_parameter("--extract",_("extract debian package"));
+    op.help.add_parameter("--create",_("create debian package"));
+    op.help.add_parameter("--convert",_("convert debian package to ymp package"));
+    op.help.add_parameter(colorize(_("Install options"),magenta),"");
+    op.help.add_parameter("--install",_("install debian package")+colorize(colorize(colorize(" (%s)",red),5),1).printf(_("Dangerous")));
+    op.help.add_parameter(colorize(_("Catalog options"),magenta),"");
+    op.help.add_parameter("--update-catalog",_("update debian catalog from debian repository"));
+    op.help.add_parameter("--get-pkgname",_("get source package name from catalog"));
+    op.help.add_parameter("--mirror",_("debian mirror url"));
+    add_operation(op);
 }

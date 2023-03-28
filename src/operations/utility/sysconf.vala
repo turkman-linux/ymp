@@ -27,8 +27,11 @@ public int sysconf_main(string[] args){
 }
 
 void sysconf_init(){
-    var h = new helpmsg();
-    h.name = _("sysconf");
-    h.description = _("Trigger sysconf operations.");
-    add_operation(sysconf_main, {_("sysconf"),"sc","sysconf"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(sysconf_main);
+    op.names = {_("sysconf"),"sc","sysconf"};
+    op.help.name = _("sysconf");
+    op.help.description = _("Trigger sysconf operations.");
+    add_operation(op);
 }

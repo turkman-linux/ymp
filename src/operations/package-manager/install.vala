@@ -130,14 +130,17 @@ public string[] calculate_leftover(package[] pkgs){
     return files.get();
 }
 void install_init(){
-    var h = new helpmsg();
-    h.name = _("install");
-    h.description = _("Install package from source or package file or repository");
-    h.add_parameter("--ignore-dependency", _("disable dependency check"));
-    h.add_parameter("--ignore-satisfied", _("ignore not satisfied packages"));
-    h.add_parameter("--sync-single", _("sync quarantine after every package installation"));
-    h.add_parameter("--reinstall", _("reinstall if already installed"));
-    h.add_parameter("--upgrade", _("upgrade all packages"));
-    h.add_parameter("--no-emerge", _("use binary packages"));
-    add_operation(install_main,{_("install"),"install","it","add"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(install_main);
+    op.names = {_("install"),"install","it","add"};
+    op.help.name = _("install");
+    op.help.description = _("Install package from source or package file or repository");
+    op.help.add_parameter("--ignore-dependency", _("disable dependency check"));
+    op.help.add_parameter("--ignore-satisfied", _("ignore not satisfied packages"));
+    op.help.add_parameter("--sync-single", _("sync quarantine after every package installation"));
+    op.help.add_parameter("--reinstall", _("reinstall if already installed"));
+    op.help.add_parameter("--upgrade", _("upgrade all packages"));
+    op.help.add_parameter("--no-emerge", _("use binary packages"));
+    add_operation(op);
 }

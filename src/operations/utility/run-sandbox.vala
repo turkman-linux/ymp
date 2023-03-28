@@ -17,12 +17,15 @@ public int run_sandbox_main(string[] args){
 }
 
 void run_sandbox_init(){
-    var h = new helpmsg();
-    h.name = _("sandbox");
-    h.minargs=1;
-    h.description = _("Start sandbox environment.");
-    h.add_parameter("--shared",_("select shared directory"));
-    h.add_parameter("--tmpfs",_("select tmpfs directory"));
-    h.add_parameter("--no-net",_("block network access"));
-    add_operation(run_sandbox_main,{_("sandbox"),"sandbox", "sb"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(run_sandbox_main);
+    op.names = {_("sandbox"),"sandbox", "sb"};
+    op.help.name = _("sandbox");
+    op.help.minargs=1;
+    op.help.description = _("Start sandbox environment.");
+    op.help.add_parameter("--shared",_("select shared directory"));
+    op.help.add_parameter("--tmpfs",_("select tmpfs directory"));
+    op.help.add_parameter("--no-net",_("block network access"));
+    add_operation(op);
 }

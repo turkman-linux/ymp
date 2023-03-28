@@ -16,11 +16,14 @@ public int exec_main(string[] args){
     return status;
 }
 void exec_init(){
-    var h = new helpmsg();
-    h.name = _("exec");
-    h.description = _("Execute a command.");
-    h.minargs=1;
-    h.shell_only = true;
-    h.add_parameter("--silent",_("run without output"));
-    add_operation(exec_main,{_("exec"),"exec"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(exec_main);
+    op.names = {_("exec"),"exec"};
+    op.help.name = _("exec");
+    op.help.description = _("Execute a command.");
+    op.help.minargs=1;
+    op.help.shell_only = true;
+    op.help.add_parameter("--silent",_("run without output"));
+    add_operation(op);
 }

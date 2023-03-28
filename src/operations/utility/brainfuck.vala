@@ -4,9 +4,12 @@ public int brainfuck_main(string[] args){
 }
 
 void brainfuck_init(){
-    var h = new helpmsg();
-    h.name = _("brainfuck");
-    h.minargs=1;
-    h.description = _("Run a brainfuck script.");
-    add_operation(brainfuck_main,{_("brainfuck"),"brainfuck","bf"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(brainfuck_main);
+    op.names = {_("brainfuck"),"brainfuck","bf"};
+    op.help.name = _("brainfuck");
+    op.help.minargs=1;
+    op.help.description = _("Run a brainfuck script.");
+    add_operation(op);
 }

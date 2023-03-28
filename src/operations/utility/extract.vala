@@ -18,10 +18,13 @@ public int extract_main(string[] args){
 }
 
 void extract_init(){
-    var h = new helpmsg();
-    h.name = _("extract");
-    h.minargs=1;
-    h.description = _("Extract files from archive.");
-    h.add_parameter("--list",_("list archive files"));
-    add_operation(extract_main,{_("extract"),"extract","x"},h);
+    operation op = new operation();
+    op.help = new helpmsg();
+    op.callback.connect(extract_main);
+    op.names = {_("extract"),"extract","x"};
+    op.help.name = _("extract");
+    op.help.minargs=1;
+    op.help.description = _("Extract files from archive.");
+    op.help.add_parameter("--list",_("list archive files"));
+    add_operation(op);
 }
