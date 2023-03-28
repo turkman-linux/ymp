@@ -117,15 +117,21 @@ public extern int run_args(string[] args);
 
 
 //DOC; ### fetcher.c
-//DOC: `bool fetch(string url, string path):`
-//DOC: fetch file from url
-//DOC: `string fetch_string(string url):`
-//DOC: fetch string from url
 #if no_libcurl
 #else
+//DOC: `bool fetch(string url, string path):`
+//DOC: fetch file from url
 public extern bool fetch(string url, string path);
+//DOC: `string fetch_string(string url):`
+//DOC: fetch string from url
 public extern string fetch_string(string url);
 #endif
+//DOC: `string url_encode(string url):`
+//DOC: encode string from url
+public extern string url_encode(string url);
+//DOC: `string url_decode(string url):`
+//DOC: decode string from url
+public extern string url_decode(string url);
 
 //DOC: ### string.c
 //DOC: `string run_printf(char* format, ...):`

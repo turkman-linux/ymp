@@ -15,7 +15,7 @@ async void process_request(SocketConnection conn) {
             return;
         }
         if(req!=null && req.length>=4){
-            path = safedir(ssplit(req," ")[1]);
+            path = url_decode(safedir(ssplit(req," ")[1]));
         }else{
             return;
         }
@@ -24,8 +24,16 @@ async void process_request(SocketConnection conn) {
         }
         InetSocketAddress local = conn.get_remote_address() as InetSocketAddress;
         string ip = local.get_address().to_string();
+        string acl = get_value("allow");
+        if(acl == ""){
+            acl = "127.0.0.1";
+        }
+        string[] acls = ssplit(acl,":");
+        if(! (ip in acls) && ! ("0.0.0.0" in acls)){
+            return;
+        }
         string date = now.format("%H:%M %Y.%m.%d");
-        if (isfile("./"+path) && !(" " in path)) {
+        if (isfile("./"+path)) {
             FileStream stream = FileStream.open("./"+path, "r");
             if(stream == null){
                 dos.put_string("HTTP/1.1 403 Forbidden\n");
@@ -73,7 +81,7 @@ async void process_request(SocketConnection conn) {
                 }
                 if(isdir("./"+path+"/"+f)){
                     string ff = f.replace(">","&gt;").replace("<","&lt;");
-                    dos.put_string("&#x1F4C1; <a class=\"link\" href=\""+path+f+"/\">"+ff+"/</a><br></li>\n");
+                    dos.put_string("&#x1F4C1; <a class=\"link\" href=\""+url_encode(path+f)+"/\">"+ff+"/</a><br></li>\n");
                     dos.flush();
                 }
             }
@@ -84,7 +92,7 @@ async void process_request(SocketConnection conn) {
                 if(isfile("./"+path+"/"+f)){
                     string ff = f.replace(">","&gt;").replace("<","&lt;");
                     long size = filesize("./"+path+"/"+f);
-                    dos.put_string("&#x1F4C4; <a class=\"link\" href=\""+path+f+"\">"+ff+"</a> ("+GLib.format_size((uint64)size)+")<br></li>\n");
+                    dos.put_string("&#x1F4C4; <a class=\"link\" href=\""+url_encode(path+f)+"\">"+ff+"</a> ("+GLib.format_size((uint64)size)+")<br></li>\n");
                     dos.flush();
                 }
             }
@@ -127,7 +135,11 @@ public int httpd_main(string[] args) {
         srv.add_inet_port((uint16)port, null);
         srv.incoming.connect(on_incoming_connection);
         srv.start();
-        print_fn(_("Servering HTTP on 0.0.0.0 port %s").printf(port.to_string()),true,true);
+        string acl = get_value("allow");
+        if(acl == ""){
+            acl = "127.0.0.1";
+        }
+        print_fn(_("Servering HTTP on %s port %s").printf(acl, port.to_string()),true,true);
         new MainLoop().run();
     } catch (Error e) {
         error_add(e.message);
@@ -139,5 +151,7 @@ void httpd_init() {
     var h = new helpmsg();
     h.name = _("httpd");
     h.description = _("Simple http server.");
+    h.add_parameter("--port",_("port number"));
+    h.add_parameter("--allow",_("allowed clients (0.0.0.0 for allow everyone)"));
     add_operation(httpd_main, {_("httpd"),"httpd"}, h);
 }

@@ -139,6 +139,14 @@ fetch file from url
 
 fetch string from url
 
+`string url_encode(string url):`
+
+encode string from url
+
+`string url_decode(string url):`
+
+decode string from url
+
 ### string.c
 
 `string run_printf(char* format, ...):`
