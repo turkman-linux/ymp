@@ -9,8 +9,8 @@ debian:
     - apt update
     - apt full-upgrade -y
     - apt install meson gcc valac gobject-introspection --no-install-recommends -y
-    - apt install libarchive-dev libreadline-dev libcurl4-openssl-dev libbrotli-dev --no-install-recommends -y
-    - meson build -Ddebug=true -Dtools=true -Dlibbrotli=false -Dtest=true -Dshared=true
+    - apt install libarchive-dev libreadline-dev libcurl4-openssl-dev libbrotli-dev libmagic-dev --no-install-recommends -y
+    - meson build -Ddebug=true -Dtools=true -Dlibbrotli=false -Dlibmagic=true -Dtest=true -Dshared=true
     - ninja -C build
     - cd build && timeout 30 ./ymp-test || true
     - ninja install
@@ -25,8 +25,8 @@ archlinux:
   script:
     - pacman -Syyu --noconfirm
     - pacman -Sy gcc vala gobject-introspection --noconfirm
-    - pacman -Sy meson curl libarchive readline --noconfirm
-    - meson build -Ddebug=true -Dtools=true  -Dtest=true -Dshared=true
+    - pacman -Sy meson curl libarchive readline file --noconfirm
+    - meson build -Ddebug=true -Dtools=true  -Dtest=true -Dshared=true -Dlibmagic=true 
     - ninja -C build
     - cd build && timeout 30 ./ymp-test || true
     - ninja install
@@ -40,9 +40,9 @@ alpine:
       - build
   script:
     - apk update
-    - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev libcurl curl-dev upx
+    - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev libcurl curl-dev upx file-dev libmagic-static
     - apk add libarchive-static readline-static glib-static zlib-static ncurses-static acl-static expat-static openssl-libs-static xz-dev zstd-static lz4-static bzip2-static curl-static brotli-static nghttp2-static
-    - meson build -Ddebug=false -Dstatic=true -Dtools=true -Dtest=true
+    - meson build -Ddebug=false -Dstatic=true -Dtools=true -Dtest=true -Dlibmagic=true 
     - ninja -C build
     - upx -9 build/* || true
     - cd build && timeout 30 ./ymp-test || true
