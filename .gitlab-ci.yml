@@ -40,9 +40,9 @@ alpine:
       - build
   script:
     - apk update
-    - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev libcurl curl-dev upx file-dev libmagic-static
-    - apk add libarchive-static readline-static glib-static zlib-static ncurses-static acl-static expat-static openssl-libs-static xz-dev zstd-static lz4-static bzip2-static curl-static brotli-static nghttp2-static
-    - meson build -Ddebug=false -Dstatic=true -Dtools=true -Dtest=true -Dlibmagic=true 
+    - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev libcurl curl-dev upx file-dev libmagic
+    - apk add libarchive readline glib zlib ncurses acl expat openssl-libs xz-dev zstd lz4 bzip2 curl brotli nghttp2
+    - meson build -Ddebug=false -Dshared=true -Dtools=true -Dtest=true -Dlibmagic=true 
     - ninja -C build
     - upx -9 build/* || true
     - cd build && timeout 30 ./ymp-test || true
