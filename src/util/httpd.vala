@@ -22,7 +22,6 @@ async void process_request(SocketConnection conn) {
         }else{
             return;
         }
-        print(path);
         if(isdir(path) && isfile(path+"/index.html")){
             path = path+"/index.html";
         }
@@ -85,7 +84,6 @@ async void process_request(SocketConnection conn) {
                 }
                 if(isdir("./"+path+"/"+f)){
                     string ff = f.replace(">","&gt;").replace("<","&lt;");
-                    print(path+f);
                     dos.put_string("&#x1F4C1; <a class=\"link\" href=\"/"+url_encode(path+f).replace("%2F","/")+"/\">"+ff+"/</a><br></li>\n");
                     dos.flush();
                 }
@@ -146,7 +144,7 @@ public int start_httpd() {
         srv.start();
         string acl = get_value("allow");
         if(acl == ""){
-            acl = "127.0.0.1";
+            acl = "0.0.0.0";
         }
         print_fn(_("Servering HTTP on %s port %s").printf(acl, port.to_string()),true,true);
         new MainLoop().run();

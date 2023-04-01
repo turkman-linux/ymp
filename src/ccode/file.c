@@ -172,7 +172,7 @@ char* get_magic_mime_type(char* path){
   mime = magic_file(magic, path);
 
   magic_close(magic);
-  ret = malloc(sizeof(char)*(strlen(magic)+1));
+  ret = malloc(sizeof(char)*(strlen((char*)magic)+1));
   strcpy(ret,mime);
   return ret;
 }
