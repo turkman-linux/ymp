@@ -44,7 +44,7 @@ void main(string[] args){
 
     // command test
     print("Command test");
-    tmp = getoutput("echo -n hmmm");
+    tmp = getoutput("./test/hello.py");
     run_silent("non-command -non-parameter");
     run("false");
 

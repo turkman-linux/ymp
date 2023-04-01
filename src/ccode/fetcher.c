@@ -5,7 +5,10 @@
 #include <curl/curl.h>
 
 #ifndef get_value
-char* get_value(char* variable);;
+char* get_value(char* variable);
+#endif
+#ifndef get_bool
+int get_bool(char* variable);
 #endif
 
 static size_t write_data_to_file(void *ptr, size_t size, size_t nmemb, void *stream){
@@ -52,6 +55,10 @@ int fetcher_process_to_vala(void *p, curl_off_t total, curl_off_t current, curl_
     return fetcher_vala(current, total, fetcher_filename);
 }
 
+int fetcher_process_to_dummy(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded){
+    return 0;
+}
+
 CURL *curl;
 void curl_options_common(char* url){
         struct curl_slist *chunk = NULL;
@@ -68,7 +75,9 @@ void curl_options_common(char* url){
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
         curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, "");
-        curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_vala);
+        if(!get_bool("no-processbar")){
+            curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_dummy);
+        }
         if(strcmp(get_value("ignore-ssl"),"true")==0){
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);

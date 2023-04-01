@@ -86,7 +86,12 @@ public extern bool isdir(string path);
 //DOC: `bool issymlink(string path)`:
 //DOC: check path is symlink
 public extern bool issymlink(string path);
-
+#if no_libmagic
+#else
+//DOC: `get_magic_mime_type(string path):`
+//DOC: get mimetype string from libmagic
+public extern string get_magic_mime_type(string path);
+#endif
 //DOC: ### signal.c
 //DOC: `void block_sigint():`
 //DOC: block ctrl-c

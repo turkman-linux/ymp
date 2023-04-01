@@ -99,6 +99,7 @@ else
     args += ['-Dno_libarchive']
 endif
 
+
 if get_option('libcurl')
     if get_option('static')
         args += run_command('pkg-config', '--libs', '--static','libcurl',check:true).stdout().strip().split(' ')
@@ -112,6 +113,19 @@ if get_option('libcurl')
 
 else
     add_project_arguments('-D', 'no_libcurl', language: 'vala')
+    args +=['-Dno_libcurl']
+endif
+
+if get_option('libmagic')
+    if get_option('static')
+        args += run_command('pkg-config', '--libs', '--static','libmagic',check:true).stdout().strip().split(' ')
+    endif
+    if get_option('shared')
+        args += run_command('pkg-config', '--libs', 'libmagic',check:true).stdout().strip().split(' ')
+    endif
+
+else
+    add_project_arguments('-D', 'no_libmagic', language: 'vala')
     args +=['-Dno_libcurl']
 endif
 

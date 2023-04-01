@@ -12,7 +12,6 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <dirent.h>
-
 #define FILE_OK 0
 #define FILE_NOT_EXIST 1
 #define FILE_TO_LARGE 2
@@ -160,5 +159,22 @@ char * readfile_raw(const char * filename) {
     }
 }
 
+#ifndef no_libmagic
+#include <magic.h>
+char* get_magic_mime_type(char* path){
+  const char *mime;
+  char* ret;
+  magic_t magic;
 
+  magic = magic_open(MAGIC_MIME_TYPE); 
+  magic_load(magic, NULL);
+  magic_compile(magic, NULL);
+  mime = magic_file(magic, path);
+
+  magic_close(magic);
+  ret = malloc(sizeof(char)*(strlen(magic)+1));
+  strcpy(ret,mime);
+  return ret;
+}
+#endif
 #endif

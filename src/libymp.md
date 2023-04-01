@@ -99,6 +99,10 @@ Check **path** is directory
 
 check path is symlink
 
+`get_magic_mime_type(string path):`
+
+get mimetype string from libmagic
+
 ### signal.c
 
 `void block_sigint():`
@@ -747,6 +751,7 @@ create gpg signature and insert into elf binary
 
 dump gpg signature from file and verify elf file
 
+# src/util/httpd.vala
 # src/util/interface.vala
 ## Interface functions
 
