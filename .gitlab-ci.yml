@@ -32,7 +32,7 @@ archlinux:
     - ninja install
 
 alpine:
-  image: alpine:3.16
+  image: alpine:edge
   stage: build
   artifacts:
     expire_in: 1 week
