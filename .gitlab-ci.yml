@@ -9,7 +9,7 @@ debian:
     - apt update
     - apt full-upgrade -y
     - apt install meson gcc valac gobject-introspection --no-install-recommends -y
-    - apt install libarchive-dev libreadline-dev libcurl4-openssl-dev libbrotli-dev libmagic-dev --no-install-recommends -y
+    - apt install libarchive-dev libreadline-dev libcurl4-openssl-dev libbrotli-dev libmagic-dev libidn2-0-dev libpsl-dev --no-install-recommends -y
     - meson build -Ddebug=true -Dtools=true -Dlibbrotli=false -Dtest=true -Dshared=true
     - ninja -C build
     - cd build && timeout 30 ./ymp-test || true
@@ -41,7 +41,7 @@ alpine:
   script:
     - apk update
     - apk add meson musl-dev gcc bash vala glib-dev readline-dev libarchive-dev libcurl curl-dev upx file-dev libmagic
-    - apk add libarchive readline glib zlib ncurses acl expat openssl xz-dev zstd lz4 bzip2 curl brotli nghttp2
+    - apk add libarchive readline glib zlib ncurses acl expat openssl xz-dev zstd lz4 bzip2 curl brotli nghttp2 libidn2-dev libidn2 libpsl-dev libpsl
     - meson build -Ddebug=false -Dshared=true -Dtools=true -Dtest=true
     - ninja -C build
     - upx -9 build/* || true
@@ -57,7 +57,7 @@ turkman:
       - build
   script:
     - ymp repo --update --ignore-gpg
-    - ymp it meson gcc bash vala binutils flex --no-emerge
+    - ymp it meson gcc bash vala binutils flex pkgconf --no-emerge
     - meson build -Ddebug=false -Dstatic=true -Dtools=true -Dtest=true 
     - ninja -C build
     - ninja -C build install
