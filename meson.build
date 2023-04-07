@@ -102,10 +102,10 @@ endif
 
 if get_option('libcurl')
     if get_option('static')
-        args += run_command('pkg-config', '--libs', '--static','libcurl',check:true).stdout().strip().split(' ')
+        args += run_command('pkg-config', '--libs','libcurl', 'libidn2', 'libpsl', '--static',check:true).stdout().strip().split(' ')
     endif
     if get_option('shared')
-        args += run_command('pkg-config', '--libs', 'libcurl',check:true).stdout().strip().split(' ')
+        args += run_command('pkg-config', '--libs', 'libcurl', 'libidn2', 'libpsl',check:true).stdout().strip().split(' ')
     endif
     if get_option('libbrotli')
         args += ['-lbrotlicommon']

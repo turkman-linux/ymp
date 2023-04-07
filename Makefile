@@ -2,6 +2,10 @@ build: clean
 	meson setup build --prefix=/usr -Ddoc=true -Ddebug=true -Dshared=true -Dscripts=true -Dlibbrotli=false
 	ninja -C build
 
+static: clean
+	meson setup build --prefix=/usr -Ddoc=true -Ddebug=true -Dstatic=true -Dscripts=true -Dlibbrotli=false
+	ninja -C build
+
 test: test-clean
 	meson setup build/_test -Dtest=true -Dtools=false -Dscripts=false -Ddebug=true -Dshared=true
 	ln -s ../test build/test
