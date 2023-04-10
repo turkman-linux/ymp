@@ -35,6 +35,9 @@ public int install_main(string[] args){
             p.download_only();
         }
     }
+    if(get_bool("download-only")){
+        return 0;
+    }
     foreach(string name in pkgs){
         package pkg = install_single(name);
         if(pkg == null){
@@ -139,6 +142,7 @@ void install_init(){
     op.help.add_parameter("--ignore-dependency", _("disable dependency check"));
     op.help.add_parameter("--ignore-satisfied", _("ignore not satisfied packages"));
     op.help.add_parameter("--sync-single", _("sync quarantine after every package installation"));
+    op.help.add_parameter("--download-only", _("download packages without installation"));
     op.help.add_parameter("--reinstall", _("reinstall if already installed"));
     op.help.add_parameter("--upgrade", _("upgrade all packages"));
     op.help.add_parameter("--no-emerge", _("use binary packages"));
