@@ -10,7 +10,7 @@ if meson.get_compiler('vala').version().version_compare('<0.54.9')
 endif
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
-args = ['-X','-O3', '-flto', '-DTURKMAN', '-Wall']
+args = ['-X','-O3', '-flto', '-DTURKMAN', '-Wall', '-fvisibility=hidden', '-Wextra']
 
 args += ['-s', '-Wl,--gc-sections','-ffunction-sections', '-fdata-sections', '-fno-exceptions']
 if get_option('shared')
@@ -76,7 +76,7 @@ endforeach
 if get_option('debug')
     add_project_arguments('--debug', language: 'vala')
     add_project_arguments('-D', 'DEBUG', language: 'vala')
-    args += ['-DDEBUG', '-g']
+    args += ['-DDEBUG', '-g3']
 endif
 
 if not get_option('colorize')
