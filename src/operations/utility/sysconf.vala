@@ -24,7 +24,6 @@ public int sysconf_main(string[] args){
             }
         }
     }
-    set_env("STORAGE","");
     set_env("OPERATION","");
     return 0;
 }
