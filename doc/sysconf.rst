@@ -23,7 +23,7 @@ Ymp forward current operation with **OPERATION** environment variable hovewer re
 
 .. code-block:: shell
 	
-	OPERATION=install
+	OPERATION=postinst
 	SHLVL=2
 	TERM=linux
 	PATH=/usr/bin:/bin:/usr/sbin:/sbin
