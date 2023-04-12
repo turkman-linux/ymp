@@ -4,7 +4,7 @@ public int remove_main(string[] args){
         error(1);
     }
     single_instance();
-    set_value("OPERATION","prerm");
+    set_value_readonly("OPERATION","prerm");
     sysconf_main(args);
     string[] pkgs = {};
     if(get_bool("ignore-dependency")){
@@ -35,7 +35,7 @@ public int remove_main(string[] args){
             warning(_("Package %s is not installed. Skip removing.").printf(pkg));
         }
     }
-    set_value("OPERATION","postrm");
+    set_value_readonly("OPERATION","postrm");
     sysconf_main(args);
     return 0;
 }

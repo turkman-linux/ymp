@@ -8,7 +8,7 @@ public int install_main(string[] args){
         error(31);
     }
     single_instance();
-    set_value("OPERATION","preinst");
+    set_value_readonly("OPERATION","preinst");
     sysconf_main(args);
     var a = new array();
     a.adds(resolve_dependencies(args));
@@ -61,7 +61,7 @@ public int install_main(string[] args){
     foreach(string file in leftovers){
         remove_file(DESTDIR+"/"+file);
     }
-    set_value("OPERATION","postinst");
+    set_value_readonly("OPERATION","postinst");
     sysconf_main(args);
     error(1);
     return 0;

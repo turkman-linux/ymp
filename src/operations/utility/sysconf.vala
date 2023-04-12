@@ -2,7 +2,7 @@ public int sysconf_main(string[] args){
     if(!is_root() || get_bool("no-sysconf")){
         return 0;
     }
-    if(get_env("OPERATION") == ""){
+    if(get_value("OPERATION") != "install" && get_value("OPERATION") != "remove"){
         set_env("OPERATION",get_value("OPERATION"));
     }
     if(DESTDIR != "/"){

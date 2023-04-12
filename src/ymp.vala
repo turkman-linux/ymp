@@ -50,7 +50,7 @@ private int operation_main(string type, string[] args){
                 if(get_bool("help") || op.help.minargs > args.length){
                     return help_main({name});
                 }        
-                set_value_readonly("operation",op.help.name);
+                set_value_readonly("OPERATION",op.help.name);
                 parse_args(args);
                 return op.callback(argument_process(args));
             }
