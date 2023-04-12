@@ -171,3 +171,7 @@ public string[] uniq(string[] array){
     }
     return ret;
 }
+
+public string str_add(string str1, string str2){
+    return str1 + str2;
+}

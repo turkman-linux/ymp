@@ -22,6 +22,15 @@ if get_option('static')
     add_project_arguments('-D', 'STATIC', language: 'vala')
     static_dependencies = [dependency('gio-2.0', static: true)]
 endif
+
+
+if get_option('static')
+    args += run_command('pkg-config', '--libs', 'glib-2.0', '--static',check:true).stdout().strip().split(' ')
+endif
+if get_option('shared')
+    args += run_command('pkg-config', '--libs', 'glib-2.0', check:true).stdout().strip().split(' ')
+endif
+
 add_project_arguments('-C', language: 'vala')
 add_project_arguments(['--disable-assert', '--hide-internal', '--nostdpkg', '--enable-checking', '--abi-stability'], language: 'vala')
 add_project_arguments('-D', '_GNU_SOURCE', '--disable-version-header', language: 'vala')

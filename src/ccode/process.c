@@ -13,9 +13,12 @@
 #include <sys/prctl.h> 
 #include <unistd.h>
 
-
 #ifndef which
 char* which(char* path);
+#endif
+
+#ifndef str_add
+char* str_add(char* str1, char* str2);
 #endif
 
 
@@ -34,7 +37,6 @@ void single_instance(){
         }
     }
 }
-
 int run_args(char* args[]){
     pid_t pid = fork();
     if(pid == 0){
@@ -42,9 +44,14 @@ int run_args(char* args[]){
         if (r == -1){
             exit(1);
         }
-        char *envp[] = {"TERM=linux", "PATH=/usr/bin:/bin:/usr/sbin:/sbin", NULL};
+        char *envp[] = {
+            "TERM=linux",
+            "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
+            str_add("OPERATION=",getenv("OPERATION")),
+            NULL
+        };
         exit(execvpe(which(args[0]),args,envp));
-        return 127;
+        exit(127);
     }else{
         int status;
         kill(wait(&status),9);

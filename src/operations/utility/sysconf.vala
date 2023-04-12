@@ -2,7 +2,9 @@ public int sysconf_main(string[] args){
     if(!is_root() || get_bool("no-sysconf")){
         return 0;
     }
-    set_env("OPERATION",get_value("OPERATION"));
+    if(get_env("OPERATION") == ""){
+        set_env("OPERATION",get_value("OPERATION"));
+    }
     if(DESTDIR != "/"){
         run_args({"chroot", get_destdir(), "ldconfig"});
     }else{
@@ -23,6 +25,7 @@ public int sysconf_main(string[] args){
         }
     }
     set_env("STORAGE","");
+    set_env("OPERATION","");
     return 0;
 }
 
