@@ -7,6 +7,8 @@ public int clean_main(string[] args){
     remove_all(DESTDIR+"/tmp/ymp-build/");
     print(colorize(_("Clean: "),yellow)+_("quarantine"));
     quarantine_reset();
+    set_value("OPERATION","clean");
+    sysconf_main(args);
     return 0;
 }
 
