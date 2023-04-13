@@ -21,7 +21,6 @@ char* which(char* path);
 char* str_add(char* str1, char* str2);
 #endif
 
-
 int locked=0;
 void single_instance(){
     if(locked){

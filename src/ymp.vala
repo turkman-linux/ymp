@@ -156,7 +156,11 @@ public class Ymp {
                 continue;
             }
             lock_operation();
+            if(get_bool("disable-stdin")){
+                nostdin();
+            }
             int status = proc[i].run();
+            resetstd();
             unlock_operation();
             if(status != 0){
                 string type = proc[i].type;
