@@ -349,7 +349,9 @@ public string create_index_data(string fpath){
     string[] srcs = {};
     string[] pkgs = {};
     // tmp variable
-    string tmp = "";
+    string nam = "";
+    string dat = "";
+    string rel = "";
     foreach(string file in find(path)){
         if(endswith(file,".ymp")){
             md5sum = calculate_md5sum(file);
@@ -361,20 +363,22 @@ public string create_index_data(string fpath){
             string ymparea = yaml.get_area(metadata,"ymp");
             if(!get_bool("ignore-check")){
                 if (yaml.has_area(ymparea, "source")) {
-                    tmp = yaml.get_area(metadata,"ymp.source");
-                    tmp = yaml.get_value(tmp,"name");
-                    if(tmp in srcs){
-                        warning(_("A source has multiple versions: %s").printf(tmp));
+                    dat = yaml.get_area(ymparea,"source");
+                    nam = yaml.get_value(dat,"name");
+                    rel = yaml.get_value(dat,"release");
+                    if(nam+"-"+rel in srcs){
+                        warning(_("A source has multiple versions: %s").printf(nam));
                     }
-                    srcs += tmp;
+                    srcs += nam+"-"+rel;
                 }
                 if (yaml.has_area(ymparea, "package")) {
-                    tmp = yaml.get_area(metadata,"ymp.package");
-                    tmp = yaml.get_value(tmp,"name");
-                    if(tmp in pkgs){
-                        warning(_("A package has multiple versions: %s").printf(tmp));
+                    dat = yaml.get_area(ymparea,"package");
+                    nam = yaml.get_value(dat,"name");
+                    rel = yaml.get_value(dat,"release");
+                    if(nam+"-"+rel in pkgs){
+                        warning(_("A package has multiple versions: %s").printf(nam));
                     }
-                    pkgs += tmp;
+                    pkgs += nam+"-"+rel;;
                 }
             }
             foreach(string line in ssplit(ymparea,"\n")){
