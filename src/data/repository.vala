@@ -345,6 +345,11 @@ public string create_index_data(string fpath){
             }
         }
     }
+    // name lists
+    string[] srcs = {};
+    string[] pkgs = {};
+    // tmp variable
+    string tmp = "";
     foreach(string file in find(path)){
         if(endswith(file,".ymp")){
             md5sum = calculate_md5sum(file);
@@ -354,6 +359,24 @@ public string create_index_data(string fpath){
             info("Index: "+file);
             string metadata = tar.readfile("metadata.yaml");
             string ymparea = yaml.get_area(metadata,"ymp");
+            if(!get_bool("ignore-check")){
+                if (yaml.has_area(ymparea, "source")) {
+                    tmp = yaml.get_area(metadata,"ymp.source");
+                    tmp = yaml.get_value(tmp,"name");
+                    if(tmp in srcs){
+                        warning(_("A source has multiple versions: %s").printf(tmp));
+                    }
+                    srcs += tmp;
+                }
+                if (yaml.has_area(ymparea, "package")) {
+                    tmp = yaml.get_area(metadata,"ymp.package");
+                    tmp = yaml.get_value(tmp,"name");
+                    if(tmp in pkgs){
+                        warning(_("A package has multiple versions: %s").printf(tmp));
+                    }
+                    pkgs += tmp;
+                }
+            }
             foreach(string line in ssplit(ymparea,"\n")){
                 if(line == "" || line == null){
                     continue;
