@@ -1,6 +1,5 @@
 private bool no_src = false;
 public int build_operation(string[] args){
-    nostdin();
     string current_directory=srealpath(pwd());
     string[] new_args = args;
     if(usr_is_merged()){
@@ -88,10 +87,6 @@ public int build_operation(string[] args){
         }
     }
     cd(current_directory);
-    resetstd();
-    if(get_bool("disable-stdin")){
-        nostdin();
-    }
     return 0;
 }
 

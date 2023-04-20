@@ -120,6 +120,13 @@ public extern int run_silent (string command);
 //DOC: ruh command from argument array
 public extern int run_args(string[] args);
 
+//DOC: `int run_args(string[] args):`
+//DOC: ruh command from argument array silently.
+public extern int run_args_silent(string[] args);
+
+//DOC: `string getoutput (string command):`
+//DOC: Run command and return output
+public extern string getoutput (string command);
 
 //DOC; ### fetcher.c
 #if no_libcurl

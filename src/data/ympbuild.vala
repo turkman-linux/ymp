@@ -189,7 +189,13 @@ public string[] get_ympbuild_array(string variable){
 //DOC: `bool ympbuild_has_function(string function):`
 //DOC: check ympbuild file has function
 public bool ympbuild_has_function(string function){
-    return 0 == run_silent("env -i bash -c 'source "+ympbuild_srcpath+"/ympbuild >/dev/null ; declare -F "+function+"'");
+
+    return 0 == run(
+        "bash -c 'set +e ; source %s/ympbuild &>/dev/null; set -e; declare -F %s'".printf(
+            ympbuild_srcpath,
+            function
+        )
+    );
 }
 
 private bool ympbuild_check(){
@@ -208,7 +214,13 @@ public int run_ympbuild_function(string function){
         get_ympbuild_value("name"),
         function));
     if(ympbuild_has_function(function)){
-        string cmd = "env -i bash -c '"+ympbuild_header+" \n source "+ympbuild_srcpath+"/ympbuild ; export ACTION="+function+" ; set -e ; "+function+"'";
+    
+        string cmd = "bash -c '%s \n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s'".printf(
+            ympbuild_header,
+            ympbuild_srcpath,
+            function,
+            function
+        );
         if(get_bool("quiet")){
             return run_silent(cmd);
         }else{
@@ -220,6 +232,12 @@ public int run_ympbuild_function(string function){
     return 0;
 }
 public void ymp_process_binaries(){
+    string[] garbage_dirs = {STORAGEDIR, "/tmp", "/run", "/dev", "/data", "/home"};
+    foreach(string dir in garbage_dirs){
+        if(isdir(ympbuild_buildpath+"/output/"+dir)){
+            remove_all(ympbuild_buildpath+"/output/"+dir);
+        }
+    }
     if (get_ympbuild_value("dontstrip") == ""){
         foreach(string file in find(ympbuild_buildpath+"/output")){
             if(endswith(file,".a") || endswith(file,".o")){

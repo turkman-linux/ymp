@@ -135,6 +135,14 @@ run command silently.
 
 ruh command from argument array
 
+`int run_args(string[] args):`
+
+ruh command from argument array silently.
+
+`string getoutput (string command):`
+
+Run command and return output
+
 `bool fetch(string url, string path):`
 
 fetch file from url
@@ -946,28 +954,6 @@ safe basename. return filename
 `string sdirname(string path):`
 
 safe dirname. return path name
-
-## Command functions
-
-This functions call shell commands
-
-Example usage
-
-```vala
-
-if (0 != run("ls /var/lib/ymp")){
-
-    stdout.printf("Command failed");
-
-}
-
-string uname = getoutput("uname");
-
-```
-
-`string getoutput (string command):`
-
-Run command and return output
 
 # src/util/value.vala
 ## Variable functions

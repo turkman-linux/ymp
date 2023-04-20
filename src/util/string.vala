@@ -137,31 +137,6 @@ public string sdirname(string path){
     return ret;
 }
 
-//DOC: ## Command functions
-//DOC: This functions call shell commands
-//DOC: Example usage
-//DOC: ```vala
-//DOC: if (0 != run("ls /var/lib/ymp")){
-//DOC:     stdout.printf("Command failed");
-//DOC: }
-//DOC: string uname = getoutput("uname");
-//DOC: ```
-
-//DOC: `string getoutput (string command):`
-//DOC: Run command and return output
-public static string getoutput (string command) {
-    debug(_("getoutput: %s").printf(command));
-    string stdout;
-    string stderr;
-    int status;
-    try {
-        Process.spawn_command_line_sync (command, out stdout, out stderr, out status);
-        return stdout;
-    } catch (SpawnError e) {
-        return "";
-    }
-}
-
 public string[] uniq(string[] array){
     string[] ret = {};
     foreach(string item in array){

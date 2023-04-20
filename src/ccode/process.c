@@ -95,6 +95,25 @@ int run_silent(char* command){
     return run_args_silent(cmd);
 }
 
+char* getoutput(char* command) {
+    FILE *fp = popen(command, "r");
+    if (!fp){
+        return "";
+    }
+    char buff[1024];
+    char* ret = malloc(1);
+    ret[0] = '\0';
+    while (fgets(buff, sizeof(buff), fp) != NULL)
+    {
+        ret = realloc(ret,sizeof(ret)+sizeof(buff));
+        strcat(ret,buff);
+    }
+    pclose(fp);
+    ret = realloc(ret, (strlen(ret)+1) * sizeof(char));
+    ret[strlen(ret)] = '\0';
+    return ret;
+}
+
 long get_epoch(){
     struct timeval tv;
     gettimeofday(&tv, NULL);
