@@ -8,6 +8,8 @@ Build-Depends: make,
                libcurl4-openssl-dev,
                libbrotli-dev,
                libmagic-dev,
+               libidn2-dev,
+               libpsl-dev,
                meson, gcc, valac
 Standards-Version: 4.3.0
 Homepage: https://turkman.gitlab.io
