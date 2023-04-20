@@ -7,12 +7,13 @@ int get_bool(char* msg);
 
 void brainfuck(char * code, unsigned int size) {
   unsigned int ptr = 0;
+  unsigned int i = 0;
   int tmp = 0;
   int values[size];
-  for(int i=0;i < size;i++){
+  for(i=0;i < size;i++){
       values[i] = 0;
   }
-  for (int i = 0; i < strlen(code); i++) {
+  for (i = 0; i < strlen(code); i++) {
     if(ptr >=size){
         fprintf(stderr,"Failed to run brainfuck code:  %s\n","Out of memory");
         return;

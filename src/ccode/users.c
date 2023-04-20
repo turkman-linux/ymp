@@ -8,7 +8,7 @@ int is_root(){
   return 0 == getuid();
 }
 
-int get_uid_by_user(char* username){
+uid_t get_uid_by_user(char* username){
     struct passwd *p;
     if((p = getpwnam(username)) == NULL){
         return p->pw_uid;
