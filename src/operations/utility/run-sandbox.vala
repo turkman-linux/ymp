@@ -11,8 +11,14 @@ public int run_sandbox_main(string[] args){
     sandbox_rootfs = get_destdir();
     sandbox_uid = int.parse(get_value("uid"));
     sandbox_gid = int.parse(get_value("gid"));
-    debug(_("Execute sandbox :%s").printf(join(" ",args)));
-    int status = sandbox(args);
+    info(_("Execute sandbox :%s").printf(join(" ",args)));
+    string[] argv = {};
+    argv += "ymp";
+    argv += "exec";
+    foreach(string i in args){
+        argv += i;
+    }
+    int status = sandbox(argv);
     return status/256;
 }
 

@@ -13,7 +13,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
-#include <sys/prctl.h> 
+#include <sys/prctl.h>
 
 #ifndef clear_env
 void clear_env();
@@ -67,7 +67,7 @@ int sandbox(char** args){
         if (r == -1){
             exit(1);
         }
-        
+
         write_to_file("/proc/self/comm", "ymp-sandbox");
         uid_t uid = getuid();
         gid_t gid = getgid();
@@ -114,7 +114,7 @@ int sandbox(char** args){
                 unshare(CLONE_VM);
                 unshare(CLONE_NEWPID| CLONE_VFORK | SIGCHLD);
                 char *envp[] = {"TERM=linux", "PATH=/usr/bin:/bin:/usr/sbin:/sbin", NULL};
-                exit(execvpe(which(args[0]),args,envp));
+                exit(execvpe("/proc/self/exe",args,envp));
             }
         }
         exit(127);

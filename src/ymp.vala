@@ -42,7 +42,7 @@ private void unlock_operation(){
     unblock_sigint();
 }
 
-private int operation_main(string type, string[] args){
+public int operation_main(string type, string[] args){
     info(_("RUN:")+type + ":" + join(" ",args));
     foreach(operation op in ops){
         foreach(string name in op.names){
@@ -59,6 +59,7 @@ private int operation_main(string type, string[] args){
     warning(_("Invalid operation name: %s").printf(type));
     return 0;
 }
+
 
 private class process{
     public string type;
