@@ -25,7 +25,20 @@ public int revdep_rebuild_main(string[] args){
         print_fn("\x1b[2K\r",false,true);
     }else if(get_bool("detect-dep")){
         foreach(string arg in args){
-            detect_dep(arg);
+            info(colorize(_("Detect dependencies for:"),green)+" %s".printf(arg));
+            string[] flist = {};
+            if(iself(arg)){
+                flist = detect_file_dep(arg);
+            }else{
+                flist = detect_dep(arg);
+            }
+            var deps = new array();
+            foreach(string pkg in search_file(flist)){
+                if(!deps.has(pkg)){
+                    deps.add(pkg);
+                }
+            }
+            print_array(deps.get());
         }
     }else{
         string[] paths = {
@@ -72,29 +85,42 @@ public void check_pkgconfig(string file){
 }
 
 
-public void detect_dep(string pkgname){
+public string[] detect_dep(string pkgname){
     if(!is_installed_package(pkgname)){
         error_add(_("%s is not an installed package.").printf(pkgname));
-        return;
+        return {};
     }
-    print(colorize(_("Detect dependencies for:"),green)+" %s".printf(pkgname));
     var depfiles = new array();
     string files=readfile("%s/files/%s".printf(get_storage(), pkgname));
     foreach(string line in ssplit(files,"\n")){
         string path="/"+line[41:];
         if(iself(path)){
-            string lddout=getoutput("ldd '%s'".printf(path));
-            foreach(string ldline in ssplit(lddout,"\n")){
-                if("=>" in ldline){
-                    string fdep = ldline.strip().split(" ")[2];
-                    if(!depfiles.has(fdep)){
-                        depfiles.add(fdep);
-                    }
+            foreach(string dep in detect_file_dep(path)){
+                if(!depfiles.has(dep)){
+                    depfiles.add(dep);
                 }
             }
         }
     }
-    search_files_main(depfiles.get());
+    return depfiles.get();
+}
+
+public string[] detect_file_dep(string path){
+    if(!iself(path)){
+        return {};
+    }
+    string lddout=getoutput("ldd '%s'".printf(path));
+    var depfiles = new array();
+    foreach(string ldline in ssplit(lddout,"\n")){
+        if("=>" in ldline){
+            string fdep = ldline.strip().split(" ")[2];
+            if(!depfiles.has(fdep)){
+                depfiles.add(fdep);
+            }
+        }
+    }
+    
+    return depfiles.get();
 }
 
 void revdep_rebuild_init(){

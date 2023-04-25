@@ -79,6 +79,25 @@ public int search_files_main(string[] args){
     return 0;
 }
 
+public string[] search_file(string[] args){
+    var pkgs = new array();
+    foreach(string pkg in list_installed_packages()){
+        string files = readfile("%s/files/%s".printf(get_storage(),pkg));
+        foreach(string file in files.split("\n")){
+            if(file.length < 41){
+                continue;
+            }
+            foreach(string arg in args){
+                if(Regex.match_simple(arg, "/"+file[41:])){
+                    pkgs.add(pkg);
+                }
+            }
+        }
+    }
+    return pkgs.get();
+
+}
+
 void search_init(){
     operation op = new operation();
     op.help = new helpmsg();
