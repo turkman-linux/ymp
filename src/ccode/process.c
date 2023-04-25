@@ -100,7 +100,7 @@ char* getoutput(char* command) {
     if (!fp){
         return "";
     }
-    char buff[1024];
+    char buff[1024*1024];
     char* ret = malloc(1);
     ret[0] = '\0';
     while (fgets(buff, sizeof(buff), fp) != NULL)

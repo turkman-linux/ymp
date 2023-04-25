@@ -3,23 +3,8 @@ public int revdep_rebuild_main(string[] args){
     set_env("LC_ALL","C");
     if(get_bool("pkgconfig")){
         writefile("/tmp/.empty.c","");
-        string[] paths = {
-            "/lib64/pkgconfig",
-            "/usr/lib64/pkgconfig",
-            "/lib32/pkgconfig",
-            "/usr/lib32/pkgconfig",
-            "/lib/pkgconfig",
-            "/usr/lib/pkgconfig",
-            "/lib64/pkgconfig",
-            "/usr/lib64/pkgconfig",
-            "/usr/share/pkgconfig"
-        };
-        foreach(string path in paths){
-            foreach(string file in find(path)){
-                if(endswith(file,".pc")){
-                    check_pkgconfig(file);
-                }
-            }
+        foreach(string name in ssplit(getoutput("pkg-config --list-package-names"),"\n")){
+            check_pkgconfig(name);
         }
         remove_file("/tmp/.empty.c");
         print_fn("\x1b[2K\r",false,true);
@@ -66,22 +51,21 @@ public int revdep_rebuild_main(string[] args){
 private string ldddata;
 public void check(string file){
     print_fn("\x1b[2K\r"+_("Checking: %s").printf(sbasename(file)),false,true);
-    ldddata = getoutput("ldd "+file+" 2>/dev/null");
+    ldddata = getoutput("ldd %s 2>/dev/null".printf(file));
     foreach(string line in ssplit(ldddata,"\n")){
         if(endswith(line,"not found")){
             print_fn("\x1b[2K\r",false,true);
-            print(colorize(file,red) +" => "+ line[1:line.length-13]);
+            print("%s => %s (%s)".printf(colorize(file,red), line[1:line.length-13], join(" ",search_file({file}))));
         }
     }
 }
-public void check_pkgconfig(string file){
-    print_fn("\x1b[2K\r"+_("Checking: %s").printf(sbasename(file)),false,true);
-    int status = run("gcc `pkg-config --cflags --libs "+file+" 2>/dev/null` /tmp/.empty.c -shared -o /dev/null 2>/dev/null");
+public void check_pkgconfig(string name){
+    print_fn("\x1b[2K\r"+_("Checking: %s").printf(name),false,true);
+    int status = run("gcc `pkg-config --cflags --libs "+name+" 2>/dev/null` /tmp/.empty.c -shared -o /dev/null 2>/dev/null");
     if(status != 0){
         print_fn("\x1b[2K\r",false,true);
-        print(colorize(file,red)+" "+"broken.");
+        print(_("%s broken.").printf(colorize(name,red)));
     }
-
 }
 
 
