@@ -190,17 +190,17 @@ public string[] get_ympbuild_array(string variable){
 //DOC: check ympbuild file has function
 public bool ympbuild_has_function(string function){
 
-    return 0 == run(
-        "bash -c 'set +e ; source %s/ympbuild &>/dev/null; set -e; declare -F %s'".printf(
+    return 0 == run_args({"bash", "-c",
+        "set +e ; source %s/ympbuild &>/dev/null; set -e; declare -F %s".printf(
             ympbuild_srcpath,
             function
         )
-    );
+    });
 }
 
 private bool ympbuild_check(){
     info(_("Check ympbuild: %s/ympbuild").printf(ympbuild_srcpath));
-    return 0 == run("bash -n "+ympbuild_srcpath+"/ympbuild");
+    return 0 == run_args({"bash", "-n",ympbuild_srcpath+"/ympbuild"});
 }
 
 //DOC: `int run_ympbuild_function(string function):`
@@ -214,17 +214,16 @@ public int run_ympbuild_function(string function){
         get_ympbuild_value("name"),
         function));
     if(ympbuild_has_function(function)){
-    
-        string cmd = "bash -c '%s \n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s'".printf(
+        string cmd = "%s \n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s".printf(
             ympbuild_header,
             ympbuild_srcpath,
             function,
             function
         );
         if(get_bool("quiet")){
-            return run_silent(cmd);
+            return run_args_silent({"bash", "-c", cmd});
         }else{
-            return run(cmd);
+            return run_args({"bash", "-c", cmd});
         }
     }else{
         warning(_("ympbuild function not exists: %s").printf(function));
@@ -247,11 +246,11 @@ public void ymp_process_binaries(){
             }
             if(iself(file)){
                 print(colorize(_("Binary process: %s"),magenta).printf(file[(ympbuild_buildpath+"/output").length:]));
-                run("objcopy -R .comment \\
-                -R .note -R .debug_info -R .debug_aranges -R .debug_pubnames \\
-                -R .debug_pubtypes -R .debug_abbrev -R .debug_line -R .debug_str \\
-                -R .debug_ranges -R .debug_loc '"+file+"'");
-                run("strip '"+file+"'");
+                run_args({"objcopy", "-R", ".comment", "-R", ".note", "-R", ".debug_info",
+                    "-R", ".debug_aranges", "-R", ".debug_pubnames",  "-R", ".debug_pubtypes",
+                    "-R", ".debug_abbrev", "-R", ".debug_line", "-R", ".debug_str",
+                    "-R", ".debug_ranges", "-R", ".debug_loc", file});
+                run_args({"strip", file});
             }
         }
     }

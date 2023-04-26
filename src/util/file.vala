@@ -283,6 +283,9 @@ public bool isexists(string path){
     var file = File.new_for_path (path);
     return file.query_exists();
 }
+
+extern string c_realpath(string path);
+
 //DOC: `string srealpath(string path):`
 //DOC: safe realpath function.
 public string srealpath(string path){
@@ -292,7 +295,11 @@ public string srealpath(string path){
     }
     string real = path;
     if("/../" in path || !startswith(path,"/")){
+    #if __GLIBC__
         real = Posix.realpath(path);
+    #else
+        real = c_realpath(path);
+    #endif
     }
     if(real == null || real == ""){
         return path;

@@ -159,6 +159,10 @@ char * readfile_raw(const char * filename) {
     }
 }
 
+char* c_realpath(char* path){
+    return realpath(path,NULL);
+}
+
 #ifndef no_libmagic
 #include <magic.h>
 char* get_magic_mime_type(char* path){
