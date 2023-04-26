@@ -10,83 +10,110 @@ public int build_operation(string[] args){
         new_args = {"."};
     }
     foreach(string arg in new_args){
-        string srcpath=arg;
-        if(startswith(arg,"git://") || endswith(arg,".git")){
-            srcpath=DESTDIR+"/tmp/ymp-build/"+sbasename(arg);
-            if(isdir(srcpath)){
-                remove_all(srcpath);
-            }
-            if(run("git clone '"+arg+"' "+srcpath) != 0){
-                error_add(_("Failed to fetch git package."));
-                return 2;
-            }
-        }else if(startswith(arg,"http://") || startswith(arg,"https://")){
-            string file=DESTDIR+"/tmp/ymp-build/.cache/"+sbasename(arg);
-            create_dir(file);
-            string farg = file+"/"+sbasename(arg);
-            if(!isfile(farg)){
-                fetch(arg,farg);
-            }
-            arg=farg;
-            srcpath=farg;
-        }
-        if(isfile(srcpath)){
-            srcpath = DESTDIR+"/tmp/ymp-build/"+calculate_md5sum(srcpath);
-            var tar = new archive();
-            tar.load(arg);
-            tar.set_target(srcpath);
-            tar.extract_all();
-            if(!isfile(srcpath+"/ympbuild")){
-                error_add(_("Package is invalid: %s").printf(arg));
-                remove_all(srcpath);
-                return 2;
-            }
-        }
-        if(!isfile(srcpath+"/ympbuild")){
-            continue;
-        }
-        if(!set_build_target(srcpath)){
-            return 1;
-        }
-        if(!create_metadata_info()){
-            return 1;
-        }
-        // Set build target again (emerge change build target)
-        set_ympbuild_srcpath(srcpath);
-        string build_path = srealpath(get_build_dir()+calculate_md5sum(ympbuild_srcpath+"/ympbuild"));
-        set_ympbuild_buildpath(build_path);
-        
-        if(!check_build_dependencies(new_args)){
-            return 1;
-        }
-        if(!fetch_package_sources()){
-            return 2;
-        }
-        if(! isfile(arg) && !get_bool("no-source")){
-            if(!create_source_archive()){
-                return 1;
-            }
-        }
-        if(!get_bool("no-binary")){
-            if(!extract_package_sources()){
-                return 3;
-            }
-            if(isfile(arg)){
-                var fname = sbasename(output_package_path);
-                output_package_path=current_directory+"/"+fname;
-            }
-            if(!build_package()){
-                return 1;
-            }
-            create_binary_package();
-            if(get_bool("install")){
-                if(0 != install_main({output_package_path+"_"+getArch()+".ymp"})){
-                    return 1;
-                }
-            }
+        info(_("Building %s").printf(arg));
+         int r = build_single(arg);
+         if(r!=0){
+             return r;
         }
     }
     cd(current_directory);
+    return 0;
+}
+
+private int build_single(string path){
+    string srcpath=srealpath(path);
+    string srcpkg = "";
+    string binpkg = "";
+    string output = srealpath(get_value("output"));
+    if(output == ""){
+        output=srealpath(srcpath);
+    }
+    if(!isdir(output)){
+        create_dir(output);
+    }
+
+    if(startswith(path,"git://") || endswith(path,".git")){
+        srcpath=DESTDIR+"/tmp/ymp-build/"+sbasename(path);
+        if(isdir(srcpath)){
+            remove_all(srcpath);
+        }
+        if(run("git clone '"+path+"' "+srcpath) != 0){
+            error_add(_("Failed to fetch git package."));
+            return 2;
+        }
+    }else if(startswith(path,"http://") || startswith(path,"https://")){
+        string file=DESTDIR+"/tmp/ymp-build/.cache/"+sbasename(path);
+        create_dir(file);
+        string farg = file+"/"+sbasename(path);
+        if(!isfile(farg)){
+            fetch(path,farg);
+        }
+        srcpath=farg;
+    }
+    if(isfile(srcpath)){
+        srcpath = DESTDIR+"/tmp/ymp-build/"+calculate_md5sum(srcpath);
+        var tar = new archive();
+        tar.load(srcpath);
+        tar.set_target(srcpath);
+        tar.extract_all();
+        if(!isfile(srcpath+"/ympbuild")){
+            error_add(_("Package is invalid: %s").printf(path));
+            remove_all(srcpath);
+            return 2;
+        }
+    }
+    if(!isfile(srcpath+"/ympbuild")){
+        return 0;
+    }
+    if(!set_build_target(srcpath)){
+        return 1;
+    }
+    if(!create_metadata_info()){
+        return 1;
+    }
+    // Set build target again (emerge change build target)
+    set_ympbuild_srcpath(srcpath);
+    string build_path = srealpath(get_build_dir()+calculate_md5sum(srcpath+"/ympbuild"));
+    set_ympbuild_buildpath(build_path);
+
+
+    info("Check build dependencies");
+    if(!check_build_dependencies({srcpath})){
+        return 1;
+    }
+    info("Fetch sources");
+    if(!fetch_package_sources()){
+        return 2;
+    }
+    if(!get_bool("no-source")){
+        info("Create source package");
+        srcpkg = create_source_archive();
+        if (srcpkg == ""){
+            return 1;
+        }
+        string target = output + "/" + output_package_name+"_source.ymp";
+        move_file(srcpkg, target);
+    }
+    if(!get_bool("no-binary")){
+        info("Create binary package");
+        if(!extract_package_sources()){
+            return 3;
+        }
+        if(!build_package()){
+            return 1;
+        }
+        binpkg = create_binary_package();
+        if(binpkg == ""){
+            return 1;
+        }
+        if(get_bool("install")){
+            if(0 != install_main({binpkg})){
+                return 1;
+            }
+        }
+        string target = output + "/" + output_package_name+"_"+getArch()+".ymp";
+        move_file(binpkg, target);
+    }
     return 0;
 }
 
@@ -191,7 +218,6 @@ private bool extract_package_sources(){
             continue;
         }
         string srcfile = sbasename(src);
-        print(srcfile);
         if(tar.is_archive(srcfile)){
             tar.load(srcfile);
             tar.extract_all();
@@ -231,7 +257,7 @@ private bool build_package(){
     return true;
 }
 
-private bool create_source_archive(){
+private string create_source_archive(){
     print(colorize(_("Create source package from :"),yellow)+ympbuild_srcpath);
     cd(ympbuild_srcpath);
     string metadata = get_ympbuild_metadata();
@@ -263,8 +289,7 @@ private bool create_source_archive(){
     }
     set_archive_type("zip","none");
     tar.create();
-    move_file(ympbuild_buildpath+"/source.zip",output_package_path+"_source.ymp");
-    return true;
+    return ympbuild_buildpath+"/source.zip";
 }
 
 private bool create_files_info(){
@@ -322,7 +347,7 @@ private bool create_files_info(){
     writefile(ympbuild_buildpath+"/output/links",links_data);
     return true;
 }
-private string output_package_path;
+private string output_package_name;
 private bool create_metadata_info(){
     string metadata = get_ympbuild_metadata();
     debug("Create metadata info: "+ympbuild_buildpath+"/output/metadata.yaml");
@@ -441,7 +466,7 @@ private bool create_metadata_info(){
     if(has_error()){
         return false;
     }
-    output_package_path = ympbuild_srcpath+"/"+name+"_"+version+"_"+release;
+    output_package_name = name+"_"+version+"_"+release;
     writefile(ympbuild_buildpath+"/output/metadata.yaml",trim(new_data));
     return true;
 }
@@ -490,10 +515,10 @@ private void create_data_file(){
     new_data += "    arch: "+getArch()+"\n";
     new_data += "    archive-size: "+size.to_string()+"\n";
     writefile(ympbuild_buildpath+"/output/metadata.yaml",trim(new_data));
-    
+
 }
 
-private void create_binary_package(){
+private string create_binary_package(){
     print(colorize(_("Create binary package from: %s"),yellow).printf(ympbuild_buildpath));
     cd(ympbuild_buildpath+"/output");
     create_data_file();
@@ -512,7 +537,7 @@ private void create_binary_package(){
     }
     set_archive_type("zip","none");
     tar.create();
-    move_file(ympbuild_buildpath+"/package.zip",output_package_path+"_"+getArch()+".ymp");
+    return ympbuild_buildpath+"/package.zip";
 }
 
 void build_init(){

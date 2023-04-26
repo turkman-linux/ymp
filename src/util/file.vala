@@ -283,7 +283,6 @@ public bool isexists(string path){
     var file = File.new_for_path (path);
     return file.query_exists();
 }
-
 //DOC: `string srealpath(string path):`
 //DOC: safe realpath function.
 public string srealpath(string path){
@@ -291,7 +290,10 @@ public string srealpath(string path){
     if(path == null || path == "" || path == "/"){
         return "/";
     }
-    string real = Posix.realpath(path);
+    string real = path;
+    if("/../" in path || !startswith(path,"/")){
+        real = Posix.realpath(path);
+    }
     if(real == null || real == ""){
         return path;
     }
@@ -304,7 +306,8 @@ public string[] find(string path){
     debug(_("Search: %s").printf(path));
     find_ret = {};
     if(path == "" || path == null){
-        return {};
+        return {
+};
     }
     find_operation(path);
     return find_ret;

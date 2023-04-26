@@ -156,13 +156,13 @@ private void ympbuild_init(){
 //DOC: configure ympbuild file directory
 public void set_ympbuild_srcpath(string path){
     debug(_("Set ympbuild src path : %s").printf(path));
-    ympbuild_srcpath = srealpath(path);
+    ympbuild_srcpath = trim(srealpath(path));
 }
 
 //DOC: `void set_ympbuild_srcpath(string path):`
 //DOC: configure ympbuild file directory
 public void set_ympbuild_buildpath(string path){
-    ympbuild_buildpath = srealpath(path);
+    ympbuild_buildpath = trim(srealpath(path));
     create_dir(ympbuild_buildpath);
     debug(_("Set ympbuild build path : %s").printf(ympbuild_buildpath));
     ympbuild_init();

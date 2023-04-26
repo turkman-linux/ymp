@@ -86,12 +86,13 @@ public int debian_convert(string file){
     set_ympbuild_buildpath(output);
     deb_extract(file,output+"/output");
     create_debian_metadata(output+"/output");
-    output_package_path=file;
     create_files_info();
-    create_binary_package();
+    string binpkg = create_binary_package();
+    string target = pwd() + "/" + output_package_name+"_"+getArch()+".ymp";
+    move_file(binpkg, target);
     if(get_bool("install")){
         set_bool("no-emerge",true);
-        install_main({file+"_"+getArch()+".ymp"});
+        install_main({target});
     }
     return 0;
 }
