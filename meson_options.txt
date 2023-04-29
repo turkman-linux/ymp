@@ -1,5 +1,4 @@
 option('static', type: 'boolean', value: 'false')
-option('shared', type: 'boolean', value: 'false')
 option('locale', type: 'boolean', value: 'true')
 option('experimental', type: 'boolean', value: 'false')
 option('test', type: 'boolean', value: 'false')
