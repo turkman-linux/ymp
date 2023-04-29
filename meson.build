@@ -70,7 +70,7 @@ if get_option('libreadline')
         deps += [libreadline]
 endif
 
-#libarchive (no vapi)
+#libcurl (no vapi)
 if get_option('libcurl')
         libcurl = dependency('libcurl', static:get_option('static'), required:false)
         if not libcurl.found()
@@ -171,7 +171,7 @@ if get_option('tools')
 endif
 ########### build test ###########
 if get_option('test')
-    executable('ymp-test', 'test/test.vala', dependencies: deps, link_args: args, link_with: lib)
+    executable('ymp-test', 'test/test.vala', dependencies: deps, link_args: args, link_with: libymp)
 endif
 
 ########### build scripts ###########
