@@ -154,9 +154,9 @@ endforeach
 
 ########### build libymp ###########
 if get_option('static')
-    libymp = library('ymp', sources, dependencies: deps, link_args: args)
-else
     libymp = static_library('ymp', sources, dependencies: deps, link_args: args)
+else
+    libymp = library('ymp', sources, dependencies: deps, link_args: args)
 endif
 install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('libdir'), rename: 'libymp.so')
 
