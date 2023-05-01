@@ -24,9 +24,11 @@ private int build_single(string path){
     string srcpath=srealpath(path);
     string srcpkg = "";
     string binpkg = "";
-    string output = srealpath(get_value("output"));
+    string output = get_value("output");
     if(output == ""){
         output=srealpath(srcpath);
+    }else{
+        output=srealpath(output);
     }
     if(!isdir(output)){
         create_dir(output);
