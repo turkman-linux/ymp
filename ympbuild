@@ -19,7 +19,6 @@ cd ymp-master
 setup(){
     meson setup build --prefix=/usr \
         -Ddoc=true \
-        -Dshared=true \
         -Dscripts=true \
         -Dlibbrotli=false \
         $(use_opt libarchive "" "-Dlibarchive=false") \

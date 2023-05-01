@@ -74,9 +74,9 @@ function ymp_print_metadata(){
         done
         for flag in ${uses[@]} ${uses_extra[@]} ; do
             flag_dep="${flag}_depends"
-            if [[ "$(eval echo \\${${flag_dep}[@]})" != "" ]] ; then
+            if [[ "$(eval echo \${${flag_dep}[@]})" != "" ]] ; then
                 echo "    ${flag}-depends:"
-                for dep in $(eval echo \\${${flag_dep}[@]}) ; do
+                for dep in $(eval echo \${${flag_dep}[@]}) ; do
                     echo "      - $dep"
                 done
             fi
