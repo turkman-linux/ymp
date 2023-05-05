@@ -20,7 +20,7 @@ run_command('bash', './tool/mkctx.sh',
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
 args = ['-X','-O3', '-flto', '-Wall',
-            '-fvisibility=hidden', '-Wextra','-s',
+            '-fvisibility=hidden', '-Wextra', '-Wno-unused-parameter','-s',
             '-Wl,--gc-sections','-ffunction-sections',
             '-fdata-sections', '-fno-exceptions']
 
@@ -63,7 +63,7 @@ endif
 
 #libarchive
 if get_option('libreadline')
-        libreadline = dependency('libreadline', static:get_option('static'), required:false)
+        libreadline = dependency('readline', static:get_option('static'), required:false)
         if not libreadline.found()
             conf += ['no_libreadline']
         endif
@@ -145,8 +145,8 @@ endif
 
 ########### build ymp.pc ###########
 
-run_command('install', 'data/ymp.pc', meson.current_build_dir())
-run_command('sed', '-i', 's/@version@/'+meson.project_version()+'/g', meson.current_build_dir()+'/ymp.pc')
+run_command('install', 'data/ymp.pc', meson.current_build_dir(), check: true)
+run_command('sed', '-i', 's/@version@/'+meson.project_version()+'/g', meson.current_build_dir()+'/ymp.pc', check: true)
 
 foreach c : conf
     add_project_arguments('-D', c, language: 'vala')

@@ -61,7 +61,7 @@ apk add meson musl-dev bash glib-dev readline-dev libarchive-dev libcurl curl-de
 ### 2. Build source code
 For options please see **meson_options.txt**
 ```bash
-meson build -Dshared=true <options>
+meson build <options>
 ninja -C build
 ```
 * For debian: You may need `-Dlibbrotli=false` option.
