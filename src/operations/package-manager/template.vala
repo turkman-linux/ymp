@@ -48,6 +48,7 @@ public int template_main(string[] args){
         data += "setup(){\n";
         data += "    meson setup build --prefix=/usr \\\n";
         data += "        --libdir=/usr/lib64/\n";
+        data += "        -Ddefault_library=both\n";
         data += "}\n\n";
         data += "build(){\n";
         data += "    ninja -C build $jobs\n";

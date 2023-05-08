@@ -16,7 +16,7 @@ export CC="@CC@"
 export LDFLAGS="@LDFLAGS@"
 
 function _dump_variables(){
-    set -o posix ; set  
+    set -o posix ; set
 }
 function ymp_print_metadata(){
     echo "ymp:"
