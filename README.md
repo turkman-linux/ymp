@@ -1,5 +1,5 @@
 # YMP (Yerli ve Milli Paket sistemi)
-![ymp logo](data/application-x-ymp.svg)
+<img src="data/application-x-ymp.svg" width="200">
 
 A package manager for Turkish
 
@@ -10,7 +10,7 @@ A package manager for Turkish
 
 
 ## Features
-* 🇹🇷 Made in Turkiye 🇹🇷
+* 🇹🇷 Made in Türkiye 🇹🇷
 * Binary / Source package support
 * Use flag support (for source packages only)
 * Built-in httpd
