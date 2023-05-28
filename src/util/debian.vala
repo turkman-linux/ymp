@@ -83,12 +83,13 @@ public int debian_convert(string file){
     if(isdir(output)){
         remove_all(output);
     }
-    set_ympbuild_buildpath(output);
-    deb_extract(file,output+"/output");
-    create_debian_metadata(output+"/output");
-    create_files_info();
-    string binpkg = create_binary_package();
-    string target = pwd() + "/" + output_package_name+"_"+getArch()+".ymp";
+    var bd = new builder();
+    bd.yb.set_ympbuild_buildpath(output);
+    deb_extract(file,bd.output+"/output");
+    create_debian_metadata(bd.output+"/output");
+    bd.create_files_info();
+    string binpkg = bd.create_binary_package();
+    string target = pwd() + "/" + bd.output_package_name+"_"+getArch()+".ymp";
     move_file(binpkg, target);
     if(get_bool("install")){
         set_bool("no-emerge",true);

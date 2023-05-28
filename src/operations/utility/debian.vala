@@ -12,8 +12,7 @@ public int debian_main(string[] args){
             deb_create(arg,output);
         }
     }
-    
-    
+
     if(get_bool("update-catalog")){
         debian_update_catalog();
     }if(get_bool("get-pkgname")){
@@ -21,7 +20,7 @@ public int debian_main(string[] args){
             print(find_debian_pkgname_from_catalog(arg));
         }
     }
-    
+
     if(get_bool("install")){
         set_bool("convert",true);
     }if(get_bool("convert")){

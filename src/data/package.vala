@@ -278,23 +278,26 @@ public class package {
             error_add(_("Package archive is missing."));
             return;
         }
+        string curdir = pwd();
+        var bd = new builder();
         create_dir(DESTDIR+"/tmp/ymp-build/"+name);
         pkgfile.set_target(DESTDIR+"/tmp/ymp-build/"+name);
-        set_ympbuild_srcpath(DESTDIR+"/tmp/ymp-build/"+name);
-        set_ympbuild_buildpath(DESTDIR+"/tmp/ymp-build/"+name);
+        bd.yb.set_ympbuild_srcpath(DESTDIR+"/tmp/ymp-build/"+name);
+        bd.yb.set_ympbuild_buildpath(DESTDIR+"/tmp/ymp-build/"+name);
         if(!get_bool("no-clear")){
-            remove_all(ympbuild_buildpath);
+            remove_all(bd.yb.ympbuild_buildpath);
         }
         pkgfile.set_target(DESTDIR+"/tmp/ymp-build/"+name);
         pkgfile.extract_all();
-        set_build_target(DESTDIR+"/tmp/ymp-build/"+name);
-        set_ympbuild_buildpath(DESTDIR+"/tmp/ymp-build/"+name);
-        create_metadata_info();
-        fetch_package_sources();
-        extract_package_sources();
-        build_package();
+        bd.set_build_target(DESTDIR+"/tmp/ymp-build/"+name);
+        bd.yb.set_ympbuild_buildpath(DESTDIR+"/tmp/ymp-build/"+name);
+        bd.create_metadata_info();
+        bd.fetch_package_sources();
+        bd.extract_package_sources();
+        bd.build_package();
         error(1);
-        quarantine_import_from_path(ympbuild_buildpath+"/output");
+        quarantine_import_from_path(bd.yb.ympbuild_buildpath+"/output");
+        cd(curdir);
     }
 
 
