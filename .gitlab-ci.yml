@@ -58,6 +58,6 @@ turkman:
   script:
     - ymp repo --update --ignore-gpg
     - ymp it meson ninja gcc bash vala binutils flex pkgconf file --no-emerge --upgrade
-    - meson build -Ddebug=false -Dstatic=true -Dtools=true -Dtest=true -Dlibbrotli=false
+    - meson build -Ddebug=false -Dtools=true -Dtest=true -Dlibbrotli=false
     - ninja -C build
     - ninja -C build install
