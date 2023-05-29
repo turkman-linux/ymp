@@ -48,10 +48,23 @@ public int remove_single(package p){
                 file=file[41:];
                 remove_file(DESTDIR+"/"+file);
             }
-        }foreach(string file in p.list_links()){
+        }
+        foreach(string file in p.list_links()){
             if(file.length > 3){
                 file=ssplit(file," ")[0];
                 remove_file(DESTDIR+"/"+file);
+            }
+        }
+        foreach(string file in p.list_files()){
+            string dir = sdirname(file);
+            if(is_empty_dir(DESTDIR+"/"+dir)){
+                remove_dir(DESTDIR+"/"+dir);
+            }
+        }
+        foreach(string file in p.list_links()){
+            string dir = sdirname(file);
+            if(is_empty_dir(DESTDIR+"/"+dir)){
+                remove_dir(DESTDIR+"/"+dir);
             }
         }
     }

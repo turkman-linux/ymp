@@ -307,6 +307,28 @@ public string srealpath(string path){
     return real;
 }
 
+private string p_realpath(string path){
+    string[] p = ssplit(path,"/");
+    string cur = DESTDIR+"/";
+    foreach(string dir in p){
+        if(issymlink(cur+dir)){
+            string link = sreadlink(cur+dir);
+            if(!startswith(link,"/")){
+                cur += link;
+            }else{
+                cur = link;
+            }
+        }else{
+            cur += dir;
+        }
+        if(isfile(cur)){
+            return cur;
+        }
+        cur += "/";
+    }
+    return cur;
+}
+
 //DOC: `string[] find(string path):`
 //DOC: find file and directories with parents
 public string[] find(string path){
@@ -357,6 +379,15 @@ public string sreadlink(string path){
        }
     }
     return "";
+}
+
+//DOC: `bool is_empty_dir(string path):`
+//DOC: check path is empty directory
+public bool is_empty_dir(string path){
+    if(!isdir(path)){
+        return false;
+    }
+    return listdir(path).length == 0;
 }
 
 //DOC: `string calculate_checksum(string path, ChecksumType type):`

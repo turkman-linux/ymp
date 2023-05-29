@@ -74,6 +74,7 @@ public bool quarantine_validate_files(){
         foreach(string line in ssplit(file_data,"\n")){
             if(line.length > 41){
                 string path = line[41:];
+                path = p_realpath(path)[1:];
                 new_files.add(path);
             }
         }
@@ -82,6 +83,7 @@ public bool quarantine_validate_files(){
             foreach(string line in ssplit(exists_file_data,"\n")){
                 if(line.length > 41){
                     string path = line[41:];
+                    path = p_realpath(path)[1:];
                     new_files.remove(path);
                 }
             }
@@ -149,6 +151,8 @@ public bool quarantine_validate_files(){
         foreach(string line in ssplit(link_data,"\n")){
             if(" " in line){
                 string path = ssplit(line," ")[0];
+                path = p_realpath(sdirname(path))+"/"+sbasename(path);
+                path = path[1:];
                 new_links.add(path);
             }
         }
@@ -157,6 +161,8 @@ public bool quarantine_validate_files(){
             foreach(string line in ssplit(exists_link_data,"\n")){
                 if(" " in line){
                     string path = ssplit(line," ")[0];
+                    path = p_realpath(sdirname(path))+"/"+sbasename(path);
+                    path = path[1:];
                     new_links.remove(path);
                 }
             }
