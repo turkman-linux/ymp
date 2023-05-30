@@ -2,7 +2,7 @@
 //DOC: set or get ymp global variable
 //DOC: Example usage:
 //DOC: ```vala
-//DOC: set_value ("CFLAGS","-O3");
+//DOC: set_value ("CFLAGS", "-O3");
 //DOC: var jobs = get_value ("jobs");
 //DOC: if (get_bool ("debug")) {
 //DOC:     stderr.printf ("Debug mode enabled");
@@ -15,9 +15,9 @@ class variable {
 
 variable[] vars;
 
-//DOC: `void set_value (string name, string value):`
+//DOC: `void set_value (string name,  string value):`
 //DOC: add a global ymp variable as string
-public void set_value (string name, string value) {
+public void set_value (string name,  string value) {
     if (vars == null) {
         vars = {};
     }
@@ -41,7 +41,7 @@ public void set_value (string name, string value) {
     vars += varx;
 }
 
-private void set_value_readonly (string name, string value) {
+private void set_value_readonly (string name,  string value) {
     if (vars == null) {
         vars = {};
     }
@@ -57,7 +57,7 @@ private void set_value_readonly (string name, string value) {
             return;
         }
     }
-    set_value (name,"");
+    set_value (name, "");
     variable varx = new variable ();
     varx.name = name.up ();
     varx.value = value;
@@ -93,13 +93,13 @@ public bool get_bool (string name) {
     return get_value (name).down () == "true";
 }
 
-//DOC: `void set_bool (string name, bool value):`
+//DOC: `void set_bool (string name,  bool value):`
 //DOC: add a global ymp variable as bool
-public void set_bool (string name,bool value) {
+public void set_bool (string name, bool value) {
     if (value) {
-        set_value (name,"true");
+        set_value (name, "true");
     }else {
-        set_value (name,"false");
+        set_value (name, "false");
     }
 }
 
@@ -115,11 +115,11 @@ public string[] list_values () {
     return ret;
 }
 
-//DOC: `void set_env (string variable, string value):`
+//DOC: `void set_env (string variable,  string value):`
 //DOC: add environmental variable
-public void set_env (string variable,string value) {
+public void set_env (string variable, string value) {
     if (value != null) {
-        GLib.Environment.set_variable (variable,value,true);
+        GLib.Environment.set_variable (variable, value, true);
     }
 }
 

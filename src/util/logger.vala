@@ -26,8 +26,8 @@ public extern void info (string msg);
 //DOC: Change string color if no_color is false.
 //DOC: Example usage:
 //DOC: ```vala
-//DOC: var msg = colorize ("Hello",red);
-//DOC: var msg2 = colorize ("world",blue);
+//DOC: var msg = colorize ("Hello", red);
+//DOC: var msg2 = colorize ("world", blue);
 //DOC: stdout.printf (msg+" "+msg2);
 //DOC: ```
 public string colorize (string msg, int color) {
@@ -39,19 +39,19 @@ public string colorize (string msg, int color) {
 public extern void print_stderr (string msg);
 
 public void warning_fn (string message) {
-    print_stderr ("%s: %s".printf (colorize (_ ("WARNING"),yellow),message));
+    print_stderr ("%s: %s".printf (colorize (_ ("WARNING"), yellow), message));
 }
 
 public void debug_fn (string message) {
-    print_stderr ("%s: %s".printf (colorize (_ ("DEBUG"),blue),message));
+    print_stderr ("%s: %s".printf (colorize (_ ("DEBUG"), blue), message));
 }
 
 public void info_fn (string message) {
-    print_stderr ("%s: %s".printf (colorize (_ ("INFO"),green),message));
+    print_stderr ("%s: %s".printf (colorize (_ ("INFO"), green), message));
 }
 
 public string colorize_fn (string msg, int color) {
-    return ccolorize (msg,color.to_string ());
+    return ccolorize (msg, color.to_string ());
 }
 public string colorize_dummy (string msg, int color) {
     return msg;
@@ -68,7 +68,7 @@ public void set_terminal_title (string msg) {
        return;
     #else
     if (!get_bool ("no-color")) {
-        print_fn ("\x1b]0;"+msg+"\x07",false,false);
+        print_fn ("\x1b]0;" + msg + "\x07", false, false);
     }
     #endif
 }
@@ -88,7 +88,7 @@ public void error (int status) {
     if (has_error ()) {
          if (!get_bool ("ignore-error")) {
             foreach (string error in errors) {
-                print_stderr ("%s: %s".printf (colorize (_ ("ERROR"),red),error));
+                print_stderr ("%s: %s".printf (colorize (_ ("ERROR"), red), error));
             }
         }
         errors = null;

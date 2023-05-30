@@ -5,7 +5,7 @@
          -X -shared -o libymp_template.so
 */
 // Plugins require plugin_init function like this
-public void plugin_init(){
+public void plugin_init () {
     // All plugins loaded after ctx_init function.
-    info("Hello World");
+    info ("Hello World");
 }

@@ -1,34 +1,34 @@
 //DOC: ## String functions
 //DOC: easy & safe string operation functions.
 
-//DOC: `string join (string f, string[] array):`
+//DOC: `string join (string f,  string[] array):`
 //DOC: merge array items. insert **f** in between
 //DOC: Example usage:
 //DOC: ```vala
-//DOC: string[] aa = {"hello","world","!"};
-//DOC: string bb = join (aa," ");
+//DOC: string[] aa = {"hello", "world", "!"};
+//DOC: string bb = join (aa, " ");
 //DOC: stdout.printf (bb);
 //DOC: ```
-public string join (string f,string[] array) {
+public string join (string f, string[] array) {
     string tmp="";
     if (array == null) {
         return "";
     }
     foreach (string item in array) {
-        if (item.length>0 && item != null) {
+        if (item.length > 0 && item != null) {
             tmp += item + f;
         }
     }
     if (f.length >= tmp.length) {
         return tmp;
     }
-    return tmp[0:tmp.length-f.length];
+    return tmp[0:tmp.length - f.length];
 }
-//DOC: `public int[] sindex (string f, string[] array)`:
+//DOC: `public int[] sindex (string f,  string[] array)`:
 //DOC: Get item index number array in string array.
-public int[] sindex (string f, string[] array) {
+public int[] sindex (string f,  string[] array) {
     int[] ret = {};
-    for (int i=0;i<array.length;i++) {
+    for (int i=0;i < array.length;i++) {
         if (array[i] == f) {
             ret += i;
         }
@@ -36,10 +36,10 @@ public int[] sindex (string f, string[] array) {
     return ret;
 }
 
-//DOC: `string[] ssplit (string data, string f):`
+//DOC: `string[] ssplit (string data,  string f):`
 //DOC: safe split function. If data null or empty return empty array.
-//DOC: if **f** not in data, return single item array.
-public string[] ssplit (string data, string f) {
+//DOC: if **f** not in data,  return single item array.
+public string[] ssplit (string data,  string f) {
     if (data == null || f == null || data.length == 0) {
         debug (_ ("empty data"));
         return {};
@@ -48,7 +48,7 @@ public string[] ssplit (string data, string f) {
     }
     string[] ret = {};
     foreach (string i in data.split (f)) {
-        if (i.length>0 && i != null) {
+        if (i.length > 0 && i != null) {
             ret += i;
         }
     }
@@ -58,35 +58,35 @@ public string[] ssplit (string data, string f) {
 //DOC: `string trim (string data):`
 //DOC: fixes excess indentation
 public string trim (string data) {
-    if (data==null || data == "") {
+    if (data == null || data == "") {
         return "";
     }
-    int min = -1;
+    int min =  - 1;
     string new_data = "";
-    foreach (string line in ssplit (data,"\n")) {
+    foreach (string line in ssplit (data, "\n")) {
         int level = count_tab (line);
         if (line.length == 0) {
             continue;
         }
-        if (min == -1 || count_tab (line) < min) {
+        if (min ==  - 1 || count_tab (line)  <  min) {
             min = level;
         }
     }
-    if (min == -1) {
+    if (min ==  - 1) {
         min = 0;
     }
-    foreach (string line in ssplit (data,"\n")) {
+    foreach (string line in ssplit (data, "\n")) {
         if (line.length == 0) {
             continue;
         }
-        new_data += line[min:]+"\n";
+        new_data += line[min:] + "\n";
     }
-    return new_data[:new_data.length-1];
+    return new_data[:new_data.length - 1];
 }
 //DOC: `int count_tab (string line):`
 //DOC: count indentation level
 public int count_tab (string line) {
-    for (int i = 0; i<line.length;i++) {
+    for (int i = 0; i < line.length;i++) {
         if (line[i] != ' ') {
             return i;
         }
@@ -94,45 +94,45 @@ public int count_tab (string line) {
     return 0;
 }
 
-//DOC: `boot startswith (string data, string f):`
+//DOC: `boot startswith (string data,  string f):`
 //DOC: return true if data starts with f
-public bool startswith (string data,string f) {
-    if (data.length < f.length) {
+public bool startswith (string data, string f) {
+    if (data.length  <  f.length) {
         return false;
     }
     return data[:f.length] == f;
 }
-//DOC: `bool endswith (string data, string f):`
+//DOC: `bool endswith (string data,  string f):`
 //DOC: return true if data ends with f
-public bool endswith (string data,string f) {
-    if (data.length < f.length) {
+public bool endswith (string data, string f) {
+    if (data.length  <  f.length) {
         return false;
     }
-    return data[data.length-f.length:] == f;
+    return data[data.length - f.length:] == f;
 }
 
 //DOC: `string sbasename (string path):`
 //DOC: safe basename. return filename
 public string sbasename (string path) {
     debug (_ ("Basename: %s").printf (path));
-    string[] f = ssplit (path,"/");
-    return f[f.length-1];
+    string[] f = ssplit (path, "/");
+    return f[f.length - 1];
 }
 
 //DOC: `string sdirname (string path):`
 //DOC: safe dirname. return path name
 public string sdirname (string path) {
     debug (_ ("Dirname: %s").printf (path));
-    string[] f = ssplit (path,"/");
+    string[] f = ssplit (path, "/");
     string ret = "";
     if (f.length == 0) {
         return "";
     }
-    foreach (string g in f[:f.length-1]) {
-        ret +=g+"/";
+    foreach (string g in f[:f.length - 1]) {
+        ret +=g + "/";
     }
     if (path[0] == '/') {
-        ret = "/"+ret;
+        ret = "/" + ret;
     }
     return ret;
 }
@@ -147,6 +147,6 @@ public string[] uniq (string[] array) {
     return ret;
 }
 
-public string str_add (string str1, string str2) {
+public string str_add (string str1,  string str2) {
     return str1 + str2;
 }
