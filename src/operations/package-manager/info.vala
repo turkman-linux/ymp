@@ -20,7 +20,7 @@ public int info_main (string[] args) {
                 p = get_installed_package (name);
             }
             if (p != null) {
-                print ("%s: %s".printf (get_value ("get"),  p.get (get_value ("get"))));
+                print ("%s: %s".printf (get_value ("get"), p.get (get_value ("get"))));
             }
         }
     }else {
@@ -55,10 +55,10 @@ void info_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (info_main);
-    op.names =  {_ ("info"), "info", "i"};
+    op.names = {_ ("info"), "info", "i"};
     op.help.name = _ ("info");
     op.help.description = _ ("Get informations from package manager databases.");
-    op.help.add_parameter ("--deps",  _ ("list required packages"));
-    op.help.add_parameter ("--revdeps",  _ ("list packages required by package"));
+    op.help.add_parameter ("--deps", _ ("list required packages"));
+    op.help.add_parameter ("--revdeps", _ ("list packages required by package"));
     add_operation (op);
 }

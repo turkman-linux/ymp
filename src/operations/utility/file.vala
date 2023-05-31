@@ -1,11 +1,11 @@
 public int file_main (string[] args) {
     if (get_bool ("remove")) {
         return remove_file_main (args);
-    }else if  (get_bool ("copy")) {
+    }else if (get_bool ("copy")) {
         return copy_file_main (args);
-    }else if  (get_bool ("move")) {
+    }else if (get_bool ("move")) {
         return copy_file_main (args);
-    }else if  (get_bool ("extract")) {
+    }else if (get_bool ("extract")) {
         return extract_main (args);
     }
     return 0;
@@ -64,13 +64,13 @@ void file_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (file_main);
-    op.names =  {_ ("file"), "f",  "file"};
+    op.names = {_ ("file"), "f", "file"};
     op.help.name = _ ("file");
     op.help.minargs=1;
     op.help.description = _ ("Copy / Move / Remove files or directories.");
     op.help.add_parameter ("--remove", _ ("remove file or directories"));
     op.help.add_parameter ("--copy", _ ("copy file or directories"));
     op.help.add_parameter ("--move", _ ("move file or directories"));
-    op.help.add_parameter ("--extract", _ ("extract archive file  (same as extract operation)"));
+    op.help.add_parameter ("--extract", _ ("extract archive file (same as extract operation)"));
     add_operation (op);
 }

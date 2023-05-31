@@ -4,7 +4,7 @@ public int install_main (string[] args) {
         error (1);
     }
     if (!get_bool ("no-emerge") && usr_is_merged ()) {
-        error_add (_ ("Install  (from source) operation with usrmerge is not allowed!"));
+        error_add (_ ("Install (from source) operation with usrmerge is not allowed!"));
         error (31);
     }
     single_instance ();
@@ -27,7 +27,7 @@ public int install_main (string[] args) {
         info (_ ("Resolve dependency done: %s").printf (join (" ", pkgs)));
     }
     quarantine_reset ();
-    package[] pkg_obj =  {};
+    package[] pkg_obj = {};
     foreach (string name in pkgs) {
         if (isfile (name)) {
             continue;
@@ -59,7 +59,7 @@ public int install_main (string[] args) {
     error (1);
     print (colorize (_ ("Clearing leftovers"), yellow));
     foreach (string file in leftovers) {
-        remove_file (DESTDIR+"/"+file);
+        remove_file (DESTDIR + "/" + file);
     }
     set_value_readonly ("OPERATION", "postinst");
     sysconf_main (args);
@@ -79,11 +79,11 @@ public package install_single (string pkg) {
         p.download ();
     }
     if (p.is_source) {
-        if  (! (getArch () in p.gets ("arch"))) {
+        if (! (getArch () in p.gets ("arch"))) {
             error_add (_ ("Package architecture is not supported."));
         }
     }else {
-        if  (p.get ("arch") != getArch ()) {
+        if (p.get ("arch") != getArch ()) {
             error_add (_ ("Package architecture is not supported."));
         }
     }
@@ -122,13 +122,13 @@ public string[] calculate_leftover (package[] pkgs) {
                  files.add (ssplit (link, " ")[0]);
              }
              // new files
-             foreach (string file in ssplit (readfile (get_storage ()+"/quarantine/files/"+p.name), "\n")) {
+             foreach (string file in ssplit (readfile (get_storage () + "/quarantine/files/" + p.name), "\n")) {
                  if (file.length > 41) {
                      files.remove (file[41:]);
                  }
              }
              //new symlinks
-             foreach (string link in ssplit (readfile (get_storage ()+"/quarantine/links/"+p.name), "\n")) {
+             foreach (string link in ssplit (readfile (get_storage () + "/quarantine/links/" + p.name), "\n")) {
                  files.remove (ssplit (link, " ")[0]);
              }
         }
@@ -139,15 +139,15 @@ void install_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (install_main);
-    op.names =  {_ ("install"), "install", "it", "add"};
+    op.names = {_ ("install"), "install", "it", "add"};
     op.help.name = _ ("install");
     op.help.description = _ ("Install package from source or package file or repository");
-    op.help.add_parameter ("--ignore-dependency",  _ ("disable dependency check"));
-    op.help.add_parameter ("--ignore-satisfied",  _ ("ignore not satisfied packages"));
-    op.help.add_parameter ("--sync-single",  _ ("sync quarantine after every package installation"));
-    op.help.add_parameter ("--download-only",  _ ("download packages without installation"));
-    op.help.add_parameter ("--reinstall",  _ ("reinstall if already installed"));
-    op.help.add_parameter ("--upgrade",  _ ("upgrade all packages"));
-    op.help.add_parameter ("--no-emerge",  _ ("use binary packages"));
+    op.help.add_parameter ("--ignore-dependency", _ ("disable dependency check"));
+    op.help.add_parameter ("--ignore-satisfied", _ ("ignore not satisfied packages"));
+    op.help.add_parameter ("--sync-single", _ ("sync quarantine after every package installation"));
+    op.help.add_parameter ("--download-only", _ ("download packages without installation"));
+    op.help.add_parameter ("--reinstall", _ ("reinstall if already installed"));
+    op.help.add_parameter ("--upgrade", _ ("upgrade all packages"));
+    op.help.add_parameter ("--no-emerge", _ ("use binary packages"));
     add_operation (op);
 }

@@ -15,9 +15,9 @@ class variable {
 
 variable[] vars;
 
-//DOC: `void set_value (string name,  string value):`
+//DOC: `void set_value (string name, string value):`
 //DOC: add a global ymp variable as string
-public void set_value (string name,  string value) {
+public void set_value (string name, string value) {
     if (vars == null) {
         vars = {};
     }
@@ -41,7 +41,7 @@ public void set_value (string name,  string value) {
     vars += varx;
 }
 
-private void set_value_readonly (string name,  string value) {
+private void set_value_readonly (string name, string value) {
     if (vars == null) {
         vars = {};
     }
@@ -93,7 +93,7 @@ public bool get_bool (string name) {
     return get_value (name).down () == "true";
 }
 
-//DOC: `void set_bool (string name,  bool value):`
+//DOC: `void set_bool (string name, bool value):`
 //DOC: add a global ymp variable as bool
 public void set_bool (string name, bool value) {
     if (value) {
@@ -115,7 +115,7 @@ public string[] list_values () {
     return ret;
 }
 
-//DOC: `void set_env (string variable,  string value):`
+//DOC: `void set_env (string variable, string value):`
 //DOC: add environmental variable
 public void set_env (string variable, string value) {
     if (value != null) {

@@ -43,7 +43,7 @@ void debian_init () {
     op.help.add_parameter ("--create", _ ("create debian package"));
     op.help.add_parameter ("--convert", _ ("convert debian package to ymp package"));
     op.help.add_parameter (colorize (_ ("Install options"), magenta), "");
-    op.help.add_parameter ("--install", _ ("install debian package") + colorize (colorize (colorize ("  (%s)", red), 5), 1).printf (_ ("Dangerous")));
+    op.help.add_parameter ("--install", _ ("install debian package") + colorize (colorize (colorize (" (%s)", red), 5), 1).printf (_ ("Dangerous")));
     op.help.add_parameter (colorize (_ ("Catalog options"), magenta), "");
     op.help.add_parameter ("--update-catalog", _ ("update debian catalog from debian repository"));
     op.help.add_parameter ("--get-pkgname", _ ("get source package name from catalog"));

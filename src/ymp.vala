@@ -4,7 +4,7 @@
 //DOC: ```vala
 //DOC: int main (string[] args) {
 //DOC:     var ymp = new ymp_init (args);
-//DOC:     ymp.add_process ("install",  {"ncurses", "readline"});
+//DOC:     ymp.add_process ("install", {"ncurses", "readline"});
 //DOC:     ymp.add_script ("install bash glibc perl");
 //DOC:     ymp.run ();
 //DOC:     return 0;

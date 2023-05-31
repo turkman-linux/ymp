@@ -1,7 +1,7 @@
 //DOC: ## String functions
 //DOC: easy & safe string operation functions.
 
-//DOC: `string join (string f,  string[] array):`
+//DOC: `string join (string f, string[] array):`
 //DOC: merge array items. insert **f** in between
 //DOC: Example usage:
 //DOC: ```vala
@@ -24,9 +24,9 @@ public string join (string f, string[] array) {
     }
     return tmp[0:tmp.length - f.length];
 }
-//DOC: `public int[] sindex (string f,  string[] array)`:
+//DOC: `public int[] sindex (string f, string[] array)`:
 //DOC: Get item index number array in string array.
-public int[] sindex (string f,  string[] array) {
+public int[] sindex (string f, string[] array) {
     int[] ret = {};
     for (int i=0;i < array.length;i++) {
         if (array[i] == f) {
@@ -36,10 +36,10 @@ public int[] sindex (string f,  string[] array) {
     return ret;
 }
 
-//DOC: `string[] ssplit (string data,  string f):`
+//DOC: `string[] ssplit (string data, string f):`
 //DOC: safe split function. If data null or empty return empty array.
-//DOC: if **f** not in data,  return single item array.
-public string[] ssplit (string data,  string f) {
+//DOC: if **f** not in data, return single item array.
+public string[] ssplit (string data, string f) {
     if (data == null || f == null || data.length == 0) {
         debug (_ ("empty data"));
         return {};
@@ -61,18 +61,18 @@ public string trim (string data) {
     if (data == null || data == "") {
         return "";
     }
-    int min =  - 1;
+    int min = - 1;
     string new_data = "";
     foreach (string line in ssplit (data, "\n")) {
         int level = count_tab (line);
         if (line.length == 0) {
             continue;
         }
-        if (min ==  - 1 || count_tab (line)  <  min) {
+        if (min == - 1 || count_tab (line) < min) {
             min = level;
         }
     }
-    if (min ==  - 1) {
+    if (min == - 1) {
         min = 0;
     }
     foreach (string line in ssplit (data, "\n")) {
@@ -94,18 +94,18 @@ public int count_tab (string line) {
     return 0;
 }
 
-//DOC: `boot startswith (string data,  string f):`
+//DOC: `boot startswith (string data, string f):`
 //DOC: return true if data starts with f
 public bool startswith (string data, string f) {
-    if (data.length  <  f.length) {
+    if (data.length < f.length) {
         return false;
     }
     return data[:f.length] == f;
 }
-//DOC: `bool endswith (string data,  string f):`
+//DOC: `bool endswith (string data, string f):`
 //DOC: return true if data ends with f
 public bool endswith (string data, string f) {
-    if (data.length  <  f.length) {
+    if (data.length < f.length) {
         return false;
     }
     return data[data.length - f.length:] == f;
@@ -147,6 +147,6 @@ public string[] uniq (string[] array) {
     return ret;
 }
 
-public string str_add (string str1,  string str2) {
+public string str_add (string str1, string str2) {
     return str1 + str2;
 }

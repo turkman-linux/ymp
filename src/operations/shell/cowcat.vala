@@ -18,7 +18,7 @@ void cowcat_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (cowcat_main);
-    op.names =  {_ ("cow"), "cow", "moo", "cowcat"};
+    op.names = {_ ("cow"), "cow", "moo", "cowcat"};
     op.help.name = _ ("cowcat");
     op.help.minargs=1;
     op.help.shell_only = true;

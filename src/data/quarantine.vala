@@ -63,7 +63,7 @@ public bool quarantine_validate_files () {
     string rootfs_metadatas = get_storage () + "/quarantine/metadata/";
     string[] restricted_list = ssplit (readfile (get_storage () + "/restricted.list"), "\n");
     // add package db into restricted_list
-    restricted_list + = STORAGEDIR;
+    restricted_list += STORAGEDIR;
     var yaml = new yamlfile ();
     foreach (string files_list in listdir (rootfs_files)) {
         print (colorize (_ ("Validating:"), yellow) + " " + files_list + "(files)");

@@ -412,7 +412,7 @@ public class builder {
                 if (deps.length > 0) {
                     new_data += "    " + arr + ":\n";
                     foreach (string dep in deps) {
-                        new_data += "      - " + dep + "\n";
+                        new_data += " - " + dep + "\n";
                     }
                 }
             }
@@ -441,7 +441,7 @@ public class builder {
             if (deps.length () > 0) {
                 new_data += "    depends:\n";
                 foreach (string dep in deps.get ()) {
-                    new_data += "      - " + dep + "\n";
+                    new_data += " - " + dep + "\n";
                 }
             }
             if (release == "") {

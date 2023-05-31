@@ -7,7 +7,7 @@ public int search_main (string[] args) {
         return search_files_main (args);
     }else if (get_bool ("installed")) {
         return search_installed_main (args);
-    }else  {
+    }else {
         error_add (_ ("No options given. Please use --source or --package or --file or --installed ."));
         return 1;
     }
@@ -33,7 +33,7 @@ public int search_pkgrepo_main (string[] args) {
             foreach (string arg in args) {
                 if (arg in p.get ("description") || arg in p.name ) {
                     int color = red;
-                    if  (is_installed_package (p.name))  {
+                    if (is_installed_package (p.name)) {
                         color = green;
                     }
                     print ("%s\t%s".printf (p.name, p.get ("description")).replace (arg, colorize (arg, color)));
@@ -51,7 +51,7 @@ public int search_srcrepo_main (string[] args) {
             foreach (string arg in args) {
                 if (arg in p.get ("description") || arg in p.name ) {
                     int color = red;
-                    if  (is_installed_package (p.name))  {
+                    if (is_installed_package (p.name)) {
                         color = green;
                     }
                     print ("%s\t%s".printf (p.name, p.get ("description")).replace (arg, colorize (arg, color)));
@@ -70,8 +70,8 @@ public int search_files_main (string[] args) {
                 continue;
             }
             foreach (string arg in args) {
-                if (Regex.match_simple (arg,  "/" + file[41:])) {
-                    print ("%s => /%s".printf (pkg,  file[41:]));
+                if (Regex.match_simple (arg, "/" + file[41:])) {
+                    print ("%s => /%s".printf (pkg, file[41:]));
                 }
             }
         }
@@ -88,7 +88,7 @@ public string[] search_file (string[] args) {
                 continue;
             }
             foreach (string arg in args) {
-                if (Regex.match_simple (arg,  "/" + file[41:])) {
+                if (Regex.match_simple (arg, "/" + file[41:])) {
                     pkgs.add (pkg);
                 }
             }
@@ -102,13 +102,13 @@ void search_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (search_main);
-    op.names =  {_ ("search"), "search", "sr"};
+    op.names = {_ ("search"), "search", "sr"};
     op.help.name = _ ("search");
     op.help.minargs=1;
     op.help.description = _ ("Search packages.");
-    op.help.add_parameter ("--package",  _ ("search package in binary package repository"));
-    op.help.add_parameter ("--source",  _ ("search package in source package repository"));
-    op.help.add_parameter ("--installed",  _ ("search package in installed packages"));
-    op.help.add_parameter ("--file",  _ ("searches for packages by package file"));
+    op.help.add_parameter ("--package", _ ("search package in binary package repository"));
+    op.help.add_parameter ("--source", _ ("search package in source package repository"));
+    op.help.add_parameter ("--installed", _ ("search package in installed packages"));
+    op.help.add_parameter ("--file", _ ("searches for packages by package file"));
     add_operation (op);
 }

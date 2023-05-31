@@ -1,16 +1,16 @@
 public int help_main (string[] args) {
-    if  (args.length == 0) {
+    if (args.length == 0) {
         print (colorize (_ ("Operation list:"), blue));
         foreach (operation op in ops) {
             if (!op.help.shell_only) {
-                print_fn (colorize (op.help.name + " : ", green) + op.help.description + "\n",  false,  false);
+                print_fn (colorize (op.help.name + " : ", green) + op.help.description + "\n", false, false);
             }
         }
         if (get_bool ("all")) {
             print (colorize (_ ("Shell only operation list:"), blue));
             foreach (operation op in ops) {
                 if (op.help.shell_only) {
-                    print_fn (colorize (op.help.name + " : ", green) + op.help.description + "\n",  false,  false);
+                    print_fn (colorize (op.help.name + " : ", green) + op.help.description + "\n", false, false);
                 }
             }
         }
@@ -47,11 +47,11 @@ public void write_version () {
 @@@@@@@@&*                         *#&@@@@@@@@@@@%    
 @@@@@@@@@ (                               *%@@@@@@@@#  
  (@@@@@@@@&*                              *%@@ (   ** (%/
-  (@@@@@@@@&/                             *##*         
+ (@@@@@@@@&/                             *##*         
   /@@@@@@@@@&*                      *                 
-     (@@@@@@@@@@#*                /# (                  
+ (@@@@@@@@@@#*                /# (                  
       *&@@@@@@@@@@@&# (//**// (%@@%                     
-           (&@@@@@@@@@@@@@@@@%/                        ";
+ (&@@@@@@@@@@@@@@@@%/                        ";
     foreach (string line in ssplit (flag, "\n")) {
         print ("    " + line);
     }
@@ -84,7 +84,7 @@ void help_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (help_main);
-    op.names =  {_ ("help"), "help"};
+    op.names = {_ ("help"), "help"};
     op.help.name = _ ("help");
     op.help.description = _ ("Write help message about ymp commands.");
     add_operation (op);
@@ -92,11 +92,11 @@ void help_init () {
 }
 
 private string[] common_parameters;
-private void add_common_parameter (string arg,  string desc) {
+private void add_common_parameter (string arg, string desc) {
     if (common_parameters == null) {
-        common_parameters =  {};
+        common_parameters = {};
     }
-    common_parameters +=  (colorize (arg, red) + " : " + desc);
+    common_parameters += (colorize (arg, red) + " : " + desc);
 }
 
 public class helpmsg {
@@ -107,11 +107,11 @@ public class helpmsg {
     public int minargs = 0;
     public bool shell_only = false;
 
-    public void add_parameter (string arg,  string desc) {
-        if  (parameters == null) {
-            parameters =  {};
+    public void add_parameter (string arg, string desc) {
+        if (parameters == null) {
+            parameters = {};
         }
-        string f =  (colorize (arg, red) + " : " + desc);
+        string f = (colorize (arg, red) + " : " + desc);
         parameters += f;
     }
     public string build () {
@@ -120,7 +120,7 @@ public class helpmsg {
             usage = "ymp " + name + _ (" [OPTION]... [ARGS]... ");
         }
         ret += colorize (_ ("Usage:"), green) + " " + usage + "\n";
-        ret += description  +  "\n";
+        ret += description + "\n";
         if (parameters.length > 0) {
             ret += colorize (_ ("Options:") + "\n", green);
             foreach (string param in parameters) {

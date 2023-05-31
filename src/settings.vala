@@ -9,11 +9,11 @@ private void settings_init () {
     if (DESTDIR == null) {
         DESTDIR = "/";
     }
-    if  (CONFIGDIR == null) {
+    if (CONFIGDIR == null) {
         CONFIGDIR = "/etc/";
     }
-    if  (CONFIG == null) {
-        CONFIG = DESTDIR+"/"+CONFIGDIR+"/ymp.yaml";
+    if (CONFIG == null) {
+        CONFIG = DESTDIR + "/" + CONFIGDIR + "/ymp.yaml";
     }
     config_yaml = new yamlfile ();
     set_value_readonly ("destdir", DESTDIR);
@@ -30,7 +30,7 @@ private void settings_init () {
                 if (section == "ymp") {
                     set_value (variable, value);
                 }else {
-                    set_value (section+":"+variable, value);
+                    set_value (section + ":" + variable, value);
                 }
             }
         }
@@ -41,11 +41,11 @@ private void settings_init () {
         set_value ("USE", get_env ("USE"));
     }else {
         area = config_yaml.get_area (config_yaml.data, "ymp");
-        set_value ("USE",  config_yaml.get_value (area, "use"));
+        set_value ("USE", config_yaml.get_value (area, "use"));
     }
     #if DEBUG
     if (get_bool ("debug")) {
-        set_env ("G_MESSAGES_DEBUG",  "all");
+        set_env ("G_MESSAGES_DEBUG", "all");
         set_env ("G_DEBUG", "fatal_warnings");
     }
     #endif
@@ -68,15 +68,15 @@ public void set_destdir (string rootfs) {
 }
 
 //DOC: `string get_storage ():`
-//DOC: get ymp storage directory.  (default: /var/lib/ymp)
+//DOC: get ymp storage directory. (default: /var/lib/ymp)
 public string get_storage () {
-    return DESTDIR+"/"+STORAGEDIR;
+    return DESTDIR + "/" + STORAGEDIR;
 }
 
 //DOC: `string get_configdir ():`
-//DOC: get ymp storage directory.  (default: /etc/)
+//DOC: get ymp storage directory. (default: /etc/)
 public string get_configdir () {
-    return DESTDIR+"/"+CONFIGDIR;
+    return DESTDIR + "/" + CONFIGDIR;
 }
 
 public string get_destdir () {
@@ -87,17 +87,17 @@ public string get_destdir () {
 }
 
 //DOC: `string get_storage ():`
-//DOC: get ymp storage directory.  (default: /var/lib/ymp)
+//DOC: get ymp storage directory. (default: /var/lib/ymp)
 public string get_build_dir () {
-    return DESTDIR+"/tmp/ymp-build/";
+    return DESTDIR + "/tmp/ymp-build/";
 }
 
 private string get_metadata_path (string name) {
-    return get_storage ()+"/metadata/"+name+".yaml";
+    return get_storage () + "/metadata/" + name + ".yaml";
 }
 
 //DOC: `void set_config (string path):`
-//DOC: change ymp config file  (default /etc/ymp.yaml)
+//DOC: change ymp config file (default /etc/ymp.yaml)
 public void set_config (string path) {
     CONFIG=srealpath (path);
     settings_init ();
@@ -113,7 +113,7 @@ private void parse_args (string[] args) {
                     set_value_readonly ("allow-oem", "true");
             }else if (arg.contains ("=")) {
                 var name = ssplit (argname, "=")[0];
-                var value = argname[name.length+1:];
+                var value = argname[name.length + 1:];
                 if (name == "use") {
                     set_value (name, value);
                 }else if (name == "destdir") {

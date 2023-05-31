@@ -3,7 +3,7 @@ public int exec_main (string[] args) {
     print_stderr (colorize (_ ("Executing: =>"), blue) + cmd);
     int status = 0;
     if (get_destdir () != "/") {
-        status = run_args ( {"chroot",  get_destdir (),  cmd}) / 256;
+        status = run_args ( {"chroot", get_destdir (), cmd}) / 256;
     }else if (get_bool ("silent")) {
         status = run (cmd + " 2>/dev/null | :") / 256;
     }else {
@@ -19,7 +19,7 @@ void exec_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (exec_main);
-    op.names =  {_ ("exec"), "exec"};
+    op.names = {_ ("exec"), "exec"};
     op.help.name = _ ("exec");
     op.help.description = _ ("Execute a command.");
     op.help.minargs = 1;

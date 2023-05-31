@@ -11,7 +11,7 @@ public int revdep_rebuild_main (string[] args) {
     }else if (get_bool ("detect-dep")) {
         foreach (string arg in args) {
             info (colorize (_ ("Detect dependencies for:"), green) + " %s".printf (arg));
-            string[] flist =  {};
+            string[] flist = {};
             if (iself (arg)) {
                 flist = detect_file_dep (arg);
             }else {
@@ -26,7 +26,7 @@ public int revdep_rebuild_main (string[] args) {
             print_array (deps.get ());
         }
     }else {
-        string[] paths =  {
+        string[] paths = {
             "/lib", "/lib64", "/usr/lib", "/usr/lib64",
             "/lib32", "/usr/lib32", "/libx32", "/usr/libx32",
         };
@@ -37,7 +37,7 @@ public int revdep_rebuild_main (string[] args) {
                 }
             }
         }
-        paths =  {"/bin", "/sbin", "/usr/bin", "/usr/sbin", "/usr/libexec"};
+        paths = {"/bin", "/sbin", "/usr/bin", "/usr/sbin", "/usr/libexec"};
         foreach (string path in paths) {
             foreach (string file in find (path)) {
                 check (file);
@@ -55,7 +55,7 @@ public void check (string file) {
     foreach (string line in ssplit (ldddata, "\n")) {
         if (endswith (line, "not found")) {
             print_fn ("\x1b[2K\r", false, true);
-            print ("%s => %s  (%s)".printf (colorize (file, red),  line[1:line.length - 13],  join (" ", search_file ( {file}))));
+            print ("%s => %s (%s)".printf (colorize (file, red), line[1:line.length - 13], join (" ", search_file ( {file}))));
         }
     }
 }
@@ -72,10 +72,10 @@ public void check_pkgconfig (string name) {
 public string[] detect_dep (string pkgname) {
     if (!is_installed_package (pkgname)) {
         error_add (_ ("%s is not an installed package.").printf (pkgname));
-        return  {};
+        return {};
     }
     var depfiles = new array ();
-    string files=readfile ("%s/files/%s".printf (get_storage (),  pkgname));
+    string files=readfile ("%s/files/%s".printf (get_storage (), pkgname));
     foreach (string line in ssplit (files, "\n")) {
         string path="/" + line[41:];
         if (iself (path)) {
@@ -91,7 +91,7 @@ public string[] detect_dep (string pkgname) {
 
 public string[] detect_file_dep (string path) {
     if (!iself (path)) {
-        return  {};
+        return {};
     }
     string lddout=getoutput ("ldd '%s'".printf (path));
     var depfiles = new array ();
@@ -111,7 +111,7 @@ void revdep_rebuild_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (revdep_rebuild_main);
-    op.names =  {_ ("revdep-rebuild"), "revdep-rebuild", "rbd"};
+    op.names = {_ ("revdep-rebuild"), "revdep-rebuild", "rbd"};
     op.help.name = _ ("revdep-rebuild");
     op.help.description = _ ("Check library for broken links.");
     op.help.add_parameter ("--pkgconfig", _ ("check pkgconfig files"));
