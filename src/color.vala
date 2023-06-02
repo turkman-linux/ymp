@@ -9,4 +9,3 @@ public int blue = 34;
 public int magenta = 35;
 public int cyan = 36;
 public int white = 37;
-
