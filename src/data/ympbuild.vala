@@ -64,7 +64,7 @@ public class ympbuild {
             if (ympbuild_srcpath == null) {
                 ympbuild_srcpath = "./";
             }
-            return getoutput ("env -i bash -c 'source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo $ {" + variable + "[@]}'").strip ();
+            return getoutput ("env -i bash -c 'source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo ${" + variable + "[@]}'").strip ();
         }
 
         //DOC: `string[] get_ympbuild_array (string variable):`
@@ -73,7 +73,7 @@ public class ympbuild {
             if (ympbuild_srcpath == null) {
                 ympbuild_srcpath = "./";
             }
-            return ssplit (getoutput ("env -i bash -c 'source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo $ {" + variable + "[@]}'").strip (), " ");
+            return ssplit (getoutput ("env -i bash -c 'source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo ${" + variable + "[@]}'").strip (), " ");
         }
 
         //DOC: `bool ympbuild_has_function (string function):`
