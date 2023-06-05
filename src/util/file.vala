@@ -101,6 +101,8 @@ public string safedir (string dir) {
     }
     while ("//" in ret) {
         ret = ret.replace ("//", "/");
+    }while ("/./" in ret) {
+        ret = ret.replace ("/./", "/");
     }while (ret.length > 0 && ret[0] == '/') {
         ret = ret[1:];
     }
@@ -322,11 +324,11 @@ private string p_realpath (string path) {
             cur += dir;
         }
         if (isfile (cur)) {
-            return cur;
+            return safedir(cur);
         }
         cur += "/";
     }
-    return cur;
+    return safedir(cur);;
 }
 
 //DOC: `string[] find (string path):`
