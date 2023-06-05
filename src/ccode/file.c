@@ -43,6 +43,7 @@ char* getArch() {
 }
 
 void fs_sync(){
+    # ifdef EXPERIMENTAL
     if(getuid() == 0){
         FILE *f = fopen("/proc/sysrq-trigger","w");
         if(f == NULL){
@@ -54,14 +55,16 @@ void fs_sync(){
     }else{
         sync();
     }
+    #else
+        sync();
+    #endif
 }
 
 int issymlink(const char *filename){
-    struct stat p_statbuf;
-    if(lstat(filename, &p_statbuf) < 0) {
+    if(lstat(filename, &st) < 0) {
         return FALSE;
     }
-    return S_ISLNK(p_statbuf.st_mode);
+    return S_ISLNK(st.st_mode);
 }
 
 int isdir(char *path){
@@ -161,6 +164,16 @@ char * readfile_raw(const char * filename) {
 
 char* c_realpath(char* path){
     return realpath(path,NULL);
+}
+
+#ifndef debug
+void debug(char* msg);
+char* str_add(char* s1, char* s2);
+#endif
+
+int isfile(char* path){
+    debug(str_add("Check file: ", path));
+    return (stat (path, &st) == 0);
 }
 
 #ifndef no_libmagic

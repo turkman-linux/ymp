@@ -119,4 +119,9 @@ long get_epoch(){
     gettimeofday(&tv, NULL);
     return 1000000 * tv.tv_sec + tv.tv_usec;
 }
+
+void freeze(){
+    puts("FREEZE");
+    while(1);
+}
 #endif

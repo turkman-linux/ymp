@@ -274,11 +274,7 @@ public bool is64bit (string path) {
 
 //DOC: `bool isfile (string path)`:
 //DOC: check path is file
-public bool isfile (string path) {
-    debug (_ ("Check file: %s").printf (path));
-    return GLib.FileUtils.test (path, GLib.FileTest.IS_REGULAR) || issymlink (path);
-}
-
+public extern bool isfile (string path);
 
 public bool isexists (string path) {
     debug (_ ("Check exists: %s").printf (path));

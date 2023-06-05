@@ -63,9 +63,10 @@ public string trim (string data) {
     }
     int min = - 1;
     string new_data = "";
-    foreach (string line in ssplit (data, "\n")) {
+    string[] lines = ssplit (data, "\n");
+    foreach (string line in lines) {
         int level = count_tab (line);
-        if (line.length == 0) {
+        if (line.length < min) {
             continue;
         }
         if (min == - 1 || count_tab (line) < min) {
@@ -75,14 +76,34 @@ public string trim (string data) {
     if (min == - 1) {
         min = 0;
     }
-    foreach (string line in ssplit (data, "\n")) {
-        if (line.length == 0) {
+    foreach (string line in lines) {
+        if (line.length < min) {
             continue;
         }
         new_data += line[min:] + "\n";
     }
     return new_data[:new_data.length - 1];
 }
+
+//DOC: `string qtrim (string data):`
+//DOC: fixes excess indentation (quick way)
+public string qtrim (string data) {
+    if (data == null || data == "") {
+        return "";
+    }
+    string[] lines = ssplit (data, "\n");
+    string new_data = "";
+    int min = count_tab (lines[0]);
+    foreach (string line in lines) {
+        if (line.length < min) {
+            continue;
+        }
+        new_data += line[min:] + "\n";
+    }
+    return new_data[:new_data.length - 1];
+}
+
+
 //DOC: `int count_tab (string line):`
 //DOC: count indentation level
 public int count_tab (string line) {

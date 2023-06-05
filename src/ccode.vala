@@ -110,6 +110,9 @@ public extern int run (string command);
 //DOC: `long get_epoch ():`
 //DOC: get epoch time
 public extern long get_epoch ();
+//DOC: `void freeze ():`
+//DOC: freeze program (for debug)
+public extern void freeze ();
 private extern int ckill (int pid);
 
 //DOC: `int run_silent (string command):`

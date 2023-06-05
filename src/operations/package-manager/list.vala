@@ -90,10 +90,6 @@ public int list_digraph_main (string[] args) {
     return 0;
 }
 public int list_available_main (string[] args) {
-    if (get_bool ("digraph")) {
-        print ("digraph {");
-        print ("beautify=\"sfdp\";");
-    }
     foreach (repository repo in get_repos ()) {
         if (args.length > 0 && ! (repo.name in args)) {
             continue;

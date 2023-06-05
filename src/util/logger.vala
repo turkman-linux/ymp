@@ -42,8 +42,13 @@ public void warning_fn (string message) {
     print_stderr ("%s: %s".printf (colorize (_ ("WARNING"), yellow), message));
 }
 
+private long last_debug_time = -1;
 public void debug_fn (string message) {
-    print_stderr ("%s: %s".printf (colorize (_ ("DEBUG"), blue), message));
+    if (last_debug_time == -1) {
+        last_debug_time = get_epoch();
+    }
+    print_stderr ("[%s:%d]: %s".printf (colorize (_ ("DEBUG"), blue), (int) (get_epoch () - last_debug_time) , message));
+    last_debug_time = get_epoch();
 }
 
 public void info_fn (string message) {

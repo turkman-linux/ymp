@@ -38,7 +38,7 @@ public class yamlfile {
     //DOC: `bool yamlfile.has_area (string fdata, string path):`
     //DOC: return true if **fdata** has **path** area
     public bool has_area (string fdata, string path) {
-        foreach (string line in ssplit (trim (fdata), "\n")) {
+        foreach (string line in ssplit (fdata, "\n")) {
             if (startswith (line, path + ":")) {
                 return true;
             }
@@ -53,30 +53,30 @@ public class yamlfile {
         string[] ret = {};
         string data="";
         bool e=false;
-        foreach (string line in ssplit (trim (fdata), "\n")) {
+        foreach (string line in ssplit (fdata, "\n")) {
             if (!startswith (line, " ") && ":" in line) {
                 string name = ssplit (line, ":")[0];
                 //flush memory to array
                 if (data != "") {
-                    ret+=trim (data);
+                    ret+=qtrim (data);
                 }
                 //reset memory
                 data="";
-                e= (name == path);
+                e = (name == path);
             }else if (e && line.strip () != "") {
-                    data += line + "\n";
+                data += line + "\n";
             }
         }
         // flush memory for last item
         if (e && data != "") {
-            ret+=trim (data);
+            ret += qtrim (data);
         }
         return ret;
     }
 
     public string[] get_area_names (string fdata) {
         string[] ret = {};
-        foreach (string line in ssplit (trim (fdata), "\n")) {
+        foreach (string line in ssplit (fdata, "\n")) {
             if (!startswith (line, " ") && ":" in line) {
                 string name = ssplit (line, ":")[0];
                 if (! (name in ret)) {
@@ -94,7 +94,7 @@ public class yamlfile {
         if (data == null || data == "") {
             return "";
         }
-        foreach (string line in ssplit (trim (data), "\n")) {
+        foreach (string line in ssplit (data, "\n")) {
             if (line.length < name.length + 1) {
                 continue;
             }
@@ -125,6 +125,7 @@ public class yamlfile {
     //DOC: `string yamlfile.get_area (string data, string path):`
     //DOC: get area from data
     public string get_area (string data, string path) {
+        debug (_ ("Get area : %s").printf (path));
         string tmp = data;
         if (data == null || data == "") {
             return "";
@@ -143,10 +144,7 @@ public class yamlfile {
         bool e = false;
         string area = "";
         int i = 0;
-        if (!has_area (fdata, path)) {
-            return "";
-        }
-        foreach (string line in ssplit (trim (fdata), "\n")) {
+        foreach (string line in ssplit (fdata, "\n")) {
             i +=1;
             if (i < offset) {
                 continue;
@@ -154,7 +152,7 @@ public class yamlfile {
             level = count_tab (line);
             if (level == 0) {
                if (e) {
-                   return trim (area);
+                   return qtrim (area);
                }
                if (line == path + ":") {
                     e=true;
@@ -165,6 +163,6 @@ public class yamlfile {
                 area += line + "\n";
             }
         }
-        return trim (area);
+        return qtrim (area);
     }
 }
