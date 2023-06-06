@@ -35,4 +35,34 @@ void csort(const char* arr[], int n){
     qsort(arr, n, sizeof(const char*), string_compare);
 }
 
+long count_tab(char* data){
+    long cnt=0;
+    for(long i=0; data[i]==' '; i++) {
+        cnt++;
+    }
+    return cnt;
+}
+
+char* trim(char* data) {
+    long i=0, j= 0, cnt=0;
+    long len = strlen(data);
+    char* str = malloc(len*sizeof(char)+1);
+    strcpy(str,data);
+    cnt = count_tab (data);
+    j=cnt-1;
+    for(i=0; i<len; i++) {
+        j += 1;
+        if(j >= len || str[i] == '\0') {
+            str[i] = '\0';
+            break;
+        }
+        str[i] = data[j];
+        if(str[i] == '\n'){
+            j += cnt;
+            
+        }
+    }
+    return str;
+}
+
 #endif

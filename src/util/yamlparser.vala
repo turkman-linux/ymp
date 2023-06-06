@@ -58,7 +58,7 @@ public class yamlfile {
                 string name = ssplit (line, ":")[0];
                 //flush memory to array
                 if (data != "") {
-                    ret+=qtrim (data);
+                    ret+=trim (data);
                 }
                 //reset memory
                 data="";
@@ -69,7 +69,7 @@ public class yamlfile {
         }
         // flush memory for last item
         if (e && data != "") {
-            ret += qtrim (data);
+            ret += trim (data);
         }
         return ret;
     }
@@ -99,7 +99,9 @@ public class yamlfile {
                 continue;
             }
             if (startswith (line, name + ":")) {
-                return line[name.length + 1:].strip ();
+                string ret = line[name.length + 1:].strip ();
+                debug(" --> %s".printf(ret));
+                return ret;
             }
         }
         return "";
@@ -119,6 +121,7 @@ public class yamlfile {
                 array += line[1:].strip ();
             }
         }
+        debug(" --> %d item".printf(array.length));
         return array;
     }
 
@@ -152,7 +155,7 @@ public class yamlfile {
             level = count_tab (line);
             if (level == 0) {
                if (e) {
-                   return qtrim (area);
+                   return trim (area);
                }
                if (line == path + ":") {
                     e=true;
@@ -163,6 +166,6 @@ public class yamlfile {
                 area += line + "\n";
             }
         }
-        return qtrim (area);
+        return trim (area);
     }
 }

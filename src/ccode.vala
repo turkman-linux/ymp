@@ -154,6 +154,14 @@ public extern string url_decode (string url);
 public extern string run_printf (char* format, ...);
 private extern string ccolorize (string message, string color);
 public extern void csort (string[] arr, int n);
+//DOC: `string trim (string data):`
+//DOC: fixes excess indentation
+public extern string trim (string data);
+
+//DOC: `int count_tab (string data):`
+//DOC: count space intent on string
+public extern int count_tab (string data);
+
 
 //DOC: ### logger.c
 //DOC: `void print_fn (string message, bool new_line, bool err):`
