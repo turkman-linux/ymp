@@ -8,6 +8,10 @@ public int revdep_rebuild_main (string[] args) {
         }
         remove_file ("/tmp/.empty.c");
         print_fn ("\x1b[2K\r", false, true);
+    }else if (get_bool ("detect-file-dep")) {
+        foreach (string arg in args) {
+            print_array (detect_file_dep (arg));
+        }
     }else if (get_bool ("detect-dep")) {
         foreach (string arg in args) {
             info (colorize (_ ("Detect dependencies for:"), green) + " %s".printf (arg));
@@ -116,5 +120,6 @@ void revdep_rebuild_init () {
     op.help.description = _ ("Check library for broken links.");
     op.help.add_parameter ("--pkgconfig", _ ("check pkgconfig files"));
     op.help.add_parameter ("--detect-dep", _ ("detect package dependencies"));
+    op.help.add_parameter ("--detect-file-dep", _ ("detect file dependencies"));
     add_operation (op);
 }

@@ -1,0 +1,11 @@
+#!/bin/bash
+file="$1"
+ls /var/lib/ymp/files/ | while read line ; do
+    echo -ne "\033[2K\rCheck:$line"
+    cat /var/lib/ymp/files/$line | cut -f2 -d" " | while read fline ; do
+        if ldd /$fline |& grep $(basename $file) &>/dev/null ; then
+            echo -e "\033[2K\r$line"
+            break
+        fi
+    done
+done
