@@ -19,7 +19,7 @@ shift
 output=$(realpath $output)
 basepkgs=(busybox base-files glibc)
 ympdep=(acl attr bzip2 curl glib libarchive libcap-ng libffi libidn2 libnghttp2
-        libpcre2 libpsl libssh libunistring libxml2 lz4 lzo ncurses openssl readline
+        libpcre2 libpsl libssh libunistring libxml2 lz4 lzo ncurses openssl openssl-1.1 readline
         util-linux xz-utils ymp zlib bash file libseccomp
 )
 arch=$(uname -m)
