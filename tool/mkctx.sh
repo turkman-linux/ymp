@@ -34,7 +34,7 @@ echo "}" >> ctx.vala
 for i in $(list_txt) ; do
     echo -e "private string get_$i(){"
     echo -e  "    return \""
-    cat src/shcode/$i.sh | sed 's/\\/\\\\/g;s/"/\\"/g;s/^/        /g'
+    cat src/shcode/$i.sh | sed 's/\\/\\\\/g;s/"/\\"/g'
     echo -e "\n    \";"
     echo -e "}"
 done >> ctx.vala
