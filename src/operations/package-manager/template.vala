@@ -7,14 +7,14 @@ public int template_main (string[] args) {
     data += "description='" + str_or_def ("description", "Package description missing") + "'\n";
     data += "email='" + str_or_def ("email", get_gitconfig_variable ("email")) + "'\n";
     data += "maintainer='" + str_or_def ("maintainer", get_gitconfig_variable ("name")) + "'\n";
-    data += "license= ('" + str_or_def ("license", "GPLv3") + "')\n";
-    data += "source= ('" + str_or_def ("source", "") + "')\n";
-    data += "depends= (" + str_or_def ("depends", " ") + ")\n";
-    data += "makedepends= (" + str_or_def ("makedepends", " ") + ")\n";
-    data += "md5sums= ('FIXME')\n";
-    data += "group= ()\n";
-    data += "uses= ()\n";
-    data += "arch= ('" + getArch () + "')\n\n";
+    data += "license=('" + str_or_def ("license", "GPLv3") + "')\n";
+    data += "source=('" + str_or_def ("source", " ") + "')\n";
+    data += "depends=(" + str_or_def ("depends", " ") + ")\n";
+    data += "makedepends=(" + str_or_def ("makedepends", " ") + ")\n";
+    data += "md5sums=('FIXME')\n";
+    data += "group=()\n";
+    data += "uses=()\n";
+    data += "arch=('" + getArch () + "')\n\n";
 
     data += "cd $name-$version\n\n";
     string buildtype = get_value ("build-type");
@@ -34,7 +34,7 @@ public int template_main (string[] args) {
         data += "    mkdir build\n";
         data += "    cd build\n";
         data += "    cmake -DCMAKE_INSTALL_PREFIX=/usr \\\n";
-        data += " -DCMAKE_INSTALL_LIBDIR=/usr/lib64 ..\n";
+        data += "        -DCMAKE_INSTALL_LIBDIR=/usr/lib64 ..\n";
         data += "}\n\n";
         data += "build () {\n";
         data += "    cd build\n";
@@ -47,8 +47,8 @@ public int template_main (string[] args) {
     }else if (buildtype == "meson") {
         data += "setup () {\n";
         data += "    meson setup build --prefix=/usr \\\n";
-        data += " --libdir=/usr/lib64/\n";
-        data += " -Ddefault_library=both\n";
+        data += "        --libdir=/usr/lib64/\n";
+        data += "        -Ddefault_library=both\n";
         data += "}\n\n";
         data += "build () {\n";
         data += "    ninja -C build $jobs\n";
