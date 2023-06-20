@@ -64,15 +64,15 @@ async void process_request (SocketConnection conn) {
         }else if (isdir ("./" + path)) {
             print_fn ("%s -- %s %s 0 bytes".printf (ip, date, srealpath ("./" + path)), true, true);
             dos.put_string ("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
-            dos.put_string (" < html > \n < head > ");
-            dos.put_string (" < meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" > \n");
-            dos.put_string (" < title > " + _ ("Directory listing for %s").printf (path) + " < /title > \n");
-            dos.put_string (" < style > .link { text-decoration: none;} < /style > \n");
-            dos.put_string (" < /head > \n < body > \n");
-            dos.put_string (" < h1 > " + _ ("Directory listing for /%s").printf (path) + " < /h1 > \n");
-            dos.put_string (" < hr > \n < ul > \n");
+            dos.put_string ("<html> \n <head>");
+            dos.put_string ("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" >\n");
+            dos.put_string ("<title> " + _ ("Directory listing for %s").printf (path) + " </title> \n");
+            dos.put_string ("<style> .link { text-decoration: none;} </style> \n");
+            dos.put_string ("</head> \n <body> \n");
+            dos.put_string ("<h1> " + _ ("Directory listing for /%s").printf (path) + " </h1> \n");
+            dos.put_string ("<hr> \n <ul> \n");
             if (path != "/") {
-                dos.put_string ("&#x1F4C1; < a href=\"../\" > .. < /a > < br > < /li > \n");
+                dos.put_string ("&#x1F4C1; <a href=\"../\" > .. </a> <br> </li> \n");
             }
             dos.flush ();
             var node = new array ();
@@ -83,8 +83,8 @@ async void process_request (SocketConnection conn) {
                     continue;
                 }
                 if (isdir ("./" + path + "/" + f)) {
-                    string ff = f.replace (" > ", "&gt;").replace (" < ", "&lt;");
-                    dos.put_string ("&#x1F4C1; < a class=\"link\" href=\"/" + url_encode (path + f).replace ("%2F", "/") + "/\" > " + ff + "/ < /a > < br > < /li > \n");
+                    string ff = f.replace (" > ", "&gt;").replace (" <", "&lt;");
+                    dos.put_string ("&#x1F4C1; <a class=\"link\" href=\"/" + url_encode (path + f).replace ("%2F", "/") + "/\" > " + ff + "/ </a > <br > </li > \n");
                     dos.flush ();
                 }
             }
@@ -93,14 +93,14 @@ async void process_request (SocketConnection conn) {
                     continue;
                 }
                 if (isfile ("./" + path + "/" + f)) {
-                    string ff = f.replace (" > ", "&gt;").replace (" < ", "&lt;");
+                    string ff = f.replace (">", "&gt;").replace ("<", "&lt;");
                     long size = filesize ("./" + path + "/" + f);
-                    dos.put_string ("&#x1F4C4; < a class=\"link\" href=\"/" + url_encode (path + f).replace ("%2F", "/") + "\" > " + ff + " < /a > (" + GLib.format_size ( (uint64)size) + ") < br > < /li > \n");
+                    dos.put_string ("&#x1F4C4; <a class=\"link\" href=\"/" + url_encode (path + f).replace ("%2F", "/") + "\">" + ff + " </a> (" + GLib.format_size ( (uint64)size) + ") <br> </li> \n");
                     dos.flush ();
                 }
             }
-            dos.put_string (" < /ul > \n < hr > \n");
-            dos.put_string (" < /body > \n < /html > ");
+            dos.put_string ("</ul> \n <hr> \n");
+            dos.put_string ("</body> \n </html> ");
         }else {
             dos.put_string ("HTTP/1.1 404 Not Found\nContent-Type: text/html\n");
             dos.flush ();
