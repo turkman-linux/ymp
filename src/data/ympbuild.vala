@@ -172,6 +172,12 @@ public class ympbuild {
                     remove_file (path);
                 }
             }
+            string[] wrong_dirs = {"/usr/local/", "/usr/etc/", "/share/", "/usr/var/"};
+            foreach (string dir in wrong_dirs) {
+                if(isdir (ympbuild_buildpath + "/output/" + dir)) {
+                    warning (_ ("Files in %s detected.").printf (dir));
+                }
+            }
         }
 
         //DOC: `string get_ympbuild_metadata ():`
