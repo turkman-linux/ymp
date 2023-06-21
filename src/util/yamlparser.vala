@@ -104,7 +104,7 @@ public class yamlfile {
                 if (startswith (line, " ")) {
                     ret += line + "\n";
                 } else {
-                    return trim(ret[:-1]);
+                    return trim(ret);
                 }
                 continue;
             }
@@ -114,10 +114,6 @@ public class yamlfile {
                     continue;
                 }
                 ret = line[name.length + 1:].strip ();
-                debug(" --> %s".printf(ret));
-                return ret;
-            } else if (startswith (line, "- " + name + ":")) {
-                ret = line[name.length + 3:].strip ();
                 debug(" --> %s".printf(ret));
                 return ret;
             }
