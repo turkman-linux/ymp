@@ -94,17 +94,35 @@ public class yamlfile {
         if (data == null || data == "") {
             return "";
         }
+        bool e = false;
+        string ret = "";
         foreach (string line in ssplit (data, "\n")) {
             if (line.length < name.length + 1) {
                 continue;
             }
+            if (e) {
+                if (startswith (line, " ")) {
+                    ret += line + "\n";
+                } else {
+                    return trim(ret[:-1]);
+                }
+                continue;
+            }
             if (startswith (line, name + ":")) {
-                string ret = line[name.length + 1:].strip ();
+                if (endswith(line, "|")) {
+                    e = true;
+                    continue;
+                }
+                ret = line[name.length + 1:].strip ();
+                debug(" --> %s".printf(ret));
+                return ret;
+            } else if (startswith (line, "- " + name + ":")) {
+                ret = line[name.length + 3:].strip ();
                 debug(" --> %s".printf(ret));
                 return ret;
             }
         }
-        return "";
+        return trim(ret);
     }
 
     //DOC: `string[] yamlfile.get_array (string data, string name):`
