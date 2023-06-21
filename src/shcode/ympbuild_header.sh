@@ -21,10 +21,10 @@ function _dump_variables(){
 function ymp_print_metadata(){
     echo "ymp:"
     echo "  source:"
-    echo "    name: $name"
-    echo "    version: $version"
-    echo "    release: $release"
-    echo "    description: $description"
+    echo "    name: $(echo $name)"
+    echo "    version: $(echo $version)"
+    echo "    release: $(echo $release)"
+    echo "    description: $(echo $description)"
     if [[ "${makedepends[@]}" != "" ]] ; then
         echo "    makedepends:"
         for dep in ${makedepends[@]} ; do
