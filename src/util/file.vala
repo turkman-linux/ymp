@@ -126,15 +126,23 @@ public string pwd () {
     return GLib.Environment.get_current_dir ();
 }
 
+// libc function (from stdio.h)
+public extern int remove (string path);
+public extern int rmdir (string path);
+
 //DOC: `int remove_dir (string path)`
 //DOC: remove **path** directory
 public int remove_dir (string path) {
     debug (_ ("Remove directory: %s").printf (path));
+    if (!isdir (path)) {
+        return 0;
+    }
+    #if experimental
     return GLib.DirUtils.remove (path);
+    #else
+    return rmdir (path);
+    #endif
 }
-
-// libc function (from stdio.h)
-public extern int remove(string path);
 
 //DOC: `int remove_file (string path)`
 //DOC: remove **path** file
@@ -143,8 +151,8 @@ public int remove_file (string path) {
     if (!isfile (path)) {
         return 0;
     }
+    #if experimental
     try {
-        #if experimental
         File file = File.new_for_path (path);
         // remove file content on disk
         if (!issymlink (path)) {
@@ -152,13 +160,13 @@ public int remove_file (string path) {
         }
         file.delete ();
         return 0;
-        #else
-        return remove(path);
-        #endif
     }catch (Error e) {
         error_add (e.message);
         return -1;
     }
+    #else
+    return remove (path);
+    #endif  
 }
 //DOC: `int remove_all (string path):`
 //DOC: Remove files and directories (like **rm -rf**)
