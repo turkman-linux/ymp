@@ -173,7 +173,9 @@ char* str_add(char* s1, char* s2);
 
 int isfile(char* path){
     debug(str_add("Check file: ", path));
-    return (stat (path, &st) == 0) && ! isdir (path);
+    int fs = stat (path, &st);
+    int ls = lstat (path, &st);
+    return (!ls || !fs) && ! isdir (path);
 }
 
 #ifndef no_libmagic

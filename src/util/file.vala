@@ -133,6 +133,9 @@ public int remove_dir (string path) {
     return GLib.DirUtils.remove (path);
 }
 
+// libc function (from stdio.h)
+public extern int remove(string path);
+
 //DOC: `int remove_file (string path)`
 //DOC: remove **path** file
 public int remove_file (string path) {
@@ -140,16 +143,18 @@ public int remove_file (string path) {
     if (!isfile (path)) {
         return 0;
     }
-    File file = File.new_for_path (path);
     try {
         #if experimental
+        File file = File.new_for_path (path);
         // remove file content on disk
         if (!issymlink (path)) {
             file.replace_contents ("\0x00".data, null, false, FileCreateFlags.NONE, null);
         }
-        #endif
         file.delete ();
         return 0;
+        #else
+        return remove(path);
+        #endif
     }catch (Error e) {
         error_add (e.message);
         return -1;

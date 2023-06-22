@@ -43,28 +43,36 @@ public int remove_main (string[] args) {
 public int remove_single (package p) {
     print (colorize (_ ("Removing: %s"), yellow).printf (p.name));
     if (!get_bool ("without-files")) {
+        foreach (string file in p.list_links ()) {
+            if (file.length > 3) {
+                file=ssplit (file, " ")[0];
+                info (_ ("Removing: %s").printf (file));
+                remove_file (DESTDIR + "/" + file);
+            }
+        }
         foreach (string file in p.list_files ()) {
             if (file.length > 41) {
                 file=file[41:];
+                info (_ ("Removing: %s").printf (file));
                 remove_file (DESTDIR + "/" + file);
             }
         }
         foreach (string file in p.list_links ()) {
             if (file.length > 3) {
                 file=ssplit (file, " ")[0];
-                remove_file (DESTDIR + "/" + file);
+                string dir = sdirname (file);
+                if (is_empty_dir (DESTDIR + "/" + dir)) {
+                    remove_dir (DESTDIR + "/" + dir);
+                }
             }
         }
         foreach (string file in p.list_files ()) {
-            string dir = sdirname (file);
-            if (is_empty_dir (DESTDIR + "/" + dir)) {
-                remove_dir (DESTDIR + "/" + dir);
-            }
-        }
-        foreach (string file in p.list_links ()) {
-            string dir = sdirname (file);
-            if (is_empty_dir (DESTDIR + "/" + dir)) {
-                remove_dir (DESTDIR + "/" + dir);
+            if (file.length > 41) {
+                file=file[41:];
+                string dir = sdirname (file);
+                if (is_empty_dir (DESTDIR + "/" + dir)) {
+                    remove_dir (DESTDIR + "/" + dir);
+                }
             }
         }
     }
