@@ -1,6 +1,6 @@
 public int code_runner_operation (string[] args) {
     if(get_bool("create")){
-        writefile(args[0],get_code_runner_template());
+        writefile(args[0],get_code_runner_template()+"\n\n");
         return 0;
     }
     foreach (string arg in args){
