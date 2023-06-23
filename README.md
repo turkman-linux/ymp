@@ -16,11 +16,12 @@ A package manager for Turkish
 * Built-in httpd
 * Sandbox environment support
 * Static build support
-* Built-in yaml & ini parser
+* Built-in yaml
 * Simple package format
 * Built-in repository mirror tool
 * Shell mode
 * Built-in revdep-rebuild
+* Built-in code-runner
 
 ## Dependencies
 * libarchive
