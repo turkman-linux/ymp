@@ -110,7 +110,6 @@ public class ympbuild {
                     function,
                     function
                 );
-                print(cmd);
                 if (get_bool ("quiet")) {
                     return run_args_silent ( {"bash", "-c", cmd});
                 }else {
