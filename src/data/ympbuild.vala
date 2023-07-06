@@ -26,7 +26,7 @@ public class ympbuild {
             ympbuild_header = ympbuild_header.replace ("@CXXFLAGS@", get_value ("build:cxxflags"));
             ympbuild_header = ympbuild_header.replace ("@CC@", get_value ("build:cc"));
             ympbuild_header = ympbuild_header.replace ("@LDFLAGS@", get_value ("build:ldflags"));
-
+            ympbuild_header += "\n";
             var use_flags = new array ();
             string[] flags = ssplit (get_value ("use"), " ");
             string name = get_ympbuild_value ("name");
@@ -110,6 +110,7 @@ public class ympbuild {
                     function,
                     function
                 );
+                print(cmd);
                 if (get_bool ("quiet")) {
                     return run_args_silent ( {"bash", "-c", cmd});
                 }else {
