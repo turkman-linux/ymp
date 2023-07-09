@@ -280,17 +280,17 @@ public class package {
         }
         string curdir = pwd ();
         var bd = new builder ();
-        create_dir (DESTDIR + BUILDDIR + name);
-        pkgfile.set_target (DESTDIR + BUILDDIR + name);
-        bd.yb.set_ympbuild_srcpath (DESTDIR + BUILDDIR + name);
-        bd.yb.set_ympbuild_buildpath (DESTDIR + BUILDDIR + name);
+        create_dir (DESTDIR + BUILDDIR + "/" + name);
+        pkgfile.set_target (DESTDIR + BUILDDIR + "/" + name);
+        bd.yb.set_ympbuild_srcpath (DESTDIR + BUILDDIR + "/" + name);
+        bd.yb.set_ympbuild_buildpath (DESTDIR + BUILDDIR + "/" + name);
         if (!get_bool ("no-clear")) {
             remove_all (bd.yb.ympbuild_buildpath);
         }
-        pkgfile.set_target (DESTDIR + BUILDDIR + name);
+        pkgfile.set_target (DESTDIR + BUILDDIR + "/" + name);
         pkgfile.extract_all ();
-        bd.set_build_target (DESTDIR + BUILDDIR + name);
-        bd.yb.set_ympbuild_buildpath (DESTDIR + BUILDDIR + name);
+        bd.set_build_target (DESTDIR + BUILDDIR + "/" + name);
+        bd.yb.set_ympbuild_buildpath (DESTDIR + BUILDDIR + "/" + name);
         bd.create_metadata_info ();
         bd.fetch_package_sources ();
         bd.extract_package_sources ();

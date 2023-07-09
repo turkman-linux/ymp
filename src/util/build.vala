@@ -21,7 +21,7 @@ public class builder {
             }
 
             if (startswith (path, "git://") || endswith (path, ".git")) {
-                srcpath=DESTDIR + BUILDDIR + sbasename (path);
+                srcpath=DESTDIR + BUILDDIR + "/" + sbasename (path);
                 if (isdir (srcpath)) {
                     remove_all (srcpath);
                 }
@@ -39,7 +39,7 @@ public class builder {
                 srcpath=farg;
             }
             if (isfile (srcpath)) {
-                srcpath = DESTDIR + BUILDDIR + calculate_md5sum (srcpath);
+                srcpath = DESTDIR + BUILDDIR + "/" + calculate_md5sum (srcpath);
                 var tar = new archive ();
                 tar.load (srcpath);
                 tar.set_target (srcpath);
@@ -61,7 +61,7 @@ public class builder {
             }
             // Set build target again (emerge change build target)
             yb.set_ympbuild_srcpath (srcpath);
-            string build_path = srealpath (get_build_dir () + calculate_md5sum (srcpath + "/ympbuild"));
+            string build_path = srealpath (get_build_dir () + "/" + calculate_md5sum (srcpath + "/ympbuild"));
             yb.set_ympbuild_buildpath (build_path);
 
 
@@ -148,7 +148,7 @@ public class builder {
 
         public bool set_build_target (string src_path) {
             yb.set_ympbuild_srcpath (src_path);
-            string build_path = srealpath (get_build_dir () + calculate_md5sum (yb.ympbuild_srcpath + "/ympbuild"));
+            string build_path = srealpath (get_build_dir () + "/" + calculate_md5sum (yb.ympbuild_srcpath + "/ympbuild"));
             remove_all (build_path);
             yb.set_ympbuild_buildpath (build_path);
             if (isdir (build_path)) {

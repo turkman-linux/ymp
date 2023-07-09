@@ -33,6 +33,7 @@ void build_init () {
     op.help.add_parameter ("--no-package", _ ("do not install package after building"));
     op.help.add_parameter ("--ignore-dependency", _ ("disable dependency check"));
     op.help.add_parameter ("--no-emerge", _ ("use binary packages"));
+    op.help.add_parameter ("--builddir", _ ("build directory"));
     op.help.add_parameter ("--compress", _ ("compress format"));
     op.help.add_parameter ("--install", _ ("install binary package after building"));
     add_operation (op);
