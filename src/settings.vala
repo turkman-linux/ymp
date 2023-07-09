@@ -3,11 +3,15 @@
 //DOC: ymp configuration functions
 private string CONFIG;
 private string DESTDIR;
+private string BUILDDIR;
 
 private yamlfile config_yaml;
 private void settings_init () {
     if (DESTDIR == null) {
         DESTDIR = "/";
+    }
+    if (BUILDDIR == null) {
+        BUILDDIR = "/tmp/ymp-build/";
     }
     if (CONFIGDIR == null) {
         CONFIGDIR = "/etc/";
@@ -18,6 +22,7 @@ private void settings_init () {
     config_yaml = new yamlfile ();
     set_value_readonly ("destdir", DESTDIR);
     set_value_readonly ("config", CONFIG);
+    set_value_readonly ("builddir", BUILDDIR);
     set_value_readonly ("version", VERSION);
     string area = "";
     string value = "";
@@ -67,6 +72,14 @@ public void set_destdir (string rootfs) {
     settings_init ();
 }
 
+//DOC: `void set_builddir (string path):`
+//DOC: change builddir
+public void set_builddir (string path) {
+    BUILDDIR=srealpath (path);
+    info (_ ("Build directory has been changed: %s").printf (BUILDDIR));
+    settings_init ();
+}
+
 //DOC: `string get_storage ():`
 //DOC: get ymp storage directory. (default: /var/lib/ymp)
 public string get_storage () {
@@ -89,7 +102,11 @@ public string get_destdir () {
 //DOC: `string get_storage ():`
 //DOC: get ymp storage directory. (default: /var/lib/ymp)
 public string get_build_dir () {
-    return DESTDIR + "/tmp/ymp-build/";
+    return DESTDIR + get_builddir_priv ();
+}
+
+private string get_builddir_priv () {
+    return BUILDDIR;
 }
 
 private string get_metadata_path (string name) {
@@ -118,6 +135,8 @@ private void parse_args (string[] args) {
                     set_value (name, value);
                 }else if (name == "destdir") {
                     set_destdir (value);
+                }else if (name == "builddir") {
+                    set_builddir (value);
                 }else if (name == "config") {
                     set_config (value);
                 }else {

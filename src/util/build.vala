@@ -21,7 +21,7 @@ public class builder {
             }
 
             if (startswith (path, "git://") || endswith (path, ".git")) {
-                srcpath=DESTDIR + "/tmp/ymp-build/" + sbasename (path);
+                srcpath=DESTDIR + BUILDDIR + sbasename (path);
                 if (isdir (srcpath)) {
                     remove_all (srcpath);
                 }
@@ -30,7 +30,7 @@ public class builder {
                     return 2;
                 }
             }else if (startswith (path, "http://") || startswith (path, "https://")) {
-                string file=DESTDIR + "/tmp/ymp-build/.cache/" + sbasename (path);
+                string file=DESTDIR + BUILDDIR + "/.cache/" + sbasename (path);
                 create_dir (file);
                 string farg = file + "/" + sbasename (path);
                 if (!isfile (farg)) {
@@ -39,7 +39,7 @@ public class builder {
                 srcpath=farg;
             }
             if (isfile (srcpath)) {
-                srcpath = DESTDIR + "/tmp/ymp-build/" + calculate_md5sum (srcpath);
+                srcpath = DESTDIR + BUILDDIR + calculate_md5sum (srcpath);
                 var tar = new archive ();
                 tar.load (srcpath);
                 tar.set_target (srcpath);
@@ -172,7 +172,7 @@ public class builder {
                     continue;
                 }
                 string srcfile = yb.ympbuild_buildpath + "/" + sbasename (src);
-                string ymp_source_cache = DESTDIR + "/tmp/ymp-build/.cache/" + yb.get_ympbuild_value ("name") + "/";
+                string ymp_source_cache = DESTDIR + BUILDDIR + "/.cache/" + yb.get_ympbuild_value ("name") + "/";
                 create_dir (ymp_source_cache);
                 if (isfile (srcfile)) {
                     info (_ ("Source file already exists."));

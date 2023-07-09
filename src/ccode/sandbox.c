@@ -40,6 +40,10 @@ int sandbox_gid = 0;
 int get_bool(char* variable);
 #endif
 
+#ifndef get_builddir_priv
+char* get_builddir_priv();
+#endif
+
 int isdir(char* target);
 int isfile(char* target);
 void remove_all(char* target);
@@ -91,7 +95,7 @@ int sandbox(char** args){
         sandbox_create_tmpfs("/tmp/ymp-root/root");
         sandbox_create_tmpfs("/tmp/ymp-root/tmp");
         sandbox_create_tmpfs("/tmp/ymp-root/run");
-        sandbox_bind("/tmp/ymp-build");
+        sandbox_bind(get_builddir_priv());
         sandbox_bind("/proc/");
         char *token = strtok(sandbox_shared,":");
         while(token != NULL){

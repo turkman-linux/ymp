@@ -79,7 +79,7 @@ public int deb_create (string fpath, string output) {
 }
 
 public int debian_convert (string file) {
-    string output = "/tmp/ymp-build/" + sbasename (file);
+    string output = BUILDDIR + sbasename (file);
     if (isdir (output)) {
         remove_all (output);
     }
