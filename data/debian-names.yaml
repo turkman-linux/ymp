@@ -6,3 +6,5 @@ debian:
   libxdamage: libXdamage
   libxext: libXext
   libxfixes: libXfixes
+  libxrandr: libXrandr
+  pango1.0: pango
