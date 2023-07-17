@@ -85,15 +85,16 @@ public int debian_convert (string file) {
     }
     var bd = new builder ();
     bd.yb.set_ympbuild_buildpath (output);
-    deb_extract (file, bd.output + "/output");
-    create_debian_metadata (bd.output + "/output");
+    deb_extract (file, output + "/output");
+    create_debian_metadata (output + "/output");
     bd.create_files_info ();
     string binpkg = bd.create_binary_package ();
-    string target = pwd () + "/" + bd.output_package_name + "_" + getArch () + ".ymp";
-    move_file (binpkg, target);
+    string target = file[:-4]+".ymp";
     if (get_bool ("install")) {
         set_bool ("no-emerge", true);
-        install_main ( {target});
+        install_main ({binpkg});
+    } else {
+        move_file (binpkg, target);
     }
     return 0;
 }
