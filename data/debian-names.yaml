@@ -1,0 +1,4 @@
+debian:
+  glib2.0: glib
+  libx11: libX11
+  gtk+3.0: gtk3

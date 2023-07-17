@@ -188,6 +188,7 @@ install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 
 install_data('data/fix-turkish.sed', install_dir : get_option('prefix') / 'share/ymp/')
 install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/packages/')
 install_data('data/ymp-extra.h', install_dir : get_option('includedir'))
+install_data('data/debian-names.yaml', install_dir : get_option('sysconfdir'))
 
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
 install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'))

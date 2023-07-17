@@ -177,18 +177,43 @@ public void create_debian_metadata (string path) {
                foreach (string deb in ssplit (val, ", ")) {
                    string fdep = find_debian_pkgname_from_catalog (deb);
                    string[] deps = {};
-                   if (fdep.strip () != "" && fdep != name && !(fdep in deps) ) {
-                       data +="      - %s\n".printf (fdep);
+                   if (fdep.strip () != "" && fdep != name) {
                        deps += fdep;
+                   }
+                   deps = debian_packagename_fix (deps);
+                   foreach (string dep in deps){
+                       data +="      - %s\n".printf (dep);
                    }
                }
            }
         }
     }
     data +="    arch: %s\n".printf (getArch ());
-    data +="    group:\n";
     data +="    unsafe: true\n";
+    data +="    group:\n";
     data +="      - debian\n";
+    data +="      - unsafe\n";
     writefile (path + "/metadata.yaml", data);
     remove_all (path + "/DEBIAN/");
+}
+
+private string[] debian_packagename_fix (string[] names){
+    var yaml = new yamlfile();
+    if(!isfile ("/etc/debian-names.yaml")) {
+        return names;
+    }
+    yaml.load("/etc/debian-names.yaml");
+    string area = yaml.get("debian");
+    var ret = new array();
+    foreach (string name in names) {
+        name = name.strip();
+        string fname = yaml.get_value(area, name).strip();
+        if (fname == "" || fname == null) {
+            fname = name;
+        }
+        ret.add(fname);
+    }
+    ret.uniq();
+    ret.sort();
+    return ret.get();
 }

@@ -38,7 +38,7 @@ public class array {
     //DOC: add item into array
     public void add (string item) {
         if (item != "" && item != null) {
-            a += item;
+            a += "%s".printf (item);
         }
     }
 
@@ -124,9 +124,21 @@ public class array {
         a = new_a;
     }
 
-    //DOC: `long size ()`;
+    //DOC: `long size ():`
     //DOC: return array length
     public long length () {
         return a.length - rmsize;
+    }
+    
+    //DOC: `void uniq ():`
+    //DOC: Remove duplicated items
+    public void uniq () {
+        string[] new_a = {};
+        foreach (string item in a){
+            if (!(item in new_a)){
+                new_a += item;
+            }
+        }
+        a = new_a;
     }
 }
