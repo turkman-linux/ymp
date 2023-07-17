@@ -174,16 +174,16 @@ public void create_debian_metadata (string path) {
                data +="    description: %s\n".printf (val);
            }else if (var == "Depends") {
                data +="    depends:\n";
+               string[] deps = {};
                foreach (string deb in ssplit (val, ", ")) {
                    string fdep = find_debian_pkgname_from_catalog (deb);
-                   string[] deps = {};
                    if (fdep.strip () != "" && fdep != name) {
                        deps += fdep;
                    }
-                   deps = debian_packagename_fix (deps);
-                   foreach (string dep in deps){
-                       data +="      - %s\n".printf (dep);
-                   }
+               }
+               deps = debian_packagename_fix (deps);
+               foreach (string dep in deps){
+                   data +="      - %s\n".printf (dep);
                }
            }
         }
@@ -211,9 +211,12 @@ private string[] debian_packagename_fix (string[] names){
         if (fname == "" || fname == null) {
             fname = name;
         }
-        ret.add(fname);
+        if (fname == "" || fname == null) {
+            continue;
+        }
+        ret.add (fname);
     }
     ret.uniq();
     ret.sort();
-    return ret.get();
+    return ret.get ();
 }
