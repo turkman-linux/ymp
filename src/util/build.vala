@@ -293,6 +293,7 @@ public class builder {
             cd (yb.ympbuild_buildpath + "/output");
             string files_data = "";
             string links_data = "";
+            bool unsafe = get_bool ("unsafe");
             foreach (string path in listdir (yb.ympbuild_buildpath + "/output")) {
                 if (path == "metadata.yaml" || path == "icon.svg") {
                     continue;
@@ -300,7 +301,7 @@ public class builder {
                 string fpath = yb.ympbuild_buildpath + "/output/" + path;
                 if (issymlink (fpath)) {
                     continue;
-                }else if (isfile (fpath)) {
+                }else if (!unsafe && isfile (fpath)) {
                     error_add (_ ("Files are not allowed in root directory: /%s").printf (path));
                 }
             }
@@ -311,16 +312,16 @@ public class builder {
                 if (isdir (file)) {
                     continue;
                 }
-                if (filesize (file) == 0) {
+                if (!unsafe && filesize (file) == 0) {
                     warning (_ ("Empty file detected: %s").printf (file));
                 }
                 if (issymlink (file)) {
                     var link = sreadlink (file);
-                    if (link[0] == '/') {
+                    if (!unsafe && link[0] == '/') {
                         error_add (_ ("Absolute path symlink is not allowed:%s%s => %s").printf ("\n    ", file, link));
                         continue;
                     }
-                    if (!isexists (sdirname (file) + "/" + link) && link.length > 0) {
+                    if (!unsafe && !isexists (sdirname (file) + "/" + link) && link.length > 0) {
                         error_add (_ ("Broken symlink detected:%s%s => %s").printf ("\n    ", file, link));
                         continue;
                     }
@@ -349,6 +350,7 @@ public class builder {
         public string output_package_name;
         public bool create_metadata_info () {
             string metadata = yb.get_ympbuild_metadata ();
+            bool unsafe = get_bool ("unsafe");
             debug ("Create metadata info: " + yb.ympbuild_buildpath + "/output/metadata.yaml");
             var yaml = new yamlfile ();
             yaml.data = metadata;
@@ -420,6 +422,9 @@ public class builder {
             var deps = new array ();
             if (yaml.has_area (srcdata, "depends")) {
                 deps.adds (yaml.get_array (srcdata, "depends"));
+            }
+            if (unsafe) {
+                new_data += "    unsafe: true/n";
             }
             string[] use_flags = ssplit (get_value ("use"), " ");
             string package_use = get_config ("package.use", name);

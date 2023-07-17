@@ -30,6 +30,7 @@ void build_init () {
     op.help.add_parameter ("--no-source", _ ("do not generate source package"));
     op.help.add_parameter ("--no-binary", _ ("do not generate binary package"));
     op.help.add_parameter ("--no-build", _ ("do not build package (only test and package)"));
+    op.help.add_parameter ("--unsafe", _ ("do not check filesystem safety"));
     op.help.add_parameter ("--no-package", _ ("do not install package after building"));
     op.help.add_parameter ("--ignore-dependency", _ ("disable dependency check"));
     op.help.add_parameter ("--no-emerge", _ ("use binary packages"));

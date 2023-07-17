@@ -49,10 +49,19 @@ private void resolve_process (string[] names) {
                     pkg = get_installed_package (name);
                 }
             }else {
-                error_add (_ ("Package is not installable: %s").printf (name));
+                string errmsg = _ ("Package is not installable: %s").printf (name);
+                if (!get_bool ("ignore-missing")) {
+                    error_add (errmsg);
+                } else {
+                    warning (errmsg);
+                    continue;
+                }
             }
             if (pkg == null) {
                 continue;
+            }
+            if (!get_bool ("unsafe") && pkg.get ("unsafe") != "") {
+                error_add("Unsafe package detected! If you want to install please use --unsafe.");
             }
             if (!get_bool ("ignore-dependency")) {
                 // run recursive function

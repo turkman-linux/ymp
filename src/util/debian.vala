@@ -176,8 +176,10 @@ public void create_debian_metadata (string path) {
                data +="    depends:\n";
                foreach (string deb in ssplit (val, ", ")) {
                    string fdep = find_debian_pkgname_from_catalog (deb);
-                   if (fdep.strip () != "" && fdep != name) {
-                       data +=" - %s\n".printf (fdep);
+                   string[] deps = {};
+                   if (fdep.strip () != "" && fdep != name && !(fdep in deps) ) {
+                       data +="      - %s\n".printf (fdep);
+                       deps += fdep;
                    }
                }
            }
@@ -185,7 +187,8 @@ public void create_debian_metadata (string path) {
     }
     data +="    arch: %s\n".printf (getArch ());
     data +="    group:\n";
-    data +=" - debian\n";
+    data +="    unsafe: true\n";
+    data +="      - debian\n";
     writefile (path + "/metadata.yaml", data);
     remove_all (path + "/DEBIAN/");
 }
