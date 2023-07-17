@@ -214,6 +214,9 @@ private string[] debian_packagename_fix (string[] names){
         if (fname == "" || fname == null) {
             continue;
         }
+        if (startswith(fname, "python3-")) {
+            fname = fname.replace ("python3-","py3-");
+        }
         ret.add (fname);
     }
     ret.uniq();
