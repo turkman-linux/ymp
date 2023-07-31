@@ -60,7 +60,7 @@ private void resolve_process (string[] names) {
             if (pkg == null) {
                 continue;
             }
-            if (!get_bool ("unsafe") && pkg.get ("unsafe") != "") {
+            if (!get_bool ("unsafe") && pkg.is_unsafe()) {
                 error_add("Unsafe package detected! If you want to install please use --unsafe.");
             }
             if (!get_bool ("ignore-dependency")) {

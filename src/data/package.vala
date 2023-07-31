@@ -157,6 +157,15 @@ public class package {
         warning (_ ("Package information is broken: %s %s").printf (fname, name));
         return "";
     }
+    //DOC: `string package.is_unsafe ():`
+    //DOC: Check package is unsafe
+    public bool is_unsafe () {
+        debug (_ ("Check package unsafe %s").printf (name));
+        if (yaml.has_area (pkgarea, "unsafe")) {
+            return true;
+        }
+        return false;
+    }
 
     //DOC: `string package.get_uri ():`
     //DOC: get repository uri
