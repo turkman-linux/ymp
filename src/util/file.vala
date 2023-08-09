@@ -166,7 +166,7 @@ public int remove_file (string path) {
     }
     #else
     return remove (path);
-    #endif  
+    #endif
 }
 //DOC: `int remove_all (string path):`
 //DOC: Remove files and directories (like **rm -rf**)

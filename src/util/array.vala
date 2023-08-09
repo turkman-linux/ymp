@@ -129,7 +129,7 @@ public class array {
     public long length () {
         return a.length - rmsize;
     }
-    
+
     //DOC: `void uniq ():`
     //DOC: Remove duplicated items
     public void uniq () {

@@ -10,7 +10,7 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include <sys/prctl.h> 
+#include <sys/prctl.h>
 #include <unistd.h>
 
 #ifndef which

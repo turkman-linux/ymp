@@ -80,7 +80,7 @@ public class code_runner {
                         p.clean();
                         return status;
                     }else{
-                        print_stderr(colorize("Finish:",blue)+job.name);                    
+                        print_stderr(colorize("Finish:",blue)+job.name);
                     }
                 }
                 print(colorize("Clean plugin:",green)+p.name);

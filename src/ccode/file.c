@@ -185,7 +185,7 @@ char* get_magic_mime_type(char* path){
   char* ret;
   magic_t magic;
 
-  magic = magic_open(MAGIC_MIME_TYPE); 
+  magic = magic_open(MAGIC_MIME_TYPE);
   magic_load(magic, NULL);
   mime = magic_file(magic, path);
 

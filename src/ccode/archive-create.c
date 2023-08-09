@@ -92,7 +92,7 @@ void write_archive(const char *outname, const char **filename) {
   #endif
   while (*filename) {
     lstat(*filename, &st);
-    entry = archive_entry_new(); 
+    entry = archive_entry_new();
     archive_entry_set_pathname(entry, *filename);
     archive_entry_set_size(entry, st.st_size);
     switch (st.st_mode & S_IFMT) {
@@ -156,7 +156,7 @@ void write_archive(const char *outname, const char **filename) {
                 type = "socket";
                 #endif
                 archive_entry_set_filetype(entry, AE_IFSOCK);
-                break;                
+                break;
             default:
                 // unknown
                 #ifdef DEBUG

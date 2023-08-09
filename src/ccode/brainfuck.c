@@ -17,7 +17,7 @@ void brainfuck(char * code, unsigned int size) {
     if(ptr >=size){
         fprintf(stderr,"Failed to run brainfuck code:  %s\n","Out of memory");
         return;
-    }  
+    }
     if (code[i] == '>') {
       ptr++;
     } else if (code[i] == '<') {

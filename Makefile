@@ -1,3 +1,4 @@
+SHELL=/bin/bash
 build: clean
 	meson setup build --prefix=/usr -Ddoc=true -Ddebug=true -Dscripts=true -Dlibbrotli=false
 	ninja -C build
@@ -30,3 +31,6 @@ pot:
 	    rm -f $$file ; \
 	    mv $$file.new $$file ; \
 	done
+
+fix:
+	find src -type f -exec sed -i "s/^ *$$//g;s/ *$$//g" {} \;
