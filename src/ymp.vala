@@ -228,6 +228,7 @@ private void directories_init () {
     create_dir (get_storage () + "/metadata/");
     create_dir (get_storage () + "/files/");
     create_dir (get_storage () + "/links/");
+    create_dir (get_storage () + "/gpg/");
     create_dir (get_storage () + "/sources.list.d/");
     create_dir (get_storage () + "/quarantine/");
     if (!isexists (get_storage () + "/sources.list")) {
@@ -239,6 +240,7 @@ private void directories_init () {
             Posix.chown (path, 0, 0);
         }
     }
+    GLib.FileUtils.chmod (get_storage () + "/gpg/", 0700);
 }
 
 private bool ymp_activated = false;

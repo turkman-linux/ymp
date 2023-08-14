@@ -215,6 +215,12 @@ public void copy_file (string src, string desc) {
     File file2 = File.new_for_path (desc);
     create_dir (sdirname (desc));
     int64 sync_bytes = 0;
+    if("://" in src){
+        if(!fetch(src, desc)){
+            error_add (_ ("Failed to fetch file: %s => %s").printf (src, desc));
+        }
+        return;
+    }
     if (isfile (desc)) {
         remove_file (desc);
     }

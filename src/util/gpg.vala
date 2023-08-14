@@ -28,7 +28,30 @@ public bool verify_file (string path) {
     if (!isfile (path)) {
         return false;
     }
-    return 0 == run ("sh -c \"gpg --verify %s'\" 2>/dev/null".printf (path + ".gpg'"));
+    string gpgdir = get_storage()+"/gpg/";
+    foreach(string file in listdir(gpgdir)) {
+        if(!endswith(file,".gpg")){
+            continue;
+        }
+        string[] args = {"gpg","--homedir", gpgdir, "--trust-model", "always", "--no-default-keyring", "--keyring", gpgdir+"%s".printf(file),  "--quiet" ,"--verify", path+".gpg"};
+        int status = run_args (args);
+        if(status == 0){
+            return true;
+        }
+
+    }
+    return false;
+}
+
+public void add_gpg_key(string path){
+    if(endswith(path,".asc")){
+        string target = get_storage()+"/gpg/"+sbasename(path);
+        copy_file(path, target);
+        run_args({"gpg", "--dearmor", target});
+        move_file(target+".gpg",get_storage()+"/gpg/"+calculate_md5sum(target+".gpg")+".gpg");
+        remove_file(target);
+    }
+
 }
 
 //DOC: `void sign_elf (string path):`
