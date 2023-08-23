@@ -4,6 +4,7 @@ declare -r installdir="@buildpath@/output"
 declare -r jobs="-j@jobs@"
 export HOME="@buildpath@"
 export DESTDIR="$installdir"
+export INSTALL_ROOT="$installdir"
 declare -r YMPVER="@VERSION@"
 export NOCONFIGURE=1
 export NO_COLOR=1
