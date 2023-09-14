@@ -188,11 +188,63 @@ public class Ymp {
             if (line.length == 0) {
                 continue;
             }
-            string[] proc_args = ssplit (line, " ");
+            string[] proc_args = split_args(line);
             if (proc_args[0] != null) {
                 add_process (proc_args[0], proc_args[1:]);
             }
         }
+    }
+    private string[] split_args(string line){
+        array ret = new array();
+        string cur = "";
+        char c = '\0';
+        char cc = '\0';
+        int type = 0; // 0 = normal 1 = exec 2 = quota
+        for(int i = 0; i < line.length ; i++){
+            c = line[i];
+            if(c >= 1){
+                cc = line[i-1];
+            }
+            if(c == '\\'){
+                i += 1;
+                if(i >= line.length){
+                    error_add("Unexceped line ending!");
+                    error(31);
+                }
+                cur += line[i].to_string();
+                continue;
+            }
+            if(c == '`' && cc != '\\'){
+                if(type != 1){
+                    type = 1;
+                    ret.add(cur);
+                    cur = "";
+                }else{
+                    ret.add(getoutput(cur).strip());
+                    cur = "";
+                    type = 0;
+                }
+                continue;
+            }
+            if(c == '"' && cc != '\\'){
+                if(type != 2){
+                    type = 2;
+                }else{
+                    type = 0;
+                }
+                continue;
+            }
+            if(c == ' ' && cc != '\\'){
+                if(type == 0){
+                    ret.add(cur);
+                    cur = "";
+                    continue;
+                }
+            }
+            cur += c.to_string();
+        }
+        ret.add(cur);
+        return ret.get();
     }
 }
 //DOC: `string[] argument_process (string[] args):`

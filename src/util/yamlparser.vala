@@ -38,6 +38,7 @@ public class yamlfile {
     //DOC: `bool yamlfile.has_area (string fdata, string path):`
     //DOC: return true if **fdata** has **path** area
     public bool has_area (string fdata, string path) {
+        debug (_ ("Has area : %s").printf (path));
         foreach (string line in ssplit (fdata, "\n")) {
             if (startswith (line, path + ":")) {
                 return true;
@@ -76,6 +77,7 @@ public class yamlfile {
 
     public string[] get_area_names (string fdata) {
         string[] ret = {};
+        debug (_ ("Get area names"));
         foreach (string line in ssplit (fdata, "\n")) {
             if (!startswith (line, " ") && ":" in line) {
                 string name = ssplit (line, ":")[0];
@@ -154,6 +156,7 @@ public class yamlfile {
     }
 
     private string get_area_single (string fdata, string path) {
+        debug (_ ("Get area : %s").printf (path));
         if (fdata == null || fdata == "") {
             return "";
         }

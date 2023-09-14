@@ -77,6 +77,7 @@ public class archive {
         set_archive_type ("zip", "none");
     }
     private void load_archive (string path) {
+        debug (_ ("Load archive : %s").printf (path));
         archive = new Archive.Read ();
         archive.support_filter_all ();
         archive.support_format_all ();
@@ -89,6 +90,7 @@ public class archive {
     //DOC: `bool is_archive (string path):`
     //DOC: check file is archive
     public bool is_archive (string path) {
+        debug (_ ("Is archive : %s").printf (path));
         archive = new Archive.Read ();
         archive.support_filter_all ();
         archive.support_format_all ();
@@ -101,6 +103,8 @@ public class archive {
     //DOC: `string[] archive.list_files ():`
     //DOC: Get archive file list
     public string[] list_files () {
+        debug (_ ("List files in archive"));
+
         load_archive (archive_path);
         unowned Archive.Entry entry;
         string[] ret = {};
@@ -114,6 +118,8 @@ public class archive {
     //DOC: `void archive.set_target (string path):`
     //DOC: Change target directory for extract
     public void set_target (string path) {
+        debug (_ ("Set archive target : %s").printf (path));
+
         if (path != null) {
             target_path = path;
         }
@@ -123,6 +129,8 @@ public class archive {
     //DOC: Add a file to archive create list
     private string[] archive_add_list;
     public void add (string path) {
+        debug (_ ("Add to archive : %s").printf (path));
+
         if (archive_add_list == null) {
             archive_add_list = {};
         }
@@ -138,6 +146,7 @@ public class archive {
     //DOC: `void archive.extract (string path):`
     //DOC: Extract **path** file to target directory
     public void extract (string path) {
+        debug (_ ("Extract archve: %s").printf (path));
         load_archive (archive_path);
         Archive.ExtractFlags flags;
         flags = Archive.ExtractFlags.TIME;

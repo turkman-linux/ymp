@@ -20,8 +20,8 @@ run_command('bash', './tool/mkctx.sh',
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
 args = ['-O0', '-flto', '-Wall','-lm',
-            '-fvisibility=hidden', '-Wextra', '-Wno-unused-parameter','-s',
-            '-Wl,--gc-sections','-ffunction-sections',
+            '-fvisibility=hidden', '-Wextra', '-Wno-unused-parameter','-s', '-Os',
+            '-Wl,--gc-sections','-ffunction-sections', '-fno-math-errno', '-ffast-math',
             '-fdata-sections', '-fno-exceptions']
 
 
