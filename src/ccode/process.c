@@ -86,12 +86,12 @@ int run_args_silent(char* args[]){
 }
 
 int run(char* command){
-    char* cmd[] = {"sh","-c",command};
+    char* cmd[] = {"sh","-c",command,"\0"};
     return run_args(cmd);
 }
 
 int run_silent(char* command){
-    char* cmd[] = {"sh","-c",command};
+    char* cmd[] = {"sh","-c",command,"\0"};
     return run_args_silent(cmd);
 }
 

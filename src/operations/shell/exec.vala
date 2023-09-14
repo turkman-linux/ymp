@@ -5,9 +5,9 @@ public int exec_main (string[] args) {
     if (get_destdir () != "/") {
         status = run_args ( {"chroot", get_destdir (), cmd}) / 256;
     }else if (get_bool ("silent")) {
-        status = run (cmd + " 2>/dev/null | :") / 256;
+        status = run_args_silent ( { "sh", "-c" , cmd}) / 256;
     }else {
-        status = run (cmd) / 256;
+        status = run_args ( { "sh", "-c" , cmd}) / 256;
     }
     if (status != 0) {
         error_add (_ ("Failed to run command: %s").printf (cmd));
