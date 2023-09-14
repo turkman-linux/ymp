@@ -55,6 +55,12 @@ public int cd_main (string[] args) {
     }
     return 0;
 }
+public int export_main (string[] args) {
+    foreach (string arg in args) {
+        set_env(arg,get_value (arg));
+    }
+    return 0;
+}
 
 void setget_init () {
     operation op_get = new operation ();
@@ -109,10 +115,19 @@ void setget_init () {
     op_cd.help.shell_only = true;
     op_cd.help.description = _ ("Change directory.");
 
+    operation op_exp = new operation ();
+    op_exp.help = new helpmsg ();
+    op_exp.callback.connect (export_main);
+    op_exp.names = {_ ("export"), "export"};
+    op_exp.help.name = _ ("export");
+    op_exp.help.shell_only = true;
+    op_exp.help.description = _ ("Convert value to environmental.");
+
     add_operation (op_get);
     add_operation (op_set);
     add_operation (op_equal);
     add_operation (op_read);
     add_operation (op_match);
     add_operation (op_cd);
+    add_operation (op_exp);
 }
