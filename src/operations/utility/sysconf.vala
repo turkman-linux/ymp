@@ -19,7 +19,7 @@ public int sysconf_main (string[] args) {
                 if (0 != run_args ( {"chroot", get_destdir (), hook})) {
                     warning (_ ("Failed to run sysconf: %s").printf (sbasename (hook)));
                 }
-            }else if (0 != run (hook)) {
+            }else if (0 != run_args ({hook})) {
                 warning (_ ("Failed to run sysconf: %s").printf (sbasename (hook)));
             }
         }
