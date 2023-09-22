@@ -76,10 +76,10 @@ void curl_options_common(char* url){
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
         curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, "");
-        if (get_bool("no-processbar") || getenv("NO_PROGRESSBAR")){
-            curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_dummy);
-        } else {
+        if (get_bool("processbar") || getenv("PROGRESSBAR")){
             curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_vala);
+        } else {
+            curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_dummy);
         }
         if (strcmp(get_value("ignore-ssl"),"true")==0){
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
