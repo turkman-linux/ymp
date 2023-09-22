@@ -52,7 +52,8 @@ char fetcher_filename[PATH_MAX];
 int fetcher_vala(double current, double total, char* filename);
 
 int fetcher_process_to_vala(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded){
-    return fetcher_vala(current, total, fetcher_filename);
+    fetcher_vala(current, total, fetcher_filename);
+    return 0;
 }
 
 int fetcher_process_to_dummy(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded){
@@ -75,10 +76,12 @@ void curl_options_common(char* url){
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
         curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, "");
-        if(!get_bool("no-processbar")){
+        if (get_bool("no-processbar") || getenv("NO_PROGRESSBAR")){
             curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_dummy);
+        } else {
+            curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_vala);
         }
-        if(strcmp(get_value("ignore-ssl"),"true")==0){
+        if (strcmp(get_value("ignore-ssl"),"true")==0){
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
         }
