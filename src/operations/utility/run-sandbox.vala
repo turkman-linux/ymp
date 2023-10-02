@@ -12,13 +12,7 @@ public int run_sandbox_main (string[] args) {
     sandbox_uid = int.parse (get_value ("uid"));
     sandbox_gid = int.parse (get_value ("gid"));
     info (_ ("Execute sandbox :%s").printf (join (" ", args)));
-    string[] argv = {};
-    argv += "ymp";
-    argv += "exec";
-    foreach (string i in args) {
-        argv += i;
-    }
-    int status = sandbox (argv);
+    int status = sandbox (args);
     return status / 256;
 }
 

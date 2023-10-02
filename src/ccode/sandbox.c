@@ -118,7 +118,7 @@ int sandbox(char** args){
                 unshare(CLONE_VM);
                 unshare(CLONE_NEWPID| CLONE_VFORK | SIGCHLD);
                 char *envp[] = {"TERM=linux", "PATH=/usr/bin:/bin:/usr/sbin:/sbin", NULL};
-                exit(execvpe("/proc/self/exe",args,envp));
+                exit(operation_main_raw("exec",args));
             }
         }
         exit(127);

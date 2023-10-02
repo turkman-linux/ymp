@@ -42,6 +42,21 @@ private void unlock_operation () {
     unblock_sigint ();
 }
 
+public int operation_main_raw(string type, string[] args){
+    info (_ ("RUN (RAW):") + type + ":" + join (" ", args));
+    foreach (operation op in ops) {
+        foreach (string name in op.names) {
+            if (type == name) {
+                set_value_readonly ("OPERATION", op.help.name);
+                return op.callback (args);
+            }
+        }
+    }
+    warning (_ ("Invalid operation name: %s").printf (type));
+    return 0;
+
+}
+
 public int operation_main (string type, string[] args) {
     info (_ ("RUN:") + type + ":" + join (" ", args));
     foreach (operation op in ops) {
