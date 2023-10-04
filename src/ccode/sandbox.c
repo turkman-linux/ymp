@@ -60,7 +60,7 @@ char* sandbox_tmpfs;
 
 char* sandbox_rootfs;
 
-int sandbox(char** args){
+int sandbox(char* type, char** args){
     int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER;
     if(isfile("/.sandbox")){
         exit(31);
@@ -118,7 +118,9 @@ int sandbox(char** args){
                 unshare(CLONE_VM);
                 unshare(CLONE_NEWPID| CLONE_VFORK | SIGCHLD);
                 char *envp[] = {"TERM=linux", "PATH=/usr/bin:/bin:/usr/sbin:/sbin", NULL};
-                exit(operation_main_raw("exec",args));
+                ymp_init();
+                //puts(args[0]);
+                exit(operation_main_raw(type,args));
             }
         }
         exit(127);

@@ -15,14 +15,12 @@ public string join (string f, string[] array) {
         return "";
     }
     foreach (string item in array) {
-        if (item.length > 0 && item != null) {
-            tmp += item + f;
-        }
+        tmp += item + f;
     }
     if (f.length >= tmp.length) {
         return tmp;
     }
-    return tmp[0:tmp.length - f.length];
+    return tmp[0:-f.length];
 }
 //DOC: `public int[] sindex (string f, string[] array)`:
 //DOC: Get item index number array in string array.

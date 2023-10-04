@@ -12,7 +12,7 @@ public int run_sandbox_main (string[] args) {
     sandbox_uid = int.parse (get_value ("uid"));
     sandbox_gid = int.parse (get_value ("gid"));
     info (_ ("Execute sandbox :%s").printf (join (" ", args)));
-    int status = sandbox (args);
+    int status = sandbox ("exec", args);
     return status / 256;
 }
 

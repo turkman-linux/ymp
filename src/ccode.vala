@@ -34,9 +34,9 @@ private extern void no_stderr ();
 private extern void reset_std ();
 
 //DOC: ### sandbox.c
-//DOC: `void sandbox (string[] args):`
+//DOC: `void sandbox (string type, string[] args):`
 //DOC: run command in sandboxed area
-public extern int sandbox (string[] args);
+public extern int sandbox (string type, string[] args);
 //DOC: `boot sandbox_network:`
 //DOC: enable/disable sandbox network access (default: false)
 public extern bool sandbox_network;
