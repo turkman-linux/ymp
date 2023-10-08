@@ -43,6 +43,39 @@ long count_tab(char* data){
     return cnt;
 }
 
+char* join(char* f, char** array){
+    size_t len = 0;
+    int i = 0;
+    int c = 0;
+    // find output size
+    while(array[i]){
+        len += strlen(array[i]) + strlen(f);
+        i++;
+    }
+    // allocate memory
+    char* ret = malloc(sizeof(char)*len+1);
+    strcpy(ret,"");
+    // copy item len and reset value
+    c = i;
+    i = 0;
+    // copy items
+    while(array[i]){
+        strcat(ret,array[i]);
+        if(i<c-1){
+            strcat(ret,f);
+        }
+	i++;
+    }
+    return ret;
+}
+
+char* str_add(char* str1, char* str2){
+    char* ret = malloc( (strlen(str1)+strlen(str2)+1)*sizeof(char) );
+    strcpy(ret,str1);
+    strcat(ret,str2);
+    return ret;
+}
+
 char* trim(char* data) {
     long i=0, j= 0, cnt=0;
     long len = strlen(data);

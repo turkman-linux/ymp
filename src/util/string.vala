@@ -1,27 +1,6 @@
 //DOC: ## String functions
 //DOC: easy & safe string operation functions.
 
-//DOC: `string join (string f, string[] array):`
-//DOC: merge array items. insert **f** in between
-//DOC: Example usage:
-//DOC: ```vala
-//DOC: string[] aa = {"hello", "world", "!"};
-//DOC: string bb = join (aa, " ");
-//DOC: stdout.printf (bb);
-//DOC: ```
-public string join (string f, string[] array) {
-    string tmp="";
-    if (array == null) {
-        return "";
-    }
-    foreach (string item in array) {
-        tmp += item + f;
-    }
-    if (f.length >= tmp.length) {
-        return tmp;
-    }
-    return tmp[0:-f.length];
-}
 //DOC: `public int[] sindex (string f, string[] array)`:
 //DOC: Get item index number array in string array.
 public int[] sindex (string f, string[] array) {
@@ -106,6 +85,4 @@ public string[] uniq (string[] array) {
     return ret;
 }
 
-public string str_add (string str1, string str2) {
-    return str1 + str2;
-}
+//public string str_add (string str1, string str2);

@@ -162,6 +162,16 @@ public extern string trim (string data);
 //DOC: count space intent on string
 public extern int count_tab (string data);
 
+//DOC: `string join (string f, string[] array):`
+//DOC: merge array items. insert **f** in between
+//DOC: Example usage:
+//DOC: ```vala
+//DOC: string[] aa = {"hello", "world", "!"};
+//DOC: string bb = join (aa, " ");
+//DOC: stdout.printf (bb);
+//DOC: ```
+public extern string join (string f, string[] array);
+
 
 //DOC: ### logger.c
 //DOC: `void print_fn (string message, bool new_line, bool err):`
