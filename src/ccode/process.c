@@ -21,6 +21,15 @@ char* which(char* path);
 char* str_add(char* str1, char* str2);
 #endif
 
+#ifndef run_args
+int run_args(char** args);
+#endif
+
+#ifndef run_args_silent
+int run_args_silent(char** args);
+#endif
+
+
 int locked=0;
 void single_instance(){
     if(locked){
@@ -35,54 +44,6 @@ void single_instance(){
             exit(31);
         }
     }
-}
-int run_args(char* args[]){
-    pid_t pid = fork();
-    if(pid == 0){
-        int r = prctl(PR_SET_PDEATHSIG, SIGHUP);
-        if (r == -1){
-            exit(1);
-        }
-        char *envp[] = {
-            "TERM=linux",
-            "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
-            str_add("OPERATION=",getenv("OPERATION")),
-            NULL
-        };
-        exit(execvpe(which(args[0]),args,envp));
-        exit(127);
-    }else{
-        int status;
-        kill(wait(&status),9);
-        return status;
-    }
-    return 127;
-}
-
-int run_args_silent(char* args[]){
-    pid_t pid = fork();
-    if(pid == 0){
-        int r = prctl(PR_SET_PDEATHSIG, SIGHUP);
-        if (r == -1){
-            exit(1);
-        }
-        char *envp[] = {
-            "TERM=linux",
-            "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
-            str_add("OPERATION=",getenv("OPERATION")),
-            NULL
-        };
-        int devnull = open("/dev/null", O_WRONLY);
-        dup2(devnull, STDOUT_FILENO);
-        dup2(devnull, STDERR_FILENO);
-        exit(execvpe(which(args[0]),args,envp));
-        exit(127);
-    }else{
-        int status;
-        kill(wait(&status),9);
-        return status;
-    }
-    return 127;
 }
 
 int run(char* command){
