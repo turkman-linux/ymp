@@ -24,7 +24,13 @@ args = ['-O0', '-flto', '-Wall','-lm',
             '-Wl,--gc-sections','-ffunction-sections', '-fno-math-errno', '-ffast-math',
             '-fdata-sections', '-fno-exceptions']
 
+args += ['-fno-unwind-tables', '-fno-asynchronous-unwind-tables', '-fno-math-errno',
+        '-fno-unroll-loops', '-fmerge-all-constants', '-fno-ident', '-ffast-math',
+        '-fsingle-precision-constant', '-Wl,--build-id=none', '-Wl,-z,norelro',
+        '-Wl,--hash-style=sysv'
+]
 
+args += [meson.current_build_dir()/ 'obj.o']
 deps = []
 
 pkgconfig_arg = ''
