@@ -106,8 +106,9 @@ public class builder {
         }
 
         public bool check_build_dependencies (string[] args) {
-          if (get_bool ("ignore-dependency")) {
-                  return true;
+            if (get_bool ("ignore-dependency")) {
+                 warning (_ ("Dependency check disabled"));
+                 return true;
             }
             string metadata = yb.get_ympbuild_metadata ();
             var yaml = new yamlfile ();
@@ -141,7 +142,11 @@ public class builder {
                 }
             }
             if (need_install.length > 0) {
-                error_add (_ ("Packages is not installed: %s").printf (join (" ", need_install)));
+                if (get_bool ("install")) {
+                    install_main (need_install);
+                } else {
+                    error_add (_ ("Packages is not installed: %s").printf (join (" ", need_install)));
+                }
             }
             return (!has_error ());
         }
@@ -358,41 +363,6 @@ public class builder {
             string name = yaml.get_value (srcdata, "name");
             string release = yaml.get_value (srcdata, "release");
             string version = yaml.get_value (srcdata, "version");
-            if (get_bool ("ignore-dependency")) {
-                warning (_ ("Dependency check disabled"));
-            }else {
-                var need_install = new array ();
-                if (yaml.has_area (srcdata, "depends")) {
-                    foreach (string dep in yaml.get_array (srcdata, "depends")) {
-                        if (!is_installed_package (dep)) {
-                            if (get_bool ("install")) {
-                                need_install.add (dep);
-                            }else {
-                                error_add (_ ("Package %s in not satisfied. Required by: %s").printf (dep, name));
-                            }
-                        }
-                    }
-                }
-                if (yaml.has_area (srcdata, "makedepends")) {
-                    foreach (string dep in yaml.get_array (srcdata, "makedepends")) {
-                        if (!is_installed_package (dep)) {
-                            if (get_bool ("install")) {
-                                need_install.add (dep);
-                            }else {
-                                error_add (_ ("Package %s in not satisfied. Required by: %s").printf (dep, name));
-                            }
-                        }
-                    }
-                }
-                if (has_error ()) {
-                    return false;
-                }
-                string curdir = pwd ();
-                if (get_bool ("install")) {
-                    install_main (need_install.get ());
-                }
-                cd (curdir);
-            }
             no_src = false;
             if (!yaml.has_area (srcdata, "archive")) {
                 no_src = true;

@@ -44,6 +44,10 @@ int get_bool(char* variable);
 char* get_builddir_priv();
 #endif
 
+#ifndef operation_main_raw
+int operation_main_raw(char* type, char** args);
+#endif
+
 int isdir(char* target);
 int isfile(char* target);
 void remove_all(char* target);
@@ -117,9 +121,6 @@ int sandbox(char* type, char** args){
                 unshare(CLONE_NEWIPC);
                 unshare(CLONE_VM);
                 unshare(CLONE_NEWPID| CLONE_VFORK | SIGCHLD);
-                char *envp[] = {"TERM=linux", "PATH=/usr/bin:/bin:/usr/sbin:/sbin", NULL};
-                ymp_init();
-                //puts(args[0]);
                 exit(operation_main_raw(type,args));
             }
         }
