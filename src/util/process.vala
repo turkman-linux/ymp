@@ -5,7 +5,12 @@
 //DOC: run command from argument array
 int run_args(string[] args){
     try{
-        string[] env = Environ.get ();
+        string[] env = {
+            "TERM=linux",
+            "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
+            "OPERATION="+get_value("OPERATION")
+        };
+
         int status;
         GLib.Process.spawn_sync (pwd(),
             args,
@@ -26,7 +31,11 @@ int run_args(string[] args){
 //DOC: run command from argument array silently.
 int run_args_silent(string[] args){
     try{
-        string[] env = Environ.get ();
+        string[] env = {
+            "TERM=linux",
+            "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
+            "OPERATION="+get_value("OPERATION")
+        };
         int status;
         string devnull;
         GLib.Process.spawn_sync (pwd(),
