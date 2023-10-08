@@ -3,7 +3,7 @@
 
 //DOC: `int run_args (string[] args):`
 //DOC: run command from argument array
-int run_args(string[] args){
+public int run_args(string[] args){
     try{
         string[] env = {
             "TERM=linux",
@@ -29,7 +29,7 @@ int run_args(string[] args){
 
 //DOC: `int run_args (string[] args):`
 //DOC: run command from argument array silently.
-int run_args_silent(string[] args){
+public int run_args_silent(string[] args){
     try{
         string[] env = {
             "TERM=linux",
