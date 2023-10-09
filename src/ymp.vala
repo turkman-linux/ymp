@@ -27,7 +27,6 @@ private class operation {
 }
 
 private void add_operation (operation op) {
-    logger_init (); // logger reload
     debug (_ ("Add operation: %s").printf (join (":", op.names)));
     ops += op;
 }
@@ -326,13 +325,13 @@ public Ymp ymp_init (string[] args) {
     GLib.Intl.textdomain (GETTEXT_PACKAGE);
     #endif
     Posix.umask (022);
-    logger_init ();
-    wsl_block ();
     Ymp app = new Ymp ();
     if (ymp_activated) {
         return app;
     }
     settings_init ();
+    logger_init ();
+    wsl_block ();
     parse_args (args);
     ctx_init ();
     #if SHARED
@@ -347,8 +346,8 @@ public Ymp ymp_init (string[] args) {
     #endif
     directories_init ();
     #if check_oem
-        if (is_oem_available ()) {
-            if (!get_bool ("ALLOW-OEM")) {
+        if (!get_bool ("ALLOW-OEM")) {
+            if (is_oem_available ()) {
                 warning (_ ("OEM detected! Ymp may not working good."));
                 error_add (_ ("OEM is not allowed! Please use --allow-oem to allow oem."));
             }
@@ -357,14 +356,15 @@ public Ymp ymp_init (string[] args) {
         warning (_ ("UsrMerge detected! Ymp may not working good."));
     }
     #endif
-    //set_env ("G_DEBUG", "fatal-criticals");
+    #if debug
+    set_env ("G_DEBUG", "fatal-criticals");
+    #endif
     if (has_error ()) {
         error (31);
     }
 
     ymp_activated = true;
     tty_size_init ();
-    logger_init (); // logger reload
     info( _("Ymp init done"));
     return app;
 }

@@ -1,0 +1,19 @@
+index:
+  name: main
+  package:
+    name: test
+    version: 1.0
+    release: 1
+    description: test
+    group:
+      - test.group
+    depends:
+      - glibc
+      - ymp
+    archive-hash: test
+    arch: x86_64
+    archive-size: 432613
+    md5sum: test
+    size: 422132
+    uri: /test/test_1.0_1_x86_64.ymp
+

@@ -4,6 +4,7 @@ void main (string[] args) {
     // init ymp
     Ymp ymp = ymp_init (args);
     print ("Ymp test");
+
     set_destdir ("../test/rootfs");
     ymp.add_process ("init", {"hello", "world"});
     ymp.run ();
@@ -44,7 +45,7 @@ void main (string[] args) {
 
     // command test
     print ("Command test");
-    tmp = getoutput ("./test/hello.py");
+    tmp = getoutput ("../test/hello.py");
     run_silent ("non-command -non-parameter");
     run ("false");
 
@@ -106,5 +107,6 @@ void main (string[] args) {
     print ("Brainfuck test");
     string bfcode = readfile ("../test/data/hello.bf");
     brainfuck (bfcode, 102400);
-    print ("done");
+    print ("\ndone");
+
 }
