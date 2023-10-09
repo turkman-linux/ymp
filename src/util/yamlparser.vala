@@ -156,7 +156,7 @@ public class yamlfile {
     }
 
     private string get_area_single (string fdata, string path) {
-        debug (_ ("Get area : %s").printf (path));
+        debug (_ ("Get area single : %s").printf (path));
         if (fdata == null || fdata == "") {
             return "";
         }

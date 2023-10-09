@@ -301,9 +301,9 @@ private void directories_init () {
         writefile (get_storage () + "/sources.list", "");
     }
     #if experimental
-    foreach (string path in find (get_storage ())) {
-        GLib.FileUtils.chmod (path, 0755);
-        if (is_root ()) {
+    if (is_root ()) {
+        foreach (string path in find (get_storage ())) {
+            GLib.FileUtils.chmod (path, 0755);
             Posix.chown (path, 0, 0);
         }
     }
@@ -330,9 +330,9 @@ public Ymp ymp_init (string[] args) {
         return app;
     }
     settings_init ();
+    parse_args (args);
     logger_init ();
     wsl_block ();
-    parse_args (args);
     ctx_init ();
     #if SHARED
     info (_ ("Plugin manager init"));
@@ -355,9 +355,6 @@ public Ymp ymp_init (string[] args) {
     if (usr_is_merged ()) {
         warning (_ ("UsrMerge detected! Ymp may not working good."));
     }
-    #endif
-    #if debug
-    set_env ("G_DEBUG", "fatal-criticals");
     #endif
     if (has_error ()) {
         error (31);

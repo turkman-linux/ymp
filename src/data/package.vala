@@ -38,7 +38,7 @@ public class package {
     public void load_from_data (string metadata) {
         yaml = new yamlfile ();
         string ympdata = "";
-        // metadata detection
+        debug( _("Metadata detection"));
         if (yaml.has_area (metadata, "ymp")) {
             ympdata = yaml.get_area (metadata, "ymp");
         }else if (yaml.has_area (metadata, "package") || yaml.has_area (metadata, "source")) {
@@ -46,7 +46,7 @@ public class package {
         }else {
             error_add (_ ("Package metadata file is broken: %s").printf (metadata));
         }
-        // package area load
+        debug( _("Load pkgarea"));
         if (yaml.has_area (ympdata, "package")) {
             is_source = false;
             pkgarea = yaml.get_area (ympdata, "package");
@@ -57,7 +57,7 @@ public class package {
             error_add (_ ("Package data is broken: %s").printf (ympdata));
         }
         error (2);
-        //read values from data
+        debug( _("Read package values"));
         read_values ();
     }
 
