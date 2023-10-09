@@ -166,6 +166,20 @@ char* c_realpath(char* path){
     return realpath(path,NULL);
 }
 
+void write_to_file(const char *which, const char *format, ...) {
+  FILE * fu = fopen(which, "w");
+  va_list args;
+  va_start(args, format);
+  if (vfprintf(fu, format, args) < 0) {
+    printf("cannot write");
+  }
+  fclose(fu);
+}
+
+void writefile(char* path, char* ctx){
+    write_to_file(path,"%s", ctx);
+}
+
 #ifndef debug
 void debug(char* msg);
 char* str_add(char* s1, char* s2);

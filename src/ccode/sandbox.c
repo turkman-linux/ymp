@@ -165,13 +165,4 @@ void sandbox_create_tmpfs(char* dir){
     mount("tmpfs",source,"tmpfs",0,NULL);
 }
 
-void write_to_file(const char *which, const char *format, ...) {
-  FILE * fu = fopen(which, "w");
-  va_list args;
-  va_start(args, format);
-  if (vfprintf(fu, format, args) < 0) {
-    printf("cannot write");
-  }
-  fclose(fu);
-}
 #endif

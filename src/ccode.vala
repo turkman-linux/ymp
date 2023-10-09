@@ -80,6 +80,9 @@ public extern void create_dir (string path);
 //DOC: `string readfile_raw (string path):`
 //DOC: Read file from **path** and return content
 public extern string readfile_raw (string path);
+//DOC: `void writefile (string path, string ctx):`
+//DOC: write **ctx** data to **path** file
+public extern void writefile (string path, string ctx);
 //DOC: `bool isdir (string path):`
 //DOC: Check **path** is directory
 public extern bool isdir (string path);

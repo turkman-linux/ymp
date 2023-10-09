@@ -69,28 +69,6 @@ public string readfile (string path) {
     return new_data;
 }
 
-//DOC: `void writefile (string path, string ctx):`
-//DOC: write **ctx** data to **path** file
-public void writefile (string path, string ctx) {
-    debug (_ ("Write file: %s").printf (path));
-    string dir = sdirname (path);
-    create_dir (dir);
-    try {
-        var file = File.new_for_path (path);
-        if (file.query_exists ()) {
-            file.delete ();
-        }
-        var dos = new DataOutputStream (file.create (FileCreateFlags.REPLACE_DESTINATION));
-        uint8[] data = ctx.data;
-        long written = 0;
-        while (written < data.length) {
-            written += dos.write (data[written:data.length]);
-        }
-    } catch (Error e) {
-        error_add (e.message);
-    }
-}
-
 //DOC: `string safedir (string dir):`
 //DOC: directory safe for httpd
 public string safedir (string dir) {
