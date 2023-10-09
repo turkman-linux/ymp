@@ -1,7 +1,7 @@
 public int key_main (string[] args) {
     if(get_bool("add")){
         foreach(string arg in args){
-        add_gpg_key(arg);
+            add_gpg_key(arg);
         }
     }
     return 0;

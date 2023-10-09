@@ -269,9 +269,6 @@ public bool is64bit (string path) {
     return ctx[4] == '\x02';
 }
 
-//DOC: `bool isfile (string path)`:
-//DOC: check path is file
-public extern bool isfile (string path);
 
 public bool isexists (string path) {
     debug (_ ("Check exists: %s").printf (path));

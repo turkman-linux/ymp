@@ -3,6 +3,7 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdarg.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
 #include <sys/mman.h>

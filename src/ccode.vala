@@ -86,6 +86,9 @@ public extern void writefile (string path, string ctx);
 //DOC: `bool isdir (string path):`
 //DOC: Check **path** is directory
 public extern bool isdir (string path);
+//DOC: `bool isfile (string path)`:
+//DOC: check path is file
+public extern bool isfile (string path);
 //DOC: `bool issymlink (string path)`:
 //DOC: check path is symlink
 public extern bool issymlink (string path);

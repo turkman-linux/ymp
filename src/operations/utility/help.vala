@@ -48,9 +48,7 @@ private void write_op_help (operation op) {
 void help_init () {
     add_common_parameter ("--", _ ("stop argument parser"));
     #if check_oem
-    if (is_oem_available ()) {
-        add_common_parameter ("--allow-oem", _ ("disable oem check"));
-    }
+    add_common_parameter ("--allow-oem", _ ("disable oem check"));
     #endif
     add_common_parameter ("--quiet", _ ("disable output"));
     add_common_parameter ("--ignore-warning", _ ("disable warning messages"));

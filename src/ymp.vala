@@ -298,15 +298,17 @@ private void directories_init () {
     create_dir (get_storage () + "/gpg/");
     create_dir (get_storage () + "/sources.list.d/");
     create_dir (get_storage () + "/quarantine/");
-    if (!isexists (get_storage () + "/sources.list")) {
+    if (!isfile (get_storage () + "/sources.list")) {
         writefile (get_storage () + "/sources.list", "");
     }
+    #if experimental
     foreach (string path in find (get_storage ())) {
         GLib.FileUtils.chmod (path, 0755);
         if (is_root ()) {
             Posix.chown (path, 0, 0);
         }
     }
+    #endif
     GLib.FileUtils.chmod (get_storage () + "/gpg/", 0700);
 }
 
@@ -363,5 +365,6 @@ public Ymp ymp_init (string[] args) {
     ymp_activated = true;
     tty_size_init ();
     logger_init (); // logger reload
+    info( _("Ymp init done"));
     return app;
 }

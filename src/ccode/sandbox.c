@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdio.h>
-#include <stdarg.h>
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
