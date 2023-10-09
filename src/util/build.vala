@@ -443,6 +443,7 @@ public class builder {
                 return false;
             }
             output_package_name = name + "_" + version + "_" + release;
+            create_dir(yb.ympbuild_buildpath + "/output/");
             writefile (yb.ympbuild_buildpath + "/output/metadata.yaml", trim (new_data));
             return true;
         }
