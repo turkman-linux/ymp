@@ -67,7 +67,6 @@ public class repository {
                             string area = sources[index];
                             int release = int.parse (yaml.get_value (area, "release"));
                             if (release <= currel) {
-                                print ("%s".printf (name));
                                 continue;
                             }
                             currel = release;
