@@ -1,5 +1,5 @@
 #!/bin/bash
-export PATH=":/usr/sbin:/sbin:/usr/bin:/bin:@buildpath@"
+export PATH="@buildpath@:/usr/sbin:/sbin:/usr/bin:/bin"
 declare -r installdir="@buildpath@/output"
 declare -r jobs="-j@jobs@"
 export HOME="@buildpath@"
