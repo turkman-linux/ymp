@@ -428,10 +428,9 @@ public class builder {
             if (name == "") {
                 error_add (_ ("Name is not defined."));
             }
-            string arch = getArch ();
             bool arch_is_supported = false;
             foreach (string a in yaml.get_array (srcdata, "arch")) {
-                if (a == arch) {
+                if (a == getArch ()) {
                     arch_is_supported = true;
                     break;
                 }
