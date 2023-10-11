@@ -113,12 +113,6 @@ sources += run_command('find', 'src/operations','-type','f',check:true).stdout()
 sources += run_command('find', 'src/data','-type','f',check:true).stdout().strip().split('\n')
 
 
-generated_sources=[]
-foreach valasrc : sources
-    run_command('bash', 'tool/preprocessor.sh','.generated',valasrc,check:true)
-    generated_sources += '.generated'/valasrc
-endforeach
-
 foreach csource : run_command('find', 'src/ccode','-type','f',check:true).stdout().strip().split('\n')
     args += [meson.current_source_dir() / csource]
 endforeach
@@ -160,8 +154,18 @@ endif
 run_command('install', 'data/ymp.pc', meson.current_build_dir(), check: true)
 run_command('sed', '-i', 's/@version@/'+meson.project_version()+'/g', meson.current_build_dir()+'/ymp.pc', check: true)
 
+prep_args = []
 foreach c : conf
     add_project_arguments('-D', c, language: 'vala')
+    prep_args += '-D'+c
+endforeach
+
+########### generate vala sources ###########
+
+generated_sources=[]
+foreach valasrc : sources
+    run_command('bash', 'tool/preprocessor.sh','.generated',valasrc, prep_args,check:true)
+    generated_sources += '.generated'/valasrc
 endforeach
 
 ########### build libymp ###########

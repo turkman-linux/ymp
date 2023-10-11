@@ -1,6 +1,5 @@
 output=$1
-shift
-for arg in $@ ; do
-    mkdir -p $(dirname $output/$arg)
-    cat src/constants.h $arg | gcc -E - | sed "/^#.*/d"> $output/$arg
-done
+file=$2
+shift 2
+mkdir -p $(dirname $output/$file)
+cat src/constants.h $file | gcc -E - $@ | sed "/^#.*/d"> $output/$file

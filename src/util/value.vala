@@ -13,7 +13,7 @@ class variable {
     public string value;
 }
 
-variable[] vars;
+private variable[] vars;
 
 //DOC: `void set_value (string name, string value):`
 //DOC: add a global ymp variable as string
@@ -39,6 +39,14 @@ public void set_value (string name, string value) {
     varx.name = name.down ();
     varx.value = value;
     vars += varx;
+}
+
+public string[] get_variable_names(){
+    string[] ret = {};
+    foreach (variable varx in vars) {
+        ret += varx.name;
+    }
+    return ret;
 }
 
 private void set_value_readonly (string name, string value) {
