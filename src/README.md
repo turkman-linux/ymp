@@ -31,3 +31,13 @@ look **libymp.md** file
 
 # How to ymp works
 ![ymp-work-schema](ymp-work-schema.svg)
+
+# How to ymp build
+1. vala sources preprocess with **gcc -E -** command
+1. generated vala sources converted to C sources
+1. gcc compile C sources
+1. link all .o files for creating libymp.so
+1. main.vala converted to C source
+1. gcc compile main.c file
+1. gcc create ymp-cli and link with libymp.so
+![ymp-build-schema](ymp-build-schema.svg)
