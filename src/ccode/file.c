@@ -30,19 +30,6 @@ long filesize(char* path){
     return st.st_size;
 }
 
-char* getArch() {
-    struct utsname uts;
-	int err = uname(&uts);
-	if (err != 0) {
-		printf("Failed to detect CPU architecture");
-		return "UNKNOWN";
-	}
-	// Allocate memory and copy value into
-	char* ret = malloc(sizeof(uts.machine));
-	strcpy(ret,uts.machine);
-	return ret;
-}
-
 void fs_sync(){
     # ifdef EXPERIMENTAL
     if(getuid() == 0){

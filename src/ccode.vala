@@ -68,9 +68,6 @@ public extern void set_archive_type (string filt, string form);
 //DOC: `int filesize (string path):`
 //DOC: calculate file size
 public extern int filesize (string path);
-//DOC: `string getArch ():`
-//DOC: get current cpu architecture
-public extern string getArch ();
 //DOC: `void sync ():`
 //DOC: sync call
 public extern void fs_sync ();
