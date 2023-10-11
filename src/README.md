@@ -15,7 +15,7 @@ look **libymp.md** file
 * **operations/** has install/remove and other operation functions.
 * **tools/** has command line programs.
 * **util/** has utility functions for libymp.
-* **color.vala** has color related functions.
+* **constants.h** common preprocessor definitions file
 * **ymp.vala** is main libymp file.
 * **settings.vala** has init functions and settings.
 * **wslblock.vala** has wsl blocker functions.
