@@ -180,15 +180,15 @@ install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('
 ########### build tools ###########
 if get_option('tools')
     # ymp cli
-    executable('ymp-cli', 'src/cli/main.vala', dependencies: deps, link_args: args, link_with: libymp)
+    executable('ymp-cli', 'src/cli/main.vala', dependencies: deps, link_args: prep_args, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
     # ymp shell
-    executable('ymp-shell', 'src/cli/shell.c', dependencies: deps, link_args: args, link_with: libymp)
+    executable('ymp-shell', 'src/cli/shell.c', dependencies: deps, link_args: prep_args, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-shell', install_dir : get_option('bindir'),rename : 'ympsh')
 endif
 ########### build test ###########
 if get_option('test')
-    executable('ymp-test', 'test/test.vala', dependencies: deps, link_args: args, link_with: libymp)
+    executable('ymp-test', 'test/test.vala', dependencies: deps, link_args: prep_args, link_with: libymp)
 endif
 
 ########### build scripts ###########
