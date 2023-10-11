@@ -40,4 +40,5 @@ look **libymp.md** file
 1. main.vala converted to C source
 1. gcc compile main.c file
 1. gcc create ymp-cli and link with libymp.so
+
 ![ymp-build-schema](ymp-build-schema.svg)
