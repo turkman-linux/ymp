@@ -1,7 +1,7 @@
 project(
     'ymp',
     'vala', 'c',
-    meson_version: '>= 0.49.0',
+    meson_version: '>= 0.54.0',
     version : '1.0',
     license: ['GplV3']
 )
@@ -10,7 +10,7 @@ if meson.get_compiler('vala').version().version_compare('<0.54.9')
 endif
 
 conf = []
-
+message('\x1b[32;1mGenerate:\x1b[;0m','ctx.vala')
 run_command('bash', './tool/mkctx.sh',
     'CONFIGDIR=/'+get_option('sysconfdir'),
     'STORAGEDIR=/'+get_option('storagedir'),
@@ -164,6 +164,7 @@ endforeach
 
 generated_sources=[]
 foreach valasrc : sources
+    message('\x1b[32;1mGenerate:\x1b[;0m' ,valasrc)
     run_command('bash', 'tool/preprocessor.sh','.generated',valasrc, prep_args,check:true)
     generated_sources += '.generated'/valasrc
 endforeach
