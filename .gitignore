@@ -9,3 +9,4 @@ debian/files
 po/*.mo
 obj-*-linux-gnu
 .idea
+.generated

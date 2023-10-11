@@ -100,18 +100,25 @@ if get_option('libmagic')
 endif
 
 # find sources
-sources = files('src/ymp.vala',
+sources = ['src/ymp.vala',
                 'src/color.vala',
                 'src/settings.vala',
                 'src/wslblock.vala',
                 'src/ccode.vala',
                 'ctx.vala',
                 'data/ymp-extra.h'
-               )
+           ]
 
 sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip().split('\n')
 sources += run_command('find', 'src/operations','-type','f',check:true).stdout().strip().split('\n')
 sources += run_command('find', 'src/data','-type','f',check:true).stdout().strip().split('\n')
+
+
+generated_sources=[]
+foreach valasrc : sources
+    run_command('bash', 'tool/preprocessor.sh','.generated',valasrc,check:true)
+    generated_sources += '.generated'/valasrc
+endforeach
 
 foreach csource : run_command('find', 'src/ccode','-type','f',check:true).stdout().strip().split('\n')
     args += [meson.current_source_dir() / csource]
@@ -160,9 +167,9 @@ endforeach
 
 ########### build libymp ###########
 if get_option('static')
-    libymp = static_library('ymp', sources, dependencies: deps, link_args: args)
+    libymp = static_library('ymp', generated_sources, dependencies: deps, link_args: args)
 else
-    libymp = library('ymp', sources, dependencies: deps, link_args: args)
+    libymp = library('ymp', generated_sources, dependencies: deps, link_args: args)
 endif
 install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('libdir'), rename: 'libymp.so')
 

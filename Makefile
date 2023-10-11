@@ -17,11 +17,11 @@ install:
 	DESTDIR=$(DESTDIR) ninja -C build install
 
 test-clean:
-	rm -rf build/_test ctx.vala build/test
+	rm -rf build/_test ctx.vala build/test .generated
 
 
 clean:
-	rm -rf build ctx.vala po/*.mo obj-*-linux-gnu
+	rm -rf build ctx.vala po/*.mo obj-*-linux-gnu .generated
 
 pot:
 	xgettext -o po/ymp.pot --from-code="utf-8" `find src -type f -iname "*.vala"` `find src -type f -iname "*.c"` 2>/dev/null
