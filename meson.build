@@ -101,7 +101,6 @@ endif
 
 # find sources
 sources = ['src/ymp.vala',
-                'src/color.vala',
                 'src/settings.vala',
                 'src/wslblock.vala',
                 'src/ccode.vala',
