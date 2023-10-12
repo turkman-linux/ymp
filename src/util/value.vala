@@ -150,3 +150,20 @@ public void clear_env () {
         GLib.Environment.unset_variable (name);
     }
 }
+
+private string DISTRO;
+public string get_distro_name (){
+    if (DISTRO!=null){
+        return DISTRO;
+    }
+    string os_release = readfile("/etc/os-release");
+    foreach(string line in ssplit(os_release,"\n")){
+        if (startswith (line, "NAME=")){
+            DISTRO=line[5:];
+        }
+    }
+    if(DISTRO==null){
+        DISTRO="Unknown";
+    }
+    return DISTRO;
+}

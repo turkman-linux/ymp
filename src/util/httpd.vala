@@ -73,10 +73,10 @@ async void process_request (SocketConnection conn) {
             dos.put_string ("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
             dos.put_string ("<html> \n <head>");
             dos.put_string ("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" >\n");
-            dos.put_string ("<title> " + _ ("Directory listing for %s").printf (path) + " </title> \n");
+            dos.put_string ("<title> " + _ ("Index of /%s").printf (path) + " </title> \n");
             dos.put_string ("<style> .link { text-decoration: none;} </style> \n");
             dos.put_string ("</head> \n <body> \n");
-            dos.put_string ("<h1> " + _ ("Directory listing for /%s").printf (path) + " </h1> \n");
+            dos.put_string ("<h1> " + _ ("Index of /%s").printf (path) + " </h1> \n");
             dos.put_string ("<hr> \n <ul> \n");
             if (path != "/") {
                 dos.put_string ("&#x1F4C1; <a href=\"../\" > .. </a> <br> </li> \n");
@@ -107,6 +107,7 @@ async void process_request (SocketConnection conn) {
                 }
             }
             dos.put_string ("</ul> \n <hr> \n");
+            dos.put_string ("Ymp-httpd/%s (%s) - IP: %s".printf( VERSION, get_distro_name(), ip));
             dos.put_string ("</body> \n </html> ");
         }else {
             dos.put_string ("HTTP/1.1 404 Not Found\nContent-Type: text/html\n");
