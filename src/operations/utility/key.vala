@@ -13,5 +13,6 @@ void key_init () {
     op.names = {_ ("key"), "key"};
     op.help.name = _ ("key");
     op.help.description = _ ("Gpg key operations.");
+    op.help.add_parameter ("--add", _ ("add new gpg key"));
     add_operation (op);
 }

@@ -32,7 +32,14 @@ async void process_request (SocketConnection conn) {
             acl = "127.0.0.1";
         }
         string[] acls = ssplit (acl, ":");
-        if (! (ip in acls) && ! ("0.0.0.0" in acls)) {
+        bool perm = false;
+        foreach(string item in acls){
+            if(Regex.match_simple (item, ip)){
+                perm = true;
+                break;
+            }
+        }
+        if (!perm && !("0.0.0.0" in acls)) {
             return;
         }
         string date = now.format ("%H:%M %Y.%m.%d");

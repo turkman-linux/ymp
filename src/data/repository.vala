@@ -351,6 +351,8 @@ public string create_index_data (string fpath) {
     string nam = "";
     string dat = "";
     string rel = "";
+    string metadata = "";
+    string ymparea = "";
     foreach (string file in find (path)) {
         if (endswith (file, ".ymp")) {
             md5sum = calculate_md5sum (file);
@@ -358,8 +360,8 @@ public string create_index_data (string fpath) {
             tar.load (file);
             file = file[path.length:];
             info ("Index: " + file);
-            string metadata = tar.readfile ("metadata.yaml");
-            string ymparea = yaml.get_area (metadata, "ymp");
+            metadata = tar.readfile ("metadata.yaml");
+            ymparea = yaml.get_area (metadata, "ymp");
             if (!get_bool ("ignore-check")) {
                 if (yaml.has_area (ymparea, "source")) {
                     dat = yaml.get_area (ymparea, "source");
