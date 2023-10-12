@@ -107,7 +107,7 @@ async void process_request (SocketConnection conn) {
                 }
             }
             dos.put_string ("</ul> \n <hr> \n");
-            dos.put_string ("Ymp-httpd/%s (%s) - IP: %s".printf( VERSION, get_distro_name(), ip));
+            dos.put_string ("Ymp-httpd/%s (%s) - IP: %s".printf( VERSION, DISTRO, ip));
             dos.put_string ("</body> \n </html> ");
         }else {
             dos.put_string ("HTTP/1.1 404 Not Found\nContent-Type: text/html\n");

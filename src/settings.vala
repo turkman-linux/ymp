@@ -4,7 +4,7 @@
 private string CONFIG;
 private string DESTDIR;
 private string BUILDDIR;
-
+private string DISTRO;
 private yamlfile config_yaml;
 private void settings_init () {
     if (DESTDIR == null) {
@@ -18,6 +18,17 @@ private void settings_init () {
     }
     if (CONFIG == null) {
         CONFIG = DESTDIR + "/" + CONFIGDIR + "/ymp.yaml";
+    }
+    if (DISTRO==null){
+        string os_release = readfile("/etc/os-release");
+        foreach(string line in ssplit(os_release,"\n")){
+            if (startswith (line, "NAME=") && line.length > 5){
+                DISTRO=line[5:];
+            }
+        }
+        if(DISTRO==null){
+            DISTRO="Unknown";
+        }
     }
     config_yaml = new yamlfile ();
     set_value_readonly ("destdir", DESTDIR);
