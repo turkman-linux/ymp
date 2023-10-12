@@ -23,7 +23,7 @@ private void settings_init () {
         string os_release = readfile("/etc/os-release");
         foreach(string line in ssplit(os_release,"\n")){
             if (startswith (line, "NAME=") && line.length > 5){
-                DISTRO=line[5:];
+                DISTRO=line[5:].replace("\"","");
             }
         }
         if(DISTRO==null){
