@@ -29,8 +29,11 @@ args += ['-fno-unwind-tables', '-fno-asynchronous-unwind-tables', '-fno-math-err
         '-fsingle-precision-constant', '-Wl,--build-id=none', '-Wl,-z,norelro',
         '-Wl,--hash-style=sysv'
 ]
-
-args += ['-nostdlib', '-lc']
+if run_command('/bin/sh', '-c', 'ldd --version | grep musl').returncode() == 0
+    args += ['-nostdlib', '-lc.musl']
+else
+    args += ['-nostdlib', '-lc']
+endif
 
 args += [meson.current_build_dir()/ 'obj.o']
 deps = []
