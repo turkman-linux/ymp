@@ -19,7 +19,7 @@ int main (string[] args) {
         return 0;
     }
     if (args.length < 2) {
-        error_add (_ ("No command given.") + "\n" + _ ("Run %s for more information about usage.").printf (colorize (_ ("ymp help"), 31)));
+        error_add (_ ("No command given.") + "\n" + _ ("Run %s for more information about usage.").printf ("\x1b[%dm%s\x1b[;0m".printf(31, _ ("ymp help"))));
         error (31);
     }else {
         ymp.add_process (args[1], args[2:]);

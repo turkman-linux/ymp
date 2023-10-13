@@ -10,21 +10,6 @@
 int iseq(char* str1, char* str2){
     return strcmp(str1,str2) == 0;
 }
-#ifndef NOCOLOR
-char* ccolorize(char* msg, char* num){
-    char* ret = malloc((strlen(msg)+strlen(num))*(sizeof(char)+13));
-    strcpy(ret,"\x1b[");
-    strcat(ret,num);
-    strcat(ret,"m");
-    strcat(ret,msg);
-    strcat(ret,"\x1b[0m");
-    return ret;
-}
-#else
-char* ccolorize(char* msg, char* num){
-    return msg;
-}
-#endif
 
 static int string_compare(const void* a, const void* b){
 
@@ -96,6 +81,11 @@ char* trim(char* data) {
         }
     }
     return str;
+}
+char* int_to_string(int num){
+    char *ret = malloc(sizeof(char)*((sizeof(num) - 1) / 3 + 2));
+    sprintf(ret, "%d", num);
+    return ret;
 }
 
 #endif

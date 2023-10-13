@@ -22,18 +22,6 @@ public extern void debug (string msg);
 //DOC: write additional info messages.
 public extern void info (string msg);
 
-//DOC: `string colorize (string message, int color):`
-//DOC: Change string color if no_color is false.
-//DOC: Example usage:
-//DOC: ```vala
-//DOC: var msg = colorize ("Hello", red);
-//DOC: var msg2 = colorize ("world", blue);
-//DOC: stdout.printf (msg+" "+msg2);
-//DOC: ```
-public string colorize (string msg, int color) {
-    return ccolorize (msg, color.to_string ());
-}
-
 //DOC: `void print_stderr (string message):`
 //DOC: same with print but write to stderr
 public extern void print_stderr (string msg);
@@ -54,14 +42,6 @@ public void debug_fn (string message) {
 public void info_fn (string message) {
     print_stderr ("%s: %s".printf (colorize (_ ("INFO"), green), message));
 }
-
-public string colorize_fn (string msg, int color) {
-    return ccolorize (msg, color.to_string ());
-}
-public string colorize_dummy (string msg, int color) {
-    return msg;
-}
-
 
 public extern void logger_init ();
 

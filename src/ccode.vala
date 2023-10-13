@@ -147,7 +147,6 @@ public extern string url_decode (string url);
 //DOC: `string run_printf (char* format, ...):`
 //DOC: run command like printf
 public extern string run_printf (char* format, ...);
-private extern string ccolorize (string message, string color);
 public extern void csort (string[] arr, int n);
 //DOC: `string trim (string data):`
 //DOC: fixes excess indentation
@@ -175,6 +174,18 @@ public extern string join (string f, string[] array);
 //DOC: * new_line: if set true, append new line
 //DOC: * err: if set true, write log to stderr
 public extern void print_fn (string message, bool new_line, bool err);
+
+
+//DOC: ### colorize.c
+//DOC: `string colorize (string message, int color):`
+//DOC: Change string color if no_color is false.
+//DOC: Example usage:
+//DOC: ```vala
+//DOC: var msg = colorize ("Hello", red);
+//DOC: var msg2 = colorize ("world", blue);
+//DOC: stdout.printf (msg+" "+msg2);
+//DOC: ```
+public extern string colorize (string msg, int color);
 
 //DOC: ### brainfuck.c
 //DOC: `void brainfuck (string code, int size):`

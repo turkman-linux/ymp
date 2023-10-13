@@ -170,6 +170,7 @@ run_command('sed', '-i', 's/@version@/'+meson.project_version()+'/g', meson.curr
 foreach c : conf
     add_project_arguments('-D', c, language: 'vala')
     prep_args += '-D'+c
+    args += '-D'+c
 endforeach
 
 ########### generate vala sources ###########
