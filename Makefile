@@ -31,6 +31,7 @@ pot:
 	    rm -f $$file ; \
 	    mv $$file.new $$file ; \
 	done
+	sed -f data/fix-turkish.sed -i po/tr.po
 
 fix:
 	find src -type f -exec sed -i "s/^ *$$//g;s/ *$$//g" {} \;

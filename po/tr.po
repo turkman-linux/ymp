@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-29 08:09+0000\n"
+"POT-Creation-Date: 2023-10-13 10:27+0000\n"
 "PO-Revision-Date: 2023-03-10 20:35+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,52 +17,111 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: src/data/repository.vala:197 src/data/repository.vala:221
+#: src/settings.vala:54
 #, c-format
-msgid "Package is not satisfied from repository: %s"
-msgstr "Paket depodan saglanamadi: %s"
+msgid "Config file does not exists: %s"
+msgstr "Ayar dosyasi bulunamadi: %s"
 
-#: src/data/repository.vala:254 src/data/repository.vala:258
+#: src/settings.vala:82
 #, c-format
-msgid "Find repo list: %s"
-msgstr "Depo listesi bul: %s"
+msgid "Destination directory has been changed: %s"
+msgstr "Hedef dizin degisti: %s"
 
-#: src/data/repository.vala:283
+#: src/settings.vala:90
 #, c-format
-msgid "Invalid repository index: %s"
-msgstr "Gecersiz depo indexi: %s"
+msgid "Build directory has been changed: %s"
+msgstr "Derleme dizin degisti: %s"
 
-#: src/data/repository.vala:324
-msgid "Index name is not defined. Please use --name=xxx"
-msgstr "Index adi tanimlanmadi. Lutfen --name=xxx kullanin"
-
-#: src/data/repository.vala:370
+#: src/ymp.vala:30
 #, c-format
-msgid "A source has multiple versions: %s"
-msgstr ""
+msgid "Add operation: %s"
+msgstr "Eylem ekleme: %s"
 
-#: src/data/repository.vala:379
-#, fuzzy, c-format
-msgid "A package has multiple versions: %s"
-msgstr "Bir paket birden cok surume sahip: %s"
+#: src/ymp.vala:45
+msgid "RUN (RAW):"
+msgstr "KOS (HAM)"
+
+#: src/ymp.vala:54 src/ymp.vala:73
+#, c-format
+msgid "Invalid operation name: %s"
+msgstr "Gecersiz eylem ismi: %s"
+
+#: src/ymp.vala:60
+msgid "RUN:"
+msgstr "KOS:"
+
+#: src/ymp.vala:158
+msgid "Syntax error: Unexceped endif detected."
+msgstr "Syntax hatasi: Beklenmedik endif tespit edildi."
+
+#: src/ymp.vala:182
+#, c-format
+msgid "Process: %s failed. Exited with %d."
+msgstr "Surec: %s basarisiz %d ile cikildi."
+
+#: src/ymp.vala:187
+#, c-format
+msgid "Process done in : %f sec"
+msgstr "Surec tamamlandi: %f sn"
+
+#: src/ymp.vala:338
+msgid "Plugin manager init"
+msgstr "Eklenti yoneticisi baslatilmasi"
+
+#: src/ymp.vala:342
+#, c-format
+msgid "Load plugin: %s"
+msgstr "Yuklenen eklenti: %s"
+
+#: src/ymp.vala:351
+msgid "OEM detected! Ymp may not working good."
+msgstr "OEM tespit edildi! Ymp iyi calismayabilir."
+
+#: src/ymp.vala:352
+msgid "OEM is not allowed! Please use --allow-oem to allow oem."
+msgstr "OEM kabul edilemez! Oem kabul etmek icin lutfen --allow-oem kullanin."
+
+#: src/ymp.vala:356
+msgid "UsrMerge detected! Ymp may not working good."
+msgstr "UsrMerge tespit edildi! Ymp iyi calismayabilir."
+
+#: src/ymp.vala:365
+msgid "Ymp init done"
+msgstr "Ymp init tamamlandi"
+
+#: src/wslblock.vala:28
+msgid "Using ymp in Fucking WSL environment is not allowed."
+msgstr "Sikik WSL ormatinda Ymp kullanmaya izin verilmiyor."
+
+#: src/data/package.vala:41
+msgid "Metadata detection"
+msgstr "Metaveri tespiti"
 
 #: src/data/package.vala:47
 #, c-format
 msgid "Package metadata file is broken: %s"
 msgstr "Paket metaveri dosyasi bozuk: %s"
 
+#: src/data/package.vala:49
+msgid "Load pkgarea"
+msgstr "Pkgarea yukle"
+
 #: src/data/package.vala:57
 #, c-format
 msgid "Package data is broken: %s"
 msgstr "Paket verisi bozuk: %s"
+
+#: src/data/package.vala:60
+msgid "Read package values"
+msgstr "Paket verilerini oku"
 
 #: src/data/package.vala:78
 #, c-format
 msgid "Load package from: %s"
 msgstr "Paket suradan yukleniyor: %s"
 
-#: src/data/package.vala:90 src/data/package.vala:106 src/data/package.vala:223
-#: src/data/package.vala:278
+#: src/data/package.vala:90 src/data/package.vala:106 src/data/package.vala:232
+#: src/data/package.vala:287
 msgid "Package archive is missing."
 msgstr "Paket arsivi kayip."
 
@@ -81,44 +140,190 @@ msgstr "Paket verisi al %s:%s"
 msgid "Package information is broken: %s %s"
 msgstr "Paket bilgisi bozuk: %s %s"
 
-#: src/data/package.vala:168
+#: src/data/package.vala:163
+#, c-format
+msgid "Check package unsafe %s"
+msgstr "Paket guvensizligi gozden gecir: %s"
+
+#: src/data/package.vala:177
 #, c-format
 msgid "Get package uri: %s"
 msgstr "Paket urisi al: %s"
 
-#: src/data/package.vala:185
+#: src/data/package.vala:194
 #, c-format
 msgid "File already exists: %s"
 msgstr "Dosya zaten mevcut: %s"
 
-#: src/data/package.vala:188
+#: src/data/package.vala:197
 #, c-format
 msgid "Failed to fetch package: %s"
 msgstr "Paket indirilemedi: %s"
 
-#: src/data/package.vala:191
+#: src/data/package.vala:200
 #, c-format
 msgid "Package is not downloadable: %s"
 msgstr "Paket indirilebilir degil: %s"
 
-#: src/data/package.vala:195
+#: src/data/package.vala:204
 #, c-format
 msgid "Package md5sum mismatch: %s"
 msgstr "Paket md5sum eslesmiyor: %s"
 
-#: src/data/package.vala:230
+#: src/data/package.vala:239
 #, c-format
 msgid "Skip quartine package extract: %s"
 msgstr "Karantina paket cikarma atlandi: %s"
 
-#: src/data/package.vala:244
+#: src/data/package.vala:253
 msgid "Archive sha1sum mismatch."
 msgstr "Arsiv sha1sum eslesmiyor."
 
-#: src/data/package.vala:326
+#: src/data/package.vala:338
 #, c-format
 msgid "Loading package metadata from: %s"
 msgstr "Paket metaverisi suradan yukleniyor: %s"
+
+#: src/data/ympbuild.vala:43
+#, c-format
+msgid "USE flag: %s"
+msgstr "USE bayragi: %s"
+
+#: src/data/ympbuild.vala:48
+#, c-format
+msgid "Set ympbuild src path : %s"
+msgstr "ympbuild src konumu ayarla: %s"
+
+#: src/data/ympbuild.vala:57
+#, c-format
+msgid "Set ympbuild build path : %s"
+msgstr "ympbuild build konumu ayarla: %s"
+
+#: src/data/ympbuild.vala:92
+#, c-format
+msgid "Check ympbuild: %s/ympbuild"
+msgstr "ympbulid gozden gecir: %s/ympbuild"
+
+#: src/data/ympbuild.vala:102
+#, c-format
+msgid "Run action (%s) %s => %s"
+msgstr "Eylem calistir (%s) %s => %s"
+
+#: src/data/ympbuild.vala:119
+#, c-format
+msgid "ympbuild function not exists: %s"
+msgstr "ympbuild islevi eksik: %s"
+
+#: src/data/ympbuild.vala:134
+#, c-format
+msgid "Binary process skip for: %s"
+msgstr "Ikili dosya islemi sunun icin atlandi: %s"
+
+#: src/data/ympbuild.vala:138
+#, c-format
+msgid "Binary process: %s"
+msgstr "Ikili dosya islemi: %s"
+
+#: src/data/ympbuild.vala:149 src/data/ympbuild.vala:154
+#, c-format
+msgid "File is not 64bit: %s"
+msgstr "Dosya 64bit degil: %s"
+
+#: src/data/ympbuild.vala:159 src/data/ympbuild.vala:164
+#, c-format
+msgid "File is not 32bit: %s"
+msgstr "Dosya 32bit degil: %s"
+
+#: src/data/ympbuild.vala:178
+#, c-format
+msgid "Files in %s detected."
+msgstr "%s icinde dosyalar tespit edildi."
+
+#: src/data/quarantine.vala:52
+msgid "Quarantine validation disabled."
+msgstr "Karantina dogrulamasi kapali."
+
+#: src/data/quarantine.vala:69 src/data/quarantine.vala:148
+msgid "Validating:"
+msgstr "Dogrulaniyor:"
+
+#: src/data/quarantine.vala:98
+#, c-format
+msgid "Invalid replaces files path: %s (%s)"
+msgstr "Gecersiz degisen dosya konumu: %s (%s)"
+
+#: src/data/quarantine.vala:105
+#, c-format
+msgid "File already exists in filesystem: /%s (%s)"
+msgstr "Dosya dosya sisteminde zaten mevcut: /%s (%s)"
+
+#: src/data/quarantine.vala:116 src/data/quarantine.vala:194
+#, c-format
+msgid "Validating: %s"
+msgstr "Dogrulaniyor: %s"
+
+#: src/data/quarantine.vala:119
+#, c-format
+msgid "File conflict detected: /%s (%s)"
+msgstr "Dosya cakismasi tespit edildi: /%s (%s)"
+
+#: src/data/quarantine.vala:125
+#, c-format
+msgid "Package file is missing: /%s (%s)"
+msgstr "Paket dosyasi eksik: /%s (%s)"
+
+#: src/data/quarantine.vala:131
+#, c-format
+msgid "File in restricted path is not allowed: /%s (%s)"
+msgstr "Kisitlanmis konumda dosyalara izin verilmiyor: /%s (%s)"
+
+#: src/data/quarantine.vala:140
+#, c-format
+msgid "Broken file detected: /%s (%s)"
+msgstr "Dozuk dosya tespit edildi: /%s (%s)"
+
+#: src/data/quarantine.vala:177
+#, c-format
+msgid "Invalid replaces symlink path: %s (%s)"
+msgstr "Gecersiz degisen symlink konumu: %s (%s)"
+
+#: src/data/quarantine.vala:184
+#, c-format
+msgid "Symlink already exists in filesystem: /%s (%s)"
+msgstr "Symlink dosya sisteminde zaten mevcut: /%s (%s)"
+
+#: src/data/quarantine.vala:197
+#, c-format
+msgid "Broken symlink detected: /%s (%s)"
+msgstr "Bozuk symlink tespit edildi: /%s (%s)"
+
+#: src/data/quarantine.vala:204
+#, c-format
+msgid "Symlink conflict detected: /%s (%s)"
+msgstr "Symlink cakismasi tespit edildi: /%s (%s)"
+
+#: src/data/quarantine.vala:209
+#, c-format
+msgid "Package symlink is missing: /%s (%s)"
+msgstr "Paket symlinki eksik: /%s (%s)"
+
+#: src/data/quarantine.vala:215
+#, c-format
+msgid "Symlink in restricted path is not allowed: /%s (%s)"
+msgstr "Kisitlanmis konumda symlinke izin verilmiyor: /%s (%s)"
+
+#: src/data/quarantine.vala:235
+msgid "Quarantine installation"
+msgstr "Karantina kurulumu"
+
+#: src/data/quarantine.vala:243
+#, c-format
+msgid "Installing: %s => %s"
+msgstr "Kuruluyor: %s => %s"
+
+#: src/data/quarantine.vala:279
+msgid "Quarantine import"
+msgstr "Karantina iceri aktarilmasi"
 
 #: src/data/dependency.vala:8
 #, c-format
@@ -130,527 +335,74 @@ msgstr "Bagimlilik coz: %s"
 msgid "Package is not installable: %s"
 msgstr "Paket kurulabilir degil: %s"
 
-#: src/data/dependency.vala:69
+#: src/data/dependency.vala:78
 #, c-format
 msgid "Resolve group: %s"
 msgstr "Gurubu cop: %s"
 
-#: src/data/dependency.vala:85
+#: src/data/dependency.vala:94
 #, c-format
 msgid "Group %s: add: %s"
 msgstr "Gurup %s: add: %s"
 
-#: src/data/dependency.vala:91
+#: src/data/dependency.vala:100
 #, c-format
 msgid "Group is unknown: %s"
 msgstr "Gurup bilinmiyor: %s"
 
-#: src/data/dependency.vala:97
+#: src/data/dependency.vala:106
 #, c-format
 msgid "Resolve ordep packages: %s"
 msgstr "ordep paketleri coz: %s"
 
-#: src/data/dependency.vala:113
+#: src/data/dependency.vala:122
 #, c-format
 msgid "Resolve regex: %s"
 msgstr "regex coz : %s"
 
-#: src/data/dependency.vala:123
+#: src/data/dependency.vala:132
 #, c-format
 msgid "Match %s: rule: %s"
 msgstr "Eslesme %s: kural: %s"
 
-#: src/data/dependency.vala:128
+#: src/data/dependency.vala:137
 #, c-format
 msgid "Regex match is not available: %s"
 msgstr "Regex eslesmesi bulunamadi: %s"
 
-#: src/data/dependency.vala:166
+#: src/data/dependency.vala:175
 #, c-format
 msgid "Resolve reverse dependency: %s"
 msgstr "Ters bagimlilik coz: %s"
 
-#: src/data/ympbuild.vala:42
+#: src/data/repository.vala:196 src/data/repository.vala:220
 #, c-format
-msgid "USE flag: %s"
-msgstr "USE bayragi: %s"
+msgid "Package is not satisfied from repository: %s"
+msgstr "Paket depodan saglanamadi: %s"
 
-#: src/data/ympbuild.vala:47
+#: src/data/repository.vala:253 src/data/repository.vala:257
 #, c-format
-msgid "Set ympbuild src path : %s"
-msgstr "ympbuild src konumu ayarla: %s"
+msgid "Find repo list: %s"
+msgstr "Depo listesi bul: %s"
 
-#: src/data/ympbuild.vala:56
+#: src/data/repository.vala:282
 #, c-format
-msgid "Set ympbuild build path : %s"
-msgstr "ympbuild build konumu ayarla: %s"
+msgid "Invalid repository index: %s"
+msgstr "Gecersiz depo indexi: %s"
 
-#: src/data/ympbuild.vala:91
-#, c-format
-msgid "Check ympbuild: %s/ympbuild"
-msgstr "ympbulid gozden gecir: %s/ympbuild"
-
-#: src/data/ympbuild.vala:101
-#, c-format
-msgid "Run action (%s) %s => %s"
-msgstr "Eylem calistir (%s) %s => %s"
-
-#: src/data/ympbuild.vala:118
-#, c-format
-msgid "ympbuild function not exists: %s"
-msgstr "ympbuild islevi eksik: %s"
-
-#: src/data/ympbuild.vala:133
-#, c-format
-msgid "Binary process skip for: %s"
-msgstr "Ikili dosya islemi sunun icin atlandi: %s"
-
-#: src/data/ympbuild.vala:137
-#, c-format
-msgid "Binary process: %s"
-msgstr "Ikili dosya islemi: %s"
-
-#: src/data/ympbuild.vala:148 src/data/ympbuild.vala:153
-#, c-format
-msgid "File is not 64bit: %s"
-msgstr "Dosya 64bit degil: %s"
-
-#: src/data/ympbuild.vala:158 src/data/ympbuild.vala:163
-#, c-format
-msgid "File is not 32bit: %s"
-msgstr "Dosya 32bit degil: %s"
-
-#: src/data/quarantine.vala:52
-msgid "Quarantine validation disabled."
-msgstr "Karantina dogrulamasi kapali."
-
-#: src/data/quarantine.vala:69 src/data/quarantine.vala:146
-msgid "Validating:"
-msgstr "Dogrulaniyor:"
-
-#: src/data/quarantine.vala:96
-#, c-format
-msgid "Invalid replaces files path: %s (%s)"
-msgstr "Gecersiz degisen dosya konumu: %s (%s)"
-
-#: src/data/quarantine.vala:103
-#, c-format
-msgid "File already exists in filesystem: /%s (%s)"
-msgstr "Dosya dosya sisteminde zaten mevcut: /%s (%s)"
-
-#: src/data/quarantine.vala:114 src/data/quarantine.vala:188
-#, c-format
-msgid "Validating: %s"
-msgstr "Dogrulaniyor: %s"
-
-#: src/data/quarantine.vala:117
-#, c-format
-msgid "File conflict detected: /%s (%s)"
-msgstr "Dosya cakismasi tespit edildi: /%s (%s)"
-
-#: src/data/quarantine.vala:123
-#, c-format
-msgid "Package file is missing: /%s (%s)"
-msgstr "Paket dosyasi eksik: /%s (%s)"
-
-#: src/data/quarantine.vala:129
-#, c-format
-msgid "File in restricted path is not allowed: /%s (%s)"
-msgstr "Kisitlanmis konumda dosyalara izin verilmiyor: /%s (%s)"
-
-#: src/data/quarantine.vala:138
-#, c-format
-msgid "Broken file detected: /%s (%s)"
-msgstr "Dozuk dosya tespit edildi: /%s (%s)"
-
-#: src/data/quarantine.vala:171
-#, c-format
-msgid "Invalid replaces symlink path: %s (%s)"
-msgstr "Gecersiz degisen symlink konumu: %s (%s)"
-
-#: src/data/quarantine.vala:178
-#, c-format
-msgid "Symlink already exists in filesystem: /%s (%s)"
-msgstr "Symlink dosya sisteminde zaten mevcut: /%s (%s)"
-
-#: src/data/quarantine.vala:191
-#, c-format
-msgid "Broken symlink detected: /%s (%s)"
-msgstr "Bozuk symlink tespit edildi: /%s (%s)"
-
-#: src/data/quarantine.vala:198
-#, c-format
-msgid "Symlink conflict detected: /%s (%s)"
-msgstr "Symlink cakismasi tespit edildi: /%s (%s)"
-
-#: src/data/quarantine.vala:203
-#, c-format
-msgid "Package symlink is missing: /%s (%s)"
-msgstr "Paket symlinki eksik: /%s (%s)"
-
-#: src/data/quarantine.vala:209
-#, c-format
-msgid "Symlink in restricted path is not allowed: /%s (%s)"
-msgstr "Kisitlanmis konumda symlinke izin verilmiyor: /%s (%s)"
-
-#: src/data/quarantine.vala:229
-msgid "Quarantine installation"
-msgstr "Karantina kurulumu"
-
-#: src/data/quarantine.vala:237
-#, c-format
-msgid "Installing: %s => %s"
-msgstr "Kuruluyor: %s => %s"
-
-#: src/data/quarantine.vala:273
-msgid "Quarantine import"
-msgstr "Karantina iceri aktarilmasi"
-
-#: src/ymp.vala:31
-#, c-format
-msgid "Add operation: %s"
-msgstr "Eylem ekleme: %s"
-
-#: src/ymp.vala:46
-msgid "RUN:"
-msgstr "KOS:"
-
-#: src/ymp.vala:59
-#, c-format
-msgid "Invalid operation name: %s"
-msgstr "Gecersiz eylem ismi: %s"
-
-#: src/ymp.vala:144
-msgid "Syntax error: Unexceped endif detected."
-msgstr "Syntax hatasi: Beklenmedik endif tespit edildi."
-
-#: src/ymp.vala:168
-#, c-format
-msgid "Process: %s failed. Exited with %d."
-msgstr "Surec: %s basarisiz %d ile cikildi."
-
-#: src/ymp.vala:173
-#, c-format
-msgid "Process done in : %f sec"
-msgstr "Surec tamamlandi: %f sn"
-
-#: src/ymp.vala:268
-msgid "Plugin manager init"
-msgstr "Eklenti yoneticisi baslatilmasi"
-
-#: src/ymp.vala:272
-#, c-format
-msgid "Load plugin: %s"
-msgstr "Yuklenen eklenti: %s"
-
-#: src/ymp.vala:281
-msgid "OEM detected! Ymp may not working good."
-msgstr "OEM tespit edildi! Ymp iyi calismayabilir."
-
-#: src/ymp.vala:282
-msgid "OEM is not allowed! Please use --allow-oem to allow oem."
-msgstr "OEM kabul edilemez! Oem kabul etmek icin lutfen --allow-oem kullanin."
-
-#: src/ymp.vala:286
-msgid "UsrMerge detected! Ymp may not working good."
-msgstr "UsrMerge tespit edildi! Ymp iyi calismayabilir."
-
-#: src/settings.vala:38
-#, c-format
-msgid "Config file does not exists: %s"
-msgstr "Ayar dosyasi bulunamadi: %s"
-
-#: src/settings.vala:66
-#, c-format
-msgid "Destination directory has been changed: %s"
-msgstr "Hedef dizin degisti: %s"
-
-#: src/util/httpd.vala:69
-#, c-format
-msgid "Directory listing for %s"
-msgstr "%s icin dizin listeleniyor."
-
-#: src/util/httpd.vala:72
-msgid "Directory listing for /%s"
-msgstr "%s icin dizin listeleniyor."
-
-#: src/util/httpd.vala:149
-msgid "Servering HTTP on %s port %s"
-msgstr "HTTP %s uzerinde %s portundan sunuluyor"
-
-#: src/util/debian.vala:66
-#, c-format
-msgid "Creating debian package to: %s"
-msgstr "Suraya debian paketi olusturuluyor: %s"
-
-#: src/util/debian.vala:110
-msgid "Failed to decompress debian repository index."
-msgstr "Debian depo indexi acilamadi."
-
-#: src/util/debian.vala:143
-msgid "Debian catalog does not found. Please use --update-catalog to update."
-msgstr ""
-"Debian katalogu bulunamadi. Lutfen --update-catalog kullanarak guncelleyin."
-
-#: src/util/logger.vala:42
-msgid "WARNING"
-msgstr "UYARI"
-
-#: src/util/logger.vala:46
-msgid "DEBUG"
-msgstr "DEBUG"
-
-#: src/util/logger.vala:50
-msgid "INFO"
-msgstr "BILGI"
-
-#: src/util/logger.vala:91
-msgid "ERROR"
-msgstr "HATA"
-
-#: src/util/file.vala:7
-#, c-format
-msgid "Read file bytes: %s"
-msgstr "Dasye bytelarini oku: %s"
+#: src/data/repository.vala:323
+msgid "Index name is not defined. Please use --name=xxx"
+msgstr "Index adi tanimlanmadi. Lutfen --name=xxx kullanin"
 
-#: src/util/file.vala:13
+#: src/data/repository.vala:371
 #, c-format
-msgid "Failed to read file: %s"
-msgstr "Dosya okunamadi: %s"
+msgid "A source has multiple versions: %s"
+msgstr "Bir kaynak birden cok surume sahip: %s"
 
-#: src/util/file.vala:22
+#: src/data/repository.vala:380
 #, c-format
-msgid "File is empty: %s"
-msgstr "Dosya bos: %s"
-
-#: src/util/file.vala:25
-#, c-format
-msgid "Read byte size is bigger than file size: %s"
-msgstr "Okunan byte boyutu dosya boyutundan daha fazla: %s"
-
-#: src/util/file.vala:45
-#, c-format
-msgid "Read file: %s"
-msgstr "Dosya oku: %s"
-
-#: src/util/file.vala:75
-#, c-format
-msgid "Write file: %s"
-msgstr "Dosya yaz: %s"
-
-#: src/util/file.vala:97
-#, c-format
-msgid "Safedir: %s"
-msgstr "Safedir: %s"
-
-#: src/util/file.vala:114
-#, c-format
-msgid "Change directory: %s"
-msgstr "Dizin degistir: %s"
-
-#: src/util/file.vala:130
-#, c-format
-msgid "Remove directory: %s"
-msgstr "Dizin sil: %s"
-
-#: src/util/file.vala:137
-#, c-format
-msgid "Remove file: %s"
-msgstr "Dosya sil: %s"
-
-#: src/util/file.vala:178
-#, c-format
-msgid "Move: %s => %s"
-msgstr "Tasi: %s => %s"
-
-#: src/util/file.vala:190
-#, c-format
-msgid "Failed to move file: %s => %s"
-msgstr "Dosya tasinamadi: %s => %s"
-
-#: src/util/file.vala:198
-#, c-format
-msgid "Copy: %s => %s"
-msgstr "Kopyala: %s => %s"
-
-#: src/util/file.vala:224
-#, c-format
-msgid "Failed to copy file: %s => %s"
-msgstr "Dosya kopyalanamadi: %s => %s"
-
-#: src/util/file.vala:232
-#, c-format
-msgid "List directory: %s"
-msgstr "Dizin listele: %s"
-
-#: src/util/file.vala:251
-#, c-format
-msgid "Check elf: %s"
-msgstr "Elf gozden gecir: %s"
-
-#: src/util/file.vala:263
-#, c-format
-msgid "Check 64bit: %s"
-msgstr "64bit gozden gecir: %s"
-
-#: src/util/file.vala:276
-#, c-format
-msgid "Check file: %s"
-msgstr "Dosya gozden gecir: %s"
-
-#: src/util/file.vala:282
-#, c-format
-msgid "Check exists: %s"
-msgstr "Varligi gozden gecir: %s"
-
-#: src/util/file.vala:292
-#, c-format
-msgid "Realpath: %s"
-msgstr "Realpath: %s"
-
-#: src/util/file.vala:313
-#, c-format
-msgid "Search: %s"
-msgstr "Ara: %s"
-
-#: src/util/file.vala:329
-#, c-format
-msgid "Search subdir: %s"
-msgstr "Alt dizin ara: %s"
-
-#: src/util/file.vala:352
-#, c-format
-msgid "Read symlink: %s => %s"
-msgstr "Symlink oku: %s => %s"
-
-#: src/util/file.vala:371
-#, c-format
-msgid "Calculating checksum: %s"
-msgstr "Checksum hesaplaniyor: %s"
-
-#: src/util/interface.vala:24 src/util/interface.vala:27
-#, c-format
-msgid "%s [y/n]"
-msgstr "%s [y/n]"
-
-#: src/util/string.vala:44
-msgid "empty data"
-msgstr "bos veri"
-
-#: src/util/string.vala:117
-#, c-format
-msgid "Basename: %s"
-msgstr "Basename: %s"
-
-#: src/util/string.vala:125
-#, c-format
-msgid "Dirname: %s"
-msgstr "Dirname: %s"
-
-#: src/util/yamlparser.vala:24
-#, c-format
-msgid "Loading yaml from: %s"
-msgstr "Suradan yaml yukleniyor: %s"
-
-#: src/util/yamlparser.vala:52
-#, c-format
-msgid "Get area list: %s"
-msgstr "Alan listesi al: %s"
-
-#: src/util/yamlparser.vala:93
-#, c-format
-msgid "Yaml get value: %s"
-msgstr "Yaml degeri al: %s"
-
-#: src/util/yamlparser.vala:111
-#, c-format
-msgid "Yaml get array: %s"
-msgstr "Yaml listesi al: %s"
-
-#: src/wslblock.vala:28
-msgid "Using ymp in Fucking WSL environment is not allowed."
-msgstr "Sikik WSL ormatinda Ymp kullanmaya izin verilmiyor."
-
-#: src/cli/main.vala:22
-msgid "No command given."
-msgstr "Komut girilmedi."
-
-#: src/cli/main.vala:22
-#, c-format
-msgid "Run %s for more information about usage."
-msgstr "Kullanimla ilgili daha cok bilgi icin %s calistirin"
-
-#: src/cli/main.vala:22
-msgid "ymp help"
-msgstr "ymp yardim"
-
-#: src/operations/utility/httpd.vala:9 src/operations/utility/httpd.vala:10
-msgid "httpd"
-msgstr "httpd"
-
-#: src/operations/utility/httpd.vala:11
-msgid "Simple http server."
-msgstr "Basit http sunucusu."
-
-#: src/operations/utility/httpd.vala:12
-msgid "port number"
-msgstr ""
-
-#: src/operations/utility/httpd.vala:13
-msgid "allowed clients (0.0.0.0 for allow everyone)"
-msgstr ""
-
-#: src/operations/utility/debian.vala:39 src/operations/utility/debian.vala:40
-msgid "debian"
-msgstr "debian"
-
-#: src/operations/utility/debian.vala:41
-msgid "Debian package operations."
-msgstr "Debian paket eylemleri."
-
-#: src/operations/utility/debian.vala:42
-msgid "Package options"
-msgstr "Paket eylemleri"
-
-#: src/operations/utility/debian.vala:43
-msgid "extract debian package"
-msgstr "debian paketi cikart"
-
-#: src/operations/utility/debian.vala:44
-msgid "create debian package"
-msgstr "debian paketi olustur"
-
-#: src/operations/utility/debian.vala:45
-msgid "convert debian package to ymp package"
-msgstr "debian paketini ymp paketine donustur"
-
-#: src/operations/utility/debian.vala:46
-msgid "Install options"
-msgstr "Kurulum eylemleri"
-
-#: src/operations/utility/debian.vala:47
-msgid "install debian package"
-msgstr "debian paketi kur"
-
-#: src/operations/utility/debian.vala:47
-msgid "Dangerous"
-msgstr "Tehlikeli"
-
-#: src/operations/utility/debian.vala:48
-msgid "Catalog options"
-msgstr "Catalog secenekleri"
-
-#: src/operations/utility/debian.vala:49
-msgid "update debian catalog from debian repository"
-msgstr "debian deposundan catalog guncelle"
-
-#: src/operations/utility/debian.vala:50
-msgid "get source package name from catalog"
-msgstr "kaynak dosya adini catalog icinden al"
-
-#: src/operations/utility/debian.vala:51
-msgid "debian mirror url"
-msgstr "debian yansi baglantisi"
+msgid "A package has multiple versions: %s"
+msgstr "Bir paket birden cok surume sahip: %s"
 
 #: src/operations/utility/compress.vala:24
 #: src/operations/utility/compress.vala:25
@@ -668,22 +420,6 @@ msgstr "sikistirma algoritmasi"
 #: src/operations/utility/compress.vala:29
 msgid "archive format"
 msgstr "arsiv turu"
-
-#: src/operations/utility/fetch.vala:3
-msgid "URL missing"
-msgstr "Baglanti eksik"
-
-#: src/operations/utility/fetch.vala:24 src/operations/utility/fetch.vala:25
-msgid "fetch"
-msgstr "indir"
-
-#: src/operations/utility/fetch.vala:27
-msgid "Download files from network."
-msgstr "Agdan dosya indir."
-
-#: src/operations/utility/fetch.vala:28
-msgid "disable ssl check"
-msgstr "ssl gozden gecirmesini kapat"
 
 #: src/operations/utility/file.vala:23 src/operations/utility/file.vala:44
 msgid "Source or Target is not defined."
@@ -713,119 +449,75 @@ msgstr "dosyalari veya dizinleri tasi"
 msgid "extract archive file (same as extract operation)"
 msgstr "arsiv dosyasini cikart (cikart eylemi ile aynidir)"
 
-#: src/operations/utility/shell.vala:34 src/operations/utility/shell.vala:35
-msgid "shell"
-msgstr "kabuk"
+#: src/operations/utility/extract.vala:24
+#: src/operations/utility/extract.vala:25
+msgid "extract"
+msgstr "cikart"
 
-#: src/operations/utility/shell.vala:36
-msgid "Create a ymp shell or execute ympsh script."
-msgstr "ymp kabugu olustur veya ympsh calistir."
+#: src/operations/utility/extract.vala:27
+msgid "Extract files from archive."
+msgstr "Arsivden dosyalari cikart."
 
-#: src/operations/utility/help.vala:3
-msgid "Operation list:"
-msgstr "Eylem listesi:"
+#: src/operations/utility/extract.vala:28
+msgid "list archive files"
+msgstr "arsiv dosyalarini listele"
 
-#: src/operations/utility/help.vala:10
-msgid "Shell only operation list:"
-msgstr "Kabuga ozel eylem listesi:"
+#: src/operations/utility/httpd.vala:9 src/operations/utility/httpd.vala:10
+msgid "httpd"
+msgstr "httpd"
 
-#: src/operations/utility/help.vala:21
-msgid "Aliases:"
-msgstr "Aliaslar"
+#: src/operations/utility/httpd.vala:11
+msgid "Simple http server."
+msgstr "Basit http sunucusu."
 
-#: src/operations/utility/help.vala:33
-msgid "Version"
-msgstr "Surum"
+#: src/operations/utility/httpd.vala:12
+msgid "port number"
+msgstr "port sayisi"
 
-#: src/operations/utility/help.vala:65
-msgid "stop argument parser"
-msgstr "argument isleyiciyi durdur"
+#: src/operations/utility/httpd.vala:13
+msgid "allowed clients (0.0.0.0 for allow everyone)"
+msgstr "kabul edilen alicilar (herkes icin 0.0.0.0)"
 
-#: src/operations/utility/help.vala:68
-msgid "disable oem check"
-msgstr "oem gozden gecirmesini kapat"
+#: src/operations/utility/revdep-rebuild.vala:17
+msgid "Detect dependencies for:"
+msgstr "Bagimliliklar sunun icin tespit ediliyor:"
 
-#: src/operations/utility/help.vala:71
-msgid "disable output"
-msgstr "ciktiyi kapat"
-
-#: src/operations/utility/help.vala:72
-msgid "disable warning messages"
-msgstr "uyari iletilerini kapat"
-
-#: src/operations/utility/help.vala:74
-msgid "enable debug output"
-msgstr "hata ayiklamayi etkinlestir"
-
-#: src/operations/utility/help.vala:76
-msgid "show verbose output"
-msgstr "ayrintili cikti goster"
-
-#: src/operations/utility/help.vala:77
-msgid "enable questions"
-msgstr "sorgulari etkinlestir"
-
-#: src/operations/utility/help.vala:78
-msgid "disable color output"
-msgstr "renkli ciktiyi kapat"
-
-#: src/operations/utility/help.vala:79
-msgid "disable sysconf triggers"
-msgstr "sysconf tetiklemelerini kapat"
-
-#: src/operations/utility/help.vala:80
-msgid "run ymp actions at sandbox environment"
-msgstr "ymp eylemlerini sandbox ortaminda calistir"
-
-#: src/operations/utility/help.vala:81
-msgid "write help messages"
-msgstr "yardim iletisi yaz"
-
-#: src/operations/utility/help.vala:87 src/operations/utility/help.vala:88
-msgid "help"
-msgstr "yardim"
-
-#: src/operations/utility/help.vala:89
-msgid "Write help message about ymp commands."
-msgstr "Ymp komutlari ile ilgili yardim iletisi yaz"
-
-#: src/operations/utility/help.vala:120
-msgid " [OPTION]... [ARGS]... "
-msgstr " [SECENEK]... [ARGS]..."
-
-#: src/operations/utility/help.vala:122
-msgid "Usage:"
-msgstr "Kullanim:"
-
-#: src/operations/utility/help.vala:125
-msgid "Options:"
-msgstr "Secenek:"
-
-#: src/operations/utility/help.vala:130
-msgid "Common options:"
-msgstr "Ortak secenekler:"
-
-#: src/operations/utility/brainfuck.vala:10
-#: src/operations/utility/brainfuck.vala:11
-msgid "brainfuck"
-msgstr "brainfuck"
-
-#: src/operations/utility/brainfuck.vala:13
-msgid "Run a brainfuck script."
-msgstr "Brainfuck betigi calistir."
-
-#: src/operations/utility/kill.vala:16
+#: src/operations/utility/revdep-rebuild.vala:57
+#: src/operations/utility/revdep-rebuild.vala:67
 #, c-format
-msgid "Kill: %s"
-msgstr "Oldur: %s"
+msgid "Checking: %s"
+msgstr "Gozden geciriliyor: %s"
 
-#: src/operations/utility/kill.vala:30 src/operations/utility/kill.vala:31
-msgid "kill"
-msgstr "oldur"
+#: src/operations/utility/revdep-rebuild.vala:71
+#, c-format
+msgid "%s broken."
+msgstr "%s bozuk."
 
-#: src/operations/utility/kill.vala:32
-msgid "Kill all other ymp process."
-msgstr "Diger ymp sureclerini oldurur."
+#: src/operations/utility/revdep-rebuild.vala:78
+#, c-format
+msgid "%s is not an installed package."
+msgstr "%s kurulu bir paket degil."
+
+#: src/operations/utility/revdep-rebuild.vala:118
+#: src/operations/utility/revdep-rebuild.vala:119
+msgid "revdep-rebuild"
+msgstr "revdep-rebuild"
+
+#: src/operations/utility/revdep-rebuild.vala:120
+msgid "Check library for broken links."
+msgstr "Kutuphaneleri bozuk baglar icin gozden gecir."
+
+#: src/operations/utility/revdep-rebuild.vala:121
+msgid "check pkgconfig files"
+msgstr "pkgconfig dosyalarini gozden gecir"
+
+#: src/operations/utility/revdep-rebuild.vala:122
+msgid "detect package dependencies"
+msgstr "paket bagimliliklarini gozden gecir"
+
+#: src/operations/utility/revdep-rebuild.vala:123
+msgid "detect file dependencies"
+msgstr "paket bagimliliklarini bul"
 
 #: src/operations/utility/sysconf.vala:15
 #, c-format
@@ -847,6 +539,23 @@ msgstr "sysconf"
 msgid "Trigger sysconf operations."
 msgstr "Sysconf eylemi tetikle."
 
+#: src/operations/utility/shell.vala:34 src/operations/utility/shell.vala:35
+msgid "shell"
+msgstr "kabuk"
+
+#: src/operations/utility/shell.vala:36
+msgid "Create a ymp shell or execute ympsh script."
+msgstr "ymp kabugu olustur veya ympsh calistir."
+
+#: src/operations/utility/brainfuck.vala:10
+#: src/operations/utility/brainfuck.vala:11
+msgid "brainfuck"
+msgstr "brainfuck"
+
+#: src/operations/utility/brainfuck.vala:13
+msgid "Run a brainfuck script."
+msgstr "Brainfuck betigi calistir."
+
 #: src/operations/utility/run-sandbox.vala:3
 msgid "Sandbox operation with usrmerge is not allowed!"
 msgstr "Sandbox eylemi usrmerge ile kabul edilmiyor!"
@@ -856,25 +565,24 @@ msgstr "Sandbox eylemi usrmerge ile kabul edilmiyor!"
 msgid "Execute sandbox :%s"
 msgstr "Sandbox calistir: %s"
 
-#: src/operations/utility/run-sandbox.vala:29
-#: src/operations/utility/run-sandbox.vala:30
+#: src/operations/utility/run-sandbox.vala:23
+#: src/operations/utility/run-sandbox.vala:24
 msgid "sandbox"
 msgstr "sandbox"
 
-#: src/operations/utility/run-sandbox.vala:32
+#: src/operations/utility/run-sandbox.vala:26
 msgid "Start sandbox environment."
 msgstr "Sandbox ortami baslat."
 
-#: src/operations/utility/run-sandbox.vala:33
+#: src/operations/utility/run-sandbox.vala:27
 msgid "select shared directory"
 msgstr "paylasilan dizin sec"
 
-#: src/operations/utility/run-sandbox.vala:34
-#, fuzzy
+#: src/operations/utility/run-sandbox.vala:28
 msgid "select tmpfs directory"
-msgstr "gecici dizin sec"
+msgstr "tmpfs dizini sec"
 
-#: src/operations/utility/run-sandbox.vala:35
+#: src/operations/utility/run-sandbox.vala:29
 msgid "block network access"
 msgstr "ag erisimini engelle"
 
@@ -891,108 +599,253 @@ msgstr "yamlget [dosya] [yol]"
 msgid "Parse yaml files"
 msgstr "Yaml dosyalarini isle"
 
-#: src/operations/utility/extract.vala:24
-#: src/operations/utility/extract.vala:25
-msgid "extract"
-msgstr "cikart"
+#: src/operations/utility/debian.vala:38 src/operations/utility/debian.vala:39
+msgid "debian"
+msgstr "debian"
 
-#: src/operations/utility/extract.vala:27
-msgid "Extract files from archive."
-msgstr "Arsivden dosyalari cikart."
+#: src/operations/utility/debian.vala:40
+msgid "Debian package operations."
+msgstr "Debian paket eylemleri."
 
-#: src/operations/utility/extract.vala:28
-msgid "list archive files"
-msgstr "arsiv dosyalarini listele"
+#: src/operations/utility/debian.vala:41
+msgid "Package options"
+msgstr "Paket eylemleri"
 
-#: src/operations/utility/revdep-rebuild.vala:13
-msgid "Detect dependencies for:"
-msgstr "Bagimliliklar sunun icin tespit ediliyor:"
+#: src/operations/utility/debian.vala:42
+msgid "extract debian package"
+msgstr "debian paketi cikart"
 
-#: src/operations/utility/revdep-rebuild.vala:53
-#: src/operations/utility/revdep-rebuild.vala:63
+#: src/operations/utility/debian.vala:43
+msgid "create debian package"
+msgstr "debian paketi olustur"
+
+#: src/operations/utility/debian.vala:44
+msgid "convert debian package to ymp package"
+msgstr "debian paketini ymp paketine donustur"
+
+#: src/operations/utility/debian.vala:45
+msgid "Install options"
+msgstr "Kurulum eylemleri"
+
+#: src/operations/utility/debian.vala:46
+msgid "install debian package"
+msgstr "debian paketi kur"
+
+#: src/operations/utility/debian.vala:46
 #, c-format
-msgid "Checking: %s"
-msgstr "Gozden geciriliyor: %s"
+msgid "Dangerous"
+msgstr "Tehlikeli"
 
-#: src/operations/utility/revdep-rebuild.vala:67
+#: src/operations/utility/debian.vala:47
+msgid "Catalog options"
+msgstr "Catalog secenekleri"
+
+#: src/operations/utility/debian.vala:48
+msgid "update debian catalog from debian repository"
+msgstr "debian deposundan catalog guncelle"
+
+#: src/operations/utility/debian.vala:49
+msgid "get source package name from catalog"
+msgstr "kaynak dosya adini catalog icinden al"
+
+#: src/operations/utility/debian.vala:50
+msgid "debian mirror url"
+msgstr "debian yansi baglantisi"
+
+#: src/operations/utility/code_runner.vala:21
+#: src/operations/utility/code_runner.vala:22
+msgid "code-runner"
+msgstr "code-runner"
+
+#: src/operations/utility/code_runner.vala:23
+msgid "Run code-runner jobs."
+msgstr "Code-runner islerini calistir."
+
+#: src/operations/utility/kill.vala:16
 #, c-format
-msgid "%s broken."
-msgstr ""
+msgid "Kill: %s"
+msgstr "Oldur: %s"
 
-#: src/operations/utility/revdep-rebuild.vala:74
-#, c-format
-msgid "%s is not an installed package."
-msgstr "%s kurulu bir paket degil."
+#: src/operations/utility/kill.vala:30 src/operations/utility/kill.vala:31
+msgid "kill"
+msgstr "oldur"
 
-#: src/operations/utility/revdep-rebuild.vala:114
-#: src/operations/utility/revdep-rebuild.vala:115
-msgid "revdep-rebuild"
-msgstr "revdep-rebuild"
+#: src/operations/utility/kill.vala:32
+msgid "Kill all other ymp process."
+msgstr "Diger ymp sureclerini oldurur."
 
-#: src/operations/utility/revdep-rebuild.vala:116
-msgid "Check library for broken links."
-msgstr "Kutuphaneleri bozuk baglar icin gozden gecir."
+#: src/operations/utility/help.vala:3
+msgid "Operation list:"
+msgstr "Eylem listesi:"
 
-#: src/operations/utility/revdep-rebuild.vala:117
-msgid "check pkgconfig files"
-msgstr "pkgconfig dosyalarini gozden gecir"
+#: src/operations/utility/help.vala:10
+msgid "Shell only operation list:"
+msgstr "Kabuga ozel eylem listesi:"
 
-#: src/operations/utility/revdep-rebuild.vala:118
-msgid "detect package dependencies"
-msgstr "paket bagimliliklarini gozden gecir"
+#: src/operations/utility/help.vala:21
+msgid "Aliases:"
+msgstr "Aliaslar"
 
-#: src/operations/shell/setget.vala:63 src/operations/shell/setget.vala:64
+#: src/operations/utility/help.vala:33
+msgid "Version"
+msgstr "Surum"
+
+#: src/operations/utility/help.vala:49
+msgid "stop argument parser"
+msgstr "argument isleyiciyi durdur"
+
+#: src/operations/utility/help.vala:51
+msgid "disable oem check"
+msgstr "oem gozden gecirmesini kapat"
+
+#: src/operations/utility/help.vala:53
+msgid "disable output"
+msgstr "ciktiyi kapat"
+
+#: src/operations/utility/help.vala:54
+msgid "disable warning messages"
+msgstr "uyari iletilerini kapat"
+
+#: src/operations/utility/help.vala:56
+msgid "enable debug output"
+msgstr "hata ayiklamayi etkinlestir"
+
+#: src/operations/utility/help.vala:58
+msgid "show verbose output"
+msgstr "ayrintili cikti goster"
+
+#: src/operations/utility/help.vala:59
+msgid "enable questions"
+msgstr "sorgulari etkinlestir"
+
+#: src/operations/utility/help.vala:60
+msgid "disable color output"
+msgstr "renkli ciktiyi kapat"
+
+#: src/operations/utility/help.vala:61
+msgid "disable sysconf triggers"
+msgstr "sysconf tetiklemelerini kapat"
+
+#: src/operations/utility/help.vala:62
+msgid "run ymp actions at sandbox environment"
+msgstr "ymp eylemlerini sandbox ortaminda calistir"
+
+#: src/operations/utility/help.vala:63
+msgid "write help messages"
+msgstr "yardim iletisi yaz"
+
+#: src/operations/utility/help.vala:69 src/operations/utility/help.vala:70
+msgid "help"
+msgstr "yardim"
+
+#: src/operations/utility/help.vala:71
+msgid "Write help message about ymp commands."
+msgstr "Ymp komutlari ile ilgili yardim iletisi yaz"
+
+#: src/operations/utility/help.vala:102
+msgid " [OPTION]... [ARGS]... "
+msgstr " [SECENEK]... [ARGS]..."
+
+#: src/operations/utility/help.vala:104
+msgid "Usage:"
+msgstr "Kullanim:"
+
+#: src/operations/utility/help.vala:107
+msgid "Options:"
+msgstr "Secenek:"
+
+#: src/operations/utility/help.vala:112
+msgid "Common options:"
+msgstr "Ortak secenekler:"
+
+#: src/operations/utility/fetch.vala:3
+msgid "URL missing"
+msgstr "Baglanti eksik"
+
+#: src/operations/utility/fetch.vala:24 src/operations/utility/fetch.vala:25
+msgid "fetch"
+msgstr "indir"
+
+#: src/operations/utility/fetch.vala:27
+msgid "Download files from network."
+msgstr "Agdan dosya indir."
+
+#: src/operations/utility/fetch.vala:28
+msgid "disable ssl check"
+msgstr "ssl gozden gecirmesini kapat"
+
+#: src/operations/utility/key.vala:13 src/operations/utility/key.vala:14
+msgid "key"
+msgstr "anahtar"
+
+#: src/operations/utility/key.vala:15
+msgid "Gpg key operations."
+msgstr "Gpg anahtari eylemleri."
+
+#: src/operations/utility/key.vala:16
+msgid "add new gpg key"
+msgstr "yeni gpg anahtari ekle"
+
+#: src/operations/shell/setget.vala:69 src/operations/shell/setget.vala:70
 msgid "get"
 msgstr "get"
 
-#: src/operations/shell/setget.vala:66
+#: src/operations/shell/setget.vala:72
 msgid "Get variable from name."
 msgstr "isimden degisken alin."
 
-#: src/operations/shell/setget.vala:71 src/operations/shell/setget.vala:72
+#: src/operations/shell/setget.vala:77 src/operations/shell/setget.vala:78
 msgid "set"
 msgstr "ayarla"
 
-#: src/operations/shell/setget.vala:75
+#: src/operations/shell/setget.vala:81
 msgid "Set variable from name and value."
 msgstr "Ad ve degerden degisken ayarlayin."
 
-#: src/operations/shell/setget.vala:80 src/operations/shell/setget.vala:81
+#: src/operations/shell/setget.vala:86 src/operations/shell/setget.vala:87
 msgid "equal"
 msgstr "esit"
 
-#: src/operations/shell/setget.vala:84
+#: src/operations/shell/setget.vala:90
 msgid "Compare arguments equality."
 msgstr "Argumanlarin esitligini karsilastirin."
 
-#: src/operations/shell/setget.vala:89 src/operations/shell/setget.vala:90
+#: src/operations/shell/setget.vala:95 src/operations/shell/setget.vala:96
 msgid "read"
 msgstr "oku"
 
-#: src/operations/shell/setget.vala:93
+#: src/operations/shell/setget.vala:99
 msgid "Read value from terminal."
 msgstr "Terminalden degeri oku."
 
-#: src/operations/shell/setget.vala:98 src/operations/shell/setget.vala:99
+#: src/operations/shell/setget.vala:104 src/operations/shell/setget.vala:105
 msgid "match"
 msgstr "eslestir"
 
-#: src/operations/shell/setget.vala:102
+#: src/operations/shell/setget.vala:108
 msgid "Match arguments regex."
 msgstr "Regex argumanlarini eslestir"
 
-#: src/operations/shell/setget.vala:107 src/operations/shell/setget.vala:108
+#: src/operations/shell/setget.vala:113 src/operations/shell/setget.vala:114
 msgid "cd"
 msgstr "cd"
 
-#: src/operations/shell/setget.vala:110
+#: src/operations/shell/setget.vala:116
 msgid "Change directory."
 msgstr "Dizin degistir."
 
+#: src/operations/shell/setget.vala:121 src/operations/shell/setget.vala:122
+msgid "export"
+msgstr "export"
+
+#: src/operations/shell/setget.vala:124
+msgid "Convert value to environmental."
+msgstr "Degiskeni cevresel hale getir."
+
 #: src/operations/shell/chroot.vala:3
+#: src/operations/package-manager/bootstrap.vala:3
 #: src/operations/package-manager/install.vala:3
 #: src/operations/package-manager/repository.vala:14
-#: src/operations/package-manager/bootstrap.vala:3
 #: src/operations/package-manager/remove.vala:3
 msgid "You must be root!"
 msgstr "Root olmalisiniz!"
@@ -1019,37 +872,13 @@ msgstr "chroot"
 msgid "Execute a command in chroot."
 msgstr "Chroot'ta bir komut yurutun."
 
-#: src/operations/shell/cowcat.vala:21
-msgid "cow"
-msgstr "cow"
+#: src/operations/shell/clear.vala:9 src/operations/shell/clear.vala:10
+msgid "clear"
+msgstr "temizle"
 
-#: src/operations/shell/cowcat.vala:22
-msgid "cowcat"
-msgstr "cowcat"
-
-#: src/operations/shell/cowcat.vala:25
-msgid "Write a message with cow."
-msgstr "Inek ile bir mesaj yaz."
-
-#: src/operations/shell/cowcat.vala:26
-msgid "write from stdin"
-msgstr "stdin'den yaz"
-
-#: src/operations/shell/title.vala:13 src/operations/shell/title.vala:14
-msgid "title"
-msgstr "baslik"
-
-#: src/operations/shell/title.vala:17
-msgid "Set terminal title"
-msgstr "Terminal basligini ayarla"
-
-#: src/operations/shell/echo.vala:9 src/operations/shell/echo.vala:10
-msgid "echo"
-msgstr "echo"
-
-#: src/operations/shell/echo.vala:12
-msgid "Write a message to terminal."
-msgstr "Terminale bir mesaj yaz."
+#: src/operations/shell/clear.vala:11
+msgid "Clear terminal screen."
+msgstr "Terminal ekranini temizle."
 
 #: src/operations/shell/exec.vala:3
 msgid "Executing: =>"
@@ -1067,6 +896,46 @@ msgstr "Bir komut yurut."
 msgid "run without output"
 msgstr "cikti olmadan calistir"
 
+#: src/operations/shell/cowcat.vala:21
+msgid "cow"
+msgstr "cow"
+
+#: src/operations/shell/cowcat.vala:22
+msgid "cowcat"
+msgstr "cowcat"
+
+#: src/operations/shell/cowcat.vala:25
+msgid "Write a message with cow."
+msgstr "Inek ile bir mesaj yaz."
+
+#: src/operations/shell/cowcat.vala:26
+msgid "write from stdin"
+msgstr "stdin'den yaz"
+
+#: src/operations/shell/echo.vala:9 src/operations/shell/echo.vala:10
+msgid "echo"
+msgstr "echo"
+
+#: src/operations/shell/echo.vala:12
+msgid "Write a message to terminal."
+msgstr "Terminale bir mesaj yaz."
+
+#: src/operations/shell/exit.vala:12 src/operations/shell/exit.vala:13
+msgid "exit"
+msgstr "cikis"
+
+#: src/operations/shell/exit.vala:14
+msgid "Exit ymp"
+msgstr "ymp'den cik"
+
+#: src/operations/shell/title.vala:13 src/operations/shell/title.vala:14
+msgid "title"
+msgstr "baslik"
+
+#: src/operations/shell/title.vala:17
+msgid "Set terminal title"
+msgstr "Terminal basligini ayarla"
+
 #: src/operations/shell/shitcat.vala:21
 msgid "shit"
 msgstr "shit"
@@ -1081,19 +950,11 @@ msgstr "Kotu gorunumlu mesaj yaz."
 
 #: src/operations/shell/shitcat.vala:26
 msgid "FUCK LGBT"
-msgstr ""
+msgstr "LGBT'yi sikeyim"
 
 #: src/operations/shell/shitcat.vala:27
 msgid "read from stdin"
 msgstr "stdin'den oku"
-
-#: src/operations/shell/clear.vala:9 src/operations/shell/clear.vala:10
-msgid "clear"
-msgstr "temizle"
-
-#: src/operations/shell/clear.vala:11
-msgid "Clear terminal screen."
-msgstr "Terminal ekranini temizle."
 
 #: src/operations/shell/dummy.vala:8 src/operations/shell/dummy.vala:9
 msgid "init"
@@ -1103,93 +964,235 @@ msgstr "init"
 msgid "Do nothing."
 msgstr "Hicbir sey yapma."
 
-#: src/operations/shell/exit.vala:12 src/operations/shell/exit.vala:13
-msgid "exit"
-msgstr "cikis"
+#: src/operations/package-manager/build.vala:6
+msgid "Build operation with usrmerge is not allowed!"
+msgstr "usrmerge ile derleme islemine izin verilmez!"
 
-#: src/operations/shell/exit.vala:14
-msgid "Exit ymp"
-msgstr "ymp'den cik"
+#: src/operations/package-manager/build.vala:13
+#, c-format
+msgid "Building %s"
+msgstr "%s derleniyor"
 
-#: src/operations/package-manager/template.vala:71
+#: src/operations/package-manager/build.vala:27
+#: src/operations/package-manager/build.vala:28
+msgid "build"
+msgstr "olustur"
+
+#: src/operations/package-manager/build.vala:29
+msgid "Build package from ympbuild file."
+msgstr "Ympbuild dosyasindan paket olustur."
+
+#: src/operations/package-manager/build.vala:30
+msgid "do not generate source package"
+msgstr "kaynak paketi olusturma"
+
+#: src/operations/package-manager/build.vala:31
+msgid "do not generate binary package"
+msgstr "ikili paket olusturma"
+
+#: src/operations/package-manager/build.vala:32
+msgid "do not build package (only test and package)"
+msgstr "paket olusturma (yalnizca test ve paket)"
+
+#: src/operations/package-manager/build.vala:33
+msgid "do not check filesystem safety"
+msgstr "dosya sistemi guvenligini gormezden gel"
+
+#: src/operations/package-manager/build.vala:34
+msgid "do not install package after building"
+msgstr "olusturduktan sonra paketi kurma"
+
+#: src/operations/package-manager/build.vala:35
+#: src/operations/package-manager/install.vala:145
+#: src/operations/package-manager/remove.vala:98
+msgid "disable dependency check"
+msgstr "bagimlilik kontrolunu devre disi birak"
+
+#: src/operations/package-manager/build.vala:36
+#: src/operations/package-manager/bootstrap.vala:50
+#: src/operations/package-manager/install.vala:151
+msgid "use binary packages"
+msgstr "ikili paketleri kullan"
+
+#: src/operations/package-manager/build.vala:37
+#: src/operations/package-manager/clean.vala:6
+msgid "build directory"
+msgstr "derleme dizini"
+
+#: src/operations/package-manager/build.vala:38
+msgid "compress format"
+msgstr "sikistirma formati"
+
+#: src/operations/package-manager/build.vala:39
+msgid "install binary package after building"
+msgstr "olusturduktan sonra ikili paketi kur"
+
+#: src/operations/package-manager/list.vala:140
+#: src/operations/package-manager/list.vala:141
+msgid "list"
+msgstr "liste"
+
+#: src/operations/package-manager/list.vala:142
+msgid "List installed packages."
+msgstr "Yuklenen paketleri listele."
+
+#: src/operations/package-manager/list.vala:143
+msgid "list installed packages"
+msgstr "yuklenen paketleri listele"
+
+#: src/operations/package-manager/list.vala:144
+msgid "write as graphwiz format"
+msgstr "graphviz biciminde yaz"
+
+#: src/operations/package-manager/list.vala:145
+msgid "list repositories"
+msgstr "depolari listele"
+
+#: src/operations/package-manager/list.vala:146
+msgid "list available source packages"
+msgstr "mevcut kaynak paketleri listele"
+
+#: src/operations/package-manager/template.vala:72
 msgid "Please check ympbuild:"
 msgstr "Lutfen ympbuild'i kontrol edin:"
 
-#: src/operations/package-manager/template.vala:73
+#: src/operations/package-manager/template.vala:74
 msgid "Is it OK ?"
 msgstr "Tamam mi?"
 
-#: src/operations/package-manager/template.vala:79
+#: src/operations/package-manager/template.vala:80
 #, c-format
 msgid "Creating template: %s"
 msgstr "Sablon olusturuluyor: %s"
 
-#: src/operations/package-manager/template.vala:88
+#: src/operations/package-manager/template.vala:89
 #, c-format
 msgid "Reading gitconfig: %s"
 msgstr "gitconfig okunuyor: %s"
 
-#: src/operations/package-manager/template.vala:104
+#: src/operations/package-manager/template.vala:105
 #, c-format
 msgid "Variable '%s' is not defined. please use --%s"
 msgstr "Degisken '%s' tanimli degil. lutfen --%s kullanin"
 
-#: src/operations/package-manager/template.vala:113
 #: src/operations/package-manager/template.vala:114
+#: src/operations/package-manager/template.vala:115
 msgid "template"
 msgstr "sablon"
 
-#: src/operations/package-manager/template.vala:115
+#: src/operations/package-manager/template.vala:116
 msgid "Create ympbuild from template."
 msgstr "Sablondan ympbuild olustur."
 
-#: src/operations/package-manager/template.vala:116
+#: src/operations/package-manager/template.vala:117
 msgid "package name"
 msgstr "paket adi"
 
-#: src/operations/package-manager/template.vala:117
+#: src/operations/package-manager/template.vala:118
 msgid "package version"
 msgstr "paket versiyonu"
 
-#: src/operations/package-manager/template.vala:118
+#: src/operations/package-manager/template.vala:119
 msgid "package homepage"
 msgstr "paket sayfasi"
 
-#: src/operations/package-manager/template.vala:119
+#: src/operations/package-manager/template.vala:120
 msgid "package description"
 msgstr "paket aciklamasi"
 
-#: src/operations/package-manager/template.vala:120
+#: src/operations/package-manager/template.vala:121
 msgid "package dependencies"
 msgstr "paket bagimliliklari"
 
-#: src/operations/package-manager/template.vala:121
+#: src/operations/package-manager/template.vala:122
 msgid "package build dependencies"
 msgstr "paket olusturma bagimliliklari"
 
-#: src/operations/package-manager/template.vala:122
+#: src/operations/package-manager/template.vala:123
 msgid "package creator email"
 msgstr "paketleyen e-posta adresi"
 
-#: src/operations/package-manager/template.vala:123
+#: src/operations/package-manager/template.vala:124
 msgid "package maintainer"
 msgstr "paket bakicisi"
 
-#: src/operations/package-manager/template.vala:124
+#: src/operations/package-manager/template.vala:125
 msgid "package license"
 msgstr "paket lisansi"
 
-#: src/operations/package-manager/template.vala:125
+#: src/operations/package-manager/template.vala:126
 msgid "package source"
 msgstr "paket kaynagi"
 
-#: src/operations/package-manager/template.vala:126
+#: src/operations/package-manager/template.vala:127
 msgid "package build-type (autotool cmake meson)"
 msgstr "paket olusturma turu (autotool cmake meson)"
 
-#: src/operations/package-manager/template.vala:127
+#: src/operations/package-manager/template.vala:128
 msgid "ympbuild output directory"
 msgstr "ympbuild cikti dizini"
+
+#: src/operations/package-manager/search.vala:11
+msgid ""
+"No options given. Please use --source or --package or --file or --installed ."
+msgstr ""
+"Secenek verilmedi. Lutfen --source veya --package veya --file veya --"
+"installed kullanin."
+
+#: src/operations/package-manager/search.vala:105
+#: src/operations/package-manager/search.vala:106
+msgid "search"
+msgstr "ara"
+
+#: src/operations/package-manager/search.vala:108
+msgid "Search packages."
+msgstr "Paketleri ara"
+
+#: src/operations/package-manager/search.vala:109
+msgid "search package in binary package repository"
+msgstr "paketi ikili paket deposunda ara"
+
+#: src/operations/package-manager/search.vala:110
+msgid "search package in source package repository"
+msgstr "paketi kaynak paketleri deposunda ara"
+
+#: src/operations/package-manager/search.vala:111
+msgid "search package in installed packages"
+msgstr "paketi kurulu paketlerde ara"
+
+#: src/operations/package-manager/search.vala:112
+msgid "searches for packages by package file"
+msgstr "paket dosyasina gore paketleri ara"
+
+#: src/operations/package-manager/bootstrap.vala:8
+msgid "Mirror is not defined. Please use --mirror ."
+msgstr "Yansi tanimlanmadi. Lutfen --mirror kullanin."
+
+#: src/operations/package-manager/bootstrap.vala:10
+msgid "Destdir is not defined. Please use --destdir ."
+msgstr "Hedef dizin tanimlanmadi. Lutfen --destdir kullanin."
+
+#: src/operations/package-manager/bootstrap.vala:13
+#, c-format
+msgid "Target rootfs already exists: %s"
+msgstr "Hedf rootfs zaten mevcut: %s"
+
+#: src/operations/package-manager/bootstrap.vala:16
+msgid "Creating bootstrap."
+msgstr "Bootstrap olusturuluyor."
+
+#: src/operations/package-manager/bootstrap.vala:45
+#: src/operations/package-manager/bootstrap.vala:47
+msgid "bootstrap"
+msgstr "bootstrap"
+
+#: src/operations/package-manager/bootstrap.vala:48
+msgid "Create new rootfs filesystem."
+msgstr "Yeni rootfs dosya sistemi olustur."
+
+#: src/operations/package-manager/bootstrap.vala:49
+msgid "bootstrap mirror uri"
+msgstr "bootstrap yansi baglantisi"
 
 #: src/operations/package-manager/clean.vala:2
 #: src/operations/package-manager/clean.vala:4
@@ -1205,10 +1208,6 @@ msgstr "paket onbellegi"
 #: src/operations/package-manager/clean.vala:4
 msgid "repository index cache"
 msgstr "depo index onbellegi"
-
-#: src/operations/package-manager/clean.vala:6
-msgid "build directory"
-msgstr "derleme dizini"
 
 #: src/operations/package-manager/clean.vala:8
 msgid "quarantine"
@@ -1261,8 +1260,7 @@ msgid "Installing from repository: %s"
 msgstr "Depodan paket yukleniyor: %s"
 
 #: src/operations/package-manager/install.vala:83
-#: src/operations/package-manager/install.vala:87
-#: src/operations/package-manager/build.vala:464
+#: src/operations/package-manager/install.vala:87 src/util/build.vala:439
 msgid "Package architecture is not supported."
 msgstr "Paket mimarisi desteklenmiyor."
 
@@ -1284,12 +1282,6 @@ msgstr "yukle"
 msgid "Install package from source or package file or repository"
 msgstr "Kaynak veya ikili depodan veya dosyadan paket yukle"
 
-#: src/operations/package-manager/install.vala:145
-#: src/operations/package-manager/build.vala:554
-#: src/operations/package-manager/remove.vala:77
-msgid "disable dependency check"
-msgstr "bagimlilik kontrolunu devre disi birak"
-
 #: src/operations/package-manager/install.vala:146
 msgid "ignore not satisfied packages"
 msgstr "karsilanmayan paketleri gormezden gel"
@@ -1300,7 +1292,7 @@ msgstr "her paket kurulumu sonrasi karantinayi esitle"
 
 #: src/operations/package-manager/install.vala:148
 msgid "download packages without installation"
-msgstr ""
+msgstr "paketleri kurmadan indir"
 
 #: src/operations/package-manager/install.vala:149
 msgid "reinstall if already installed"
@@ -1309,193 +1301,6 @@ msgstr "kuruluysa tekrar yukle"
 #: src/operations/package-manager/install.vala:150
 msgid "upgrade all packages"
 msgstr "tum paketleri guncelle"
-
-#: src/operations/package-manager/install.vala:151
-#: src/operations/package-manager/build.vala:555
-#: src/operations/package-manager/bootstrap.vala:50
-msgid "use binary packages"
-msgstr "ikili paketleri kullan"
-
-#: src/operations/package-manager/build.vala:6
-msgid "Build operation with usrmerge is not allowed!"
-msgstr "usrmerge ile derleme islemine izin verilmez!"
-
-#: src/operations/package-manager/build.vala:13
-#, c-format
-msgid "Building %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:41
-msgid "Failed to fetch git package."
-msgstr "Git paketi getirilemedi."
-
-#: src/operations/package-manager/build.vala:60
-#, c-format
-msgid "Package is invalid: %s"
-msgstr "Paket gecersiz: %s"
-
-#: src/operations/package-manager/build.vala:156
-#, c-format
-msgid "Packages is not installed: %s"
-msgstr "Paketler kurulu degil: %s"
-
-#: src/operations/package-manager/build.vala:170
-msgid "ympbuild file is invalid!"
-msgstr "ympbuild dosyasi gecersiz!"
-
-#: src/operations/package-manager/build.vala:190
-msgid "Source file already exists."
-msgstr "Kaynak dosya zaten var."
-
-#: src/operations/package-manager/build.vala:192
-msgid "Source file import from cache."
-msgstr "Onbellekten kaynak dosyayi ice aktar."
-
-#: src/operations/package-manager/build.vala:195
-msgid "Source file copy from cache."
-msgstr "Onbellekten kaynak dosyayi kopyala."
-
-#: src/operations/package-manager/build.vala:198
-#, c-format
-msgid "Download: %s"
-msgstr "indir: %s"
-
-#: src/operations/package-manager/build.vala:205
-#, c-format
-msgid "md5sum check failed. Excepted: %s <> Reveiced: %s"
-msgstr "md5sum kontrolu basarisiz oldu. Beklenen: %s <> Alinan: %s"
-
-#: src/operations/package-manager/build.vala:214
-msgid "Extracting package resources from:"
-msgstr "Paket kaynaklari ayiklaniyor:"
-
-#: src/operations/package-manager/build.vala:230
-msgid "Building package from:"
-msgstr "Paket derleniyor:"
-
-#: src/operations/package-manager/build.vala:236
-#, c-format
-msgid "Running build action: %s"
-msgstr "Derleme islemi calistiriliyor: %s"
-
-#: src/operations/package-manager/build.vala:239
-#: src/operations/package-manager/build.vala:250
-#, c-format
-msgid "Failed to build package. Action: %s"
-msgstr "Paket olusturulamadi. islem:%s"
-
-#: src/operations/package-manager/build.vala:261
-msgid "Create source package from :"
-msgstr "Kaynak paketini bu kaynaktan olustur:"
-
-#: src/operations/package-manager/build.vala:307
-#, c-format
-msgid "Files are not allowed in root directory: /%s"
-msgstr "Root dizinde dosyalara izin verilmez: /%s"
-
-#: src/operations/package-manager/build.vala:318
-#, c-format
-msgid "Empty file detected: %s"
-msgstr "Bos dosya tespit edildi: %s"
-
-#: src/operations/package-manager/build.vala:323
-#, c-format
-msgid "Absolute path symlink is not allowed:%s%s => %s"
-msgstr "Mutlak yol sembolik bagina izin verilmez:%s%s => %s"
-
-#: src/operations/package-manager/build.vala:327
-#, c-format
-msgid "Broken symlink detected:%s%s => %s"
-msgstr "Bozuk sembolik bag tespit edildi:%s%s => %s"
-
-#: src/operations/package-manager/build.vala:331
-#, c-format
-msgid "Link info add: %s"
-msgstr "Baglanti bilgisi ekle: %s"
-
-#: src/operations/package-manager/build.vala:339
-#, c-format
-msgid "File info add: %s"
-msgstr "Dosya bilgisi ekle: %s"
-
-#: src/operations/package-manager/build.vala:361
-msgid "Dependency check disabled"
-msgstr "Bagimlilik kontrolu devre disi"
-
-#: src/operations/package-manager/build.vala:370
-#: src/operations/package-manager/build.vala:381
-#, c-format
-msgid "Package %s in not satisfied. Required by: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:396
-msgid "Source array is not defined."
-msgstr "Kaynak dizisi tanimlanamadi."
-
-#: src/operations/package-manager/build.vala:433
-#, c-format
-msgid "Add use flag dependency: %s"
-msgstr "Kullanim bayragi bagimlilgi ekle: %s"
-
-#: src/operations/package-manager/build.vala:447
-msgid "Release is not defined."
-msgstr "Surum tanimlanmadi."
-
-#: src/operations/package-manager/build.vala:450
-msgid "Version is not defined."
-msgstr "Versiyon tanimlanmadi."
-
-#: src/operations/package-manager/build.vala:453
-msgid "Name is not defined."
-msgstr "isim tanimli degil."
-
-#: src/operations/package-manager/build.vala:475
-#, c-format
-msgid "Create data file: %s/output/data.tar.gz"
-msgstr "Veri dosyasi olustur: %s/output/data.tar.gz"
-
-#: src/operations/package-manager/build.vala:497
-#, c-format
-msgid "Compress: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:522
-#, c-format
-msgid "Create binary package from: %s"
-msgstr "Su kaynaktan ikili paket olustur: %s"
-
-#: src/operations/package-manager/build.vala:547
-#: src/operations/package-manager/build.vala:548
-msgid "build"
-msgstr "olustur"
-
-#: src/operations/package-manager/build.vala:549
-msgid "Build package from ympbuild file."
-msgstr "Ympbuild dosyasindan paket olustur."
-
-#: src/operations/package-manager/build.vala:550
-msgid "do not generate source package"
-msgstr "kaynak paketi olusturma"
-
-#: src/operations/package-manager/build.vala:551
-msgid "do not generate binary package"
-msgstr "ikili paket olusturma"
-
-#: src/operations/package-manager/build.vala:552
-msgid "do not build package (only test and package)"
-msgstr "paket olusturma (yalnizca test ve paket)"
-
-#: src/operations/package-manager/build.vala:553
-msgid "do not install package after building"
-msgstr "olusturduktan sonra paketi kurma"
-
-#: src/operations/package-manager/build.vala:556
-msgid "compress format"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:557
-msgid "install binary package after building"
-msgstr "olusturduktan sonra ikili paketi kur"
 
 #: src/operations/package-manager/repository.vala:24
 msgid "name not defined."
@@ -1511,11 +1316,11 @@ msgid "Mirror:"
 msgstr "Yansi:"
 
 #: src/operations/package-manager/repository.vala:92
-msgid "(binary)"
+msgid " (binary)"
 msgstr "(ikili)"
 
 #: src/operations/package-manager/repository.vala:100
-msgid "(source)"
+msgid " (source)"
 msgstr "(kaynak)"
 
 #: src/operations/package-manager/repository.vala:129
@@ -1591,85 +1396,6 @@ msgstr "yansilama sonrasi indexle."
 msgid "target mirror directory"
 msgstr "hedef yansi dizini"
 
-#: src/operations/package-manager/search.vala:11
-msgid ""
-"No options given. Please use --source or --package or --file or --installed ."
-msgstr ""
-"Secenek verilmedi. Lutfen --source veya --package veya --file veya --"
-"installed kullanin."
-
-#: src/operations/package-manager/search.vala:105
-#: src/operations/package-manager/search.vala:106
-msgid "search"
-msgstr "ara"
-
-#: src/operations/package-manager/search.vala:108
-msgid "Search packages."
-msgstr "Paketleri ara"
-
-#: src/operations/package-manager/search.vala:109
-msgid "search package in binary package repository"
-msgstr "paketi ikili paket deposunda ara"
-
-#: src/operations/package-manager/search.vala:110
-msgid "search package in source package repository"
-msgstr "paketi kaynak paketleri deposunda ara"
-
-#: src/operations/package-manager/search.vala:111
-msgid "search package in installed packages"
-msgstr "paketi kurulu paketlerde ara"
-
-#: src/operations/package-manager/search.vala:112
-msgid "searches for packages by package file"
-msgstr "paket dosyasina gore paketleri ara"
-
-#: src/operations/package-manager/bootstrap.vala:8
-msgid "Mirror is not defined. Please use --mirror ."
-msgstr "Yansi tanimlanmadi. Lutfen --mirror kullanin."
-
-#: src/operations/package-manager/bootstrap.vala:10
-msgid "Destdir is not defined. Please use --destdir ."
-msgstr "Hedef dizin tanimlanmadi. Lutfen --destdir kullanin."
-
-#: src/operations/package-manager/bootstrap.vala:13
-#, c-format
-msgid "Target rootfs already exists: %s"
-msgstr "Hedf rootfs zaten mevcut: %s"
-
-#: src/operations/package-manager/bootstrap.vala:16
-msgid "Creating bootstrap."
-msgstr "Bootstrap olusturuluyor."
-
-#: src/operations/package-manager/bootstrap.vala:45
-#: src/operations/package-manager/bootstrap.vala:47
-msgid "bootstrap"
-msgstr "bootstrap"
-
-#: src/operations/package-manager/bootstrap.vala:48
-msgid "Create new rootfs filesystem."
-msgstr "Yeni rootfs dosya sistemi olustur."
-
-#: src/operations/package-manager/bootstrap.vala:49
-msgid "bootstrap mirror uri"
-msgstr "bootstrap yansi baglantisi"
-
-#: src/operations/package-manager/info.vala:58
-#: src/operations/package-manager/info.vala:59
-msgid "info"
-msgstr "bilgi"
-
-#: src/operations/package-manager/info.vala:60
-msgid "Get informations from package manager databases."
-msgstr "Paket veritabanindan paket bilgisi al."
-
-#: src/operations/package-manager/info.vala:61
-msgid "list required packages"
-msgstr "gereken paketleri listele"
-
-#: src/operations/package-manager/info.vala:62
-msgid "list packages required by package"
-msgstr "paket icin gerekenler listele"
-
 #: src/operations/package-manager/remove.vala:17
 msgid ""
 "You cannot remove package manager! If you really want, must use --ignore-"
@@ -1693,53 +1419,447 @@ msgid "Package %s is not installed. Skip removing."
 msgstr "%s paketi kurulu degil. Silme es geciliyor."
 
 #: src/operations/package-manager/remove.vala:44
+#: src/operations/package-manager/remove.vala:49
+#: src/operations/package-manager/remove.vala:56
 #, c-format
 msgid "Removing: %s"
 msgstr "Siliniyor: %s"
 
-#: src/operations/package-manager/remove.vala:73
-#: src/operations/package-manager/remove.vala:74
+#: src/operations/package-manager/remove.vala:94
+#: src/operations/package-manager/remove.vala:95
 msgid "remove"
 msgstr "sil"
 
-#: src/operations/package-manager/remove.vala:76
+#: src/operations/package-manager/remove.vala:97
 msgid "Remove package from package name."
 msgstr "Paket adina gore paket sil."
 
-#: src/operations/package-manager/remove.vala:78
-#, fuzzy
+#: src/operations/package-manager/remove.vala:99
 msgid "do not remove files from package database"
-msgstr "Paket veritabanindan dosya silemezsiniz"
+msgstr "paket veritabanindan dosya sileme"
 
-#: src/operations/package-manager/remove.vala:79
-#, fuzzy
+#: src/operations/package-manager/remove.vala:100
 msgid "do not remove metadata from package database"
-msgstr "Paket veritabanindan metaverisi silemezsiniz"
+msgstr "paket veritabanindan metaverisi sileme"
 
-#: src/operations/package-manager/list.vala:144
-#: src/operations/package-manager/list.vala:145
-msgid "list"
-msgstr "liste"
+#: src/operations/package-manager/info.vala:58
+#: src/operations/package-manager/info.vala:59
+msgid "info"
+msgstr "bilgi"
 
-#: src/operations/package-manager/list.vala:146
-msgid "List installed packages."
-msgstr "Yuklenen paketleri listele."
+#: src/operations/package-manager/info.vala:60
+msgid "Get informations from package manager databases."
+msgstr "Paket veritabanindan paket bilgisi al."
 
-#: src/operations/package-manager/list.vala:147
-msgid "list installed packages"
-msgstr "yuklenen paketleri listele"
+#: src/operations/package-manager/info.vala:61
+msgid "list required packages"
+msgstr "gereken paketleri listele"
 
-#: src/operations/package-manager/list.vala:148
-msgid "write as graphwiz format"
-msgstr "graphviz biciminde yaz"
+#: src/operations/package-manager/info.vala:62
+msgid "list packages required by package"
+msgstr "paket icin gerekenler listele"
 
-#: src/operations/package-manager/list.vala:149
-msgid "list repositories"
-msgstr "depolari listele"
+#: src/util/build.vala:29
+msgid "Failed to fetch git package."
+msgstr "Git paketi getirilemedi."
 
-#: src/operations/package-manager/list.vala:150
-msgid "list available source packages"
-msgstr "mevcut kaynak paketleri listele"
+#: src/util/build.vala:48
+#, c-format
+msgid "Package is invalid: %s"
+msgstr "Paket gecersiz: %s"
+
+#: src/util/build.vala:110
+msgid "Dependency check disabled"
+msgstr "Bagimlilik kontrolu devre disi"
+
+#: src/util/build.vala:148
+#, c-format
+msgid "Packages is not installed: %s"
+msgstr "Paketler kurulu degil: %s"
+
+#: src/util/build.vala:163
+msgid "ympbuild file is invalid!"
+msgstr "ympbuild dosyasi gecersiz!"
+
+#: src/util/build.vala:183
+msgid "Source file already exists."
+msgstr "Kaynak dosya zaten var."
+
+#: src/util/build.vala:185
+msgid "Source file import from cache."
+msgstr "Onbellekten kaynak dosyayi ice aktar."
+
+#: src/util/build.vala:188
+msgid "Source file copy from cache."
+msgstr "Onbellekten kaynak dosyayi kopyala."
+
+#: src/util/build.vala:191
+#, c-format
+msgid "Download: %s"
+msgstr "indir: %s"
+
+#: src/util/build.vala:198
+#, c-format
+msgid "md5sum check failed. Excepted: %s <> Reveiced: %s"
+msgstr "md5sum kontrolu basarisiz oldu. Beklenen: %s <> Alinan: %s"
+
+#: src/util/build.vala:208
+msgid "Extracting package resources from:"
+msgstr "Paket kaynaklari ayiklaniyor:"
+
+#: src/util/build.vala:225
+msgid "Building package from:"
+msgstr "Paket derleniyor:"
+
+#: src/util/build.vala:232
+#, c-format
+msgid "Running build action: %s"
+msgstr "Derleme islemi calistiriliyor: %s"
+
+#: src/util/build.vala:235 src/util/build.vala:247
+#, c-format
+msgid "Failed to build package. Action: %s"
+msgstr "Paket olusturulamadi. islem:%s"
+
+#: src/util/build.vala:260
+msgid "Create source package from :"
+msgstr "Kaynak paketini bu kaynaktan olustur:"
+
+#: src/util/build.vala:310
+#, c-format
+msgid "Files are not allowed in root directory: /%s"
+msgstr "Root dizinde dosyalara izin verilmez: /%s"
+
+#: src/util/build.vala:321
+#, c-format
+msgid "Empty file detected: %s"
+msgstr "Bos dosya tespit edildi: %s"
+
+#: src/util/build.vala:326
+#, c-format
+msgid "Absolute path symlink is not allowed:%s%s => %s"
+msgstr "Mutlak yol sembolik bagina izin verilmez:%s%s => %s"
+
+#: src/util/build.vala:330
+#, c-format
+msgid "Broken symlink detected:%s%s => %s"
+msgstr "Bozuk sembolik bag tespit edildi:%s%s => %s"
+
+#: src/util/build.vala:334
+#, c-format
+msgid "Link info add: %s"
+msgstr "Baglanti bilgisi ekle: %s"
+
+#: src/util/build.vala:342
+#, c-format
+msgid "File info add: %s"
+msgstr "Dosya bilgisi ekle: %s"
+
+#: src/util/build.vala:369
+msgid "Source array is not defined."
+msgstr "Kaynak dizisi tanimlanamadi."
+
+#: src/util/build.vala:409
+#, c-format
+msgid "Add use flag dependency: %s"
+msgstr "Kullanim bayragi bagimlilgi ekle: %s"
+
+#: src/util/build.vala:423
+msgid "Release is not defined."
+msgstr "Surum tanimlanmadi."
+
+#: src/util/build.vala:426
+msgid "Version is not defined."
+msgstr "Versiyon tanimlanmadi."
+
+#: src/util/build.vala:429
+msgid "Name is not defined."
+msgstr "isim tanimli degil."
+
+#: src/util/build.vala:451
+#, c-format
+msgid "Create data file: %s/output/data.tar.gz"
+msgstr "Veri dosyasi olustur: %s/output/data.tar.gz"
+
+#: src/util/build.vala:473
+#, c-format
+msgid "Compress: %s"
+msgstr "Sikistir: %s"
+
+#: src/util/build.vala:498
+#, c-format
+msgid "Create binary package from: %s"
+msgstr "Su kaynaktan ikili paket olustur: %s"
+
+#: src/util/file.vala:7
+#, c-format
+msgid "Read file bytes: %s"
+msgstr "Dasye bytelarini oku: %s"
+
+#: src/util/file.vala:13
+#, c-format
+msgid "Failed to read file: %s"
+msgstr "Dosya okunamadi: %s"
+
+#: src/util/file.vala:22
+#, c-format
+msgid "File is empty: %s"
+msgstr "Dosya bos: %s"
+
+#: src/util/file.vala:25
+#, c-format
+msgid "Read byte size is bigger than file size: %s"
+msgstr "Okunan byte boyutu dosya boyutundan daha fazla: %s"
+
+#: src/util/file.vala:45
+#, c-format
+msgid "Read file: %s"
+msgstr "Dosya oku: %s"
+
+#: src/util/file.vala:75
+#, c-format
+msgid "Safedir: %s"
+msgstr "Safedir: %s"
+
+#: src/util/file.vala:94
+#, c-format
+msgid "Change directory: %s"
+msgstr "Dizin degistir: %s"
+
+#: src/util/file.vala:114
+#, c-format
+msgid "Remove directory: %s"
+msgstr "Dizin sil: %s"
+
+#: src/util/file.vala:128
+#, c-format
+msgid "Remove file: %s"
+msgstr "Dosya sil: %s"
+
+#: src/util/file.vala:171
+#, c-format
+msgid "Move: %s => %s"
+msgstr "Tasi: %s => %s"
+
+#: src/util/file.vala:183
+#, c-format
+msgid "Failed to move file: %s => %s"
+msgstr "Dosya tasinamadi: %s => %s"
+
+#: src/util/file.vala:191
+#, c-format
+msgid "Copy: %s => %s"
+msgstr "Kopyala: %s => %s"
+
+#: src/util/file.vala:198
+#, c-format
+msgid "Failed to fetch file: %s => %s"
+msgstr "Dosya indirilemedi: %s => %s"
+
+#: src/util/file.vala:223
+#, c-format
+msgid "Failed to copy file: %s => %s"
+msgstr "Dosya kopyalanamadi: %s => %s"
+
+#: src/util/file.vala:231
+#, c-format
+msgid "List directory: %s"
+msgstr "Dizin listele: %s"
+
+#: src/util/file.vala:250
+#, c-format
+msgid "Check elf: %s"
+msgstr "Elf gozden gecir: %s"
+
+#: src/util/file.vala:262
+#, c-format
+msgid "Check 64bit: %s"
+msgstr "64bit gozden gecir: %s"
+
+#: src/util/file.vala:274
+#, c-format
+msgid "Check exists: %s"
+msgstr "Varligi gozden gecir: %s"
+
+#: src/util/file.vala:284
+#, c-format
+msgid "Realpath: %s"
+msgstr "Realpath: %s"
+
+#: src/util/file.vala:327
+#, c-format
+msgid "Search: %s"
+msgstr "Ara: %s"
+
+#: src/util/file.vala:343
+#, c-format
+msgid "Search subdir: %s"
+msgstr "Alt dizin ara: %s"
+
+#: src/util/file.vala:366
+#, c-format
+msgid "Read symlink: %s => %s"
+msgstr "Symlink oku: %s => %s"
+
+#: src/util/file.vala:394
+#, c-format
+msgid "Calculating checksum: %s"
+msgstr "Checksum hesaplaniyor: %s"
+
+#: src/util/httpd.vala:76 src/util/httpd.vala:79
+#, c-format
+msgid "Index of /%s"
+msgstr "Index of /%s"
+
+#: src/util/httpd.vala:157
+#, c-format
+msgid "Servering HTTP on %s port %s"
+msgstr "HTTP %s uzerinde %s portundan sunuluyor"
+
+#: src/util/interface.vala:24 src/util/interface.vala:27
+#, c-format
+msgid "%s [y/n]"
+msgstr "%s [y/n]"
+
+#: src/util/archive.vala:80
+#, c-format
+msgid "Load archive : %s"
+msgstr "Paket yukleme: %s"
+
+#: src/util/archive.vala:93
+#, c-format
+msgid "Is archive : %s"
+msgstr "Arsiv mi : %s"
+
+#: src/util/archive.vala:106
+msgid "List files in archive"
+msgstr "Arsivdeki dosyalari listele"
+
+#: src/util/archive.vala:121
+#, c-format
+msgid "Set archive target : %s"
+msgstr "Arsiv hedefi ayarla: %s"
+
+#: src/util/archive.vala:132
+#, c-format
+msgid "Add to archive : %s"
+msgstr "Arsive ekle : %s"
+
+#: src/util/archive.vala:149
+#, c-format
+msgid "Extract archve: %s"
+msgstr "Arsivi cikart: %s"
+
+#: src/util/string.vala:21
+msgid "empty data"
+msgstr "bos veri"
+
+#: src/util/string.vala:55
+#, c-format
+msgid "Basename: %s"
+msgstr "Basename: %s"
+
+#: src/util/string.vala:63
+#, c-format
+msgid "Dirname: %s"
+msgstr "Dirname: %s"
+
+#: src/util/debian.vala:66
+#, c-format
+msgid "Creating debian package to: %s"
+msgstr "Suraya debian paketi olusturuluyor: %s"
+
+#: src/util/debian.vala:112
+msgid "Failed to decompress debian repository index."
+msgstr "Debian depo indexi acilamadi."
+
+#: src/util/debian.vala:145
+msgid "Debian catalog does not found. Please use --update-catalog to update."
+msgstr ""
+"Debian katalogu bulunamadi. Lutfen --update-catalog kullanarak guncelleyin."
+
+#: src/util/yamlparser.vala:24
+#, c-format
+msgid "Loading yaml from: %s"
+msgstr "Suradan yaml yukleniyor: %s"
+
+#: src/util/yamlparser.vala:41
+#, c-format
+msgid "Has area : %s"
+msgstr "Alan var mi : %s"
+
+#: src/util/yamlparser.vala:53
+#, c-format
+msgid "Get area list: %s"
+msgstr "Alan listesi al: %s"
+
+#: src/util/yamlparser.vala:80
+msgid "Get area names"
+msgstr "Alan adlarini al"
+
+#: src/util/yamlparser.vala:95
+#, c-format
+msgid "Yaml get value: %s"
+msgstr "Yaml degeri al: %s"
+
+#: src/util/yamlparser.vala:129
+#, c-format
+msgid "Yaml get array: %s"
+msgstr "Yaml listesi al: %s"
+
+#: src/util/yamlparser.vala:147
+#, c-format
+msgid "Get area : %s"
+msgstr "Alan al : %s"
+
+#: src/util/yamlparser.vala:159
+#, c-format
+msgid "Get area single : %s"
+msgstr "Tekil alan al : %s"
+
+#: src/util/logger.vala:42
+msgid "WARNING"
+msgstr "UYARI"
+
+#: src/util/logger.vala:50
+msgid "DEBUG"
+msgstr "DEBUG"
+
+#: src/util/logger.vala:55
+msgid "INFO"
+msgstr "BILGI"
+
+#: src/util/logger.vala:96
+msgid "ERROR"
+msgstr "HATA"
+
+#: src/cli/main.vala:22
+msgid "No command given."
+msgstr "Komut girilmedi."
+
+#: src/cli/main.vala:22
+#, c-format
+msgid "Run %s for more information about usage."
+msgstr "Kullanimla ilgili daha cok bilgi icin %s calistirin"
+
+#: src/cli/main.vala:22
+msgid "ymp help"
+msgstr "ymp yardim"
+
+#, c-format
+#~ msgid "Directory listing for %s"
+#~ msgstr "%s icin dizin listeleniyor."
+
+#~ msgid "Directory listing for /%s"
+#~ msgstr "%s icin dizin listeleniyor."
+
+#, c-format
+#~ msgid "Write file: %s"
+#~ msgstr "Dosya yaz: %s"
+
+#, c-format
+#~ msgid "Check file: %s"
+#~ msgstr "Dosya gozden gecir: %s"
 
 #, c-format
 #~ msgid "getoutput: %s"

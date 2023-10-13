@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-29 08:09+0000\n"
+"POT-Creation-Date: 2023-10-13 10:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,33 +17,84 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/data/repository.vala:197 src/data/repository.vala:221
+#: src/settings.vala:54
 #, c-format
-msgid "Package is not satisfied from repository: %s"
+msgid "Config file does not exists: %s"
 msgstr ""
 
-#: src/data/repository.vala:254 src/data/repository.vala:258
+#: src/settings.vala:82
 #, c-format
-msgid "Find repo list: %s"
+msgid "Destination directory has been changed: %s"
 msgstr ""
 
-#: src/data/repository.vala:283
+#: src/settings.vala:90
 #, c-format
-msgid "Invalid repository index: %s"
+msgid "Build directory has been changed: %s"
 msgstr ""
 
-#: src/data/repository.vala:324
-msgid "Index name is not defined. Please use --name=xxx"
+#: src/ymp.vala:30
+#, c-format
+msgid "Add operation: %s"
 msgstr ""
 
-#: src/data/repository.vala:370
-#, c-format
-msgid "A source has multiple versions: %s"
+#: src/ymp.vala:45
+msgid "RUN (RAW):"
 msgstr ""
 
-#: src/data/repository.vala:379
+#: src/ymp.vala:54 src/ymp.vala:73
 #, c-format
-msgid "A package has multiple versions: %s"
+msgid "Invalid operation name: %s"
+msgstr ""
+
+#: src/ymp.vala:60
+msgid "RUN:"
+msgstr ""
+
+#: src/ymp.vala:158
+msgid "Syntax error: Unexceped endif detected."
+msgstr ""
+
+#: src/ymp.vala:182
+#, c-format
+msgid "Process: %s failed. Exited with %d."
+msgstr ""
+
+#: src/ymp.vala:187
+#, c-format
+msgid "Process done in : %f sec"
+msgstr ""
+
+#: src/ymp.vala:338
+msgid "Plugin manager init"
+msgstr ""
+
+#: src/ymp.vala:342
+#, c-format
+msgid "Load plugin: %s"
+msgstr ""
+
+#: src/ymp.vala:351
+msgid "OEM detected! Ymp may not working good."
+msgstr ""
+
+#: src/ymp.vala:352
+msgid "OEM is not allowed! Please use --allow-oem to allow oem."
+msgstr ""
+
+#: src/ymp.vala:356
+msgid "UsrMerge detected! Ymp may not working good."
+msgstr ""
+
+#: src/ymp.vala:365
+msgid "Ymp init done"
+msgstr ""
+
+#: src/wslblock.vala:28
+msgid "Using ymp in Fucking WSL environment is not allowed."
+msgstr ""
+
+#: src/data/package.vala:41
+msgid "Metadata detection"
 msgstr ""
 
 #: src/data/package.vala:47
@@ -51,9 +102,17 @@ msgstr ""
 msgid "Package metadata file is broken: %s"
 msgstr ""
 
+#: src/data/package.vala:49
+msgid "Load pkgarea"
+msgstr ""
+
 #: src/data/package.vala:57
 #, c-format
 msgid "Package data is broken: %s"
+msgstr ""
+
+#: src/data/package.vala:60
+msgid "Read package values"
 msgstr ""
 
 #: src/data/package.vala:78
@@ -61,8 +120,8 @@ msgstr ""
 msgid "Load package from: %s"
 msgstr ""
 
-#: src/data/package.vala:90 src/data/package.vala:106 src/data/package.vala:223
-#: src/data/package.vala:278
+#: src/data/package.vala:90 src/data/package.vala:106 src/data/package.vala:232
+#: src/data/package.vala:287
 msgid "Package archive is missing."
 msgstr ""
 
@@ -81,43 +140,189 @@ msgstr ""
 msgid "Package information is broken: %s %s"
 msgstr ""
 
-#: src/data/package.vala:168
+#: src/data/package.vala:163
+#, c-format
+msgid "Check package unsafe %s"
+msgstr ""
+
+#: src/data/package.vala:177
 #, c-format
 msgid "Get package uri: %s"
 msgstr ""
 
-#: src/data/package.vala:185
+#: src/data/package.vala:194
 #, c-format
 msgid "File already exists: %s"
 msgstr ""
 
-#: src/data/package.vala:188
+#: src/data/package.vala:197
 #, c-format
 msgid "Failed to fetch package: %s"
 msgstr ""
 
-#: src/data/package.vala:191
+#: src/data/package.vala:200
 #, c-format
 msgid "Package is not downloadable: %s"
 msgstr ""
 
-#: src/data/package.vala:195
+#: src/data/package.vala:204
 #, c-format
 msgid "Package md5sum mismatch: %s"
 msgstr ""
 
-#: src/data/package.vala:230
+#: src/data/package.vala:239
 #, c-format
 msgid "Skip quartine package extract: %s"
 msgstr ""
 
-#: src/data/package.vala:244
+#: src/data/package.vala:253
 msgid "Archive sha1sum mismatch."
 msgstr ""
 
-#: src/data/package.vala:326
+#: src/data/package.vala:338
 #, c-format
 msgid "Loading package metadata from: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:43
+#, c-format
+msgid "USE flag: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:48
+#, c-format
+msgid "Set ympbuild src path : %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:57
+#, c-format
+msgid "Set ympbuild build path : %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:92
+#, c-format
+msgid "Check ympbuild: %s/ympbuild"
+msgstr ""
+
+#: src/data/ympbuild.vala:102
+#, c-format
+msgid "Run action (%s) %s => %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:119
+#, c-format
+msgid "ympbuild function not exists: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:134
+#, c-format
+msgid "Binary process skip for: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:138
+#, c-format
+msgid "Binary process: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:149 src/data/ympbuild.vala:154
+#, c-format
+msgid "File is not 64bit: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:159 src/data/ympbuild.vala:164
+#, c-format
+msgid "File is not 32bit: %s"
+msgstr ""
+
+#: src/data/ympbuild.vala:178
+#, c-format
+msgid "Files in %s detected."
+msgstr ""
+
+#: src/data/quarantine.vala:52
+msgid "Quarantine validation disabled."
+msgstr ""
+
+#: src/data/quarantine.vala:69 src/data/quarantine.vala:148
+msgid "Validating:"
+msgstr ""
+
+#: src/data/quarantine.vala:98
+#, c-format
+msgid "Invalid replaces files path: %s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:105
+#, c-format
+msgid "File already exists in filesystem: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:116 src/data/quarantine.vala:194
+#, c-format
+msgid "Validating: %s"
+msgstr ""
+
+#: src/data/quarantine.vala:119
+#, c-format
+msgid "File conflict detected: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:125
+#, c-format
+msgid "Package file is missing: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:131
+#, c-format
+msgid "File in restricted path is not allowed: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:140
+#, c-format
+msgid "Broken file detected: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:177
+#, c-format
+msgid "Invalid replaces symlink path: %s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:184
+#, c-format
+msgid "Symlink already exists in filesystem: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:197
+#, c-format
+msgid "Broken symlink detected: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:204
+#, c-format
+msgid "Symlink conflict detected: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:209
+#, c-format
+msgid "Package symlink is missing: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:215
+#, c-format
+msgid "Symlink in restricted path is not allowed: /%s (%s)"
+msgstr ""
+
+#: src/data/quarantine.vala:235
+msgid "Quarantine installation"
+msgstr ""
+
+#: src/data/quarantine.vala:243
+#, c-format
+msgid "Installing: %s => %s"
+msgstr ""
+
+#: src/data/quarantine.vala:279
+msgid "Quarantine import"
 msgstr ""
 
 #: src/data/dependency.vala:8
@@ -130,527 +335,73 @@ msgstr ""
 msgid "Package is not installable: %s"
 msgstr ""
 
-#: src/data/dependency.vala:69
+#: src/data/dependency.vala:78
 #, c-format
 msgid "Resolve group: %s"
 msgstr ""
 
-#: src/data/dependency.vala:85
+#: src/data/dependency.vala:94
 #, c-format
 msgid "Group %s: add: %s"
 msgstr ""
 
-#: src/data/dependency.vala:91
+#: src/data/dependency.vala:100
 #, c-format
 msgid "Group is unknown: %s"
 msgstr ""
 
-#: src/data/dependency.vala:97
+#: src/data/dependency.vala:106
 #, c-format
 msgid "Resolve ordep packages: %s"
 msgstr ""
 
-#: src/data/dependency.vala:113
+#: src/data/dependency.vala:122
 #, c-format
 msgid "Resolve regex: %s"
 msgstr ""
 
-#: src/data/dependency.vala:123
+#: src/data/dependency.vala:132
 #, c-format
 msgid "Match %s: rule: %s"
 msgstr ""
 
-#: src/data/dependency.vala:128
+#: src/data/dependency.vala:137
 #, c-format
 msgid "Regex match is not available: %s"
 msgstr ""
 
-#: src/data/dependency.vala:166
+#: src/data/dependency.vala:175
 #, c-format
 msgid "Resolve reverse dependency: %s"
 msgstr ""
 
-#: src/data/ympbuild.vala:42
+#: src/data/repository.vala:196 src/data/repository.vala:220
 #, c-format
-msgid "USE flag: %s"
+msgid "Package is not satisfied from repository: %s"
 msgstr ""
 
-#: src/data/ympbuild.vala:47
+#: src/data/repository.vala:253 src/data/repository.vala:257
 #, c-format
-msgid "Set ympbuild src path : %s"
+msgid "Find repo list: %s"
 msgstr ""
 
-#: src/data/ympbuild.vala:56
+#: src/data/repository.vala:282
 #, c-format
-msgid "Set ympbuild build path : %s"
+msgid "Invalid repository index: %s"
 msgstr ""
 
-#: src/data/ympbuild.vala:91
-#, c-format
-msgid "Check ympbuild: %s/ympbuild"
-msgstr ""
-
-#: src/data/ympbuild.vala:101
-#, c-format
-msgid "Run action (%s) %s => %s"
-msgstr ""
-
-#: src/data/ympbuild.vala:118
-#, c-format
-msgid "ympbuild function not exists: %s"
-msgstr ""
-
-#: src/data/ympbuild.vala:133
-#, c-format
-msgid "Binary process skip for: %s"
-msgstr ""
-
-#: src/data/ympbuild.vala:137
-#, c-format
-msgid "Binary process: %s"
-msgstr ""
-
-#: src/data/ympbuild.vala:148 src/data/ympbuild.vala:153
-#, c-format
-msgid "File is not 64bit: %s"
-msgstr ""
-
-#: src/data/ympbuild.vala:158 src/data/ympbuild.vala:163
-#, c-format
-msgid "File is not 32bit: %s"
-msgstr ""
-
-#: src/data/quarantine.vala:52
-msgid "Quarantine validation disabled."
-msgstr ""
-
-#: src/data/quarantine.vala:69 src/data/quarantine.vala:146
-msgid "Validating:"
-msgstr ""
-
-#: src/data/quarantine.vala:96
-#, c-format
-msgid "Invalid replaces files path: %s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:103
-#, c-format
-msgid "File already exists in filesystem: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:114 src/data/quarantine.vala:188
-#, c-format
-msgid "Validating: %s"
-msgstr ""
-
-#: src/data/quarantine.vala:117
-#, c-format
-msgid "File conflict detected: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:123
-#, c-format
-msgid "Package file is missing: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:129
-#, c-format
-msgid "File in restricted path is not allowed: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:138
-#, c-format
-msgid "Broken file detected: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:171
-#, c-format
-msgid "Invalid replaces symlink path: %s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:178
-#, c-format
-msgid "Symlink already exists in filesystem: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:191
-#, c-format
-msgid "Broken symlink detected: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:198
-#, c-format
-msgid "Symlink conflict detected: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:203
-#, c-format
-msgid "Package symlink is missing: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:209
-#, c-format
-msgid "Symlink in restricted path is not allowed: /%s (%s)"
-msgstr ""
-
-#: src/data/quarantine.vala:229
-msgid "Quarantine installation"
-msgstr ""
-
-#: src/data/quarantine.vala:237
-#, c-format
-msgid "Installing: %s => %s"
-msgstr ""
-
-#: src/data/quarantine.vala:273
-msgid "Quarantine import"
-msgstr ""
-
-#: src/ymp.vala:31
-#, c-format
-msgid "Add operation: %s"
-msgstr ""
-
-#: src/ymp.vala:46
-msgid "RUN:"
-msgstr ""
-
-#: src/ymp.vala:59
-#, c-format
-msgid "Invalid operation name: %s"
-msgstr ""
-
-#: src/ymp.vala:144
-msgid "Syntax error: Unexceped endif detected."
-msgstr ""
-
-#: src/ymp.vala:168
-#, c-format
-msgid "Process: %s failed. Exited with %d."
-msgstr ""
-
-#: src/ymp.vala:173
-#, c-format
-msgid "Process done in : %f sec"
-msgstr ""
-
-#: src/ymp.vala:268
-msgid "Plugin manager init"
-msgstr ""
-
-#: src/ymp.vala:272
-#, c-format
-msgid "Load plugin: %s"
-msgstr ""
-
-#: src/ymp.vala:281
-msgid "OEM detected! Ymp may not working good."
-msgstr ""
-
-#: src/ymp.vala:282
-msgid "OEM is not allowed! Please use --allow-oem to allow oem."
-msgstr ""
-
-#: src/ymp.vala:286
-msgid "UsrMerge detected! Ymp may not working good."
-msgstr ""
-
-#: src/settings.vala:38
-#, c-format
-msgid "Config file does not exists: %s"
-msgstr ""
-
-#: src/settings.vala:66
-#, c-format
-msgid "Destination directory has been changed: %s"
-msgstr ""
-
-#: src/util/httpd.vala:69
-#, c-format
-msgid "Directory listing for %s"
-msgstr ""
-
-#: src/util/httpd.vala:72
-#, c-format
-msgid "Directory listing for /%s"
-msgstr ""
-
-#: src/util/httpd.vala:149
-#, c-format
-msgid "Servering HTTP on %s port %s"
-msgstr ""
-
-#: src/util/debian.vala:66
-#, c-format
-msgid "Creating debian package to: %s"
-msgstr ""
-
-#: src/util/debian.vala:110
-msgid "Failed to decompress debian repository index."
-msgstr ""
-
-#: src/util/debian.vala:143
-msgid "Debian catalog does not found. Please use --update-catalog to update."
-msgstr ""
-
-#: src/util/logger.vala:42
-msgid "WARNING"
-msgstr ""
-
-#: src/util/logger.vala:46
-msgid "DEBUG"
-msgstr ""
-
-#: src/util/logger.vala:50
-msgid "INFO"
-msgstr ""
-
-#: src/util/logger.vala:91
-msgid "ERROR"
-msgstr ""
-
-#: src/util/file.vala:7
-#, c-format
-msgid "Read file bytes: %s"
+#: src/data/repository.vala:323
+msgid "Index name is not defined. Please use --name=xxx"
 msgstr ""
 
-#: src/util/file.vala:13
+#: src/data/repository.vala:371
 #, c-format
-msgid "Failed to read file: %s"
+msgid "A source has multiple versions: %s"
 msgstr ""
 
-#: src/util/file.vala:22
+#: src/data/repository.vala:380
 #, c-format
-msgid "File is empty: %s"
-msgstr ""
-
-#: src/util/file.vala:25
-#, c-format
-msgid "Read byte size is bigger than file size: %s"
-msgstr ""
-
-#: src/util/file.vala:45
-#, c-format
-msgid "Read file: %s"
-msgstr ""
-
-#: src/util/file.vala:75
-#, c-format
-msgid "Write file: %s"
-msgstr ""
-
-#: src/util/file.vala:97
-#, c-format
-msgid "Safedir: %s"
-msgstr ""
-
-#: src/util/file.vala:114
-#, c-format
-msgid "Change directory: %s"
-msgstr ""
-
-#: src/util/file.vala:130
-#, c-format
-msgid "Remove directory: %s"
-msgstr ""
-
-#: src/util/file.vala:137
-#, c-format
-msgid "Remove file: %s"
-msgstr ""
-
-#: src/util/file.vala:178
-#, c-format
-msgid "Move: %s => %s"
-msgstr ""
-
-#: src/util/file.vala:190
-#, c-format
-msgid "Failed to move file: %s => %s"
-msgstr ""
-
-#: src/util/file.vala:198
-#, c-format
-msgid "Copy: %s => %s"
-msgstr ""
-
-#: src/util/file.vala:224
-#, c-format
-msgid "Failed to copy file: %s => %s"
-msgstr ""
-
-#: src/util/file.vala:232
-#, c-format
-msgid "List directory: %s"
-msgstr ""
-
-#: src/util/file.vala:251
-#, c-format
-msgid "Check elf: %s"
-msgstr ""
-
-#: src/util/file.vala:263
-#, c-format
-msgid "Check 64bit: %s"
-msgstr ""
-
-#: src/util/file.vala:276
-#, c-format
-msgid "Check file: %s"
-msgstr ""
-
-#: src/util/file.vala:282
-#, c-format
-msgid "Check exists: %s"
-msgstr ""
-
-#: src/util/file.vala:292
-#, c-format
-msgid "Realpath: %s"
-msgstr ""
-
-#: src/util/file.vala:313
-#, c-format
-msgid "Search: %s"
-msgstr ""
-
-#: src/util/file.vala:329
-#, c-format
-msgid "Search subdir: %s"
-msgstr ""
-
-#: src/util/file.vala:352
-#, c-format
-msgid "Read symlink: %s => %s"
-msgstr ""
-
-#: src/util/file.vala:371
-#, c-format
-msgid "Calculating checksum: %s"
-msgstr ""
-
-#: src/util/interface.vala:24 src/util/interface.vala:27
-#, c-format
-msgid "%s [y/n]"
-msgstr ""
-
-#: src/util/string.vala:44
-msgid "empty data"
-msgstr ""
-
-#: src/util/string.vala:117
-#, c-format
-msgid "Basename: %s"
-msgstr ""
-
-#: src/util/string.vala:125
-#, c-format
-msgid "Dirname: %s"
-msgstr ""
-
-#: src/util/yamlparser.vala:24
-#, c-format
-msgid "Loading yaml from: %s"
-msgstr ""
-
-#: src/util/yamlparser.vala:52
-#, c-format
-msgid "Get area list: %s"
-msgstr ""
-
-#: src/util/yamlparser.vala:93
-#, c-format
-msgid "Yaml get value: %s"
-msgstr ""
-
-#: src/util/yamlparser.vala:111
-#, c-format
-msgid "Yaml get array: %s"
-msgstr ""
-
-#: src/wslblock.vala:28
-msgid "Using ymp in Fucking WSL environment is not allowed."
-msgstr ""
-
-#: src/cli/main.vala:22
-msgid "No command given."
-msgstr ""
-
-#: src/cli/main.vala:22
-#, c-format
-msgid "Run %s for more information about usage."
-msgstr ""
-
-#: src/cli/main.vala:22
-msgid "ymp help"
-msgstr ""
-
-#: src/operations/utility/httpd.vala:9 src/operations/utility/httpd.vala:10
-msgid "httpd"
-msgstr ""
-
-#: src/operations/utility/httpd.vala:11
-msgid "Simple http server."
-msgstr ""
-
-#: src/operations/utility/httpd.vala:12
-msgid "port number"
-msgstr ""
-
-#: src/operations/utility/httpd.vala:13
-msgid "allowed clients (0.0.0.0 for allow everyone)"
-msgstr ""
-
-#: src/operations/utility/debian.vala:39 src/operations/utility/debian.vala:40
-msgid "debian"
-msgstr ""
-
-#: src/operations/utility/debian.vala:41
-msgid "Debian package operations."
-msgstr ""
-
-#: src/operations/utility/debian.vala:42
-msgid "Package options"
-msgstr ""
-
-#: src/operations/utility/debian.vala:43
-msgid "extract debian package"
-msgstr ""
-
-#: src/operations/utility/debian.vala:44
-msgid "create debian package"
-msgstr ""
-
-#: src/operations/utility/debian.vala:45
-msgid "convert debian package to ymp package"
-msgstr ""
-
-#: src/operations/utility/debian.vala:46
-msgid "Install options"
-msgstr ""
-
-#: src/operations/utility/debian.vala:47
-msgid "install debian package"
-msgstr ""
-
-#: src/operations/utility/debian.vala:47
-msgid "Dangerous"
-msgstr ""
-
-#: src/operations/utility/debian.vala:48
-msgid "Catalog options"
-msgstr ""
-
-#: src/operations/utility/debian.vala:49
-msgid "update debian catalog from debian repository"
-msgstr ""
-
-#: src/operations/utility/debian.vala:50
-msgid "get source package name from catalog"
-msgstr ""
-
-#: src/operations/utility/debian.vala:51
-msgid "debian mirror url"
+msgid "A package has multiple versions: %s"
 msgstr ""
 
 #: src/operations/utility/compress.vala:24
@@ -668,22 +419,6 @@ msgstr ""
 
 #: src/operations/utility/compress.vala:29
 msgid "archive format"
-msgstr ""
-
-#: src/operations/utility/fetch.vala:3
-msgid "URL missing"
-msgstr ""
-
-#: src/operations/utility/fetch.vala:24 src/operations/utility/fetch.vala:25
-msgid "fetch"
-msgstr ""
-
-#: src/operations/utility/fetch.vala:27
-msgid "Download files from network."
-msgstr ""
-
-#: src/operations/utility/fetch.vala:28
-msgid "disable ssl check"
 msgstr ""
 
 #: src/operations/utility/file.vala:23 src/operations/utility/file.vala:44
@@ -714,118 +449,74 @@ msgstr ""
 msgid "extract archive file (same as extract operation)"
 msgstr ""
 
-#: src/operations/utility/shell.vala:34 src/operations/utility/shell.vala:35
-msgid "shell"
+#: src/operations/utility/extract.vala:24
+#: src/operations/utility/extract.vala:25
+msgid "extract"
 msgstr ""
 
-#: src/operations/utility/shell.vala:36
-msgid "Create a ymp shell or execute ympsh script."
+#: src/operations/utility/extract.vala:27
+msgid "Extract files from archive."
 msgstr ""
 
-#: src/operations/utility/help.vala:3
-msgid "Operation list:"
+#: src/operations/utility/extract.vala:28
+msgid "list archive files"
 msgstr ""
 
-#: src/operations/utility/help.vala:10
-msgid "Shell only operation list:"
+#: src/operations/utility/httpd.vala:9 src/operations/utility/httpd.vala:10
+msgid "httpd"
 msgstr ""
 
-#: src/operations/utility/help.vala:21
-msgid "Aliases:"
+#: src/operations/utility/httpd.vala:11
+msgid "Simple http server."
 msgstr ""
 
-#: src/operations/utility/help.vala:33
-msgid "Version"
+#: src/operations/utility/httpd.vala:12
+msgid "port number"
 msgstr ""
 
-#: src/operations/utility/help.vala:65
-msgid "stop argument parser"
+#: src/operations/utility/httpd.vala:13
+msgid "allowed clients (0.0.0.0 for allow everyone)"
 msgstr ""
 
-#: src/operations/utility/help.vala:68
-msgid "disable oem check"
+#: src/operations/utility/revdep-rebuild.vala:17
+msgid "Detect dependencies for:"
 msgstr ""
 
-#: src/operations/utility/help.vala:71
-msgid "disable output"
-msgstr ""
-
-#: src/operations/utility/help.vala:72
-msgid "disable warning messages"
-msgstr ""
-
-#: src/operations/utility/help.vala:74
-msgid "enable debug output"
-msgstr ""
-
-#: src/operations/utility/help.vala:76
-msgid "show verbose output"
-msgstr ""
-
-#: src/operations/utility/help.vala:77
-msgid "enable questions"
-msgstr ""
-
-#: src/operations/utility/help.vala:78
-msgid "disable color output"
-msgstr ""
-
-#: src/operations/utility/help.vala:79
-msgid "disable sysconf triggers"
-msgstr ""
-
-#: src/operations/utility/help.vala:80
-msgid "run ymp actions at sandbox environment"
-msgstr ""
-
-#: src/operations/utility/help.vala:81
-msgid "write help messages"
-msgstr ""
-
-#: src/operations/utility/help.vala:87 src/operations/utility/help.vala:88
-msgid "help"
-msgstr ""
-
-#: src/operations/utility/help.vala:89
-msgid "Write help message about ymp commands."
-msgstr ""
-
-#: src/operations/utility/help.vala:120
-msgid " [OPTION]... [ARGS]... "
-msgstr ""
-
-#: src/operations/utility/help.vala:122
-msgid "Usage:"
-msgstr ""
-
-#: src/operations/utility/help.vala:125
-msgid "Options:"
-msgstr ""
-
-#: src/operations/utility/help.vala:130
-msgid "Common options:"
-msgstr ""
-
-#: src/operations/utility/brainfuck.vala:10
-#: src/operations/utility/brainfuck.vala:11
-msgid "brainfuck"
-msgstr ""
-
-#: src/operations/utility/brainfuck.vala:13
-msgid "Run a brainfuck script."
-msgstr ""
-
-#: src/operations/utility/kill.vala:16
+#: src/operations/utility/revdep-rebuild.vala:57
+#: src/operations/utility/revdep-rebuild.vala:67
 #, c-format
-msgid "Kill: %s"
+msgid "Checking: %s"
 msgstr ""
 
-#: src/operations/utility/kill.vala:30 src/operations/utility/kill.vala:31
-msgid "kill"
+#: src/operations/utility/revdep-rebuild.vala:71
+#, c-format
+msgid "%s broken."
 msgstr ""
 
-#: src/operations/utility/kill.vala:32
-msgid "Kill all other ymp process."
+#: src/operations/utility/revdep-rebuild.vala:78
+#, c-format
+msgid "%s is not an installed package."
+msgstr ""
+
+#: src/operations/utility/revdep-rebuild.vala:118
+#: src/operations/utility/revdep-rebuild.vala:119
+msgid "revdep-rebuild"
+msgstr ""
+
+#: src/operations/utility/revdep-rebuild.vala:120
+msgid "Check library for broken links."
+msgstr ""
+
+#: src/operations/utility/revdep-rebuild.vala:121
+msgid "check pkgconfig files"
+msgstr ""
+
+#: src/operations/utility/revdep-rebuild.vala:122
+msgid "detect package dependencies"
+msgstr ""
+
+#: src/operations/utility/revdep-rebuild.vala:123
+msgid "detect file dependencies"
 msgstr ""
 
 #: src/operations/utility/sysconf.vala:15
@@ -848,6 +539,23 @@ msgstr ""
 msgid "Trigger sysconf operations."
 msgstr ""
 
+#: src/operations/utility/shell.vala:34 src/operations/utility/shell.vala:35
+msgid "shell"
+msgstr ""
+
+#: src/operations/utility/shell.vala:36
+msgid "Create a ymp shell or execute ympsh script."
+msgstr ""
+
+#: src/operations/utility/brainfuck.vala:10
+#: src/operations/utility/brainfuck.vala:11
+msgid "brainfuck"
+msgstr ""
+
+#: src/operations/utility/brainfuck.vala:13
+msgid "Run a brainfuck script."
+msgstr ""
+
 #: src/operations/utility/run-sandbox.vala:3
 msgid "Sandbox operation with usrmerge is not allowed!"
 msgstr ""
@@ -857,24 +565,24 @@ msgstr ""
 msgid "Execute sandbox :%s"
 msgstr ""
 
-#: src/operations/utility/run-sandbox.vala:29
-#: src/operations/utility/run-sandbox.vala:30
+#: src/operations/utility/run-sandbox.vala:23
+#: src/operations/utility/run-sandbox.vala:24
 msgid "sandbox"
 msgstr ""
 
-#: src/operations/utility/run-sandbox.vala:32
+#: src/operations/utility/run-sandbox.vala:26
 msgid "Start sandbox environment."
 msgstr ""
 
-#: src/operations/utility/run-sandbox.vala:33
+#: src/operations/utility/run-sandbox.vala:27
 msgid "select shared directory"
 msgstr ""
 
-#: src/operations/utility/run-sandbox.vala:34
+#: src/operations/utility/run-sandbox.vala:28
 msgid "select tmpfs directory"
 msgstr ""
 
-#: src/operations/utility/run-sandbox.vala:35
+#: src/operations/utility/run-sandbox.vala:29
 msgid "block network access"
 msgstr ""
 
@@ -891,108 +599,253 @@ msgstr ""
 msgid "Parse yaml files"
 msgstr ""
 
-#: src/operations/utility/extract.vala:24
-#: src/operations/utility/extract.vala:25
-msgid "extract"
+#: src/operations/utility/debian.vala:38 src/operations/utility/debian.vala:39
+msgid "debian"
 msgstr ""
 
-#: src/operations/utility/extract.vala:27
-msgid "Extract files from archive."
+#: src/operations/utility/debian.vala:40
+msgid "Debian package operations."
 msgstr ""
 
-#: src/operations/utility/extract.vala:28
-msgid "list archive files"
+#: src/operations/utility/debian.vala:41
+msgid "Package options"
 msgstr ""
 
-#: src/operations/utility/revdep-rebuild.vala:13
-msgid "Detect dependencies for:"
+#: src/operations/utility/debian.vala:42
+msgid "extract debian package"
 msgstr ""
 
-#: src/operations/utility/revdep-rebuild.vala:53
-#: src/operations/utility/revdep-rebuild.vala:63
+#: src/operations/utility/debian.vala:43
+msgid "create debian package"
+msgstr ""
+
+#: src/operations/utility/debian.vala:44
+msgid "convert debian package to ymp package"
+msgstr ""
+
+#: src/operations/utility/debian.vala:45
+msgid "Install options"
+msgstr ""
+
+#: src/operations/utility/debian.vala:46
+msgid "install debian package"
+msgstr ""
+
+#: src/operations/utility/debian.vala:46
 #, c-format
-msgid "Checking: %s"
+msgid "Dangerous"
 msgstr ""
 
-#: src/operations/utility/revdep-rebuild.vala:67
+#: src/operations/utility/debian.vala:47
+msgid "Catalog options"
+msgstr ""
+
+#: src/operations/utility/debian.vala:48
+msgid "update debian catalog from debian repository"
+msgstr ""
+
+#: src/operations/utility/debian.vala:49
+msgid "get source package name from catalog"
+msgstr ""
+
+#: src/operations/utility/debian.vala:50
+msgid "debian mirror url"
+msgstr ""
+
+#: src/operations/utility/code_runner.vala:21
+#: src/operations/utility/code_runner.vala:22
+msgid "code-runner"
+msgstr ""
+
+#: src/operations/utility/code_runner.vala:23
+msgid "Run code-runner jobs."
+msgstr ""
+
+#: src/operations/utility/kill.vala:16
 #, c-format
-msgid "%s broken."
+msgid "Kill: %s"
 msgstr ""
 
-#: src/operations/utility/revdep-rebuild.vala:74
-#, c-format
-msgid "%s is not an installed package."
+#: src/operations/utility/kill.vala:30 src/operations/utility/kill.vala:31
+msgid "kill"
 msgstr ""
 
-#: src/operations/utility/revdep-rebuild.vala:114
-#: src/operations/utility/revdep-rebuild.vala:115
-msgid "revdep-rebuild"
+#: src/operations/utility/kill.vala:32
+msgid "Kill all other ymp process."
 msgstr ""
 
-#: src/operations/utility/revdep-rebuild.vala:116
-msgid "Check library for broken links."
+#: src/operations/utility/help.vala:3
+msgid "Operation list:"
 msgstr ""
 
-#: src/operations/utility/revdep-rebuild.vala:117
-msgid "check pkgconfig files"
+#: src/operations/utility/help.vala:10
+msgid "Shell only operation list:"
 msgstr ""
 
-#: src/operations/utility/revdep-rebuild.vala:118
-msgid "detect package dependencies"
+#: src/operations/utility/help.vala:21
+msgid "Aliases:"
 msgstr ""
 
-#: src/operations/shell/setget.vala:63 src/operations/shell/setget.vala:64
+#: src/operations/utility/help.vala:33
+msgid "Version"
+msgstr ""
+
+#: src/operations/utility/help.vala:49
+msgid "stop argument parser"
+msgstr ""
+
+#: src/operations/utility/help.vala:51
+msgid "disable oem check"
+msgstr ""
+
+#: src/operations/utility/help.vala:53
+msgid "disable output"
+msgstr ""
+
+#: src/operations/utility/help.vala:54
+msgid "disable warning messages"
+msgstr ""
+
+#: src/operations/utility/help.vala:56
+msgid "enable debug output"
+msgstr ""
+
+#: src/operations/utility/help.vala:58
+msgid "show verbose output"
+msgstr ""
+
+#: src/operations/utility/help.vala:59
+msgid "enable questions"
+msgstr ""
+
+#: src/operations/utility/help.vala:60
+msgid "disable color output"
+msgstr ""
+
+#: src/operations/utility/help.vala:61
+msgid "disable sysconf triggers"
+msgstr ""
+
+#: src/operations/utility/help.vala:62
+msgid "run ymp actions at sandbox environment"
+msgstr ""
+
+#: src/operations/utility/help.vala:63
+msgid "write help messages"
+msgstr ""
+
+#: src/operations/utility/help.vala:69 src/operations/utility/help.vala:70
+msgid "help"
+msgstr ""
+
+#: src/operations/utility/help.vala:71
+msgid "Write help message about ymp commands."
+msgstr ""
+
+#: src/operations/utility/help.vala:102
+msgid " [OPTION]... [ARGS]... "
+msgstr ""
+
+#: src/operations/utility/help.vala:104
+msgid "Usage:"
+msgstr ""
+
+#: src/operations/utility/help.vala:107
+msgid "Options:"
+msgstr ""
+
+#: src/operations/utility/help.vala:112
+msgid "Common options:"
+msgstr ""
+
+#: src/operations/utility/fetch.vala:3
+msgid "URL missing"
+msgstr ""
+
+#: src/operations/utility/fetch.vala:24 src/operations/utility/fetch.vala:25
+msgid "fetch"
+msgstr ""
+
+#: src/operations/utility/fetch.vala:27
+msgid "Download files from network."
+msgstr ""
+
+#: src/operations/utility/fetch.vala:28
+msgid "disable ssl check"
+msgstr ""
+
+#: src/operations/utility/key.vala:13 src/operations/utility/key.vala:14
+msgid "key"
+msgstr ""
+
+#: src/operations/utility/key.vala:15
+msgid "Gpg key operations."
+msgstr ""
+
+#: src/operations/utility/key.vala:16
+msgid "add new gpg key"
+msgstr ""
+
+#: src/operations/shell/setget.vala:69 src/operations/shell/setget.vala:70
 msgid "get"
 msgstr ""
 
-#: src/operations/shell/setget.vala:66
+#: src/operations/shell/setget.vala:72
 msgid "Get variable from name."
 msgstr ""
 
-#: src/operations/shell/setget.vala:71 src/operations/shell/setget.vala:72
+#: src/operations/shell/setget.vala:77 src/operations/shell/setget.vala:78
 msgid "set"
 msgstr ""
 
-#: src/operations/shell/setget.vala:75
+#: src/operations/shell/setget.vala:81
 msgid "Set variable from name and value."
 msgstr ""
 
-#: src/operations/shell/setget.vala:80 src/operations/shell/setget.vala:81
+#: src/operations/shell/setget.vala:86 src/operations/shell/setget.vala:87
 msgid "equal"
 msgstr ""
 
-#: src/operations/shell/setget.vala:84
+#: src/operations/shell/setget.vala:90
 msgid "Compare arguments equality."
 msgstr ""
 
-#: src/operations/shell/setget.vala:89 src/operations/shell/setget.vala:90
+#: src/operations/shell/setget.vala:95 src/operations/shell/setget.vala:96
 msgid "read"
 msgstr ""
 
-#: src/operations/shell/setget.vala:93
+#: src/operations/shell/setget.vala:99
 msgid "Read value from terminal."
 msgstr ""
 
-#: src/operations/shell/setget.vala:98 src/operations/shell/setget.vala:99
+#: src/operations/shell/setget.vala:104 src/operations/shell/setget.vala:105
 msgid "match"
 msgstr ""
 
-#: src/operations/shell/setget.vala:102
+#: src/operations/shell/setget.vala:108
 msgid "Match arguments regex."
 msgstr ""
 
-#: src/operations/shell/setget.vala:107 src/operations/shell/setget.vala:108
+#: src/operations/shell/setget.vala:113 src/operations/shell/setget.vala:114
 msgid "cd"
 msgstr ""
 
-#: src/operations/shell/setget.vala:110
+#: src/operations/shell/setget.vala:116
 msgid "Change directory."
 msgstr ""
 
+#: src/operations/shell/setget.vala:121 src/operations/shell/setget.vala:122
+msgid "export"
+msgstr ""
+
+#: src/operations/shell/setget.vala:124
+msgid "Convert value to environmental."
+msgstr ""
+
 #: src/operations/shell/chroot.vala:3
+#: src/operations/package-manager/bootstrap.vala:3
 #: src/operations/package-manager/install.vala:3
 #: src/operations/package-manager/repository.vala:14
-#: src/operations/package-manager/bootstrap.vala:3
 #: src/operations/package-manager/remove.vala:3
 msgid "You must be root!"
 msgstr ""
@@ -1019,36 +872,12 @@ msgstr ""
 msgid "Execute a command in chroot."
 msgstr ""
 
-#: src/operations/shell/cowcat.vala:21
-msgid "cow"
+#: src/operations/shell/clear.vala:9 src/operations/shell/clear.vala:10
+msgid "clear"
 msgstr ""
 
-#: src/operations/shell/cowcat.vala:22
-msgid "cowcat"
-msgstr ""
-
-#: src/operations/shell/cowcat.vala:25
-msgid "Write a message with cow."
-msgstr ""
-
-#: src/operations/shell/cowcat.vala:26
-msgid "write from stdin"
-msgstr ""
-
-#: src/operations/shell/title.vala:13 src/operations/shell/title.vala:14
-msgid "title"
-msgstr ""
-
-#: src/operations/shell/title.vala:17
-msgid "Set terminal title"
-msgstr ""
-
-#: src/operations/shell/echo.vala:9 src/operations/shell/echo.vala:10
-msgid "echo"
-msgstr ""
-
-#: src/operations/shell/echo.vala:12
-msgid "Write a message to terminal."
+#: src/operations/shell/clear.vala:11
+msgid "Clear terminal screen."
 msgstr ""
 
 #: src/operations/shell/exec.vala:3
@@ -1065,6 +894,46 @@ msgstr ""
 
 #: src/operations/shell/exec.vala:27
 msgid "run without output"
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:21
+msgid "cow"
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:22
+msgid "cowcat"
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:25
+msgid "Write a message with cow."
+msgstr ""
+
+#: src/operations/shell/cowcat.vala:26
+msgid "write from stdin"
+msgstr ""
+
+#: src/operations/shell/echo.vala:9 src/operations/shell/echo.vala:10
+msgid "echo"
+msgstr ""
+
+#: src/operations/shell/echo.vala:12
+msgid "Write a message to terminal."
+msgstr ""
+
+#: src/operations/shell/exit.vala:12 src/operations/shell/exit.vala:13
+msgid "exit"
+msgstr ""
+
+#: src/operations/shell/exit.vala:14
+msgid "Exit ymp"
+msgstr ""
+
+#: src/operations/shell/title.vala:13 src/operations/shell/title.vala:14
+msgid "title"
+msgstr ""
+
+#: src/operations/shell/title.vala:17
+msgid "Set terminal title"
 msgstr ""
 
 #: src/operations/shell/shitcat.vala:21
@@ -1087,14 +956,6 @@ msgstr ""
 msgid "read from stdin"
 msgstr ""
 
-#: src/operations/shell/clear.vala:9 src/operations/shell/clear.vala:10
-msgid "clear"
-msgstr ""
-
-#: src/operations/shell/clear.vala:11
-msgid "Clear terminal screen."
-msgstr ""
-
 #: src/operations/shell/dummy.vala:8 src/operations/shell/dummy.vala:9
 msgid "init"
 msgstr ""
@@ -1103,92 +964,232 @@ msgstr ""
 msgid "Do nothing."
 msgstr ""
 
-#: src/operations/shell/exit.vala:12 src/operations/shell/exit.vala:13
-msgid "exit"
+#: src/operations/package-manager/build.vala:6
+msgid "Build operation with usrmerge is not allowed!"
 msgstr ""
 
-#: src/operations/shell/exit.vala:14
-msgid "Exit ymp"
+#: src/operations/package-manager/build.vala:13
+#, c-format
+msgid "Building %s"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:71
+#: src/operations/package-manager/build.vala:27
+#: src/operations/package-manager/build.vala:28
+msgid "build"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:29
+msgid "Build package from ympbuild file."
+msgstr ""
+
+#: src/operations/package-manager/build.vala:30
+msgid "do not generate source package"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:31
+msgid "do not generate binary package"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:32
+msgid "do not build package (only test and package)"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:33
+msgid "do not check filesystem safety"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:34
+msgid "do not install package after building"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:35
+#: src/operations/package-manager/install.vala:145
+#: src/operations/package-manager/remove.vala:98
+msgid "disable dependency check"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:36
+#: src/operations/package-manager/bootstrap.vala:50
+#: src/operations/package-manager/install.vala:151
+msgid "use binary packages"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:37
+#: src/operations/package-manager/clean.vala:6
+msgid "build directory"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:38
+msgid "compress format"
+msgstr ""
+
+#: src/operations/package-manager/build.vala:39
+msgid "install binary package after building"
+msgstr ""
+
+#: src/operations/package-manager/list.vala:140
+#: src/operations/package-manager/list.vala:141
+msgid "list"
+msgstr ""
+
+#: src/operations/package-manager/list.vala:142
+msgid "List installed packages."
+msgstr ""
+
+#: src/operations/package-manager/list.vala:143
+msgid "list installed packages"
+msgstr ""
+
+#: src/operations/package-manager/list.vala:144
+msgid "write as graphwiz format"
+msgstr ""
+
+#: src/operations/package-manager/list.vala:145
+msgid "list repositories"
+msgstr ""
+
+#: src/operations/package-manager/list.vala:146
+msgid "list available source packages"
+msgstr ""
+
+#: src/operations/package-manager/template.vala:72
 msgid "Please check ympbuild:"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:73
+#: src/operations/package-manager/template.vala:74
 msgid "Is it OK ?"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:79
+#: src/operations/package-manager/template.vala:80
 #, c-format
 msgid "Creating template: %s"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:88
+#: src/operations/package-manager/template.vala:89
 #, c-format
 msgid "Reading gitconfig: %s"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:104
+#: src/operations/package-manager/template.vala:105
 #, c-format
 msgid "Variable '%s' is not defined. please use --%s"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:113
 #: src/operations/package-manager/template.vala:114
+#: src/operations/package-manager/template.vala:115
 msgid "template"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:115
+#: src/operations/package-manager/template.vala:116
 msgid "Create ympbuild from template."
 msgstr ""
 
-#: src/operations/package-manager/template.vala:116
+#: src/operations/package-manager/template.vala:117
 msgid "package name"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:117
+#: src/operations/package-manager/template.vala:118
 msgid "package version"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:118
+#: src/operations/package-manager/template.vala:119
 msgid "package homepage"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:119
+#: src/operations/package-manager/template.vala:120
 msgid "package description"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:120
+#: src/operations/package-manager/template.vala:121
 msgid "package dependencies"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:121
+#: src/operations/package-manager/template.vala:122
 msgid "package build dependencies"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:122
+#: src/operations/package-manager/template.vala:123
 msgid "package creator email"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:123
+#: src/operations/package-manager/template.vala:124
 msgid "package maintainer"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:124
+#: src/operations/package-manager/template.vala:125
 msgid "package license"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:125
+#: src/operations/package-manager/template.vala:126
 msgid "package source"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:126
+#: src/operations/package-manager/template.vala:127
 msgid "package build-type (autotool cmake meson)"
 msgstr ""
 
-#: src/operations/package-manager/template.vala:127
+#: src/operations/package-manager/template.vala:128
 msgid "ympbuild output directory"
+msgstr ""
+
+#: src/operations/package-manager/search.vala:11
+msgid ""
+"No options given. Please use --source or --package or --file or --installed ."
+msgstr ""
+
+#: src/operations/package-manager/search.vala:105
+#: src/operations/package-manager/search.vala:106
+msgid "search"
+msgstr ""
+
+#: src/operations/package-manager/search.vala:108
+msgid "Search packages."
+msgstr ""
+
+#: src/operations/package-manager/search.vala:109
+msgid "search package in binary package repository"
+msgstr ""
+
+#: src/operations/package-manager/search.vala:110
+msgid "search package in source package repository"
+msgstr ""
+
+#: src/operations/package-manager/search.vala:111
+msgid "search package in installed packages"
+msgstr ""
+
+#: src/operations/package-manager/search.vala:112
+msgid "searches for packages by package file"
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:8
+msgid "Mirror is not defined. Please use --mirror ."
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:10
+msgid "Destdir is not defined. Please use --destdir ."
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:13
+#, c-format
+msgid "Target rootfs already exists: %s"
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:16
+msgid "Creating bootstrap."
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:45
+#: src/operations/package-manager/bootstrap.vala:47
+msgid "bootstrap"
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:48
+msgid "Create new rootfs filesystem."
+msgstr ""
+
+#: src/operations/package-manager/bootstrap.vala:49
+msgid "bootstrap mirror uri"
 msgstr ""
 
 #: src/operations/package-manager/clean.vala:2
@@ -1204,10 +1205,6 @@ msgstr ""
 
 #: src/operations/package-manager/clean.vala:4
 msgid "repository index cache"
-msgstr ""
-
-#: src/operations/package-manager/clean.vala:6
-msgid "build directory"
 msgstr ""
 
 #: src/operations/package-manager/clean.vala:8
@@ -1261,8 +1258,7 @@ msgid "Installing from repository: %s"
 msgstr ""
 
 #: src/operations/package-manager/install.vala:83
-#: src/operations/package-manager/install.vala:87
-#: src/operations/package-manager/build.vala:464
+#: src/operations/package-manager/install.vala:87 src/util/build.vala:439
 msgid "Package architecture is not supported."
 msgstr ""
 
@@ -1282,12 +1278,6 @@ msgstr ""
 
 #: src/operations/package-manager/install.vala:144
 msgid "Install package from source or package file or repository"
-msgstr ""
-
-#: src/operations/package-manager/install.vala:145
-#: src/operations/package-manager/build.vala:554
-#: src/operations/package-manager/remove.vala:77
-msgid "disable dependency check"
 msgstr ""
 
 #: src/operations/package-manager/install.vala:146
@@ -1310,193 +1300,6 @@ msgstr ""
 msgid "upgrade all packages"
 msgstr ""
 
-#: src/operations/package-manager/install.vala:151
-#: src/operations/package-manager/build.vala:555
-#: src/operations/package-manager/bootstrap.vala:50
-msgid "use binary packages"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:6
-msgid "Build operation with usrmerge is not allowed!"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:13
-#, c-format
-msgid "Building %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:41
-msgid "Failed to fetch git package."
-msgstr ""
-
-#: src/operations/package-manager/build.vala:60
-#, c-format
-msgid "Package is invalid: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:156
-#, c-format
-msgid "Packages is not installed: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:170
-msgid "ympbuild file is invalid!"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:190
-msgid "Source file already exists."
-msgstr ""
-
-#: src/operations/package-manager/build.vala:192
-msgid "Source file import from cache."
-msgstr ""
-
-#: src/operations/package-manager/build.vala:195
-msgid "Source file copy from cache."
-msgstr ""
-
-#: src/operations/package-manager/build.vala:198
-#, c-format
-msgid "Download: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:205
-#, c-format
-msgid "md5sum check failed. Excepted: %s <> Reveiced: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:214
-msgid "Extracting package resources from:"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:230
-msgid "Building package from:"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:236
-#, c-format
-msgid "Running build action: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:239
-#: src/operations/package-manager/build.vala:250
-#, c-format
-msgid "Failed to build package. Action: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:261
-msgid "Create source package from :"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:307
-#, c-format
-msgid "Files are not allowed in root directory: /%s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:318
-#, c-format
-msgid "Empty file detected: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:323
-#, c-format
-msgid "Absolute path symlink is not allowed:%s%s => %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:327
-#, c-format
-msgid "Broken symlink detected:%s%s => %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:331
-#, c-format
-msgid "Link info add: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:339
-#, c-format
-msgid "File info add: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:361
-msgid "Dependency check disabled"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:370
-#: src/operations/package-manager/build.vala:381
-#, c-format
-msgid "Package %s in not satisfied. Required by: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:396
-msgid "Source array is not defined."
-msgstr ""
-
-#: src/operations/package-manager/build.vala:433
-#, c-format
-msgid "Add use flag dependency: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:447
-msgid "Release is not defined."
-msgstr ""
-
-#: src/operations/package-manager/build.vala:450
-msgid "Version is not defined."
-msgstr ""
-
-#: src/operations/package-manager/build.vala:453
-msgid "Name is not defined."
-msgstr ""
-
-#: src/operations/package-manager/build.vala:475
-#, c-format
-msgid "Create data file: %s/output/data.tar.gz"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:497
-#, c-format
-msgid "Compress: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:522
-#, c-format
-msgid "Create binary package from: %s"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:547
-#: src/operations/package-manager/build.vala:548
-msgid "build"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:549
-msgid "Build package from ympbuild file."
-msgstr ""
-
-#: src/operations/package-manager/build.vala:550
-msgid "do not generate source package"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:551
-msgid "do not generate binary package"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:552
-msgid "do not build package (only test and package)"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:553
-msgid "do not install package after building"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:556
-msgid "compress format"
-msgstr ""
-
-#: src/operations/package-manager/build.vala:557
-msgid "install binary package after building"
-msgstr ""
-
 #: src/operations/package-manager/repository.vala:24
 msgid "name not defined."
 msgstr ""
@@ -1511,11 +1314,11 @@ msgid "Mirror:"
 msgstr ""
 
 #: src/operations/package-manager/repository.vala:92
-msgid "(binary)"
+msgid " (binary)"
 msgstr ""
 
 #: src/operations/package-manager/repository.vala:100
-msgid "(source)"
+msgid " (source)"
 msgstr ""
 
 #: src/operations/package-manager/repository.vala:129
@@ -1591,83 +1394,6 @@ msgstr ""
 msgid "target mirror directory"
 msgstr ""
 
-#: src/operations/package-manager/search.vala:11
-msgid ""
-"No options given. Please use --source or --package or --file or --installed ."
-msgstr ""
-
-#: src/operations/package-manager/search.vala:105
-#: src/operations/package-manager/search.vala:106
-msgid "search"
-msgstr ""
-
-#: src/operations/package-manager/search.vala:108
-msgid "Search packages."
-msgstr ""
-
-#: src/operations/package-manager/search.vala:109
-msgid "search package in binary package repository"
-msgstr ""
-
-#: src/operations/package-manager/search.vala:110
-msgid "search package in source package repository"
-msgstr ""
-
-#: src/operations/package-manager/search.vala:111
-msgid "search package in installed packages"
-msgstr ""
-
-#: src/operations/package-manager/search.vala:112
-msgid "searches for packages by package file"
-msgstr ""
-
-#: src/operations/package-manager/bootstrap.vala:8
-msgid "Mirror is not defined. Please use --mirror ."
-msgstr ""
-
-#: src/operations/package-manager/bootstrap.vala:10
-msgid "Destdir is not defined. Please use --destdir ."
-msgstr ""
-
-#: src/operations/package-manager/bootstrap.vala:13
-#, c-format
-msgid "Target rootfs already exists: %s"
-msgstr ""
-
-#: src/operations/package-manager/bootstrap.vala:16
-msgid "Creating bootstrap."
-msgstr ""
-
-#: src/operations/package-manager/bootstrap.vala:45
-#: src/operations/package-manager/bootstrap.vala:47
-msgid "bootstrap"
-msgstr ""
-
-#: src/operations/package-manager/bootstrap.vala:48
-msgid "Create new rootfs filesystem."
-msgstr ""
-
-#: src/operations/package-manager/bootstrap.vala:49
-msgid "bootstrap mirror uri"
-msgstr ""
-
-#: src/operations/package-manager/info.vala:58
-#: src/operations/package-manager/info.vala:59
-msgid "info"
-msgstr ""
-
-#: src/operations/package-manager/info.vala:60
-msgid "Get informations from package manager databases."
-msgstr ""
-
-#: src/operations/package-manager/info.vala:61
-msgid "list required packages"
-msgstr ""
-
-#: src/operations/package-manager/info.vala:62
-msgid "list packages required by package"
-msgstr ""
-
 #: src/operations/package-manager/remove.vala:17
 msgid ""
 "You cannot remove package manager! If you really want, must use --ignore-"
@@ -1689,48 +1415,428 @@ msgid "Package %s is not installed. Skip removing."
 msgstr ""
 
 #: src/operations/package-manager/remove.vala:44
+#: src/operations/package-manager/remove.vala:49
+#: src/operations/package-manager/remove.vala:56
 #, c-format
 msgid "Removing: %s"
 msgstr ""
 
-#: src/operations/package-manager/remove.vala:73
-#: src/operations/package-manager/remove.vala:74
+#: src/operations/package-manager/remove.vala:94
+#: src/operations/package-manager/remove.vala:95
 msgid "remove"
 msgstr ""
 
-#: src/operations/package-manager/remove.vala:76
+#: src/operations/package-manager/remove.vala:97
 msgid "Remove package from package name."
 msgstr ""
 
-#: src/operations/package-manager/remove.vala:78
+#: src/operations/package-manager/remove.vala:99
 msgid "do not remove files from package database"
 msgstr ""
 
-#: src/operations/package-manager/remove.vala:79
+#: src/operations/package-manager/remove.vala:100
 msgid "do not remove metadata from package database"
 msgstr ""
 
-#: src/operations/package-manager/list.vala:144
-#: src/operations/package-manager/list.vala:145
-msgid "list"
+#: src/operations/package-manager/info.vala:58
+#: src/operations/package-manager/info.vala:59
+msgid "info"
 msgstr ""
 
-#: src/operations/package-manager/list.vala:146
-msgid "List installed packages."
+#: src/operations/package-manager/info.vala:60
+msgid "Get informations from package manager databases."
 msgstr ""
 
-#: src/operations/package-manager/list.vala:147
-msgid "list installed packages"
+#: src/operations/package-manager/info.vala:61
+msgid "list required packages"
 msgstr ""
 
-#: src/operations/package-manager/list.vala:148
-msgid "write as graphwiz format"
+#: src/operations/package-manager/info.vala:62
+msgid "list packages required by package"
 msgstr ""
 
-#: src/operations/package-manager/list.vala:149
-msgid "list repositories"
+#: src/util/build.vala:29
+msgid "Failed to fetch git package."
 msgstr ""
 
-#: src/operations/package-manager/list.vala:150
-msgid "list available source packages"
+#: src/util/build.vala:48
+#, c-format
+msgid "Package is invalid: %s"
+msgstr ""
+
+#: src/util/build.vala:110
+msgid "Dependency check disabled"
+msgstr ""
+
+#: src/util/build.vala:148
+#, c-format
+msgid "Packages is not installed: %s"
+msgstr ""
+
+#: src/util/build.vala:163
+msgid "ympbuild file is invalid!"
+msgstr ""
+
+#: src/util/build.vala:183
+msgid "Source file already exists."
+msgstr ""
+
+#: src/util/build.vala:185
+msgid "Source file import from cache."
+msgstr ""
+
+#: src/util/build.vala:188
+msgid "Source file copy from cache."
+msgstr ""
+
+#: src/util/build.vala:191
+#, c-format
+msgid "Download: %s"
+msgstr ""
+
+#: src/util/build.vala:198
+#, c-format
+msgid "md5sum check failed. Excepted: %s <> Reveiced: %s"
+msgstr ""
+
+#: src/util/build.vala:208
+msgid "Extracting package resources from:"
+msgstr ""
+
+#: src/util/build.vala:225
+msgid "Building package from:"
+msgstr ""
+
+#: src/util/build.vala:232
+#, c-format
+msgid "Running build action: %s"
+msgstr ""
+
+#: src/util/build.vala:235 src/util/build.vala:247
+#, c-format
+msgid "Failed to build package. Action: %s"
+msgstr ""
+
+#: src/util/build.vala:260
+msgid "Create source package from :"
+msgstr ""
+
+#: src/util/build.vala:310
+#, c-format
+msgid "Files are not allowed in root directory: /%s"
+msgstr ""
+
+#: src/util/build.vala:321
+#, c-format
+msgid "Empty file detected: %s"
+msgstr ""
+
+#: src/util/build.vala:326
+#, c-format
+msgid "Absolute path symlink is not allowed:%s%s => %s"
+msgstr ""
+
+#: src/util/build.vala:330
+#, c-format
+msgid "Broken symlink detected:%s%s => %s"
+msgstr ""
+
+#: src/util/build.vala:334
+#, c-format
+msgid "Link info add: %s"
+msgstr ""
+
+#: src/util/build.vala:342
+#, c-format
+msgid "File info add: %s"
+msgstr ""
+
+#: src/util/build.vala:369
+msgid "Source array is not defined."
+msgstr ""
+
+#: src/util/build.vala:409
+#, c-format
+msgid "Add use flag dependency: %s"
+msgstr ""
+
+#: src/util/build.vala:423
+msgid "Release is not defined."
+msgstr ""
+
+#: src/util/build.vala:426
+msgid "Version is not defined."
+msgstr ""
+
+#: src/util/build.vala:429
+msgid "Name is not defined."
+msgstr ""
+
+#: src/util/build.vala:451
+#, c-format
+msgid "Create data file: %s/output/data.tar.gz"
+msgstr ""
+
+#: src/util/build.vala:473
+#, c-format
+msgid "Compress: %s"
+msgstr ""
+
+#: src/util/build.vala:498
+#, c-format
+msgid "Create binary package from: %s"
+msgstr ""
+
+#: src/util/file.vala:7
+#, c-format
+msgid "Read file bytes: %s"
+msgstr ""
+
+#: src/util/file.vala:13
+#, c-format
+msgid "Failed to read file: %s"
+msgstr ""
+
+#: src/util/file.vala:22
+#, c-format
+msgid "File is empty: %s"
+msgstr ""
+
+#: src/util/file.vala:25
+#, c-format
+msgid "Read byte size is bigger than file size: %s"
+msgstr ""
+
+#: src/util/file.vala:45
+#, c-format
+msgid "Read file: %s"
+msgstr ""
+
+#: src/util/file.vala:75
+#, c-format
+msgid "Safedir: %s"
+msgstr ""
+
+#: src/util/file.vala:94
+#, c-format
+msgid "Change directory: %s"
+msgstr ""
+
+#: src/util/file.vala:114
+#, c-format
+msgid "Remove directory: %s"
+msgstr ""
+
+#: src/util/file.vala:128
+#, c-format
+msgid "Remove file: %s"
+msgstr ""
+
+#: src/util/file.vala:171
+#, c-format
+msgid "Move: %s => %s"
+msgstr ""
+
+#: src/util/file.vala:183
+#, c-format
+msgid "Failed to move file: %s => %s"
+msgstr ""
+
+#: src/util/file.vala:191
+#, c-format
+msgid "Copy: %s => %s"
+msgstr ""
+
+#: src/util/file.vala:198
+#, c-format
+msgid "Failed to fetch file: %s => %s"
+msgstr ""
+
+#: src/util/file.vala:223
+#, c-format
+msgid "Failed to copy file: %s => %s"
+msgstr ""
+
+#: src/util/file.vala:231
+#, c-format
+msgid "List directory: %s"
+msgstr ""
+
+#: src/util/file.vala:250
+#, c-format
+msgid "Check elf: %s"
+msgstr ""
+
+#: src/util/file.vala:262
+#, c-format
+msgid "Check 64bit: %s"
+msgstr ""
+
+#: src/util/file.vala:274
+#, c-format
+msgid "Check exists: %s"
+msgstr ""
+
+#: src/util/file.vala:284
+#, c-format
+msgid "Realpath: %s"
+msgstr ""
+
+#: src/util/file.vala:327
+#, c-format
+msgid "Search: %s"
+msgstr ""
+
+#: src/util/file.vala:343
+#, c-format
+msgid "Search subdir: %s"
+msgstr ""
+
+#: src/util/file.vala:366
+#, c-format
+msgid "Read symlink: %s => %s"
+msgstr ""
+
+#: src/util/file.vala:394
+#, c-format
+msgid "Calculating checksum: %s"
+msgstr ""
+
+#: src/util/httpd.vala:76 src/util/httpd.vala:79
+#, c-format
+msgid "Index of /%s"
+msgstr ""
+
+#: src/util/httpd.vala:157
+#, c-format
+msgid "Servering HTTP on %s port %s"
+msgstr ""
+
+#: src/util/interface.vala:24 src/util/interface.vala:27
+#, c-format
+msgid "%s [y/n]"
+msgstr ""
+
+#: src/util/archive.vala:80
+#, c-format
+msgid "Load archive : %s"
+msgstr ""
+
+#: src/util/archive.vala:93
+#, c-format
+msgid "Is archive : %s"
+msgstr ""
+
+#: src/util/archive.vala:106
+msgid "List files in archive"
+msgstr ""
+
+#: src/util/archive.vala:121
+#, c-format
+msgid "Set archive target : %s"
+msgstr ""
+
+#: src/util/archive.vala:132
+#, c-format
+msgid "Add to archive : %s"
+msgstr ""
+
+#: src/util/archive.vala:149
+#, c-format
+msgid "Extract archve: %s"
+msgstr ""
+
+#: src/util/string.vala:21
+msgid "empty data"
+msgstr ""
+
+#: src/util/string.vala:55
+#, c-format
+msgid "Basename: %s"
+msgstr ""
+
+#: src/util/string.vala:63
+#, c-format
+msgid "Dirname: %s"
+msgstr ""
+
+#: src/util/debian.vala:66
+#, c-format
+msgid "Creating debian package to: %s"
+msgstr ""
+
+#: src/util/debian.vala:112
+msgid "Failed to decompress debian repository index."
+msgstr ""
+
+#: src/util/debian.vala:145
+msgid "Debian catalog does not found. Please use --update-catalog to update."
+msgstr ""
+
+#: src/util/yamlparser.vala:24
+#, c-format
+msgid "Loading yaml from: %s"
+msgstr ""
+
+#: src/util/yamlparser.vala:41
+#, c-format
+msgid "Has area : %s"
+msgstr ""
+
+#: src/util/yamlparser.vala:53
+#, c-format
+msgid "Get area list: %s"
+msgstr ""
+
+#: src/util/yamlparser.vala:80
+msgid "Get area names"
+msgstr ""
+
+#: src/util/yamlparser.vala:95
+#, c-format
+msgid "Yaml get value: %s"
+msgstr ""
+
+#: src/util/yamlparser.vala:129
+#, c-format
+msgid "Yaml get array: %s"
+msgstr ""
+
+#: src/util/yamlparser.vala:147
+#, c-format
+msgid "Get area : %s"
+msgstr ""
+
+#: src/util/yamlparser.vala:159
+#, c-format
+msgid "Get area single : %s"
+msgstr ""
+
+#: src/util/logger.vala:42
+msgid "WARNING"
+msgstr ""
+
+#: src/util/logger.vala:50
+msgid "DEBUG"
+msgstr ""
+
+#: src/util/logger.vala:55
+msgid "INFO"
+msgstr ""
+
+#: src/util/logger.vala:96
+msgid "ERROR"
+msgstr ""
+
+#: src/cli/main.vala:22
+msgid "No command given."
+msgstr ""
+
+#: src/cli/main.vala:22
+#, c-format
+msgid "Run %s for more information about usage."
+msgstr ""
+
+#: src/cli/main.vala:22
+msgid "ymp help"
 msgstr ""
