@@ -19,21 +19,29 @@ run_command('bash', './tool/mkctx.sh',
     check:true)
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
-args = ['-O0', '-flto', '-Wall','-lm',
+prep_args = ['-L'+meson.current_build_dir(), '-lymp']
+args = prep_args
+
+# disable optimization for test
+if not get_option('test')
+    args += ['-O0', '-flto', '-Wall','-lm',
             '-fvisibility=hidden', '-Wextra', '-Wno-unused-parameter','-s', '-Os',
             '-Wl,--gc-sections','-ffunction-sections', '-fno-math-errno', '-ffast-math',
-            '-fdata-sections', '-fno-exceptions']
+            '-fdata-sections', '-fno-exceptions', '-fno-unwind-tables',
+            '-fno-asynchronous-unwind-tables', '-fno-math-errno',
+            '-fno-unroll-loops', '-fmerge-all-constants', '-fno-ident', '-ffast-math',
+            '-fsingle-precision-constant', '-Wl,--build-id=none', '-Wl,-z,norelro',
+            '-Wl,--hash-style=sysv'
+    ]
+endif
 
-args += ['-fno-unwind-tables', '-fno-asynchronous-unwind-tables', '-fno-math-errno',
-        '-fno-unroll-loops', '-fmerge-all-constants', '-fno-ident', '-ffast-math',
-        '-fsingle-precision-constant', '-Wl,--build-id=none', '-Wl,-z,norelro',
-        '-Wl,--hash-style=sysv'
-]
+# do not include glibc or musl stdlib and link with glibc or musl
 if run_command('/bin/sh', '-c', 'ldd --version | grep musl').returncode() == 0
     args += ['-nostdlib', '-lc.musl']
 else
     args += ['-nostdlib', '-lc']
 endif
+
 
 args += [meson.current_build_dir()/ 'obj.o']
 deps = []
@@ -106,12 +114,12 @@ endif
 
 # find sources
 sources = ['src/ymp.vala',
-                'src/settings.vala',
-                'src/wslblock.vala',
-                'src/ccode.vala',
-                'ctx.vala',
-                'data/ymp-extra.h'
-           ]
+           'src/settings.vala',
+           'src/wslblock.vala',
+           'src/ccode.vala',
+           'ctx.vala',
+           'data/ymp-extra.h'
+          ]
 
 sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip().split('\n')
 sources += run_command('find', 'src/operations','-type','f',check:true).stdout().strip().split('\n')
@@ -159,7 +167,6 @@ endif
 run_command('install', 'data/ymp.pc', meson.current_build_dir(), check: true)
 run_command('sed', '-i', 's/@version@/'+meson.project_version()+'/g', meson.current_build_dir()+'/ymp.pc', check: true)
 
-prep_args = []
 foreach c : conf
     add_project_arguments('-D', c, language: 'vala')
     prep_args += '-D'+c
