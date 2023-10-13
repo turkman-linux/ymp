@@ -24,7 +24,7 @@ public int run_args(string[] args){
     }catch(GLib.SpawnError e){
         return 127;
     }
-    
+
 }
 
 //DOC: `int run_args (string[] args):`
