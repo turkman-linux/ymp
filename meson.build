@@ -30,6 +30,8 @@ args += ['-fno-unwind-tables', '-fno-asynchronous-unwind-tables', '-fno-math-err
         '-Wl,--hash-style=sysv'
 ]
 
+args += ['-nostdlib', '-lc']
+
 args += [meson.current_build_dir()/ 'obj.o']
 deps = []
 
