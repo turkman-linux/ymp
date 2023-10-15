@@ -123,12 +123,35 @@ public int list_available_main (string[] args) {
 
 public int list_repository_main (string[] args) {
     foreach (repository repo in get_repos ()) {
+        string[] srcs = repo.list_sources ();
+        string[] pkgs = repo.list_packages ();
         print_fn (colorize (repo.name, green) + " :: ", false, false);
         print_fn (repo.address + " :: ", false, false);
-        print_fn (colorize (" (" + repo.list_packages ().length.to_string () + " binary)", cyan) + " :: ", false, false);
-        print_fn (colorize (" (" + repo.list_sources ().length.to_string () + " source) ", magenta), false, false);
+        print_fn (colorize (" (" + pkgs.length.to_string () + " binary)", cyan) + " :: ", false, false);
+        print_fn (colorize (" (" + srcs.length.to_string () + " source) ", magenta), false, false);
         print ("");
-
+         if (!get_bool ("ignore-check")) {
+            string[] cache = {};
+            foreach(string pkg in pkgs){
+                if(!(pkg in srcs)){
+                    warning(_("Source package is not available: %s").printf(pkg));
+                }
+                if(pkg in cache){
+                     warning (_ ("A package has multiple versions: %s").printf (pkg));                    
+                }
+                cache += pkg;
+            }
+            cache = {};
+            foreach(string src in srcs){
+                if(!(src in pkgs)){
+                    warning(_("Binary package is not available: %s").printf(src));
+                }
+                if(src in cache){
+                     warning (_ ("A source has multiple versions: %s").printf (src));
+                }
+                cache += src;
+            }
+        }
     }
     return 0;
 }
