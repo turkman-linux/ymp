@@ -1,5 +1,5 @@
 public delegate void fetcher_process (double current, double total, string filename);
-#if no_fetcher
+#if no_fetcher_backend
 public bool fetch (string url, string path) {
     return 0 == run ("wget -U '" + get_value ("useragent") + "' -c '" + url + "' -O '" + path + "'");
 }

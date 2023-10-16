@@ -1,11 +1,8 @@
 #ifdef libsoup
 
-#ifndef readfile_raw
-char* readfile_raw(char* file);
-int remove_file(char* file);
-#endif
-
 #include <libsoup/soup.h>
+#include <string.h>
+
 int fetch (char* url, char* path){
     GError *error = NULL;
     SoupSession * session = soup_session_new();
@@ -28,13 +25,18 @@ int fetch (char* url, char* path){
 }
 
 char* fetch_string(char* url){
-    char* file = "/tmp/.ymp-soup-file.tmp";
-    if(fetch(url, file)){
-        return "";
+    GError *error = NULL;
+    SoupSession * session = soup_session_new();
+    SoupMessage * msg = soup_message_new(SOUP_METHOD_GET, url);
+    GBytes *bytes = soup_session_send_and_read (
+        session,
+        msg,
+        NULL,
+        &error);
+    if(error){
+        return 0;
     }
-    char* ctx = readfile_raw(file);
-    remove_file(file);
-    return ctx;
+    return strdup((char*)g_bytes_get_data(bytes,NULL));   
 }
 
 #endif

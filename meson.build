@@ -95,7 +95,7 @@ if get_option('libcurl')
         if not libcurl.found()
         else
            conf += ['libcurl']
-            args += run_command('pkg-config', '--libs','libcurl', pkgconfig_arg ,check:true).stdout().strip().split(' ')
+            args += run_command('pkg-config', '--libs', '--cflags' ,'libcurl', pkgconfig_arg ,check:true).stdout().strip().split(' ')
             if get_option('libbrotli')
                 args += ['-lbrotlicommon']
             endif
@@ -108,6 +108,8 @@ elif get_option('libsoup')
             conf += ['libsoup']
             args += run_command('pkg-config', '--libs', '--cflags', 'libsoup-3.0', pkgconfig_arg ,check:true).stdout().strip().split(' ')
         endif
+else
+    conf += ['no_fetcher_backend']
 endif
 
 #libmagic (no vapi)
@@ -116,7 +118,7 @@ if get_option('libmagic')
         if not libmagic.found()
             conf += ['no_libmagic']
         else
-            args += run_command('pkg-config', '--libs','libmagic', pkgconfig_arg ,check:true).stdout().strip().split(' ')
+            args += run_command('pkg-config', '--libs', '--cflags' ,'libmagic', pkgconfig_arg ,check:true).stdout().strip().split(' ')
         endif
 endif
 
