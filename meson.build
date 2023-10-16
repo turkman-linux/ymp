@@ -187,14 +187,10 @@ endforeach
 ########### libc files ###########
 
 arch = run_command('uname', '-m',check:true).stdout().strip()
-
-if run_command('[', '-d', 'src/libc/'+arch, ']').returncode() == 0
-    libc_srcs += run_command('find', 'src/libc/'+arch,'-type','f',check:true).stdout().strip().split('\n')
-    libc_srcs += ['src/libc/start.c']
-    # do not include glibc or musl stdlib and link with glibc or musl
-    if run_command('/bin/sh', '-c', 'ldd --version | grep musl').returncode() == 0
-        prep_args += ['-nostdlib', '-lc.musl']
-    else
+if run_command('/bin/bash', '-c', 'ldd --version |& grep musl').returncode() != 0 and not get_option('test')
+    if run_command('[', '-d', 'src/libc/'+arch, ']').returncode() == 0
+        libc_srcs += run_command('find', 'src/libc/'+arch,'-type','f',check:true).stdout().strip().split('\n')
+        libc_srcs += ['src/libc/start.c']
         prep_args += ['-nostdlib', '-lc']
     endif
 endif
@@ -228,7 +224,7 @@ if get_option('tools')
 endif
 ########### build test ###########
 if get_option('test')
-    executable('ymp-test', 'test/test.vala', libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
+    executable('ymp-test', 'test/test.vala', dependencies: deps, link_args: prep_args, link_with: libymp)
 endif
 
 ########### build scripts ###########
