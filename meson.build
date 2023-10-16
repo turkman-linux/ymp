@@ -93,12 +93,20 @@ endif
 if get_option('libcurl')
         libcurl = dependency('libcurl', static:get_option('static'), required:false)
         if not libcurl.found()
-            conf += ['no_libcurl']
         else
+           conf += ['libcurl']
             args += run_command('pkg-config', '--libs','libcurl', pkgconfig_arg ,check:true).stdout().strip().split(' ')
             if get_option('libbrotli')
                 args += ['-lbrotlicommon']
             endif
+        endif
+#libsoup-3.0 (no vapi)
+elif get_option('libsoup')
+        libsoup = dependency('libsoup-3.0', static:get_option('static'), required:false)
+        if not libsoup.found()
+        else
+            conf += ['libsoup']
+            args += run_command('pkg-config', '--libs', '--cflags', 'libsoup-3.0', pkgconfig_arg ,check:true).stdout().strip().split(' ')
         endif
 endif
 

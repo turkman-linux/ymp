@@ -1,4 +1,4 @@
-#ifndef no_libcurl
+#ifdef libcurl
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
