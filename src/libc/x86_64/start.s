@@ -5,5 +5,5 @@ _start:
 	popq	%rdi
 	movq	%rsp, %rsi
 	movq	8(%rsp, %rdi, 8), %rdx
-	call	_libc_start
+	call	__libc_start_main
 

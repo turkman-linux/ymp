@@ -21,6 +21,7 @@ run_command('bash', './tool/mkctx.sh',
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
 prep_args = ['-L'+meson.current_build_dir(), '-lymp']
 args = prep_args
+libc_srcs = []
 
 # disable optimization for test
 if not get_option('test')
@@ -183,6 +184,21 @@ foreach c : conf
     args += '-D'+c
 endforeach
 
+########### libc files ###########
+
+arch = run_command('uname', '-m',check:true).stdout().strip()
+
+if run_command('[', '-d', 'src/libc/'+arch, ']').returncode() == 0
+    libc_srcs += run_command('find', 'src/libc/'+arch,'-type','f',check:true).stdout().strip().split('\n')
+    # do not include glibc or musl stdlib and link with glibc or musl
+    if run_command('/bin/sh', '-c', 'ldd --version | grep musl').returncode() == 0
+        prep_args += ['-nostdlib', '-lc.musl']
+    else
+        prep_args += ['-nostdlib', '-lc']
+    endif
+endif
+
+
 ########### generate vala sources ###########
 
 generated_sources=[]
@@ -203,15 +219,15 @@ install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('
 ########### build tools ###########
 if get_option('tools')
     # ymp cli
-    executable('ymp-cli', 'src/cli/main.vala', dependencies: deps, link_args: prep_args, link_with: libymp)
+    executable('ymp-cli', 'src/cli/main.vala',libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
     # ymp shell
-    executable('ymp-shell', 'src/cli/shell.c', dependencies: deps, link_args: prep_args, link_with: libymp)
+    executable('ymp-shell', 'src/cli/shell.c', libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-shell', install_dir : get_option('bindir'),rename : 'ympsh')
 endif
 ########### build test ###########
 if get_option('test')
-    executable('ymp-test', 'test/test.vala', dependencies: deps, link_args: prep_args, link_with: libymp)
+    executable('ymp-test', 'test/test.vala', libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
 endif
 
 ########### build scripts ###########
