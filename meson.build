@@ -190,6 +190,7 @@ arch = run_command('uname', '-m',check:true).stdout().strip()
 
 if run_command('[', '-d', 'src/libc/'+arch, ']').returncode() == 0
     libc_srcs += run_command('find', 'src/libc/'+arch,'-type','f',check:true).stdout().strip().split('\n')
+    libc_srcs += ['src/libc/start.c']
     # do not include glibc or musl stdlib and link with glibc or musl
     if run_command('/bin/sh', '-c', 'ldd --version | grep musl').returncode() == 0
         prep_args += ['-nostdlib', '-lc.musl']
