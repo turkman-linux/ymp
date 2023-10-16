@@ -184,18 +184,6 @@ foreach c : conf
     args += '-D'+c
 endforeach
 
-########### libc files ###########
-
-arch = run_command('uname', '-m',check:true).stdout().strip()
-if run_command('/bin/bash', '-c', 'ldd --version |& grep musl').returncode() != 0 and not get_option('test')
-    if run_command('[', '-d', 'src/libc/'+arch, ']').returncode() == 0
-        libc_srcs += run_command('find', 'src/libc/'+arch,'-type','f',check:true).stdout().strip().split('\n')
-        libc_srcs += ['src/libc/start.c']
-        prep_args += ['-nostdlib', '-lc']
-    endif
-endif
-
-
 ########### generate vala sources ###########
 
 generated_sources=[]
