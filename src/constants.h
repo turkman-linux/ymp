@@ -19,3 +19,7 @@
 #else
     #define getArch() "UNKNOWN"
 #endif
+// debug function remove if non debug
+#ifndef debug
+    #define debug(A)
+#endif

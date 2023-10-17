@@ -2,6 +2,9 @@ SHELL=/bin/bash
 build: clean
 	meson setup build --prefix=/usr -Ddoc=true -Ddebug=true -Dscripts=true -Dlibbrotli=false
 	ninja -C build
+release: clean
+	meson setup build --prefix=/usr -Ddoc=true -Ddebug=false -Dscripts=true -Dlibbrotli=false
+	ninja -C build
 
 static: clean
 	meson setup build --prefix=/usr -Ddoc=true -Ddebug=true -Dstatic=true -Dscripts=true -Dlibbrotli=false

@@ -168,13 +168,15 @@ void writefile(char* path, char* ctx){
     write_to_file(path,"%s", ctx);
 }
 
-#ifndef debug
+#ifdef debug
 void debug(char* msg);
-char* str_add(char* s1, char* s2);
 #endif
+char* str_add(char* s1, char* s2);
 
 int isfile(char* path){
+    #ifdef debug
     debug(str_add("Check file: ", path));
+    #endif
     int fs = stat (path, &st);
     int ls = lstat (path, &st);
     return (!ls || !fs) && ! isdir (path);

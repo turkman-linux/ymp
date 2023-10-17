@@ -15,11 +15,13 @@ public extern void print (string msg);
 //DOC: WARNING: message
 //DOC: ```
 public extern void warning (string msg);
+#if debug
 //DOC: `void debug (string message):`
 //DOC: write debug messages. Its only print if debug mode enabled.
 public extern void debug (string msg);
 //DOC: `void info (string message):`
 //DOC: write additional info messages.
+#endif
 public extern void info (string msg);
 
 //DOC: `void print_stderr (string message):`
@@ -30,6 +32,7 @@ public void warning_fn (string message) {
     print_stderr ("%s: %s".printf (colorize (_ ("WARNING"), yellow), message));
 }
 
+#if debug
 private long last_debug_time = -1;
 public void debug_fn (string message) {
     if (last_debug_time == -1) {
@@ -38,6 +41,7 @@ public void debug_fn (string message) {
     print_stderr ("[%s:%d]: %s".printf (colorize (_ ("DEBUG"), blue), (int) (get_epoch () - last_debug_time) , message));
     last_debug_time = get_epoch();
 }
+#endif
 
 public void info_fn (string message) {
     print_stderr ("%s: %s".printf (colorize (_ ("INFO"), green), message));
