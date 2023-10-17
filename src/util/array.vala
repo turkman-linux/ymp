@@ -104,6 +104,9 @@ public class array {
     //DOC: `string[] get ():`
     //DOC: return as string array
     public string[] get () {
+        if (a == null){
+            return {};
+        }
         if (rmsize == 0) {
             return a;
         }else {
