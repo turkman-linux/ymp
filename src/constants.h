@@ -23,3 +23,5 @@
 #ifndef debug
     #define debug(A)
 #endif
+// define some functions
+#define pwd GLib.Environment.get_current_dir

@@ -98,12 +98,6 @@ public void cd (string path) {
     GLib.Environment.set_current_dir (path);
 }
 
-//DOC: `string pwd ():`
-//DOC: return current directory path
-public string pwd () {
-    return GLib.Environment.get_current_dir ();
-}
-
 // libc function (from stdio.h)
 public extern int remove (string path);
 public extern int rmdir (string path);
