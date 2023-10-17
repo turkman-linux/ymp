@@ -1,3 +1,8 @@
+#if no_locale
+string _(string msg){
+    return msg;
+}
+#endif
 int main (string[] args) {
     /*
     ██████╗  ██╗

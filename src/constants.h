@@ -23,5 +23,9 @@
 #ifndef debug
     #define debug(A)
 #endif
+// no locale option
+#ifdef no_locale
+    #define _(A) A
+#endif
 // define some functions
 #define pwd GLib.Environment.get_current_dir

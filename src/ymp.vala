@@ -12,9 +12,6 @@
 //DOC: ```
 
 #if no_locale
-public string _ (string msg) {
-    return msg;
-}
 #else
 public const string GETTEXT_PACKAGE="ymp";
 #endif
