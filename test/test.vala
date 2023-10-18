@@ -26,7 +26,7 @@ void main (string[] args) {
     // file test
     print ("File test");
     readfile ("./test/main.c");
-    string curdir = pwd ();
+    string curdir = GLib.Environment.get_current_dir ();
     cd ("..");
 
     // directory test
@@ -37,7 +37,6 @@ void main (string[] args) {
     create_dir ("test/dir");
     writefile ("test/dir/test.txt", "ymp");
     remove_all ("test");
-    pwd ();
 
     // logger test
     print ("Logging test");
