@@ -128,7 +128,6 @@ sources = ['src/ymp.vala',
            'src/settings.vala',
            'src/wslblock.vala',
            'src/ccode.vala',
-           'ctx.vala',
            'data/ymp-extra.h'
           ]
 
@@ -193,6 +192,7 @@ foreach valasrc : sources
     generated_sources += '.generated'/valasrc
 endforeach
 
+generated_sources += ['ctx.vala']
 ########### build libymp ###########
 if get_option('static')
     libymp = static_library('ymp', generated_sources, dependencies: deps, link_args: args)
