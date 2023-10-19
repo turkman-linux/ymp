@@ -10,7 +10,11 @@ public int run_args(string[] args){
             "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
             "OPERATION="+get_value("OPERATION")
         };
-
+        foreach(string name in get_variable_names()){
+            if(name.up() == name){
+                env += name+"="+get_value(name);
+            }
+        }
         int status;
         GLib.Process.spawn_sync (pwd(),
             args,
@@ -36,6 +40,11 @@ public int run_args_silent(string[] args){
             "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
             "OPERATION="+get_value("OPERATION")
         };
+        foreach(string name in get_variable_names()){
+            if(name.up() == name){
+                env += name+"="+get_value(name);
+            }
+        }
         int status;
         string devnull;
         GLib.Process.spawn_sync (pwd(),

@@ -157,8 +157,8 @@ endif
 # debug
 if get_option('debug')
     add_project_arguments('--debug', language: 'vala')
-    add_project_arguments('-D', 'DEBUG', language: 'vala')
-    args += ['-DDEBUG', '-g3']
+    args += ['-g3']
+    conf += ['DEBUG']
 endif
 
 # colorize options

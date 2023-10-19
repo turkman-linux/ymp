@@ -20,7 +20,7 @@
     #define getArch() "UNKNOWN"
 #endif
 // debug function remove if non debug
-#ifndef debug
+#ifndef DEBUG
     #define debug(A)
 #endif
 // no locale option

@@ -13,7 +13,7 @@ void cprint(char* msg);
 void cprint_stderr(char* msg);
 void cprint_dummy(char* msg);
 void warning_fn(char* msg);
-#ifdef debug
+#ifdef DEBUG
 void debug_fn(char* msg);
 #endif
 void info_fn(char* msg);
@@ -27,7 +27,7 @@ fn_logger print_ptr = cprint;
 fn_logger print_stderr_ptr = cprint_stderr;
 fn_logger warning_ptr = warning_fn;
 fn_logger info_ptr = cprint_dummy;
-#ifdef debug
+#ifdef DEBUG
 fn_logger debug_ptr = cprint_dummy;
 #endif
 
@@ -85,7 +85,7 @@ void info(char* msg){
         info_ptr(msg);
     }
 }
-#ifdef debug
+#ifdef DEBUG
 void debug(char* msg){
     if(debug_ptr){
         debug_ptr(msg);
@@ -107,7 +107,7 @@ void logger_init(){
     if(get_bool("verbose")){
         info_ptr = info_fn;
     }
-    #ifdef debug
+    #ifdef DEBUG
     if(get_bool("debug")){
         debug_ptr = debug_fn;
     }
