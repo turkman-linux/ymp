@@ -2,13 +2,14 @@ private class code_runner_job {
     public string name;
     public string uses;
     public string image;
+    public string directory;
     public string[] commands;
 }
 
 private  class code_runner_plugin {
     public string name;
     public string ctx;
-    public signal void init(string image);
+    public signal void init(string image, string directory);
     public signal int run(string command);
     public signal void clean();
 }
@@ -40,9 +41,13 @@ public class code_runner {
             job.name = area_name;
             job.uses = yaml.get_value(area,"uses");
             job.image = yaml.get_value(area,"image");
+            job.directory = yaml.get_value(area,"directory");
             job.commands = yaml.get_array(area,"run");
             if (job.commands.length == 0) {
                 job.commands = {yaml.get_value(area,"run")};
+            }
+            if(job.directory == ""){
+                job.directory = pwd ();
             }
             jobs += job;
         }
@@ -70,7 +75,7 @@ public class code_runner {
         foreach(code_runner_plugin p in plugins) {
             if(p.name == job.uses){
                 print(colorize("Init plugin:",green)+p.name);
-                p.init(job.image);
+                p.init(job.image, job.directory);
                 print(colorize("Run plugin:",green)+p.name);
                 foreach(string cmd in job.commands){
                     int status = p.run(cmd);
@@ -96,9 +101,9 @@ private code_runner_plugin[] get_code_runner_plugins(){
     // docker plugin
     var docker = new code_runner_plugin();
     docker.name = "docker";
-    docker.init.connect((image)=>{
+    docker.init.connect((image, directory)=>{
         run_args({"docker", "pull", image});
-        docker.ctx = getoutput("docker run -it -d -v $PWD:/root '%s' 2>/dev/null".printf(image.replace("'",""))).strip();
+        docker.ctx = getoutput("docker run -it -d -v '%s':/root '%s' 2>/dev/null".printf(directory.replace("'","\\'"), image.replace("'",""))).strip();
     });
     docker.run.connect((command)=>{
         return run_args({"docker", "exec", docker.ctx, "sh", "-c", command});
@@ -110,11 +115,16 @@ private code_runner_plugin[] get_code_runner_plugins(){
     // local plugin
     var local = new code_runner_plugin();
     local.name = "local";
-    local.init.connect((image)=>{
+    local.init.connect((image, directory)=>{
+        local.ctx = directory;
         return;
     });
     local.run.connect((command)=>{
-        return run_args({"sh", "-c", command});
+        string cur = pwd ();
+        cd(local.ctx);
+        int status = run_args({"sh", "-c", command});
+        cd (cur);
+        return status;
     });
     local.clean.connect(()=>{
         return;
