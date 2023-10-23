@@ -93,7 +93,6 @@ private class script_label {
 }
 public class Ymp {
     process[] proc;
-    private int iflevel = 0;
 
     //DOC: `void Ymp.add_process (string type, string[] args):`
     //DOC: add ymp process using **type** and **args**
@@ -121,7 +120,10 @@ public class Ymp {
     //DOC: run ymp process then if succes remove
     public void run () {
         script_label[] labels = {};
+        int iflevel = 0;
+        int last_i = -1;
         for (int i=0;i < proc.length;i++) {
+            debug("Current:%d Last:%d Type:%s".printf(i, last_i, proc[i].type));
             long start_time = get_epoch ();
             if (proc[i].type == "label") {
                 script_label l = new script_label ();
@@ -130,6 +132,7 @@ public class Ymp {
                 if (! (l in labels)) {
                     labels += l;
                 }
+                continue;
             }
 
             if (proc[i].type == "if") {
@@ -158,12 +161,20 @@ public class Ymp {
             }
             if (proc[i].type == "goto") {
                 string name = proc[i].args[0];
+                last_i = i;
                 foreach (script_label l in labels) {
                     if (l.name == name) {
                         i = l.line;
                         iflevel = 0;
                         break;
                     }
+                }
+                continue;
+            }
+            if (proc[i].type == "ret") {
+                if(last_i >= 0){
+                    i = last_i;
+                    last_i = -1;
                 }
                 continue;
             }
@@ -201,6 +212,13 @@ public class Ymp {
             }
             string[] proc_args = split_args(line);
             if (proc_args[0] != null) {
+                if(proc_args[0] == "include"){
+                    foreach(string path in proc_args[1:]){
+                        string fdata = readfile(path+".ympsh");
+                        add_script(fdata);
+                    }
+                    continue;
+                }
                 add_process (proc_args[0], proc_args[1:]);
             }
         }

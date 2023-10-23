@@ -15,6 +15,7 @@ public int exec_main (string[] args) {
     print_stderr (_ ("Command %s done.".printf (colorize (cmd, blue))));
     return status;
 }
+
 void exec_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
@@ -26,4 +27,5 @@ void exec_init () {
     op.help.shell_only = true;
     op.help.add_parameter ("--silent", _ ("run without output"));
     add_operation (op);
+
 }
