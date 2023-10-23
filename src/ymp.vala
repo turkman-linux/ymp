@@ -210,6 +210,7 @@ public class Ymp {
         string cur = "";
         char c = '\0';
         char cc = '\0';
+        char qc = '\0';
         int type = 0; // 0 = normal 1 = exec 2 = quota
         for(int i = 0; i < line.length ; i++){
             c = line[i];
@@ -238,10 +239,12 @@ public class Ymp {
                 continue;
             }
             if((c == '"' || c == '\'') && cc != '\\'){
-                if(type != 2){
-                    type = 2;
-                }else{
+                if(type == 2 && qc == c){
                     type = 0;
+                    qc = '\0';
+                }else if(type == 0){
+                    type = 2;
+                    qc = c;
                 }
                 continue;
             }
