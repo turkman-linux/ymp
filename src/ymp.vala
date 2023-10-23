@@ -237,7 +237,7 @@ public class Ymp {
                 }
                 continue;
             }
-            if(c == '"' && cc != '\\'){
+            if((c == '"' || c == '\'') && cc != '\\'){
                 if(type != 2){
                     type = 2;
                 }else{
