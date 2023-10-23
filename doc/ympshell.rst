@@ -74,4 +74,24 @@ You can define label and use **goto** word like this
 
 This program can simulate while loop
 
+ret keyworld
+^^^^^^^^^^^^
+If you use **goto** current code point saved. If you use **ret** saved point restored.
+
+.. code-block:: shell
+
+	if eq 0 1
+	  label hello
+	    echo hello
+	    ret
+	endif
+	if eq 0 1
+	  label word
+	    echo world
+	    ret
+	endif
+	goto hello
+	goto world
+
+This program can simulate functions.
 
