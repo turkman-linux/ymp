@@ -192,6 +192,13 @@ foreach valasrc : sources
     generated_sources += '.generated'/valasrc
 endforeach
 
+if 
+
+if get_option('nolibc_path') != ""
+    args += ['-nostdlib', '-I'+get_option('nolibc_path')]
+endif
+
+
 generated_sources += ['ctx.vala']
 ########### build libymp ###########
 if get_option('static')
