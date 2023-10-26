@@ -11,6 +11,10 @@ char* get_value(char* variable);
 int get_bool(char* variable);
 #endif
 
+#ifndef PATH_MAX
+#define PATH_MAX 1024
+#endif
+
 static size_t write_data_to_file(void *ptr, size_t size, size_t nmemb, void *stream){
   size_t written = fwrite(ptr, size, nmemb, (FILE *)stream);
   return written;

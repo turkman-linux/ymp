@@ -31,6 +31,10 @@ int afilter = 0;
 
 #include <limits.h>
 
+#ifndef PATH_MAX
+#define PATH_MAX 1024
+#endif
+
 
 #ifndef get_bool
 int get_bool(char*variable);

@@ -10,6 +10,7 @@ if meson.get_compiler('vala').version().version_compare('<0.54.9')
 endif
 
 conf = []
+compiler = meson.get_compiler('c')
 message('\x1b[32;1mGenerate:\x1b[;0m','ctx.vala')
 run_command('bash', './tool/mkctx.sh',
     'CONFIGDIR=/'+get_option('sysconfdir'),
@@ -25,15 +26,22 @@ libc_srcs = []
 
 # disable optimization for test
 if not get_option('test')
-    args += ['-O0', '-flto', '-Wall','-lm',
+    args += ['-O3', '-flto', '-Wall','-lm',
             '-fvisibility=hidden', '-Wextra', '-Wno-unused-parameter','-s', '-Os',
             '-Wl,--gc-sections','-ffunction-sections', '-fno-math-errno', '-ffast-math',
-            '-fdata-sections', '-fno-exceptions', '-fno-unwind-tables',
-            '-fno-asynchronous-unwind-tables', '-fno-math-errno',
+            '-fdata-sections', '-fno-exceptions', '-fno-unwind-tables', '-fpack-struct',
+            '-fno-asynchronous-unwind-tables', '-fno-math-errno', '-fcf-protection',
             '-fno-unroll-loops', '-fmerge-all-constants', '-fno-ident', '-ffast-math',
             '-fsingle-precision-constant', '-Wl,--build-id=none', '-Wl,-z,norelro',
-            '-Wl,--hash-style=sysv'
+            '-Wl,--hash-style=sysv', '-fpie', '-fpic', '-Wl,-v', '-Wl,-z,now',
+            '-Wno-ignored-optimization-argument', '-pipe', '-D_FORTIFY_SOURCE=2',
+            '-Wl,--as-needed', '-Wl,--strip-all', '-Wl,-z,max-page-size=0x1000',
+            '-fshort-enums', '-fwhole-program', '-ffreestanding'
     ]
+    if compiler.get_id() == 'clang'
+        args += ['-gembed-source', '-gdwarf-5']
+    endif
+
 endif
 
 # do not include glibc or musl stdlib and link with glibc or musl
@@ -157,8 +165,11 @@ endif
 # debug
 if get_option('debug')
     add_project_arguments('--debug', language: 'vala')
-    args += ['-g3']
+    args += ['-g3', '-grecord-gcc-switches', '-DDEBUG']
     conf += ['DEBUG']
+else
+    args += ['-DNDEBUG']
+    conf += ['NDEBUG']
 endif
 
 # colorize options
