@@ -350,6 +350,7 @@ public Ymp ymp_init (string[] args) {
     logger_init ();
     wsl_block ();
     ctx_init ();
+    build_target_ymp_init();
     #if SHARED
     info (_ ("Plugin manager init"));
     foreach (string lib in find (DISTRODIR)) {

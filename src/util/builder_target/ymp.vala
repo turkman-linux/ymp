@@ -1,31 +1,27 @@
-public class build_target_ymp {
-
-        public builder bd;
-        public string suffix = "ymp";
-        public build_target_ymp(builder build){
-            bd = build;
-        }
-
-        public string create_source_archive () {
-            print (colorize (_ ("Create source package from :"), yellow) + bd.yb.ympbuild_srcpath);
+public void build_target_ymp_init() {
+        build_target ymp_target = new build_target();
+        ymp_target.suffix = "ymp";
+        ymp_target.name = "ymp";
+        ymp_target.create_source_archive.connect( () => {
+            print (colorize (_ ("Create source package from :"), yellow) + ymp_target.builder.ymp_build.ympbuild_srcpath);
             string curdir = pwd ();
-            cd (bd.yb.ympbuild_srcpath);
-            string metadata = bd.yb.get_ympbuild_metadata ();
-            writefile (srealpath (bd.yb.ympbuild_buildpath + "/metadata.yaml"), metadata.strip () + "\n");
+            cd (ymp_target.builder.ymp_build.ympbuild_srcpath);
+            string metadata = ymp_target.builder.ymp_build.get_ympbuild_metadata ();
+            writefile (srealpath (ymp_target.builder.ymp_build.ympbuild_buildpath + "/metadata.yaml"), metadata.strip () + "\n");
             var tar = new archive ();
-            tar.load (bd.yb.ympbuild_buildpath + "/source.zip");
-            foreach (string file in bd.yb.get_ympbuild_array ("source")) {
+            tar.load (ymp_target.builder.ymp_build.ympbuild_buildpath + "/source.zip");
+            foreach (string file in ymp_target.builder.ymp_build.get_ympbuild_array ("source")) {
                 if (!endswith (file, ".ymp") && isfile (file)) {
-                    file = file[ (bd.yb.ympbuild_srcpath).length:];
-                    create_dir (sdirname (bd.yb.ympbuild_buildpath + "/" + file));
-                    copy_file (bd.yb.ympbuild_srcpath + file, bd.yb.ympbuild_buildpath + file);
+                    file = file[ (ymp_target.builder.ymp_build.ympbuild_srcpath).length:];
+                    create_dir (sdirname (ymp_target.builder.ymp_build.ympbuild_buildpath + "/" + file));
+                    copy_file (ymp_target.builder.ymp_build.ympbuild_srcpath + file, ymp_target.builder.ymp_build.ympbuild_buildpath + file);
                 }
             }
-            copy_file (bd.yb.ympbuild_srcpath + "/ympbuild", bd.yb.ympbuild_buildpath + "/ympbuild");
-            cd (bd.yb.ympbuild_buildpath);
+            copy_file (ymp_target.builder.ymp_build.ympbuild_srcpath + "/ympbuild", ymp_target.builder.ymp_build.ympbuild_buildpath + "/ympbuild");
+            cd (ymp_target.builder.ymp_build.ympbuild_buildpath);
             tar.add ("metadata.yaml");
-            foreach (string file in find (bd.yb.ympbuild_buildpath)) {
-                file = file[ (bd.yb.ympbuild_buildpath).length:];
+            foreach (string file in find (ymp_target.builder.ymp_build.ympbuild_buildpath)) {
+                file = file[ (ymp_target.builder.ymp_build.ympbuild_buildpath).length:];
                 if (file[0] == '/') {
                     file = file[1:];
                 }
@@ -40,27 +36,27 @@ public class build_target_ymp {
             set_archive_type ("zip", "none");
             tar.create ();
             cd (curdir);
-            return bd.yb.ympbuild_buildpath + "/source.zip";
-        }
+            return ymp_target.builder.ymp_build.ympbuild_buildpath + "/source.zip";
+        });
 
-        public bool create_files_info () {
+        ymp_target.create_files_info.connect( () => {
             string curdir = pwd ();
-            cd (bd.yb.ympbuild_buildpath + "/output");
+            cd (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output");
             string files_data = "";
             string links_data = "";
             bool unsafe = get_bool ("unsafe");
-            foreach (string path in listdir (bd.yb.ympbuild_buildpath + "/output")) {
+            foreach (string path in listdir (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output")) {
                 if (path == "metadata.yaml" || path == "icon.svg") {
                     continue;
                 }
-                string fpath = bd.yb.ympbuild_buildpath + "/output/" + path;
+                string fpath = ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/" + path;
                 if (issymlink (fpath)) {
                     continue;
                 }else if (!unsafe && isfile (fpath)) {
                     error_add (_ ("Files are not allowed in root directory: /%s").printf (path));
                 }
             }
-            foreach (string file in find (bd.yb.ympbuild_buildpath + "/output")) {
+            foreach (string file in find (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output")) {
                 if (" " in file) {
                     continue;
                 }
@@ -80,12 +76,12 @@ public class build_target_ymp {
                         error_add (_ ("Broken symlink detected:%s%s => %s").printf ("\n    ", file, link));
                         continue;
                     }
-                    file = file[ (bd.yb.ympbuild_buildpath + "/output/").length:];
+                    file = file[ (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/").length:];
                     debug (_ ("Link info add: %s").printf (file));
                     links_data += file + " " + link + "\n";
                     continue;
                 }else {
-                    file = file[ (bd.yb.ympbuild_buildpath + "/output/").length:];
+                    file = file[ (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/").length:];
                     if (file == "metadata.yaml" || file == "icon.svg") {
                         continue;
                     }
@@ -97,15 +93,16 @@ public class build_target_ymp {
                 cd (curdir);
                 return false;
             }
-            writefile (bd.yb.ympbuild_buildpath + "/output/files", files_data);
-            writefile (bd.yb.ympbuild_buildpath + "/output/links", links_data);
+            writefile (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/files", files_data);
+            writefile (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/links", links_data);
             cd (curdir);
             return true;
-        }
-        public bool create_metadata_info () {
-            string metadata = bd.yb.get_ympbuild_metadata ();
+        });
+        
+        ymp_target.create_metadata_info.connect( () => {
+            string metadata = ymp_target.builder.ymp_build.get_ympbuild_metadata ();
             bool unsafe = get_bool ("unsafe");
-            debug ("Create metadata info: " + bd.yb.ympbuild_buildpath + "/output/metadata.yaml");
+            debug ("Create metadata info: " + ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/metadata.yaml");
             var yaml = new yamlfile ();
             yaml.data = metadata;
             string srcdata = yaml.get ("ymp.source");
@@ -190,35 +187,35 @@ public class build_target_ymp {
             if (has_error ()) {
                 return false;
             }
-            bd.output_package_name = name + "_" + version + "_" + release;
-            create_dir(bd.yb.ympbuild_buildpath + "/output/");
-            writefile (bd.yb.ympbuild_buildpath + "/output/metadata.yaml", trim (new_data));
+            ymp_target.builder.output_package_name = name + "_" + version + "_" + release;
+            create_dir(ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/");
+            writefile (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/metadata.yaml", trim (new_data));
             return true;
-        }
+        });
 
-        public void create_data_file () {
-            debug (_ ("Create data file: %s/output/data.tar.gz").printf (bd.yb.ympbuild_buildpath));
+        ymp_target.create_data_file.connect( () => {
+            debug (_ ("Create data file: %s/output/data.tar.gz").printf (ymp_target.builder.ymp_build.ympbuild_buildpath));
             var tar = new archive ();
             if (get_value ("compress") == "none") {
                       set_archive_type ("tar", "none");
-                      tar.load (bd.yb.ympbuild_buildpath + "/output/data.tar");
+                      tar.load (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/data.tar");
             }else if (get_value ("compress") == "gzip") {
                       set_archive_type ("tar", "gzip");
-                      tar.load (bd.yb.ympbuild_buildpath + "/output/data.tar.gz");
+                      tar.load (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/data.tar.gz");
             }else if (get_value ("compress") == "xz") {
                       set_archive_type ("tar", "xz");
-                      tar.load (bd.yb.ympbuild_buildpath + "/output/data.tar.xz");
+                      tar.load (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/data.tar.xz");
             }else {
                       // Default format (gzip)
                       set_archive_type ("tar", "gzip");
-                      tar.load (bd.yb.ympbuild_buildpath + "/output/data.tar.gz");
+                      tar.load (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/data.tar.gz");
             }
             int fnum = 0;
-            foreach (string file in find (bd.yb.ympbuild_buildpath + "/output")) {
+            foreach (string file in find (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output")) {
                 if (isdir (file)) {
                     continue;
                 }
-                file = file[ (bd.yb.ympbuild_buildpath + "/output/").length:];
+                file = file[ (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/").length:];
                 debug (_ ("Compress: %s").printf (file));
                 if (file == "files" || file == "links" || file == "metadata.yaml" || file == "icon.svg") {
                     continue;
@@ -226,30 +223,30 @@ public class build_target_ymp {
                 tar.add (file);
                 fnum++;
             }
-            if (isfile (bd.yb.ympbuild_buildpath + "/output/data.tar.gz")) {
-                remove_file (bd.yb.ympbuild_buildpath + "/output/data.tar.gz");
+            if (isfile (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/data.tar.gz")) {
+                remove_file (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/data.tar.gz");
             }
             if (fnum != 0) {
                 set_archive_type ("tar", "gzip");
                 tar.create ();
             }
-            string hash = calculate_sha1sum (bd.yb.ympbuild_buildpath + "/output/data.tar.gz");
-            int size = filesize (bd.yb.ympbuild_buildpath + "/output/data.tar.gz");
-            string new_data = readfile (bd.yb.ympbuild_buildpath + "/output/metadata.yaml");
+            string hash = calculate_sha1sum (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/data.tar.gz");
+            int size = filesize (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/data.tar.gz");
+            string new_data = readfile (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/metadata.yaml");
             new_data += "    archive-hash: " + hash + "\n";
             new_data += "    arch: " + getArch () + "\n";
             new_data += "    archive-size: " + size.to_string () + "\n";
-            writefile (bd.yb.ympbuild_buildpath + "/output/metadata.yaml", trim (new_data));
+            writefile (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/metadata.yaml", trim (new_data));
 
-        }
+        });
 
-        public string create_binary_package () {
-            print (colorize (_ ("Create binary package from: %s"), yellow).printf (bd.yb.ympbuild_buildpath));
+        ymp_target.create_binary_package.connect( () => {
+            print (colorize (_ ("Create binary package from: %s"), yellow).printf (ymp_target.builder.ymp_build.ympbuild_buildpath));
             string curdir = pwd ();
-            cd (bd.yb.ympbuild_buildpath + "/output");
-            create_data_file ();
+            cd (ymp_target.builder.ymp_build.ympbuild_buildpath + "/output");
+            ymp_target.create_data_file ();
             var tar = new archive ();
-            tar.load (bd.yb.ympbuild_buildpath + "/package.zip");
+            tar.load (ymp_target.builder.ymp_build.ympbuild_buildpath + "/package.zip");
             tar.add ("metadata.yaml");
             tar.add ("files");
             tar.add ("links");
@@ -264,6 +261,7 @@ public class build_target_ymp {
             set_archive_type ("zip", "none");
             tar.create ();
             cd (curdir);
-            return bd.yb.ympbuild_buildpath + "/package.zip";
-        }
+            return ymp_target.builder.ymp_build.ympbuild_buildpath + "/package.zip";
+        });
+        add_build_target(ymp_target);
 }

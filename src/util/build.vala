@@ -1,13 +1,46 @@
+private build_target[] bts;
+public class build_target{
+    public string name;
+    public string suffix;
+    public builder builder;
+    public signal string create_source_archive ();
+    public signal bool create_files_info ();
+    public signal bool create_metadata_info ();
+    public signal void create_data_file ();
+    public signal string create_binary_package();
+}
+
+public void add_build_target(build_target bt){
+    if (bts == null) {
+        bts = {};
+    }
+    bts += bt;
+}
+
 public class builder {
 
         public builder () {
-            yb = new ympbuild ();
-            bt = new build_target_ymp(this);
+            ymp_build = new ympbuild ();
+            string target = get_value("build:target");
+            if(target == ""){
+                target="ymp";
+            }
+            foreach(build_target b in bts){
+                if(b.name == target){
+                    build_target = b;
+                    build_target.builder = this;
+                    break;
+                }
+            }
+            if(build_target == null){
+                error_add(_("Failed to detect build target: %s").printf(target));
+                error(1);
+            }
         }
 
-        public ympbuild yb;
+        public ympbuild ymp_build;
         public string output;
-        public build_target_ymp bt;
+        public build_target build_target;
         public string output_package_name;
         public int build_single (string path) {
             string srcpath=srealpath (path);
@@ -22,7 +55,6 @@ public class builder {
             if (!isdir (output)) {
                 create_dir (output);
             }
-
             if (startswith (path, "git://") || endswith (path, ".git")) {
                 srcpath=get_build_dir () + "/" + sbasename (path);
                 if (isdir (srcpath)) {
@@ -59,13 +91,13 @@ public class builder {
             if (!set_build_target (srcpath)) {
                 return 1;
             }
-            if (!bt.create_metadata_info ()) {
+            if (!build_target.create_metadata_info ()) {
                 return 1;
             }
             // Set build target again (emerge change build target)
-            yb.set_ympbuild_srcpath (srcpath);
+            ymp_build.set_ympbuild_srcpath (srcpath);
             string build_path = srealpath (get_build_dir () + "/" + calculate_md5sum (srcpath + "/ympbuild"));
-            yb.set_ympbuild_buildpath (build_path);
+            ymp_build.set_ympbuild_buildpath (build_path);
 
 
             info ("Check build dependencies");
@@ -78,7 +110,7 @@ public class builder {
             }
             if (!get_bool ("no-source")) {
                 info ("Create source package");
-                srcpkg = bt.create_source_archive ();
+                srcpkg = build_target.create_source_archive ();
                 if (srcpkg == "") {
                     return 1;
                 }
@@ -93,7 +125,7 @@ public class builder {
                 if (!build_package ()) {
                     return 1;
                 }
-                binpkg = bt.create_binary_package ();
+                binpkg = build_target.create_binary_package ();
                 if (binpkg == "") {
                     return 1;
                 }
@@ -102,7 +134,7 @@ public class builder {
                         return 1;
                     }
                 }
-                string target = output + "/" + output_package_name + "_" + getArch () + "."+bt.suffix;
+                string target = output + "/" + output_package_name + "_" + getArch () + "."+build_target.suffix;
                 move_file (binpkg, target);
             }
             return 0;
@@ -113,7 +145,7 @@ public class builder {
                  warning (_ ("Dependency check disabled"));
                  return true;
             }
-            string metadata = yb.get_ympbuild_metadata ();
+            string metadata = ymp_build.get_ympbuild_metadata ();
             var yaml = new yamlfile ();
             yaml.data = metadata;
             yaml.data = yaml.get ("ymp.source");
@@ -155,14 +187,14 @@ public class builder {
         }
 
         public bool set_build_target (string src_path) {
-            yb.set_ympbuild_srcpath (src_path);
-            string build_path = srealpath (get_build_dir () + "/" + calculate_md5sum (yb.ympbuild_srcpath + "/ympbuild"));
+            ymp_build.set_ympbuild_srcpath (src_path);
+            string build_path = srealpath (get_build_dir () + "/" + calculate_md5sum (ymp_build.ympbuild_srcpath + "/ympbuild"));
             remove_all (build_path);
-            yb.set_ympbuild_buildpath (build_path);
+            ymp_build.set_ympbuild_buildpath (build_path);
             if (isdir (build_path)) {
                 remove_all (build_path);
             }
-            if (!yb.ympbuild_check ()) {
+            if (!ymp_build.ympbuild_check ()) {
                 error_add (_ ("ympbuild file is invalid!"));
                 return false;
             }
@@ -174,22 +206,22 @@ public class builder {
             if (no_src) {
                 return true;
             }
-            string[] md5sums = yb.get_ympbuild_array ("md5sums");
-            foreach (string src in yb.get_ympbuild_array ("source")) {
+            string[] md5sums = ymp_build.get_ympbuild_array ("md5sums");
+            foreach (string src in ymp_build.get_ympbuild_array ("source")) {
                 if (src == "" || md5sums[i] == "") {
                     continue;
                 }
-                string srcfile = yb.ympbuild_buildpath + "/" + sbasename (src);
-                string ymp_source_cache = get_build_dir () + "/.cache/" + yb.get_ympbuild_value ("name") + "/";
+                string srcfile = ymp_build.ympbuild_buildpath + "/" + sbasename (src);
+                string ymp_source_cache = get_build_dir () + "/.cache/" + ymp_build.get_ympbuild_value ("name") + "/";
                 create_dir (ymp_source_cache);
                 if (isfile (srcfile)) {
                     info (_ ("Source file already exists."));
                 }else if (isfile (ymp_source_cache + "/" + sbasename (src))) {
                     info (_ ("Source file import from cache."));
                     copy_file (ymp_source_cache + "/" + sbasename (src), srcfile);
-                }else if (isfile (yb.ympbuild_srcpath + "/" + src)) {
+                }else if (isfile (ymp_build.ympbuild_srcpath + "/" + src)) {
                     info (_ ("Source file copy from cache."));
-                    copy_file (yb.ympbuild_srcpath + "/" + src, srcfile);
+                    copy_file (ymp_build.ympbuild_srcpath + "/" + src, srcfile);
                 }else {
                     info (_ ("Download: %s").printf (src));
                     fetch (src, ymp_source_cache + "/" + sbasename (src));
@@ -207,10 +239,10 @@ public class builder {
 
         public bool extract_package_sources () {
             string curdir = pwd ();
-            cd (yb.ympbuild_buildpath);
-            print (colorize (_ ("Extracting package resources from:"), yellow) + yb.ympbuild_buildpath);
+            cd (ymp_build.ympbuild_buildpath);
+            print (colorize (_ ("Extracting package resources from:"), yellow) + ymp_build.ympbuild_buildpath);
             var tar = new archive ();
-            foreach (string src in yb.get_ympbuild_array ("source")) {
+            foreach (string src in ymp_build.get_ympbuild_array ("source")) {
                 if (src == "") {
                     continue;
                 }
@@ -225,15 +257,15 @@ public class builder {
         }
 
         public bool build_package () {
-            print (colorize (_ ("Building package from:"), yellow) + yb.ympbuild_buildpath);
+            print (colorize (_ ("Building package from:"), yellow) + ymp_build.ympbuild_buildpath);
             string curdir = pwd ();
-            cd (yb.ympbuild_buildpath);
+            cd (ymp_build.ympbuild_buildpath);
             int status = 0;
             if (!get_bool ("no-build")) {
                 string[] build_actions = {"prepare", "setup", "build"};
                 foreach (string func in build_actions) {
                     info (_ ("Running build action: %s").printf (func));
-                    status = yb.run_ympbuild_function (func);
+                    status = ymp_build.run_ympbuild_function (func);
                     if (status != 0) {
                         error_add (_ ("Failed to build package. Action: %s").printf (func));
                         cd (curdir);
@@ -245,16 +277,16 @@ public class builder {
                 string[] install_actions = {"test", "package"};
                 foreach (string func in install_actions) {
                     info ("Running build action: " + func);
-                    status = yb.run_ympbuild_function (func);
+                    status = ymp_build.run_ympbuild_function (func);
                     if (status != 0) {
                         error_add (_ ("Failed to build package. Action: %s").printf (func));
                         cd (curdir);
                         return false;
                     }
                 }
-                yb.ymp_process_binaries ();
+                ymp_build.ymp_process_binaries ();
             }
-            bt.create_files_info ();
+            build_target.create_files_info ();
             cd (curdir);
             return true;
         }

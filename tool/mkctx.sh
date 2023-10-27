@@ -12,6 +12,11 @@ echo "private string[] operation_names;" >> ctx.vala
 function list_operations(){
     find src/operations -type f -exec basename {} \; | sed "s/\..*//g" | sort
 }
+
+function list_build_targets(){
+    find src/util/builder_target -type f -exec basename {} \; | sed "s/\..*//g" | sort
+}
+
 function list_txt(){
     find src/shcode -type f -exec basename {} \; | sed "s/\..*//g" | sort
 }
@@ -27,6 +32,9 @@ for op_name in $(list_operations) ; do
     echo -n "\"${op_name}\", "
 done >> ctx.vala
 echo "};" >> ctx.vala
+for target_name in $(list_build_targets) ; do
+    echo  "     build_target_${target_name/-/_}_init();"
+done >> ctx.vala
 for op_name in $(list_operations) ; do
     echo "    ${op_name/-/_}_init();"
 done >> ctx.vala
