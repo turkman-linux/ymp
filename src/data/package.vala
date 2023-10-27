@@ -300,7 +300,7 @@ public class package {
         pkgfile.extract_all ();
         bd.set_build_target (get_build_dir () + "/" + name);
         bd.yb.set_ympbuild_buildpath (get_build_dir () + "/" + name);
-        bd.create_metadata_info ();
+        bd.bt.create_metadata_info ();
         bd.fetch_package_sources ();
         bd.extract_package_sources ();
         bd.build_package ();

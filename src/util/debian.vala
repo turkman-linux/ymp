@@ -87,8 +87,8 @@ public int debian_convert (string file) {
     bd.yb.set_ympbuild_buildpath (output);
     deb_extract (file, output + "/output");
     create_debian_metadata (output + "/output");
-    bd.create_files_info ();
-    string binpkg = bd.create_binary_package ();
+    bd.bt.create_files_info ();
+    string binpkg = bd.bt.create_binary_package ();
     string target = file[:-4]+".ymp";
     if (get_bool ("install")) {
         set_bool ("no-emerge", true);
