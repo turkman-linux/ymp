@@ -40,6 +40,12 @@ int afilter = 0;
 int get_bool(char*variable);
 #endif
 
+#ifndef error_add(
+void error_add(char* msg);
+int has_error();
+void error(int num);
+#endif
+
 void set_archive_type(char* form, char* filt){
     if(strcmp(form,"zip")==0)
         aformat=zip;
@@ -136,7 +142,8 @@ void write_archive(const char *outname, const char **filename) {
                 len = readlink(*filename,link,sizeof(link));
                 if(len < 0){
                     fprintf(stderr,"Broken symlink: %s\n",*filename);
-                    continue;
+                    error_add("Failed to create archive");
+                    break;
                 }
                 link[len] = '\0';
                 #ifdef DEBUG
@@ -168,7 +175,11 @@ void write_archive(const char *outname, const char **filename) {
                 #endif
                 archive_entry_set_filetype(entry, AE_IFREG);
                 fprintf(stderr,"Unknown enty detected: %s (%d)\n",*filename,st.st_mode);
-                continue;
+                error_add("Failed to create archive");
+                break;
+    }
+    if(has_error()){
+        error(2);
     }
     #ifdef DEBUG
     if(get_bool("debug")){

@@ -296,7 +296,10 @@ public class builder {
             }
             ymp_build.ymp_process_binaries();
         }
-        build_target.create_files_info();
+        if(!build_target.create_files_info()){
+            cd(curdir);
+            return false;
+        }
         cd(curdir);
         return true;
     }

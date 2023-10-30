@@ -315,6 +315,23 @@ private string p_realpath (string path) {
     return safedir(cur);;
 }
 
+private string get_fixed_symlink(string source, string target){
+   string[] source_items = ssplit(source,"/");
+   string ret = "";
+   for(int i=source_items.length -1 ; i>0 ; i--){
+       ret += "../";
+   }
+   if (target[0] == '/'){
+       if(ret.length == 0 ){
+           ret += ".";
+       }else{
+           ret = ret[:ret.length-1];
+       }
+   }
+   ret += target;
+   return ret;
+}
+
 //DOC: `string[] find (string path):`
 //DOC: find file and directories with parents
 public string[] find (string path) {
