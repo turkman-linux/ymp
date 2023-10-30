@@ -7,13 +7,14 @@ public int build_operation (string[] args) {
         error (31);
     }
     if (new_args.length == 0) {
-        new_args = {"."};
+        new_args = {pwd()};
     }
     foreach (string arg in new_args) {
         info (_ ("Building %s").printf (arg));
         var bd = new builder ();
         int r = bd.build_single (arg);
         if (r != 0) {
+            error_add("Build path: %s (%s)".printf(bd.ymp_build.ympbuild_buildpath, arg));
             return r;
         }
     }
