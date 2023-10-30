@@ -8,22 +8,18 @@ public string readfile_byte (string path, long n) {
     if (!isfile (path)) {
         return "";
     }
+    long size = get_filesize(path);
     FileStream stream = FileStream.open (path, "r");
     if (stream == null) {
         warning (_ ("Failed to read file: %s").printf (path));
         return "";
     }
 
-    // get file size:
-    stream.seek (0, FileSeek.END);
-    long size = stream.tell ();
-    stream.rewind ();
     if (size == 0) {
         warning (_ ("File is empty: %s").printf (path));
         return "";
     }else if (size < n) {
-        warning (_ ("Read byte size is bigger than file size: %s").printf (path));
-        print (size.to_string () + " " + n.to_string ());
+        warning (_ ("Read byte size is bigger than file size: %s (read: %lu size %lu)").printf (path, n, size));
         return "";
     }else if (n == 0) {
         n = size;
@@ -38,6 +34,19 @@ public string readfile_byte (string path, long n) {
     return (string) buf;
 }
 
+public long get_filesize(string path){
+    FileStream stream = FileStream.open (path, "r");
+    if (stream == null) {
+        warning (_ ("Failed to read file: %s").printf (path));
+        return 0;
+    }
+
+    // get file size:
+    stream.seek (0, FileSeek.END);
+    long size = stream.tell ();
+    stream.rewind ();
+    return size;
+}
 
 //DOC: `string readfile (string path):`
 //DOC: read file from **path** and remove commends
@@ -242,6 +251,13 @@ public string[] listdir (string path) {
 //DOC: return true if file is elf binary
 public bool iself (string path) {
     debug (_ ("Check elf: %s").printf (path));
+    if (!isfile (path)) {
+        return false;
+    }
+    long size = get_filesize(path);
+    if(size < 4){
+        return false;
+    }
     var ctx = readfile_byte (path, 4);
     // .ELF magic bytes
     if (ctx == "") {
@@ -254,6 +270,15 @@ public bool iself (string path) {
 //DOC: return true if file is elf binary
 public bool is64bit (string path) {
     debug (_ ("Check 64bit: %s").printf (path));
+    if (!isfile (path)) {
+        return false;
+    }
+    
+    long size = get_filesize(path);
+    if(size < 4){
+        return false;
+    }
+
     var ctx = readfile_byte (path, 4);
     // first byte after magic is bit size flag
     // 01 = 32bit 02 = 64bit
