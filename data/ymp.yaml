@@ -20,6 +20,8 @@ ymp:
 build:
   # if jobs 0 use all cpu cores
   jobs: 0
+  directory: /tmp/ymp-build
+  target: ymp
   debug: false
   cflags: -O2 -s
   cxxflags: -O2 -s

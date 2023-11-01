@@ -58,9 +58,9 @@ public void shitcat (string data) {
     }
 }
 
-//DOC: `void print_with_cow (string data):`
+//DOC: `void print_with_amogus (string data):`
 //DOC: print message with cow dialog
-public void print_with_cow (string data) {
+public void print_with_amogus (string data) {
     int max = 0;
     foreach (string line in data.split ("\n")) {
         if (line.length > max) {
@@ -95,13 +95,13 @@ public void print_with_cow (string data) {
     for (int i=0;i < max;i++) {
         print_fn ("-", false, false);
     }
-    print (" + ");
-    print ("   \\   ^__^");
-    print ("    \\ (oo)\\_______");
-    print (" (__)\\       )\\/\\");
-    print ("           ||----w |");
-    print ("           ||     ||");
-    print ("");
+    print("");
+    foreach(string line in ssplit(get_amogus(),"\n")){
+        for(int i=0;i < (max / 3);i++){
+            print_fn(" ",false,false);
+        }
+        print(line);
+    }
 
 }
 

@@ -33,7 +33,7 @@ private void settings_init () {
     config_yaml = new yamlfile ();
     set_value_readonly ("destdir", DESTDIR);
     set_value_readonly ("config", CONFIG);
-    set_value_readonly ("builddir", BUILDDIR);
+    set_value_readonly ("build:directory", BUILDDIR);
     set_value_readonly ("version", VERSION);
     string area = "";
     string value = "";
@@ -146,7 +146,7 @@ private void parse_args (string[] args) {
                     set_value (name, value);
                 }else if (name == "destdir") {
                     set_destdir (value);
-                }else if (name == "builddir") {
+                }else if (name == "build:directory") {
                     set_builddir (value);
                 }else if (name == "config") {
                     set_config (value);
