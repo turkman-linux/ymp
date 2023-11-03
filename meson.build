@@ -221,7 +221,7 @@ install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('
 ########### build tools ###########
 if get_option('tools')
     # ymp cli
-    executable('ymp-cli', 'src/cli/main.vala',libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
+    executable('ymp-cli', 'src/cli/main.c',libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
     # ymp shell
     executable('ymp-shell', 'src/cli/shell.c', libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
