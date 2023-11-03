@@ -111,12 +111,15 @@ public class builder {
         }
         if (!get_bool("no-source")) {
             info("Create source package");
+            print(colorize(_("Create source package from :"), yellow) + ymp_build.ympbuild_srcpath);
             srcpkg = build_target.create_source_archive();
             if (srcpkg == "") {
                 return 1;
             }
-            string target = output + "/" + output_package_name + "_source.ymp";
-            move_file(srcpkg, target);
+            if (srcpkg != "ignore") {
+                string target = output + "/" + output_package_name + "_source.ymp";
+                move_file(srcpkg, target);        
+            }
         }
         if (!get_bool("no-binary")) {
             info("Create binary package");
@@ -126,6 +129,7 @@ public class builder {
             if (!build_package()) {
                 return 1;
             }
+            print(colorize(_("Create binary package from: %s"), yellow).printf(build_path));
             binpkg = build_target.create_binary_package();
             if (binpkg == "") {
                 return 1;

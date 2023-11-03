@@ -4,7 +4,6 @@ public void build_target_ymp_init() {
     ymp_target.name = "ymp";
     ymp_target.create_source_archive.connect(() => {
         string buildpath = ymp_target.builder.ymp_build.ympbuild_buildpath;
-        print(colorize(_("Create source package from :"), yellow) + ymp_target.builder.ymp_build.ympbuild_srcpath);
         string curdir = pwd();
         cd(ymp_target.builder.ymp_build.ympbuild_srcpath);
         string metadata = ymp_target.builder.ymp_build.get_ympbuild_metadata();
@@ -258,7 +257,7 @@ public void build_target_ymp_init() {
 
     ymp_target.create_binary_package.connect(() => {
         string buildpath = ymp_target.builder.ymp_build.ympbuild_buildpath;
-        print(colorize(_("Create binary package from: %s"), yellow).printf(buildpath));
+
         string curdir = pwd();
         cd(buildpath + "/output/");
         ymp_target.create_data_file();
