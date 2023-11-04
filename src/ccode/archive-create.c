@@ -40,6 +40,10 @@ int afilter = 0;
 int get_bool(char*variable);
 #endif
 
+#ifndef isexists
+int isexists(char*path);
+#endif
+
 #ifndef error_add
 void error_add(char* msg);
 int has_error();
@@ -101,6 +105,10 @@ void write_archive(const char *outname, const char **filename) {
   char* type;
   #endif
   while (*filename) {
+    if(!isexists(*filename)){
+        fprintf(stderr,"Non-existent enty detected: %s\n",*filename);
+        continue;
+    }
     lstat(*filename, &st);
     entry = archive_entry_new();
     archive_entry_set_pathname(entry, *filename);
@@ -195,10 +203,11 @@ void write_archive(const char *outname, const char **filename) {
         len = read(fd, buff, sizeof(buff));
     }
     close(fd);
-    archive_entry_free(entry);
     filename++;
   }
+  archive_entry_free(entry);
   archive_write_close(a);
+  puts("aaaa");
   archive_write_free(a);
 }
 #endif

@@ -2,6 +2,7 @@ private build_target[] bts;
 public class build_target {
     public string name;
     public string suffix;
+    public string arch;
     public builder builder;
     public signal string create_source_archive();
     public signal bool create_files_info();
@@ -141,7 +142,7 @@ public class builder {
                     return 1;
                 }
             }
-            string target = output + "/" + output_package_name + "_" + getArch() + "." + build_target.suffix;
+            string target = output + "/" + output_package_name + "_" + build_target.arch + "." + build_target.suffix;
             move_file(binpkg, target);
         }
         return 0;

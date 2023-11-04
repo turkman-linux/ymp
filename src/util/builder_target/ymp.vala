@@ -2,6 +2,7 @@ public void build_target_ymp_init() {
     build_target ymp_target = new build_target();
     ymp_target.suffix = "ymp";
     ymp_target.name = "ymp";
+    ymp_target.arch = getArch();
     ymp_target.create_source_archive.connect(() => {
         string buildpath = ymp_target.builder.ymp_build.ympbuild_buildpath;
         string curdir = pwd();

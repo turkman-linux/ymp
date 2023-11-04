@@ -2,6 +2,7 @@ public void build_target_dummy_init() {
     build_target dummy_target = new build_target();
     dummy_target.suffix = "dummy";
     dummy_target.name = "dummy";
+    dummy_target.arch = "none";
     dummy_target.create_source_archive.connect(() => {
         writefile("/tmp/dummy-src", "");
         return "/tmp/dummy-src";

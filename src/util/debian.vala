@@ -27,10 +27,10 @@ public int deb_extract (string debfile, string output) {
 }
 
 public int deb_create (string fpath, string output) {
-    // create data.tar.gz
+    // create data.tar.xz
     var data = new archive ();
     string path = srealpath (fpath);
-    data.load (output + "/data.tar.gz");
+    data.load (output + "/data.tar.xz");
     string curdir = pwd ();
     cd (path);
     string md5sum_data = "";
@@ -46,19 +46,18 @@ public int deb_create (string fpath, string output) {
             data.add (file);
         }
     }
-    set_archive_type ("tar", "gzip");
-    data.create ();
-    cd (curdir);
     // update md5sums
     writefile (path + "/DEBIAN/md5sums", md5sum_data);
-    // create control.tar.gz
+    set_archive_type ("tar", "xz");
+    data.create ();
+    // create control.tar.xz
     cd (path + "/DEBIAN");
     var control = new archive ();
-    control.load (output + "/control.tar.gz");
+    control.load (output + "/control.tar.xz");
     foreach (string file in listdir (".")) {
         control.add (file);
     }
-    set_archive_type ("tar", "gzip");
+    set_archive_type ("tar", "xz");
     control.create ();
     writefile (output + "/debian-binary", "2.0\n");
     cd (output);
@@ -67,13 +66,13 @@ public int deb_create (string fpath, string output) {
     var debfile = new archive ();
     debfile.load (target);
     debfile.add ("debian-binary");
-    debfile.add ("control.tar.gz");
-    debfile.add ("data.tar.gz");
+    debfile.add ("control.tar.xz");
+    debfile.add ("data.tar.xz");
     set_archive_type ("ar", "none");
     debfile.create ();
     remove_file ("debian-binary");
-    remove_file ("control.tar.gz");
-    remove_file ("data.tar.gz");
+    remove_file ("control.tar.xz");
+    remove_file ("data.tar.xz");
     cd (curdir);
     return 0;
 }
