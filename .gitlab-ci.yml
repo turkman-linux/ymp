@@ -8,10 +8,11 @@ debian:
   script:
     - apt update
     - apt full-upgrade -y
-    - apt install meson gcc valac gobject-introspection --no-install-recommends -y
+    - apt install meson gcc valac gobject-introspection patchelf--no-install-recommends -y
     - apt install libarchive-dev libreadline-dev libcurl4-openssl-dev libbrotli-dev libmagic-dev libidn2-0-dev libpsl-dev --no-install-recommends -y
     - meson build -Ddebug=true -Dtools=true -Dlibbrotli=false -Dtest=true
     - ninja -C build
+    - bash scripts/remove-symver build/libymp.so build/ymp-cli build/ymp-shell
     - cd build && timeout 30 ./ymp-test || true
     - ninja install
 
@@ -24,10 +25,11 @@ archlinux:
       - build
   script:
     - pacman -Syyu --noconfirm
-    - pacman -Sy gcc vala gobject-introspection --noconfirm
+    - pacman -Sy gcc vala gobject-introspection patchelf --noconfirm
     - pacman -Sy meson curl libarchive readline file --noconfirm
     - meson build -Ddebug=true -Dtools=true -Dtest=true
     - ninja -C build
+    - bash scripts/remove-symver build/libymp.so build/ymp-cli build/ymp-shell
     - cd build && timeout 30 ./ymp-test || true
     - ninja install
 
