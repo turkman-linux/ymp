@@ -193,7 +193,6 @@ public class Ymp {
             float diff = ( (float) (get_epoch () - start_time)) / 1000000;
             info (_ ("Process done in : %f sec").printf (diff));
         }
-        error (1);
     }
 
     //DOC: `void Ymp.add_script (string data):`
@@ -319,8 +318,8 @@ private void directories_init () {
     #if experimental
     if (is_root ()) {
         foreach (string path in find (get_storage ())) {
-            GLib.FileUtils.chmod (path, 0755);
-            Posix.chown (path, 0, 0);
+            chmod (path, 0755);
+            chown (path, 0, 0);
         }
     }
     #endif
@@ -340,7 +339,7 @@ public Ymp ymp_init (string[] args) {
     GLib.Intl.bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     GLib.Intl.textdomain (GETTEXT_PACKAGE);
     #endif
-    Posix.umask (022);
+    c_umask (022);
     Ymp app = new Ymp ();
     if (ymp_activated) {
         return app;

@@ -9,7 +9,7 @@ char* _(char* msg){
 #include <ymp.h>
 #include <stdio.h>
 
-int main(int argc, char** argv){
+int main(int argc, char** argv, char** envp){
 #ifndef no_locale
     setlocale(LC_ALL, "");
     bindtextdomain("ymp", NULL);
@@ -48,6 +48,8 @@ int main(int argc, char** argv){
         ymp_add_process(ymp, argv[1], argv+2, argc-2);
     }
     ymp_run(ymp);
-    error(1);
-    return 0;
+    if(has_error()){
+        error(1);
+    }
+    exit(0);
 }

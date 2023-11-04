@@ -3,7 +3,8 @@ public int exit_main (string[] args) {
     if (args.length > 0) {
         status = int.parse (args[0]);
     }
-    Process.exit (status);
+    exit (status);
+    return 0;
 }
 void exit_init () {
     operation op = new operation ();

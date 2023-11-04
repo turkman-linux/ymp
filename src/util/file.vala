@@ -307,7 +307,7 @@ public string srealpath (string path) {
     string real = path;
     if ("/../" in path || !startswith (path, "/")) {
     #if __GLIBC__
-        real = Posix.realpath (path);
+        real = realpath (path);
     #else
         real = c_realpath (path);
     #endif

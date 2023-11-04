@@ -1,3 +1,4 @@
+
 private array quarantine_file_cache_list;
 private array quarantine_file_conflict_list;
 private array quarantine_file_replaces_list;
@@ -247,7 +248,7 @@ public void quarantine_install () {
             move_file (fname, ftarget);
             GLib.FileUtils.chmod (ftarget, 0755);
             if (is_root ()) {
-                Posix.chown (ftarget, 0, 0);
+                chown (ftarget, 0, 0);
             }
         }
     }

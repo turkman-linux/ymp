@@ -197,3 +197,10 @@ public extern void brainfuck (string code, int size);
 //DOC: `void load_plugin (string path):`
 //DOC: ymp plugin load function
 public extern void load_plugin (string path);
+
+
+//libc functions for vala source
+private extern int chown(char* path, int uid, int gid);
+private extern int c_umask(int value);
+private extern void exit(int status);
+

@@ -40,7 +40,7 @@ int afilter = 0;
 int get_bool(char*variable);
 #endif
 
-#ifndef error_add(
+#ifndef error_add
 void error_add(char* msg);
 int has_error();
 void error(int num);
@@ -174,7 +174,7 @@ void write_archive(const char *outname, const char **filename) {
                 type = "unknown";
                 #endif
                 archive_entry_set_filetype(entry, AE_IFREG);
-                fprintf(stderr,"Unknown enty detected: %s (%d)\n",*filename,st.st_mode);
+                fprintf(stderr,"Unknown enty detected: %s (%d %d)\n",*filename,st.st_mode,AE_IFREG);
                 error_add("Failed to create archive");
                 break;
     }

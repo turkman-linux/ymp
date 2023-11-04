@@ -226,12 +226,14 @@ public void build_target_ymp_init() {
             tar.load(buildpath + "/output/data.tar.gz");
         }
         int fnum = 0;
-        foreach(string file in find(buildpath + "/output/")) {
+        string curdir = pwd();
+        cd(buildpath + "/output/");
+        foreach(string file in find("./")) {
             if (isdir(file)) {
                 continue;
             }
-            file = file[(buildpath + "/output/").length: ];
-            debug(_("Compress: %s").printf(file));
+            file = file[3: ];
+            info(_("Compress: %s").printf(file));
             if (file == "files" || file == "links" || file == "metadata.yaml" || file == "icon.svg") {
                 continue;
             }
@@ -242,9 +244,9 @@ public void build_target_ymp_init() {
             remove_file(buildpath + "/output/data.tar.gz");
         }
         if (fnum != 0) {
-            set_archive_type("tar", "gzip");
             tar.create();
         }
+        cd(curdir);
         string hash = calculate_sha1sum(buildpath + "/output/data.tar.gz");
         int size = filesize(buildpath + "/output/data.tar.gz");
         string new_data = readfile(buildpath + "/output/metadata.yaml");

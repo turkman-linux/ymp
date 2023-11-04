@@ -82,7 +82,7 @@ public void error (int status) {
         }
         errors = null;
         if (status != 0 && !get_bool ("shellmode")) {
-            Process.exit (status);
+            exit (status);
         }
     }
 }

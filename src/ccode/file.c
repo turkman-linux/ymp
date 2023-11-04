@@ -168,6 +168,10 @@ void writefile(char* path, char* ctx){
     write_to_file(path,"%s", ctx);
 }
 
+mode_t c_umask(mode_t mask){
+    return umask(mask);
+}
+
 #ifdef debug
 void debug(char* msg);
 #endif
