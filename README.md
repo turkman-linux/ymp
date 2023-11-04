@@ -67,7 +67,15 @@ ninja -C build
 ```
 * For debian: You may need `-Dlibbrotli=false` option.
 
-### 3. Install source code
+### 3. Remove symbol versions (optional)
+If you want to remove symbol versions:
+```bash
+bash scripts/remove-symver build/libymp.so build/ymp-cli build/ymp-shell
+```
+* **note**: For only glibc.
+
+
+### 4. Install source code
 ```bash
 ninja -C build install
 ldconfig
