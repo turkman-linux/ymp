@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+sync
 if which nm && which patchelf ; then
     : Remove symver
 else

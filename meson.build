@@ -217,16 +217,6 @@ else
     libymp = library('ymp', generated_sources, dependencies: deps, link_args: args)
 endif
 
-# remove symver
-custom_target('symver-libymp',
-    input: libymp,
-    output: 'libymp.sym',
-    command : ['bash',meson.current_source_dir() + '/tool/no_symver.sh',
-         meson.current_build_dir() / 'libymp.so',
-    ],
-    build_by_default: true,
-)
-
 
 install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('libdir'), rename: 'libymp.so')
 
@@ -236,29 +226,9 @@ if get_option('tools')
     cli = executable('ymp-cli', 'src/cli/main.c',libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
 
-    # remove symver
-    custom_target('symver-cli',
-        input: cli,
-        output: 'cli.sym',
-        command : ['bash',meson.current_source_dir() + '/tool/no_symver.sh',
-             meson.current_build_dir() / 'ymp-cli',
-        ],
-        build_by_default: true,
-    )
-
     # ymp shell
     shell = executable('ymp-shell', 'src/cli/shell.c', libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-shell', install_dir : get_option('bindir'),rename : 'ympsh')
-
-    # remove symver
-    custom_target('symver-shell',
-        input: shell,
-        output: 'shell.sym',
-        command : ['bash',meson.current_source_dir() + '/tool/no_symver.sh',
-            meson.current_build_dir() / 'ymp-shell',
-        ],
-        build_by_default: true,
-    )
 
 endif
 

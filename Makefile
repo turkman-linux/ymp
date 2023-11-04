@@ -2,6 +2,8 @@ SHELL=/bin/bash
 build: clean
 	meson setup build --prefix=/usr -Ddoc=true -Ddebug=true -Dscripts=true -Dlibbrotli=false
 	ninja -C build
+	bash scripts/remove-symver build/libymp.so build/ymp-cli build/ymp-shell
+
 release: clean
 	meson setup build --prefix=/usr -Ddoc=true -Ddebug=false -Dscripts=true -Dlibbrotli=false
 	ninja -C build
