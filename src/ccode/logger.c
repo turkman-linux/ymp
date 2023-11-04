@@ -93,6 +93,9 @@ void debug(char* msg){
 }
 #endif
 
+static char buffer[512];
+static char buffer_stderr[512];
+
 // init function
 void logger_init(){
     if(get_bool("quiet")){
@@ -115,4 +118,8 @@ void logger_init(){
     #ifndef NOCOLOR
     colorize_init();
     #endif
+    memset( buffer, '\0', sizeof( buffer ));
+    memset( buffer_stderr, '\0', sizeof( buffer_stderr ));
+    setvbuf(stdout, buffer, _IOFBF, sizeof(buffer));
+    setvbuf(stderr, buffer_stderr, _IOFBF, sizeof(buffer_stderr));
 }

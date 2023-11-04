@@ -41,7 +41,7 @@ int get_bool(char*variable);
 #endif
 
 #ifndef isexists
-int isexists(char*path);
+int isexists(const char*path);
 #endif
 
 #ifndef error_add
@@ -104,6 +104,7 @@ void write_archive(const char *outname, const char **filename) {
   #ifdef DEBUG
   char* type;
   #endif
+  entry = NULL;
   while (*filename) {
     if(!isexists(*filename)){
         fprintf(stderr,"Non-existent enty detected: %s\n",*filename);

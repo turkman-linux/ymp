@@ -57,7 +57,7 @@ public void set_terminal_title (string msg) {
        return;
     #else
     if (!get_bool ("no-color")) {
-        print_fn ("\x1b]0;" + msg + "\x07", false, false);
+        print_fn ("\x1b]2;" + msg + "\x07", false, false);
     }
     #endif
 }
