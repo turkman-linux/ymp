@@ -1,5 +1,10 @@
 #!/bin/bash
 set -e
+if which nm && which patchelf ; then
+    : Remove symver
+else
+    exit 0
+fi
 for file in $@ ; do
     if [ ! -f $file ] ; then
         continue;
