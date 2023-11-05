@@ -8,16 +8,16 @@
 #define cyan 36
 #define white 37
 // CPU Architecture
-#if defined(__x86_64__) || defined(_M_X64)
+#if defined(__x86_64__)
     #define getArch() "x86_64"
     #define getDebianArch() "amd64"
-#elif defined(i386) || defined(__i386__) || defined(__i386) || defined(_M_IX86)
+#elif defined(__i386__) || defined(__i486__) || defined(__i586__) || defined(__i686__)
     #define getArch() "i386"
     #define getDebianArch() "i386"
-#elif defined(__aarch64__) || defined(_M_ARM64)
+#elif defined(__aarch64__)
     #define getArch() "aarch64"
     #define getDebianArch() "arm64"
-#elif defined(__ARM_ARCH_7__) || defined(__ARM_ARCH_7A__) || defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7S__)
+#elif defined(__ARM_EABI__)
     #define getArch() "arm"
     #define getDebianArch() "armhf"
 #else

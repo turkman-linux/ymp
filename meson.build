@@ -11,6 +11,8 @@ endif
 
 conf = []
 compiler = meson.get_compiler('c')
+architecture = run_command('uname', '-m', check:true).stdout().strip()
+
 message('\x1b[32;1mGenerate:\x1b[;0m','ctx.vala')
 run_command('bash', './tool/mkctx.sh',
     'CONFIGDIR=/'+get_option('sysconfdir'),
@@ -223,11 +225,11 @@ install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('
 ########### build tools ###########
 if get_option('tools')
     # ymp cli
-    cli = executable('ymp-cli', 'src/cli/main.c',libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
+    cli = executable('ymp-cli', ['src/cli/main.c','src/start/'+architecture+'.s'], libc_srcs, dependencies: deps, link_args: prep_args + ['-nostdlib', '-lc'], link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
 
     # ymp shell
-    shell = executable('ymp-shell', 'src/cli/shell.c', libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
+    shell = executable('ymp-shell', ['src/cli/shell.c','src/start/'+architecture+'.s'], libc_srcs, dependencies: deps, link_args: prep_args + ['-nostdlib', '-lc'], link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-shell', install_dir : get_option('bindir'),rename : 'ympsh')
 
 endif
