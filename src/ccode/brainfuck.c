@@ -60,3 +60,11 @@ void brainfuck(char * code, unsigned int size) {
     }
   }
 }
+
+void bf_compile(char* code){
+    FILE *output;
+    output = popen ("gcc -x c - $CFLAGS -O3 -s -o /tmp/bf.elf", "w");
+    fputs(code, output);
+    pclose(output);
+}
+

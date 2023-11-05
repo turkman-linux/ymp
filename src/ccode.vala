@@ -193,6 +193,7 @@ public extern string colorize (string msg, int color);
 //DOC: * code: source code
 //DOC: * size: virtual memory size
 public extern void brainfuck (string code, int size);
+private extern void bf_compile(string code);
 //DOC: ### plugin.c
 //DOC: `void load_plugin (string path):`
 //DOC: ymp plugin load function
