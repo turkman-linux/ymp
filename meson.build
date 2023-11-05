@@ -239,7 +239,7 @@ endif
 
 ########### build test ###########
 if get_option('test')
-    executable('ymp-test', 'test/test.vala', dependencies: deps, link_args: prep_args, link_with: libymp)
+    executable('ymp-test', ['test/test.vala','src/start/'+architecture+'.s'], dependencies: deps, link_args: prep_args + ['-nostdlib', '-lc'], link_with: libymp)
 endif
 
 ########### build scripts ###########
