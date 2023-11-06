@@ -46,11 +46,14 @@ if not get_option('test')
 
 endif
 
+start_code = []
+
 # do not include glibc or musl stdlib and link with glibc or musl
-if run_command('/bin/sh', '-c', 'ldd --version | grep musl').returncode() == 0
-    args += ['-nostdlib', '-lc.musl']
+if run_command('/bin/sh', '-c', 'ldd /proc/self/exe | grep /lib/ld-musl-'+architecture+'.so.1').returncode() == 0
+    args += ['-Dmusl']
 else
     args += ['-nostdlib', '-lc']
+    start_code += ['src/start/'+architecture+'.s' ]
 endif
 
 
@@ -225,11 +228,11 @@ install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('
 ########### build tools ###########
 if get_option('tools')
     # ymp cli
-    cli = executable('ymp-cli', ['src/cli/main.c','src/start/'+architecture+'.s'], libc_srcs, dependencies: deps, link_args: prep_args + ['-nostdlib', '-lc'], link_with: libymp)
+    cli = executable('ymp-cli', ['src/cli/main.c'] + start_code, libc_srcs, dependencies: deps, link_args: prep_args , link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
 
     # ymp shell
-    shell = executable('ymp-shell', ['src/cli/shell.c','src/start/'+architecture+'.s'], libc_srcs, dependencies: deps, link_args: prep_args + ['-nostdlib', '-lc'], link_with: libymp)
+    shell = executable('ymp-shell', ['src/cli/shell.c'] + start_code, libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-shell', install_dir : get_option('bindir'),rename : 'ympsh')
 
 endif
@@ -239,7 +242,7 @@ endif
 
 ########### build test ###########
 if get_option('test')
-    executable('ymp-test', ['test/test.vala','src/start/'+architecture+'.s'], dependencies: deps, link_args: prep_args + ['-nostdlib', '-lc'], link_with: libymp)
+    executable('ymp-test', ['test/test.vala'] + start_code, dependencies: deps, link_args: prep_args, link_with: libymp)
 endif
 
 ########### build scripts ###########
