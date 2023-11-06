@@ -63,12 +63,12 @@ void brainfuck(char * code, unsigned int size) {
 
 void bf_compile(char* code){
     FILE *output;
-    output = popen ("gcc -x c - $CFLAGS -nostdlib -lc -O3 -s -o /tmp/bf.elf", "w");
+    output = popen ("gcc -x c - $CFLAGS -o /tmp/bf.elf", "w");
     fputs("#include <stdio.h>\n",output);
     fputs("#include <stdlib.h>\n",output);
     fputs("int ptr = 0;",output);
     fputs("unsigned char cell[1024*1024];",output);
-    fputs("void _start(){",output);
+    fputs("void main(){",output);
     for(int i=0;code[i];i++){
         switch (code[i]) {
             case '<':
