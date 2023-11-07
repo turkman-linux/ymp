@@ -3,6 +3,11 @@
 private array need_install;
 private array cache_list;
 
+private bool ignore_missing;
+private bool reinstall;
+private bool ignore_dependency;
+private bool unsafe;
+
 private void resolve_process (string[] names) {
     foreach (string name in names) {
         info (_ ("Resolve dependency: %s").printf (name));
@@ -37,20 +42,20 @@ private void resolve_process (string[] names) {
                 pkg = get_package_from_file (name);
             }else if (is_available_from_repository (name)) {
                 pkg = get_from_repository (name);
-                if (!get_bool ("reinstall") && is_installed_package (name)) {
+                if (!reinstall && is_installed_package (name)) {
                     if (pkg.release <= get_installed_package (name).release) {
                         continue;
                     }
                 }
             }else if (is_installed_package (name)) {
-                if (!get_bool ("reinstall")) {
+                if (!reinstall) {
                     continue;
                 }else {
                     pkg = get_installed_package (name);
                 }
             }else {
                 string errmsg = _ ("Package is not installable: %s").printf (name);
-                if (!get_bool ("ignore-missing")) {
+                if (!ignore_missing) {
                     error_add (errmsg);
                 } else {
                     warning (errmsg);
@@ -60,10 +65,10 @@ private void resolve_process (string[] names) {
             if (pkg == null) {
                 continue;
             }
-            if (!get_bool ("unsafe") && pkg.is_unsafe()) {
+            if (!unsafe && pkg.is_unsafe()) {
                 error_add("Unsafe package detected! If you want to install please use --unsafe.");
             }
-            if (!get_bool ("ignore-dependency")) {
+            if (!ignore_dependency) {
                 // run recursive function
                 resolve_process (pkg.dependencies);
             }
@@ -178,7 +183,7 @@ private void resolve_reverse_process (string[] names) {
         }else {
             continue;
         }
-        if (get_bool ("ignore-dependency")) {
+        if (ignore_dependency) {
             continue;
         }
         foreach (string pkgname in pkgnames) {
@@ -194,6 +199,11 @@ private void resolve_reverse_process (string[] names) {
 //DOC: `string[] resolve_dependencies (string[] names):`
 //DOC: return package name list with required dependencies
 public string[] resolve_dependencies (string[] names) {
+    // set variables
+    ignore_dependency = get_bool("ignore-dependency");
+    ignore_missing = get_bool("ignore-missing");
+    reinstall = get_bool("reinstall");
+    unsafe = get_bool ("unsafe");
     // reset need list
     need_install = new array ();
     // reset cache list
@@ -206,6 +216,10 @@ public string[] resolve_dependencies (string[] names) {
 //DOC: `string[] resolve_reverse_dependencies (string[] names):`
 //DOC: return package name list with required reverse dependencies
 public string[] resolve_reverse_dependencies (string[] names) {
+    ignore_dependency = get_bool("ignore-dependency");
+    ignore_missing = get_bool("ignore-missing");
+    reinstall = get_bool("reinstall");
+    unsafe = get_bool ("unsafe");
     // reset need list
     need_install = new array ();
     // reset cache list
