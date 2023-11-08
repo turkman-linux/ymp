@@ -38,7 +38,7 @@ char* join(char* f, char** array){
         i++;
     }
     // allocate memory
-    char* ret = malloc(sizeof(char)*len+1);
+    char* ret = calloc(len+1, sizeof(char));
     strcpy(ret,"");
     // copy item len and reset value
     c = i;
@@ -55,7 +55,7 @@ char* join(char* f, char** array){
 }
 
 char* str_add(char* str1, char* str2){
-    char* ret = malloc( (strlen(str1)+strlen(str2)+1)*sizeof(char) );
+    char* ret = calloc( (strlen(str1)+strlen(str2)+1),sizeof(char) );
     strcpy(ret,str1);
     strcat(ret,str2);
     return ret;
@@ -64,7 +64,7 @@ char* str_add(char* str1, char* str2){
 char* trim(char* data) {
     long i=0, j= 0, cnt=0;
     long len = strlen(data);
-    char* str = malloc(len*sizeof(char)+1);
+    char* str = calloc(len+1, sizeof(char));
     strcpy(str,data);
     cnt = count_tab (data);
     j=cnt-1;
@@ -83,7 +83,7 @@ char* trim(char* data) {
     return str;
 }
 char* int_to_string(int num){
-    char *ret = malloc(sizeof(char)*((sizeof(num) - 1) / 3 + 2));
+    char *ret = calloc(((sizeof(num) - 1) / 3 + 2), sizeof(char));
     sprintf(ret, "%d", num);
     return ret;
 }

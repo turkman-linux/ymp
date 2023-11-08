@@ -18,7 +18,7 @@ char* which(char* cmd){
     struct stat buffer;
     int exists;
     char* fileOrDirectory = cmd;
-    char *fullfilename = malloc(1024*sizeof(char));
+    char *fullfilename = calloc(1024, sizeof(char));
 
     char *token = strtok(fullPath, ":");
 

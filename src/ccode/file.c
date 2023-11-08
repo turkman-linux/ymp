@@ -106,7 +106,7 @@ char * c_read_file(const char * f_name, int * err, size_t * f_size) {
             return "";
         }
 
-        buffer = (char * ) malloc(length + 1);
+        buffer = (char * ) calloc(length + 1, sizeof(char));
 
         if (length) {
             read_length = fread(buffer, 1, length, f);
@@ -190,7 +190,6 @@ int isfile(char* path){
 #include <magic.h>
 char* get_magic_mime_type(char* path){
   const char *mime;
-  char* ret;
   magic_t magic;
 
   magic = magic_open(MAGIC_MIME_TYPE);
@@ -198,9 +197,7 @@ char* get_magic_mime_type(char* path){
   mime = magic_file(magic, path);
 
   magic_close(magic);
-  ret = malloc(sizeof(char)*(strlen((char*)magic)+1));
-  strcpy(ret,mime);
-  return ret;
+  return strdup(mime);
 }
 #endif
 #endif

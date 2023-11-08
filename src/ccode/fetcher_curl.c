@@ -27,9 +27,9 @@ struct string {
 
 void init_string(struct string *s) {
   s->len = 0;
-  s->ptr = malloc(s->len+1);
+  s->ptr = calloc(1, s->len+1);
   if (s->ptr == NULL) {
-    fprintf(stderr, "malloc() failed\n");
+    fprintf(stderr, "calloc() failed\n");
     exit(EXIT_FAILURE);
   }
   s->ptr[0] = '\0';

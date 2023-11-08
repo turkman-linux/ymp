@@ -10,7 +10,7 @@ int get_bool(char* name);
 char* int_to_string(int num);
 
 char* ccolorize(char* msg, char* num){
-    char* ret = malloc((strlen(msg)+strlen(num))*(sizeof(char)+13));
+    char* ret = calloc((strlen(msg)+strlen(num)+13), sizeof(char));
     strcpy(ret,"\x1b[");
     strcat(ret,num);
     strcat(ret,"m");

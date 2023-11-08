@@ -62,7 +62,7 @@ char* getoutput(char* command) {
         return "";
     }
     char buff[1024*1024];
-    char* ret = malloc(1);
+    char* ret = calloc(1,sizeof(char));
     ret[0] = '\0';
     while (fgets(buff, sizeof(buff), fp) != NULL)
     {
