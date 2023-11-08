@@ -36,8 +36,10 @@ int afilter = 0;
 #define PATH_MAX 1024
 #endif
 
-
+#ifdef __STRICT_ANSI__
+/* lstat missing if code is ansi */
 int lstat(const char *pathname, struct stat *statbuf);
+#endif
 
 #ifndef get_bool
 int get_bool(char*variable);
