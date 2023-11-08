@@ -79,11 +79,11 @@ int sandbox(char* type, char** args){
         uid_t uid = getuid();
         gid_t gid = getgid();
         unshare(flag);
-        // remap uid
+        /* remap uid */
         write_to_file("/proc/self/uid_map", "%d %d 1", sandbox_uid, uid);
-        // deny setgroups (see user_namespaces(7))
+        /* deny setgroups (see user_namespaces(7)) */
         write_to_file("/proc/self/setgroups", "deny");
-        // remap gid
+        /* remap gid */
         write_to_file("/proc/self/gid_map", "%d %d 1", sandbox_gid, gid);
         sandbox_create_tmpfs("/tmp/ymp-root/");
         sandbox_bind("/usr");

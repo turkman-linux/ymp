@@ -69,7 +69,8 @@ void bf_compile(char* code){
     fputs("int ptr = 0;",output);
     fputs("unsigned char cell[1024*1024];",output);
     fputs("void main(){",output);
-    for(int i=0;code[i];i++){
+    int i=0;
+    for(i=0;code[i];i++){
         switch (code[i]) {
             case '<':
                 fputs("ptr--;",output);

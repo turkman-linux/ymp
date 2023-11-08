@@ -15,6 +15,7 @@
 int aformat = 1;
 int afilter = 0;
 
+#define _XOPEN_SOURCE 700
 
 #ifndef no_libarchive
 #include <sys/types.h>
@@ -35,6 +36,8 @@ int afilter = 0;
 #define PATH_MAX 1024
 #endif
 
+
+int lstat(const char *pathname, struct stat *statbuf);
 
 #ifndef get_bool
 int get_bool(char*variable);
@@ -79,7 +82,7 @@ void write_archive(const char *outname, const char **filename) {
   int fd;
 
   a = archive_write_new();
-  // compress format
+  /* compress format */
   if(afilter == filter_gzip){
       archive_write_add_filter_gzip(a);
   }else if(afilter == filter_xz){
@@ -87,7 +90,7 @@ void write_archive(const char *outname, const char **filename) {
   }else{
       archive_write_add_filter_none(a);
   }
-  // archive format
+  /* archive format */
   if(aformat == tar){
       archive_write_set_format_gnutar(a);
   }else if (aformat == p7zip){
@@ -114,78 +117,69 @@ void write_archive(const char *outname, const char **filename) {
     entry = archive_entry_new();
     archive_entry_set_pathname(entry, *filename);
     archive_entry_set_size(entry, st.st_size);
-    switch (st.st_mode & S_IFMT) {
-            case S_IFBLK:
-                 // block device
-                archive_entry_set_filetype(entry, AE_IFBLK);
-                #ifdef DEBUG
-                type = "block device";
-                #endif
-                break;
-            case S_IFCHR:
-                // character device
-                #ifdef DEBUG
-                type = "character device";
-                #endif
-                archive_entry_set_filetype(entry, AE_IFCHR);
-                break;
-            case S_IFDIR:
-                // directory
-                #ifdef DEBUG
-                type = "directory";
-                #endif
-                archive_entry_set_filetype(entry, AE_IFDIR);
-                break;
-            case S_IFIFO:
-                // FIFO/pipe
-                #ifdef DEBUG
-                type = "fifo";
-                #endif
-                archive_entry_set_filetype(entry, AE_IFIFO);
-                break;
-            case S_IFLNK:
-                // symlink
-                #ifdef DEBUG
-                type = "symlink";
-                #endif
-                len = readlink(*filename,link,sizeof(link));
-                if(len < 0){
-                    fprintf(stderr,"Broken symlink: %s\n",*filename);
-                    error_add("Failed to create archive");
-                    break;
-                }
-                link[len] = '\0';
-                #ifdef DEBUG
-                if(get_bool("debug")){
-                    fprintf(stderr,"Symlink: %s %s\n",*filename, link);
-                }
-                #endif
-                archive_entry_set_filetype(entry, AE_IFLNK);
-                archive_entry_set_symlink(entry, link);
-                break;
-            case S_IFREG:
-                // regular file
-                #ifdef DEBUG
-                type = "file";
-                #endif
-                archive_entry_set_filetype(entry, AE_IFREG);
-                break;
-            case S_IFSOCK:
-                // socket
-                #ifdef DEBUG
-                type = "socket";
-                #endif
-                archive_entry_set_filetype(entry, AE_IFSOCK);
-                break;
-            default:
-                // unknown
-                #ifdef DEBUG
-                type = "unknown";
-                #endif
-                archive_entry_set_filetype(entry, AE_IFREG);
-                fprintf(stderr,"Unknown enty detected: %s (%d %d)\n",*filename,st.st_mode,AE_IFREG);
-                error_add("Failed to create archive");
-                break;
+    if (S_ISBLK(st.st_mode)) {
+        /* block device */
+        archive_entry_set_filetype(entry, AE_IFBLK);
+        #ifdef DEBUG
+        type = "block device";
+        #endif
+    } else if (S_ISCHR(st.st_mode)) {
+        /* character device */
+        #ifdef DEBUG
+        type = "character device";
+        #endif
+        archive_entry_set_filetype(entry, AE_IFCHR);
+    } else if (S_ISDIR(st.st_mode)) {
+        /* directory */
+        #ifdef DEBUG
+        type = "directory";
+        #endif
+        archive_entry_set_filetype(entry, AE_IFDIR);
+    } else if (S_ISDIR(st.st_mode)) {
+        /* FIFO/pipe */
+        #ifdef DEBUG
+        type = "fifo";
+        #endif
+        archive_entry_set_filetype(entry, AE_IFIFO);
+    } else if (S_ISLNK(st.st_mode)) {
+        /* symlink */
+        #ifdef DEBUG
+        type = "symlink";
+        #endif
+        len = readlink(*filename,link,sizeof(link));
+        if(len < 0){
+            fprintf(stderr,"Broken symlink: %s\n",*filename);
+            error_add("Failed to create archive");
+            break;
+        }
+        link[len] = '\0';
+        #ifdef DEBUG
+        if(get_bool("debug")){
+            fprintf(stderr,"Symlink: %s %s\n",*filename, link);
+        }
+        #endif
+        archive_entry_set_filetype(entry, AE_IFLNK);
+        archive_entry_set_symlink(entry, link);
+    } else if (S_ISREG(st.st_mode)) {
+        /* regular file */
+        #ifdef DEBUG
+        type = "file";
+        #endif
+        archive_entry_set_filetype(entry, AE_IFREG);
+    } else if (S_ISSOCK(st.st_mode)) {
+        /* socket */
+        #ifdef DEBUG
+        type = "socket";
+        #endif
+        archive_entry_set_filetype(entry, AE_IFSOCK);
+     } else {
+        /* unknown */
+        #ifdef DEBUG
+        type = "unknown";
+        #endif
+        archive_entry_set_filetype(entry, AE_IFREG);
+        fprintf(stderr,"Unknown enty detected: %s (%d %d)\n",*filename,st.st_mode,AE_IFREG);
+        error_add("Failed to create archive");
     }
     if(has_error()){
         error(2);

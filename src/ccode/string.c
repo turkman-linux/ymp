@@ -22,7 +22,8 @@ void csort(const char* arr[], int n){
 
 long count_tab(char* data){
     long cnt=0;
-    for(long i=0; data[i]==' '; i++) {
+    long i=0;
+    for(i=0; data[i]==' '; i++) {
         cnt++;
     }
     return cnt;
@@ -32,18 +33,18 @@ char* join(char* f, char** array){
     size_t len = 0;
     int i = 0;
     int c = 0;
-    // find output size
+    /* find output size */
     while(array[i]){
         len += strlen(array[i]) + strlen(f);
         i++;
     }
-    // allocate memory
+    /* allocate memory */
     char* ret = calloc(len+1, sizeof(char));
     strcpy(ret,"");
-    // copy item len and reset value
+    /* copy item len and reset value */
     c = i;
     i = 0;
-    // copy items
+    /* copy items */
     while(array[i]){
         strcat(ret,array[i]);
         if(i<c-1){

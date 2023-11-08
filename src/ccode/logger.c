@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-// functions from vala source
+/* functions from vala source */
 void print(char* msg);
 void print_stderr(char* msg);
 void error_add(char* msg);
 int get_bool(char* val);
 void colorize_init();
 
-//headers of functions
+/* headers of functions */
 void cprint(char* msg);
 void cprint_stderr(char* msg);
 void cprint_dummy(char* msg);
@@ -19,10 +19,10 @@ void debug_fn(char* msg);
 void info_fn(char* msg);
 
 
-// function pointer type definitions
+/* function pointer type definitions */
 typedef void (*fn_logger)(char*);
 
-// logger function pointer
+/* logger function pointer */
 fn_logger print_ptr = cprint;
 fn_logger print_stderr_ptr = cprint_stderr;
 fn_logger warning_ptr = warning_fn;
@@ -31,7 +31,7 @@ fn_logger info_ptr = cprint_dummy;
 fn_logger debug_ptr = cprint_dummy;
 #endif
 
-// print functions area
+/* print functions area */
 void print_fn(char* message, int new_line, int err){
     if(strcmp(message,"")==0){
         return;
@@ -61,7 +61,7 @@ void cprint_stderr(char* message){
 void cprint_dummy(char* message){}
 
 
-// logger functions
+/* logger functions */
 void print(char* msg){
     if(print_ptr){
         print_ptr(msg);
@@ -96,7 +96,7 @@ void debug(char* msg){
 static char buffer[512];
 static char buffer_stderr[512];
 
-// init function
+/* init function */
 void logger_init(){
     if(get_bool("quiet")){
         print_ptr = cprint_dummy;

@@ -1,4 +1,4 @@
-// musl libc fix
+/* for musl libc */
 #ifndef F_OK
 #define F_OK 0
 #endif

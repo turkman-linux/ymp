@@ -23,7 +23,7 @@ run_command('bash', './tool/mkctx.sh',
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
 prep_args = ['-L'+meson.current_build_dir(), '-lymp']
-args = prep_args
+args = prep_args + ['-ansi']
 libc_srcs = []
 
 # disable optimization for test
@@ -82,7 +82,7 @@ deps += [dependency('gio-2.0', static: get_option('static'), required:true)]
 
 # glib-2.0
 args += run_command(
-        'pkg-config', '--libs', 'glib-2.0', pkgconfig_arg ,check:true
+        'pkg-config', '--libs', '--cflags' , 'glib-2.0', pkgconfig_arg ,check:true
         ).stdout().strip().split(' ')
 
 #libarchive
