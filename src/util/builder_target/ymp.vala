@@ -42,7 +42,7 @@ public void build_target_ymp_init() {
 
     ymp_target.create_files_info.connect(() => {
         string curdir = pwd();
-        string output = ymp_target.builder.ymp_build.ympbuild_buildpath + "/output";
+        string output = ymp_target.builder.ymp_build.ympbuild_buildpath + "/output/";
         cd(output);
         string files_data = "";
         string links_data = "";
@@ -81,12 +81,12 @@ public void build_target_ymp_init() {
                     error_add(_("Broken symlink detected:%s%s => %s").printf("\n    ", file, link));
                     continue;
                 }
-                file = file[(output).length: ];
+                file = file[(output).length+1: ];
                 debug(_("Link info add: %s").printf(file));
                 links_data += file + " " + link + "\n";
                 continue;
             } else {
-                file = file[(output).length: ];
+                file = file[(output).length+1: ];
                 if (file == "metadata.yaml" || file == "icon.svg") {
                     continue;
                 }
