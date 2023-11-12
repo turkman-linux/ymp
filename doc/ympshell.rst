@@ -87,6 +87,31 @@ Conditions
 		echo equal to 12
 	endif
 
+The keyword **and** compares left and right. Return true if both return true.
+
+.. code-block:: shell
+
+	if eq 1 1 and eq 2 2
+		echo equal
+	endif
+
+The keyword **or** compares left and right. Return true if anyone returns true.
+
+.. code-block:: shell
+
+	if eq 1 1 or eq 2 0
+		echo equal
+	endif
+
+The keyword **not** takes the opposite
+
+.. code-block:: shell
+
+	if not eq 2 0
+		echo not equal
+	endif
+
+
 Labels and goto
 ^^^^^^^^^^^^^^^
 You can define label and use **goto** word like this
@@ -103,7 +128,7 @@ You can define label and use **goto** word like this
 
 This program can simulate while loop
 
-ret keyworld
+ret keyword
 ^^^^^^^^^^^^
 If you use **goto** current code point saved. If you use **ret** saved point restored.
 
