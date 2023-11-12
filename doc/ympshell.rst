@@ -4,8 +4,8 @@ You can create new ymp shell with **ymp shell** command or **ympsh** command. Yo
 
 .. code-block:: shell
 
-    ymp shell
-    -> Ymp >> install git
+	ymp shell
+	-> Ymp >> install git
 
 Commends
 ^^^^^^^^
@@ -13,8 +13,8 @@ You can use **#** symbol or **:** operdation (dummy)
 
 .. code-block:: shell
 
-    # hello world
-    : Hello world
+	# hello world
+	: Hello world
 
 Escape & exclusive characters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -23,33 +23,37 @@ Escape & exclusive characters
 
 .. code-block:: shell
 
-    set num 13
-    echo $num
+	set num 13
+	echo $num
+	# It is not equal to test13
+	echo test$num
+	# It is not equal 13test
+	echo $numtest
 
 **\\** character ignore next characters functions
 
 .. code-block:: shell
 
-    set msg Hello\ World
-    echo $msg
+	set msg Hello\ World
+	echo $msg
 
-**"** character define string
-
-.. code-block:: shell
-
-    set msg "Hello World"
-    echo $msg
-
-**`** character execute command and replace output with yourself (preprocessor)
+**"** and **'** characters define string
 
 .. code-block:: shell
 
-    set dist `uname -a`
-    echo $dist
+	set msg "Hello World"
+	echo $msg
+
+**`** character execute command and replace output with yourself (for preprocesing)
+
+.. code-block:: shell
+
+	set dist `uname -a`
+	echo $dist
 
 Expressions
 ^^^^^^^^^^^
-**$(xxxx)** expression execute command and replace output with yourself. For example:
+**$(xxxx)** expression execute command and replace output with yourself.
 
 .. code-block:: shell
 
@@ -57,12 +61,20 @@ Expressions
 	set uid "$(id -u)"
 	print $uid
 
-**--** stop argument processing
+**--** stop expressioning
 
 .. code-block:: shell
 
 	# print stuff
 	print -- $hello $world
+
+**${xxx}** expression used for variables. 
+
+.. code-block:: shell
+
+	# expr command from shell
+	set num 2
+	print "$(expr ${num} + 2)"
 
 Conditions
 ^^^^^^^^^^
@@ -70,10 +82,10 @@ Conditions
 
 .. code-block:: shell
 
-    read var
-    if eq 12 $var
-        echo equal to 12
-    endif
+	read var
+	if eq 12 $var
+		echo equal to 12
+	endif
 
 Labels and goto
 ^^^^^^^^^^^^^^^
@@ -81,13 +93,13 @@ You can define label and use **goto** word like this
 
 .. code-block:: shell
 
-    label test
-    read var
-    if eq $var 0
-        exit
-    endif
-    echo $var
-    goto test
+	label test
+	read var
+	if eq $var 0
+		exit
+	endif
+	echo $var
+	goto test
 
 This program can simulate while loop
 
@@ -99,13 +111,13 @@ If you use **goto** current code point saved. If you use **ret** saved point res
 
 	if eq 0 1
 	  label hello
-	    echo hello
-	    ret
+		echo hello
+		ret
 	endif
 	if eq 0 1
 	  label word
-	    echo world
-	    ret
+		echo world
+		ret
 	endif
 	goto hello
 	goto world

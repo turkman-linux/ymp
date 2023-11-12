@@ -243,7 +243,7 @@ public class Ymp {
                 continue;
             }
             if(c == '`' && cc != '\\'){
-                if(type != 1){
+                if(type != 0){
                     type = 1;
                     ret.add(cur);
                     cur = "";
@@ -291,6 +291,11 @@ public string[] argument_process (string[] args) {
              new_args += arg;
              continue;
          }
+         foreach(string name in get_variable_names()){
+             if("${%s}".printf(name) in arg){
+                 arg = arg.replace("${%s}".printf(name), get_value(name));
+             }
+         }
          if (startswith(arg,"$(") && endswith(arg,")")){
              arg = getoutput(arg[2:-1]).strip();
          }else if (arg.length > 1 && arg[0] == '$') {
@@ -299,7 +304,6 @@ public string[] argument_process (string[] args) {
          if (!e && startswith (arg, "--")) {
              continue;
          }
-         
          new_args += arg;
      }
      return new_args;
