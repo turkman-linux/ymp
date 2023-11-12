@@ -54,6 +54,28 @@ public int operation_main_raw(string type, string[] args){
 }
 
 public int operation_main (string type, string[] fargs) {
+    string[] nargs = {type};
+    int cur = 0;
+    foreach(string arg in fargs){
+        if (arg == "and") {
+            int s1 = operation_main(nargs[0], nargs[1:]);
+            int s2 = operation_main(fargs[cur+1], fargs[cur+2:]);
+            if(s1 == 0 && s2 == 0){
+                return 0;
+            }
+            return s1 + s2;
+        }
+        if (arg == "or") {
+            int s1 = operation_main(nargs[0], nargs[1:]);
+            int s2 = operation_main(fargs[cur+1], fargs[cur+2:]);
+            if(s1 == 0 || s2 == 0){
+                return 0;
+            }
+            return s1 + s2;
+        }
+        nargs += arg;
+        cur++;
+    }
     string[] args = argument_process (fargs);
     info (_ ("RUN:") + type + ":" + join (" ", args));
     foreach (operation op in ops) {
