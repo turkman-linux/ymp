@@ -138,7 +138,7 @@ char* getoutput(const char* command) {
 
     /* Allocate initial buffer size */
     size_t bufsize = 1024;
-    char* ret = malloc(bufsize * sizeof(char));
+    char* ret = calloc(bufsize, sizeof(char));
     if (!ret) {
         perror("Memory allocation error");
         exit(EXIT_FAILURE);

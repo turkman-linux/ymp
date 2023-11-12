@@ -8,7 +8,7 @@ int get_bool(char* name);
 #endif
 
 #ifdef __STRICT_ANSI__
-#define strdup(A) strcpy(malloc(strlen(A) + 1), A); 
+#define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
 #endif
 
 char* int_to_string(int num);
