@@ -21,15 +21,6 @@ char* which(char* path);
 char* str_add(char* str1, char* str2);
 #endif
 
-#ifndef run_args
-int run_args(char** args);
-#endif
-
-#ifndef run_args_silent
-int run_args_silent(char** args);
-#endif
-
-
 int locked=0;
 void single_instance(){
     if(locked){
@@ -47,31 +38,136 @@ void single_instance(){
 }
 
 int run(char* command){
-    char* cmd[] = {"sh","-c",command};
+    char* cmd[] = {"sh","-c",command, NULL};
     return run_args(cmd);
 }
 
 int run_silent(char* command){
-    char* cmd[] = {"sh","-c",command};
+    char* cmd[] = {"sh","-c",command, NULL};
     return run_args_silent(cmd);
 }
 
-char* getoutput(char* command) {
+pid_t child_pid, wait_pid;
+int status;
+int run_args(char **command) {
+
+    child_pid = fork();
+
+    if (child_pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (child_pid == 0) {
+        /* This code is executed by the child process */
+        execvp(command[0], command);
+
+        /* If execvp fails */
+        perror("execvp");
+        exit(EXIT_FAILURE);
+    } else {
+        /* This code is executed by the parent process */
+        wait_pid = waitpid(child_pid, &status, 0);
+
+        if (wait_pid == -1) {
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+
+        if (WIFEXITED(status)) {
+            /* Child process terminated normally */
+            return WEXITSTATUS(status);
+        } else {
+            /* Child process did not terminate normally */
+            fprintf(stderr, "Child process did not terminate normally.\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
+int run_args_silent(char **command) {
+
+    child_pid = fork();
+
+    if (child_pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (child_pid == 0) {
+
+        /* Redirect standard output and standard error to /dev/null */
+        int devnull = open("/dev/null", O_WRONLY);
+        dup2(devnull, STDOUT_FILENO);
+        dup2(devnull, STDERR_FILENO);
+        close(devnull);
+    
+        /* This code is executed by the child process */
+        execvp(command[0], command);
+
+        /* If execvp fails */
+        perror("execvp");
+        exit(EXIT_FAILURE);
+    } else {
+        /* This code is executed by the parent process */
+        wait_pid = waitpid(child_pid, &status, 0);
+
+        if (wait_pid == -1) {
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+
+        if (WIFEXITED(status)) {
+            /* Child process terminated normally */
+            return WEXITSTATUS(status);
+        } else {
+            /* Child process did not terminate normally */
+            fprintf(stderr, "Child process did not terminate normally.\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
+
+char* getoutput(const char* command) {
     FILE *fp = popen(command, "r");
-    if (!fp){
-        return "";
+    if (!fp) {
+        /* Return NULL on failure */
+        return NULL;
     }
-    char buff[1024*1024];
-    char* ret = calloc(1,sizeof(char));
+
+    /* Allocate initial buffer size */
+    size_t bufsize = 1024;
+    char* ret = malloc(bufsize * sizeof(char));
+    if (!ret) {
+        perror("Memory allocation error");
+        exit(EXIT_FAILURE);
+    }
+
+    /* Initialize the string */
     ret[0] = '\0';
-    while (fgets(buff, sizeof(buff), fp) != NULL)
-    {
-        ret = realloc(ret,sizeof(ret)+sizeof(buff));
-        strcat(ret,buff);
+
+    char buff[1024];
+    while (fgets(buff, sizeof(buff), fp) != NULL) {
+        /* Resize buffer if needed */
+        size_t len = strlen(ret) + strlen(buff) + 1;
+        if (len > bufsize) {
+            /* Double the buffer size */
+            bufsize = len * 2;
+            ret = realloc(ret, bufsize * sizeof(char));
+            if (!ret) {
+                perror("Memory reallocation error");
+                exit(EXIT_FAILURE);
+            }
+        }
+        strcat(ret, buff);
     }
+
     pclose(fp);
-    ret = realloc(ret, (strlen(ret)+1) * sizeof(char));
-    ret[strlen(ret)] = '\0';
+
+    /* Trim the buffer to the actual size needed */
+    ret = realloc(ret, (strlen(ret) + 1) * sizeof(char));
+
     return ret;
 }
 

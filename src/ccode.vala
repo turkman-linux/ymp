@@ -117,6 +117,12 @@ public extern long get_epoch ();
 //DOC: freeze program (for debug)
 public extern void freeze ();
 private extern int ckill (int pid);
+//DOC: `int run_args (string[] args):`
+//DOC: run command from argument array
+public extern int run_args(string[] args);
+//DOC: `int run_args (string[] args):`
+//DOC: run command from argument array silently.
+public extern int run_args_silent(string[] args);
 
 //DOC: `int run_silent (string command):`
 //DOC: run command silently.
