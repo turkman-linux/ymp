@@ -6,7 +6,7 @@ private class code_runner_job {
     public string[] commands;
 }
 
-private  class code_runner_plugin {
+public  class code_runner_plugin {
     public string name;
     public string ctx;
     public signal void init(string image, string directory);
@@ -14,10 +14,10 @@ private  class code_runner_plugin {
     public signal void clean();
 }
 
+private code_runner_plugin[] plugins;
 public class code_runner {
     private yamlfile yaml;
     private array steps;
-    private code_runner_plugin[] plugins;
     private code_runner_job[] jobs;
     private string fail_job_name;
     public void load (string file){
@@ -51,7 +51,6 @@ public class code_runner {
             }
             jobs += job;
         }
-        plugins = get_code_runner_plugins();
     }
     public int run(){
         foreach (code_runner_job job in jobs){
@@ -95,40 +94,10 @@ public class code_runner {
         return 0;
     }
 }
-
-private code_runner_plugin[] get_code_runner_plugins(){
-    code_runner_plugin[] ret = {};
-    // docker plugin
-    var docker = new code_runner_plugin();
-    docker.name = "docker";
-    docker.init.connect((image, directory)=>{
-        run_args({"docker", "pull", image});
-        docker.ctx = getoutput("docker run -it -d -v '%s':/root '%s' 2>/dev/null".printf(directory.replace("'","\\'"), image.replace("'",""))).strip();
-    });
-    docker.run.connect((command)=>{
-        return run_args({"docker", "exec", docker.ctx, "sh", "-c", command});
-    });
-    docker.clean.connect(()=>{
-        run_args({"docker", "rm", "-f", docker.ctx});
-    });
-    ret += docker;
-    // local plugin
-    var local = new code_runner_plugin();
-    local.name = "local";
-    local.init.connect((image, directory)=>{
-        local.ctx = directory;
-        return;
-    });
-    local.run.connect((command)=>{
-        string cur = pwd ();
-        cd(local.ctx);
-        int status = run_args({"sh", "-c", command});
-        cd (cur);
-        return status;
-    });
-    local.clean.connect(()=>{
-        return;
-    });
-    ret += local;
-    return ret;
+public void add_code_runner_plugin(code_runner_plugin plug){
+    if(plugins == null){
+        plugins = {};
+    }
+    plugins += plug;
 }
+
