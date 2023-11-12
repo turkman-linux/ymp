@@ -91,6 +91,14 @@ public int calc_main (string[] args) {
     return 0;
 }
 
+public int not_main (string[] args) {
+    int status = operation_main(args[0], args[1:]);
+    if(status == 0){
+        return 1;
+    }
+    return 0;
+}
+
 void setget_init () {
     operation op_get = new operation ();
     op_get.help = new helpmsg ();
@@ -169,7 +177,7 @@ void setget_init () {
     op_gt.help.name = _ ("gt");
     op_gt.help.shell_only = true;
     op_gt.help.description = _ ("return true if first number greater than second");
-    
+
     operation op_calc = new operation ();
     op_calc.help = new helpmsg ();
     op_calc.callback.connect (calc_main);
@@ -178,6 +186,15 @@ void setget_init () {
     op_calc.help.name = _ ("calc");
     op_calc.help.shell_only = true;
     op_calc.help.description = _ ("calculator");
+
+    operation op_not = new operation ();
+    op_not.help = new helpmsg ();
+    op_not.callback.connect (not_main);
+    op_not.help.minargs=1;
+    op_not.names = {_ ("not"), "not", "!"};
+    op_not.help.name = _ ("not");
+    op_not.help.shell_only = true;
+    op_not.help.description = _ ("logic not");
 
     add_operation (op_get);
     add_operation (op_set);
@@ -189,4 +206,5 @@ void setget_init () {
     add_operation (op_lt);
     add_operation (op_gt);
     add_operation (op_calc);
+    add_operation (op_not);
 }
