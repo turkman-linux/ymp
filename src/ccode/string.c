@@ -90,19 +90,17 @@ char* int_to_string(int num){
     return ret;
 }
 
-int isalnum(char ch) {
-    return (ch >= 'A' && ch <= 'Z') ||
-           (ch >= 'a' && ch <= 'z') ||
-           (ch >= '0' && ch <= '9') ||
-           ch == '-' || ch == '_' || ch == '.' || ch == '~';
-}
+#define isalnum_c(A) \
+    (A >= 'A' && A <= 'Z') || \
+    (A >= 'a' && A <= 'z') || \
+    (A >= '0' && A <= '9') || \
+    A == '-' || A == '_' || A == '.' || A == '~'
 
 /* Function to check if a character is a hexadecimal digit */
-int isHexDigit(char ch) {
-    return (ch >= '0' && ch <= '9') ||
-           (ch >= 'A' && ch <= 'F') ||
-           (ch >= 'a' && ch <= 'f');
-}
+#define isHexDigit(A) \
+    (A >= '0' && A <= '9') || \
+    (A >= 'A' && A <= 'F') || \
+    (A >= 'a' && A <= 'f')
 
 /* Function to convert a hexadecimal character to its integer value */
 int hexToInt(char ch) {
@@ -161,7 +159,7 @@ char* url_decode(const char *input) {
 char* url_encode(const char *input) {
     int encodedLength = 0;
     for (i = 0; input[i] != '\0'; i++) {
-        if (!isalnum(input[i])) {
+        if (!isalnum_c(input[i])) {
             /* Two characters for % and the hexadecimal digit */
             encodedLength += 2;
         } else {
@@ -179,7 +177,7 @@ char* url_encode(const char *input) {
 
     int j = 0;
     for (i = 0; input[i] != '\0'; i++) {
-        if (isalnum(input[i])) {
+        if (isalnum_c(input[i])) {
             output[j++] = input[i];
         } else {
             sprintf(output + j, "%%%02X", (unsigned char)input[i]);
