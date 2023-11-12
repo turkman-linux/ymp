@@ -37,16 +37,6 @@ void single_instance(){
     }
 }
 
-int run(char* command){
-    char* cmd[] = {"sh","-c",command, NULL};
-    return run_args(cmd);
-}
-
-int run_silent(char* command){
-    char* cmd[] = {"sh","-c",command, NULL};
-    return run_args_silent(cmd);
-}
-
 pid_t child_pid, wait_pid;
 int status;
 int run_args(char **command) {
@@ -128,6 +118,15 @@ int run_args_silent(char **command) {
     }
 }
 
+int run(char* command){
+    char* cmd[] = {"sh","-c",command, NULL};
+    return run_args(cmd);
+}
+
+int run_silent(char* command){
+    char* cmd[] = {"sh","-c",command, NULL};
+    return run_args_silent(cmd);
+}
 
 char* getoutput(const char* command) {
     FILE *fp = popen(command, "r");

@@ -89,4 +89,107 @@ char* int_to_string(int num){
     return ret;
 }
 
+int isalnum(char ch) {
+    return (ch >= 'A' && ch <= 'Z') ||
+           (ch >= 'a' && ch <= 'z') ||
+           (ch >= '0' && ch <= '9') ||
+           ch == '-' || ch == '_' || ch == '.' || ch == '~';
+}
+
+/* Function to check if a character is a hexadecimal digit */
+int isHexDigit(char ch) {
+    return (ch >= '0' && ch <= '9') ||
+           (ch >= 'A' && ch <= 'F') ||
+           (ch >= 'a' && ch <= 'f');
+}
+
+/* Function to convert a hexadecimal character to its integer value */
+int hexToInt(char ch) {
+    if (ch >= '0' && ch <= '9') {
+        return ch - '0';
+    } else if (ch >= 'A' && ch <= 'F') {
+        return ch - 'A' + 10;
+    } else if (ch >= 'a' && ch <= 'f') {
+        return ch - 'a' + 10;
+    } else {
+        /* Invalid character */
+        return -1;
+    }
+}
+int i;
+
+/* Function to perform URL decoding */
+char* url_decode(const char *input) {
+    int decodedLength = 0;
+    for (i = 0; input[i] != '\0'; i++) {
+        if (input[i] == '%' && isHexDigit(input[i + 1]) && isHexDigit(input[i + 2])) {
+            /* Skip '%', and the next two characters (assuming they are valid hexadecimal digits) */
+            i += 2;
+            decodedLength++;
+        } else {
+            decodedLength++;
+        }
+    }
+
+    /* +1 for null-terminator */
+    char *output = (char *)malloc((decodedLength + 1) * sizeof(char));
+
+    if (output == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return (char*) input;
+    }
+
+    int j = 0;
+    for (i = 0; input[i] != '\0'; i++) {
+        if (input[i] == '%' && isHexDigit(input[i + 1]) && isHexDigit(input[i + 2])) {
+            char hex[3] = {input[i + 1], input[i + 2], '\0'};
+            output[j++] = (char)strtol(hex, NULL, 16);
+            /* Skip '%', and the next two characters */
+            i += 2;
+        } else {
+            output[j++] = input[i];
+        }
+    }
+    /* Null-terminate the output string */
+    output[j] = '\0';
+
+    return output;
+}
+
+/* Function to perform URL encoding */
+char* url_encode(const char *input) {
+    int encodedLength = 0;
+    for (i = 0; input[i] != '\0'; i++) {
+        if (!isalnum(input[i])) {
+            /* Two characters for % and the hexadecimal digit */
+            encodedLength += 2;
+        } else {
+            encodedLength++;
+        }
+    }
+
+    /* +1 for null-terminator */
+    char *output = (char *)malloc((encodedLength + 1) * sizeof(char));
+
+    if (output == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return (char*) input;
+    }
+
+    int j = 0;
+    for (i = 0; input[i] != '\0'; i++) {
+        if (isalnum(input[i])) {
+            output[j++] = input[i];
+        } else {
+            sprintf(output + j, "%%%02X", (unsigned char)input[i]);
+            /* Move to the next position in the output string */
+            j += 3;
+        }
+    }
+    /* Null-terminate the output string */
+    output[j] = '\0';
+
+    return output;
+}
+
 #endif

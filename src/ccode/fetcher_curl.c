@@ -135,26 +135,5 @@ char* fetch_string(char* url){
     return (char*)(s.ptr);
 }
 
-char* url_encode(char* data){
-    curl=curl_easy_init();
-    char* ret = curl_easy_escape(curl, data, strlen(data));
-    return ret;
-}
-
-char* url_decode(char* data){
-    int i=0;
-    char* ret = curl_easy_unescape(curl, data, strlen(data), &i);
-    return ret;
-}
-
-# else
-char* url_encode(char* data){
-    //FIXME: write non-curl url encode function
-    return data;
-}
-char* url_decode(char* data){
-    //FIXME: write non-curl url decode function
-    return data;
-}
 
 #endif
