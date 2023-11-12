@@ -154,6 +154,27 @@ char* c_realpath(char* path){
     return realpath(path,NULL);
 }
 
+void cd(const char *path) {
+    /* Print a debug message indicating the change of directory */
+    printf("Change directory: %s\n", path);
+
+    /* Check if the specified path is not a directory */
+    struct stat st;
+    if (stat(path, &st) != 0 || !S_ISDIR(st.st_mode)) {
+        /* If it's not a directory, try to create the directory */
+        if (mkdir(path, 0777) != 0) {
+            perror("Error creating directory");
+            return;
+        }
+    }
+
+    /* Set the current directory to the specified path */
+    if (chdir(path) != 0) {
+        perror("Error changing directory");
+        return;
+    }
+}
+
 void write_to_file(const char *which, const char *format, ...) {
   FILE * fu = fopen(which, "w");
   va_list args;

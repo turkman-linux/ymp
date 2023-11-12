@@ -83,6 +83,9 @@ public extern void writefile (string path, string ctx);
 //DOC: `bool isdir (string path):`
 //DOC: Check **path** is directory
 public extern bool isdir (string path);
+//DOC: `void cd (string path):`
+//DOC: change current directory to **path**
+public extern void cd (string path);
 //DOC: `bool isfile (string path)`:
 //DOC: check path is file
 public extern bool isfile (string path);

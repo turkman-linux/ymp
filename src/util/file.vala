@@ -97,16 +97,6 @@ public string safedir (string dir) {
     return ret;
 }
 
-//DOC: `void cd (string path):`
-//DOC: change current directory to **path**
-public void cd (string path) {
-    debug (_ ("Change directory: %s").printf (path));
-    if (!isdir (path)) {
-        create_dir (path);
-    }
-    GLib.Environment.set_current_dir (path);
-}
-
 // libc function (from stdio.h)
 public extern int remove (string path);
 public extern int rmdir (string path);
