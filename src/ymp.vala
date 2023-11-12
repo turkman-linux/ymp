@@ -283,7 +283,7 @@ public string[] argument_process (string[] args) {
      string[] new_args = {};
      bool e = false;
      foreach (string arg in args) {
-         if (arg == "--") {
+         if (!e && arg == "--") {
              e = true;
              continue;
          }
@@ -292,9 +292,8 @@ public string[] argument_process (string[] args) {
              continue;
          }
          if (startswith(arg,"$(") && endswith(arg,")")){
-             arg = getoutput(arg[2:-1]);
-         }
-         if (arg.length > 1 && arg[0] == '$') {
+             arg = getoutput(arg[2:-1]).strip();
+         }else if (arg.length > 1 && arg[0] == '$') {
              arg = get_value (arg[1:]);
          }
          if (!e && startswith (arg, "--")) {

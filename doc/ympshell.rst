@@ -40,12 +40,29 @@ Escape & exclusive characters
     set msg "Hello World"
     echo $msg
 
-**`** character execute command and replace output with yourself
+**`** character execute command and replace output with yourself (preprocessor)
 
 .. code-block:: shell
 
     set dist `uname -a`
     echo $dist
+
+Expressions
+^^^^^^^^^^^
+**$(xxxx)** expression execute command and replace output with yourself. For example:
+
+.. code-block:: shell
+
+	# get current uid
+	set uid "$(id -u)"
+	print $uid
+
+**--** stop argument processing
+
+.. code-block:: shell
+
+	# print stuff
+	print -- $hello $world
 
 Conditions
 ^^^^^^^^^^
