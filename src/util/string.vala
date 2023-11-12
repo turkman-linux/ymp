@@ -32,23 +32,6 @@ public string[] ssplit (string data, string f) {
     return ret;
 }
 
-//DOC: `boot startswith (string data, string f):`
-//DOC: return true if data starts with f
-public bool startswith (string data, string f) {
-    if (data.length < f.length) {
-        return false;
-    }
-    return data[:f.length] == f;
-}
-//DOC: `bool endswith (string data, string f):`
-//DOC: return true if data ends with f
-public bool endswith (string data, string f) {
-    if (data.length < f.length) {
-        return false;
-    }
-    return data[data.length - f.length:] == f;
-}
-
 //DOC: `string sbasename (string path):`
 //DOC: safe basename. return filename
 public string sbasename (string path) {

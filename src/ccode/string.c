@@ -12,7 +12,6 @@ int iseq(char* str1, char* str2){
 }
 
 static int string_compare(const void* a, const void* b){
-
     return strcmp(*(const char**)a, *(const char**)b);
 }
 
@@ -20,11 +19,12 @@ void csort(const char* arr[], int n){
     qsort(arr, n, sizeof(const char*), string_compare);
 }
 
+size_t cnt = 0;
 long count_tab(char* data){
-    long cnt=0;
-    long i=0;
-    for(i=0; data[i]==' '; i++) {
+    cnt = 0;
+    while (*data == ' ') {
         cnt++;
+        data++;
     }
     return cnt;
 }
@@ -63,26 +63,29 @@ char* str_add(char* str1, char* str2){
 }
 
 char* trim(char* data) {
-    long i=0, j= 0, cnt=0;
+    /* Get the length of the input string */
     long len = strlen(data);
-    char* str = calloc(len+1, sizeof(char));
-    strcpy(str,data);
-    cnt = count_tab (data);
-    j=cnt-1;
-    for(i=0; i<len; i++) {
-        j += 1;
-        if(j >= len || str[i] == '\0') {
-            str[i] = '\0';
-            break;
-        }
+    /* Allocate memory for the trimmed string */
+    char* str = calloc(len + 1, sizeof(char));
+    /* Count the number of tabs using the count_tab function */
+    long i, j = 0, cnt = count_tab(data);
+    /* Iterate through each character in the input string */
+    for (i = 0; i < len; ++i) {
+        /* Copy the current character to the trimmed string */
         str[i] = data[j];
-        if(str[i] == '\n'){
+        /* If the current character is a newline, skip ahead by cnt positions */
+        if (data[j] == '\n') {
             j += cnt;
-
         }
+        /* Move to the next character in the input string (circular buffer) */
+        j = (j + 1) % len;
     }
+    /* Null-terminate the trimmed string */
+    str[i] = '\0';
+    /* Return the trimmed string */
     return str;
 }
+
 char* int_to_string(int num){
     char *ret = calloc(((sizeof(num) - 1) / 3 + 2), sizeof(char));
     sprintf(ret, "%d", num);
@@ -190,6 +193,29 @@ char* url_encode(const char *input) {
     output[j] = '\0';
 
     return output;
+}
+
+
+int endswith(const char* data, const char* f) {
+    size_t data_length = strlen(data);
+    size_t f_length = strlen(f);
+
+    if (data_length < f_length) {
+        return 0;
+    }
+
+    return strcmp(data + data_length - f_length, f) == 0;
+}
+
+int startswith(const char* data, const char* f) {
+    size_t data_length = strlen(data);
+    size_t f_length = strlen(f);
+
+    if (data_length < f_length) {
+        return 0;
+    }
+
+    return strncmp(data, f, f_length) == 0;
 }
 
 #endif

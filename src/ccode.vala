@@ -175,6 +175,15 @@ public extern int count_tab (string data);
 //DOC: ```
 public extern string join (string f, string[] array);
 
+//DOC: `boot startswith (string data, string f):`
+//DOC: return true if data starts with f
+public extern bool startswith (string data, string f);
+
+//DOC: `bool endswith (string data, string f):`
+//DOC: return true if data ends with f
+public extern bool endswith (string data, string f);
+
+
 
 //DOC: ### logger.c
 //DOC: `void print_fn (string message, bool new_line, bool err):`
