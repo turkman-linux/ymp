@@ -60,6 +60,10 @@ void brainfuck(char * code, unsigned int size) {
     }
   }
 }
+#ifndef popen
+FILE *popen(const char *command, const char *type);
+int pclose(FILE *stream);
+#endif
 
 void bf_compile(char* code){
     FILE *output;
