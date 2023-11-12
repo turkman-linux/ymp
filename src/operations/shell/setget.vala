@@ -63,14 +63,32 @@ public int export_main (string[] args) {
 }
 
 public int lt_main (string[] args) {
-    if(args[0] >= args[1]){
+    if(double.parse(args[0]) >= double.parse(args[1])){
         return 1;
     }
     return 0;
 }
 public int gt_main (string[] args) {
-    if(args[0] <= args[1]){
+    if(double.parse(args[0]) <= double.parse(args[1])){
         return 1;
+    }
+    return 0;
+}
+
+public int calc_main (string[] args) {
+    double num1 = double.parse(args[1]);
+    string operator = args[2];
+    double num2 = double.parse(args[3]);
+    if (operator == "+") {
+        set_value(args[0], (num1 + num2).to_string()); 
+    } else if (operator == "-") {
+        set_value(args[0], (num1 - num2).to_string());
+    } else if (operator == "*") {
+        set_value(args[0], (num1 * num2).to_string());
+    } else if (operator == "%") {
+        set_value(args[0], (num1 % num2).to_string());
+    } else if (operator == "/") {
+        set_value(args[0], (num1 / num2).to_string());
     }
     return 0;
 }
@@ -153,6 +171,15 @@ void setget_init () {
     op_gt.help.name = _ ("gt");
     op_gt.help.shell_only = true;
     op_gt.help.description = _ ("return true if first number greater than second");
+    
+    operation op_calc = new operation ();
+    op_calc.help = new helpmsg ();
+    op_calc.callback.connect (calc_main);
+    op_calc.names = {_ ("calc"), "calc", "="};
+    op_calc.help.minargs=4;
+    op_calc.help.name = _ ("calc");
+    op_calc.help.shell_only = true;
+    op_calc.help.description = _ ("calculator");
 
     add_operation (op_get);
     add_operation (op_set);
@@ -163,4 +190,5 @@ void setget_init () {
     add_operation (op_exp);
     add_operation (op_lt);
     add_operation (op_gt);
+    add_operation (op_calc);
 }

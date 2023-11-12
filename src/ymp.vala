@@ -53,7 +53,8 @@ public int operation_main_raw(string type, string[] args){
 
 }
 
-public int operation_main (string type, string[] args) {
+public int operation_main (string type, string[] fargs) {
+    string[] args = argument_process (fargs);
     info (_ ("RUN:") + type + ":" + join (" ", args));
     foreach (operation op in ops) {
         foreach (string name in op.names) {
@@ -63,7 +64,7 @@ public int operation_main (string type, string[] args) {
                 }
                 set_value_readonly ("OPERATION", op.help.name);
                 parse_args (args);
-                return op.callback (argument_process (args));
+                return op.callback (args);
             }
         }
     }
@@ -290,12 +291,16 @@ public string[] argument_process (string[] args) {
              new_args += arg;
              continue;
          }
+         if (startswith(arg,"$(") && endswith(arg,")")){
+             arg = getoutput(arg[2:-1]);
+         }
          if (arg.length > 1 && arg[0] == '$') {
              arg = get_value (arg[1:]);
          }
          if (!e && startswith (arg, "--")) {
              continue;
          }
+         
          new_args += arg;
      }
      return new_args;
