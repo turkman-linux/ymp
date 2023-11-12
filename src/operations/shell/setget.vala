@@ -62,6 +62,19 @@ public int export_main (string[] args) {
     return 0;
 }
 
+public int lt_main (string[] args) {
+    if(args[0] >= args[1]){
+        return 1;
+    }
+    return 0;
+}
+public int gt_main (string[] args) {
+    if(args[0] <= args[1]){
+        return 1;
+    }
+    return 0;
+}
+
 void setget_init () {
     operation op_get = new operation ();
     op_get.help = new helpmsg ();
@@ -123,6 +136,24 @@ void setget_init () {
     op_exp.help.shell_only = true;
     op_exp.help.description = _ ("Convert value to environmental.");
 
+    operation op_lt = new operation ();
+    op_lt.help = new helpmsg ();
+    op_lt.callback.connect (lt_main);
+    op_lt.names = {_ ("lt"), "lt", "<"};
+    op_lt.help.minargs=2;
+    op_lt.help.name = _ ("lt");
+    op_lt.help.shell_only = true;
+    op_lt.help.description = _ ("return true if first number lower than second");
+
+    operation op_gt = new operation ();
+    op_gt.help = new helpmsg ();
+    op_gt.callback.connect (gt_main);
+    op_gt.names = {_ ("gt"), "gt", ">"};
+    op_gt.help.minargs=2;
+    op_gt.help.name = _ ("gt");
+    op_gt.help.shell_only = true;
+    op_gt.help.description = _ ("return true if first number greater than second");
+
     add_operation (op_get);
     add_operation (op_set);
     add_operation (op_equal);
@@ -130,4 +161,6 @@ void setget_init () {
     add_operation (op_match);
     add_operation (op_cd);
     add_operation (op_exp);
+    add_operation (op_lt);
+    add_operation (op_gt);
 }
