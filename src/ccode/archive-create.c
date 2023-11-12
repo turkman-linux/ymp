@@ -204,7 +204,6 @@ void write_archive(const char *outname, const char **filename) {
   }
   archive_entry_free(entry);
   archive_write_close(a);
-  puts("aaaa");
   archive_write_free(a);
 }
 #endif
