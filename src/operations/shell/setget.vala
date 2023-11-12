@@ -80,13 +80,11 @@ public int calc_main (string[] args) {
     string operator = args[2];
     double num2 = double.parse(args[3]);
     if (operator == "+") {
-        set_value(args[0], (num1 + num2).to_string()); 
+        set_value(args[0], (num1 + num2).to_string());
     } else if (operator == "-") {
         set_value(args[0], (num1 - num2).to_string());
     } else if (operator == "*") {
         set_value(args[0], (num1 * num2).to_string());
-    } else if (operator == "%") {
-        set_value(args[0], (num1 % num2).to_string());
     } else if (operator == "/") {
         set_value(args[0], (num1 / num2).to_string());
     }
