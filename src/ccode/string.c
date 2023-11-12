@@ -63,26 +63,24 @@ char* str_add(char* str1, char* str2){
 }
 
 char* trim(char* data) {
-    /* Get the length of the input string */
+    long i=0, j= 0, cnt=0;
     long len = strlen(data);
-    /* Allocate memory for the trimmed string */
-    char* str = calloc(len + 1, sizeof(char));
-    /* Count the number of tabs using the count_tab function */
-    long i, j = 0, cnt = count_tab(data);
-    /* Iterate through each character in the input string */
-    for (i = 0; i < len; ++i) {
-        /* Copy the current character to the trimmed string */
-        str[i] = data[j];
-        /* If the current character is a newline, skip ahead by cnt positions */
-        if (data[j] == '\n') {
-            j += cnt;
+    char* str = calloc(len+1, sizeof(char));
+    strcpy(str,data);
+    cnt = count_tab (data);
+    j=cnt-1;
+    for(i=0; i<len; i++) {
+        j += 1;
+        if(j >= len || str[i] == '\0') {
+            str[i] = '\0';
+            break;
         }
-        /* Move to the next character in the input string (circular buffer) */
-        j = (j + 1) % len;
+        str[i] = data[j];
+        if(str[i] == '\n'){
+            j += cnt;
+
+        }
     }
-    /* Null-terminate the trimmed string */
-    str[i] = '\0';
-    /* Return the trimmed string */
     return str;
 }
 
