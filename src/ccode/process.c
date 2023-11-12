@@ -61,7 +61,7 @@ int run_args(char **command) {
 
         if (wait_pid == -1) {
             perror("waitpid");
-            exit(EXIT_FAILURE);
+            return EXIT_FAILURE;
         }
 
         if (WIFEXITED(status)) {
@@ -70,7 +70,7 @@ int run_args(char **command) {
         } else {
             /* Child process did not terminate normally */
             fprintf(stderr, "Child process did not terminate normally.\n");
-            exit(EXIT_FAILURE);
+            return EXIT_FAILURE;
         }
     }
 }
@@ -104,7 +104,7 @@ int run_args_silent(char **command) {
 
         if (wait_pid == -1) {
             perror("waitpid");
-            exit(EXIT_FAILURE);
+            return EXIT_FAILURE;
         }
 
         if (WIFEXITED(status)) {
@@ -113,7 +113,7 @@ int run_args_silent(char **command) {
         } else {
             /* Child process did not terminate normally */
             fprintf(stderr, "Child process did not terminate normally.\n");
-            exit(EXIT_FAILURE);
+            return EXIT_FAILURE;
         }
     }
 }
