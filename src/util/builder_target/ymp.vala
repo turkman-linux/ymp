@@ -71,9 +71,9 @@ public void build_target_ymp_init() {
             if (issymlink(file)) {
                 var link = sreadlink(file);
                 if (!unsafe && link[0] == '/') {
-                    string fixed_symlink = get_fixed_symlink(file[(output).length: ],link[(output).length: ]);
+                    string fixed_symlink = get_fixed_symlink(file[(output).length: ],link);
                     error_add(_("Absolute path symlink is not allowed:%s%s => %s (%s)").printf(
-                        "\n    ", file[(output).length:], link[(output).length: ], fixed_symlink)
+                        "\n    ", file[(output).length:], link, fixed_symlink)
                     );
                     continue;
                 }

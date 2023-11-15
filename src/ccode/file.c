@@ -193,7 +193,7 @@ mode_t c_umask(mode_t mask){
     return umask(mask);
 }
 
-#ifdef debug
+#ifndef debug
 void debug(char* msg);
 #endif
 char* str_add(char* s1, char* s2);

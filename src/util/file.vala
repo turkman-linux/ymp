@@ -331,6 +331,7 @@ private string p_realpath (string path) {
 }
 
 private string get_fixed_symlink(string source, string target){
+   debug (_ ("Calculate fixed symlink: %s -> %s").printf (source, target));
    string[] source_items = ssplit(source,"/");
    string ret = "";
    for(int i=source_items.length -1 ; i>0 ; i--){

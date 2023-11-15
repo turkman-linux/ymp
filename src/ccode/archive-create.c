@@ -49,17 +49,22 @@ int get_bool(char*variable);
 int isexists(const char*path);
 #endif
 
+#ifndef debug
+void debug(char* msg);
+#endif
+
 #ifndef error_add
 void error_add(char* msg);
-void debug(char* msg);
 int has_error();
 void error(int num);
 #endif
 
 void set_archive_type(char* form, char* filt){
+    #ifdef debug
     debug("Archive type changed");
     debug(form);
     debug(filt);
+    #endif
     if(strcmp(form,"zip")==0)
         aformat=zip;
     else if(strcmp(form,"tar")==0)
