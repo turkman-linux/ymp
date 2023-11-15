@@ -213,18 +213,18 @@ public void build_target_ymp_init() {
         debug(_("Create data file: %s/output/data.tar.gz").printf(buildpath));
         var tar = new archive();
         if (get_value("compress") == "none") {
-            set_archive_type("tar", "none");
             tar.load(buildpath + "/output/data.tar");
+            set_archive_type("tar", "none");
         } else if (get_value("compress") == "gzip") {
-            set_archive_type("tar", "gzip");
             tar.load(buildpath + "/output/data.tar.gz");
+            set_archive_type("tar", "gzip");
         } else if (get_value("compress") == "xz") {
-            set_archive_type("tar", "xz");
             tar.load(buildpath + "/output/data.tar.xz");
+            set_archive_type("tar", "xz");
         } else {
             // Default format (gzip)
-            set_archive_type("tar", "gzip");
             tar.load(buildpath + "/output/data.tar.gz");
+            set_archive_type("tar", "gzip");
         }
         int fnum = 0;
         string curdir = pwd();

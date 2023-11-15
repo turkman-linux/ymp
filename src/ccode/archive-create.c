@@ -51,11 +51,15 @@ int isexists(const char*path);
 
 #ifndef error_add
 void error_add(char* msg);
+void debug(char* msg);
 int has_error();
 void error(int num);
 #endif
 
 void set_archive_type(char* form, char* filt){
+    debug("Archive type changed");
+    debug(form);
+    debug(filt);
     if(strcmp(form,"zip")==0)
         aformat=zip;
     else if(strcmp(form,"tar")==0)
@@ -82,6 +86,7 @@ void write_archive(const char *outname, const char **filename) {
   char buff[8192];
   int len;
   int fd;
+  int e;
 
   a = archive_write_new();
   /* compress format */
@@ -94,16 +99,21 @@ void write_archive(const char *outname, const char **filename) {
   }
   /* archive format */
   if(aformat == tar){
-      archive_write_set_format_gnutar(a);
+      e = (archive_write_set_format_gnutar(a) != ARCHIVE_OK);
   }else if (aformat == p7zip){
-      archive_write_set_format_7zip(a);
+      e = (archive_write_set_format_7zip(a) != ARCHIVE_OK);
   }else if (aformat == cpio){
-      archive_write_set_format_cpio(a);
+      e = (archive_write_set_format_cpio(a) != ARCHIVE_OK);
   }else if (aformat == ar){
-      archive_write_set_format_ar_bsd(a);
+      e = (archive_write_set_format_ar_bsd(a) != ARCHIVE_OK);
   }else{
-      archive_write_set_format_zip(a);
+      e = (archive_write_set_format_zip(a) != ARCHIVE_OK);
   }
+  if (e){
+      error_add("Libarchive error!");
+      return;
+  }
+  
   archive_write_open_filename(a, outname);
   char link[PATH_MAX];
   #ifdef DEBUG
