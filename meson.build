@@ -23,7 +23,11 @@ run_command('bash', './tool/mkctx.sh',
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
 prep_args = ['-L'+meson.current_build_dir(), '-lymp']
-args = prep_args + ['-ansi']
+args = prep_args
+if get_option('ansi')
+    args += ['-ansi']
+endif
+
 libc_srcs = []
 
 # disable optimization for test
@@ -32,18 +36,20 @@ if not get_option('test')
             '-fvisibility=hidden', '-Wextra', '-Wno-unused-parameter','-s', '-Os',
             '-Wl,--gc-sections','-ffunction-sections', '-fno-math-errno', '-ffast-math',
             '-fdata-sections', '-fno-exceptions', '-fno-unwind-tables', '-fpack-struct',
-            '-fno-asynchronous-unwind-tables', '-fno-math-errno', '-fcf-protection',
+            '-fno-asynchronous-unwind-tables', '-fno-math-errno', '-ffreestanding',
             '-fno-unroll-loops', '-fmerge-all-constants', '-fno-ident', '-ffast-math',
             '-fsingle-precision-constant', '-Wl,--build-id=none', '-Wl,-z,norelro',
             '-Wl,--hash-style=sysv', '-fpie', '-fpic', '-Wl,-v', '-Wl,-z,now',
             '-Wno-ignored-optimization-argument', '-pipe', '-D_FORTIFY_SOURCE=2',
             '-Wl,--as-needed', '-Wl,--strip-all', '-Wl,-z,max-page-size=0x1000',
-            '-fshort-enums', '-fwhole-program', '-ffreestanding'
+            '-fshort-enums', '-fwhole-program'
     ]
     if compiler.get_id() == 'clang'
         args += ['-gembed-source', '-gdwarf-5']
     endif
-
+    if architecture == 'x86_64'
+        args += ['-fcf-protection']
+    endif
 endif
 
 start_code = []
