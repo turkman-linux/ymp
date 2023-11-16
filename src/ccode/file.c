@@ -160,7 +160,8 @@ char* c_realpath(char* path){
 
 void cd(const char *path) {
     /* Print a debug message indicating the change of directory */
-    info(g_strconcat("Change directory: %s\n", path));
+    debug("Change directory:");
+    debug(path);
 
     /* Check if the specified path is not a directory */
     struct stat st;
