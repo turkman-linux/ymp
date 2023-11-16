@@ -25,6 +25,10 @@
 
 struct stat st;
 
+#ifndef info
+void info(char* msg);
+#endif
+
 long filesize(char* path){
     stat(path, &st);
     return st.st_size;
@@ -156,7 +160,7 @@ char* c_realpath(char* path){
 
 void cd(const char *path) {
     /* Print a debug message indicating the change of directory */
-    printf("Change directory: %s\n", path);
+    info(g_strconcat("Change directory: %s\n", path));
 
     /* Check if the specified path is not a directory */
     struct stat st;
