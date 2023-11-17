@@ -155,34 +155,42 @@ public class yamlfile {
         return tmp;
     }
 
-    private string get_area_single (string fdata, string path) {
-        debug (_ ("Get area single : %s").printf (path));
-        if (fdata == null || fdata == "") {
-            return "";
+private string get_area_single(string fdata, string path) {
+    debug(_ ("Get area single: %s").printf(path));
+
+    if (fdata == null || fdata == "") {
+        return "";
+    }
+
+    bool e = false;
+    StringBuilder area_builder = new StringBuilder();
+    int i = 0;
+
+    string[] lines = ssplit(fdata, "\n");
+    foreach (string line in lines) {
+        i += 1;
+        if (i < offset) {
+            continue;
         }
-        int level = 0;
-        bool e = false;
-        string area = "";
-        int i = 0;
-        foreach (string line in ssplit (fdata, "\n")) {
-            i +=1;
-            if (i < offset) {
+
+        if (line[0] != ' ') {
+            if (e) {
+                return trim(area_builder.str);
+            }
+
+            if (line == path + ":") {
+                e = true;
                 continue;
             }
-            level = count_tab (line);
-            if (level == 0) {
-               if (e) {
-                   return trim (area);
-               }
-               if (line == path + ":") {
-                    e=true;
-                    continue;
-                }
-            }
-            if (e) {
-                area += line + "\n";
-            }
         }
-        return trim (area);
+
+        if (e) {
+            area_builder.append(line + "\n");
+        }
     }
+
+    return trim(area_builder.str);
+}
+
+
 }
