@@ -277,7 +277,7 @@ public void update_repo () {
         string name = repo.replace ("/", "-");
         string path = get_storage () + "/index/" + name;
         fetch (repo, path);
-        string index_data = readfile (path);
+        string index_data = readfile_raw (path);
         if (!startswith (index_data, "index:")) {
             error_add (_ ("Invalid repository index: %s").printf (name));
             remove_file (path);

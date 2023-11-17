@@ -60,6 +60,7 @@ public string readfile (string path) {
     if (data.length == 0) {
         return new_data;
     }
+    debug (_ ("Remove commend lines: %s").printf (path));
     foreach (string line in ssplit (data, "\n")) {
         if ("#" in line) {
             if (line.strip ()[0] == '#') {

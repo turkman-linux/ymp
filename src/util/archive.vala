@@ -40,7 +40,7 @@ public class archive {
     public string readfile (string path) {
         create_dir ("/tmp/.ymp/");
         run_silent ("tar -xf -C /tmp/.ymp/ '" + archive_path + "' '" + path + "'");
-        string data = readfile ("/tmp/.ymp/" + path);
+        string data = readfile_raw ("/tmp/.ymp/" + path);
         remove_file ("/tmp/.ymp/" + path);
         return data;
     }

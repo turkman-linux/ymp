@@ -84,7 +84,7 @@ public class package {
     public string[] list_files () {
         if (pkgfile == null) {
             if (is_installed_package (name)) {
-                string files = readfile (get_storage () + "/files/" + name);
+                string files = readfile_raw (get_storage () + "/files/" + name);
                 return ssplit (files, "\n");
             }
             error_add (_ ("Package archive is missing."));
@@ -100,7 +100,7 @@ public class package {
     public string[] list_links () {
         if (pkgfile == null) {
             if (is_installed_package (name)) {
-                string links = readfile (get_storage () + "/links/" + name);
+                string links = readfile_raw (get_storage () + "/links/" + name);
                 return ssplit (links, "\n");
             }
             error_add (_ ("Package archive is missing."));

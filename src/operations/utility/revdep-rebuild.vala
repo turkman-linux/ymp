@@ -79,7 +79,7 @@ public string[] detect_dep (string pkgname) {
         return {};
     }
     var depfiles = new array ();
-    string files=readfile ("%s/files/%s".printf (get_storage (), pkgname));
+    string files=readfile_raw ("%s/files/%s".printf (get_storage (), pkgname));
     foreach (string line in ssplit (files, "\n")) {
         string path="/" + line[41:];
         if (iself (path)) {

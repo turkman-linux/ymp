@@ -22,7 +22,7 @@ public class yamlfile {
     //DOC: load yaml from file
     public void load (string path) {
         debug (_ ("Loading yaml from: %s").printf (path));
-        data = readfile (path);
+        data = readfile_raw (path);
     }
 
     //DOC: `string yamlfile.get (string path):`

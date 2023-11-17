@@ -122,13 +122,13 @@ public string[] calculate_leftover (package[] pkgs) {
                  files.add (ssplit (link, " ")[0]);
              }
              // new files
-             foreach (string file in ssplit (readfile (get_storage () + "/quarantine/files/" + p.name), "\n")) {
+             foreach (string file in ssplit (readfile_raw (get_storage () + "/quarantine/files/" + p.name), "\n")) {
                  if (file.length > 41) {
                      files.remove (file[41:]);
                  }
              }
              //new symlinks
-             foreach (string link in ssplit (readfile (get_storage () + "/quarantine/links/" + p.name), "\n")) {
+             foreach (string link in ssplit (readfile_raw (get_storage () + "/quarantine/links/" + p.name), "\n")) {
                  files.remove (ssplit (link, " ")[0]);
              }
         }

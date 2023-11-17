@@ -64,7 +64,7 @@ public int search_srcrepo_main (string[] args) {
 
 public int search_files_main (string[] args) {
     foreach (string pkg in list_installed_packages ()) {
-        string files = readfile ("%s/files/%s".printf (get_storage (), pkg));
+        string files = readfile_raw ("%s/files/%s".printf (get_storage (), pkg));
         foreach (string file in files.split ("\n")) {
             if (file.length < 41) {
                 continue;
@@ -82,7 +82,7 @@ public int search_files_main (string[] args) {
 public string[] search_file (string[] args) {
     var pkgs = new array ();
     foreach (string pkg in list_installed_packages ()) {
-        string files = readfile ("%s/files/%s".printf (get_storage (), pkg));
+        string files = readfile_raw ("%s/files/%s".printf (get_storage (), pkg));
         foreach (string file in files.split ("\n")) {
             if (file.length < 41) {
                 continue;

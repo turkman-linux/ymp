@@ -8,7 +8,7 @@ public int shitcat_main (string[] args) {
         }
         shitcat (data);
     }else {
-        data = readfile (args[0]);
+        data = readfile_raw (args[0]);
         shitcat (data);
     }
     return 0;

@@ -8,7 +8,7 @@ public int amoguscat_main (string[] args) {
             print_with_amogus (data);
         }
     }else {
-        data = readfile (args[0]);
+        data = readfile_raw (args[0]);
         print_with_amogus (data);
     }
     return 0;
