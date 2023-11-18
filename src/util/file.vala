@@ -68,22 +68,7 @@ public string readfile (string path) {
 
 //DOC: `string safedir (string dir):`
 //DOC: directory safe for httpd
-public string safedir (string dir) {
-    debug (_ ("Safedir: %s").printf (dir));
-    string ret = dir;
-    while (".." in ret) {
-        ret = ret.replace ("..", "./");
-    }
-    while ("//" in ret) {
-        ret = ret.replace ("//", "/");
-    }while ("/./" in ret) {
-        ret = ret.replace ("/./", "/");
-    }while (ret.length > 0 && ret[0] == '/') {
-        ret = ret[1:];
-    }
-    ret="/" + ret;
-    return ret;
-}
+public extern string safedir (string dir);
 
 // libc function (from stdio.h)
 public extern int remove (string path);

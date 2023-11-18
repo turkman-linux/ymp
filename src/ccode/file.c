@@ -164,9 +164,7 @@ char* c_realpath(char* path){
 
 void cd(char *path) {
     #ifdef debug
-    /* Print a debug message indicating the change of directory */
-    debug("Change directory:");
-    debug(path);
+    debug(str_add("Change directory: ", path));
     #endif
 
     /* Check if the specified path is not a directory */
@@ -184,6 +182,57 @@ void cd(char *path) {
         perror("Error changing directory");
         return;
     }
+}
+
+char* safedir(const char* dir) {
+    #ifdef debug
+    debug(str_add("safedir: ", path));
+    #endif
+
+    /* Allocate memory for the result */
+    size_t len = strlen(dir);
+    /* +2 for '/' and null terminator */
+    char* ret = (char*)malloc(len + 2);
+
+    /* Copy the input directory to the result */
+    strcpy(ret, dir);
+
+    /* Replace ".." with "./" */
+    while (strstr(ret, "..") != NULL) {
+        char* pos = strstr(ret, "..");
+        memmove(pos + 1, pos + 2, strlen(pos + 2) + 1);
+        *pos = '.';
+    }
+
+    /* Replace "//" with "/" */
+    while (strstr(ret, "//") != NULL) {
+        char* pos = strstr(ret, "//");
+        memmove(pos + 1, pos + 2, strlen(pos + 2) + 1);
+    }
+
+    /* Replace "/./" with "/" */
+    while (strstr(ret, "/./") != NULL) {
+        char* pos = strstr(ret, "/./");
+        memmove(pos + 1, pos + 3, strlen(pos + 3) + 1);
+    }
+
+    /* Remove leading '/' */
+    while (len > 0 && ret[0] == '/') {
+        memmove(ret, ret + 1, len);
+        len--;
+    }
+
+    /* Add leading '/' */
+    /* +2 for '/' and null terminator */
+    char* newRet = (char*)malloc(len + 2);
+    strcpy(newRet + 1, ret);
+    newRet[0] = '/';
+    newRet[len + 1] = '\0';
+
+    /* Free the memory allocated for the intermediate result */
+    free(ret);
+
+    return newRet;
 }
 
 void write_to_file(const char *which, const char *format, ...) {
