@@ -29,6 +29,11 @@ struct stat st;
 void info(char* msg);
 #endif
 
+#ifndef debug
+void debug(char* msg);
+#endif
+char* str_add(char* s1, char* s2);
+
 long filesize(char* path){
     stat(path, &st);
     return st.st_size;
@@ -92,7 +97,7 @@ void create_dir(const char *dir) {
         mkdir(tmp, 0755);
 }
 
-char * c_read_file(const char * f_name, int * err, size_t * f_size) {
+static char * c_read_file(const char * f_name, int * err, size_t * f_size) {
     char * buffer;
     size_t length;
     FILE * f = fopen(f_name, "rb");
@@ -158,10 +163,12 @@ char* c_realpath(char* path){
     return realpath(path,NULL);
 }
 
-void cd(const char *path) {
+void cd(char *path) {
+    #ifdef debug
     /* Print a debug message indicating the change of directory */
     debug("Change directory:");
     debug(path);
+    #endif
 
     /* Check if the specified path is not a directory */
     struct stat st;
@@ -197,11 +204,6 @@ void writefile(char* path, char* ctx){
 mode_t c_umask(mode_t mask){
     return umask(mask);
 }
-
-#ifndef debug
-void debug(char* msg);
-#endif
-char* str_add(char* s1, char* s2);
 
 int isfile(char* path){
     #ifdef debug

@@ -103,7 +103,7 @@ char* int_to_string(int num){
     (A >= 'a' && A <= 'f')
 
 /* Function to convert a hexadecimal character to its integer value */
-int hexToInt(char ch) {
+static int hexToInt(char ch) {
     if (ch >= '0' && ch <= '9') {
         return ch - '0';
     } else if (ch >= 'A' && ch <= 'F') {
@@ -121,10 +121,14 @@ int i;
 char* url_decode(const char *input) {
     int decodedLength = 0;
     for (i = 0; input[i] != '\0'; i++) {
-        if (input[i] == '%' && isHexDigit(input[i + 1]) && isHexDigit(input[i + 2])) {
-            /* Skip '%', and the next two characters (assuming they are valid hexadecimal digits) */
-            i += 2;
-            decodedLength++;
+        if (input[i] == '%'){
+           if (isHexDigit(input[i + 1])){
+               if (isHexDigit(input[i + 2])) {
+                   /* Skip '%', and the next two characters (assuming they are valid hexadecimal digits) */
+                   i += 2;
+                   decodedLength++;
+                }
+            }
         } else {
             decodedLength++;
         }
@@ -140,11 +144,15 @@ char* url_decode(const char *input) {
 
     int j = 0;
     for (i = 0; input[i] != '\0'; i++) {
-        if (input[i] == '%' && isHexDigit(input[i + 1]) && isHexDigit(input[i + 2])) {
-            char hex[3] = {input[i + 1], input[i + 2], '\0'};
-            output[j++] = (char)strtol(hex, NULL, 16);
-            /* Skip '%', and the next two characters */
-            i += 2;
+        if (input[i] == '%') {
+            if (isHexDigit(input[i + 1])){
+                if (isHexDigit(input[i + 2])) {
+                    char hex[3] = {input[i + 1], input[i + 2], '\0'};
+                    output[j++] = (char)strtol(hex, NULL, 16);
+                    /* Skip '%', and the next two characters */
+                    i += 2;
+                }
+            }
         } else {
             output[j++] = input[i];
         }
