@@ -7,6 +7,12 @@
 #include <stddef.h>
 #include <string.h>
 
+/*generic counters*/
+long i;
+long j;
+long cnt = 0;
+long len = 0;
+
 int iseq(char* str1, char* str2){
     return strcmp(str1,str2) == 0;
 }
@@ -19,7 +25,6 @@ void csort(const char* arr[], int n){
     qsort(arr, n, sizeof(const char*), string_compare);
 }
 
-size_t cnt = 0;
 long count_tab(char* data){
     cnt = 0;
     while (*data == ' ') {
@@ -30,9 +35,8 @@ long count_tab(char* data){
 }
 
 char* join(char* f, char** array){
-    size_t len = 0;
-    int i = 0;
-    int c = 0;
+    i = 0;
+    len = 0;
     /* find output size */
     while(array[i]){
         len += strlen(array[i]) + strlen(f);
@@ -42,12 +46,12 @@ char* join(char* f, char** array){
     char* ret = calloc(len+1, sizeof(char));
     strcpy(ret,"");
     /* copy item len and reset value */
-    c = i;
+    cnt = i;
     i = 0;
     /* copy items */
     while(array[i]){
         strcat(ret,array[i]);
-        if(i<c-1){
+        if(i<cnt-1){
             strcat(ret,f);
         }
 	i++;
@@ -63,8 +67,10 @@ char* str_add(char* str1, char* str2){
 }
 
 char* trim(char* data) {
-    long i=0, j= 0, cnt=0;
-    long len = strlen(data);
+    i=0;
+    j=0;
+    cnt=0;
+    len = strlen(data);
     char* str = calloc(len+1, sizeof(char));
     strcpy(str,data);
     cnt = count_tab (data);
@@ -102,47 +108,33 @@ char* int_to_string(int num){
     (A >= 'A' && A <= 'F') || \
     (A >= 'a' && A <= 'f')
 
-/* Function to convert a hexadecimal character to its integer value */
-static int hexToInt(char ch) {
-    if (ch >= '0' && ch <= '9') {
-        return ch - '0';
-    } else if (ch >= 'A' && ch <= 'F') {
-        return ch - 'A' + 10;
-    } else if (ch >= 'a' && ch <= 'f') {
-        return ch - 'a' + 10;
-    } else {
-        /* Invalid character */
-        return -1;
-    }
-}
-int i;
 
 /* Function to perform URL decoding */
 char* url_decode(const char *input) {
-    int decodedLength = 0;
+    cnt = 0;
     for (i = 0; input[i] != '\0'; i++) {
         if (input[i] == '%'){
            if (isHexDigit(input[i + 1])){
                if (isHexDigit(input[i + 2])) {
                    /* Skip '%', and the next two characters (assuming they are valid hexadecimal digits) */
                    i += 2;
-                   decodedLength++;
+                   cnt++;
                 }
             }
         } else {
-            decodedLength++;
+            cnt++;
         }
     }
 
     /* +1 for null-terminator */
-    char *output = (char *)malloc((decodedLength + 1) * sizeof(char));
+    char *output = (char *)calloc((cnt + 1), sizeof(char));
 
     if (output == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         return (char*) input;
     }
 
-    int j = 0;
+    j = 0;
     for (i = 0; input[i] != '\0'; i++) {
         if (input[i] == '%') {
             if (isHexDigit(input[i + 1])){
@@ -165,25 +157,25 @@ char* url_decode(const char *input) {
 
 /* Function to perform URL encoding */
 char* url_encode(const char *input) {
-    int encodedLength = 0;
+    cnt = 0;
     for (i = 0; input[i] != '\0'; i++) {
         if (!isalnum_c(input[i])) {
             /* Two characters for % and the hexadecimal digit */
-            encodedLength += 2;
+            cnt += 2;
         } else {
-            encodedLength++;
+            cnt++;
         }
     }
 
     /* +1 for null-terminator */
-    char *output = (char *)malloc((encodedLength + 1) * sizeof(char));
+    char *output = (char *)malloc((cnt + 1) * sizeof(char));
 
     if (output == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         return (char*) input;
     }
 
-    int j = 0;
+    j = 0;
     for (i = 0; input[i] != '\0'; i++) {
         if (isalnum_c(input[i])) {
             output[j++] = input[i];
@@ -201,25 +193,25 @@ char* url_encode(const char *input) {
 
 
 int endswith(const char* data, const char* f) {
-    size_t data_length = strlen(data);
-    size_t f_length = strlen(f);
+    i = strlen(data);
+    j = strlen(f);
 
-    if (data_length < f_length) {
+    if (i < j) {
         return 0;
     }
 
-    return strcmp(data + data_length - f_length, f) == 0;
+    return strcmp(data + i - j, f) == 0;
 }
 
 int startswith(const char* data, const char* f) {
-    size_t data_length = strlen(data);
-    size_t f_length = strlen(f);
+    i = strlen(data);
+    j = strlen(f);
 
-    if (data_length < f_length) {
+    if (i < j) {
         return 0;
     }
 
-    return strncmp(data, f, f_length) == 0;
+    return strncmp(data, f, j) == 0;
 }
 
 #endif

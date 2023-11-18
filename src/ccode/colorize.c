@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 #ifndef get_bool
 int get_bool(char* name);
@@ -11,9 +12,14 @@ int get_bool(char* name);
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
 #endif
 
-char* int_to_string(int num);
+static char* int_to_string(int num){
+    char *ret = calloc(((sizeof(num) - 1) / 3 + 2), sizeof(char));
+    sprintf(ret, "%d", num);
+    return ret;
+}
 
-char* ccolorize(char* msg, char* num){
+
+static char* ccolorize(char* msg, char* num){
     char* ret = calloc((strlen(msg)+strlen(num)+13), sizeof(char));
     strcpy(ret,"\x1b[");
     strcat(ret,num);

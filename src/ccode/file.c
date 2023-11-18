@@ -158,7 +158,6 @@ char * readfile_raw(const char * filename) {
         return f_data;
     }
 }
-
 char* c_realpath(char* path){
     return realpath(path,NULL);
 }
@@ -192,7 +191,7 @@ void write_to_file(const char *which, const char *format, ...) {
   va_list args;
   va_start(args, format);
   if (vfprintf(fu, format, args) < 0) {
-    printf("cannot write");
+    fprintf(stderr,"cannot write");
   }
   fclose(fu);
 }

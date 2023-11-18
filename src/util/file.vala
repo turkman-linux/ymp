@@ -8,7 +8,7 @@ public string readfile_byte (string path, long n) {
     if (!isfile (path)) {
         return "";
     }
-    long size = get_filesize(path);
+    long size = filesize(path);
     FileStream stream = FileStream.open (path, "r");
     if (stream == null) {
         warning (_ ("Failed to read file: %s").printf (path));
@@ -34,19 +34,6 @@ public string readfile_byte (string path, long n) {
     return (string) buf;
 }
 
-public long get_filesize(string path){
-    FileStream stream = FileStream.open (path, "r");
-    if (stream == null) {
-        warning (_ ("Failed to read file: %s").printf (path));
-        return 0;
-    }
-
-    // get file size:
-    stream.seek (0, FileSeek.END);
-    long size = stream.tell ();
-    stream.rewind ();
-    return size;
-}
 
 //DOC: `string readfile (string path):`
 //DOC: read file from **path** and remove commends
@@ -245,7 +232,7 @@ public bool iself (string path) {
     if (!isfile (path)) {
         return false;
     }
-    long size = get_filesize(path);
+    long size = filesize(path);
     if(size < 4){
         return false;
     }
@@ -265,7 +252,7 @@ public bool is64bit (string path) {
         return false;
     }
     
-    long size = get_filesize(path);
+    long size = filesize(path);
     if(size < 4){
         return false;
     }
@@ -285,7 +272,6 @@ public bool isexists (string path) {
     var file = File.new_for_path (path);
     return file.query_exists ();
 }
-
 extern string c_realpath (string path);
 
 //DOC: `string srealpath (string path):`
@@ -297,11 +283,7 @@ public string srealpath (string path) {
     }
     string real = path;
     if ("/../" in path || !startswith (path, "/")) {
-    #if __GLIBC__
-        real = realpath (path);
-    #else
         real = c_realpath (path);
-    #endif
     }
     if (real == null || real == "") {
         return path;
