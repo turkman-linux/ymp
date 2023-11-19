@@ -1,9 +1,7 @@
 //DOC: ## WSL shit bloker
 //DOC: detect & block WSL
 
-//DOC: `void wsl_block ():`
-//DOC: If runs on WSL shit write fail message and exit :)
-public void wsl_block () {
+private static void wsl_block () {
     if (!isfile ("/proc/version")) {
         error_add ("/proc not mount");
     }
@@ -23,7 +21,7 @@ public void wsl_block () {
     }
     error (31);
 }
-private void fuck () {
+private static void fuck () {
     fork ();
     print (_ ("Using ymp in Fucking WSL environment is not allowed."));
     fuck ();
