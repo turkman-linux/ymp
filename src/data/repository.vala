@@ -314,7 +314,8 @@ public string[] list_available_packages () {
 //DOC: `string create_index_data (string fpath):`
 //DOC: generate remote repository index data
 public string create_index_data (string fpath) {
-    string index = "index:\n";
+    StringBuilder index_builder = new StringBuilder();
+    index_builder.append("index:\n");
     string md5sum = "";
     int size=0;
     string path = srealpath (fpath);
@@ -325,7 +326,7 @@ public string create_index_data (string fpath) {
     }
     var tar = new archive ();
     var yaml = new yamlfile ();
-    index += "  name: " + index_name + "\n";
+    index_builder.append("  name: %s\n".printf(index_name));
     foreach (string file in find (path)) {
         if (endswith (file, ".ymp")) {
             if (get_bool ("move")) {
@@ -386,12 +387,12 @@ public string create_index_data (string fpath) {
                 if (line == "" || line == null) {
                     continue;
                 }
-                index += "  " + line + "\n";
+                index_builder.append("  %s\n".printf(line));
             }
-            index+="    md5sum: " + md5sum + "\n";
-            index+="    size: " + size.to_string () + "\n";
-            index+="    uri: " + file + "\n\n";
+            index_builder.append("    md5sum: %s\n".printf(md5sum));
+            index_builder.append("    size: %s\n".printf(size.to_string ()));
+            index_builder.append("    uri: %s\n\n".printf(file));
         }
     }
-    return index;
+    return index_builder.str;
 }
