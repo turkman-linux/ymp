@@ -5,7 +5,7 @@ Creating a code-runner config
 
 To create a code-runner config, you can use the following command:
 
-.. code-block::shell
+.. code-block:: shell
 
 	ymp code-runner --create build.yaml
 
@@ -15,7 +15,7 @@ Execute code-runner
 ^^^^^^^^^^^^^^^^^^^
 To execute code-runner with a specific configuration file, use the following command:
 
-.. code-block::shell
+.. code-block:: shell
 
 	ymp code-runner build.yaml
 
@@ -25,7 +25,7 @@ code-runner configuration file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Below is an example of a code-runner configuration file (build.yaml):
 
-.. code-block::yaml
+.. code-block:: yaml
 
 	name: example
 	on-fail: fail-job
