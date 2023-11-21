@@ -44,6 +44,10 @@ public class builder {
     public build_target build_target;
     public string output_package_name;
     public int build_single(string path) {
+        backup_env();
+        clear_env();
+        set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+
         string srcpath = srealpath(path);
         string srcpkg = "";
         string binpkg = "";
@@ -63,6 +67,7 @@ public class builder {
             }
             if (run("git clone '" + path + "' " + srcpath) != 0) {
                 error_add(_("Failed to fetch git package."));
+                restore_env();
                 return 2;
             }
         } else if (startswith(path, "http://") || startswith(path, "https://")) {
@@ -83,16 +88,20 @@ public class builder {
             if (!isfile(srcpath + "/ympbuild")) {
                 error_add(_("Package is invalid: %s").printf(path));
                 remove_all(srcpath);
+                restore_env();
                 return 2;
             }
         }
         if (!isfile(srcpath + "/ympbuild")) {
+            restore_env();
             return 0;
         }
         if (!set_build_target(srcpath)) {
+            restore_env();
             return 1;
         }
         if (!build_target.create_metadata_info()) {
+            restore_env();
             return 1;
         }
         // Set build target again (emerge change build target)
@@ -101,13 +110,13 @@ public class builder {
         ymp_build.set_ympbuild_buildpath(build_path);
 
         info("Check build dependencies");
-        if (!check_build_dependencies({
-                srcpath
-            })) {
+        if (!check_build_dependencies({srcpath})) {
+            restore_env();
             return 1;
         }
         info("Fetch sources");
         if (!fetch_package_sources()) {
+            restore_env();
             return 2;
         }
         if (!get_bool("no-source")) {
@@ -115,36 +124,42 @@ public class builder {
             print(colorize(_("Create source package from :"), yellow) + ymp_build.ympbuild_srcpath);
             srcpkg = build_target.create_source_archive();
             if (srcpkg == "") {
+                restore_env();
                 return 1;
             }
             if (srcpkg != "ignore") {
                 string target = output + "/" + output_package_name + "_source.ymp";
-                move_file(srcpkg, target);        
+                move_file(srcpkg, target);
             }
         }
         if (!get_bool("no-binary")) {
             info("Create binary package");
             if (!extract_package_sources()) {
+                restore_env();
                 return 3;
             }
             if (!build_package()) {
+                restore_env();
                 return 1;
             }
             print(colorize(_("Create binary package from: %s"), yellow).printf(build_path));
             binpkg = build_target.create_binary_package();
             if (binpkg == "") {
+                restore_env();
                 return 1;
             }
             if (get_bool("install")) {
                 if (0 != install_main({
                         binpkg
                     })) {
+                    restore_env();
                     return 1;
                 }
             }
             string target = output + "/" + output_package_name + "_" + build_target.arch + "." + build_target.suffix;
             move_file(binpkg, target);
         }
+        restore_env();
         return 0;
     }
 
@@ -153,6 +168,10 @@ public class builder {
             warning(_("Dependency check disabled"));
             return true;
         }
+        backup_env();
+        clear_env();
+        set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+
         string metadata = ymp_build.get_ympbuild_metadata();
         var yaml = new yamlfile();
         yaml.data = metadata;
@@ -191,6 +210,7 @@ public class builder {
                 error_add(_("Packages is not installed: %s").printf(join(" ", need_install)));
             }
         }
+        restore_env();
         return (!has_error());
     }
 

@@ -143,6 +143,31 @@ public string get_home () {
     return GLib.Environment.get_home_dir ();
 }
 
+
+private variable[] envs;
+
+//DOC: `void backup_env():`
+//DOC: backup environmental variables
+public void backup_env(){
+    envs = {};
+    foreach (string name in GLib.Environment.list_variables ()) {
+        variable e = new variable();
+        e.name = name;
+        e.value = get_env(name);
+        envs += e;
+    }
+}
+
+//DOC: `void restore_env():`
+//DOC: restore environmetal variables
+public void restore_env(){
+    clear_env();
+    foreach(variable e in envs){
+        set_env(e.name, e.value);
+    }
+}
+
+
 //DOC: `void clear_env ():`
 //DOC: remove all environmental variable except **PATH**
 public void clear_env () {
