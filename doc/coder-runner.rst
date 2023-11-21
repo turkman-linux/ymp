@@ -70,3 +70,43 @@ Job definition:
 * **run**: Contains the actual commands to be executed in the job. It can be a single command or a list of commands. Commands can be specified as a list (using -) or as a multiline string (using |). In the example, "command1," "command2," and "echo 'Running job2'" are placeholders for the actual commands to be executed.
 
 
+
+Create plugins
+^^^^^^^^^^^^^^
+Create new file in ymp source code. under **src/util/code_runner_plugins** directory.
+
+**example.vala** file content:
+
+.. code-runner:: java
+
+	public void my_init(string image, string directory){
+	    // Initialization logic
+	}
+
+	public int my_run(string command){
+	    // Run logic
+	}
+
+	public void my_clean(){
+	    // Clean logic
+	}
+	public void code_runner_example_init(){
+	    my_plugin = new code_runner_plugin();
+	    my_plugin.name = "my_plugin";
+	    my_plugin.init.connect(my_init);
+	    my_plugin.run.connect(my_run);
+	    my_plugin.clean.connect(my_clean);
+	    add_code_runner_plugin(my_plugin);
+	}
+
+**Note:** **code_runner_xxx_init** function automatically call by ymp. **xxx** must same with file name.
+
+Then rebuild ymp.
+
+.. code-block:: shell
+
+	meson setup build
+	ninja -C build
+	ninja -C build install
+
+
