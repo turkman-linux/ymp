@@ -99,7 +99,7 @@ Create new file in ymp source code. under **src/util/code_runner_plugins** direc
 	    add_code_runner_plugin(my_plugin);
 	}
 
-**Note:** **code_runner_xxx_init** function automatically call by ymp. **xxx** must same with file name.
+**Note:** **code_runner_xxx_init** function automatically called by ymp. **xxx** must same with file name.
 
 Then rebuild ymp.
 
