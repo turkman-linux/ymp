@@ -77,7 +77,7 @@ Create new file in ymp source code. under **src/util/code_runner_plugins** direc
 
 **example.vala** file content:
 
-.. code-runner:: java
+.. code-block:: java
 
 	public void my_init(string image, string directory){
 	    // Initialization logic
