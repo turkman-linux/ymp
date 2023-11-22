@@ -29,7 +29,7 @@ async void process_request (SocketConnection conn) {
         string ip = local.get_address ().to_string ();
         string acl = get_value ("allow");
         if (acl == "") {
-            acl = "127.0.0.1";
+            acl = "0.0.0.0";
         }
         string[] acls = ssplit (acl, ":");
         bool perm = false;
@@ -40,6 +40,7 @@ async void process_request (SocketConnection conn) {
             }
         }
         if (!perm && !("0.0.0.0" in acls)) {
+            info("Permission denied for %s".printf(ip));
             return;
         }
         string date = now.format ("%H:%M %Y.%m.%d");
@@ -78,7 +79,7 @@ async void process_request (SocketConnection conn) {
             dos.put_string ("</head> \n <body> \n");
             dos.put_string ("<h1> " + _ ("Index of /%s").printf (path) + " </h1> \n");
             dos.put_string ("<hr> \n <ul> \n");
-            if (path != "/") {
+            if (path != "/" && path != "") {
                 dos.put_string ("&#x1F4C1; <a href=\"../\" > .. </a> <br> </li> \n");
             }
             dos.flush ();
