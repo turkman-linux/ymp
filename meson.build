@@ -100,7 +100,7 @@ if get_option('libarchive')
         deps += [libarchive]
 endif
 
-#libarchive
+#libreadline
 if get_option('libreadline')
         libreadline = dependency('readline', static:get_option('static'), required:false)
         if not libreadline.found()

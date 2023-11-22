@@ -25,7 +25,7 @@ function list_txt(){
     find src/shcode -type f -exec basename {} \; | sed "s/\..*//g" | sort
 }
 ### ctx_init function build
-echo "private void ctx_init(){" >> ctx.vala
+echo "private static void ctx_init(){" >> ctx.vala
 for i in $@ ; do
     name=$(echo $i | cut -f1 -d=)
     value=$(echo $i | cut -f2 -d=)

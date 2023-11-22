@@ -1,3 +1,4 @@
+.section .note.GNU-stack
 .section .text
 .weak  _start
 _start:
