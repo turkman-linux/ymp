@@ -29,6 +29,9 @@ char* which(char* path);
 
 #ifndef info
 char* info(char* message);
+#endif
+
+#ifdef DEBUG
 char* debug(char* message);
 #endif
 
@@ -143,7 +146,9 @@ int sandbox(char* type, char** args){
 
 
 void sandbox_bind(char* dir){
+    #ifdef DEBUG
     debug(str_add("Sandbox: create bind", dir));
+    #endif
     char *target = calloc((strlen(dir)+15), sizeof(char));
     strcpy(target,"/tmp/ymp-root/");
     strcat(target,dir);
@@ -159,7 +164,9 @@ void sandbox_bind(char* dir){
     }
 }
 void sandbox_bind_shared(char* dir){
+    #ifdef DEBUG
     debug(str_add("Sandbox: bind shared", dir));
+    #endif
     char *target = calloc((strlen(dir)+15), sizeof(char));
     strcpy(target,"/tmp/ymp-root/");
     strcat(target,dir);
@@ -168,7 +175,9 @@ void sandbox_bind_shared(char* dir){
 }
 
 void sandbox_create_tmpfs(char* dir){
+    #ifdef DEBUG
     debug(str_add("Sandbox: create tmpfs", dir));
+    #endif
     char *source = calloc(strlen(dir)+strlen(sandbox_rootfs)+2, sizeof(char));
     strcpy(source,sandbox_rootfs);
     strcat(source,"/");
