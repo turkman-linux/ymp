@@ -29,6 +29,7 @@ char* which(char* path);
 
 #ifndef info
 char* info(char* message);
+char* debug(char* message);
 #endif
 
 int sandbox_network = 0;
@@ -50,6 +51,7 @@ int operation_main_raw(char* type, char** args);
 int isdir(char* target);
 int isfile(char* target);
 void remove_all(char* target);
+char* str_add(char* str1, char* str2);
 
 char* which(char* cmd);
 void write_to_file(const char *which, const char *format, ...);
@@ -64,9 +66,15 @@ char* sandbox_tmpfs;
 char* sandbox_rootfs;
 
 int sandbox(char* type, char** args){
+    if(sandbox_rootfs == NULL){
+        sandbox_rootfs = "/";
+    }
+    if(sandbox_shared == NULL){
+        sandbox_shared = "";
+    }
     int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER;
     if(isfile("/.sandbox")){
-        exit(31);
+        return operation_main_raw(type,args);
     }
     pid_t pid = fork();
     if(pid == 0) {
@@ -135,20 +143,24 @@ int sandbox(char* type, char** args){
 
 
 void sandbox_bind(char* dir){
-    char target[(strlen(dir)+20)*sizeof(char)];
-    char source[(strlen(dir)+strlen(sandbox_rootfs)+20)*sizeof(char)];
+    debug(str_add("Sandbox: create bind", dir));
+    char *target = calloc((strlen(dir)+15), sizeof(char));
     strcpy(target,"/tmp/ymp-root/");
     strcat(target,dir);
+
+    char *source = calloc(strlen(dir)+strlen(sandbox_rootfs)+2, sizeof(char));
     strcpy(source,sandbox_rootfs);
     strcat(source,"/");
     strcat(source,dir);
+
     if(!isdir(target)){
         create_dir(target);
         mount(source, target, NULL, MS_SILENT | MS_BIND | MS_REC, NULL);
     }
 }
 void sandbox_bind_shared(char* dir){
-    char target[(strlen(dir)+20)*sizeof(char)];
+    debug(str_add("Sandbox: bind shared", dir));
+    char *target = calloc((strlen(dir)+15), sizeof(char));
     strcpy(target,"/tmp/ymp-root/");
     strcat(target,dir);
     create_dir(target);
@@ -156,7 +168,8 @@ void sandbox_bind_shared(char* dir){
 }
 
 void sandbox_create_tmpfs(char* dir){
-    char source[(strlen(dir)+strlen(sandbox_rootfs)+10)*sizeof(char)];
+    debug(str_add("Sandbox: create tmpfs", dir));
+    char *source = calloc(strlen(dir)+strlen(sandbox_rootfs)+2, sizeof(char));
     strcpy(source,sandbox_rootfs);
     strcat(source,"/");
     strcat(source,dir);

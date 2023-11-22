@@ -25,12 +25,7 @@ int main(int argc, char** argv, char** envp){
     ╚═════╝  ╚═╝
     */
     Ymp *ymp = ymp_init(argv, argc);
-    if(get_bool("sandbox")){
-        array *a = array_new();
-        array_adds(a, argv, argc);
-        array_remove(a, "--sandbox");
-        return run_sandbox_main(array_get(a,NULL),array_length(a));
-    }if (get_bool("version")){
+    if (get_bool("version")){
         write_version();
         return 0;
     }if(argc < 2){

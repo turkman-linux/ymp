@@ -40,9 +40,16 @@ private void unlock_operation () {
 
 public int operation_main_raw(string type, string[] args){
     info (_ ("RUN (RAW):") + type + ":" + join (" ", args));
+    if(get_bool("sandbox") && !isfile("/.sandbox")){
+        sandbox_rootfs = get_destdir ();
+        return sandbox (type, args);
+    }
     foreach (operation op in ops) {
         foreach (string name in op.names) {
             if (type == name) {
+                if (get_bool ("help") || op.help.minargs > args.length) {
+                    return help_main ({name});
+                }
                 set_value_readonly ("OPERATION", op.help.name);
                 return op.callback (args);
             }
@@ -77,21 +84,9 @@ public int operation_main (string type, string[] fargs) {
         cur++;
     }
     string[] args = argument_process (fargs);
+    parse_args (args);
     info (_ ("RUN:") + type + ":" + join (" ", args));
-    foreach (operation op in ops) {
-        foreach (string name in op.names) {
-            if (type == name) {
-                if (get_bool ("help") || op.help.minargs > args.length) {
-                    return help_main ( {name});
-                }
-                set_value_readonly ("OPERATION", op.help.name);
-                parse_args (args);
-                return op.callback (args);
-            }
-        }
-    }
-    warning (_ ("Invalid operation name: %s").printf (type));
-    return 0;
+    return operation_main_raw(type, args);
 }
 
 
