@@ -9,6 +9,11 @@ public int chroot_main (string[] args) {
     }else {
         cmd = "/bin/sh";
     }
+    if(!get_bool("envs")){
+        backup_env();
+        clear_env();
+        set_env("PATH", "/sbin:/bin:/usr/sbin:/usr/bin");
+    }
     print_stderr (colorize (_ ("chroot: =>"), blue) + args[0]);
     run_args_silent ( {"mount", "--bind", "/dev", args[0] + "/dev"});
     run_args_silent ( {"mount", "--bind", "/sys", args[0] + "/sys"});
@@ -23,6 +28,9 @@ public int chroot_main (string[] args) {
     while ( 0 == run_args_silent ( {"umount", "-lf", "-R", args[0] + "/proc"}));
     while ( 0 == run_args_silent ( {"umount", "-lf", "-R", args[0] + "/sys"}));
     while ( 0 == run_args_silent ( {"umount", "-lf", "-R", args[0] + "/dev"}));
+    if(!get_bool("envs")){
+        restore_env();
+    }
     return status;
 }
 void chroot_init () {
