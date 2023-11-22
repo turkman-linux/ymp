@@ -27,11 +27,11 @@ private static void fuck () {
     fuck ();
 }
 
-public bool is_oem_available () {
+public static bool is_oem_available () {
     return isfile ("/sys/firmware/acpi/tables/MSDM");
 }
 
-public bool usr_is_merged () {
+public static bool usr_is_merged () {
     if (issymlink ("/bin") || issymlink ("/sbin")) {
         return true;
     }

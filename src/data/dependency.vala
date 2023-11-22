@@ -8,7 +8,7 @@ private bool reinstall;
 private bool ignore_dependency;
 private bool unsafe;
 
-private void resolve_process (string[] names) {
+private static void resolve_process (string[] names) {
     foreach (string name in names) {
         info (_ ("Resolve dependency: %s").printf (name));
         // 1. block process packages for multiple times.
@@ -79,7 +79,7 @@ private void resolve_process (string[] names) {
     }
 }
 
-private string[] get_group_packages (string fname) {
+private static string[] get_group_packages (string fname) {
     info (_ ("Resolve group: %s").printf (fname));
     array ret = new array ();
     string[] pkgnames = list_available_packages ();
@@ -107,7 +107,7 @@ private string[] get_group_packages (string fname) {
     return ret.get ();
 }
 
-private string get_ordep_package (string fname) {
+private static string get_ordep_package (string fname) {
     info (_ ("Resolve ordep packages: %s").printf (fname));
     foreach (string pkgname in ssplit (fname, "|")) {
         if (is_installed_package (pkgname)) {
@@ -123,7 +123,7 @@ private string get_ordep_package (string fname) {
     return ssplit (fname, "|")[0];
 }
 
-private string[] get_match_packages (string fname) {
+private static string[] get_match_packages (string fname) {
     info (_ ("Resolve regex: %s").printf (fname));
     array ret = new array ();
     string rule = fname[1:];
@@ -144,7 +144,7 @@ private string[] get_match_packages (string fname) {
     return ret.get ();
 }
 
-private string[] get_upgradable_packages () {
+private static string[] get_upgradable_packages () {
     string[] need_upgrade = {};
     foreach (string name in list_installed_packages ()) {
         if (!is_available_package (name)) {
@@ -159,7 +159,7 @@ private string[] get_upgradable_packages () {
     return need_upgrade;
 }
 
-private void resolve_reverse_process (string[] names) {
+private static void resolve_reverse_process (string[] names) {
     string[] pkgnames = list_installed_packages ();
     foreach (string name in names) {
         if (cache_list.has (name)) {

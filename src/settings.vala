@@ -6,7 +6,7 @@ private string DESTDIR;
 private string BUILDDIR;
 private string DISTRO;
 private yamlfile config_yaml;
-private void settings_init () {
+private static void settings_init () {
     if (DESTDIR == null) {
         DESTDIR = "/";
     }
@@ -116,11 +116,11 @@ public string get_build_dir () {
     return DESTDIR + get_builddir_priv ();
 }
 
-private string get_builddir_priv () {
+private static string get_builddir_priv () {
     return BUILDDIR;
 }
 
-private string get_metadata_path (string name) {
+private static string get_metadata_path (string name) {
     return get_storage () + "/metadata/" + name + ".yaml";
 }
 
@@ -130,7 +130,7 @@ public void set_config (string path) {
     CONFIG=srealpath (path);
     settings_init ();
 }
-private void parse_args (string[] args) {
+private static void parse_args (string[] args) {
     foreach (string arg in args) {
         if (arg == "--") {
             return;
