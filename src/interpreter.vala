@@ -1,9 +1,4 @@
-private string[] script;
-
 public void add_script(string data) {
-    if (script == null) {
-        script = {};
-    }
     if (data == null || data == "") {
         return;
     }
@@ -15,6 +10,7 @@ public void add_script(string data) {
 
 public int ymp_run() {
     variable_integer[] labels = {};
+    bool label_found = false;
     int iflevel = 0;
     int last_i = -1;
     for (int i = 0; i < proc.length; i++) {
@@ -51,18 +47,25 @@ public int ymp_run() {
         }
         if (iflevel < 0) {
             error_add(_("Syntax error: Unexceped endif detected."));
+            error(2);
         } else if (iflevel != 0) {
             continue;
         }
         if (proc[i].type == "goto") {
             string name = proc[i].args[0];
             last_i = i;
+            label_found = false;
             foreach(variable_integer l in labels) {
                 if (l.name == name) {
                     i = l.value;
                     iflevel = 0;
+                    label_found = true;
                     break;
                 }
+            }
+            if(!label_found){
+                error_add(_("label is not defined: %s").printf(name));
+                error(2);
             }
             continue;
         }
