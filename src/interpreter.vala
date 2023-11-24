@@ -46,7 +46,7 @@ public int ymp_run() {
             continue;
         }
         if (iflevel < 0) {
-            error_add(_("Syntax error: Unexceped endif detected."));
+            error_add(_("Line %d:").printf(i)+" "+_("Syntax error: Unexceped endif detected."));
             error(2);
         } else if (iflevel != 0) {
             continue;
@@ -64,7 +64,7 @@ public int ymp_run() {
                 }
             }
             if(!label_found){
-                error_add(_("label is not defined: %s").printf(name));
+                error_add(_("Line %d:").printf(i)+" "+_("label is not defined: %s").printf(name));
                 error(2);
             }
             continue;
@@ -85,7 +85,7 @@ public int ymp_run() {
         unlock_operation();
         if (status != 0) {
             string type = proc[i].type;
-            error_add(_("Process: %s failed. Exited with %d.").printf(type, status));
+            error_add(_("Line %d:").printf(i)+" "+_("Process: %s failed. Exited with %d.").printf(type, status));
             error(status);
         }
         float diff = ((float)(get_epoch() - start_time)) / 1000000;
