@@ -13,6 +13,11 @@ class variable {
     public string value;
 }
 
+class variable_integer {
+    public string name;
+    public int value;
+}
+
 private variable[] vars;
 
 //DOC: `void set_value (string name, string value):`
@@ -156,6 +161,14 @@ public void backup_env(){
         e.value = get_env(name);
         envs += e;
     }
+}
+
+public string[] get_envs(){
+    string[] ret = {};
+    foreach (string name in GLib.Environment.list_variables ()) {
+        ret += name+"="+get_env(name);
+    }
+    return ret;
 }
 
 //DOC: `void restore_env():`

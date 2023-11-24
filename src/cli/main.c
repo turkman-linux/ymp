@@ -24,7 +24,7 @@ int main(int argc, char** argv, char** envp){
     ██████╔╝ ██║
     ╚═════╝  ╚═╝
     */
-    Ymp *ymp = ymp_init(argv, argc);
+    ymp_init(argv, argc);
     if (get_bool("version")){
         write_version();
         return 0;
@@ -40,9 +40,8 @@ int main(int argc, char** argv, char** envp){
         free(c1);
         error (31);
     }else {
-        ymp_add_process(ymp, argv[1], argv+2, argc-2);
+        return operation_main(argv[1], argv+2, argc-2);
     }
-    ymp_run(ymp);
     if(has_error()){
         error(1);
     }

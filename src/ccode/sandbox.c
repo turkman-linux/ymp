@@ -47,8 +47,8 @@ int get_bool(char* variable);
 char* get_builddir_priv();
 #endif
 
-#ifndef operation_main_raw
-int operation_main_raw(char* type, char** args);
+#ifndef operation_main
+int operation_main(char* type, char** args);
 #endif
 
 int isdir(char* target);
@@ -68,6 +68,8 @@ char* sandbox_tmpfs;
 
 char* sandbox_rootfs;
 
+char** get_envs();
+
 int sandbox(char* type, char** args){
     if(sandbox_rootfs == NULL){
         sandbox_rootfs = "/";
@@ -77,9 +79,12 @@ int sandbox(char* type, char** args){
     }
     int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER;
     if(isfile("/.sandbox")){
-        return operation_main_raw(type,args);
+        return operation_main(type,args);
     }
     pid_t pid = fork();
+    #if DEBUG
+    debug("Sandbox: fork");
+    #endif
     if(pid == 0) {
         int r = prctl(PR_SET_PDEATHSIG, SIGHUP);
         if (r == -1){
@@ -123,7 +128,13 @@ int sandbox(char* type, char** args){
         }
         write_to_file("/tmp/ymp-root/.sandbox", "%d",getpid());
         if (0 == chroot("/tmp/ymp-root")){
+            #if DEBUG
+            debug("Sandbox: chroot /tmp/ymp-root");
+            #endif
             if(0 == chdir("/")){
+                #if DEBUG
+                debug("Sandbox: chdir /");
+                #endif
                 unshare(CLONE_NEWUTS);
                 if(sandbox_network == 0){
                     unshare(CLONE_NEWNET);
@@ -131,7 +142,24 @@ int sandbox(char* type, char** args){
                 unshare(CLONE_NEWIPC);
                 unshare(CLONE_VM);
                 unshare(CLONE_NEWPID| CLONE_VFORK | SIGCHLD);
-                exit(operation_main_raw(type,args));
+                #if DEBUG
+                debug(str_add("Sandbox: execute ", type));
+                #endif
+                int cur = 0;
+                while(args[cur]){
+                    cur++;
+                }
+                char** new_args = calloc(cur+2, sizeof(char*));
+                cur = 0;
+                while(args[cur]){
+                    new_args[cur] = args[cur];
+                    cur++;
+                }
+                exit(operation_main(type,new_args));
+                /*exit(execvpe("/proc/self/exe",new_args,get_envs())); */
+                #if DEBUG
+                debug(str_add("Sandbox: execute done", type));
+                #endif
             }
         }
         exit(127);
@@ -164,8 +192,8 @@ void sandbox_bind(char* dir){
     }
 }
 void sandbox_bind_shared(char* dir){
-    #ifdef DEBUG
-    debug(str_add("Sandbox: bind shared", dir));
+    #if DEBUG
+    debug(str_add("Sandbox: bind shared ", dir));
     #endif
     char *target = calloc((strlen(dir)+15), sizeof(char));
     strcpy(target,"/tmp/ymp-root/");
@@ -175,8 +203,8 @@ void sandbox_bind_shared(char* dir){
 }
 
 void sandbox_create_tmpfs(char* dir){
-    #ifdef DEBUG
-    debug(str_add("Sandbox: create tmpfs", dir));
+    #if DEBUG
+    debug(str_add("Sandbox: create tmpfs ", dir));
     #endif
     char *source = calloc(strlen(dir)+strlen(sandbox_rootfs)+2, sizeof(char));
     strcpy(source,sandbox_rootfs);

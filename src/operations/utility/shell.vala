@@ -1,5 +1,6 @@
 public int shell_main (string[] args) {
-    Ymp ymp = ymp_init (args);
+    backup_process();
+    clear_process ();
     if (args[0] == "-" || args.length == 0) {
         set_bool ("shellmode", true);
         while (!stdin.eof ()) {
@@ -11,19 +12,20 @@ public int shell_main (string[] args) {
                 string line = Readline.readline (prompt);
             #endif
             if (line != null) {
-                ymp.add_script (line);
-                ymp.run ();
-                ymp.clear_process ();
+                add_script (line);
+                ymp_run ();
+                clear_process ();
             }else {
                 exit_main (args);
             }
         }
     }else {
         string data = readfile (args[0]);
-        ymp.add_script (data);
-        ymp.run ();
-        ymp.clear_process ();
+        add_script (data);
+        ymp_run ();
+        clear_process ();
     }
+    restore_process();
     return 0;
 }
 

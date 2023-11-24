@@ -145,6 +145,9 @@ endif
 # find sources
 sources = ['src/ymp.vala',
            'src/settings.vala',
+           'src/operations.vala',
+           'src/process.vala',
+           'src/interpreter.vala',
            'src/wslblock.vala',
            'src/ccode.vala',
            'data/ymp-extra.h'
