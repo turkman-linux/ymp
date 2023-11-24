@@ -3,14 +3,15 @@ public int run_sandbox_main (string[] args) {
         error_add (_ ("Sandbox operation with usrmerge is not allowed!"));
         error (31);
     }
-    if (!get_bool ("no-net")) {
-        sandbox_network = true;
-    }
     sandbox_shared = get_value ("shared");
     sandbox_tmpfs = get_value ("tmpfs");
     sandbox_rootfs = get_destdir ();
     sandbox_uid = int.parse (get_value ("uid"));
     sandbox_gid = int.parse (get_value ("gid"));
+
+    if (!get_bool ("no-net")) {
+        sandbox_network = true;
+    }
     info (_ ("Execute sandbox :%s").printf (join (" ", args)));
     if(!get_bool("envs")){
         backup_env();

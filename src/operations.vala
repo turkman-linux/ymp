@@ -23,6 +23,11 @@ private void unlock_operation () {
 public int operation_main(string type, string[] args){
     if(get_bool("sandbox") && !isfile("/.sandbox")){
         info (_ ("RUN (SANDBOX):") + type + ":" + join (" ", args));
+        sandbox_shared = get_value ("shared");
+        sandbox_tmpfs = get_value ("tmpfs");
+        sandbox_rootfs = get_destdir ();
+        sandbox_uid = int.parse (get_value ("uid"));
+        sandbox_gid = int.parse (get_value ("gid"));
         return sandbox(type, args);
     }
     info (_ ("RUN:") + type + ":" + join (" ", args));
