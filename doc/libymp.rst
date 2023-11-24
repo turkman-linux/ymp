@@ -37,18 +37,17 @@ Example hello world program with ymp operation manager like this:
 
 	#include <ymp.h>
 	int main(int argc, char* argv[]){
-	    Ymp *y = ymp_init(argv, argc);
+	    ymp_init(argv, argc);
 	    // script add
-	    ymp_add_script(y,"echo Hello World");
+	    add_script"echo Hello World");
 	    // process add
 	    char* args[] = {"Hello", "World"};
-	    ymp_add_process(y, "echo", args, 2);
-	    return ymp_run(y);
+	    add_process("echo", args, 2);
+	    return ymp_run();
 	}
 
-**Ymp** struct is ymp operation object. You must create with **ymp_init**.
-**ymp_add_script** function add ymp shell script into ymp object.
-**ymp_add_process** function add ymp process into ymp object.
+**add_script** function add ymp shell script.
+**add_process** function add ymp process.
 **ymp_run** call ymp operations and return exit status.
 
 For all ymp function please see **/usr/include/ymp.h** header.
@@ -61,10 +60,10 @@ You can use ymp with vala using vapi. For example:
 .. code-block:: java
 
 	int main(string[] argv){
-	    Ymp y = ymp_init(argv);
+	    ymp_init(argv);
 	    string[] args = {"Hello","World"};
-	    y.add_process("echo",args);
-	    y.run();
+	    add_process("echo",args);
+	    ymp_run();
 	    return 0;
 	}
 
