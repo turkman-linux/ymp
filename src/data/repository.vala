@@ -198,6 +198,21 @@ public package get_package_from_repository (string name) {
     return ret;
 }
 
+//DOC: `package get_package (string name):`
+//DOC: get package from automatically detected source
+public package get_package (string name) {
+    if (isfile(name)){
+         return get_package_from_file(name);
+    }else if (is_available_from_repository(name)) {
+        return get_from_repository(name);
+    } else if (is_installed_package(name)) {
+        return get_installed_package(name);
+    }else {
+        return new package();
+    }
+}
+
+
 //DOC: `package get_source_from_repository (string name):`
 //DOC: get source package object from all repositories
 public package get_source_from_repository (string name) {
