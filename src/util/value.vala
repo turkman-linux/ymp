@@ -29,17 +29,14 @@ public void set_value (string name, string value) {
     if (name == null || value == null) {
         return;
     }
+    debug("Set value: "+name+"="+value);
     foreach (variable varx in vars) {
         if (varx.name == name.up ()) {
             return;
         }else if (varx.name == name.down ()) {
-            varx.value = value;
             return;
         }
     }
-    #if DEBUG
-//    stderr.printf ("Set value: "+name+"="+value+"\n");
-    #endif
     variable varx = new variable ();
     varx.name = name.down ();
     varx.value = value;
@@ -109,6 +106,7 @@ public bool get_bool (string name) {
 //DOC: `void set_bool (string name, bool value):`
 //DOC: add a global ymp variable as bool
 public void set_bool (string name, bool value) {
+    debug("Set bool: "+name+"="+value.to_string());
     if (value) {
         set_value (name, "true");
     }else {

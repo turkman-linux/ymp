@@ -138,7 +138,7 @@ private static void parse_args (string[] args) {
         if (startswith (arg, "--")) {
             var argname = arg[2:];
             if (argname == "allow-oem") {
-                    set_value_readonly ("allow-oem", "true");
+                set_value_readonly ("allow-oem", "true");
             }else if (arg.contains ("=")) {
                 var name = ssplit (argname, "=")[0];
                 var value = argname[name.length + 1:];

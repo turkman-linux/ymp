@@ -17,11 +17,14 @@ public void ymp_init (string[] args) {
     GLib.Intl.textdomain (GETTEXT_PACKAGE);
     #endif
     c_umask (022);
+    // initial load
     parse_args(args);
     logger_init();
     settings_init ();
     wsl_block ();
     ctx_init ();
+    // override settings
+    parse_args(args);
     #if SHARED
     info (_ ("Plugin manager init"));
     foreach (string lib in find (DISTRODIR)) {
