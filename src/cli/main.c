@@ -40,7 +40,9 @@ int main(int argc, char** argv, char** envp){
         free(c1);
         error (31);
     }else {
-        return operation_main(argv[1], argv+2, argc-2);
+        ymp_init (argv, argc);
+        add_process (argv[1], argv+2, argc-2);
+        ymp_run ();
     }
     if(has_error()){
         error(1);
