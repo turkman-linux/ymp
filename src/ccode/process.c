@@ -123,6 +123,17 @@ int run(char* command){
     return run_args(cmd);
 }
 
+int run_printf(char* format, ...){
+    char cmd[1024];
+    va_list args;
+    va_start (args, format);
+    vsnprintf (cmd, 1023, format, args);
+    va_end (args);
+    return run(cmd);
+
+}
+
+
 int run_silent(char* command){
     char* cmd[] = {"sh","-c",command, NULL};
     return run_args_silent(cmd);

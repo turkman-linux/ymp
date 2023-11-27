@@ -52,25 +52,25 @@ public class yamlfile {
     public string[] get_area_list (string fdata, string path) {
         debug (_ ("Get area list: %s").printf (path));
         string[] ret = {};
-        string data="";
         bool e=false;
+        StringBuilder area_builder = new StringBuilder();
         foreach (string line in ssplit (fdata, "\n")) {
             if (!startswith (line, " ") && ":" in line) {
                 string name = ssplit (line, ":")[0];
                 //flush memory to array
-                if (data != "") {
-                    ret+=trim (data);
+                if (area_builder.str != "") {
+                    ret+=trim (area_builder.str);
                 }
                 //reset memory
-                data="";
+                area_builder = new StringBuilder();
                 e = (name == path);
             }else if (e && line.strip () != "") {
-                data += line + "\n";
+                area_builder.append(line + "\n");
             }
         }
         // flush memory for last item
-        if (e && data != "") {
-            ret += trim (data);
+        if (e && area_builder.str != "") {
+            ret += trim (area_builder.str);
         }
         return ret;
     }

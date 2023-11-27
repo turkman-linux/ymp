@@ -121,6 +121,23 @@ public class array {
         }
     }
 
+    //DOC: `string[] get_string ():`
+    //DOC: return as string
+    public string get_string () {
+        if (a == null){
+            return "";
+        }
+        else {
+            StringBuilder area_builder = new StringBuilder();
+            foreach (string item in a) {
+                if (item != null) {
+                    area_builder.append(item);
+                }
+            }
+            return area_builder.str;
+        }
+    }
+
     //DOC: `void set (string[] new_a):`
     //DOC: replace with new array
     public void set (string[] new_a) {

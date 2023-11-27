@@ -214,4 +214,16 @@ int startswith(const char* data, const char* f) {
     return strncmp(data, f, j) == 0;
 }
 
+char medium_buffer[1024*1024];
+char* build_string(char* format, ...){
+    strcpy(medium_buffer,"");
+    va_list args;
+    va_start (args, format);
+    vsnprintf (medium_buffer, (1024*1024)-1, format, args);
+    va_end (args);
+    return strdup(medium_buffer);
+
+}
+
+
 #endif
