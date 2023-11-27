@@ -219,9 +219,9 @@ char* build_string(char* format, ...){
     strcpy(medium_buffer,"");
     va_list args;
     va_start (args, format);
-    vsnprintf (medium_buffer, (1024*1024)-1, format, args);
+    vsprintf (medium_buffer, format, args);
     va_end (args);
-    return strdup(medium_buffer);
+    return medium_buffer;
 
 }
 
