@@ -22,10 +22,12 @@ public class ympbuild {
             ympbuild_header = ympbuild_header.replace ("@jobs@", jobs);
             ympbuild_header = ympbuild_header.replace ("@VERSION@", VERSION);
             ympbuild_header = ympbuild_header.replace ("@DISTRODIR@", DISTRODIR);
+            ympbuild_header = ympbuild_header.replace ("@DISTRO@", DISTRO);
             ympbuild_header = ympbuild_header.replace ("@CFLAGS@", get_value ("build:cflags"));
             ympbuild_header = ympbuild_header.replace ("@CXXFLAGS@", get_value ("build:cxxflags"));
             ympbuild_header = ympbuild_header.replace ("@CC@", get_value ("build:cc"));
             ympbuild_header = ympbuild_header.replace ("@LDFLAGS@", get_value ("build:ldflags"));
+            ympbuild_header = ympbuild_header.replace ("@BUILD_TARGET@", get_value ("build:target"));
             ympbuild_header += "\n";
             var use_flags = new array ();
             string[] flags = ssplit (get_value ("use"), " ");

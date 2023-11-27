@@ -3,6 +3,7 @@ export PATH="@buildpath@:/usr/sbin:/sbin:/usr/bin:/bin"
 declare -r installdir="@buildpath@/output"
 declare -r jobs="-j@jobs@"
 export HOME="@buildpath@"
+export USER="root"
 export DESTDIR="$installdir"
 export INSTALL_ROOT="$installdir"
 declare -r YMPVER="@VERSION@"
@@ -11,6 +12,8 @@ export NO_COLOR=1
 export VERBOSE=1
 export FORCE_UNSAFE_CONFIGURE=1
 export PYTHONDONTWRITEBYTECODE=1
+declare -r TARGET="@BUILD_TARGET@"
+declare -r DISTRO="@DISTRO@"
 export V=1
 export CFLAGS="-s -DTURKMAN -L@DISTRODIR@ @CFLAGS@"
 export CXXFLAGS="-s -DTURKMAN -L@DISTRODIR@ @CXXFLAGS@"
@@ -85,8 +88,16 @@ function ymp_print_metadata(){
         done
     fi
 }
+
+function target(){
+    if [[ "$1" == "@BUILD_TARGET@" ]] ; then
+        return 0
+    fi
+    return 1
+}
+
 function use(){
-    if ! echo ${uses[@]} ${uses_extra[@]} `uname -m` all extra | grep "$1" >/dev/null; then
+    if ! echo ${uses[@]} ${uses_extra[@]} ${arch[@]} all extra | grep "$1" >/dev/null; then
         echo "Use flag \"$1\" is unknown!"
         exit 1
     fi
