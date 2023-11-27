@@ -77,7 +77,7 @@ function ymp_print_metadata(){
         for use in ${uses[@]} ; do
             echo "      - $use"
         done
-        for flag in ${uses[@]} ${uses_extra[@]} ; do
+        for flag in ${uses[@]} ${uses_extra[@]} `uname -m` "@BUILD_TARGET@"; do
             flag_dep="${flag}_depends"
             if [[ "$(eval echo \${${flag_dep}[@]})" != "" ]] ; then
                 echo "    ${flag}-depends:"
@@ -99,7 +99,7 @@ function target(){
 function use(){
     if ! echo ${uses[@]} ${uses_extra[@]} ${arch[@]} all extra | grep "$1" >/dev/null; then
         echo "Use flag \"$1\" is unknown!"
-        exit 1
+        return 1
     fi
     if [[ "${use_all}" == "31" ]] ; then
         if echo ${uses[@]} | grep "$1" >/dev/null; then
