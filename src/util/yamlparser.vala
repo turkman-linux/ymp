@@ -16,6 +16,7 @@ public class yamlfile {
     //DOC: Yaml file content
     public string data;
     private int offset = 0;
+    private StringBuilder area_builder;
 
 
     //DOC: `void yamlfile.load (string path):`
@@ -53,7 +54,7 @@ public class yamlfile {
         debug (_ ("Get area list: %s").printf (path));
         string[] ret = {};
         bool e=false;
-        StringBuilder area_builder = new StringBuilder();
+        area_builder = new StringBuilder();
         foreach (string line in ssplit (fdata, "\n")) {
             if (!startswith (line, " ") && ":" in line) {
                 string name = ssplit (line, ":")[0];
@@ -163,7 +164,7 @@ public class yamlfile {
         }
 
         bool e = false;
-        StringBuilder area_builder = new StringBuilder();
+        area_builder = new StringBuilder();
         int i = 0;
 
         string[] lines = ssplit(fdata, "\n");

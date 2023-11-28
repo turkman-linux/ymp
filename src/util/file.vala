@@ -39,14 +39,14 @@ public string readfile_byte (string path, long n) {
 //DOC: read file from **path** and remove commends
 public string readfile (string path) {
     debug (_ ("Read file: %s").printf (path));
-    string new_data = "";
     if (!isfile (path)) {
-        return new_data;
+        return "";
     }
     string data = readfile_raw (path);
     if (data.length == 0) {
-        return new_data;
+        return "";
     }
+    array a = new array();
     debug (_ ("Remove commend lines: %s").printf (path));
     foreach (string line in ssplit (data, "\n")) {
         if ("#" in line) {
@@ -55,15 +55,17 @@ public string readfile (string path) {
             }
             line = ssplit (line, "#")[0];
             if (line.strip () != "") {
-                new_data += line + "\n";
+                a.add(line);
+                a.add("\n");
             }
         }else {
             if (line.length > 0) {
-                new_data += line + "\n";
+                a.add(line);
+                a.add("\n");
             }
         }
     }
-    return new_data;
+    return a.get_string();
 }
 
 //DOC: `string safedir (string dir):`
