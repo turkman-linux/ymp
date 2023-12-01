@@ -28,6 +28,8 @@ public class ympbuild {
             ympbuild_header = ympbuild_header.replace ("@CC@", get_value ("build:cc"));
             ympbuild_header = ympbuild_header.replace ("@LDFLAGS@", get_value ("build:ldflags"));
             ympbuild_header = ympbuild_header.replace ("@BUILD_TARGET@", get_value ("build:target"));
+            ympbuild_header = ympbuild_header.replace ("@ARCH@", getArch());
+            ympbuild_header = ympbuild_header.replace ("@DEBARCH@", getDebianArch());
             ympbuild_header += "\n";
             var use_flags = new array ();
             string[] flags = ssplit (get_value ("use"), " ");
@@ -66,7 +68,7 @@ public class ympbuild {
             if (ympbuild_srcpath == null) {
                 ympbuild_srcpath = "./";
             }
-            return getoutput ("env -i bash -c 'source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo ${" + variable + "[@]}'").strip ();
+            return getoutput ("env -i bash -c '"+ympbuild_header+" \n source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo ${" + variable + "[@]}'").strip ();
         }
 
         //DOC: `string[] get_ympbuild_array (string variable):`
@@ -75,7 +77,7 @@ public class ympbuild {
             if (ympbuild_srcpath == null) {
                 ympbuild_srcpath = "./";
             }
-            return ssplit (getoutput ("env -i bash -c 'source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo ${" + variable + "[@]}'").strip (), " ");
+            return ssplit (getoutput ("env -i bash -c '"+ympbuild_header+" \n source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo ${" + variable + "[@]}'").strip (), " ");
         }
 
         //DOC: `bool ympbuild_has_function (string function):`

@@ -8,9 +8,11 @@ private bool reinstall;
 private bool ignore_dependency;
 private bool unsafe;
 
+private int depth=0;
+
 private static void resolve_process (string[] names) {
     foreach (string name in names) {
-        info (_ ("Resolve dependency: %s").printf (name));
+        info (_ ("Resolve dependency: %s %d").printf (name, depth));
         // 1. block process packages for multiple times.
         if (cache_list.has (name)) {
             continue;
@@ -70,7 +72,9 @@ private static void resolve_process (string[] names) {
             }
             if (!ignore_dependency) {
                 // run recursive function
+                depth += 1;
                 resolve_process (pkg.dependencies);
+                depth -= 1;
             }
             // add package to list
             debug (name);
@@ -177,7 +181,7 @@ private static void resolve_reverse_process (string[] names) {
             resolve_reverse_process (matches);
             continue;
         }
-        info (_ ("Resolve reverse dependency: %s").printf (name));
+        info (_ ("Resolve reverse dependency: %s %d").printf (name, depth));
         if (is_installed_package (name)) {
             need_install.add (name);
         }else {
@@ -190,7 +194,9 @@ private static void resolve_reverse_process (string[] names) {
             package pkg = get_installed_package (pkgname);
             if (name in pkg.dependencies) {
                 string[] tmp = {pkgname};
+                depth += 1;
                 resolve_reverse_process (tmp);
+                depth -= 1;
             }
         }
     }
@@ -208,6 +214,7 @@ public string[] resolve_dependencies (string[] names) {
     need_install = new array ();
     // reset cache list
     cache_list = new array ();
+    depth=0;
     resolve_process (names);
     error (3);
     return need_install.get ();
@@ -224,6 +231,7 @@ public string[] resolve_reverse_dependencies (string[] names) {
     need_install = new array ();
     // reset cache list
     cache_list = new array ();
+    depth=0;
     resolve_reverse_process (names);
     error (3);
     return need_install.get ();

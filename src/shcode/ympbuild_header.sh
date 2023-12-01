@@ -19,6 +19,8 @@ export CFLAGS="-s -DTURKMAN -L@DISTRODIR@ @CFLAGS@"
 export CXXFLAGS="-s -DTURKMAN -L@DISTRODIR@ @CXXFLAGS@"
 export CC="@CC@"
 export LDFLAGS="@LDFLAGS@"
+export ARCH="@ARCH@"
+export DEBARCH="@DEBARCH@"
 
 function _dump_variables(){
     set -o posix ; set
