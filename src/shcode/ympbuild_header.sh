@@ -15,12 +15,18 @@ export PYTHONDONTWRITEBYTECODE=1
 declare -r TARGET="@BUILD_TARGET@"
 declare -r DISTRO="@DISTRO@"
 export V=1
+
 export CFLAGS="-s -DTURKMAN -L@DISTRODIR@ @CFLAGS@"
 export CXXFLAGS="-s -DTURKMAN -L@DISTRODIR@ @CXXFLAGS@"
 export CC="@CC@"
 export LDFLAGS="@LDFLAGS@"
+
 export ARCH="@ARCH@"
 export DEBARCH="@DEBARCH@"
+
+export GOCACHE="@buildpath@/go-cache/"
+export GOMODCACHE="@buildpath@/go/"
+export GOTMPDIR="@buildpath@"
 
 function _dump_variables(){
     set -o posix ; set
