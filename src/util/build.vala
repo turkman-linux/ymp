@@ -239,25 +239,30 @@ public class builder {
             if (src == "" || md5sums[i] == "") {
                 continue;
             }
-            string srcfile = ymp_build.ympbuild_buildpath + "/" + sbasename(src);
+            string name = sbasename(src);
+            if ("::" in src){
+                name = ssplit(src,"::")[0];
+                src = ssplit(src,"::")[1];
+            }
+            string srcfile = ymp_build.ympbuild_buildpath + "/" + name;
             string ymp_source_cache = get_build_dir() + "/.cache/" + ymp_build.get_ympbuild_value("name") + "/";
             create_dir(ymp_source_cache);
             if (isfile(srcfile)) {
                 info(_("Source file already exists."));
-            } else if (isfile(ymp_source_cache + "/" + sbasename(src))) {
+            } else if (isfile(ymp_source_cache + "/" + name)) {
                 info(_("Source file import from cache."));
-                copy_file(ymp_source_cache + "/" + sbasename(src), srcfile);
+                copy_file(ymp_source_cache + "/" + name, srcfile);
             } else if (isfile(ymp_build.ympbuild_srcpath + "/" + src)) {
                 info(_("Source file copy from cache."));
                 copy_file(ymp_build.ympbuild_srcpath + "/" + src, srcfile);
             } else {
                 info(_("Download: %s").printf(src));
-                fetch(src, ymp_source_cache + "/" + sbasename(src));
-                copy_file(ymp_source_cache + "/" + sbasename(src), srcfile);
+                fetch(src, ymp_source_cache + "/" + name);
+                copy_file(ymp_source_cache + "/" + name, srcfile);
             }
             string md5 = calculate_md5sum(srcfile);
             if (md5sums[i] != md5 && md5sums[i] != "SKIP") {
-                remove_all(ymp_source_cache + "/" + sbasename(src));
+                remove_all(ymp_source_cache + "/" + name);
                 error_add(_("md5sum check failed. Excepted: %s <> Reveiced: %s").printf(md5sums[i], md5));
             }
             i++;
@@ -275,6 +280,9 @@ public class builder {
                 continue;
             }
             string srcfile = sbasename(src);
+            if ("::" in src){
+                srcfile = ssplit(src,"::")[0];
+            }
             if (tar.is_archive(srcfile)) {
                 tar.load(srcfile);
                 tar.extract_all();
