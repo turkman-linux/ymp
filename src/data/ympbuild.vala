@@ -30,6 +30,7 @@ public class ympbuild {
             ympbuild_header = ympbuild_header.replace ("@BUILD_TARGET@", get_value ("build:target"));
             ympbuild_header = ympbuild_header.replace ("@ARCH@", getArch());
             ympbuild_header = ympbuild_header.replace ("@DEBARCH@", getDebianArch());
+            ympbuild_header = ympbuild_header.replace ("@APIKEY@", get_value ("build:api-key"));
             ympbuild_header += "\n";
             var use_flags = new array ();
             string[] flags = ssplit (get_value ("use"), " ");

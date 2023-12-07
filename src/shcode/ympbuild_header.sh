@@ -12,6 +12,9 @@ export NO_COLOR=1
 export VERBOSE=1
 export FORCE_UNSAFE_CONFIGURE=1
 export PYTHONDONTWRITEBYTECODE=1
+export SHELL="/bin/bash"
+export EDITOR="/bin/false"
+
 declare -r TARGET="@BUILD_TARGET@"
 declare -r DISTRO="@DISTRO@"
 export V=1
@@ -27,6 +30,11 @@ export DEBARCH="@DEBARCH@"
 export GOCACHE="@buildpath@/go-cache/"
 export GOMODCACHE="@buildpath@/go/"
 export GOTMPDIR="@buildpath@"
+
+declare -r API_KEY='@APIKEY@'
+
+exec 0< /dev/null
+
 
 function _dump_variables(){
     set -o posix ; set
