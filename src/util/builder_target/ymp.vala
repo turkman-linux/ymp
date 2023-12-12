@@ -9,7 +9,7 @@ public void build_target_ymp_init() {
         bool unsafe = get_bool("unsafe");
         cd(ymp_target.builder.ymp_build.ympbuild_srcpath);
         string metadata = ymp_target.builder.ymp_build.get_ympbuild_metadata();
-        if (unsafe) {
+        if (unsafe || ymp_target.builder.ymp_build.get_ympbuild_value("unsafe") != "") {
             metadata += "    unsafe: true\n";
         }
         writefile(srealpath(buildpath + "/metadata.yaml"), metadata.strip() + "\n");
@@ -158,7 +158,7 @@ public void build_target_ymp_init() {
         if (yaml.has_area(srcdata, "depends")) {
             deps.adds(yaml.get_array(srcdata, "depends"));
         }
-        if (unsafe) {
+        if (unsafe || yaml.get_value(srcdata, "unsafe") == "true") {
             new_data += "    unsafe: true\n";
         }
         string[] use_flags = ssplit(get_value("use"), " ");
