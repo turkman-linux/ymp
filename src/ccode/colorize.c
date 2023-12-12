@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #ifndef get_bool
 int get_bool(char* name);
@@ -42,7 +43,7 @@ typedef char* (*fn_colorize)(char*,int);
 fn_colorize colorize_ptr = colorize_fn;
 
 void colorize_init(){
-    if (get_bool("no-color")){
+    if (get_bool("no-color") || !isatty(stdout) || !isatty(stderr)){
         colorize_ptr = colorize_dummy;
     }
 }
