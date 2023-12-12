@@ -35,6 +35,15 @@ declare -r API_KEY='@APIKEY@'
 
 exec 0< /dev/null
 
+shopt -s expand_aliases
+function meson(){
+    command meson "$@" \
+        -Ddefault_library=both \
+        -Dwrap_mode=nodownload \
+        -Db_lto=true \
+        -Db_pie=true \
+        -Dauto_features=disabled
+}
 
 function _dump_variables(){
     set -o posix ; set
