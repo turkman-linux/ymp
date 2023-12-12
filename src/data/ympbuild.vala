@@ -69,7 +69,7 @@ public class ympbuild {
             if (ympbuild_srcpath == null) {
                 ympbuild_srcpath = "./";
             }
-            return getoutput ("env -i bash -c '"+ympbuild_header+" \n source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo ${" + variable + "[@]}'").strip ();
+            return getoutput ("env -i bash -c '"+ympbuild_header+" \n source " + ympbuild_srcpath + "/ympbuild &>/dev/null ; echo ${" + variable + "[@]}'").strip ();
         }
 
         //DOC: `string[] get_ympbuild_array (string variable):`
@@ -78,7 +78,7 @@ public class ympbuild {
             if (ympbuild_srcpath == null) {
                 ympbuild_srcpath = "./";
             }
-            return ssplit (getoutput ("env -i bash -c '"+ympbuild_header+" \n source " + ympbuild_srcpath + "/ympbuild >/dev/null ; echo ${" + variable + "[@]}'").strip (), " ");
+            return ssplit (getoutput ("env -i bash -c '"+ympbuild_header+" \n source " + ympbuild_srcpath + "/ympbuild &>/dev/null ; echo ${" + variable + "[@]}'").strip (), " ");
         }
 
         //DOC: `bool ympbuild_has_function (string function):`
@@ -109,7 +109,7 @@ public class ympbuild {
                 get_ympbuild_value ("name"),
                 function));
             if (ympbuild_has_function (function)) {
-                string cmd = "%s \n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s".printf (
+                string cmd = "%s \n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s | sed 's/\\x1B\\[[0-9;]*[JKmsu]//g'".printf (
                     ympbuild_header,
                     ympbuild_srcpath,
                     function,

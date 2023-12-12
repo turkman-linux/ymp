@@ -228,7 +228,7 @@ generated_sources += ['ctx.vala']
 if get_option('static')
     libymp = static_library('ymp', generated_sources, dependencies: deps, link_args: args)
 else
-    libymp = library('ymp', generated_sources, dependencies: deps, link_args: args)
+    libymp = shared_library('ymp', generated_sources, dependencies: deps, link_args: args)
 endif
 
 
