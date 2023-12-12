@@ -12,6 +12,11 @@ public int remove_main (string[] args) {
     }else {
         pkgs = resolve_reverse_dependencies (args);
     }
+    if (get_bool("unsafe")){
+        foreach (string name in  get_unsafe_packages()){
+            pkgs += name;
+        }
+    }
     if ("ymp" in pkgs) {
         if (!get_bool ("ignore-safety")) {
             error_add (_ ("You cannot remove package manager! If you really want, must use --ignore-safety"));
@@ -97,6 +102,7 @@ void remove_init () {
     op.help.description = _ ("Remove package from package name.");
     op.help.add_parameter ("--ignore-dependency", _ ("disable dependency check"));
     op.help.add_parameter ("--without-files", _ ("do not remove files from package database"));
+    op.help.add_parameter ("--unsafe", _ ("remove all unsafe packages"));
     op.help.add_parameter ("--without-metadata", _ ("do not remove metadata from package database"));
     add_operation (op);
 }

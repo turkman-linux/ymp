@@ -148,7 +148,7 @@ private static string[] get_match_packages (string fname) {
     return ret.get ();
 }
 
-private static string[] get_upgradable_packages () {
+private string[] get_upgradable_packages () {
     string[] need_upgrade = {};
     foreach (string name in list_installed_packages ()) {
         if (!is_available_package (name)) {
@@ -161,6 +161,17 @@ private static string[] get_upgradable_packages () {
         }
     }
     return need_upgrade;
+}
+
+private string[] get_unsafe_packages () {
+    string[] unsafe_list = {};
+    foreach (string name in list_installed_packages ()) {
+        package pi = get_installed_package (name);
+        if(pi.is_unsafe()){
+            unsafe_list += name;
+        }
+    }
+    return unsafe_list;
 }
 
 private static void resolve_reverse_process (string[] names) {
