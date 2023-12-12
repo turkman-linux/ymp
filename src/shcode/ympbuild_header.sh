@@ -37,6 +37,8 @@ exec 0< /dev/null
 set -o pipefail
 shopt -s expand_aliases
 
+# force disable exclusive characters
+exec &> >(sed 's/\x1B\[[0-9;]*[JKmsu]//g')
 
 function meson(){
     if [[ "$1" == "setup" ]] ; then
