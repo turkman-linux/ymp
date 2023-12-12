@@ -6,8 +6,12 @@ public void build_target_ymp_init() {
     ymp_target.create_source_archive.connect(() => {
         string buildpath = ymp_target.builder.ymp_build.ympbuild_buildpath;
         string curdir = pwd();
+        bool unsafe = get_bool("unsafe");
         cd(ymp_target.builder.ymp_build.ympbuild_srcpath);
         string metadata = ymp_target.builder.ymp_build.get_ympbuild_metadata();
+        if (unsafe) {
+            metadata += "    unsafe: true\n";
+        }
         writefile(srealpath(buildpath + "/metadata.yaml"), metadata.strip() + "\n");
         var tar = new archive();
         tar.load(buildpath + "/source.zip");
@@ -155,7 +159,7 @@ public void build_target_ymp_init() {
             deps.adds(yaml.get_array(srcdata, "depends"));
         }
         if (unsafe) {
-            new_data += "    unsafe: true/n";
+            new_data += "    unsafe: true\n";
         }
         string[] use_flags = ssplit(get_value("use"), " ");
         string package_use = get_config("package.use", name);

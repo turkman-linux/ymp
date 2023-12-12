@@ -47,7 +47,7 @@ public class builder {
         backup_env();
         clear_env();
         set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
-
+        bool unsafe = get_bool("unsafe");
         string srcpath = srealpath(path);
         string srcpkg = "";
         string binpkg = "";
@@ -57,10 +57,9 @@ public class builder {
         } else {
             output = srealpath(output);
         }
-        if (!isdir(output)) {
-            create_dir(output);
-        }
+
         if (startswith(path, "git@") || endswith(path, ".git")) {
+            set_bool("unsafe", true);
             srcpath = get_build_dir() + "/" + sbasename(path);
             if (isdir(srcpath)) {
                 remove_all(srcpath);
@@ -74,6 +73,7 @@ public class builder {
                 return 2;
             }
         } else if (startswith(path, "http://") || startswith(path, "https://")) {
+            set_bool("unsafe", true);
             string file = get_build_dir() + "/.cache/" + sbasename(path);
             create_dir(file);
             string farg = file + "/" + sbasename(path);
@@ -81,6 +81,9 @@ public class builder {
                 fetch(path, farg);
             }
             srcpath = farg;
+        }
+        if (!isdir(output)) {
+            create_dir(output);
         }
         if (isfile(srcpath)) {
             string srcdir = get_build_dir() + "/" + calculate_md5sum(srcpath);
@@ -92,19 +95,25 @@ public class builder {
             srcpath = srcdir;
             if (!isfile(srcpath + "/ympbuild")) {
                 error_add(_("Package is invalid: %s").printf(srcpath));
+                set_bool("unsafe", unsafe);
                 restore_env();
                 return 2;
             }
         }
         if (!isfile(srcpath + "/ympbuild")) {
+            set_bool("unsafe", unsafe);
             restore_env();
             return 0;
         }
         if (!set_build_target(srcpath)) {
+            error_add(_("Failed to set build target: %s").printf(srcpath));
+            set_bool("unsafe", unsafe);
             restore_env();
             return 1;
         }
         if (!build_target.create_metadata_info()) {
+            error_add(_("Failed to create metadata: %s").printf(srcpath));
+            set_bool("unsafe", unsafe);
             restore_env();
             return 1;
         }
@@ -115,11 +124,13 @@ public class builder {
 
         info("Check build dependencies");
         if (!check_build_dependencies({srcpath})) {
+            set_bool("unsafe", unsafe);
             restore_env();
             return 1;
         }
         info("Fetch sources");
         if (!fetch_package_sources()) {
+            set_bool("unsafe", unsafe);
             restore_env();
             return 2;
         }
@@ -128,6 +139,7 @@ public class builder {
             print(colorize(_("Create source package from :"), yellow) + ymp_build.ympbuild_srcpath);
             srcpkg = build_target.create_source_archive();
             if (srcpkg == "") {
+                set_bool("unsafe", unsafe);
                 restore_env();
                 return 1;
             }
@@ -139,16 +151,19 @@ public class builder {
         if (!get_bool("no-binary")) {
             info("Create binary package");
             if (!extract_package_sources()) {
+                set_bool("unsafe", unsafe);
                 restore_env();
                 return 3;
             }
             if (!build_package()) {
+                set_bool("unsafe", unsafe);
                 restore_env();
                 return 1;
             }
             print(colorize(_("Create binary package from: %s"), yellow).printf(build_path));
             binpkg = build_target.create_binary_package();
             if (binpkg == "") {
+                set_bool("unsafe", unsafe);
                 restore_env();
                 return 1;
             }
@@ -156,6 +171,7 @@ public class builder {
                 if (0 != install_main({
                         binpkg
                     })) {
+                    set_bool("unsafe", unsafe);
                     restore_env();
                     return 1;
                 }
@@ -163,6 +179,7 @@ public class builder {
             string target = output + "/" + output_package_name + "_" + build_target.arch + "." + build_target.suffix;
             move_file(binpkg, target);
         }
+        set_bool("unsafe", unsafe);
         restore_env();
         return 0;
     }
