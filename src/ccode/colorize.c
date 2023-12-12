@@ -43,7 +43,7 @@ typedef char* (*fn_colorize)(char*,int);
 fn_colorize colorize_ptr = colorize_fn;
 
 void colorize_init(){
-    if (get_bool("no-color") || !isatty(stdout) || !isatty(stderr)){
+    if (get_bool("no-color") || !isatty(fileno(stdout)) || !isatty(fileno(stdout))){
         colorize_ptr = colorize_dummy;
     }
 }
