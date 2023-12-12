@@ -109,7 +109,7 @@ public class ympbuild {
                 get_ympbuild_value ("name"),
                 function));
             if (ympbuild_has_function (function)) {
-                string cmd = "%s \n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s | sed 's/\\x1B\\[[0-9;]*[JKmsu]//g'".printf (
+                string cmd = "%s \n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s".printf (
                     ympbuild_header,
                     ympbuild_srcpath,
                     function,
