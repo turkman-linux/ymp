@@ -34,15 +34,21 @@ export GOTMPDIR="@buildpath@"
 declare -r API_KEY='@APIKEY@'
 
 exec 0< /dev/null
-
+set -o pipefail
 shopt -s expand_aliases
+
+
 function meson(){
-    command meson "$@" \
-        -Ddefault_library=both \
-        -Dwrap_mode=nodownload \
-        -Db_lto=true \
-        -Db_pie=true \
-        -Dauto_features=disabled
+    if [[ "$1" == "setup" ]] ; then
+        command meson "$@" \
+            -Ddefault_library=both \
+            -Dwrap_mode=nodownload \
+            -Db_lto=true \
+            -Db_pie=true \
+            -Dauto_features=disabled
+    else
+        command meson "$@"
+    fi
 }
 
 function _dump_variables(){
