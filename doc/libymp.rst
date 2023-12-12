@@ -39,7 +39,7 @@ Example hello world program with ymp operation manager like this:
 	int main(int argc, char* argv[]){
 	    ymp_init(argv, argc);
 	    // script add
-	    add_script"echo Hello World");
+	    add_script("echo Hello World");
 	    // process add
 	    char* args[] = {"Hello", "World"};
 	    add_process("echo", args, 2);
