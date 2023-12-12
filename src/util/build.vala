@@ -60,10 +60,13 @@ public class builder {
         if (!isdir(output)) {
             create_dir(output);
         }
-        if (startswith(path, "git://") || endswith(path, ".git")) {
+        if (startswith(path, "git@") || endswith(path, ".git")) {
             srcpath = get_build_dir() + "/" + sbasename(path);
             if (isdir(srcpath)) {
                 remove_all(srcpath);
+            }
+            if(get_value("output") == ""){
+                output=pwd();
             }
             if (run("git clone '" + path + "' " + srcpath) != 0) {
                 error_add(_("Failed to fetch git package."));
@@ -80,14 +83,15 @@ public class builder {
             srcpath = farg;
         }
         if (isfile(srcpath)) {
-            srcpath = get_build_dir() + "/" + calculate_md5sum(srcpath);
+            string srcdir = get_build_dir() + "/" + calculate_md5sum(srcpath);
+            create_dir(srcdir);
             var tar = new archive();
             tar.load(srcpath);
-            tar.set_target(srcpath);
+            tar.set_target(srcdir);
             tar.extract_all();
+            srcpath = srcdir;
             if (!isfile(srcpath + "/ympbuild")) {
-                error_add(_("Package is invalid: %s").printf(path));
-                remove_all(srcpath);
+                error_add(_("Package is invalid: %s").printf(srcpath));
                 restore_env();
                 return 2;
             }

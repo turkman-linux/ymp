@@ -121,4 +121,37 @@ Note: If you define **xxx** into use flag list, **xxx_depends** array items are 
 
 Note: Use flags is not usable for binary packages.
 
+Creating git based package
+==========================
+You can create git based package. First use **ymp template** command then create git repository.
+
+.. code-block:: shell
+
+	$ ymp template --name=example --output=test-package ...
+	$ cd test-package 
+	$ git init
+
+Then add remote address and create commit.
+
+.. code-block:: shell
+
+	$ git remote add origin git@example.org:yourname/test-package.git
+	$ git commit -m "first commit"
+
+**Note:** ympbuild file must found root directory of git repository.
+
+Then push repository to server.
+
+.. code-block:: shell
+
+	$ git push -u origin master
+
+You can build and install package like this:
+
+.. code-block:: shell
+
+	$ ymp build --output=/path/to/output git@example.org:yourname/test-package.git
+
+ymp will clone repository then build package. 
+
 
