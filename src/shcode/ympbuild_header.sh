@@ -43,8 +43,7 @@ function meson(){
             -Ddefault_library=both \
             -Dwrap_mode=nodownload \
             -Db_lto=true \
-            -Db_pie=true \
-            -Dauto_features=disabled
+            -Db_pie=true
     else
         command meson "$@"
     fi
