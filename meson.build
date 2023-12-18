@@ -33,7 +33,7 @@ libc_srcs = []
 # disable optimization for test
 if not get_option('test')
     args += ['-O3', '-flto', '-Wall','-lm',
-            '-fvisibility=hidden', '-Wextra', '-Wno-unused-parameter','-s', '-Os',
+            '-fvisibility=hidden', '-Wextra', '-Wextra','-s', '-Os',
             '-Wl,--gc-sections','-ffunction-sections', '-fno-math-errno', '-ffast-math',
             '-fdata-sections', '-fno-exceptions', '-fno-unwind-tables', '-fpack-struct',
             '-fno-asynchronous-unwind-tables', '-fno-math-errno', '-ffreestanding',

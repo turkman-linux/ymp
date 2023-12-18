@@ -6,6 +6,7 @@ private array cache_list;
 private bool ignore_missing;
 private bool reinstall;
 private bool ignore_dependency;
+private int max_depth = -1;
 private bool unsafe;
 
 private int depth=0;
@@ -31,6 +32,9 @@ private static void resolve_process (string[] names) {
         }
         if ("|" in name) {
             name = get_ordep_package (name);
+        }
+        if(max_depth < depth){
+            continue;
         }
         // 2. process if not installed or need install
         if (!need_install.has (name)) {
@@ -192,6 +196,9 @@ private static void resolve_reverse_process (string[] names) {
             resolve_reverse_process (matches);
             continue;
         }
+        if(max_depth < depth){
+            continue;
+        }
         info (_ ("Resolve reverse dependency: %s %d").printf (name, depth));
         if (is_installed_package (name)) {
             need_install.add (name);
@@ -221,6 +228,11 @@ public string[] resolve_dependencies (string[] names) {
     ignore_missing = get_bool("ignore-missing");
     reinstall = get_bool("reinstall");
     unsafe = get_bool ("unsafe");
+    max_depth = int.parse(get_value("max-depth"));
+    if (max_depth <= 0) {
+        max_depth = 1000000;
+    }
+    
     // reset need list
     need_install = new array ();
     // reset cache list
@@ -238,6 +250,10 @@ public string[] resolve_reverse_dependencies (string[] names) {
     ignore_missing = get_bool("ignore-missing");
     reinstall = get_bool("reinstall");
     unsafe = get_bool ("unsafe");
+    max_depth = int.parse(get_value("max-depth"));
+    if (max_depth <= 0) {
+        max_depth = 1000000;
+    }
     // reset need list
     need_install = new array ();
     // reset cache list
