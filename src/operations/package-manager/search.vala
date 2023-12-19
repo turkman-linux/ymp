@@ -63,17 +63,9 @@ public int search_srcrepo_main (string[] args) {
 }
 
 public int search_files_main (string[] args) {
-    foreach (string pkg in list_installed_packages ()) {
-        string files = readfile_raw ("%s/files/%s".printf (get_storage (), pkg));
-        foreach (string file in files.split ("\n")) {
-            if (file.length < 41) {
-                continue;
-            }
-            foreach (string arg in args) {
-                if (Regex.match_simple (arg, "/" + file[41:])) {
-                    print ("%s => /%s".printf (pkg, file[41:]));
-                }
-            }
+    foreach(string arg in args){
+        foreach(string file in search_file({arg})){
+            print("%s => %s".printf(arg, file));
         }
     }
     return 0;
@@ -88,7 +80,7 @@ public string[] search_file (string[] args) {
                 continue;
             }
             foreach (string arg in args) {
-                if (Regex.match_simple (arg, "/" + file[41:])) {
+                if (Regex.match_simple (arg, "/" + p_realpath(file[41:]))) {
                     pkgs.add (pkg);
                 }
             }
