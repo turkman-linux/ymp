@@ -90,11 +90,32 @@ public string[] search_file (string[] args) {
                 continue;
             }
             foreach (string arg in args) {
-                path = file[41:];
-                if(startswith(arg,"/")){
-                    path = p_realpath(path);
+                path = DESTDIR + file[41:];
+                if (Regex.match_simple (arg, path)) {
+                    pkgs.add (pkg);
                 }
-                if (Regex.match_simple (arg, "/" + path)) {
+            }
+        }
+    }
+    return pkgs.get ();
+
+}
+
+public string[] search_elf (string[] args) {
+    var pkgs = new array ();
+    string path = "";
+    foreach (string pkg in list_installed_packages ()) {
+        string files = readfile_raw ("%s/files/%s".printf (get_storage (), pkg));
+        foreach (string file in files.split ("\n")) {
+            if(pkgs.has(pkg)){
+                break;
+            }
+            if (file.length < 41) {
+                continue;
+            }
+            foreach (string arg in args) {
+                path = file[41:];
+                 if (Regex.match_simple (arg, path)) {
                     pkgs.add (pkg);
                 }
             }
@@ -114,10 +135,7 @@ public string[] search_path (string[] args) {
                 continue;
             }
             foreach (string arg in args) {
-                path = "/" + file[41:];
-                if(startswith(arg,"/")){
-                    path = p_realpath(path);
-                }
+                path = DESTDIR + file[41:];
                 if (Regex.match_simple (arg, path)) {
                     pkgs.add (path);
                 }

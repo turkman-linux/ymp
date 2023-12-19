@@ -21,8 +21,12 @@ public int revdep_rebuild_main (string[] args) {
             }else {
                 flist = detect_dep (arg);
             }
+            string[] nlist = {};
+            foreach(string l in flist){
+                nlist += sbasename(l);
+            }
             var deps = new array ();
-            foreach (string pkg in search_file (flist)) {
+            foreach (string pkg in search_elf (nlist)) {
                 if (!deps.has (pkg)) {
                     deps.add (pkg);
                 }
@@ -130,6 +134,9 @@ public string[] get_ldd_dep (string path) {
 }
 
 public string[] detect_file_dep(string path) {
+    if(!iself(path)){
+        return {};
+    }
     array base_arr = new array();
     array rm_list = new array();
     base_arr.adds(get_ldd_dep(path));
