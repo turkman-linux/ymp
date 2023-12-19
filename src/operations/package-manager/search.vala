@@ -64,8 +64,14 @@ public int search_srcrepo_main (string[] args) {
 
 public int search_files_main (string[] args) {
     foreach(string arg in args){
-        foreach(string file in search_file({arg})){
-            print("%s => %s".printf(arg, file));
+        if(get_bool("path")){
+            foreach(string file in search_path({arg})){
+                print("%s => %s".printf(arg, file));
+            }
+        }else {
+            foreach(string pkg in search_file({arg})){
+                print("%s => %s".printf(arg, pkg));
+            }
         }
     }
     return 0;
@@ -73,19 +79,50 @@ public int search_files_main (string[] args) {
 
 public string[] search_file (string[] args) {
     var pkgs = new array ();
+    string path = "";
     foreach (string pkg in list_installed_packages ()) {
         string files = readfile_raw ("%s/files/%s".printf (get_storage (), pkg));
         foreach (string file in files.split ("\n")) {
+            if(pkgs.has(pkg)){
+                break;
+            }
             if (file.length < 41) {
                 continue;
             }
-            string path = file[41:];
-            if(startswith(path,"/")){
-                path = p_realpath(path);
-            }
             foreach (string arg in args) {
+                path = file[41:];
+                if(startswith(arg,"/")){
+                    path = p_realpath(path);
+                }
                 if (Regex.match_simple (arg, "/" + path)) {
                     pkgs.add (pkg);
+                }
+            }
+        }
+    }
+    return pkgs.get ();
+
+}
+
+public string[] search_path (string[] args) {
+    var pkgs = new array ();
+    string path = "";
+    foreach (string pkg in list_installed_packages ()) {
+        string files = readfile_raw ("%s/files/%s".printf (get_storage (), pkg));
+        foreach (string file in files.split ("\n")) {
+            if(pkgs.has(pkg)){
+                break;
+            }
+            if (file.length < 41) {
+                continue;
+            }
+            foreach (string arg in args) {
+                path = "/" + file[41:];
+                if(startswith(arg,"/")){
+                    path = p_realpath(path);
+                }
+                if (Regex.match_simple (arg, path)) {
+                    pkgs.add (path);
                 }
             }
         }
