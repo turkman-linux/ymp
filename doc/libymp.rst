@@ -94,6 +94,64 @@ And compile program with this command.
 
 **Note:** This method is a bad idea but working :)
 
+libymp API
+==========
+Package struct
+^^^^^^^^^^^^^^
+libymp has **package** struct for package operations. We can define package like this:
+
+.. code-block:: C
+
+	#include <ymp.h>
+	int main(int argc, char** argv){
+	    ymp_init(argv, argc);
+	    char** deps = {"example", "test"};
+	    package *p = package_new();
+	    p->name = "test";
+	    p->dependencies = deps;
+	    return 0;
+	}
+
+Also we can get package struct from repository or file or installed.
+
+.. code-block:: C
+
+	#include <ymp.h>
+	int main(int argc, char** argv){
+	    ymp_init(argv, argc);
+	    // for automatic
+	    package *p0 = get_package("test");
+	    // for installed package
+	    package *p1 = get_installed_package("test");
+	    // for repository (with your emerge option)
+	    package *p2 = get_from_repository("test");
+	    // for binary package from repository
+	    package *p3 = get_package_from_file("test");
+	    // for source package from repository
+	    package *p4 = get_source_from_repository("test");
+	    // for package file
+	    package *p5 = get_package_from_file("./test.ymp");
+	    return 0;
+	}
+
+We can get information about package struct with this functions:
+
+.. code-block:: C
+
+	#include <ymp.h>
+	int main(int argc, char** argv){
+	    ymp_init(argv, argc);
+	    int len;
+	    package *p = get_instaled_package("test");
+	    char** files = package_list_files(p, &len)
+	    char** links = package_list_links(p, &len)
+	    char* name = package_get(p, "name");
+	    char** deps = package_gets(p, "depends");
+	    char* uri = package_get_uri(p);
+	    gboolean ii = package_is_installed(p);
+	    return 0;
+	}
+
 Usefull library parts of libymp
 ===============================
 libymp provide some usefull functions.
