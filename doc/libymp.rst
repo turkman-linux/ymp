@@ -18,7 +18,7 @@ Simple application
 ^^^^^^^^^^^^^^^^^^
 You can run libymp functions like this:
 
-.. code-block:: C
+.. code-block:: c
 
 	#include <ymp.h>
 	int main(int argc, char* argv[]){
@@ -33,7 +33,7 @@ Ymp operation manager
 ^^^^^^^^^^^^^^^^^^^^^
 Example hello world program with ymp operation manager like this:
 
-.. code-block:: C
+.. code-block:: c
 
 	#include <ymp.h>
 	int main(int argc, char* argv[]){
@@ -100,7 +100,7 @@ Package struct
 ^^^^^^^^^^^^^^
 libymp has **package** struct for package operations. We can define package like this:
 
-.. code-block:: C
+.. code-block:: c
 
 	#include <ymp.h>
 	int main(int argc, char** argv){
@@ -114,7 +114,7 @@ libymp has **package** struct for package operations. We can define package like
 
 Also we can get package struct from repository or file or installed.
 
-.. code-block:: C
+.. code-block:: c
 
 	#include <ymp.h>
 	int main(int argc, char** argv){
@@ -136,7 +136,7 @@ Also we can get package struct from repository or file or installed.
 
 We can get information about package struct with this functions:
 
-.. code-block:: C
+.. code-block:: c
 
 	#include <ymp.h>
 	int main(int argc, char** argv){
@@ -184,7 +184,7 @@ Yaml parser
 ^^^^^^^^^^^
 An example yaml parser usage in here:
 
-.. code-block:: C
+.. code-block:: c
 
 	#include <ymp.h>
 	#include <glib/gprintf.h>
