@@ -79,8 +79,12 @@ public string[] search_file (string[] args) {
             if (file.length < 41) {
                 continue;
             }
+            string path = file[41:];
+            if(startswith(path,"/")){
+                path = p_realpath(path);
+            }
             foreach (string arg in args) {
-                if (Regex.match_simple (arg, "/" + p_realpath(file[41:]))) {
+                if (Regex.match_simple (arg, "/" + path)) {
                     pkgs.add (pkg);
                 }
             }
