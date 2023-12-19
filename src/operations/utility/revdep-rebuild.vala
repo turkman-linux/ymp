@@ -10,7 +10,7 @@ public int revdep_rebuild_main (string[] args) {
         print_fn ("\x1b[2K\r", false, true);
     }else if (get_bool ("detect-file-dep")) {
         foreach (string arg in args) {
-            print_array (detect_file_dep (arg));
+            print (join("\n", detect_file_dep (arg)));
         }
     }else if (get_bool ("detect-dep")) {
         foreach (string arg in args) {
@@ -27,7 +27,20 @@ public int revdep_rebuild_main (string[] args) {
                     deps.add (pkg);
                 }
             }
-            print_array (deps.get ());
+            if (deps.has (arg)) {
+                deps.remove(arg);
+            }
+            print (join(" ", deps.get ()));
+            if(is_installed_package(arg)){
+                package p = get_installed_package(arg);
+                array misssing = new array();
+                foreach(string d in deps.get()){
+                    if(!(d in p.dependencies)){
+                        misssing.add(d);
+                    }
+                }
+                warning(_("Misssing dependencies detected: %s => %s").printf(arg, join(" ",misssing.get())));
+            }
         }
     }else {
         string[] paths = {
@@ -93,11 +106,11 @@ public string[] detect_dep (string pkgname) {
     return depfiles.get ();
 }
 
-public string[] detect_file_dep (string path) {
+public string[] get_ldd_dep (string path) {
     if (!iself (path)) {
         return {};
     }
-    string lddout=getoutput ("ldd '%s'".printf (path));
+    string lddout=getoutput ("ldd '%s' 2>/dev/null".printf (path));
     var depfiles = new array ();
     foreach (string ldline in ssplit (lddout, "\n")) {
         if ("=>" in ldline) {
@@ -109,6 +122,26 @@ public string[] detect_file_dep (string path) {
     }
 
     return depfiles.get ();
+}
+
+public string[] detect_file_dep(string path) {
+    array base_arr = new array();
+    array rm_list = new array();
+    base_arr.adds(get_ldd_dep(path));
+    foreach(string dep in base_arr.get()){
+        string[] sub = get_ldd_dep(dep);
+        foreach(string f in sub){
+            if(!rm_list.has(f)){
+                rm_list.add(f);
+            }
+        }
+    }
+    foreach(string dep in rm_list.get()){
+        if(base_arr.has(dep)){
+            base_arr.remove(dep);
+        }
+    }
+    return base_arr.get();
 }
 
 void revdep_rebuild_init () {
