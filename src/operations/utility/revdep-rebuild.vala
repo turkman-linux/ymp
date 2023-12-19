@@ -119,7 +119,7 @@ public string[] get_ldd_dep (string path) {
     var depfiles = new array ();
     foreach (string ldline in ssplit (lddout, "\n")) {
         if ("=>" in ldline) {
-            string fdep = ldline.strip ().split (" ")[0];
+            string fdep = ldline.strip ().split (" ")[2];
             if (!depfiles.has (fdep)) {
                 depfiles.add (fdep);
             }
