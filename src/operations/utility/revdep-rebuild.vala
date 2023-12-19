@@ -30,6 +30,9 @@ public int revdep_rebuild_main (string[] args) {
             if (deps.has (arg)) {
                 deps.remove(arg);
             }
+            if (deps.has ("glibc")) {
+                deps.remove("glibc");
+            }
             print (join(" ", deps.get ()));
             if(is_installed_package(arg)){
                 package p = get_installed_package(arg);
