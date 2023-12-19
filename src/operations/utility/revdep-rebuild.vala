@@ -39,7 +39,9 @@ public int revdep_rebuild_main (string[] args) {
                         misssing.add(d);
                     }
                 }
-                warning(_("Misssing dependencies detected: %s => %s").printf(arg, join(" ",misssing.get())));
+                if(misssing.length() > 0){
+                    warning(_("Misssing dependencies detected: %s => %s").printf(arg, join(" ",misssing.get())));
+                }
             }
         }
     }else {
