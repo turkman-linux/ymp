@@ -77,6 +77,12 @@ int isdir(char *path){
     }
 }
 
+static void c_mkdir(char* dir){
+    if (mkdir(A) < 0) {
+        fprintf(stderr, "Error: %s %s\n", "failed to create directory.", dir);
+    }
+}
+
 void create_dir(const char *dir) {
     char tmp[PATH_MAX];
     char *p = NULL;
@@ -90,11 +96,11 @@ void create_dir(const char *dir) {
         if (*p == '/') {
             *p = 0;
             if(!isdir(tmp))
-                mkdir(tmp, 0755);
+                c_mkdir(tmp, 0755);
             *p = '/';
         }
     if(!isdir(tmp))
-        mkdir(tmp, 0755);
+        c_mkdir(tmp, 0755);
 }
 
 static char * c_read_file(const char * f_name, int * err, size_t * f_size) {
