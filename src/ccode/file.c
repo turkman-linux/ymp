@@ -242,10 +242,14 @@ char* safedir(const char* dir) {
 
 void write_to_file(const char *which, const char *format, ...) {
   FILE * fu = fopen(which, "w");
+  if (fu == NULL) {
+      fprintf(stderr,"Error: Cannot open for write %s\n", which);
+      return;
+  }
   va_list args;
   va_start(args, format);
   if (vfprintf(fu, format, args) < 0) {
-    fprintf(stderr,"cannot write");
+    fprintf(stderr,"Error: Cannot write %s\n", which);
   }
   fclose(fu);
 }

@@ -58,8 +58,10 @@ start_code = []
 if run_command('/bin/sh', '-c', 'ldd /proc/self/exe | grep /lib/ld-musl-'+architecture+'.so.1').returncode() == 0
     args += ['-Dmusl']
 else
-    args += ['-nostdlib', '-lc']
-    start_code += ['src/start/'+architecture+'.s' ]
+    if not get_option('test')
+        args += ['-nostdlib', '-lc']
+        start_code += ['src/start/'+architecture+'.s' ]
+    endif
 endif
 
 
