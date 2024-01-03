@@ -77,10 +77,9 @@ int isdir(char *path){
     }
 }
 
-static void c_mkdir(char* dir){
-    if (mkdir(A) < 0) {
-        fprintf(stderr, "Error: %s %s\n", "failed to create directory.", dir);
-    }
+#define c_mkdir(A, B) \
+    if (mkdir(A, B) < 0) { \
+        fprintf(stderr, "Error: %s %s\n", "failed to create directory.", A); \
 }
 
 void create_dir(const char *dir) {
