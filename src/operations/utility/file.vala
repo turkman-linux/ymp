@@ -4,7 +4,7 @@ private static int file_main (string[] args) {
     }else if (get_bool ("copy")) {
         return copy_file_main (args);
     }else if (get_bool ("move")) {
-        return copy_file_main (args);
+        return move_file_main (args);
     }else if (get_bool ("extract")) {
         return extract_main (args);
     }
