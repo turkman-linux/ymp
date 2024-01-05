@@ -237,18 +237,6 @@ endif
 install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('libdir'), rename: 'libymp.so')
 
 
-########### build gobject ###########
-if not get_option('static')
-    gnome = import('gnome')
-    gnome.generate_gir(libymp,
-        sources: generated_sources,
-        namespace: 'Ymp',
-        includes: 'GObject-2.0',
-        nsversion: '1.0',
-        install: true,
-    )
-endif
-
 ########### build tools ###########
 if get_option('tools')
     # ymp cli
