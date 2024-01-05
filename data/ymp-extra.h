@@ -6,4 +6,5 @@
 #define catch(x) ExitJmp:if(__HadError)
 #define throw(x) {__HadError=true;goto ExitJmp;}
 
-#endif _ymp_extra
+#endif
+
