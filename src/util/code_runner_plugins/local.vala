@@ -1,10 +1,10 @@
 code_runner_plugin local;
-public void local_init(string image, string directory){
+private static void local_init(string image, string directory){
     local.ctx = directory;
     return;
 }
 
-public int local_run(string command){
+private static int local_run(string command){
     backup_env();
     clear_env();
     set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
@@ -15,7 +15,7 @@ public int local_run(string command){
     restore_env();
     return status;
 }
-public void local_clean(){
+private static void local_clean(){
     return;
 }
 

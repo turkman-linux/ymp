@@ -1,13 +1,13 @@
 code_runner_plugin docker;
-public void docker_init(string image, string directory){
+private static void docker_init(string image, string directory){
         run_args({"docker", "pull", image});
         docker.ctx = getoutput("docker run -it -d -v '%s':/root '%s' 2>/dev/null".printf(directory.replace("'","\\'"), image.replace("'",""))).strip();
 }
 
-public int docker_run(string command){
+private static int docker_run(string command){
         return run_args({"docker", "exec", docker.ctx, "sh", "-c", command});
 }
-public void docker_clean(){
+private static void docker_clean(){
         run_args({"docker", "rm", "-f", docker.ctx});
 }
 
