@@ -1,4 +1,4 @@
-public int kill_main (string[] args) {
+private static int kill_main (string[] args) {
     string self_link = sreadlink ("/proc/self/exe");
     int self_pid = Posix.getpid ();
     foreach (string dir in listdir ("/proc")) {

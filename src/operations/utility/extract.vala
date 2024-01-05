@@ -1,4 +1,4 @@
-public int extract_main (string[] args) {
+private static int extract_main (string[] args) {
     var tar = new archive ();
     tar.load (args[0]);
     if (get_bool ("list")) {

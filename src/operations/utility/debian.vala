@@ -1,4 +1,4 @@
-public int debian_main (string[] args) {
+private static int debian_main (string[] args) {
     string output = get_value ("output");
     if (output == "") {
         output=pwd ();

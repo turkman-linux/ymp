@@ -1,4 +1,4 @@
-public int clean_main (string[] args) {
+public static int clean_main (string[] args) {
     print (colorize (_ ("Clean: "), yellow) + _ ("package cache"));
     remove_all (get_storage () + "/packages");
     print (colorize (_ ("Clean: "), yellow) + _ ("repository index cache"));

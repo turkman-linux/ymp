@@ -1,4 +1,4 @@
-public int exec_main (string[] args) {
+public static int exec_main (string[] args) {
     string cmd = join (" ", args);
     print_stderr (colorize (_ ("Executing: =>"), blue) + cmd);
     int status = 0;

@@ -1,4 +1,4 @@
-public int search_main (string[] args) {
+private static int search_main (string[] args) {
     if (get_bool ("package")) {
         return search_pkgrepo_main (args);
     }else if (get_bool ("source")) {
@@ -13,7 +13,7 @@ public int search_main (string[] args) {
     }
 }
 
-public int search_installed_main (string[] args) {
+private static int search_installed_main (string[] args) {
     foreach (string pkg in list_installed_packages ()) {
         var p = get_installed_package (pkg);
         foreach (string arg in args) {
@@ -26,7 +26,7 @@ public int search_installed_main (string[] args) {
 }
 
 
-public int search_pkgrepo_main (string[] args) {
+private static int search_pkgrepo_main (string[] args) {
     foreach (repository repo in get_repos ()) {
         foreach (string pkg in repo.list_packages ()) {
             var p = repo.get_package (pkg);
@@ -44,7 +44,7 @@ public int search_pkgrepo_main (string[] args) {
     return 0;
 }
 
-public int search_srcrepo_main (string[] args) {
+private static int search_srcrepo_main (string[] args) {
     foreach (repository repo in get_repos ()) {
         foreach (string pkg in repo.list_sources ()) {
             var p = repo.get_source (pkg);
@@ -62,7 +62,7 @@ public int search_srcrepo_main (string[] args) {
     return 0;
 }
 
-public int search_files_main (string[] args) {
+private static int search_files_main (string[] args) {
     foreach(string arg in args){
         if(get_bool("path")){
             foreach(string file in search_path({arg})){
@@ -77,7 +77,7 @@ public int search_files_main (string[] args) {
     return 0;
 }
 
-public string[] search_file (string[] args) {
+private static string[] search_file (string[] args) {
     var pkgs = new array ();
     string path = "";
     foreach (string pkg in list_installed_packages ()) {
@@ -101,7 +101,7 @@ public string[] search_file (string[] args) {
 
 }
 
-public string[] search_elf (string[] args) {
+private static string[] search_elf (string[] args) {
     var pkgs = new array ();
     string path = "";
     foreach (string pkg in list_installed_packages ()) {
@@ -125,7 +125,7 @@ public string[] search_elf (string[] args) {
 
 }
 
-public string[] search_path (string[] args) {
+private static string[] search_path (string[] args) {
     var pkgs = new array ();
     string path = "";
     foreach (string pkg in list_installed_packages ()) {

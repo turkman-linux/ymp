@@ -1,4 +1,4 @@
-public int dummy_operation (string[] args) {
+private static int dummy_operation (string[] args) {
     return 0;
 }
 void dummy_init () {

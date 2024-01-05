@@ -1,4 +1,4 @@
-public int amoguscat_main (string[] args) {
+private static int amoguscat_main (string[] args) {
     string data="";
     if (args[0] == "-" || args.length == 0) {
         string line = " ";

@@ -1,4 +1,4 @@
-public int template_main (string[] args) {
+private static int template_main (string[] args) {
     string data="#!/usr/bin/env bash\n";
     data += "name='" + str_or_def ("name", "") + "'\n";
     data += "release=" + "'1'\n";

@@ -1,4 +1,4 @@
-public int get_main (string[] args) {
+private static int get_main (string[] args) {
     if (args.length < 1) {
         foreach (string name in list_values ()) {
             print (name + ":" + get_value (name));
@@ -13,7 +13,7 @@ public int get_main (string[] args) {
     return 0;
 }
 
-public int set_main (string[] args) {
+private static int set_main (string[] args) {
     if (args.length < 2) {
         return 1;
     }
@@ -21,7 +21,7 @@ public int set_main (string[] args) {
     return 0;
 }
 
-public int read_main (string[] args) {
+private static int read_main (string[] args) {
     if (args.length < 1) {
         return 1;
     }
@@ -29,7 +29,7 @@ public int read_main (string[] args) {
     return 0;
 }
 
-public int equal_main (string[] args) {
+private static int equal_main (string[] args) {
     if (args.length < 2) {
         return 1;
     }
@@ -39,7 +39,7 @@ public int equal_main (string[] args) {
     return 1;
 }
 
-public int match_main (string[] args) {
+private static int match_main (string[] args) {
     if (args.length < 2) {
         return 1;
     }
@@ -49,33 +49,33 @@ public int match_main (string[] args) {
     return 1;
 }
 
-public int cd_main (string[] args) {
+private static int cd_main (string[] args) {
     foreach (string arg in args) {
         cd (arg);
     }
     return 0;
 }
-public int export_main (string[] args) {
+private static int export_main (string[] args) {
     foreach (string arg in args) {
         set_env(arg,get_value (arg));
     }
     return 0;
 }
 
-public int lt_main (string[] args) {
+private static int lt_main (string[] args) {
     if(double.parse(args[0]) >= double.parse(args[1])){
         return 1;
     }
     return 0;
 }
-public int gt_main (string[] args) {
+private static int gt_main (string[] args) {
     if(double.parse(args[0]) <= double.parse(args[1])){
         return 1;
     }
     return 0;
 }
 
-public int calc_main (string[] args) {
+private static int calc_main (string[] args) {
     double num1 = double.parse(args[1]);
     string operator = args[2];
     double num2 = double.parse(args[3]);
@@ -91,7 +91,7 @@ public int calc_main (string[] args) {
     return 0;
 }
 
-public int not_main (string[] args) {
+private static int not_main (string[] args) {
     int status = operation_main(args[0], args[1:]);
     if(status == 0){
         return 1;

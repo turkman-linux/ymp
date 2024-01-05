@@ -1,4 +1,4 @@
-public int echo_main (string[] args) {
+private static int echo_main (string[] args) {
     print (join (" ", args));
     return 0;
 }

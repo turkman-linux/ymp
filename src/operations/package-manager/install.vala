@@ -1,4 +1,4 @@
-public int install_main (string[] args) {
+private static int install_main (string[] args) {
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
         error (1);
@@ -66,7 +66,7 @@ public int install_main (string[] args) {
     error (1);
     return 0;
 }
-public package install_single (string pkg) {
+private static package install_single (string pkg) {
     package p = null;
     // Download package files from repository
     if (isfile (pkg)) {
@@ -104,7 +104,7 @@ public package install_single (string pkg) {
     }
     return p;
 }
-public string[] calculate_leftover (package[] pkgs) {
+private static string[] calculate_leftover (package[] pkgs) {
     print (colorize (_ ("Calculating leftovers"), yellow));
     var files = new array ();
     // Fetch installed and new files list

@@ -1,4 +1,4 @@
-public int remove_main (string[] args) {
+private static int remove_main (string[] args) {
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
         error (1);
@@ -45,7 +45,7 @@ public int remove_main (string[] args) {
     return 0;
 }
 
-public int remove_single (package p) {
+private static int remove_single (package p) {
     print (colorize (_ ("Removing: %s"), yellow).printf (p.name));
     if (!get_bool ("without-files")) {
         foreach (string file in p.list_links ()) {

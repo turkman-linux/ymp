@@ -1,4 +1,4 @@
-public int chroot_main (string[] args) {
+private static int chroot_main (string[] args) {
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
         return 1;

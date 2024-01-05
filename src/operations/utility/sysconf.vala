@@ -1,4 +1,4 @@
-public int sysconf_main (string[] args) {
+private static int sysconf_main (string[] args) {
     if (!is_root () || get_bool ("no-sysconf")) {
         return 0;
     }

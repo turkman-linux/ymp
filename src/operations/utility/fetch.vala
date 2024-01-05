@@ -1,4 +1,4 @@
-public int fetch_main (string[] args) {
+private static int fetch_main (string[] args) {
     if (args.length < 1) {
         error_add (_ ("URL missing"));
         error (2);

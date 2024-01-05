@@ -1,4 +1,4 @@
-public int shitcat_main (string[] args) {
+private static int shitcat_main (string[] args) {
     string data="";
     if (args[0] == "-") {
         string line = " ";

@@ -1,4 +1,4 @@
-public int compress_main (string[] args) {
+private static int compress_main (string[] args) {
     var tar = new archive ();
     tar.load (args[0]);
     set_archive_type (get_value ("type"), get_value ("algorithm"));

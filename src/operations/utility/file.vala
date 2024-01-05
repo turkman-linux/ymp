@@ -1,4 +1,4 @@
-public int file_main (string[] args) {
+private static int file_main (string[] args) {
     if (get_bool ("remove")) {
         return remove_file_main (args);
     }else if (get_bool ("copy")) {
@@ -11,14 +11,14 @@ public int file_main (string[] args) {
     return 0;
 }
 
-public int remove_file_main (string[] args) {
+private static int remove_file_main (string[] args) {
     foreach (string arg in args) {
         remove_all (arg);
     }
     return 0;
 }
 
-public int copy_file_main (string[] args) {
+private static int copy_file_main (string[] args) {
     if (args.length < 2) {
         error_add (_ ("Source or Target is not defined."));
         error (1);
@@ -39,7 +39,7 @@ public int copy_file_main (string[] args) {
     return 0;
 }
 
-public int move_file_main (string[] args) {
+private static int move_file_main (string[] args) {
     if (args.length < 2) {
         error_add (_ ("Source or Target is not defined."));
         error (1);

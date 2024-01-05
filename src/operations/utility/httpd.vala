@@ -1,4 +1,4 @@
-public int httpd_main (string[] args) {
+private static int httpd_main (string[] args) {
     string cur = pwd();
     string source = get_value("source");
     if(source != ""){

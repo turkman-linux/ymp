@@ -1,4 +1,4 @@
-public int yamlget_main (string[] args) {
+private static int yamlget_main (string[] args) {
     var file = args[0];
     var path = args[1];
     var yaml = new yamlfile ();

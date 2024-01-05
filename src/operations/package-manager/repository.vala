@@ -1,4 +1,4 @@
-public int index_main (string[] args) {
+private static int index_main (string[] args) {
     foreach (string arg in args) {
         string path = srealpath (arg);
         string index = create_index_data (path);
@@ -9,7 +9,7 @@ public int index_main (string[] args) {
     return 0;
 }
 
-public int update_main (string[] args) {
+private static int update_main (string[] args) {
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
         error (1);
@@ -19,7 +19,7 @@ public int update_main (string[] args) {
     return 0;
 }
 
-public int repo_add_main (string[] args) {
+private static int repo_add_main (string[] args) {
     if (get_value ("name") == "" ) {
         error_add (_ ("name not defined."));
     }else {
@@ -37,14 +37,14 @@ public int repo_add_main (string[] args) {
     return 0;
 }
 
-public int repo_remove_main (string[] args) {
+private static int repo_remove_main (string[] args) {
     foreach (string arg in args) {
         remove_file (get_storage () + "/sources.list.d/" + arg);
     }
     return 0;
 }
 
-public int repo_list_main (string[] args) {
+private static int repo_list_main (string[] args) {
     string[] repos = find (get_storage () + "/sources.list.d/");
     repos += get_storage () + "/sources.list";
     foreach (string repofile in repos) {
@@ -61,7 +61,7 @@ public int repo_list_main (string[] args) {
     return 0;
 }
 
-public int repository_main (string[] args) {
+private static int repository_main (string[] args) {
     if (get_bool ("update")) {
         return update_main (args);
     }else if (get_bool ("mirror")) {
@@ -78,7 +78,7 @@ public int repository_main (string[] args) {
     return 0;
 }
 
-public int mirror_main (string[] args) {
+private static int mirror_main (string[] args) {
     string target = srealpath (get_value ("destdir"));
     if (target == "") {
         target=srealpath (".");
@@ -111,7 +111,7 @@ public int mirror_main (string[] args) {
 }
 
 
-private void mirror_download (package pkg, string target) {
+private static void mirror_download (package pkg, string target) {
     if (pkg == null) {
          return;
     }

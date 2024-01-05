@@ -1,4 +1,4 @@
-public int run_sandbox_main (string[] args) {
+private static int run_sandbox_main (string[] args) {
     if (usr_is_merged ()) {
         error_add (_ ("Sandbox operation with usrmerge is not allowed!"));
         error (31);

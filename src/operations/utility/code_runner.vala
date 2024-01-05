@@ -1,4 +1,4 @@
-public int code_runner_operation (string[] args) {
+private static int code_runner_operation (string[] args) {
     if(get_bool("create")){
         if(args.length == 0){
             error_add(_("You must give a new file name."));
@@ -25,13 +25,13 @@ public int code_runner_operation (string[] args) {
     return 0;
 }
 public extern int fork();
-public int code_runner_simple(string arg){
+private static int code_runner_simple(string arg){
     var crun = new code_runner();
     crun.load(arg);
     return crun.run();
 }
 
-public int code_runner_trace (string path, string source) {
+private static int code_runner_trace (string path, string source) {
     try {
         File file = File.new_for_path (path);
         FileMonitor monitor = file.monitor (FileMonitorFlags.NONE, null);

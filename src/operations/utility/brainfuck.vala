@@ -1,4 +1,4 @@
-public int brainfuck_main (string[] args) {
+private static int brainfuck_main (string[] args) {
     if(get_bool("compile")){
         bf_compile(readfile_raw (args[0]));
         //print(ccode);

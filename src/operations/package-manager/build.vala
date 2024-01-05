@@ -1,5 +1,5 @@
 private bool no_src = false;
-public int build_operation (string[] args) {
+private static int build_operation (string[] args) {
     string current_directory=pwd ();
     string[] new_args = args;
     if (usr_is_merged ()) {

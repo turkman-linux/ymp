@@ -1,4 +1,4 @@
-public int revdep_rebuild_main (string[] args) {
+private static int revdep_rebuild_main (string[] args) {
     set_env ("LANG", "C");
     set_env ("LC_ALL", "C");
     if (get_bool ("pkgconfig")) {
@@ -75,7 +75,7 @@ public int revdep_rebuild_main (string[] args) {
 }
 
 private string ldddata;
-public void check (string file) {
+private static void check (string file) {
     print_fn ("\x1b[2K\r" + _ ("Checking: %s").printf (sbasename (file)), false, true);
     ldddata = getoutput ("ldd %s 2>/dev/null".printf (file));
     foreach (string line in ssplit (ldddata, "\n")) {
@@ -85,7 +85,7 @@ public void check (string file) {
         }
     }
 }
-public void check_pkgconfig (string name) {
+private static void check_pkgconfig (string name) {
     print_fn ("\x1b[2K\r" + _ ("Checking: %s").printf (name), false, true);
     int status = run ("gcc `pkg-config --cflags --libs " + name + " 2>/dev/null` /tmp/.empty.c -shared -o /dev/null 2>/dev/null");
     if (status != 0) {
@@ -95,7 +95,7 @@ public void check_pkgconfig (string name) {
 }
 
 
-public string[] detect_dep (string pkgname) {
+private static string[] detect_dep (string pkgname) {
     if (!is_installed_package (pkgname)) {
         error_add (_ ("%s is not an installed package.").printf (pkgname));
         return {};
@@ -115,7 +115,7 @@ public string[] detect_dep (string pkgname) {
     return depfiles.get ();
 }
 
-public string[] get_ldd_dep (string path) {
+private static string[] get_ldd_dep (string path) {
     if (!iself (path)) {
         return {};
     }
@@ -133,7 +133,7 @@ public string[] get_ldd_dep (string path) {
     return depfiles.get ();
 }
 
-public string[] detect_file_dep(string path) {
+private static string[] detect_file_dep(string path) {
     if(!iself(path)){
         return {};
     }

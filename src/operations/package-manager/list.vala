@@ -1,4 +1,4 @@
-public int list_main(string[] args) {
+private static int list_main(string[] args) {
     if (get_bool("installed")) {
         return list_installed_main(args);
     } else if (get_bool("digraph")) {
@@ -10,7 +10,7 @@ public int list_main(string[] args) {
     }
 }
 
-public int list_installed_main(string[] args) {
+private static int list_installed_main(string[] args) {
     foreach(string pkg in list_installed_packages()) {
         var p = get_installed_package(pkg);
         print(colorize(pkg, green) + "\t" + p.get("description"));
@@ -18,7 +18,7 @@ public int list_installed_main(string[] args) {
     return 0;
 }
 
-public int list_digraph_main(string[] args) {
+private static int list_digraph_main(string[] args) {
     if (get_bool("digraph")) {
         print("digraph {");
         print("layout=\"dot\";");
@@ -115,7 +115,7 @@ public int list_digraph_main(string[] args) {
     print("}");
     return 0;
 }
-public int list_available_main(string[] args) {
+private static int list_available_main(string[] args) {
     foreach(repository repo in get_repos()) {
         if (args.length > 0 && !(repo.name in args)) {
             continue;
@@ -147,7 +147,7 @@ public int list_available_main(string[] args) {
     return 0;
 }
 
-public int list_repository_main(string[] args) {
+private static int list_repository_main(string[] args) {
     foreach(repository repo in get_repos()) {
         string[] srcs = repo.list_sources();
         string[] pkgs = repo.list_packages();

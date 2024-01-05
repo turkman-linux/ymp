@@ -1,4 +1,4 @@
-public int clear_main (string[] args) {
+private static int clear_main (string[] args) {
     stdout.printf ("\x1b" + "c");
     return 0;
 }

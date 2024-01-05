@@ -1,4 +1,4 @@
-public int help_main (string[] args) {
+public static int help_main (string[] args) {
     if (args.length == 0) {
         print (colorize (_ ("Operation list:"), blue));
         foreach (operation op in ops) {
@@ -28,7 +28,7 @@ public int help_main (string[] args) {
     return 0;
 }
 
-public void write_version () {
+public static void write_version () {
     print ("YMP : " + colorize ("Y", red) + "erli ve " + colorize ("M", red) + "illi " + colorize ("P", red) + "ackage manager");
     print (_ ("Version") + " : " + VERSION);
     if (!get_bool ("flag")) {
@@ -42,7 +42,7 @@ public void write_version () {
     print ("");
 }
 
-private void write_op_help (operation op) {
+private static void write_op_help (operation op) {
     print_stderr (op.help.build ());
 }
 void help_init () {

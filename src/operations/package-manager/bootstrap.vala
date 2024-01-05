@@ -1,4 +1,4 @@
-public int bootstrap_main (string[] args) {
+private static int bootstrap_main (string[] args) {
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
     }

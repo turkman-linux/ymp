@@ -1,4 +1,4 @@
-public int shell_main (string[] args) {
+private static int shell_main (string[] args) {
     backup_process();
     clear_process ();
     if (args[0] == "-" || args.length == 0) {

@@ -1,4 +1,4 @@
-public int title_main (string[] args) {
+private static int title_main (string[] args) {
     string data="";
     foreach (string arg in args) {
         data += arg + " ";

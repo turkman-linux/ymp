@@ -1,4 +1,4 @@
-public int key_main (string[] args) {
+private static int key_main (string[] args) {
     if(get_bool("add")){
         foreach(string arg in args){
             add_gpg_key(arg);

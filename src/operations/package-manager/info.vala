@@ -1,4 +1,4 @@
-public int info_main(string[] args) {
+private static int info_main(string[] args) {
     foreach(string arg in args) {
         if (get_bool("deps")) {
             bool ri = get_bool("reinstall");
