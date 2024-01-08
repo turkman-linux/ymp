@@ -94,7 +94,7 @@ void create_dir(const char *dir) {
     for (p = tmp + 1; *p; p++)
         if (*p == '/') {
             *p = 0;
-            if(!isdir(tmp))
+            if(!isdir(tmp) && !issymlink(tmp))
                 c_mkdir(tmp, 0755);
             *p = '/';
         }
