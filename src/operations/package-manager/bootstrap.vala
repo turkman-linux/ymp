@@ -39,7 +39,7 @@ private static int bootstrap_main (string[] args) {
     return 0;
 }
 
-void bootstrap_init () {
+static void bootstrap_init () {
     operation op = new operation ();
     op.callback.connect (bootstrap_main);
     op.names = {_ ("bootstrap"), "bootstrap", "bst"};

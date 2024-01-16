@@ -25,7 +25,7 @@ private static int run_sandbox_main (string[] args) {
     return status / 256;
 }
 
-void run_sandbox_init () {
+static void run_sandbox_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (run_sandbox_main);

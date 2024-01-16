@@ -2,7 +2,7 @@ private static int clear_main (string[] args) {
     stdout.printf ("\x1b" + "c");
     return 0;
 }
-void clear_init () {
+static void clear_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (clear_main);

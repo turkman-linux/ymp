@@ -17,7 +17,7 @@ private static int compress_main (string[] args) {
     return 0;
 }
 
-void compress_init () {
+static void compress_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (compress_main);

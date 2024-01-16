@@ -12,7 +12,7 @@ public static int clean_main (string[] args) {
     return 0;
 }
 
-void clean_init () {
+static void clean_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.names = {_ ("clean"), "clean", "cc"};

@@ -14,7 +14,7 @@ private static int amoguscat_main (string[] args) {
     return 0;
 }
 
-void amoguscat_init () {
+static void amoguscat_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (amoguscat_main);

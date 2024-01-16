@@ -6,7 +6,8 @@ private static int key_main (string[] args) {
     }
     return 0;
 }
-void key_init () {
+
+static void key_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (key_main);

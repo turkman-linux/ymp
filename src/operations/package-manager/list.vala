@@ -182,7 +182,7 @@ private static int list_repository_main(string[] args) {
     return 0;
 }
 
-void list_init() {
+static void list_init() {
     operation op = new operation();
     op.help = new helpmsg();
     op.callback.connect(list_main);

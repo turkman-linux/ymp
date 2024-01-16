@@ -92,7 +92,7 @@ private static int remove_single (package p) {
     return 0;
 }
 
-void remove_init () {
+static void remove_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (remove_main);

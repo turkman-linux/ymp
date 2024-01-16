@@ -2,7 +2,7 @@ private static int echo_main (string[] args) {
     print (join (" ", args));
     return 0;
 }
-void echo_init () {
+static void echo_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (echo_main);

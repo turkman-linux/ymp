@@ -6,7 +6,7 @@ private static int exit_main (string[] args) {
     exit (status);
     return 0;
 }
-void exit_init () {
+static void exit_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (exit_main);

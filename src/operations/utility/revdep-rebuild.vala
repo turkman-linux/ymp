@@ -156,7 +156,7 @@ private static string[] detect_file_dep(string path) {
     return base_arr.get();
 }
 
-void revdep_rebuild_init () {
+static void revdep_rebuild_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (revdep_rebuild_main);

@@ -17,7 +17,7 @@ private static int extract_main (string[] args) {
     return 0;
 }
 
-void extract_init () {
+static void extract_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (extract_main);

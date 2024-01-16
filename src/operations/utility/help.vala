@@ -45,7 +45,9 @@ public static void write_version () {
 private static void write_op_help (operation op) {
     print_stderr (op.help.build ());
 }
-void help_init () {
+
+
+static void help_init () {
     add_common_parameter ("--", _ ("stop argument parser"));
     #if check_oem
     add_common_parameter ("--allow-oem", _ ("disable oem check"));

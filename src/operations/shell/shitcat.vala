@@ -14,7 +14,7 @@ private static int shitcat_main (string[] args) {
     return 0;
 }
 
-void shitcat_init () {
+static void shitcat_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (shitcat_main);

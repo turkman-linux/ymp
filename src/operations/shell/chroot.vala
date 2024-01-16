@@ -33,7 +33,7 @@ private static int chroot_main (string[] args) {
     }
     return status;
 }
-void chroot_init () {
+static void chroot_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (chroot_main);

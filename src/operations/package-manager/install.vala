@@ -135,7 +135,7 @@ private static string[] calculate_leftover (package[] pkgs) {
     }
     return files.get ();
 }
-void install_init () {
+static void install_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (install_main);

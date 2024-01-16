@@ -28,7 +28,7 @@ private static int sysconf_main (string[] args) {
     return 0;
 }
 
-void sysconf_init () {
+static void sysconf_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (sysconf_main);

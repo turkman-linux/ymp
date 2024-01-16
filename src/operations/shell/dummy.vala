@@ -1,7 +1,7 @@
 private static int dummy_operation (string[] args) {
     return 0;
 }
-void dummy_init () {
+static void dummy_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (dummy_operation);

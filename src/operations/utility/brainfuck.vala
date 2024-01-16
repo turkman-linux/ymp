@@ -12,7 +12,7 @@ private static int brainfuck_main (string[] args) {
     return 0;
 }
 
-void brainfuck_init () {
+static void brainfuck_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (brainfuck_main);

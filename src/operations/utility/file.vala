@@ -60,7 +60,7 @@ private static int move_file_main (string[] args) {
     return 0;
 }
 
-void file_init () {
+static void file_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (file_main);

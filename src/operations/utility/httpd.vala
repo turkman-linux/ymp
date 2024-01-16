@@ -9,7 +9,7 @@ private static int httpd_main (string[] args) {
     return status;
 }
 
-void httpd_init () {
+static void httpd_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (httpd_main);

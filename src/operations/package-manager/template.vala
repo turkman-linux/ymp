@@ -107,7 +107,7 @@ private string str_or_def (string val, string def) {
     return def.strip ();
 }
 
-void template_init () {
+static void template_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (template_main);

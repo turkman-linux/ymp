@@ -15,9 +15,7 @@ private static int fetch_main (string[] args) {
     return 0;
 }
 
-
-
-void fetch_init () {
+static void fetch_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (fetch_main);

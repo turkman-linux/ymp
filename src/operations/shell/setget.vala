@@ -99,7 +99,7 @@ private static int not_main (string[] args) {
     return 0;
 }
 
-void setget_init () {
+static void setget_init () {
     operation op_get = new operation ();
     op_get.help = new helpmsg ();
     op_get.callback.connect (get_main);

@@ -29,7 +29,7 @@ private static int shell_main (string[] args) {
     return 0;
 }
 
-void shell_init () {
+static void shell_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (shell_main);

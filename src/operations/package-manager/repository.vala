@@ -122,7 +122,7 @@ private static void mirror_download (package pkg, string target) {
     }
 }
 
-void repository_init () {
+static void repository_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (repository_main);

@@ -57,7 +57,7 @@ private static int code_runner_trace (string path, string source) {
     return 0;
 }
 
-void code_runner_init () {
+static void code_runner_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.help.minargs=1;

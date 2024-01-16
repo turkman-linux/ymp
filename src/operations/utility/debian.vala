@@ -31,7 +31,7 @@ private static int debian_main (string[] args) {
     return 0;
 }
 
-void debian_init () {
+static void debian_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (debian_main);

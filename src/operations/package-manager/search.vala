@@ -146,7 +146,7 @@ private static string[] search_path (string[] args) {
 
 }
 
-void search_init () {
+static void search_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (search_main);

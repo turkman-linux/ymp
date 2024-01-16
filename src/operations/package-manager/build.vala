@@ -21,7 +21,7 @@ private static int build_operation (string[] args) {
     cd (current_directory);
     return 0;
 }
-void build_init () {
+static void build_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (build_operation);

@@ -19,7 +19,7 @@ private static int yamlget_main (string[] args) {
     return 0;
 }
 
-void yamlget_init () {
+static void yamlget_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (yamlget_main);

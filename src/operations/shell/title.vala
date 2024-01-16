@@ -6,7 +6,8 @@ private static int title_main (string[] args) {
     set_terminal_title (data[0:data.length - 1]);
     return 0;
 }
-void title_init () {
+
+static void title_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (title_main);

@@ -23,7 +23,7 @@ private static int kill_main (string[] args) {
     }
     return 0;
 }
-void kill_init () {
+static void kill_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (kill_main);

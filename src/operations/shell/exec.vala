@@ -16,7 +16,7 @@ public static int exec_main (string[] args) {
     return status;
 }
 
-void exec_init () {
+static void exec_init () {
     operation op = new operation ();
     op.help = new helpmsg ();
     op.callback.connect (exec_main);

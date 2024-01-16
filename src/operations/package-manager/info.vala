@@ -57,7 +57,7 @@ private static int info_main(string[] args) {
     return 0;
 }
 
-void info_init() {
+static void info_init() {
     operation op = new operation();
     op.help = new helpmsg();
     op.callback.connect(info_main);
