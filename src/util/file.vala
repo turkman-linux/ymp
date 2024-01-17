@@ -68,6 +68,25 @@ public string readfile (string path) {
     return a.get_string();
 }
 
+private variable[] cached_files;
+
+public string readfile_cached(string path){
+    if(cached_files == null) {
+        cached_files = {};
+    }
+    foreach (variable x in cached_files) {
+        if (x.name == path) {
+            info(_ ("Read file from cache %s").printf(path));
+            return x.value;
+        }
+    }
+    variable v = new variable();
+    v.name = path;
+    v.value = readfile_raw(path);
+    cached_files += v;
+    return v.value;
+}
+
 //DOC: `string safedir (string dir):`
 //DOC: directory safe for httpd
 public extern string safedir (string dir);
@@ -278,7 +297,7 @@ public string srealpath (string path) {
     return real;
 }
 
-private string p_realpath (string path) {
+public static string p_realpath (string path) {
     string[] p = ssplit (path, "/");
     string cur = DESTDIR + "/";
     foreach (string dir in p) {

@@ -20,7 +20,7 @@ private string[] get_quarantine_conflict_packages (string path, bool symlink) {
     var ret = new array ();
     if (symlink) {
         foreach (string links_list in listdir (rootfs_links)) {
-            string link_data = readfile_raw (rootfs_links + links_list);
+            string link_data = readfile_cached (rootfs_links + links_list);
             foreach (string line in ssplit (link_data, "\n")) {
                 if (" " in line) {
                     string fpath = ssplit (line, " ")[0];
@@ -32,7 +32,7 @@ private string[] get_quarantine_conflict_packages (string path, bool symlink) {
         }
     }else {
         foreach (string files_list in listdir (rootfs_files)) {
-            string file_data = readfile_raw (rootfs_files + files_list);
+            string file_data = readfile_cached (rootfs_files + files_list);
             foreach (string line in ssplit (file_data, "\n")) {
                 if (line.length > 41) {
                     string fpath = line[41:];
@@ -61,52 +61,14 @@ public bool quarantine_validate_files () {
     // get quarantine file store and list
     string rootfs_files = get_storage () + "/quarantine/files/";
     string rootfs_links = get_storage () + "/quarantine/links/";
-    string rootfs_metadatas = get_storage () + "/quarantine/metadata/";
     string[] restricted_list = ssplit (readfile (get_storage () + "/restricted.list"), "\n");
     // add package db into restricted_list
     restricted_list += STORAGEDIR;
-    var yaml = new yamlfile ();
     foreach (string files_list in listdir (rootfs_files)) {
         print (colorize (_ ("Validating:"), yellow) + " " + files_list + "(files)");
         // file list format xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /path/to/file
         // uses sha1sum
         string file_data = readfile_raw (rootfs_files + files_list);
-        var new_files = new array ();
-        foreach (string line in ssplit (file_data, "\n")) {
-            if (line.length > 41) {
-                string path = line[41:];
-                path = p_realpath (path)[1:];
-                new_files.add (path);
-            }
-        }
-        if (isfile (get_storage () + "/files/" + files_list)) {
-            string exists_file_data = readfile_raw (get_storage () + "/files/" + files_list);
-            foreach (string line in ssplit (exists_file_data, "\n")) {
-                if (line.length > 41) {
-                    string path = line[41:];
-                    path = p_realpath (path)[1:];
-                    new_files.remove (path);
-                }
-            }
-        }
-        yaml.load (rootfs_metadatas + files_list + ".yaml");
-        var pkgarea = yaml.get ("ymp.package");
-        if (yaml.has_area (pkgarea, "replaces")) {
-            foreach (string path in yaml.get_array (pkgarea, "replaces")) {
-                if (path.length > 1 && path[0] == '/') {
-                    quarantine_file_replaces_list.add (get_storage () + "/quarantine/rootfs/" + path[1:]);
-                }else {
-                    error_add (_ ("Invalid replaces files path: %s (%s)").printf (path, files_list));
-                }
-            };
-        }
-        foreach (string path in new_files.get ()) {
-            if (isexists (DESTDIR + "/" + path)) {
-                string file_path = get_storage () + "/quarantine/rootfs/" + path;
-                error_add (_ ("File already exists in filesystem: /%s (%s)").printf (path, files_list));
-                quarantine_file_conflict_list.add (file_path);
-            }
-        }
         foreach (string line in ssplit (file_data, "\n")) {
             if (line.length > 41) {
                 // fetch absolute file path
@@ -148,44 +110,6 @@ public bool quarantine_validate_files () {
     foreach (string links_list in listdir (rootfs_links)) {
         print (colorize (_ ("Validating:"), yellow) + " " + links_list + "(links)");
         string link_data = readfile_raw (rootfs_links + links_list);
-        var new_links = new array ();
-        foreach (string line in ssplit (link_data, "\n")) {
-            if (" " in line) {
-                string path = ssplit (line, " ")[0];
-                path = p_realpath (sdirname (path)) + "/" + sbasename (path);
-                path = path[1:];
-                new_links.add (path);
-            }
-        }
-        if (isfile (get_storage () + "/links/" + links_list)) {
-            string exists_link_data = readfile_raw (get_storage () + "/links/" + links_list);
-            foreach (string line in ssplit (exists_link_data, "\n")) {
-                if (" " in line) {
-                    string path = ssplit (line, " ")[0];
-                    path = p_realpath (sdirname (path)) + "/" + sbasename (path);
-                    path = path[1:];
-                    new_links.remove (path);
-                }
-            }
-        }
-        yaml.load (rootfs_metadatas + links_list + ".yaml");
-        var pkgarea = yaml.get ("ymp.package");
-        if (yaml.has_area (pkgarea, "replaces")) {
-            foreach (string path in yaml.get_array (pkgarea, "replaces")) {
-                if (path.length > 1 && path[0] == '/') {
-                    quarantine_file_replaces_list.add (get_storage () + "/quarantine/rootfs/" + path[1:]);
-                }else {
-                    error_add (_ ("Invalid replaces symlink path: %s (%s)").printf (path, links_list));
-                }
-            };
-        }
-        foreach (string path in new_links.get ()) {
-            if (isexists (DESTDIR + "/" + path)) {
-                string file_path = get_storage () + "/quarantine/rootfs/" + path;
-                error_add (_ ("Symlink already exists in filesystem: /%s (%s)").printf (path, links_list));
-                quarantine_file_conflict_list.add (file_path);
-            }
-        }
         foreach (string line in ssplit (link_data, "\n")) {
             if (" " in line) {
                 string path = ssplit (line, " ")[0];

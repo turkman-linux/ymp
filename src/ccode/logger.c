@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 /* functions from vala source */
 void print(char* msg);
@@ -118,8 +120,10 @@ void logger_init(){
     #ifndef NOCOLOR
     colorize_init();
     #endif
-    memset( buffer, '\0', sizeof( buffer ));
-    memset( buffer_stderr, '\0', sizeof( buffer_stderr ));
-    setvbuf(stdout, buffer, _IOFBF, sizeof(buffer));
-    setvbuf(stderr, buffer_stderr, _IOFBF, sizeof(buffer_stderr));
+    if(!isatty(fileno(stdout))){
+        memset( buffer, '\0', sizeof( buffer ));
+        memset( buffer_stderr, '\0', sizeof( buffer_stderr ));
+        setvbuf(stdout, buffer, _IOFBF, sizeof(buffer));
+        setvbuf(stderr, buffer_stderr, _IOFBF, sizeof(buffer_stderr));
+    }
 }
