@@ -46,8 +46,8 @@ function pkginst(){
     rm -rf "$output"/tmp
 }
 # Stage 1 download repo
-mkdir "$output"/var/lib/ymp/{index,packages}/ -p
-echo "$repo" > "$output"/var/lib/ymp/sources.list
+mkdir "$output"/var/lib/ymp/{index,packages,sources.list.d}/ -p
+echo "$repo" > "$output"/var/lib/ymp/sources.list.d/main
 wget -O - ${repo/\$uri/ymp-index.yaml} | grep "uri: " > "$output"/var/lib/ymp/index/main
 # Stage 2 install base
 fetch_pkg ${basepkgs[@]}
