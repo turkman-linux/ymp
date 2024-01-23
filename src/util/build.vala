@@ -276,6 +276,21 @@ public class builder {
             } else if (isfile(ymp_build.ympbuild_srcpath + "/" + src)) {
                 info(_("Source file copy from cache."));
                 copy_file(ymp_build.ympbuild_srcpath + "/" + src, srcfile);
+            } else if (startswith(src, "git@") || endswith(src, ".git")) {
+                if(!isdir(ymp_source_cache + "/" + name)){
+                    if (run_args({"git", "clone", "--bare",src, ymp_source_cache + "/" + name}) != 0) {
+                        error_add(_("Failed to clone repository %s").printf(src));
+                    }
+                }
+                foreach(string file in find(ymp_source_cache + "/" + name)){
+                    copy_file(file, srcfile+"/.git/"+file[(ymp_source_cache + "/" + name).length:]);
+                }
+                string cur = pwd();
+                cd(srcfile+"/.git");
+                run_args({"git", "config", "--unset", "core.bare"});
+                cd(srcfile);
+                run_args({"git", "reset", "--hard"});
+                cd(cur);
             } else {
                 info(_("Download: %s").printf(src));
                 fetch(src, ymp_source_cache + "/" + name);
