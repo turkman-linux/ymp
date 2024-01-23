@@ -1,4 +1,7 @@
 private static int index_main (string[] args) {
+    backup_env();
+    clear_env();
+    set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
     foreach (string arg in args) {
         string path = srealpath (arg);
         string index = create_index_data (path);
@@ -6,16 +9,21 @@ private static int index_main (string[] args) {
         sign_file (path + "/ymp-index.yaml");
         gpg_export_file (path + "/ymp-index.yaml.asc");
     }
+    restore_env();
     return 0;
 }
 
 private static int update_main (string[] args) {
+    backup_env();
+    clear_env();
+    set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
         error (1);
     }
     single_instance ();
     update_repo ();
+    restore_env();
     return 0;
 }
 
@@ -32,6 +40,13 @@ private static int repo_add_main (string[] args) {
         }
         create_dir (get_storage () + "/sources.list.d/");
         writefile (get_storage () + "/sources.list.d/" + get_value ("name"), data);
+        if(get_bool("with-gpg")){
+            foreach (string arg in args) {
+                if(fetch(arg.replace("$uri","ymp-index.yaml.asc"), "/tmp/"+get_value ("name")+".asc")){
+                    add_gpg_key("/tmp/"+get_value ("name")+".asc", get_value ("name"));
+                }
+            }
+        }
     }
     error (1);
     return 0;
@@ -139,7 +154,8 @@ static void repository_init () {
     op.help.add_parameter ("--move", _ ("move packages for alphabetical hierarchy"));
     op.help.add_parameter ("--name", _ ("new repository name (required)"));
     op.help.add_parameter (colorize (_ ("Add options"), magenta), "");
-    op.help.add_parameter ("--name", _ ("new file name"));
+    op.help.add_parameter ("--name", _ ("new file name (required)"));
+    op.help.add_parameter ("--with-gpg", _ ("fetch and add gpg key"));
     op.help.add_parameter (colorize (_ ("Mirror options"), magenta), "");
     op.help.add_parameter ("--no-package", _ ("do not mirror binary packages"));
     op.help.add_parameter ("--no-source", _ ("do not mirror source packages"));

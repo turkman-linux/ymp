@@ -43,15 +43,14 @@ public bool verify_file (string path) {
     return false;
 }
 
-public void add_gpg_key(string path){
+public void add_gpg_key(string path, string name){
     if(endswith(path,".asc")){
         string target = get_storage()+"/gpg/"+sbasename(path);
         copy_file(path, target);
         run_args({"gpg", "--dearmor", target});
-        move_file(target+".gpg",get_storage()+"/gpg/"+calculate_md5sum(target+".gpg")+".gpg");
+        move_file(target+".gpg",get_storage()+"/gpg/"+name+".gpg");
         remove_file(target);
     }
-
 }
 
 //DOC: `void sign_elf (string path):`

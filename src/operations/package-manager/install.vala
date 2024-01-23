@@ -1,4 +1,8 @@
 private static int install_main (string[] args) {
+    backup_env();
+    clear_env();
+    set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
         error (1);
@@ -63,6 +67,7 @@ private static int install_main (string[] args) {
     }
     set_value_readonly ("OPERATION", "postinst");
     sysconf_main (args);
+    restore_env();
     error (1);
     return 0;
 }

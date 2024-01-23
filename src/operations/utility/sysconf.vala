@@ -2,6 +2,10 @@ private static int sysconf_main (string[] args) {
     if (!is_root () || get_bool ("no-sysconf")) {
         return 0;
     }
+    backup_env();
+    clear_env();
+    set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+
     if (get_value ("OPERATION") != "install" && get_value ("OPERATION") != "remove") {
         set_env ("OPERATION", get_value ("OPERATION"));
     }
@@ -24,7 +28,7 @@ private static int sysconf_main (string[] args) {
             }
         }
     }
-    set_env ("OPERATION", "");
+    restore_env();
     return 0;
 }
 
