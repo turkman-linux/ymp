@@ -31,15 +31,29 @@ void array2_add(array2 *arr, const char *value) {
     arr->size++;
 }
 
-char *array2_get(array2 *arr, size_t index) {
-    if (index < arr->size) {
-        return arr->data[index];
-    } else {
-        return NULL;
-    }
+char **array2_get(array2 *arr, int* len) {
+    *len = arr->size;
+    return arr->data;
 }
 
 size_t array2_length(array2 *arr) {
     return arr->size;
 }
 
+void array2_reverse(array2 *arr) {
+    if (arr->size <= 1) {
+        return; /* No need to reverse if size is 0 or 1 */
+    }
+
+    size_t start = 0;
+
+    while (start < arr->size/2) {
+        /* Swap elements at start and end indices */
+        char *temp = arr->data[start];
+        arr->data[start] = arr->data[arr->size-start-1];
+        arr->data[arr->size-start-1] = temp;
+
+        /* Move towards the center */
+        start++;
+    }
+}

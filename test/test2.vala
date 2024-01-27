@@ -2,8 +2,9 @@ int main(string[] args){
     array2 a = new array2();
     a.add("Hello");
     a.add("world");
-    for(int i = 0; i<a.length();i++){
-        stdout.printf("%s\n", a.get(i));
+    a.reverse();
+    foreach(string d in a.get()){
+        stdout.printf("%s %d\n",d, a.length());
     }
     return 0;
 }

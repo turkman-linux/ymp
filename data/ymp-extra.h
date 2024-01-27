@@ -17,5 +17,5 @@ typedef struct {
 
 array2* array2_new();
 void array2_add(array2 *arr, char* data);
-char *array2_get(array2 *arr, size_t index);
+char **array2_get(array2 *arr, int* len);
 size_t array2_length(array2 *arr);
