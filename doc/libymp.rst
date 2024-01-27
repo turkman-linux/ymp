@@ -152,6 +152,74 @@ We can get information about package struct with this functions:
 	    return 0;
 	}
 
+Repository struct
+^^^^^^^^^^^
+libymp has **repository** structure. We can define like this:
+
+.. code-block:: c
+
+	#include <ymp.h>
+	int main(int argc, char** argv){
+	    ymp_init(argv, argc);
+	    repository *r = repository_new();
+	    r->name = "main";
+	    r->address = "https://example.org/repo/$uri";
+	    return 0;
+	} 
+
+Also we can list available repositories:
+
+.. code-block:: c
+
+	#include <ymp.h>
+	int main(int argc, char** argv){
+	    ymp_init(argv, argc);
+      int repo_len;
+	    repository** repos = get_repos(&repo_len);
+	    for(int i=0;i<repo_len;i++){
+	        g_print("%s\n",repos[i]->name);
+	        g_print("%d\n", repos[i]->address);
+	    }
+	    return 0;
+	}
+
+We can get package struct from repository functions.
+
+.. code-block:: c
+
+	#include <ymp.h>
+	int main(int argc, char** argv){
+	    ymp_init(argv, argc);
+      int repo_len;
+	    repository* r;
+	    // load repository from name
+	    repository_load(r,"main");
+	    // for binary package
+	    package p0 = repository_get_package(r, "test");
+	    // for source package
+	    package p1 = repository_get_source(r, "test");
+	    // check binary package is available
+	    bool b0 = repository_has_package(r,"test");
+	    // check source package is available
+	    bool b1 = repository_has_source(r,"test");
+	    // fetch binary package list
+	    char** l0 = repository_list_packages(r);
+	    // fetch source package list
+	    char** l0 = repository_list_sources(r);
+	    return 01
+	}
+
+We can list installed package names:
+
+.. code-block:: c
+
+	#include <ymp.h>
+	int main(int argc, char** argv){
+	    ymp_init(argv, argc);
+	    int len;
+	    // list instaled packages
+	    char** l0 = list_installed_packages(len);
+
 Usefull library parts of libymp
 ===============================
 libymp provide some usefull functions.

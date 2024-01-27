@@ -133,6 +133,9 @@ public repository[] get_repos () {
     foreach (string file in listdir (get_storage () + "/index")) {
         repository repo = new repository ();
         repo.load (file);
+        if(repo.name == ""){
+            continue;
+        }
         if (force_repo == "" || force_repo == repo.name) {
             repos += repo;
         }
@@ -310,7 +313,7 @@ public void update_repo () {
     error (2);
 }
 
-public string[] list_available_packages () {
+private static string[] list_available_packages () {
     string[] ret = {};
     foreach (repository repo in get_repos ()) {
         if (get_bool ("no-emerge")) {
