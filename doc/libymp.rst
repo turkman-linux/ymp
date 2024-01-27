@@ -172,13 +172,14 @@ Also we can list available repositories:
 .. code-block:: c
 
 	#include <ymp.h>
+	#include <glib/gprintf.h>
 	int main(int argc, char** argv){
 	    ymp_init(argv, argc);
-      int repo_len;
+	    int repo_len;
 	    repository** repos = get_repos(&repo_len);
 	    for(int i=0;i<repo_len;i++){
-	        g_print("%s\n",repos[i]->name);
-	        g_print("%d\n", repos[i]->address);
+	        g_printf("%s\n",repos[i]->name);
+	        g_printf("%d\n", repos[i]->address);
 	    }
 	    return 0;
 	}
@@ -190,7 +191,7 @@ We can get package struct from repository functions.
 	#include <ymp.h>
 	int main(int argc, char** argv){
 	    ymp_init(argv, argc);
-      int repo_len;
+	    int repo_len;
 	    repository* r;
 	    // load repository from name
 	    repository_load(r,"main");
@@ -219,6 +220,8 @@ We can list installed package names:
 	    int len;
 	    // list instaled packages
 	    char** l0 = list_installed_packages(len);
+	    return 0;
+	}
 
 Usefull library parts of libymp
 ===============================
