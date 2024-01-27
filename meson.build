@@ -22,7 +22,7 @@ run_command('bash', './tool/mkctx.sh',
     check:true)
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
-prep_args = ['-L'+meson.current_build_dir(), '-lymp']
+prep_args = ['-L'+meson.current_build_dir(), '-lymp', '-I'+meson.current_source_dir()/'data']
 args = prep_args
 if get_option('ansi')
     args += ['-ansi']
@@ -84,6 +84,15 @@ add_project_arguments(['--disable-assert', '--hide-internal', '--nostdpkg', '--e
 add_project_arguments('-D', '_GNU_SOURCE', '--disable-version-header', language: 'vala')
 add_project_arguments(['--pkg', 'posix'], language: 'vala')
 
+# vapi directory (valac configunation)
+add_project_arguments('--vapidir', meson.current_source_dir() / 'src/vapi/', language: 'vala')
+
+foreach vapi : run_command('find', 'src/vapi','-type','f',check:true).stdout().strip().split('\n')
+    vapi = vapi.replace('.vapi','')
+    vapi = vapi.split('/')[-1]
+    add_project_arguments('--pkg', vapi, language: 'vala')
+endforeach
+
 
 # gio
 deps += [dependency('gio-2.0', static: get_option('static'), required:true)]
@@ -92,6 +101,7 @@ deps += [dependency('gio-2.0', static: get_option('static'), required:true)]
 args += run_command(
         'pkg-config', '--libs', '--cflags' , 'glib-2.0', pkgconfig_arg ,check:true
         ).stdout().strip().split(' ')
+
 
 #libarchive
 if get_option('libarchive')
@@ -224,8 +234,9 @@ if get_option('nolibc_path') != ''
     args += ['-nostdlib', '-I'+get_option('nolibc_path')]
 endif
 
-
+add_project_arguments('-I'+meson.current_source_dir()+'/data/', language : 'c')
 generated_sources += ['ctx.vala']
+
 ########### build libymp ###########
 if get_option('static')
     libymp = static_library('ymp', generated_sources, dependencies: deps, link_args: args)
