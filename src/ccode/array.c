@@ -18,11 +18,6 @@ array2 *array2_new() {
 }
 
 void array2_unref(array2 *arr) {
-    size_t i;
-    for (i = 0; i < arr->size; i++) {
-        free(arr->data[i]);
-    }
-    free(arr->data);
     free(arr);
 }
 

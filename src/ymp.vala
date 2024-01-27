@@ -6,9 +6,6 @@ public const string GETTEXT_PACKAGE="ymp";
 private bool ymp_activated = false;
 
 public void ymp_init (string[] args) {
-    array2 a = new array2();
-    a.add("Hello");
-    a.add("World");
     if(ymp_activated){
         return;
     }

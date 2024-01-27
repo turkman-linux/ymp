@@ -30,28 +30,6 @@ endif
 
 libc_srcs = []
 
-# disable optimization for test
-if not get_option('test')
-    args += ['-O3', '-flto', '-Wall','-lm',
-            '-fvisibility=hidden', '-Wextra', '-Wextra','-s', '-Os',
-            '-Wl,--gc-sections','-ffunction-sections', '-fno-math-errno', '-ffast-math',
-            '-fdata-sections', '-fno-exceptions', '-fno-unwind-tables', '-fpack-struct',
-            '-fno-asynchronous-unwind-tables', '-fno-math-errno', '-ffreestanding',
-            '-fno-unroll-loops', '-fmerge-all-constants', '-fno-ident', '-ffast-math',
-            '-fsingle-precision-constant', '-Wl,--build-id=none', '-Wl,-z,norelro',
-            '-Wl,--hash-style=sysv', '-fpie', '-fpic', '-Wl,-v', '-Wl,-z,now',
-            '-Wno-ignored-optimization-argument', '-pipe', '-D_FORTIFY_SOURCE=2',
-            '-Wl,--as-needed', '-Wl,--strip-all', '-Wl,-z,max-page-size=0x1000',
-            '-fshort-enums', '-fwhole-program'
-    ]
-    if compiler.get_id() == 'clang'
-        args += ['-gembed-source', '-gdwarf-5']
-    endif
-    if architecture == 'x86_64'
-        args += ['-fcf-protection']
-    endif
-endif
-
 start_code = []
 
 # do not include glibc or musl stdlib and link with glibc or musl
