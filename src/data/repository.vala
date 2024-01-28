@@ -313,20 +313,16 @@ public void update_repo () {
     error (2);
 }
 
-private static string[] list_available_packages () {
-    string[] ret = {};
+public string[] list_available_packages () {
+    array ret = new array();
     foreach (repository repo in get_repos ()) {
         if (get_bool ("no-emerge")) {
-            foreach (string name in repo.list_packages ()) {
-                ret += name;
-            }
+            ret.adds(repo.list_packages ());
         }else {
-            foreach (string name in repo.list_sources ()) {
-                ret += name;
-            }
+            ret.adds(repo.list_sources ());
        }
     }
-    return ret;
+    return ret.get();
 }
 
 //DOC: `string create_index_data (string fpath):`
