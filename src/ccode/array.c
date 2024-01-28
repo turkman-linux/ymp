@@ -21,8 +21,9 @@ typedef struct {
 
 array2 *array2_new() {
     array2 *arr = (array2 *)calloc(1,sizeof(array2));
+    arr->data = (char*)calloc(1024, sizeof(char*));
     arr->size = 0;
-    arr->capacity = 0;
+    arr->capacity = 1024;
     return arr;
 }
 
