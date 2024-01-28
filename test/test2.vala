@@ -7,9 +7,9 @@ int main(string[] args){
     a.insert("amogus",0);
     a.add("Hi");
     a.add("Hi");
-    a.reverse();
-    a.uniq();
-    a.sort();
+    //a.reverse();
+    //a.uniq();
+    //a.sort();
     foreach(string d in a.get()){
         stdout.printf("%s %d\n",d, a.length());
     }

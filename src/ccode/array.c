@@ -108,7 +108,8 @@ void array2_insert(array2* arr, char* value, size_t index){
         return;
     }
     char* tmp = strdup(arr->data[index]);
-    size_t start = index;
+    arr->data[index] = strdup(value);
+    size_t start = index+1;
     while(start < arr->capacity){
         if(arr->data[start] == NULL){
             arr->data[start] = tmp;
