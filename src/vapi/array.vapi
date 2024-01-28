@@ -7,6 +7,8 @@ public class array2 {
     public string[] get();
     public int length();
     public void reverse();
+    public void uniq();
     public void sort();
+    public void insert(string value, int index);
     public void remove(string item);
 }

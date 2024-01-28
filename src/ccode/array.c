@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
 
@@ -33,8 +34,12 @@ void array2_unref(array2 *arr) {
 
 void array2_add(array2 *arr, const char *value) {
     if (arr->size >= arr->capacity) {
-        arr->capacity += 1;
+        arr->capacity += 1024;
         arr->data = (char **)realloc(arr->data, arr->capacity * sizeof(char *));
+    }
+    if(value == NULL){
+        arr->size++;
+        return;
     }
     size_t start = 0;
     while(start < arr->capacity){
@@ -58,6 +63,64 @@ void array2_remove(array2* arr, char* item){
         }
         start++;
     }
+}
+
+bool array2_has(array2* arr, char* name){
+    size_t start = 0;
+    while(start < arr->capacity){
+        if (arr->data[start] != NULL && strcmp(arr->data[start],name) == 0){
+            return true;
+        }
+        start++;
+    }
+    return false;
+}
+
+void array2_uniq(array2* arr){
+    size_t start = 1;
+    size_t i = 0;
+    size_t removed = 0;
+    while(start < arr->capacity){
+         for(i=0;i<start-1;i++){
+             if(arr->data[i] != NULL && strcmp(arr->data[i],arr->data[start])==0){
+                 arr->data[i] = NULL;
+                 removed++;
+            }
+        }
+        start++;
+    }
+    arr->size -= removed;
+}
+
+void array2_pop(array2* arr, size_t index){
+    arr->data[index] = NULL;
+    arr->size -= 1;
+}
+
+
+void array2_insert(array2* arr, char* value, size_t index){
+    if (arr->size >= arr->capacity) {
+        array2_add(arr,NULL);
+    }
+    if (arr->data[index] == NULL){
+        arr->data[index] = value;
+        arr->size++;
+        return;
+    }
+    char* tmp = strdup(arr->data[index]);
+    size_t start = index;
+    while(start < arr->capacity){
+        if(arr->data[start] == NULL){
+            arr->data[start] = tmp;
+            arr->size+=1;
+            return;
+        }
+        char* tmp2 = strdup(arr->data[start]);
+        arr->data[start] = strdup(tmp);
+        tmp = strdup(tmp2);
+        start++;
+    }
+    arr->size += 1;
 }
 
 void array2_sort(array2* arr){

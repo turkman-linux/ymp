@@ -20,6 +20,8 @@ void array2_add(array2 *arr, char* data);
 char **array2_get(array2 *arr, int* len);
 size_t array2_length(array2 *arr);
 void array2_reverse(array2 *arr);
+void array2_uniq(array2 *arr);
+void array2_insert(array2 *arr, char* value, size_t index);
 void array2_sort(array2 *arr);
 void array2_unref(array2 *arr);
 void array2_remove(array2* arr, char* item);
