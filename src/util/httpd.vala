@@ -85,7 +85,6 @@ async void process_request (SocketConnection conn) {
             dos.flush ();
             var node = new array ();
             node.adds (listdir ("./" + path));
-            node.sort ();
             foreach (string f in node.get ()) {
                 if (startswith (f, ".") || " " in f) {
                     continue;

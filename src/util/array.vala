@@ -29,10 +29,6 @@ public class array {
         a = new_a;
     }
 
-    public void sort () {
-        a = get ();
-        csort (a, a.length);
-    }
 
     //DOC: `void add (string item):`
     //DOC: add item into array

@@ -219,6 +219,5 @@ private string[] debian_packagename_fix (string[] names){
         ret.add (fname);
     }
     ret.uniq();
-    ret.sort();
     return ret.get ();
 }

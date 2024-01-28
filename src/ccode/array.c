@@ -4,6 +4,15 @@
 
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
 
+
+static int string_compare(const void* a, const void* b){
+    return strcmp(*(const char**)a, *(const char**)b);
+}
+
+void csort(char* arr[], int n){
+    qsort(arr, n, sizeof(const char*), string_compare);
+}
+
 typedef struct {
     char **data;
     size_t size;
@@ -26,19 +35,68 @@ void array2_add(array2 *arr, const char *value) {
         arr->capacity += 1;
         arr->data = (char **)realloc(arr->data, arr->capacity * sizeof(char *));
     }
-
+    size_t start = 0;
+    while(start < arr->capacity){
+        if(arr->data[start] == NULL){
+            arr->data[start] = strdup(value);
+            arr->size++;
+            return;
+        }
+        start++;
+    }
     arr->data[arr->size] = strdup(value);
     arr->size++;
 }
 
+void array2_remove(array2* arr, char* item){
+    size_t start = 0;
+    while(start < arr->capacity){
+        if(arr->data[start] != NULL && strcmp(arr->data[start],item)==0){
+            arr->data[start] = NULL;
+            arr->size -= 1;
+        }
+        start++;
+    }
+}
+
+void array2_sort(array2* arr){
+    char** new_data = (char**)calloc(arr->capacity,sizeof(char*));
+    size_t start = 0;
+    size_t skip = 0;
+     while(start < arr->capacity){
+        if(arr->data[start] == NULL){
+            start++;
+            skip++;
+            continue;
+        }
+        new_data[start-skip]=strdup(arr->data[start]);
+        start++;
+    }
+    csort(new_data, arr->size);
+    arr->data = new_data;
+}
+
 char **array2_get(array2 *arr, int* len) {
     *len = arr->size;
-    return arr->data;
+    char** ret = calloc(arr->size, sizeof(char*));
+    size_t start = 0;
+    size_t skip = 0;
+    while(start < arr->capacity){
+        if(arr->data[start] == NULL){
+            start++;
+            skip++;
+            continue;
+        }
+        ret[start-skip]=strdup(arr->data[start]);
+        start++;
+    }
+    return ret;
 }
 
 size_t array2_length(array2 *arr) {
     return arr->size;
 }
+
 
 void array2_reverse(array2 *arr) {
     if (arr->size <= 1) {
@@ -47,11 +105,11 @@ void array2_reverse(array2 *arr) {
 
     size_t start = 0;
 
-    while (start < arr->size/2) {
+    while (start < arr->capacity/2) {
         /* Swap elements at start and end indices */
         char *temp = arr->data[start];
-        arr->data[start] = arr->data[arr->size-start-1];
-        arr->data[arr->size-start-1] = temp;
+        arr->data[start] = arr->data[arr->capacity-start-1];
+        arr->data[arr->capacity-start-1] = temp;
 
         /* Move towards the center */
         start++;

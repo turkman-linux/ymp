@@ -17,14 +17,6 @@ int iseq(char* str1, char* str2){
     return strcmp(str1,str2) == 0;
 }
 
-static int string_compare(const void* a, const void* b){
-    return strcmp(*(const char**)a, *(const char**)b);
-}
-
-void csort(const char* arr[], int n){
-    qsort(arr, n, sizeof(const char*), string_compare);
-}
-
 long count_tab(char* data){
     cnt = 0;
     while (*data == ' ') {
