@@ -1,4 +1,6 @@
 private bool ymp_activated = false;
+private extern void locale_init();
+public const string GETTEXT_PACKAGE="ymp";
 public void ymp_init (string[] args) {
     if(ymp_activated){
         return;
