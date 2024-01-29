@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include <array.h>
+
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
 
 static size_t i;
@@ -17,12 +19,6 @@ static int string_compare(const void* a, const void* b){
 void csort(char* arr[], int n){
     qsort(arr, n, sizeof(const char*), string_compare);
 }
-
-typedef struct {
-    char **data;
-    size_t size;
-    size_t capacity;
-} array;
 
 array *array_new() {
     array *arr = (array *)calloc(1,sizeof(array));
