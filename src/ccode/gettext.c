@@ -1,3 +1,4 @@
+#ifndef no_locale
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -12,3 +13,5 @@ void locale_init(){
   textdomain ("ymp");
 
 }
+
+#endif

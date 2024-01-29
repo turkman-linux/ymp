@@ -1,11 +1,16 @@
 private bool ymp_activated = false;
+
+#ifndef no_locale
 private extern void locale_init();
 public const string GETTEXT_PACKAGE="ymp";
+#endif
 public void ymp_init (string[] args) {
     if(ymp_activated){
         return;
     }
+    #ifndef no_locale
     locale_init();
+    #endif
     c_umask (022);
     // initial load
     parse_args(args);
