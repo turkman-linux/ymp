@@ -213,7 +213,6 @@ if get_option('nolibc_path') != ''
 endif
 
 add_project_arguments('-I'+meson.current_source_dir()+'/src/include/', language : 'c')
-add_project_arguments('-DGETTEXT_PACKAGE=ymp', language : 'c')
 generated_sources += ['ctx.vala']
 
 ########### build libymp ###########

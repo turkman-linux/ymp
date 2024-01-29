@@ -1,21 +1,9 @@
-#if no_locale
-#else
-public const string GETTEXT_PACKAGE="ymp";
-#endif
-
 private bool ymp_activated = false;
-
 public void ymp_init (string[] args) {
     if(ymp_activated){
         return;
     }
-    #if no_locale
-    #else
-    GLib.Intl.setlocale (LocaleCategory.ALL, "");
-    GLib.Intl.bindtextdomain (GETTEXT_PACKAGE, "/usr/share/locale");
-    GLib.Intl.bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-    GLib.Intl.textdomain (GETTEXT_PACKAGE);
-    #endif
+    locale_init();
     c_umask (022);
     // initial load
     parse_args(args);

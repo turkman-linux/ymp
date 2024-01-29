@@ -1,6 +1,10 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#ifndef GETTEXT_PACKAGE
+#define GETTEXT_PACKAGE "ymp"
+#endif
+
 typedef struct {
     char **data;
     size_t size;
