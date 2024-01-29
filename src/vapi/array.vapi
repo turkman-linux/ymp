@@ -4,6 +4,7 @@ public class array2 {
     int size;
     string[] data;
     public void add(string data);
+    public void adds(string[] data);
     public string[] get();
     public int length();
     public void reverse();

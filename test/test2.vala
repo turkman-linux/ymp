@@ -7,6 +7,8 @@ int main(string[] args){
     a.insert("amogus",0);
     a.add("Hi");
     a.add("Hi");
+    string[] aaa = {"Ekmegi","elden", "y**ragi", "kelden"};
+    a.adds(aaa);
     //a.reverse();
     //a.uniq();
     //a.sort();
