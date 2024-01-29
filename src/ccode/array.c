@@ -22,21 +22,21 @@ typedef struct {
     char **data;
     size_t size;
     size_t capacity;
-} array2;
+} array;
 
-array2 *array2_new() {
-    array2 *arr = (array2 *)calloc(1,sizeof(array2));
+array *array_new() {
+    array *arr = (array *)calloc(1,sizeof(array));
     arr->data = (char**)calloc(1024, sizeof(char*));
     arr->size = 0;
     arr->capacity = 1024;
     return arr;
 }
 
-void array2_unref(array2 *arr) {
+void array_unref(array *arr) {
     free(arr);
 }
 
-void array2_add(array2 *arr, char *value) {
+void array_add(array *arr, char *value) {
     if (arr->size >= arr->capacity) {
         arr->capacity += 1024;
         arr->data = (char **)realloc(arr->data, arr->capacity * sizeof(char *));
@@ -58,12 +58,12 @@ void array2_add(array2 *arr, char *value) {
     arr->size++;
 }
 
-void array2_set(array2 *arr, char** new_data, size_t len){
+void array_set(array *arr, char** new_data, size_t len){
     arr->data = new_data;
     arr->size = len;
 }
 
-char* array2_get_string(array2 *arr){
+char* array_get_string(array *arr){
     size_t tot_len = 0;
     start = 0;
     while(start < arr->capacity){
@@ -83,13 +83,13 @@ char* array2_get_string(array2 *arr){
     return ret;
 }
 
-void array2_adds(array2 *arr, char **value, size_t len) {
+void array_adds(array *arr, char **value, size_t len) {
     for(i=0;i<len;i++){
-        array2_add(arr,value[i]);
+        array_add(arr,value[i]);
     }
 }
 
-void array2_remove(array2* arr, char* item){
+void array_remove(array* arr, char* item){
     start = 0;
     while(start < arr->capacity){
         if(arr->data[start] != NULL && strcmp(arr->data[start],item)==0){
@@ -100,7 +100,7 @@ void array2_remove(array2* arr, char* item){
     }
 }
 
-bool array2_has(array2* arr, char* name){
+bool array_has(array* arr, char* name){
     start = 0;
     while(start < arr->capacity){
         if (arr->data[start] != NULL && strcmp(arr->data[start],name) == 0){
@@ -111,7 +111,7 @@ bool array2_has(array2* arr, char* name){
     return false;
 }
 
-void array2_uniq(array2* arr){
+void array_uniq(array* arr){
     start = 1;
     i = 0;
     removed = 0;
@@ -127,15 +127,15 @@ void array2_uniq(array2* arr){
     arr->size -= removed;
 }
 
-void array2_pop(array2* arr, size_t index){
+void array_pop(array* arr, size_t index){
     arr->data[index] = NULL;
     arr->size -= 1;
 }
 
 
-void array2_insert(array2* arr, char* value, size_t index){
+void array_insert(array* arr, char* value, size_t index){
     if (arr->size >= arr->capacity) {
-        array2_add(arr,NULL);
+        array_add(arr,NULL);
     }
     if (arr->data[index] == NULL){
         arr->data[index] = value;
@@ -159,7 +159,7 @@ void array2_insert(array2* arr, char* value, size_t index){
     arr->size += 1;
 }
 
-void array2_sort(array2* arr){
+void array_sort(array* arr){
     char** new_data = (char**)calloc(arr->capacity,sizeof(char*));
     start = 0;
     skip = 0;
@@ -176,7 +176,7 @@ void array2_sort(array2* arr){
     arr->data = new_data;
 }
 
-char **array2_get(array2 *arr, int* len) {
+char **array_get(array *arr, int* len) {
     *len = arr->size;
     char** ret = calloc(arr->size, sizeof(char*));
     start = 0;
@@ -193,12 +193,12 @@ char **array2_get(array2 *arr, int* len) {
     return ret;
 }
 
-size_t array2_length(array2 *arr) {
+size_t array_length(array *arr) {
     return arr->size;
 }
 
 
-void array2_reverse(array2 *arr) {
+void array_reverse(array *arr) {
     if (arr->size <= 1) {
         return; /* No need to reverse if size is 0 or 1 */
     }

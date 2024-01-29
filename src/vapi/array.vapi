@@ -1,6 +1,6 @@
 [CCode (cheader_filename = "array.h")]
-public class array2 {
-    public array2();
+public class array {
+    public array();
     int size;
     string[] data;
     public void add(string data);
@@ -10,6 +10,8 @@ public class array2 {
     public int length();
     public void reverse();
     public void uniq();
+    public bool has(string item);
+    public void set(string[] new_data);
     public void sort();
     public void insert(string value, int index);
     public void remove(string item);

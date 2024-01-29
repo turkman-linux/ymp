@@ -1,5 +1,5 @@
 int main(string[] args){
-    array2 a = new array2();
+    array a = new array();
     a.add("Hello");
     a.add("World");
     a.remove("Hello");

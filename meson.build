@@ -22,7 +22,7 @@ run_command('bash', './tool/mkctx.sh',
     check:true)
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
-prep_args = ['-L'+meson.current_build_dir(), '-lymp', '-I'+meson.current_source_dir()/'src/include']
+prep_args = ['-L'+meson.current_build_dir(), '-lymp', '-I'+meson.current_source_dir()/'src/include/']
 args = prep_args
 if get_option('ansi')
     args += ['-ansi']
@@ -212,7 +212,8 @@ if get_option('nolibc_path') != ''
     args += ['-nostdlib', '-I'+get_option('nolibc_path')]
 endif
 
-add_project_arguments('-I'+meson.current_source_dir()+'/data/', language : 'c')
+add_project_arguments('-I'+meson.current_source_dir()+'/src/include/', language : 'c')
+add_project_arguments('-DGETTEXT_PACKAGE=ymp', language : 'c')
 generated_sources += ['ctx.vala']
 
 ########### build libymp ###########
