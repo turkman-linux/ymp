@@ -12,6 +12,7 @@ public class array {
     public void uniq();
     public bool has(string item);
     public void set(string[] new_data);
+    public void pop(int index);
     public void sort();
     public void insert(string value, int index);
     public void remove(string item);

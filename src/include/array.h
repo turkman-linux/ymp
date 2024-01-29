@@ -18,6 +18,7 @@ void array_uniq(array *arr);
 void array_insert(array *arr, char* value, size_t index);
 void array_sort(array *arr);
 void array_unref(array *arr);
+void array_pop(array *arr, size_t index);
 bool array_has(array *arr, char* item);
 void array_remove(array* arr, char* item);
 
