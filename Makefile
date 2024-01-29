@@ -21,7 +21,7 @@ test: test-clean
 test2:
 	valac -C test/test2.vala --pkg ymp --vapidir=build/ --pkg array --vapidir=src/vapi -o build/test2.c
 	mv test/test2.c build/test2.c
-	LD_LIBRAR_PATH=$PWD/build $(CC) build/test2.c -Ibuild -Idata -Lbuild -lymp -o build/test2 $(shell pkg-config --cflags --libs glib-2.0)
+	LD_LIBRAR_PATH=$PWD/build $(CC) build/test2.c -Ibuild -Isrc/include -Lbuild -lymp -o build/test2 $(shell pkg-config --cflags --libs glib-2.0)
 	LD_LIBRAR_PATH=$PWD/build build/test2
 
 install:

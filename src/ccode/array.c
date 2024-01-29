@@ -58,6 +58,31 @@ void array2_add(array2 *arr, char *value) {
     arr->size++;
 }
 
+void array2_set(array2 *arr, char** new_data, size_t len){
+    arr->data = new_data;
+    arr->size = len;
+}
+
+char* array2_get_string(array2 *arr){
+    size_t tot_len = 0;
+    start = 0;
+    while(start < arr->capacity){
+        if(arr->data[start] != NULL){
+            tot_len += strlen(arr->data[start]);
+        }
+        start++;
+    }
+    char* ret = calloc(tot_len+1, sizeof(char));
+    start = 0;
+    while(start < arr->capacity){
+        if(arr->data[start] != NULL){
+            strcat(ret, arr->data[start]);
+        }
+        start++;
+    }
+    return ret;
+}
+
 void array2_adds(array2 *arr, char **value, size_t len) {
     for(i=0;i<len;i++){
         array2_add(arr,value[i]);

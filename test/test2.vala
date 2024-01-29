@@ -15,5 +15,6 @@ int main(string[] args){
     foreach(string d in a.get()){
         stdout.printf("%s %d\n",d, a.length());
     }
+    stdout.printf(a.get_string());
     return 0;
 }

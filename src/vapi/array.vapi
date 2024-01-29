@@ -1,4 +1,4 @@
-[CCode (cheader_filename = "ymp-extra.h")]
+[CCode (cheader_filename = "array.h")]
 public class array2 {
     public array2();
     int size;
@@ -6,6 +6,7 @@ public class array2 {
     public void add(string data);
     public void adds(string[] data);
     public string[] get();
+    public string get_string();
     public int length();
     public void reverse();
     public void uniq();

@@ -22,7 +22,7 @@ run_command('bash', './tool/mkctx.sh',
     check:true)
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
-prep_args = ['-L'+meson.current_build_dir(), '-lymp', '-I'+meson.current_source_dir()/'data']
+prep_args = ['-L'+meson.current_build_dir(), '-lymp', '-I'+meson.current_source_dir()/'src/include']
 args = prep_args
 if get_option('ansi')
     args += ['-ansi']
@@ -259,9 +259,13 @@ install_data(meson.current_build_dir()+'/ymp.pc', install_dir : get_option('libd
 install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
 install_data('data/fix-turkish.sed', install_dir : get_option('prefix') / 'share/ymp/')
 install_data('data/ymp-mime.xml', install_dir : get_option('prefix') / 'share/mime/packages/')
-install_data('data/ymp-extra.h', install_dir : get_option('includedir'))
 install_data('data/debian-names.yaml', install_dir : get_option('sysconfdir'))
-
 install_data(meson.current_build_dir() / 'obj.o', install_dir : get_option('libdir'), rename : 'empty.o')
-install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir'))
+
+########### install headers ###########
+install_data(meson.current_build_dir() / 'ymp.h', install_dir : get_option('includedir')/'ymp/')
+install_data(meson.current_source_dir() / 'data/ymp-extra.h', install_dir : get_option('includedir')/'ymp/', rename : 'extra.h')
+foreach header : run_command('find', 'src/include','-type','f',check:true).stdout().strip().split('\n')
+    install_data(meson.current_source_dir() / header, install_dir : get_option('includedir')/'ymp/')
+endforeach
 install_data(meson.current_build_dir() / 'ymp.vapi', install_dir : get_option('prefix')/'share/vala/vapi/')
