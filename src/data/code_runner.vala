@@ -98,6 +98,7 @@ public void add_code_runner_plugin(code_runner_plugin plug){
     if(plugins == null){
         plugins = {};
     }
+    info(_("Register code-runner plugin: %s").printf(plug.name));
     plugins += plug;
 }
 
