@@ -41,10 +41,6 @@ void array_add(array *arr, char *value) {
             arr->data[start] = NULL;
         }
     }
-    if(value == NULL){
-        arr->size++;
-        return;
-    }
     arr->size++;
     arr->data[arr->size]=strdup(value);
 }
