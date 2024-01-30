@@ -45,15 +45,8 @@ void array_add(array *arr, char *value) {
         arr->size++;
         return;
     }
-    start = 0;
-    while(start < arr->capacity){
-        if(arr->data[start] == NULL){
-            arr->data[start] = strdup(value);
-            arr->size++;
-            return;
-        }
-        start++;
-    }
+    arr->size++;
+    arr->data[arr->size]=strdup(value);
 }
 
 void array_set(array *arr, char** new_data, size_t len){
