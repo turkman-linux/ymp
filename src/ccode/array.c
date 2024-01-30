@@ -111,7 +111,6 @@ void array_uniq(array* arr){
     start = 1;
     i = 0;
     removed = 0;
-    printf("%d %d %s\n", arr->capacity, arr->size);
     while(start < arr->capacity){
         if(arr->data[start] == NULL){
             start++;
