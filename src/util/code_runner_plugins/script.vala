@@ -1,9 +1,13 @@
 public void code_runner_script_init(){
-    if(!isdir("/etc/code-runner/")){
-        warning(_("%s directory does not exists.").printf("/etc/code-runner/"));
+    string plugin_directory = get_value("plugindir");
+    if(plugin_directory == ""){
+        plugin_directory = "/etc/code-runner/";
+    }
+    if(!isdir(plugin_directory)){
+        warning(_("%s directory does not exists.").printf(plugin_directory));
         return;
     }
-    foreach(string plugin in listdir("/etc/code-runner/")){
+    foreach(string plugin in listdir(plugin_directory)){
         code_runner_plugin script = new code_runner_plugin();
         script.name = plugin;
         script.init.connect((image, directory)=>{
@@ -12,7 +16,7 @@ public void code_runner_script_init(){
             set_env("IMAGE", image);
             set_env("DIRECTORY", directory);
             set_env("ACTION", "init");
-            run("/etc/code-runner/%s".printf(plugin));
+            run("%s/%s".printf(plugin_directory ,plugin));
             restore_env();
             
         });
@@ -21,7 +25,7 @@ public void code_runner_script_init(){
             clear_env();
             set_env("COMMAND", command);
             set_env("ACTION", "run");
-            int status = run("/etc/code-runner/%s".printf(plugin));
+            int status = run("%s/%s".printf(plugin_directory, plugin));
             restore_env();
             return status;
         });
@@ -29,7 +33,7 @@ public void code_runner_script_init(){
             backup_env();
             clear_env();
             set_env("ACTION", "clean");
-            run("/etc/code-runner/%s".printf(plugin));
+            run("%s/%s".printf(plugin_directory, plugin));
             restore_env();
         });
         add_code_runner_plugin(script);

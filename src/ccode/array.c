@@ -5,7 +5,7 @@
 
 #include <array.h>
 
-#define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
+#define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A)
 
 static size_t i;
 static size_t start, skip, removed;
@@ -61,7 +61,7 @@ char* array_get_string(array *arr){
     }
     char* ret = calloc(tot_len+1, sizeof(char));
     start = 0;
-    while(start < arr->size+arr->removed){
+    while(start < arr->size+arr->removed+1){
         if(arr->data[start] != NULL){
             strcat(ret, arr->data[start]);
         }
@@ -72,7 +72,7 @@ char* array_get_string(array *arr){
 
 void array_adds(array *arr, char **value, size_t len) {
     for(i=0;i<len;i++){
-        array_add(arr,value[i]);
+        array_add(arr, value[i]);
     }
 }
 
@@ -159,7 +159,7 @@ void array_sort(array* arr){
     char** new_data = (char**)calloc(arr->capacity,sizeof(char*));
     start = 0;
     skip = 0;
-     while(start < arr->size+arr->removed){
+     while(start < arr->size+arr->removed+1){
         if(arr->data[start] == NULL){
             start++;
             skip++;
@@ -174,10 +174,10 @@ void array_sort(array* arr){
 
 char **array_get(array *arr, int* len) {
     *len = arr->size;
-    char** ret = calloc(arr->size, sizeof(char*));
+    char** ret = calloc(arr->size+1, sizeof(char*));
     start = 0;
     skip = 0;
-    while(start < arr->size+arr->removed){
+    while(start < arr->size+arr->removed+1){
         if(arr->data[start] == NULL){
             start++;
             skip++;

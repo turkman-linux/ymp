@@ -5,14 +5,10 @@ private static void local_init(string image, string directory){
 }
 
 private static int local_run(string command){
-    backup_env();
-    clear_env();
-    set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
     string cur = pwd ();
     cd(local.ctx);
     int status = run_args({"sh", "-c", command});
     cd (cur);
-    restore_env();
     return status;
 }
 private static void local_clean(){

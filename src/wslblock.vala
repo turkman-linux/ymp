@@ -1,6 +1,8 @@
 //DOC: ## WSL shit bloker
 //DOC: detect & block WSL
 
+public extern int fork();
+
 private static void wsl_block () {
     if (!isfile ("/proc/version")) {
         error_add ("/proc not mount");

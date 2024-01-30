@@ -4,6 +4,7 @@ private class code_runner_job {
     public string image;
     public string directory;
     public string[] commands;
+    public string[] environs;
 }
 
 public  class code_runner_plugin {
@@ -42,6 +43,7 @@ public class code_runner {
             job.uses = yaml.get_value(area,"uses");
             job.image = yaml.get_value(area,"image");
             job.directory = yaml.get_value(area,"directory");
+            job.environs = yaml.get_array(area,"environs");
             job.commands = yaml.get_array(area,"run");
             if (job.commands.length == 0) {
                 job.commands = {yaml.get_value(area,"run")};
@@ -73,6 +75,13 @@ public class code_runner {
         print(colorize("Run operation:",blue)+job.name);
         foreach(code_runner_plugin p in plugins) {
             if(p.name == job.uses){
+                backup_env();
+                clear_env();
+                foreach(string env in job.environs){
+                    string var = ssplit(env,"=")[0];
+                    string val = env[var.length+1:];
+                    set_env(var, val);
+                }
                 print(colorize("Init plugin:",green)+p.name);
                 p.init(job.image, job.directory);
                 print(colorize("Run plugin:",green)+p.name);
@@ -89,6 +98,7 @@ public class code_runner {
                 }
                 print(colorize("Clean plugin:",green)+p.name);
                 p.clean();
+                restore_env();
             }
         }
         return 0;

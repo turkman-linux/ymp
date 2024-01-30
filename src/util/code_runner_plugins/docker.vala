@@ -1,7 +1,11 @@
 code_runner_plugin docker;
 private static void docker_init(string image, string directory){
         run_args({"docker", "pull", image});
-        docker.ctx = getoutput("docker run -it -d -v '%s':/root '%s' 2>/dev/null".printf(directory.replace("'","\\'"), image.replace("'",""))).strip();
+        docker.ctx = getoutput(
+                "docker run -it --env-file=<(cat /proc/self/environ | tr '\\0' '\\n') -d "
+                + "-v '%s':/root '%s' 2>/dev/null".printf(
+                directory.replace("'","\\'"), image.replace("'",""))
+        ).strip();
 }
 
 private static int docker_run(string command){
