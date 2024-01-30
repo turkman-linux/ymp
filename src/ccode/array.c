@@ -111,8 +111,14 @@ void array_uniq(array* arr){
     start = 1;
     i = 0;
     removed = 0;
+    printf("%d %d %s\n", arr->capacity, arr->size);
     while(start < arr->capacity){
-         for(i=0;i<start-1;i++){
+        if(arr->data[start] == NULL){
+            start++;
+            continue;
+        }
+        for(i=0;i<start-1;i++){
+             printf("%d %d %s\n", start, i, arr->data[i]);
              if(arr->data[i] != NULL && strcmp(arr->data[i],arr->data[start])==0){
                  arr->data[i] = NULL;
                  removed++;
