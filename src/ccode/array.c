@@ -117,7 +117,6 @@ void array_uniq(array* arr){
             continue;
         }
         for(i=0;i<start-1;i++){
-             printf("%d %d %s\n", start, i, arr->data[i]);
              if(arr->data[i] != NULL && strcmp(arr->data[i],arr->data[start])==0){
                  arr->data[i] = NULL;
                  removed++;
