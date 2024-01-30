@@ -55,8 +55,8 @@ void array_add(array *arr, char *value) {
 }
 
 void array_set(array *arr, char** new_data, size_t len){
-    arr->data = new_data;
-    arr->size = len;
+    arr->data = calloc(arr->capacity, sizeof(char*));
+    array_adds(arr, new_data, len);
 }
 
 char* array_get_string(array *arr){
