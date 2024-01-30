@@ -25,6 +25,7 @@ array *array_new() {
     arr->data = (char**)calloc(1024, sizeof(char*));
     arr->size = 0;
     arr->capacity = 1024;
+    arr->removed = 0;
     return arr;
 }
 
@@ -33,9 +34,12 @@ void array_unref(array *arr) {
 }
 
 void array_add(array *arr, char *value) {
-    if (arr->size >= arr->capacity) {
+    if (arr->size >= arr->capacity-1) {
         arr->capacity += 1024;
         arr->data = (char **)realloc(arr->data, arr->capacity * sizeof(char *));
+        for(start=arr->capacity-1024;start<arr->capacity;start++){
+            arr->data[start] = NULL;
+        }
     }
     if(value == NULL){
         arr->size++;
@@ -50,8 +54,6 @@ void array_add(array *arr, char *value) {
         }
         start++;
     }
-    arr->data[arr->size] = strdup(value);
-    arr->size++;
 }
 
 void array_set(array *arr, char** new_data, size_t len){
@@ -91,6 +93,7 @@ void array_remove(array* arr, char* item){
         if(arr->data[start] != NULL && strcmp(arr->data[start],item)==0){
             arr->data[start] = NULL;
             arr->size -= 1;
+            arr->removed +=1;
         }
         start++;
     }
@@ -98,9 +101,11 @@ void array_remove(array* arr, char* item){
 
 bool array_has(array* arr, char* name){
     start = 0;
-    while(start < arr->capacity){
-        if (arr->data[start] != NULL && strcmp(arr->data[start],name) == 0){
-            return true;
+    while(start < arr->size + arr->removed){
+        if(arr->data[start]){
+           if (strcmp(arr->data[start], name) == 0){
+               return true;
+           }
         }
         start++;
     }
@@ -125,11 +130,13 @@ void array_uniq(array* arr){
         start++;
     }
     arr->size -= removed;
+    arr->removed = removed;
 }
 
 void array_pop(array* arr, size_t index){
     arr->data[index] = NULL;
     arr->size -= 1;
+    arr->removed +=1;
 }
 
 

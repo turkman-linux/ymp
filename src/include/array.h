@@ -9,6 +9,7 @@ typedef struct {
     char **data;
     size_t size;
     size_t capacity;
+    size_t removed;
 } array;
 
 array* array_new();
