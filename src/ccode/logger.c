@@ -38,26 +38,23 @@ void print_fn(char* message, int new_line, int err){
     if(strcmp(message,"")==0){
         return;
     }
-    FILE *fd=stdout;
+    int fd=1;
     if(err){
-        fd=stderr;
+        fd=2;
     }
-    fprintf(fd,"%s",message);
+    write(fd, message, strlen(message));
     if(new_line){
-        fputc('\n',fd);
+        write(fd, "\n", 1);
     }
-    fflush(fd);
 }
 
 void cprint(char* message){
-    fputs(message,stdout);
-    fputc('\n',stdout);
-    fflush(stdout);
+    write(1, message, strlen(message));
+    write(1, "\n", 1);
 }
 void cprint_stderr(char* message){
-    fputs(message,stderr);
-    fputc('\n',stderr);
-    fflush(stderr);
+    write(2, message, strlen(message));
+    write(2, "\n", 1);
 }
 
 void cprint_dummy(char* message){}
@@ -95,9 +92,6 @@ void debug(char* msg){
 }
 #endif
 
-static char buffer[512];
-static char buffer_stderr[512];
-
 /* init function */
 void logger_init(){
     if(get_bool("quiet")){
@@ -120,10 +114,4 @@ void logger_init(){
     #ifndef NOCOLOR
     colorize_init();
     #endif
-    if(!isatty(fileno(stdout))){
-        memset( buffer, '\0', sizeof( buffer ));
-        memset( buffer_stderr, '\0', sizeof( buffer_stderr ));
-        setvbuf(stdout, buffer, _IOFBF, sizeof(buffer));
-        setvbuf(stderr, buffer_stderr, _IOFBF, sizeof(buffer_stderr));
-    }
 }
