@@ -9,6 +9,8 @@ jobs:
     uses: local
     directory: /tmp/ymp-build
     image: undefined
+    environs:
+      - prefix=/usr
     run:
       - echo hello world
 
