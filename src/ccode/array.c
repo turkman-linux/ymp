@@ -61,7 +61,7 @@ char* array_get_string(array *arr){
     }
     char* ret = calloc(tot_len+1, sizeof(char));
     start = 0;
-    while(start < arr->capacity){
+    while(start < arr->size+arr->removed){
         if(arr->data[start] != NULL){
             strcat(ret, arr->data[start]);
         }
@@ -159,7 +159,7 @@ void array_sort(array* arr){
     char** new_data = (char**)calloc(arr->capacity,sizeof(char*));
     start = 0;
     skip = 0;
-     while(start < arr->capacity){
+     while(start < arr->size+arr->removed){
         if(arr->data[start] == NULL){
             start++;
             skip++;
@@ -177,7 +177,7 @@ char **array_get(array *arr, int* len) {
     char** ret = calloc(arr->size, sizeof(char*));
     start = 0;
     skip = 0;
-    while(start < arr->capacity){
+    while(start < arr->size+arr->removed){
         if(arr->data[start] == NULL){
             start++;
             skip++;
