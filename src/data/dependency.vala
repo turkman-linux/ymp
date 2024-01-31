@@ -152,7 +152,7 @@ private static string[] get_match_packages (string fname) {
     return ret.get ();
 }
 
-private string[] get_upgradable_packages () {
+public string[] get_upgradable_packages () {
     string[] need_upgrade = {};
     foreach (string name in list_installed_packages ()) {
         if (!is_available_package (name)) {
