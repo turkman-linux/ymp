@@ -52,7 +52,7 @@ void array_set(array *arr, char** new_data, size_t len){
     arr->data = calloc(arr->capacity, sizeof(char*));
     arr->size = 0;
     arr->removed = 0;
-    for(start=arr->capacity;start<arr->capacity;start++){
+    for(start=0;start<arr->capacity;start++){
             arr->data[start] = NULL;
     }
     array_adds(arr, new_data, len);
