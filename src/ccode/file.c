@@ -58,6 +58,9 @@ void fs_sync(){
 }
 
 int issymlink(const char *filename){
+    if(filename == NULL){
+        return FALSE;
+    }
     if(lstat(filename, &st) < 0) {
         return FALSE;
     }
@@ -65,6 +68,9 @@ int issymlink(const char *filename){
 }
 
 int isdir(char *path){
+    if(path == NULL){
+        return FALSE;
+    }
     if(issymlink(path)){
         return FALSE;
     }
@@ -263,6 +269,9 @@ mode_t c_umask(mode_t mask){
 }
 
 int isfile(char* path){
+    if(path == NULL){
+        return FALSE;
+    }
     #ifdef debug
     debug(str_add("Check file: ", path));
     #endif

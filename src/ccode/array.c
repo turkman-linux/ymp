@@ -34,6 +34,9 @@ void array_unref(array *arr) {
 }
 
 void array_add(array *arr, char *value) {
+    if(value == NULL){
+        return;
+    }
     if (arr->size >= arr->capacity-1) {
         arr->capacity += 1024;
         arr->data = (char **)realloc(arr->data, arr->capacity * sizeof(char *));
@@ -47,6 +50,11 @@ void array_add(array *arr, char *value) {
 
 void array_set(array *arr, char** new_data, size_t len){
     arr->data = calloc(arr->capacity, sizeof(char*));
+    arr->size = 0;
+    arr->removed = 0;
+    for(start=arr->capacity;start<arr->capacity;start++){
+            arr->data[start] = NULL;
+    }
     array_adds(arr, new_data, len);
 }
 
@@ -190,7 +198,7 @@ char **array_get(array *arr, int* len) {
 }
 
 size_t array_length(array *arr) {
-    return arr->size;
+    return arr->size-arr->removed;
 }
 
 
@@ -200,12 +208,21 @@ void array_reverse(array *arr) {
     }
 
     start = 0;
-
-    while (start < arr->capacity/2) {
+    size_t tot = arr->size + arr->removed;
+    while (start < tot/2) {
         /* Swap elements at start and end indices */
         char *temp = arr->data[start];
-        arr->data[start] = arr->data[arr->capacity-start-1];
-        arr->data[arr->capacity-start-1] = temp;
+        char* temp2 = arr->data[tot-start-1];
+        if(temp2 != NULL){
+            arr->data[start] = strdup(temp2);
+        }else{
+            arr->data[start];
+        }
+        if(temp != NULL){
+            arr->data[tot-start-1] = strdup(temp);
+        }else{
+            arr->data[tot-start-1] = NULL;
+        }
 
         /* Move towards the center */
         start++;
