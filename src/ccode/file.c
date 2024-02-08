@@ -13,6 +13,10 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <dirent.h>
+#include <dlfcn.h>
+#include <unistd.h>
+#include <stdio.h>
+
 #define FILE_OK 0
 #define FILE_NOT_EXIST 1
 #define FILE_TO_LARGE 2
@@ -295,3 +299,33 @@ char* get_magic_mime_type(char* path){
 }
 #endif
 #endif
+
+typedef ssize_t (*write_func_t)(int, const void *, size_t);
+
+static write_func_t original_write;
+ssize_t write(int fd, const void *buf, size_t count) {
+    if (!original_write) {
+        original_write = dlsym(RTLD_NEXT, "write");
+    }
+
+    /* Splitting the buffer into 5MB chunks */
+    size_t max_chunk_size = 100 * 1024 * 1024; /* 5MB */
+    size_t bytes_written = 0;
+    ssize_t result;
+
+    while (count > 0) {
+        size_t chunk_size = (count > max_chunk_size) ? max_chunk_size : count;
+        result = original_write(fd, buf + bytes_written, chunk_size);
+        if (result < 0) {
+            /* Error occurred, return immediately */
+            return result;
+        }
+        bytes_written += result;
+        count -= result;
+        if(chunk_size == max_chunk_size) {
+            fsync(fd);
+        }
+    }
+    return bytes_written;
+}
+
