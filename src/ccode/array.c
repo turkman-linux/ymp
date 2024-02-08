@@ -26,6 +26,9 @@ array *array_new() {
     arr->size = 0;
     arr->capacity = 1024;
     arr->removed = 0;
+    for(start=0;start<arr->capacity;start++){
+        arr->data[start] = NULL;
+    }
     return arr;
 }
 
@@ -185,7 +188,7 @@ char **array_get(array *arr, int* len) {
     char** ret = calloc(arr->size+1, sizeof(char*));
     start = 0;
     skip = 0;
-    while(start < arr->size+arr->removed+1){
+    while(start < arr->size+arr->removed+1 && start < arr->capacity){
         if(arr->data[start] == NULL){
             start++;
             skip++;
