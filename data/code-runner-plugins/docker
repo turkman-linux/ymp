@@ -5,7 +5,7 @@ if [[ "$ACTION" == "init" ]] ; then
     echo "container=$container" > .init
 elif [[ "$ACTION" == "run" ]] ; then
     source .init
-    docker exec "$container" sh -c "$COMMAND"
+    docker exec "$container" sh -c "cd /root ; $COMMAND"
 elif [[ "$ACTION" == "clean" ]] ; then
     source .init
     docker rm -f "$container" >/dev/null
