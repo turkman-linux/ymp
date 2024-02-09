@@ -1,4 +1,5 @@
 private static int code_runner_operation (string[] args) {
+    code_runner_plugin_init();
     if(get_bool("create")){
         if(args.length == 0){
             error_add(_("You must give a new file name."));

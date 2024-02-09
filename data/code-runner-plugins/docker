@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+if [[ "$ACTION" == "init" ]] ; then
+    container=$(docker run -it --env-file=<(cat /proc/self/environ | tr '\0' '\n') -d -v "$DIRECTORY":/root "$IMAGE")
+    echo "container=$container" > .init
+elif [[ "$ACTION" == "run" ]] ; then
+    source .init
+    docker exec "$container" sh -c "$COMMAND"
+elif [[ "$ACTION" == "clean" ]] ; then
+    source .init
+    docker rm -f "$container" >/dev/null
+    rm .init
+fi

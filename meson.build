@@ -253,6 +253,12 @@ if get_option('scripts')
     endforeach
 endif
 
+########### code runner plugins ###########
+
+foreach plugin : run_command('find', 'data/code-runner-plugins','-type','f',check:true).stdout().strip().split('\n')
+    install_data(plugin, install_dir : '/lib/code-runner/')
+endforeach
+
 ########### install files ###########
 install_data('data/ymp.yaml', install_dir : get_option('sysconfdir'))
 install_data(meson.current_build_dir()+'/ymp.pc', install_dir : get_option('libdir')/ 'pkgconfig')

@@ -1,7 +1,11 @@
-public void code_runner_script_init(){
+private static bool code_runner_plugin_init_done = false;
+private static void code_runner_plugin_init(){
+    if(code_runner_plugin_init_done){
+        return;
+    }
     string plugin_directory = get_value("plugindir");
     if(plugin_directory == ""){
-        plugin_directory = "/etc/code-runner/";
+        plugin_directory = "/lib/code-runner/";
     }
     if(!isdir(plugin_directory)){
         warning(_("%s directory does not exists.").printf(plugin_directory));
@@ -38,4 +42,5 @@ public void code_runner_script_init(){
         });
         add_code_runner_plugin(script);
     }
+    code_runner_plugin_init_done = true;
 }

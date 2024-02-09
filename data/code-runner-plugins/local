@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+if [[ "$ACTION" == "init" ]] ; then
+    echo "cd $DIRECTORY" > .init
+elif [[ "$ACTION" == "run" ]] ; then
+    source .init
+    sh -c "$COMMAND"
+elif [[ "$ACTION" == "clean" ]] ; then
+    rm .init
+fi
