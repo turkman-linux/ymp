@@ -73,40 +73,30 @@ Job definition:
 
 Create plugins
 ^^^^^^^^^^^^^^
-Create new file in ymp source code. under **src/util/code_runner_plugins** directory.
+Create new file in ymp source code. under **/lib/code-runner/** directory.
 
-**example.vala** file content:
-
-.. code-block:: java
-
-	public void my_init(string image, string directory){
-	    // Initialization logic
-	}
-
-	public int my_run(string command){
-	    // Run logic
-	}
-
-	public void my_clean(){
-	    // Clean logic
-	}
-	public void code_runner_example_init(){
-	    my_plugin = new code_runner_plugin();
-	    my_plugin.name = "my_plugin";
-	    my_plugin.init.connect(my_init);
-	    my_plugin.run.connect(my_run);
-	    my_plugin.clean.connect(my_clean);
-	    add_code_runner_plugin(my_plugin);
-	}
-
-**Note:** **code_runner_xxx_init** function automatically called by ymp. **xxx** must same with file name.
-
-Then rebuild ymp.
+**example** file content:
 
 .. code-block:: shell
 
-	meson setup build
-	ninja -C build
-	ninja -C build install
+	#!/bin/bash
+	set -e
+	if [[ "$ACTION" == "init" ]] ; then
+		echo "Init action"
+		# Environs:
+		# - DIRECTORY
+		# - IMAGE
+	elif [[ "$ACTION" == "run" ]] ; then
+		echo "Run action"
+		# Environs:
+		# - COMMAND
+	elif [[ "$ACTION" == "clean" ]] ; then
+		echo "Clean action"
+	fi
+
+
+**Note:** You may need to save **DIRECTORY** and **IMAGE** environmental variables in init action.
+
+Then set executable your plugin.
 
 
