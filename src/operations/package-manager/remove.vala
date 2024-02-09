@@ -1,4 +1,5 @@
 private static int remove_main (string[] args) {
+    file_cache_reset();
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
         error (1);

@@ -1,6 +1,7 @@
 private static int install_main (string[] args) {
     backup_env();
     clear_env();
+    file_cache_reset();
     set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
 
     if (!is_root ()) {

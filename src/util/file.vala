@@ -87,6 +87,10 @@ public string readfile_cached(string path){
     return v.value;
 }
 
+public void file_cache_reset(){
+    cached_files = {};
+}
+
 //DOC: `string safedir (string dir):`
 //DOC: directory safe for httpd
 public extern string safedir (string dir);

@@ -16,6 +16,7 @@ private static int index_main (string[] args) {
 private static int update_main (string[] args) {
     backup_env();
     clear_env();
+    file_cache_reset();
     set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
