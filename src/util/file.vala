@@ -373,6 +373,12 @@ public string calculate_sha1sum (string path) {
     return calculate_checksum (path, ChecksumType.SHA1);
 }
 
+//DOC: `string calculate_sha1sum (string path):`
+//DOC: calculate sha1sum value from file path
+public string calculate_sha256sum (string path) {
+    return calculate_checksum (path, ChecksumType.SHA256);
+}
+
 //DOC: `string calculate_md5sum (string path):`
 //DOC: calculate md5sum value from file path
 public string calculate_md5sum (string path) {

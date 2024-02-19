@@ -331,6 +331,7 @@ public string create_index_data (string fpath) {
     array a = new array();
     a.add("index:\n");
     string md5sum = "";
+    string sha256sum = "";
     int size=0;
     string path = srealpath (fpath);
     string index_name = get_value ("name");
@@ -371,6 +372,7 @@ public string create_index_data (string fpath) {
     foreach (string file in find (path)) {
         if (endswith (file, ".ymp")) {
             md5sum = calculate_md5sum (file);
+            sha256sum = calculate_sha256sum (file);
             size = filesize (file);
             tar.load (file);
             file = file[path.length:];
@@ -404,6 +406,7 @@ public string create_index_data (string fpath) {
                 a.add("  %s\n".printf(line));
             }
             a.add("    md5sum: %s\n".printf(md5sum));
+            a.add("    sha256sum: %s\n".printf(sha256sum));
             a.add("    size: %s\n".printf(size.to_string ()));
             a.add("    uri: %s\n\n".printf(file));
         }
