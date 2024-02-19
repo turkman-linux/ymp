@@ -204,6 +204,11 @@ public class package {
             error_add (_ ("Package md5sum mismatch: %s").printf (target));
             remove_file (target);
         }
+        target_sum = calculate_sha256sum (target);
+        if (get ("sha256sum") != target_sum) {
+            error_add (_ ("Package sha256sum mismatch: %s").printf (target));
+            remove_file (target);
+        }
     }
 
     //DOC: `void package.extract ():`
