@@ -203,10 +203,6 @@ public void copy_file (string src, string desc) {
                 fs_sync ();
                 sync_bytes = cur;
             }
-            #if no_libcurl
-            #else
-            fetcher_vala (cur, total, desc);
-            #endif
         });
         print_stderr ("");
         fs_sync ();

@@ -53,10 +53,9 @@ static size_t write_data_to_string(void *ptr, size_t size, size_t nmemb, void *s
 
 char fetcher_filename[PATH_MAX];
 
-int fetcher_vala(double current, double total, char* filename);
 
-int fetcher_process_to_vala(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded){
-    fetcher_vala(current, total, fetcher_filename);
+int fetcher_process_to_stderr(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded){
+    fprintf(stderr, "CUR: %ld TOT: %ld NAME: %s\r\n", current, total, fetcher_filename);
     return 0;
 }
 
@@ -81,7 +80,7 @@ void curl_options_common(char* url){
         curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
         curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, "");
         if (get_bool("processbar") || getenv("PROGRESSBAR")){
-            curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_vala);
+            curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_stderr);
         } else {
             curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_dummy);
         }

@@ -92,7 +92,7 @@ int run_args_silent(char **command) {
         dup2(devnull, STDOUT_FILENO);
         dup2(devnull, STDERR_FILENO);
         close(devnull);
-    
+
         /* This code is executed by the child process */
         execvp(command[0], command);
 

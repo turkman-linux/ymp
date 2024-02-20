@@ -136,15 +136,12 @@ public extern int run_silent (string command);
 public extern string getoutput (string command);
 
 //DOC; ### fetcher.c
-#if no_libcurl
-#else
 //DOC: `bool fetch (string url, string path):`
 //DOC: fetch file from url
 public extern bool fetch (string url, string path);
 //DOC: `string fetch_string (string url):`
 //DOC: fetch string from url
 public extern string fetch_string (string url);
-#endif
 //DOC: `string url_encode (string url):`
 //DOC: encode string from url
 public extern string url_encode (string url);
