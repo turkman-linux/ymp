@@ -49,6 +49,18 @@ void set_value2(char* name, char* value){
     set_value_fn2(name, value, 0);
 }
 
+void set_bool2(char** name, bool value){
+    if(value){
+         set_value2(name, "true");
+    }else{
+         set_value2(name, "false");
+    }
+}
+
+bool get_bool2(char* name){
+    return strcmp(get_value(name), "true") == 0;
+}
+
 char* get_value2(char* name){
    for(i=0;i<cap_of_values;i++){
        if(strcmp(vars[i].name, name)==0){
