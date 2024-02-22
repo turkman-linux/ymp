@@ -1,5 +1,6 @@
 int main(string[] args){
     set_value2("amogus","31");
+    set_value_readonly2("amogus31","33");
     set_value2("amogus31","32");
     set_value2("amogus","32");
     stdout.printf("%s\n", get_value2("amogus"));

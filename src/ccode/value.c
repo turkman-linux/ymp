@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A)
 
 typedef struct _variable {
     char* name;
     char* value;
+    bool read_only;
 } variable;
 
 static variable *vars;
@@ -16,18 +18,22 @@ static size_t cap_of_values = 0;
 
 static int i=0;
 
-void set_value2(char* name, char* value){
+
+static void set_value_fn2(char* name, char* value, bool read_only){
     if (num_of_values <= cap_of_values) {
         vars = realloc(vars, (cap_of_values+1024)*sizeof(variable));
         for(i=cap_of_values;i<cap_of_values+1024;i++){
             vars[i].name ="";
             vars[i].value ="";
+            vars[i].read_only =0;
          }
          cap_of_values += 1024;
     }
    for(i=0;i<1024;i++){
        if(strcmp(vars[i].name, name)==0){
-           vars[i].value = value;
+           if(!(vars[i],read_only) || read_only){
+                vars[i].value = value;
+           }
            return;
        }
    }
@@ -35,6 +41,12 @@ void set_value2(char* name, char* value){
    vars[num_of_values].value = value;
    num_of_values++;
 
+}
+void set_value_readonly2(char* name, char* value){
+    set_value_fn2(name, value, 1);
+}
+void set_value2(char* name, char* value){
+    set_value_fn2(name, value, 0);
 }
 
 char* get_value2(char* name){
