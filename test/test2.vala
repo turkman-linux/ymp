@@ -1,20 +1,10 @@
 int main(string[] args){
-    array a = new array();
-    a.add("Hello");
-    a.add("World");
-    a.remove("Hello");
-    a.add("Hi");
-    a.insert("amogus",0);
-    a.add("Hi");
-    a.add("Hi");
-    string[] aaa = {"Ekmegi","elden", "y**ragi", "kelden"};
-    a.adds(aaa);
-    //a.reverse();
-    //a.uniq();
-    //a.sort();
-    foreach(string d in a.get()){
-        stdout.printf("%s %d\n",d, a.length());
+    set_value2("amogus","31");
+    set_value2("amogus31","32");
+    set_value2("amogus","32");
+    stdout.printf("%s\n", get_value2("amogus"));
+    foreach(string a in get_value_names2()){
+        stdout.printf("%s\n", a);
     }
-    stdout.printf(a.get_string());
     return 0;
 }
