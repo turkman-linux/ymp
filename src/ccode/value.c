@@ -3,25 +3,29 @@
 #include <string.h>
 #include <stdio.h>
 
+#define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A)
+
 typedef struct _variable {
     char* name;
     char* value;
 } variable;
 
-variable *vars;
-size_t num_of_values = 0;
-size_t cap_of_values = 0;
+static variable *vars;
+static size_t num_of_values = 0;
+static size_t cap_of_values = 0;
+
+static int i=0;
 
 void set_value2(char* name, char* value){
     if (num_of_values <= cap_of_values) {
         vars = realloc(vars, (cap_of_values+1024)*sizeof(variable));
-        for(int i=cap_of_values;i<cap_of_values+1024;i++){
+        for(i=cap_of_values;i<cap_of_values+1024;i++){
             vars[i].name ="";
             vars[i].value ="";
          }
          cap_of_values += 1024;
     }
-   for(int i=0;i<1024;i++){
+   for(i=0;i<1024;i++){
        if(strcmp(vars[i].name, name)==0){
            vars[i].value = value;
            return;
@@ -34,7 +38,7 @@ void set_value2(char* name, char* value){
 }
 
 char* get_value2(char* name){
-   for(int i=0;i<1024;i++){
+   for(i=0;i<1024;i++){
        if(strcmp(vars[i].name, name)==0){
            return strdup(vars[i].value);
        }
