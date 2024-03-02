@@ -49,16 +49,12 @@ void set_value2(char* name, char* value){
     set_value_fn2(name, value, 0);
 }
 
-void set_bool2(char** name, bool value){
+void set_bool2(char* name, bool value){
     if(value){
          set_value2(name, "true");
     }else{
          set_value2(name, "false");
     }
-}
-
-bool get_bool2(char* name){
-    return strcmp(get_value(name), "true") == 0;
 }
 
 char* get_value2(char* name){
@@ -68,6 +64,10 @@ char* get_value2(char* name){
        }
    }
    return "";
+}
+
+bool get_bool2(char* name){
+    return strcmp(get_value2(name), "true") == 0;
 }
 
 char** get_value_names2(int* len){
