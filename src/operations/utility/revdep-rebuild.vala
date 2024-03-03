@@ -77,13 +77,15 @@ private static int revdep_rebuild_main (string[] args) {
 
 private static void check (string file) {
     print_fn ("\x1b[2K\r" + _ ("Checking: %s").printf (sbasename (file)), false, true);
-    foreach (string line in get_ldd_dep (file)) {
+    foreach (string line in get_ldd_dep_ldd (file)) {
         if (endswith (line, "not found")) {
             print_fn ("\x1b[2K\r", false, true);
             print ("%s => %s (%s)".printf (colorize (file, red), line[1:line.length - 13], join (" ", search_file ( {file}))));
         }
     }
 }
+
+
 private static void check_pkgconfig (string name) {
     print_fn ("\x1b[2K\r" + _ ("Checking: %s").printf (name), false, true);
     int status = run ("gcc `pkg-config --cflags --libs " + name + " 2>/dev/null` /tmp/.empty.c -shared -o /dev/null 2>/dev/null");
@@ -124,6 +126,24 @@ private static string[] get_ldd_dep (string path) {
         if ("NEEDED" in ldline) {
             string fdep = ldline.strip ().split ("[")[1][0:-1];
             fdep = get_ld_path(fdep);
+            if (!depfiles.has (fdep)) {
+                depfiles.add (fdep);
+            }
+        }
+    }
+
+    return depfiles.get ();
+}
+
+private static string[] get_ldd_dep_ldd (string path) {
+    if (!iself (path)) {
+        return {};
+    }
+    string lddout=getoutput ("ldd '%s' 2>/dev/null".printf (path));
+    var depfiles = new array ();
+    foreach (string ldline in ssplit (lddout, "\n")) {
+        if ("=>" in ldline) {
+            string fdep = ldline.strip ().split (" ")[2];
             if (!depfiles.has (fdep)) {
                 depfiles.add (fdep);
             }
