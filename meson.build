@@ -169,7 +169,7 @@ endif
 # debug
 if get_option('debug')
     add_project_arguments('--debug', language: 'vala')
-    args += ['-g3', '-grecord-gcc-switches', '-DDEBUG']
+    args += ['-g3', '-Wall', '-Wextra', '-grecord-gcc-switches','-fdiagnostics-color=always', '-DDEBUG']
     conf += ['DEBUG']
 else
     args += ['-DNDEBUG']
@@ -213,6 +213,7 @@ if get_option('nolibc_path') != ''
 endif
 
 add_project_arguments('-I'+meson.current_source_dir()+'/src/include/', language : 'c')
+add_project_arguments('-fPIC', language : 'c')
 generated_sources += ['ctx.vala']
 
 ########### build libymp ###########

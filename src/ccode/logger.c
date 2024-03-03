@@ -57,7 +57,9 @@ void cprint_stderr(char* message){
     write(2, "\n", 1);
 }
 
-void cprint_dummy(char* message){}
+void cprint_dummy(char* message){
+    (void)message;
+}
 
 
 /* logger functions */

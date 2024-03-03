@@ -92,6 +92,10 @@ int isdir(char *path){
         fprintf(stderr, "Error: %s %s\n", "failed to create directory.", A); \
 }
 
+#ifndef isexists
+extern bool isexists(char* path);
+#endif
+
 void create_dir(const char *dir) {
     char tmp[PATH_MAX];
     char *p = NULL;
@@ -181,7 +185,6 @@ void cd(char *path) {
     #ifdef debug
     debug(str_add("Change directory: ", path));
     #endif
-
     /* Check if the specified path is not a directory */
     struct stat st;
     if (stat(path, &st) != 0 || !S_ISDIR(st.st_mode)) {

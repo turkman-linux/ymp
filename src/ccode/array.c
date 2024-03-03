@@ -218,8 +218,6 @@ void array_reverse(array *arr) {
         char* temp2 = arr->data[tot-start-1];
         if(temp2 != NULL){
             arr->data[start] = strdup(temp2);
-        }else{
-            arr->data[start];
         }
         if(temp != NULL){
             arr->data[tot-start-1] = strdup(temp);
