@@ -77,10 +77,15 @@ private static int revdep_rebuild_main (string[] args) {
 
 private static void check (string file) {
     print_fn ("\x1b[2K\r" + _ ("Checking: %s").printf (sbasename (file)), false, true);
-    foreach (string line in get_ldd_dep_ldd (file)) {
+    string lddout = getoutput ("ldd '%s' 2>/dev/null".printf (file));
+    foreach (string line in ssplit(lddout,"\n")) {
+        line = line.strip();
         if (endswith (line, "not found")) {
-            print_fn ("\x1b[2K\r", false, true);
-            print ("%s => %s (%s)".printf (colorize (file, red), line[1:line.length - 13], join (" ", search_file ( {file}))));
+            string missing = ssplit(line," ")[0];
+            if (missing in get_ldd_dep(file)){
+                print_fn ("\x1b[2K\r", false, true);
+                print ("%s => %s (%s)".printf (colorize (file, red), missing, join (" ", search_file ( {file}))));
+            }
         }
     }
 }
@@ -135,28 +140,10 @@ private static string[] get_ldd_dep (string path) {
     return depfiles.get ();
 }
 
-private static string[] get_ldd_dep_ldd (string path) {
-    if (!iself (path)) {
-        return {};
-    }
-    string lddout=getoutput ("ldd '%s' 2>/dev/null".printf (path));
-    var depfiles = new array ();
-    foreach (string ldline in ssplit (lddout, "\n")) {
-        if ("=>" in ldline) {
-            string fdep = ldline.strip ().split (" ")[2];
-            if (!depfiles.has (fdep)) {
-                depfiles.add (fdep);
-            }
-        }
-    }
-
-    return depfiles.get ();
-}
-
 private static string ldcache = null;
 public string get_ld_path(string dep){
     if (ldcache == null){
-        ldcache = getoutput ("ldconfig -p");
+        ldcache = getoutput ("/sbin/ldconfig -p");
     }
     foreach (string line in ssplit (ldcache, "\n")) {
         if (endswith(line,dep)){
