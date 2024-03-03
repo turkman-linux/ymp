@@ -18,12 +18,6 @@ test: test-clean
 	ninja -C build/_test
 	cd build/_test ; env LD_LIBRARY_PATH="$$(pwd)"/build G_DEBUG=fatal-criticals yes | timeout 30 ./ymp-test --allow-oem --ask
 
-test2:
-	valac -C test/test2.vala --pkg ymp --vapidir=build/ --pkg value --pkg array --vapidir=src/vapi -o build/test2.c
-	mv test/test2.c build/test2.c
-	LD_LIBRAR_PATH=$PWD/build $(CC) -g3 build/test2.c -Ibuild -Isrc/include -Lbuild -lymp -o build/test2 $(shell pkg-config --cflags --libs glib-2.0)
-	LD_LIBRAR_PATH=$PWD/build build/test2
-
 install:
 	DESTDIR=$(DESTDIR) ninja -C build install
 
