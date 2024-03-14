@@ -241,8 +241,12 @@ if get_option('tools')
 
 endif
 
-########### remove symver ###########
-
+########### build start code ###########
+start_name = 'start-' +architecture + '.o'
+run_command(compiler.get_id(), '-c', 'src/start/'+architecture+'.s', 
+   '-nostdlib', '-static', '-o', meson.current_build_dir() / start_name ,
+    check:true)
+    install_data(meson.current_build_dir() / start_name, install_dir : get_option('libdir'),rename : start_name)
 
 ########### build test ###########
 if get_option('test')
