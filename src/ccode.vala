@@ -57,13 +57,14 @@ public extern int sandbox_gid;
 //DOC: daemonize current process
 public extern void skeleton_daemon ();
 
+#ifndef no_libarchive
 //DOC: ### archive-create.c
 //DOC: `void write_archive (string output,string[] files):`
 //DOC: create archive file
 //this functions and values used by util/archive.vala
 public extern void write_archive (string output, string[] files);
 public extern void set_archive_type (string filt, string form);
-
+#endif
 //DOC: ### file.c
 //DOC: `int filesize (string path):`
 //DOC: calculate file size

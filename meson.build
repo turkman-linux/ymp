@@ -88,6 +88,8 @@ if get_option('libarchive')
             conf += ['no_libarchive']
         endif
         deps += [libarchive]
+else
+    conf += ['no_libarchive']
 endif
 
 #libreadline

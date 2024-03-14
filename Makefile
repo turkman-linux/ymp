@@ -4,6 +4,12 @@ build: clean
 	ninja -C build
 	bash scripts/remove-symver build/libymp.so build/ymp-cli build/ymp-shell
 
+minimal:
+	meson setup build --prefix=/usr -Ddoc=false -Ddebug=false -Dscripts=false -Dlibbrotli=false -Dlibcurl=false -Dlibarchive=false
+	ninja -C build
+	bash scripts/remove-symver build/libymp.so build/ymp-cli build/ymp-shell
+
+
 release: clean
 	meson setup build --prefix=/usr -Ddoc=true -Ddebug=false -Dscripts=true -Dlibbrotli=false
 	ninja -C build

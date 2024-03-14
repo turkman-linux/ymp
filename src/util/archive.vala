@@ -54,7 +54,10 @@ public class archive {
             run ("cd '" + target_path + "' && 7z a '" + archive_path + "' '" + item + "'");
         }
     }
+    
 }
+// dummy function
+public void set_archive_type (string filt, string form) {}
 #else
 public class archive {
     //DOC: ## class archive ()
