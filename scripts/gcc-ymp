@@ -1,17 +1,17 @@
-#!/bin/bash                                                                          
-is_shared=false                                                                      
-for arg in $@ ; do                                                                   
-  if [[ "$arg" == "-shared" ]] ; then                                                
-      is_shared=true                                                                 
-  elif [[ "$arg" == "-c" ]] ; then                                                   
-      exec gcc $*                                                                    
-  elif [[ "$arg" == "-nostdlib" ]] ; then                                                   
-      exec gcc $*                                                                    
-  fi                                                                                 
-done                                                                                 
+#!/bin/bash
+is_shared=false
+for arg in "$@" ; do
+  if [[ "$arg" == "-shared" ]] ; then
+      is_shared=true
+  elif [[ "$arg" == "-c" ]] ; then
+      exec gcc $*
+  elif [[ "$arg" == "-nostdlib" ]] ; then
+      exec gcc $*
+  fi
+done
 
-if [[ "${is_shared}" == true ]] ; then                                               
-    exec gcc $* -nostdlib -lc                                                        
-else                                                                                 
-    exec gcc /usr/lib64/start-$(uname -m).o $* -nostdlib -lc                         
-fi             
+if [[ "${is_shared}" == true ]] ; then
+    exec gcc "$@" -nostdlib -lc
+else
+    exec gcc /usr/lib64/start-$(uname -m).o "$@" -nostdlib -lc
+fi
