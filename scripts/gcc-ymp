@@ -9,7 +9,7 @@ for arg in $@ ; do
       exec gcc $*                                                                    
   fi                                                                                 
 done                                                                                 
-echo "${is_shared}"                                                                  
+
 if [[ "${is_shared}" == true ]] ; then                                               
     exec gcc $* -nostdlib -lc                                                        
 else                                                                                 
