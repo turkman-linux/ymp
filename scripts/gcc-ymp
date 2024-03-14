@@ -1,0 +1,13 @@
+#!/bin/bash
+is_shared=false
+for arg in "${*}" ; do
+  if [[ "$arg" == "-shared" ]] ; then
+      is_shared=true
+  fi
+done
+
+if [[ "${is_shared}" == true ]] ; then
+    exec gcc $* -nostdlib -lc
+else
+    exec gcc $* -nostdlib -lc /usr/lib64/start-$(uname -m).o
+fi
