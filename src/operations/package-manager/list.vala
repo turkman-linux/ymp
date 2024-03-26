@@ -21,7 +21,9 @@ private static int list_installed_main(string[] args) {
 private static int list_digraph_main(string[] args) {
     if (get_bool("digraph")) {
         print("digraph {");
-        print("layout=\"dot\";");
+        print("rankdir=LR;");
+        print("splines = true;");
+        print("overlap = false;");
     }
     string[] group_names = {};
     if (get_bool("repository")) {
@@ -87,30 +89,44 @@ private static int list_digraph_main(string[] args) {
                 }
             }
         }
-    }else {
+    } else {
         bool reinstall = get_bool("reinstall");
-        set_bool("reinstall",true);
-        foreach(string name in resolve_dependencies(args)){
-            if(!is_installed_package(name)){
-                continue;
+        set_bool("reinstall", true);
+        foreach(string arg in args) {
+            package pi = get_package(arg);
+            foreach(string dep in pi.dependencies) {
+                string color = "#";
+                color += GLib.Random.int_range(31, 99).to_string();
+                color += GLib.Random.int_range(31, 99).to_string();
+                color += GLib.Random.int_range(31, 99).to_string();
+                print("\"%s\" -> \"%s\" [color=\"%s\"];".printf(arg, dep, color));
             }
-            package p = get_installed_package(name);
-            if(p == null){
-                continue;
-            }
-            foreach(string dep in p.dependencies){
-                if("|" in dep){
-                    foreach(string fname in ssplit(dep,"|")){
-                        if(is_installed_package(fname)){
-                            dep = fname;
-                            break;
+            foreach(string name in resolve_dependencies({arg})) {
+                if (!is_installed_package(name)) {
+                    continue;
+                }
+                package p = get_package(name);
+                if (p == null) {
+                    continue;
+                }
+                foreach(string dep in p.dependencies) {
+                    if ("|" in dep) {
+                        foreach(string fname in ssplit(dep, "|")) {
+                            if (is_installed_package(fname)) {
+                                dep = fname;
+                                break;
+                            }
                         }
                     }
+                    string color = "#";
+                    color += GLib.Random.int_range(31, 99).to_string();
+                    color += GLib.Random.int_range(31, 99).to_string();
+                    color += GLib.Random.int_range(31, 99).to_string();
+                    print("\"%s\" -> \"%s\" [color=\"%s\"];".printf(name, dep, color));
                 }
-                print("\"%s\" -> \"%s\";".printf(dep, name));
             }
         }
-        set_bool("reinstall",reinstall);
+        set_bool("reinstall", reinstall);
     }
     print("}");
     return 0;
