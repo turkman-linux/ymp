@@ -258,6 +258,7 @@ public class builder {
         string[] sums = ymp_build.get_ympbuild_array("sha256sums");
         string algo = "sha256sum";
         if(sums.length == 0){
+            warning(_("Ympbuild uses md5sums. Please replace with sha256sums."));
             sums = ymp_build.get_ympbuild_array("md5sums");
             algo = "md5sum";
         }
