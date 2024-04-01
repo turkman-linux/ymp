@@ -255,9 +255,14 @@ public class builder {
         if (no_src) {
             return true;
         }
-        string[] md5sums = ymp_build.get_ympbuild_array("md5sums");
+        string[] sums = ymp_build.get_ympbuild_array("sha256sums");
+        string algo = "sha256sum";
+        if(sums.length == 0){
+            sums = ymp_build.get_ympbuild_array("md5sums");
+            algo = "md5sum";
+        }
         foreach(string src in ymp_build.get_ympbuild_array("source")) {
-            if (src == "" || md5sums[i] == "") {
+            if (src == "" || sums[i] == "") {
                 continue;
             }
             string name = sbasename(src);
@@ -296,10 +301,15 @@ public class builder {
                 fetch(src, ymp_source_cache + "/" + name);
                 copy_file(ymp_source_cache + "/" + name, srcfile);
             }
-            string md5 = calculate_md5sum(srcfile);
-            if (md5sums[i] != md5 && md5sums[i] != "SKIP") {
+            string hash = "";
+            if(algo == "md5sum"){
+                hash = calculate_md5sum(srcfile);
+            } else if(algo == "sha256sum"){
+                hash = calculate_sha256sum(srcfile);
+            }
+            if (sums[i] != hash && sums[i] != "SKIP") {
                 remove_all(ymp_source_cache + "/" + name);
-                error_add(_("md5sum check failed. Excepted: %s <> Reveiced: %s").printf(md5sums[i], md5));
+                error_add(_("%s check failed. Excepted: %s <> Reveiced: %s").printf(algo, sums[i], hash));
             }
             i++;
         }
