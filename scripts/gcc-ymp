@@ -4,9 +4,11 @@ for arg in "$@" ; do
   if [[ "$arg" == "-shared" ]] ; then
       is_shared=true
   elif [[ "$arg" == "-c" ]] ; then
-      exec gcc $*
+      exec gcc "$@"
+  elif [[ "$arg" == "-static" ]] ; then
+      exec gcc "$@"
   elif [[ "$arg" == "-nostdlib" ]] ; then
-      exec gcc $*
+      exec gcc "$@"
   fi
 done
 
