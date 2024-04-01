@@ -11,7 +11,7 @@ private static int template_main (string[] args) {
     data += "source=('" + str_or_def ("source", " ") + "')\n";
     data += "depends=(" + str_or_def ("depends", " ") + ")\n";
     data += "makedepends=(" + str_or_def ("makedepends", " ") + ")\n";
-    data += "md5sums=('FIXME')\n";
+    data += "sha256sums=('FIXME')\n";
     data += "group=()\n";
     data += "uses=()\n";
     data += "arch=('" + getArch () + "')\n\n";
