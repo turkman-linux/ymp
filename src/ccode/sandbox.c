@@ -35,7 +35,7 @@ char* info(char* message);
 char* debug(char* message);
 #endif
 
-int sandbox_network = 0;
+int sandbox_network = 1;
 int sandbox_uid = 0;
 int sandbox_gid = 0;
 
