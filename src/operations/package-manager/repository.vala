@@ -95,10 +95,11 @@ private static int repository_main (string[] args) {
 }
 
 private static int mirror_main (string[] args) {
-    string target = srealpath (get_value ("destdir"));
+    string target = srealpath (get_value ("target"));
     if (target == "") {
         target=srealpath (".");
     }
+    print("TARGET:"+target);
     create_dir (target);
     foreach (string arg in args) {
         foreach (repository repo in get_repos ()) {
@@ -161,6 +162,6 @@ static void repository_init () {
     op.help.add_parameter ("--no-package", _ ("do not mirror binary packages"));
     op.help.add_parameter ("--no-source", _ ("do not mirror source packages"));
     op.help.add_parameter ("--index", _ ("index after mirror."));
-    op.help.add_parameter ("--destdir", _ ("target mirror directory"));
+    op.help.add_parameter ("--target", _ ("target mirror directory"));
     add_operation (op);
 }
