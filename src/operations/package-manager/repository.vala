@@ -95,15 +95,15 @@ private static int repository_main (string[] args) {
 }
 
 private static int mirror_main (string[] args) {
-    string target = srealpath (get_value ("target"));
-    if (target == "") {
-        target=srealpath (".");
+    string ftarget = srealpath (get_value ("target"));
+    if (ftarget == "") {
+        ftarget=srealpath (".");
     }
-    print("TARGET:"+target);
-    create_dir (target);
+    create_dir (ftarget);
     foreach (string arg in args) {
         foreach (repository repo in get_repos ()) {
             if (repo.name == arg || arg == "*") {
+                string target = ftarget+"/"+repo.name;
                 if (!get_bool ("no-package")) {
                     foreach (string name in repo.list_packages ()) {
                         print (colorize (_ ("Mirror:"), yellow) + " " + repo.name + " => " + name + " " + _ (" (binary)"));
@@ -118,11 +118,16 @@ private static int mirror_main (string[] args) {
                         mirror_download (pkg, target);
                     }
                 }
+                // download index if index disabled.
+                if(!get_bool("index")){
+                    fetch(repo.address.replace("$uri", "ymp-index.yaml"),target+"ymp-index.yaml");
+                    fetch(repo.address.replace("$uri", "ymp-index.yaml.gpg"),target+"ymp-index.yaml.gpg");
+                    fetch(repo.address.replace("$uri", "ymp-index.yaml.asc"),target+"ymp-index.yaml.asc");
+                } else {
+                    index_main ( {target});
+                }
             }
         }
-    }
-    if (get_bool ("index")) {
-        index_main ( {target});
     }
     return 0;
 }
