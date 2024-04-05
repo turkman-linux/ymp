@@ -120,9 +120,9 @@ private static int mirror_main (string[] args) {
                 }
                 // download index if index disabled.
                 if(!get_bool("index")){
-                    fetch(repo.address.replace("$uri", "ymp-index.yaml"),target+"ymp-index.yaml");
-                    fetch(repo.address.replace("$uri", "ymp-index.yaml.gpg"),target+"ymp-index.yaml.gpg");
-                    fetch(repo.address.replace("$uri", "ymp-index.yaml.asc"),target+"ymp-index.yaml.asc");
+                    fetch(repo.address.replace("$uri", "ymp-index.yaml"),target+"/ymp-index.yaml");
+                    fetch(repo.address.replace("$uri", "ymp-index.yaml.gpg"),target+"/ymp-index.yaml.gpg");
+                    fetch(repo.address.replace("$uri", "ymp-index.yaml.asc"),target+"/ymp-index.yaml.asc");
                 } else {
                     index_main ( {target});
                 }
