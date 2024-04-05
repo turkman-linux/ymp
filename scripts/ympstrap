@@ -20,7 +20,7 @@ output=$(realpath $output)
 basepkgs=(busybox base-files glibc)
 ympdep=(acl attr bzip2 curl glib libarchive libcap-ng libffi libidn2 libnghttp2
         libpcre2 libpsl libssh libunistring libxml2 lz4 lzo ncurses openssl openssl-1.1 readline
-        util-linux xz-utils ymp zlib bash file libseccomp
+        util-linux xz-utils ymp zlib bash file libseccomp gnupg
 )
 arch=$(uname -m)
 function get_uri(){
@@ -48,6 +48,7 @@ function pkginst(){
 # Stage 1 download repo
 mkdir "$output"/var/lib/ymp/{index,packages,sources.list.d}/ -p
 echo "$repo" > "$output"/var/lib/ymp/sources.list.d/main
+wget -O "$output"/var/lib/ymp/gpg/main "${repo/\$uri/ymp-index.yaml.asc}"
 wget -O - ${repo/\$uri/ymp-index.yaml} | grep "uri: " > "$output"/var/lib/ymp/index/main
 # Stage 2 install base
 fetch_pkg ${basepkgs[@]}
