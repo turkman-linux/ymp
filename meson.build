@@ -124,16 +124,6 @@ else
     conf += ['no_fetcher_backend']
 endif
 
-#libmagic (no vapi)
-if get_option('libmagic')
-        libmagic = dependency('libmagic', static:get_option('static'),required:false)
-        if not libmagic.found()
-            conf += ['no_libmagic']
-        else
-            args += run_command('pkg-config', '--libs', '--cflags' ,'libmagic', pkgconfig_arg ,check:true).stdout().strip().split(' ')
-        endif
-endif
-
 # find sources
 sources = ['src/ymp.vala',
            'src/settings.vala',
