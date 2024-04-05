@@ -22,8 +22,8 @@ async void process_request (SocketConnection conn) {
         }else {
             return;
         }
-        if (isdir (path) && isfile (path + "/index.html")) {
-            path = path + "/index.html";
+        if (isdir (path) && isfile (path + "index.html")) {
+            path = path + "index.html";
         }
         InetSocketAddress local = conn.get_remote_address () as InetSocketAddress;
         string ip = local.get_address ().to_string ();
@@ -62,6 +62,7 @@ async void process_request (SocketConnection conn) {
             print_fn ("%s -- %s %s %s".printf (ip, date, srealpath ("./" + path), GLib.format_size ( (uint64)size)), true, true);
 
             dos.put_string ("HTTP/1.1 200 OK\n");
+            dos.put_string ("YMP: Ne Mutlu Turkum Diyene!\n");
             dos.put_string ("Server: YMP httpd %s\n".printf (VERSION));
             dos.put_string ("Content-Type: %s\n".printf(get_content_type ("./" + path)));
             dos.put_string ("Content-Length: %s\n\n".printf (size.to_string()));
@@ -77,7 +78,10 @@ async void process_request (SocketConnection conn) {
             }
         }else if (isdir ("./" + path)) {
             print_fn ("%s -- %s %s 0 bytes".printf (ip, date, srealpath ("./" + path)), true, true);
-            dos.put_string ("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
+            dos.put_string ("HTTP/1.1 200 OK\n");
+            dos.put_string ("YMP: Ne Mutlu Turkum Diyene!\n");
+            dos.put_string ("Server: YMP httpd %s\n".printf (VERSION));
+            dos.put_string ("Content-Type: text/html\n\n");
             dos.put_string ("<!DOCTYPE html>");
             dos.put_string ("<html> \n <head>");
             dos.put_string ("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" >\n");
