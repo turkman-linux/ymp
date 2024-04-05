@@ -39,7 +39,14 @@ async void process_request (SocketConnection conn) {
                 break;
             }
         }
-        if (!perm && !("0.0.0.0" in acls)) {
+        if("0.0.0.0" in acls){
+            perm = true;
+        }
+        if(perm && get_value("aclexec") != ""){
+            int status = run(get_value("aclexec").replace("$ip", ip));
+            perm = (status == 0);
+        }
+        if (!perm) {
             info("Permission denied for %s".printf(ip));
             return;
         }
@@ -85,6 +92,7 @@ async void process_request (SocketConnection conn) {
             dos.flush ();
             var node = new array ();
             node.adds (listdir ("./" + path));
+            node.sort();
             foreach (string f in node.get ()) {
                 if (startswith (f, ".") || " " in f) {
                     continue;
