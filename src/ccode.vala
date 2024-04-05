@@ -68,7 +68,7 @@ public extern void set_archive_type (string filt, string form);
 //DOC: ### file.c
 //DOC: `int filesize (string path):`
 //DOC: calculate file size
-public extern int filesize (string path);
+public extern uint64 filesize (string path);
 //DOC: `void sync ():`
 //DOC: sync call
 public extern void fs_sync ();
@@ -93,12 +93,9 @@ public extern bool isfile (string path);
 //DOC: `bool issymlink (string path)`:
 //DOC: check path is symlink
 public extern bool issymlink (string path);
-#if no_libmagic
-#else
-//DOC: `get_magic_mime_type (string path):`
-//DOC: get mimetype string from libmagic
-public extern string get_magic_mime_type (string path);
-#endif
+//DOC: `get_content_type (string path):`
+//DOC: get mimetype string from gio
+public extern string get_content_type (string path);
 //DOC: ### signal.c
 //DOC: `void block_sigint ():`
 //DOC: block ctrl-c

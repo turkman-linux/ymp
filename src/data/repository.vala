@@ -332,7 +332,7 @@ public string create_index_data (string fpath) {
     a.add("index:\n");
     string md5sum = "";
     string sha256sum = "";
-    int size=0;
+    uint64 size=0;
     string path = srealpath (fpath);
     string index_name = get_value ("name");
     if (index_name == "") {

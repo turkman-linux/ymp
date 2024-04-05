@@ -16,6 +16,7 @@
 #include <dlfcn.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #define FILE_OK 0
 #define FILE_NOT_EXIST 1
@@ -38,7 +39,7 @@ void debug(char* msg);
 #endif
 char* str_add(char* s1, char* s2);
 
-long filesize(char* path){
+uint64_t filesize(char* path){
     stat(path, &st);
     return st.st_size;
 }
@@ -287,21 +288,15 @@ int isfile(char* path){
     return (!ls || !fs) && ! isdir (path);
 }
 
-#ifndef no_libmagic
-#include <magic.h>
-char* get_magic_mime_type(char* path){
-  const char *mime;
-  magic_t magic;
-
-  magic = magic_open(MAGIC_MIME_TYPE);
-  magic_load(magic, NULL);
-  mime = magic_file(magic, path);
-
-  magic_close(magic);
-  return strdup(mime);
+#include <gio/gio.h>
+char* get_content_type(char* path){
+    gboolean is_certain = FALSE;
+    char *content_type = g_content_type_guess (path, NULL, 0, &is_certain);
+    if (content_type != NULL) {
+        return content_type;
+    }
+    return "text/plain";
 }
-#endif
-#endif
 
 typedef ssize_t (*write_func_t)(int, const void *, size_t);
 
@@ -331,4 +326,4 @@ ssize_t write(int fd, const void *buf, size_t count) {
     }
     return bytes_written;
 }
-
+#endif

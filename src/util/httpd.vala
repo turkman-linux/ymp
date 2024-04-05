@@ -50,15 +50,14 @@ async void process_request (SocketConnection conn) {
                 dos.put_string ("HTTP/1.1 403 Forbidden\n");
                 return;
             }
-            long size = filesize (srealpath ("./" + path));
+            uint64 size = filesize (srealpath ("./" + path));
 
             print_fn ("%s -- %s %s %s".printf (ip, date, srealpath ("./" + path), GLib.format_size ( (uint64)size)), true, true);
 
             dos.put_string ("HTTP/1.1 200 OK\n");
             dos.put_string ("Server: YMP httpd %s\n".printf (VERSION));
-            dos.put_string ("Content-Type: " + get_content_type ("./" + path) + "\n");
-            dos.put_string ("Content-Length: %s\n\n".printf (size.to_string ()));
-            debug ("Content-Length: %s\n\n".printf (size.to_string ()));
+            dos.put_string ("Content-Type: %s\n".printf(get_content_type ("./" + path)));
+            dos.put_string ("Content-Length: %s\n\n".printf (size.to_string()));
             uint8[] buf = new uint8[BUFFER_LENGTH];
             size_t read_size = 0;
             size_t written = 0;
@@ -72,6 +71,7 @@ async void process_request (SocketConnection conn) {
         }else if (isdir ("./" + path)) {
             print_fn ("%s -- %s %s 0 bytes".printf (ip, date, srealpath ("./" + path)), true, true);
             dos.put_string ("HTTP/1.1 200 OK\nContent-Type: text/html\n\n");
+            dos.put_string ("<!DOCTYPE html>");
             dos.put_string ("<html> \n <head>");
             dos.put_string ("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" >\n");
             dos.put_string ("<title> " + _ ("Index of /%s").printf (path) + " </title> \n");
@@ -101,8 +101,8 @@ async void process_request (SocketConnection conn) {
                 }
                 if (isfile ("./" + path + "/" + f)) {
                     string ff = f.replace (">", "&gt;").replace ("<", "&lt;");
-                    long size = filesize ("./" + path + "/" + f);
-                    dos.put_string ("&#x1F4C4; <a class=\"link\" href=\"/" + url_encode (path + f).replace ("%2F", "/") + "\">" + ff + " </a> (" + GLib.format_size ( (uint64)size) + ") <br> </li> \n");
+                    uint64 size = filesize ("./" + path + "/" + f);
+                    dos.put_string ("&#x1F4C4; <a class=\"link\" href=\"/" + url_encode (path + f).replace ("%2F", "/") + "\">" + ff + " </a> (" + GLib.format_size (size)+") <br> </li> \n");
                     dos.flush ();
                 }
             }
@@ -116,28 +116,6 @@ async void process_request (SocketConnection conn) {
     } catch (Error e) {
         warning (e.message);
     }
-}
-
-private string get_content_type (string path) {
-    #if no_libmagic
-    if (endswith (path.down (), ".html")) {
-        return "text/html";
-    }else if (endswith (path.down (), ".css")) {
-        return "text/css";
-    }else if (endswith (path.down (), ".js")) {
-        return "text/javascript";
-    }else if (endswith (path.down (), ".png")) {
-        return "image/png";
-    }else if (endswith (path.down (), ".jpeg") || endswith (path.down (), ".jpg")) {
-        return "image/jpeg";
-    }else if (endswith (path.down (), ".svg")) {
-        return "image/svg + xml";
-    }else {
-        return "text/plain";
-    }
-    #else
-    return get_magic_mime_type (path);
-    #endif
 }
 
 public int start_httpd () {

@@ -3,12 +3,12 @@
 
 //DOC: `string readfile_byte (string path, long size):`
 //DOC: read **n** byte from file
-public string readfile_byte (string path, long n) {
+public string readfile_byte (string path, uint64 n) {
     debug (_ ("Read file bytes: %s").printf (path));
     if (!isfile (path)) {
         return "";
     }
-    long size = filesize(path);
+    uint64 size = filesize(path);
     FileStream stream = FileStream.open (path, "r");
     if (stream == null) {
         warning (_ ("Failed to read file: %s").printf (path));
@@ -19,7 +19,7 @@ public string readfile_byte (string path, long n) {
         warning (_ ("File is empty: %s").printf (path));
         return "";
     }else if (size < n) {
-        warning (_ ("Read byte size is bigger than file size: %s (read: %lu size %lu)").printf (path, n, size));
+        warning (_ ("Read byte size is bigger than file size: %s (read: %lld size %lld)").printf (path, n, size));
         return "";
     }else if (n == 0) {
         n = size;
@@ -238,7 +238,7 @@ public bool iself (string path) {
     if (!isfile (path)) {
         return false;
     }
-    long size = filesize(path);
+    uint64 size = filesize(path);
     if(size < 4){
         return false;
     }
@@ -258,7 +258,7 @@ public bool is64bit (string path) {
         return false;
     }
     
-    long size = filesize(path);
+    uint64 size = filesize(path);
     if(size < 4){
         return false;
     }

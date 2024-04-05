@@ -253,7 +253,7 @@ public void build_target_ymp_init() {
         }
         cd(curdir);
         string hash = calculate_sha1sum(buildpath + "/output/data.tar.gz");
-        int size = filesize(buildpath + "/output/data.tar.gz");
+        uint64 size = filesize(buildpath + "/output/data.tar.gz");
         string new_data = readfile(buildpath + "/output/metadata.yaml");
         new_data += "    archive-hash: " + hash + "\n";
         new_data += "    arch: " + getArch() + "\n";
