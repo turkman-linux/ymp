@@ -17,6 +17,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <ctype.h>
+
 
 #define FILE_OK 0
 #define FILE_NOT_EXIST 1
@@ -203,18 +205,33 @@ void cd(char *path) {
     }
 }
 
-char* safedir(const char* dir) {
+char* safedir(char* dir) {
+    if(!dir){
+        return strdup("");
+    }
+
     #ifdef debug
     debug(str_add("safedir: ", path));
     #endif
 
     /* Allocate memory for the result */
-    size_t len = strlen(dir);
+    size_t len = 0;
+    while(dir[len] && dir[len] != '\0'){
+        len++;
+    }
+
     /* +2 for '/' and null terminator */
     char* ret = (char*)malloc(len + 2);
 
     /* Copy the input directory to the result */
-    strcpy(ret, dir);
+    memcpy(ret, dir, len);
+
+    size_t i=0;
+    for(i=0;i<len;i++){
+        if(!isprint(ret[i])){
+            ret[i] = '.';
+        }
+    }
 
     /* Replace ".." with "./" */
     while (strstr(ret, "..") != NULL) {
@@ -250,7 +267,7 @@ char* safedir(const char* dir) {
 
     /* Free the memory allocated for the intermediate result */
     free(ret);
-
+    printf("%s\n",newRet);
     return newRet;
 }
 
