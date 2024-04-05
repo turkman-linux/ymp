@@ -2,7 +2,7 @@ private bool on_incoming_connection (SocketConnection conn) {
     process_request.begin (conn);
     return true;
 }
-private long BUFFER_LENGTH = 1024*100;
+private long BUFFER_LENGTH = 1024*512;
 async void process_request (SocketConnection conn) {
     try {
         var dis = new DataInputStream (conn.input_stream);
@@ -55,6 +55,8 @@ async void process_request (SocketConnection conn) {
             FileStream stream = FileStream.open ("./" + path, "r");
             if (stream == null) {
                 dos.put_string ("HTTP/1.1 403 Forbidden\n");
+                dos.put_string ("Content-Type: text/plain\n\n");
+                dos.put_string ("403 Forbidden");
                 return;
             }
             uint64 size = filesize (srealpath ("./" + path));
@@ -122,7 +124,9 @@ async void process_request (SocketConnection conn) {
             dos.put_string ("Ymp-httpd/%s (%s) - IP: %s".printf( VERSION, DISTRO, ip));
             dos.put_string ("</body> \n </html> ");
         }else {
-            dos.put_string ("HTTP/1.1 404 Not Found\nContent-Type: text/html\n");
+            dos.put_string ("HTTP/1.1 404 Not Found\n");
+            dos.put_string ("Content-Type: text/plain\n\n");
+            dos.put_string ("404 Not found");
             dos.flush ();
         }
     } catch (Error e) {

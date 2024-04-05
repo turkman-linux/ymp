@@ -267,7 +267,6 @@ char* safedir(char* dir) {
 
     /* Free the memory allocated for the intermediate result */
     free(ret);
-    printf("%s\n",newRet);
     return newRet;
 }
 
