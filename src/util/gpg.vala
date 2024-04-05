@@ -34,6 +34,7 @@ public bool verify_file (string path) {
             continue;
         }
         string[] args = {"gpg","--homedir", gpgdir, "--trust-model", "always", "--no-default-keyring", "--keyring", gpgdir+"%s".printf(file),  "--quiet" ,"--verify", path+".gpg"};
+        print_array(args);
         int status = run_args (args);
         if(status == 0){
             return true;

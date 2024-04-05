@@ -23,8 +23,11 @@ private static int bootstrap_main (string[] args) {
     bool sysconf = get_bool ("no-sysconf");
     set_bool ("no-sysconf", true);
     copy_file ("/etc/resolv.conf", rootfs + "/etc/resolv.conf");
-    writefile (rootfs + "/" + STORAGEDIR + "/sources.list", repo + "\n");
+    writefile (rootfs + "/" + STORAGEDIR + "/sources.list.d/main", repo + "\n");
     writefile (rootfs + "/" + STORAGEDIR + "/restricted.list", "/data/user\n");
+    fetch(repo.replace("$uri", "ymp-index.yaml.asc"), rootfs + "/tmp/main.asc");
+    add_gpg_key(rootfs + "/tmp/main.asc", "main");
+    remove_file(rootfs + "/tmp/main.asc");
     update_main (args);
     install_main (base_packages);
     foreach (string package in base_packages) {
