@@ -9,6 +9,7 @@ group=(archlinux unsafe)
 source+=(PKGBUILD)
 sha256sums+=("SKIP")
 pkgdir="$installdir"
+srcdir="$HOME"
 function msg(){
     echo "$@"
 }
