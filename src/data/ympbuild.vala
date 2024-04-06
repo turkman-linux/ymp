@@ -69,16 +69,18 @@ public class ympbuild {
             if (ympbuild_srcpath == null) {
                 ympbuild_srcpath = "./";
             }
-            return getoutput ("env -i bash -c '"+ympbuild_header+" \n source " + ympbuild_srcpath + "/ympbuild &>/dev/null ; echo ${" + variable + "[@]}'").strip ();
+            return getoutput ("cd %s\nenv -i bash -c '%s\n source %s/ympbuild &>/dev/null ; echo ${%s[@]}'".printf(
+                ympbuild_buildpath,
+                ympbuild_header,
+                ympbuild_srcpath,
+                variable
+            )).strip ();
         }
 
         //DOC: `string[] get_ympbuild_array (string variable):`
         //DOC: get a array from ympbuild file
         public string[] get_ympbuild_array (string variable) {
-            if (ympbuild_srcpath == null) {
-                ympbuild_srcpath = "./";
-            }
-            return ssplit (getoutput ("env -i bash -c '"+ympbuild_header+" \n source " + ympbuild_srcpath + "/ympbuild &>/dev/null ; echo ${" + variable + "[@]}'").strip (), " ");
+            return ssplit (get_ympbuild_value(variable), " ");
         }
 
         //DOC: `bool ympbuild_has_function (string function):`
@@ -87,7 +89,7 @@ public class ympbuild {
 
             return 0 == run_args ( {"bash", "-c",
                 "cd %s\n set +e ; source %s/ympbuild &>/dev/null; set -e; declare -F %s".printf (
-                    ympbuild_srcpath,
+                    ympbuild_buildpath,
                     ympbuild_srcpath,
                     function
                 )
@@ -111,7 +113,7 @@ public class ympbuild {
                 function));
             if (ympbuild_has_function (function)) {
                 string cmd = "cd %s\n %s\n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s".printf (
-                    ympbuild_srcpath,
+                    ympbuild_buildpath,
                     ympbuild_header,
                     ympbuild_srcpath,
                     function,

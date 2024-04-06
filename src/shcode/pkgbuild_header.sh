@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-source PKGBUILD
+source @PKGBUILD@
 name="$pkgname"
 version="$pkgver"
 release="$pkgrel"
