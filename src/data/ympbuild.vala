@@ -86,7 +86,8 @@ public class ympbuild {
         public bool ympbuild_has_function (string function) {
 
             return 0 == run_args ( {"bash", "-c",
-                "set +e ; source %s/ympbuild &>/dev/null; set -e; declare -F %s".printf (
+                "cd %s\n set +e ; source %s/ympbuild &>/dev/null; set -e; declare -F %s".printf (
+                    ympbuild_srcpath,
                     ympbuild_srcpath,
                     function
                 )
@@ -109,7 +110,8 @@ public class ympbuild {
                 get_ympbuild_value ("name"),
                 function));
             if (ympbuild_has_function (function)) {
-                string cmd = "%s \n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s".printf (
+                string cmd = "cd %s\n %s\n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s".printf (
+                    ympbuild_srcpath,
                     ympbuild_header,
                     ympbuild_srcpath,
                     function,
@@ -188,6 +190,10 @@ public class ympbuild {
         //DOC: `string get_ympbuild_metadata ():`
         //DOC: generate metadata.yaml content and return as string
         public string get_ympbuild_metadata () {
-            return getoutput ("env -i bash -c '" + ympbuild_header + " source " + ympbuild_srcpath + "/ympbuild &>/dev/null ; ymp_print_metadata'");
+            return getoutput ("cd %s ; env -i bash -c '%s \nsource %s/ympbuild &>/dev/null  ; ymp_print_metadata'".printf(
+                ympbuild_srcpath,
+                ympbuild_header,
+                ympbuild_srcpath
+            ));
         }
 }
