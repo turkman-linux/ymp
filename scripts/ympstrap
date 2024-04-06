@@ -48,6 +48,7 @@ function pkginst(){
 # Stage 1 download repo
 mkdir "$output"/var/lib/ymp/{index,packages,sources.list.d,gpg}/ -p
 mkdir "$output"/tmp/ -p
+chmod 1777 "$output"/tmp/
 echo "$repo" > "$output"/var/lib/ymp/sources.list.d/main
 wget -O "$output"/tmp/main.asc "${repo/\$uri/ymp-index.yaml.asc}"
 gpg --dearmor "$output"/tmp/main.asc
