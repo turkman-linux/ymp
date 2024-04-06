@@ -100,6 +100,11 @@ public class builder {
                 return 2;
             }
         }
+        if(!isfile(srcpath+"/ympbuild")){
+            if(isfile(srcpath+"/PKGBUILD")){
+                writefile(srcpath+"/ympbuild", get_pkgbuild_header() + "\n# Uses PKGBUILD:" + calculate_md5sum(srcpath+"/PKGBUILD"));
+            }
+        }
         if (!isfile(srcpath + "/ympbuild")) {
             set_bool("unsafe", unsafe);
             restore_env();
