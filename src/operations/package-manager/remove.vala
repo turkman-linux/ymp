@@ -99,7 +99,6 @@ static void remove_init () {
     op.callback.connect (remove_main);
     op.names = {_ ("remove"), "remove", "rm"};
     op.help.name = _ ("remove");
-    op.help.minargs=1;
     op.help.description = _ ("Remove package from package name.");
     op.help.add_parameter ("--ignore-dependency", _ ("disable dependency check"));
     op.help.add_parameter ("--without-files", _ ("do not remove files from package database"));
