@@ -323,7 +323,7 @@ ssize_t write(int fd, const void *buf, size_t count) {
     }
 
     /* Splitting the buffer into 5MB chunks */
-    size_t max_chunk_size = 100 * 1024 * 1024; /* 5MB */
+    #define max_chunk_size (100 * 1024 * 1024) /* 5MB */
     size_t bytes_written = 0;
     ssize_t result;
 
