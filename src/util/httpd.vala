@@ -2,7 +2,7 @@ private bool on_incoming_connection (SocketConnection conn) {
     process_request.begin (conn);
     return true;
 }
-private long BUFFER_LENGTH = 1024*512;
+private long BUFFER_LENGTH = 1024*1024*5; // 5mb
 async void process_request (SocketConnection conn) {
     try {
         var dis = new DataInputStream (conn.input_stream);
