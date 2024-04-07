@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Extract Archive with Ymp
+Name[tr]=Arşivi Ymp ile Çıkart
+Comment=Extract archive files with Ymp
+Comment[tr]=Arşiv dosyalarını Ymp ile çıkart
+Exec=ymp extract --verbose --allow-oem %f
+Icon=application-x-ymp
+Terminal=true
+NoDisplay=true
+MimeType=application/zip;application/x-gzip;application/x-bzip2;application/x-xz;application/x-tar;
+Type=Application
+Categories=Utility;

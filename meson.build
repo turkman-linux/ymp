@@ -258,6 +258,7 @@ endforeach
 
 ########### install files ###########
 install_data('data/ymp.yaml', install_dir : get_option('sysconfdir'))
+install_data('data/org.turkman.ymp.extract.desktop', install_dir : get_option('prefix') / 'share/applications')
 install_data(meson.current_build_dir()+'/ymp.pc', install_dir : get_option('libdir')/ 'pkgconfig')
 install_data('data/application-x-ymp.svg', install_dir : get_option('prefix') / 'share/icons/hicolor/scalable/mimetypes/')
 install_data('data/fix-turkish.sed', install_dir : get_option('prefix') / 'share/ymp/')
