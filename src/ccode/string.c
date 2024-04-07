@@ -17,6 +17,15 @@ int iseq(char* str1, char* str2){
     return strcmp(str1,str2) == 0;
 }
 
+size_t sstrlen(const char* str){
+    size_t ret = 0;
+    while(str[ret]){
+        ret++;
+    }
+    return ret;
+}
+
+
 long count_tab(char* data){
     cnt = 0;
     while (*data == ' ') {
@@ -31,7 +40,7 @@ char* join(char* f, char** array){
     len = 0;
     /* find output size */
     while(array[i]){
-        len += strlen(array[i]) + strlen(f);
+        len += sstrlen(array[i]) + sstrlen(f);
         i++;
     }
     /* allocate memory */
@@ -52,7 +61,7 @@ char* join(char* f, char** array){
 }
 
 char* str_add(char* str1, char* str2){
-    char* ret = calloc( (strlen(str1)+strlen(str2)+1),sizeof(char) );
+    char* ret = calloc( (sstrlen(str1)+sstrlen(str2)+1),sizeof(char) );
     strcpy(ret,str1);
     strcat(ret,str2);
     return ret;
@@ -62,7 +71,7 @@ char* trim(char* data) {
     i=0;
     j=0;
     cnt=0;
-    len = strlen(data);
+    len = sstrlen(data);
     char* str = calloc(len+1, sizeof(char));
     strcpy(str,data);
     cnt = count_tab (data);
@@ -185,8 +194,8 @@ char* url_encode(const char *input) {
 
 
 int endswith(const char* data, const char* f) {
-    i = strlen(data);
-    j = strlen(f);
+    i = sstrlen(data);
+    j = sstrlen(f);
 
     if (i < j) {
         return 0;
@@ -196,8 +205,8 @@ int endswith(const char* data, const char* f) {
 }
 
 int startswith(const char* data, const char* f) {
-    i = strlen(data);
-    j = strlen(f);
+    i = sstrlen(data);
+    j = sstrlen(f);
 
     if (i < j) {
         return 0;
@@ -205,6 +214,7 @@ int startswith(const char* data, const char* f) {
 
     return strncmp(data, f, j) == 0;
 }
+
 
 char medium_buffer[1024*1024];
 char* build_string(char* format, ...){
