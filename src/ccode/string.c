@@ -19,7 +19,8 @@ int iseq(char* str1, char* str2){
 
 size_t sstrlen(const char* str){
     size_t ret = 0;
-    while(str[ret] && str[ret] != '\0'){
+    while(str && str[0] != '\0'){
+        str++;
         ret++;
     }
     return ret;
