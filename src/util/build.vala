@@ -231,7 +231,9 @@ public class builder {
         }
         if (need_install.length > 0) {
             if (get_bool("install")) {
-                install_main(need_install);
+                if(install_main(need_install) ! = 0){
+                    error_add(_("Packages build canceled."));
+                };
             } else {
                 error_add(_("Packages is not installed: %s").printf(join(" ", need_install)));
             }
