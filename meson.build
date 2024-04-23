@@ -1,7 +1,7 @@
 project(
     'ymp',
     'vala', 'c',
-    meson_version: '>= 0.54.0',
+    meson_version: '>= 0.58.0',
     version : '1.1',
     license: ['GplV3']
 )
