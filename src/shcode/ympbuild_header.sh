@@ -32,6 +32,8 @@ export GOCACHE="@buildpath@/go-cache/"
 export GOMODCACHE="@buildpath@/go/"
 export GOTMPDIR="@buildpath@"
 
+export LANG="C.UTF-8"
+
 declare -r API_KEY='@APIKEY@'
 
 exec 0< /dev/null
