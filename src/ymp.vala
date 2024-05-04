@@ -32,14 +32,15 @@ public void ymp_init (string[] args) {
     #endif
     directories_init ();
     #if check_oem
-        #if experimental
-        if(true) {
-        #else
-        if (!get_bool ("ALLOW-OEM")) {
-        #endif
-            if (is_oem_available ()) {
-                warning (_ ("OEM detected! Ymp may not working good."));
+        if (is_oem_available ()) {
+            warning (_ ("OEM detected! Ymp may not working good."));
+            #if experimental
+            if(true) {
+            #else
+            if (!get_bool ("ALLOW-OEM") && ! isfile("/.allow-oem")) {
+            #endif
                 error_add (_ ("OEM is not allowed! Please use --allow-oem to allow oem."));
+                error_add (_ ("If you wish to bypass this error entirely, create /.allow-oem empty file."));
             }
         }
     if (usr_is_merged ()) {
