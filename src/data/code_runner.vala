@@ -42,7 +42,7 @@ public class code_runner {
             job.name = area_name;
             job.uses = yaml.get_value(area,"uses");
             job.image = yaml.get_value(area,"image");
-            job.directory = yaml.get_value(area,"directory");
+            job.directory = sdirname(file);
             job.environs = yaml.get_array(area,"environs");
             job.commands = yaml.get_array(area,"run");
             if (job.commands.length == 0) {

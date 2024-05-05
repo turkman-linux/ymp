@@ -7,7 +7,6 @@ steps:
 jobs:
   main:
     uses: local
-    directory: /tmp/ymp-build
     image: undefined
     environs:
       - prefix=/usr
@@ -17,6 +16,5 @@ jobs:
   fail-job:
     uses: local
     image: undefined
-    directory: /tmp/ymp-build
     run: |
       echo "Failed"
