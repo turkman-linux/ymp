@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  compile_x86:
+  compile_deb:
     name: Create deb package (x86_86)
     runs-on: ubuntu-latest
     steps:
@@ -29,13 +29,33 @@ jobs:
             mv ../*.deb /output/
             mv ./*.deb /output/
 
-  release:
-    needs: [compile_x86]
+  compile_ymp:
+    name: Create deb package (x86_86)
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: Run the build process with Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          image: registry.gitlab.com/turkman/devel/assets/docker-images
+          options: -v ${{ github.workspace }}:/root -v /output:/output
+          run: |
+              mkdir -p /tmp/ymp-build/
+              ymp repo --update --ignore-gpg
+              ymp it bash git build-base --no-emerge
+              ymp build --unsafe /root --output=/output
 
+  release:
+    needs: [compile_deb, compile_ymp]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Merge packages from build
+        run: |
+          mkdir -p /output/
+          cp -r /github/workspace/*/output/* /output/
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
