@@ -30,7 +30,7 @@ jobs:
             mv ./*.deb /output/
 
   compile_ymp:
-    name: Create deb package (x86_86)
+    name: Create ymp package (x86_86)
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
