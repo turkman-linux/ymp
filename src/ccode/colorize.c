@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #ifndef get_bool
 int get_bool(char* name);
