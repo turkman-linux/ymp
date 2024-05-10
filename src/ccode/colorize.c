@@ -12,6 +12,7 @@ int get_bool(char* name);
 
 #ifdef __STRICT_ANSI__
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
+extern int fileno(FILE *stream);
 #endif
 
 static char* int_to_string(int num){

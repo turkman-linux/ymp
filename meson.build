@@ -28,6 +28,13 @@ if get_option('ansi')
     args += ['-ansi']
 endif
 
+# some compiler flags from dpkg-buildpackage
+args += ['-g', '-O2', '-Werror=implicit-function-declaration',
+        '-ffile-prefix-map=/root/ymp=.', '-fstack-protector-strong',
+        '-fstack-clash-protection', '-Wformat', '-Werror=format-security',
+        '-fcf-protection'
+        ]
+
 libc_srcs = []
 
 start_code = []
