@@ -38,8 +38,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Merge packages from build
         run: |
-          mkdir -p /output/
-          cp -r /github/workspace/*/output/* /output/
+          sudo mkdir -p /output/
+          sudo cp -r /github/workspace/*/output/* /output/
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
