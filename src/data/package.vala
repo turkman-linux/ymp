@@ -296,19 +296,8 @@ public class package {
         var build = new builder ();
         create_dir (get_build_dir () + "/" + name);
         pkgfile.set_target (get_build_dir () + "/" + name);
-        build.ymp_build.set_ympbuild_srcpath (get_build_dir () + "/" + name);
-        build.ymp_build.set_ympbuild_buildpath (get_build_dir () + "/" + name);
-        if (!get_bool ("no-clear")) {
-            remove_all (build.ymp_build.ympbuild_buildpath);
-        }
-        pkgfile.set_target (get_build_dir () + "/" + name);
         pkgfile.extract_all ();
-        build.set_build_target (get_build_dir () + "/" + name);
-        build.ymp_build.set_ympbuild_buildpath (get_build_dir () + "/" + name);
-        build.build_target.create_metadata_info ();
-        build.fetch_package_sources ();
-        build.extract_package_sources ();
-        build.build_package ();
+        build.build_single(get_build_dir () + "/" + name);
         error (1);
         quarantine_import_from_path (build.ymp_build.ympbuild_buildpath + "/output");
         cd (curdir);

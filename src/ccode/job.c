@@ -44,7 +44,7 @@ void jobs_add(jobs* j, void (*callback)(void*), void* args, ...) {
         job new_job;
         new_job.callback = callback;
         new_job.args = malloc(sizeof(args));
-        memcpy(new_job.args, args, sizeof(args));
+        new_job.args = args;
         new_job.id = j->total;
         j->jobs[j->total++] = new_job;
         j->current++;
