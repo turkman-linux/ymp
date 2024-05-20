@@ -33,37 +33,40 @@ private static int remove_main (string[] args) {
     }else {
         info (_ ("Resolve reverse dependency done: %s").printf (join (" ", pkgs)));
     }
+    jobs j = new jobs();
     foreach (string pkg in pkgs) {
         if (is_installed_package (pkg)) {
-            package p = get_installed_package (pkg);
-            remove_single (p);
+            package *p = get_installed_package (pkg);
+            //remove_single (p);
+            j.add((void*)remove_single, (void*)p);
         }else {
             warning (_ ("Package %s is not installed. Skip removing.").printf (pkg));
         }
     }
+    j.run();
     set_value_readonly ("OPERATION", "postrm");
     sysconf_main (args);
     return 0;
 }
 
-private static int remove_single (package p) {
-    print (colorize (_ ("Removing: %s"), yellow).printf (p.name));
+private static int remove_single (package *p) {
+    print (colorize (_ ("Removing: %s"), yellow).printf (p->name));
     if (!get_bool ("without-files")) {
-        foreach (string file in p.list_links ()) {
+        foreach (string file in p->list_links ()) {
             if (file.length > 3) {
                 file=ssplit (file, " ")[0];
                 info (_ ("Removing: %s").printf (file));
                 remove_file (DESTDIR + "/" + file);
             }
         }
-        foreach (string file in p.list_files ()) {
+        foreach (string file in p->list_files ()) {
             if (file.length > 41) {
                 file=file[41:];
                 info (_ ("Removing: %s").printf (file));
                 remove_file (DESTDIR + "/" + file);
             }
         }
-        foreach (string file in p.list_links ()) {
+        foreach (string file in p->list_links ()) {
             if (file.length > 3) {
                 file=ssplit (file, " ")[0];
                 string dir = sdirname (file);
@@ -72,7 +75,7 @@ private static int remove_single (package p) {
                 }
             }
         }
-        foreach (string file in p.list_files ()) {
+        foreach (string file in p->list_files ()) {
             if (file.length > 41) {
                 file=file[41:];
                 string dir = sdirname (file);
@@ -83,11 +86,11 @@ private static int remove_single (package p) {
         }
     }
     if (!get_bool ("without-metadata")) {
-        remove_file (get_storage () + "/metadata/" + p.name + ".yaml");
-        remove_file (get_storage () + "/files/" + p.name);
-        remove_file (get_storage () + "/links/" + p.name);
-        if (isdir (get_storage () + "/sysconf/" + p.name)) {
-            remove_all (get_storage () + "/sysconf/" + p.name);
+        remove_file (get_storage () + "/metadata/" + p->name + ".yaml");
+        remove_file (get_storage () + "/files/" + p->name);
+        remove_file (get_storage () + "/links/" + p->name);
+        if (isdir (get_storage () + "/sysconf/" + p->name)) {
+            remove_all (get_storage () + "/sysconf/" + p->name);
         }
     }
     return 0;

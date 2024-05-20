@@ -87,8 +87,6 @@ public class package {
                 string files = readfile_cached (get_storage () + "/files/" + name);
                 return ssplit (files, "\n");
             }
-            error_add (_ ("Package archive is missing."));
-            error (2);
             return {};
         }
         string files = pkgfile.readfile ("files");
@@ -103,7 +101,6 @@ public class package {
                 string links = readfile_cached (get_storage () + "/links/" + name);
                 return ssplit (links, "\n");
             }
-            error_add (_ ("Package archive is missing."));
             return {};
         }
         string links = pkgfile.readfile ("links");

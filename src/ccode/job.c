@@ -72,7 +72,7 @@ jobs* jobs_new() {
     j->current = 0;
     j->finished = 0;
     j->total = 0;
-    j->parallel = 4; /* Change as needed */
+    j->parallel = JOB_PARALLEL;
     j->jobs = (job*)malloc(j->max * sizeof(job));
     pthread_mutex_init(&j->mutex, NULL);
     pthread_cond_init(&j->cond, NULL);

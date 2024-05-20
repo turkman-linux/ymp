@@ -18,8 +18,8 @@ typedef struct _jobs {
     pthread_cond_t cond;   /* Condition variable for signaling job completion */
 } jobs;
 
-#define MAX_JOB 1024
-
+#define MAX_JOB 1024*1024
+#define JOB_PARALLEL 8
 void jobs_unref(jobs *j);
 void jobs_add(jobs* j, void (*callback)(void*,...),  void* ctx, void* args, ...);
 void jobs_run(jobs* j);
