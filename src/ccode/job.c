@@ -9,38 +9,31 @@
 void* worker_thread(void* arg) {
     jobs* j = (jobs*)arg;
     while (1) {
-        pthread_mutex_lock(&j->mutex);
-        while (j->current == 0 && j->finished < j->total) {
-            pthread_cond_wait(&j->cond, &j->mutex);
-        }
         if (j->finished >= j->total) {
-            pthread_mutex_unlock(&j->mutex);
             break;
         }
         int i;
-        for (i = 0; i < j->max; ++i) {
+        for (i = 0; i < j->total; ++i) {
             if (j->jobs[i].callback != NULL) {
-                j->jobs[i].callback((void*)j->jobs[i].ctx, (void*)j->jobs[i].args);
+                void (*callback)(void*, ...) = j->jobs[i].callback;
+                j->jobs[i].callback = NULL;
+                callback((void*)j->jobs[i].ctx, (void*)j->jobs[i].args);
                 j->finished++;
                 j->current--;
-                j->jobs[i].callback = NULL;
                 break;
             }
         }
-        pthread_mutex_unlock(&j->mutex);
     }
     pthread_exit(NULL);
 }
 
 void jobs_unref(jobs *j) {
     free(j->jobs);
-    pthread_mutex_destroy(&j->mutex);
     pthread_cond_destroy(&j->cond);
     free(j);
 }
 
 void jobs_add(jobs* j, void (*callback)(void*, ...), void* ctx, void* args, ...) {
-    pthread_mutex_lock(&j->mutex);
     if (j->total < j->max) {
         job new_job;
         new_job.callback = callback;
@@ -51,7 +44,6 @@ void jobs_add(jobs* j, void (*callback)(void*, ...), void* ctx, void* args, ...)
         j->current++;
         pthread_cond_signal(&j->cond);
     }
-    pthread_mutex_unlock(&j->mutex);
 }
 
 void jobs_run(jobs* j) {
@@ -74,7 +66,6 @@ jobs* jobs_new() {
     j->total = 0;
     j->parallel = JOB_PARALLEL;
     j->jobs = (job*)malloc(j->max * sizeof(job));
-    pthread_mutex_init(&j->mutex, NULL);
     pthread_cond_init(&j->cond, NULL);
     return j;
 }

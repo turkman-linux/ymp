@@ -14,7 +14,6 @@ typedef struct _jobs {
     int parallel;
     int finished; /* Track the number of finished jobs */
     int total;    /* Total number of jobs */
-    pthread_mutex_t mutex; /* Mutex for accessing finished and total */
     pthread_cond_t cond;   /* Condition variable for signaling job completion */
 } jobs;
 
