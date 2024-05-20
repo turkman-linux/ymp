@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <pthread.h>
 #include <string.h>
 #include <stdarg.h>
@@ -13,6 +14,7 @@ void* worker_thread(void* arg) {
             break;
         }
         int i;
+        bool e = false; /* search for job */
         for (i = 0; i < j->total; ++i) {
             if (j->jobs[i].callback != NULL) {
                 void (*callback)(void*, ...) = j->jobs[i].callback;
@@ -20,8 +22,12 @@ void* worker_thread(void* arg) {
                 callback((void*)j->jobs[i].ctx, (void*)j->jobs[i].args);
                 j->finished++;
                 j->current--;
+                e = true;
                 break;
             }
+        }
+        if(!e){
+            break;
         }
     }
     pthread_exit(NULL);
