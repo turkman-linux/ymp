@@ -1,8 +1,9 @@
 #include <pthread.h>
 
 typedef struct _job {
-    void (*callback)(void*);
+    void (*callback)(void*,...);
     void* args;
+    void* ctx;
     int id;
 } job;
 
@@ -20,6 +21,6 @@ typedef struct _jobs {
 #define MAX_JOB 1024
 
 void jobs_unref(jobs *j);
-void jobs_add(jobs* j, void (*callback)(void*), void* args, ...);
+void jobs_add(jobs* j, void (*callback)(void*,...),  void* ctx, void* args, ...);
 void jobs_run(jobs* j);
 jobs* jobs_new();

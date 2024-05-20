@@ -24,6 +24,15 @@ test: test-clean
 	ninja -C build/_test
 	cd build/_test ; env LD_LIBRARY_PATH="$$(pwd)"/build G_DEBUG=fatal-criticals yes | timeout 30 ./ymp-test --allow-oem --ask
 
+test2:
+	valac --pkg ymp test/test2.vala -C  --pkg array --pkg jobs \
+	    --pkg ymp --vapidir=src/vapi -C -X -g3
+	mv test/test2.c build/test2.c
+	gcc -o build/test2 build/test2.c `pkgconf --cflags --libs ymp` \
+	    -Lbuild -Isrc/include -Ibuild -Lbuild -g3 \
+	    -Wl,--copy-dt-needed-entries -lgobject-2.0
+	env LD_LIBRARY_PATH="$$(pwd)"/build ./build/test2 --allow-oem
+
 install:
 	DESTDIR=$(DESTDIR) ninja -C build install
 

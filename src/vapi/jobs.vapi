@@ -15,6 +15,6 @@ public class jobs {
     public int total;
 
     public void unref ();
-    public void add (void* callback, void* args);
+    public void add (void* callback, void* args, ...);
     public void run ();
 }

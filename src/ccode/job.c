@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <string.h>
+#include <stdarg.h>
 
 #include <jobs.h>
 
@@ -19,7 +20,7 @@ void* worker_thread(void* arg) {
         int i;
         for (i = 0; i < j->max; ++i) {
             if (j->jobs[i].callback != NULL) {
-                j->jobs[i].callback((void*)j->jobs[i].args);
+                j->jobs[i].callback((void*)j->jobs[i].ctx, (void*)j->jobs[i].args);
                 j->finished++;
                 j->current--;
                 j->jobs[i].callback = NULL;
@@ -38,13 +39,13 @@ void jobs_unref(jobs *j) {
     free(j);
 }
 
-void jobs_add(jobs* j, void (*callback)(void*), void* args, ...) {
+void jobs_add(jobs* j, void (*callback)(void*, ...), void* ctx, void* args, ...) {
     pthread_mutex_lock(&j->mutex);
     if (j->total < j->max) {
         job new_job;
         new_job.callback = callback;
-        new_job.args = malloc(sizeof(args));
         new_job.args = args;
+        new_job.ctx = ctx;
         new_job.id = j->total;
         j->jobs[j->total++] = new_job;
         j->current++;
