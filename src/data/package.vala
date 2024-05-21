@@ -237,18 +237,19 @@ public class package {
         var rootfs_medatata = get_storage () + "/quarantine/metadata/";
         var rootfs_files = get_storage () + "/quarantine/files/";
         var rootfs_links = get_storage () + "/quarantine/links/";
+        var tempdir = get_storage () + "/quarantine/tmp/"+ name;
         if (isfile (rootfs_medatata + name + ".yaml")) {
             debug (_ ("Skip quartine package extract: %s").printf (name));
             return;
         }
         // extract data archive
-        pkgfile.set_target (get_storage () + "/quarantine");
+        pkgfile.set_target (tempdir);
         foreach (string data in pkgfile.list_files ()) {
             // Allowed formats: data.tar.xz data.zip data.tar.zst data.tar.gz ..
             if (startswith (data, "data.")) {
                 // 1. data.* file extract to quarantine from ymp package
                 pkgfile.extract (data);
-                var datafile = get_storage () + "/quarantine/" + data;
+                var datafile = tempdir + "/" + data;
                 // 2. validate data archive
                 var data_hash = calculate_sha1sum (datafile);
                 if (data_hash != get ("archive-hash")) {
@@ -266,20 +267,21 @@ public class package {
             }
         }
         // extract metadata
-        if (isfile (rootfs_medatata + "metadata.yaml")) {
-            remove_file (rootfs_medatata + "metadata.yaml");
+        if (isfile (tempdir + "/metadata.yaml")) {
+            remove_file (tempdir + "/metadata.yaml");
         }
-        pkgfile.set_target (rootfs_medatata);
+        pkgfile.set_target (tempdir);
         pkgfile.extract ("metadata.yaml");
-        move_file (rootfs_medatata + "metadata.yaml", rootfs_medatata + name + ".yaml");
+        move_file (tempdir + "/metadata.yaml", rootfs_medatata + name + ".yaml");
         // extract files
-        pkgfile.set_target (rootfs_files);
+        pkgfile.set_target (tempdir);
         pkgfile.extract ("files");
-        move_file (rootfs_files + "files", rootfs_files + name);
+        move_file (tempdir + "/files", rootfs_files + name);
         // extract links
-        pkgfile.set_target (rootfs_links);
+        pkgfile.set_target (tempdir);
         pkgfile.extract ("links");
-        move_file (rootfs_links + "links", rootfs_links + name);
+        move_file (tempdir + "/links", rootfs_links + name);
+        // remove tempdir
         error (3);
     }
     //DOC: `void package.build ():`

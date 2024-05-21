@@ -47,14 +47,17 @@ private static int install_main (string[] args) {
     if (get_bool ("download-only")) {
         return 0;
     }
+    j = new jobs();
     foreach (string name in pkgs) {
-        package pkg = install_single (name);
+        package *pkg = package_get_single (name);
         if (pkg == null) {
             error (1);
         }else {
             pkg_obj += pkg;
+            j.add((void*)package_extract_single, pkg);
         }
     }
+    j.run();
     string[] leftovers = calculate_leftover (pkg_obj);
     if (!quarantine_validate_files ()) {
         error_add (_ ("Quarantine validation failed."));
@@ -74,7 +77,7 @@ private static int install_main (string[] args) {
     error (1);
     return 0;
 }
-private static package install_single (string pkg) {
+private static package package_get_single (string pkg) {
     package p = null;
     // Download package files from repository
     if (isfile (pkg)) {
@@ -96,8 +99,8 @@ private static package install_single (string pkg) {
         }
     }
     error (2);
-    print (colorize (_ ("Installing: %s"), yellow).printf (p.name));
     if (p.is_source || get_bool ("sync-single")) {
+        print (colorize (_ ("Building: %s"), yellow).printf (p.name));
         p.build ();
         if (!quarantine_validate_files ()) {
             error_add (_ ("Quarantine validation failed."));
@@ -107,11 +110,17 @@ private static package install_single (string pkg) {
         quarantine_install ();
         quarantine_reset ();
         sysconf_main ( {});
-    }else {
-        p.extract ();
     }
     return p;
 }
+
+private static void package_extract_single(package *p){
+    if (!p->is_source) {
+        print (colorize (_ ("Installing: %s"), yellow).printf (p->name));
+        p->extract();
+    }
+}
+
 private static string[] calculate_leftover (package[] pkgs) {
     print (colorize (_ ("Calculating leftovers"), yellow));
     var files = new array ();

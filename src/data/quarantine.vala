@@ -9,6 +9,7 @@ private array quarantine_file_broken_list;
 public void quarantine_reset () {
   remove_all (get_storage () + "/quarantine/");
   create_dir (get_storage () + "/quarantine/rootfs");
+  create_dir (get_storage () + "/quarantine/tmp");
   create_dir (get_storage () + "/quarantine/files");
   create_dir (get_storage () + "/quarantine/links");
   create_dir (get_storage () + "/quarantine/metadata");
