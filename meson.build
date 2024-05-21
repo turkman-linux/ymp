@@ -218,7 +218,6 @@ add_project_arguments('-fPIC', language : 'c')
 generated_sources += ['ctx.vala']
 
 foreach arg : args
-    message(arg)
     add_project_arguments(arg, language : 'c')
 endforeach
 
