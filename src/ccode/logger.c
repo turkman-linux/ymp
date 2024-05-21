@@ -10,6 +10,10 @@ void error_add(char* msg);
 int get_bool(char* val);
 void colorize_init();
 
+/* string add function*/
+char* str_add(char* s1, char* s2);
+
+
 /* headers of functions */
 void cprint(char* msg);
 void cprint_stderr(char* msg);
@@ -35,26 +39,19 @@ fn_logger debug_ptr = cprint_dummy;
 
 /* print functions area */
 void print_fn(char* message, int new_line, int err){
-    if(strcmp(message,"")==0){
-        return;
-    }
-    int fd=1;
-    if(err){
-        fd=2;
-    }
-    write(fd, message, strlen(message));
     if(new_line){
-        write(fd, "\n", 1);
+        message = str_add(message, "\n");
     }
+    write(err+1, message, strlen(message));
 }
 
 void cprint(char* message){
+    message = str_add(message, "\n");
     write(1, message, strlen(message));
-    write(1, "\n", 1);
 }
 void cprint_stderr(char* message){
+    message = str_add(message, "\n");
     write(2, message, strlen(message));
-    write(2, "\n", 1);
 }
 
 void cprint_dummy(char* message){
