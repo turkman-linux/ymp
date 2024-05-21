@@ -31,7 +31,7 @@ endif
 # disable vala related warnings
 args += ['-Wno-unused', '-Wno-unused-result', '-Wno-incompatible-pointer-types',
          '-Wno-discarded-qualifiers', '-Wno-infinite-recursion',
-         '-Wno-cast-function-type'
+         '-Wno-cast-function-type', '-Wno-attributes'
         ]
 
 # some compiler flags from dpkg-buildpackage
