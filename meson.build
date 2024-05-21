@@ -22,28 +22,29 @@ run_command('bash', './tool/mkctx.sh',
     check:true)
 
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
-prep_args = ['-L'+meson.current_build_dir(), '-lymp', '-I'+meson.current_source_dir()/'src/include/']
-args = prep_args
+cflags = ['-I'+meson.current_source_dir()/'src/include/']
+ldflags = ['-L'+meson.current_build_dir(), '-lymp']
 if get_option('ansi')
-    args += ['-ansi']
+    cflags += ['-ansi']
 endif
 
 # disable vala related warnings
-args += ['-Wno-unused', '-Wno-unused-result', '-Wno-incompatible-pointer-types',
+cflags += ['-Wno-unused', '-Wno-unused-result', '-Wno-incompatible-pointer-types',
          '-Wno-discarded-qualifiers', '-Wno-infinite-recursion',
-         '-Wno-cast-function-type', '-Wno-attributes'
+         '-Wno-cast-function-type', '-Wno-attributes','-Wno-unknown-warning-option',
         ]
 
 # some compiler flags from dpkg-buildpackage
-args += ['-g', '-O2', '-Werror=implicit-function-declaration',
+cflags += ['-g', '-O2', '-Werror=implicit-function-declaration',
          '-ffile-prefix-map=/root/ymp=.', '-fstack-protector-strong',
          '-fstack-clash-protection', '-Wformat', '-Werror=format-security',
          '-fcf-protection'
         ]
 
 # error on warning
-
-args += ['-Werror']
+if compiler.get_id() == 'gcc'
+    cflags += ['-Werror']
+endif
 
 libc_srcs = []
 
@@ -51,10 +52,10 @@ start_code = []
 
 # do not include glibc or musl stdlib and link with glibc or musl
 if run_command('/bin/sh', '-c', 'ldd /proc/self/exe | grep /lib/ld-musl-'+architecture+'.so.1').returncode() == 0
-    args += ['-Dmusl']
+    cflags += ['-Dmusl']
 else
     if not get_option('test')
-        args += ['-nostdlib', '-lc']
+        ldflags += ['-nostdlib', '-lc']
         start_code += ['src/start/'+architecture+'.s' ]
     endif
 endif
@@ -62,11 +63,12 @@ endif
 
 deps = []
 
+pkgconfig_dep = []
 pkgconfig_arg = ''
 
 if get_option('static')
     pkgconfig_arg = '--static'
-    args += ['--static']
+    ldflags += ['--static']
     conf += ['STATIC']
 else
     conf += ['SHARED']
@@ -91,9 +93,7 @@ endforeach
 deps += [dependency('gio-2.0', static: get_option('static'), required:true)]
 
 # glib-2.0
-args += run_command(
-        'pkg-config', '--libs', '--cflags' , 'glib-2.0', pkgconfig_arg ,check:true
-        ).stdout().strip().split(' ')
+pkgconfig_dep += ['gio-2.0']
 
 
 #libarchive
@@ -121,10 +121,10 @@ if get_option('libcurl')
         libcurl = dependency('libcurl', static:get_option('static'), required:false)
         if not libcurl.found()
         else
-           conf += ['libcurl']
-            args += run_command('pkg-config', '--libs', '--cflags' ,'libcurl', pkgconfig_arg ,check:true).stdout().strip().split(' ')
+            conf += ['libcurl']
+            pkgconfig_dep += ['libcurl']
             if get_option('libbrotli')
-                args += ['-lbrotlicommon']
+                ldflags += ['-lbrotlicommon']
             endif
         endif
 #libsoup-3.0 (no vapi)
@@ -133,8 +133,8 @@ elif get_option('libsoup')
         if not libsoup.found()
         else
             conf += ['libsoup']
-            args += run_command('pkg-config', '--libs', '--cflags', 'libsoup-3.0', pkgconfig_arg ,check:true).stdout().strip().split(' ')
-        endif
+            pkgconfig_dep += ['libsoup-3.0']
+       endif
 else
     conf += ['no_fetcher_backend']
 endif
@@ -175,10 +175,10 @@ endif
 # debug
 if get_option('debug')
     add_project_arguments('--debug', language: 'vala')
-    args += ['-g3', '-Wall', '-Wextra', '-grecord-gcc-switches','-fdiagnostics-color=always', '-DDEBUG']
+    cflags += ['-g3', '-Wall', '-Wextra', '-grecord-gcc-switches','-fdiagnostics-color=always', '-DDEBUG']
     conf += ['DEBUG']
 else
-    args += ['-DNDEBUG']
+    cflags += ['-DNDEBUG']
     conf += ['NDEBUG']
 endif
 
@@ -192,6 +192,17 @@ if get_option('check_oem')
     conf += ['check_oem']
 endif
 
+########### add ldflags and cflags ###########
+foreach name: pkgconfig_dep
+    # Run the pkg-config command and capture its output
+    ldflags += run_command(
+        'pkg-config', '--libs', name, pkgconfig_arg, check: true
+    ).stdout().strip().split(' ')
+    # Run the pkg-config command and capture its output
+    cflags += run_command(
+        'pkg-config', '--cflags', name, pkgconfig_arg, check: true
+    ).stdout().strip().split(' ')
+endforeach
 
 ########### build ymp.pc ###########
 
@@ -200,8 +211,7 @@ run_command('sed', '-i', 's/@version@/'+meson.project_version()+'/g', meson.curr
 
 foreach c : conf
     add_project_arguments('-D', c, language: 'vala')
-    prep_args += '-D'+c
-    args += '-D'+c
+    cflags += '-D'+c
 endforeach
 
 ########### generate vala sources ###########
@@ -209,28 +219,30 @@ endforeach
 generated_sources=[]
 foreach valasrc : sources
     message('\x1b[32;1mGenerate:\x1b[;0m' ,valasrc)
-    run_command('bash', 'tool/preprocessor.sh','.generated',valasrc, prep_args,check:true)
+    run_command('bash', 'tool/preprocessor.sh','.generated',valasrc, cflags,check:true)
     generated_sources += '.generated'/valasrc
 endforeach
 
 
 if get_option('nolibc_path') != ''
-    args += ['-nostdlib', '-I'+get_option('nolibc_path')]
+    cflags += ['-nostdlib', '-I'+get_option('nolibc_path')]
 endif
 
 add_project_arguments('-I'+meson.current_source_dir()+'/src/include/', language : 'c')
 add_project_arguments('-fPIC', language : 'c')
 generated_sources += ['ctx.vala']
 
-foreach arg : args
-    add_project_arguments(arg, language : 'c')
+foreach arg : cflags
+    if arg != ''
+        add_project_arguments(arg, language : 'c')
+    endif
 endforeach
 
 ########### build libymp ###########
 if get_option('static')
-    libymp = static_library('ymp', generated_sources, dependencies: deps, link_args: args)
+    libymp = static_library('ymp', generated_sources, dependencies: deps, link_args: ldflags)
 else
-    libymp = shared_library('ymp', generated_sources, dependencies: deps, link_args: args)
+    libymp = shared_library('ymp', generated_sources, dependencies: deps, link_args: ldflags)
 endif
 
 
@@ -240,11 +252,11 @@ install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('
 ########### build tools ###########
 if get_option('tools')
     # ymp cli
-    cli = executable('ymp-cli', ['src/cli/main.c'] + start_code, libc_srcs, dependencies: deps, link_args: prep_args , link_with: libymp)
+    cli = executable('ymp-cli', ['src/cli/main.c'] + start_code, libc_srcs, dependencies: deps, link_args: ldflags , link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
 
     # ymp shell
-    shell = executable('ymp-shell', ['src/cli/shell.c'] + start_code, libc_srcs, dependencies: deps, link_args: prep_args, link_with: libymp)
+    shell = executable('ymp-shell', ['src/cli/shell.c'] + start_code, libc_srcs, dependencies: deps, link_args: ldflags, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-shell', install_dir : get_option('bindir'),rename : 'ympsh')
 
 endif
@@ -258,7 +270,7 @@ run_command(compiler.get_id(), '-c', 'src/start/'+architecture+'.s',
 
 ########### build test ###########
 if get_option('test')
-    executable('ymp-test', ['test/test.vala'] + start_code, dependencies: deps, link_args: prep_args, link_with: libymp)
+    executable('ymp-test', ['test/test.vala'] + start_code, dependencies: deps, link_args: ldflags, link_with: libymp)
 endif
 
 ########### build scripts ###########
