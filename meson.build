@@ -28,11 +28,16 @@ if get_option('ansi')
     args += ['-ansi']
 endif
 
+# disable vala related warnings
+args += ['-Wno-unused', '-Wno-unused-result', '-Wno-incompatible-pointer-types',
+         '-Wno-discarded-qualifiers', '-Wno-infinite-recursion', '-Wall', '-Wextra'
+        ]
+
 # some compiler flags from dpkg-buildpackage
 args += ['-g', '-O2', '-Werror=implicit-function-declaration',
-        '-ffile-prefix-map=/root/ymp=.', '-fstack-protector-strong',
-        '-fstack-clash-protection', '-Wformat', '-Werror=format-security',
-        '-fcf-protection'
+         '-ffile-prefix-map=/root/ymp=.', '-fstack-protector-strong',
+         '-fstack-clash-protection', '-Wformat', '-Werror=format-security',
+         '-fcf-protection'
         ]
 
 libc_srcs = []
@@ -50,7 +55,6 @@ else
 endif
 
 
-args += [meson.current_build_dir()/ 'obj.o']
 deps = []
 
 pkgconfig_arg = ''
@@ -64,7 +68,6 @@ else
 endif
 
 # valac configuration
-add_project_arguments('-C', language: 'vala')
 add_project_arguments(['--disable-assert', '--hide-internal', '--nostdpkg', '--enable-checking', '--abi-stability'], language: 'vala')
 add_project_arguments('-D', '_GNU_SOURCE', '--disable-version-header', language: 'vala')
 add_project_arguments(['--pkg', 'posix'], language: 'vala')
@@ -141,14 +144,13 @@ sources = ['src/ymp.vala',
            'src/ccode.vala',
            'data/ymp-extra.h'
           ]
-
 sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip().split('\n')
 sources += run_command('find', 'src/operations','-type','f',check:true).stdout().strip().split('\n')
 sources += run_command('find', 'src/data','-type','f',check:true).stdout().strip().split('\n')
 
 
 foreach csource : run_command('find', 'src/ccode','-type','f',check:true).stdout().strip().split('\n')
-    args += [meson.current_source_dir() / csource]
+    sources += [meson.current_source_dir() / csource]
 endforeach
 
 
@@ -214,6 +216,11 @@ endif
 add_project_arguments('-I'+meson.current_source_dir()+'/src/include/', language : 'c')
 add_project_arguments('-fPIC', language : 'c')
 generated_sources += ['ctx.vala']
+
+foreach arg : args
+    message(arg)
+    add_project_arguments(arg, language : 'c')
+endforeach
 
 ########### build libymp ###########
 if get_option('static')

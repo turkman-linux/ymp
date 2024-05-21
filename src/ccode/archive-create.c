@@ -15,7 +15,9 @@
 int aformat = 1;
 int afilter = 0;
 
+#ifndef _XOPEN_SOURCE
 #define _XOPEN_SOURCE 700
+#endif
 
 #ifndef no_libarchive
 #include <sys/types.h>
