@@ -19,7 +19,7 @@ public string readfile_byte (string path, uint64 n) {
         warning (_ ("File is empty: %s").printf (path));
         return "";
     }else if (size < n) {
-        warning (_ ("Read byte size is bigger than file size: %s (read: %lld size %lld)").printf (path, n, size));
+        warning (_ ("Read byte size is bigger than file size: %s (read: %" + uint64.FORMAT + " size: %" + uint64.FORMAT+")").printf (path, n, size));
         return "";
     }else if (n == 0) {
         n = size;

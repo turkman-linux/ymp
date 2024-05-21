@@ -30,7 +30,8 @@ endif
 
 # disable vala related warnings
 args += ['-Wno-unused', '-Wno-unused-result', '-Wno-incompatible-pointer-types',
-         '-Wno-discarded-qualifiers', '-Wno-infinite-recursion', '-Wall', '-Wextra'
+         '-Wno-discarded-qualifiers', '-Wno-infinite-recursion',
+         '-Wno-cast-function-type'
         ]
 
 # some compiler flags from dpkg-buildpackage
@@ -39,6 +40,10 @@ args += ['-g', '-O2', '-Werror=implicit-function-declaration',
          '-fstack-clash-protection', '-Wformat', '-Werror=format-security',
          '-fcf-protection'
         ]
+
+# error on warning
+
+args += ['-Werror']
 
 libc_srcs = []
 
