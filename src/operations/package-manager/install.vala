@@ -33,15 +33,17 @@ private static int install_main (string[] args) {
     }
     quarantine_reset ();
     package[] pkg_obj = {};
+    jobs j = new jobs();
     foreach (string name in pkgs) {
         if (isfile (name)) {
             continue;
         }
         if (is_available_from_repository (name)) {
-            package p = get_from_repository (name);
-            p.download_only ();
+            package *p = get_from_repository (name);
+            j.add((void*)p->download_only, p);
         }
     }
+    j.run();
     if (get_bool ("download-only")) {
         return 0;
     }
