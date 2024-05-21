@@ -63,8 +63,7 @@ int fetcher_process_to_dummy(void *p, curl_off_t total, curl_off_t current, curl
     return 0;
 }
 
-CURL *curl;
-void curl_options_common(char* url){
+void curl_options_common(CURL *curl, char* url){
         struct curl_slist *chunk = NULL;
         chunk = curl_slist_append(chunk, "Connection: keep-alive");
         chunk = curl_slist_append(chunk, "DNT: 1");
@@ -93,44 +92,40 @@ void curl_options_common(char* url){
 int fetch(char* url, char* path){
     FILE *fp;
     strcpy(fetcher_filename,path);
-    curl=curl_easy_init();
+    CURL* curl=curl_easy_init();
     printf("Downloading: %s\n",path);
-    if (curl){
-        fp = fopen(path,"wb");
-        curl_options_common(url);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_file);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-        CURLcode res;
-        res = curl_easy_perform(curl);
-        if(res != CURLE_OK || res == CURLE_HTTP_RETURNED_ERROR){
-          fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-          curl_easy_cleanup(curl);
-          return 0;
-        }
+    fp = fopen(path,"wb");
+    curl_options_common(curl, url);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_file);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+    CURLcode res;
+    res = curl_easy_perform(curl);
+    if(res != CURLE_OK || res == CURLE_HTTP_RETURNED_ERROR){
+        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
         curl_easy_cleanup(curl);
-        fclose(fp);
+        return 0;
     }
+    curl_easy_cleanup(curl);
+    fclose(fp);
     return 1;
 }
 
 
 char* fetch_string(char* url){
-    curl=curl_easy_init();
+    CURL* curl=curl_easy_init();
     struct string s;
     init_string(&s);
     strcpy(fetcher_filename,"");
-    if (curl){
-        curl_options_common(url);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_string);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
-        CURLcode res;
-        res = curl_easy_perform(curl);
-        if(res != CURLE_OK){
-          fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-          return (char*)(s.ptr);
-        }
-        curl_easy_cleanup(curl);
+    curl_options_common(curl, url);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_string);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
+    CURLcode res;
+    res = curl_easy_perform(curl);
+    if(res != CURLE_OK){
+        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+        return (char*)(s.ptr);
     }
+    curl_easy_cleanup(curl);
     return (char*)(s.ptr);
 }
 
