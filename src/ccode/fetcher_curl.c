@@ -67,6 +67,7 @@ void curl_options_common(CURL *curl, char* url){
         struct curl_slist *chunk = NULL;
         chunk = curl_slist_append(chunk, "Connection: keep-alive");
         chunk = curl_slist_append(chunk, "DNT: 1");
+        chunk = curl_slist_append(chunk, "Sec-GPC: 1");
         chunk = curl_slist_append(chunk, "Ymp: \"NE MUTLU TURKUM DIYENE\"");
         if(strcmp(get_value("debug"),"true")==0){
             curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
