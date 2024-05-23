@@ -30,8 +30,6 @@
 #define FALSE 0
 #endif
 
-struct stat st;
-
 #ifndef info
 void info(char* msg);
 #endif
@@ -42,6 +40,7 @@ void debug(char* msg);
 char* str_add(char* s1, char* s2);
 
 uint64_t filesize(char* path){
+    struct stat st;
     stat(path, &st);
     return st.st_size;
 }
@@ -68,6 +67,7 @@ int issymlink(const char *filename){
     if(filename == NULL){
         return FALSE;
     }
+    struct stat st;
     if(lstat(filename, &st) < 0) {
         return FALSE;
     }
@@ -299,6 +299,7 @@ int isfile(char* path){
     #ifdef debug
     debug(str_add("Check file: ", path));
     #endif
+    struct stat st;
     int fs = stat (path, &st);
     int ls = lstat (path, &st);
     return (!ls || !fs) && ! isdir (path);

@@ -59,9 +59,8 @@ private static int install_main (string[] args) {
     }
     j.run();
     string[] leftovers = calculate_leftover (pkg_obj);
-    if (!quarantine_validate_files ()) {
+    if (!quarantine_validate ()) {
         error_add (_ ("Quarantine validation failed."));
-        quarantine_reset ();
     }
     error (1);
     quarantine_install ();
@@ -102,7 +101,7 @@ private static package package_get_single (string pkg) {
     if (p.is_source || get_bool ("sync-single")) {
         print (colorize (_ ("Building: %s"), yellow).printf (p.name));
         p.build ();
-        if (!quarantine_validate_files ()) {
+        if (!quarantine_validate ()) {
             error_add (_ ("Quarantine validation failed."));
             quarantine_reset ();
         }
