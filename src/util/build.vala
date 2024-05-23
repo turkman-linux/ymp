@@ -102,7 +102,10 @@ public class builder {
         }
         if(!isfile(srcpath+"/ympbuild")){
             if(isfile(srcpath+"/PKGBUILD")){
-                writefile(srcpath+"/ympbuild", get_pkgbuild_header().replace("@PKGBUILD@",srcpath+"/PKGBUILD") + "\n# Uses PKGBUILD:" + calculate_md5sum(srcpath+"/PKGBUILD"));
+                writefile(srcpath+"/ympbuild", 
+                    get_pkgbuild_header().replace("@PKGBUILD@",srcpath+"/PKGBUILD")
+                    + "\n# Uses PKGBUILD:" + calculate_md5sum(srcpath+"/PKGBUILD")
+                );
             }
         }
         if (!isfile(srcpath + "/ympbuild")) {

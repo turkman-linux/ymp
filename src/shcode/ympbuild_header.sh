@@ -56,6 +56,8 @@ function meson(){
 function _dump_variables(){
     set -o posix ; set
 }
+readonly -f _dump_variables
+
 function ymp_print_metadata(){
     echo "ymp:"
     echo "  source:"
@@ -121,6 +123,7 @@ function ymp_print_metadata(){
         done
     fi
 }
+readonly -f ymp_print_metadata
 
 function target(){
     if [[ "$1" == "@BUILD_TARGET@" ]] ; then
@@ -128,6 +131,7 @@ function target(){
     fi
     return 1
 }
+readonly -f target
 
 function use(){
     if ! echo ${uses[@]} ${uses_extra[@]} ${arch[@]} all extra | grep "$1" >/dev/null; then
@@ -152,6 +156,8 @@ function use(){
         fi
     done
 }
+readonly -f use
+
 function use_opt(){
     if use "$1" ; then
         echo $2
@@ -159,8 +165,12 @@ function use_opt(){
         echo $3
     fi
 }
+readonly -f use_opt
+
 function eapply(){
     for aa in $* ; do
         patch -Np1 "$aa"
     done
 }
+readonly -f eapply
+
