@@ -15,6 +15,7 @@ export FORCE_UNSAFE_CONFIGURE=1
 export PYTHONDONTWRITEBYTECODE=1
 export SHELL="/bin/bash"
 export EDITOR="/bin/false"
+export CONFIG_SHELL=/bin/bash
 
 declare -r TARGET="@BUILD_TARGET@"
 declare -r DISTRO="@DISTRO@"
