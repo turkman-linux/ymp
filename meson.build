@@ -39,8 +39,7 @@ cflags += ['-DGETTEXT_PACKAGE=ymp']
 # some compiler flags from dpkg-buildpackage
 cflags += ['-g', '-O2', '-Werror=implicit-function-declaration',
          '-ffile-prefix-map=/root/ymp=.', '-fstack-protector-strong',
-         '-fstack-clash-protection', '-Wformat', '-Werror=format-security',
-         '-fcf-protection'
+         '-fstack-clash-protection', '-Wformat', '-Werror=format-security'
         ]
 
 # error on warning
