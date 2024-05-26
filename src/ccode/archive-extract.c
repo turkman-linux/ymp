@@ -12,6 +12,11 @@ extern void error_add(char* message);
 
 extern char* build_string(char* format, ...);
 
+#ifdef __STRICT_ANSI__
+#define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
+#endif
+
+
 #if DEBUG
 extern void debug(char* message);
 #define fdebug(A, ...) \
