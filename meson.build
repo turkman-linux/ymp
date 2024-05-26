@@ -34,6 +34,8 @@ cflags += ['-Wno-unused', '-Wno-unused-result', '-Wno-incompatible-pointer-types
          '-Wno-cast-function-type', '-Wno-attributes','-Wno-unknown-warning-option',
         ]
 
+cflags += ['-DGETTEXT_PACKAGE=ymp']
+
 # some compiler flags from dpkg-buildpackage
 cflags += ['-g', '-O2', '-Werror=implicit-function-declaration',
          '-ffile-prefix-map=/root/ymp=.', '-fstack-protector-strong',

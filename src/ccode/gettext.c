@@ -5,7 +5,6 @@
 #include <libintl.h>
 #include <locale.h>
 
-char* GETTEXT_PACKAGE="ymp";
 
 void locale_init(){
   setlocale (LC_ALL, "");
