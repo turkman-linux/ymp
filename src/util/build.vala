@@ -284,14 +284,15 @@ public class builder {
             string srcfile = ymp_build.ympbuild_buildpath + "/" + name;
             string ymp_source_cache = get_build_dir() + "/.cache/" + ymp_build.get_ympbuild_value("name") + "/";
             create_dir(ymp_source_cache);
+            print(ymp_build.ympbuild_srcpath + "/" + name);
             if (isfile(srcfile)) {
                 info(_("Source file already exists."));
             } else if (isfile(ymp_source_cache + "/" + name)) {
                 info(_("Source file import from cache."));
                 copy_file(ymp_source_cache + "/" + name, srcfile);
-            } else if (isfile(ymp_build.ympbuild_srcpath + "/" + src)) {
-                info(_("Source file copy from cache."));
-                copy_file(ymp_build.ympbuild_srcpath + "/" + src, srcfile);
+            } else if (isfile(ymp_build.ympbuild_srcpath + "/" + name)) {
+                info(_("Source file copy from package."));
+                copy_file(ymp_build.ympbuild_srcpath + "/" + name, srcfile);
             } else if (startswith(src, "git@") || endswith(src, ".git")) {
                 if(!isdir(ymp_source_cache + "/" + name)){
                     if (run_args({"git", "clone", "--bare",src, ymp_source_cache + "/" + name}) != 0) {
@@ -331,6 +332,9 @@ public class builder {
         string curdir = pwd();
         cd(ymp_build.ympbuild_buildpath);
         print(colorize(_("Extracting package resources from:"), yellow) + ymp_build.ympbuild_buildpath);
+        if (ymp_build.get_ympbuild_value("noextract") != ""){
+            return true;
+        }
         var tar = new archive();
         foreach(string src in ymp_build.get_ympbuild_array("source")) {
             if (src == "") {
