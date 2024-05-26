@@ -97,15 +97,16 @@ deps += [dependency('gio-2.0', static: get_option('static'), required:true)]
 pkgconfig_dep += ['gio-2.0']
 
 
-#libarchive
+#libarchive (no vapi)
 if get_option('libarchive')
-        libarchive = dependency('libarchive', static:get_option('static'),required:false)
+        libarchive = dependency('libarchive', static:get_option('static'), required:false)
         if not libarchive.found()
-            conf += ['no_libarchive']
-        endif
-        deps += [libarchive]
+        else
+            conf += ['libarchive']
+            pkgconfig_dep += ['libarchive']
+       endif
 else
-    conf += ['no_libarchive']
+    error('libarchive not found')
 endif
 
 #libreadline
