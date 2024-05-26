@@ -83,7 +83,7 @@ private void add_common_parameter (string arg, string desc) {
     common_parameters += (colorize (arg, red) + " : " + desc);
 }
 
-public class helpmsg {
+private class helpmsg {
     public string description="";
     private string[] parameters;
     public string name="";
