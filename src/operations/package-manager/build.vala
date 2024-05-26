@@ -2,10 +2,6 @@ private bool no_src = false;
 private static int build_operation (string[] args) {
     string current_directory=pwd ();
     string[] new_args = args;
-    if (usr_is_merged ()) {
-        error_add (_ ("Build operation with usrmerge is not allowed!"));
-        error (31);
-    }
     if (new_args.length == 0) {
         new_args = {pwd()};
     }
