@@ -217,16 +217,26 @@ int startswith(const char* data, const char* f) {
 }
 
 
-char medium_buffer[1024*1024];
-char* build_string(char* format, ...){
-    strcpy(medium_buffer,"");
+char* build_string(char* format, ...) {
     va_list args;
-    va_start (args, format);
-    vsprintf (medium_buffer, format, args);
-    va_end (args);
-    return medium_buffer;
+    va_start(args, format);
 
+    /* Determine the size needed for the string */
+    int size = vsnprintf(NULL, 0, format, args) + 1;
+    va_end(args);
+
+    /* Allocate memory for the string */
+    char* result = (char*)malloc(size);
+    if (result == NULL) {
+        return "";
+    }
+
+    /* Format the string */
+    va_start(args, format);
+    vsnprintf(result, size, format, args);
+    va_end(args);
+
+    return result;
 }
-
 
 #endif
