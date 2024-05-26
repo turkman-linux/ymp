@@ -8,6 +8,8 @@ typedef struct archive {
     char *archive_path;
     char *target_path;
     int add_list_size;
+    int aformat;
+    int afilter;
     array *a;
 } archive;
 
@@ -23,6 +25,8 @@ void archive_add(archive* arch, char* path);
 char* archive_readfile(archive* arch, char* path);
 char** archive_list_files(archive* arch, int* len);
 int archive_is_archive(archive* arch, char* path);
+void archive_write(archive *data, const char *outname, const char **filename);
+void archive_set_type(archive *data, char* form, char* filt);
 
 #endif /* ARCHIVE_CREATE_H */
 

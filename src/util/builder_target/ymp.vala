@@ -42,7 +42,7 @@ public void build_target_ymp_init() {
             }
             tar.add(file);
         }
-        set_archive_type("zip", "none");
+        tar.set_type("zip", "none");
         tar.create();
         cd(curdir);
         return buildpath + "/source.zip";
@@ -222,17 +222,17 @@ public void build_target_ymp_init() {
         var tar = new archive();
         if (get_value("compress") == "none") {
             tar.load(buildpath + "/output/data.tar");
-            set_archive_type("tar", "none");
+            tar.set_type("tar", "none");
         } else if (get_value("compress") == "gzip") {
             tar.load(buildpath + "/output/data.tar.gz");
-            set_archive_type("tar", "gzip");
+            tar.set_type("tar", "gzip");
         } else if (get_value("compress") == "xz") {
             tar.load(buildpath + "/output/data.tar.xz");
-            set_archive_type("tar", "xz");
+            tar.set_type("tar", "xz");
         } else {
             // Default format (gzip)
             tar.load(buildpath + "/output/data.tar.gz");
-            set_archive_type("tar", "gzip");
+            tar.set_type("tar", "gzip");
         }
         int fnum = 0;
         string curdir = pwd();
@@ -285,7 +285,7 @@ public void build_target_ymp_init() {
                 tar.add(path);
             }
         }
-        set_archive_type("zip", "none");
+        tar.set_type("zip", "none");
         tar.create();
         cd(curdir);
         return buildpath + "/package.zip";

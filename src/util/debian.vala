@@ -48,7 +48,7 @@ public int deb_create (string fpath, string output) {
     }
     // update md5sums
     writefile (path + "/DEBIAN/md5sums", md5sum_data);
-    set_archive_type ("tar", "xz");
+    data.set_type ("tar", "xz");
     data.create ();
     // create control.tar.xz
     cd (path + "/DEBIAN");
@@ -57,7 +57,7 @@ public int deb_create (string fpath, string output) {
     foreach (string file in listdir (".")) {
         control.add (file);
     }
-    set_archive_type ("tar", "xz");
+    control.set_type ("tar", "xz");
     control.create ();
     writefile (output + "/debian-binary", "2.0\n");
     cd (output);
@@ -68,7 +68,7 @@ public int deb_create (string fpath, string output) {
     debfile.add ("debian-binary");
     debfile.add ("control.tar.xz");
     debfile.add ("data.tar.xz");
-    set_archive_type ("ar", "none");
+    debfile.set_type ("ar", "none");
     debfile.create ();
     remove_file ("debian-binary");
     remove_file ("control.tar.xz");

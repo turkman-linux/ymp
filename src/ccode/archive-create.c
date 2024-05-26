@@ -1,7 +1,6 @@
 #ifndef _archive
 #define _archive
 
-
 #define zip 0
 #define tar 1
 #define p7zip 2
@@ -11,9 +10,6 @@
 #define filter_none 0
 #define filter_gzip 1
 #define filter_xz 2
-
-int aformat = 1;
-int afilter = 0;
 
 #ifndef _XOPEN_SOURCE
 #define _XOPEN_SOURCE 700
@@ -33,6 +29,9 @@ int afilter = 0;
 #include <unistd.h>
 
 #include <limits.h>
+
+
+#include <archive_extract.h>
 
 #ifndef PATH_MAX
 #define PATH_MAX 1024
@@ -61,32 +60,32 @@ int has_error();
 void error(int num);
 #endif
 
-void set_archive_type(char* form, char* filt){
+void archive_set_type(archive *data, char* form, char* filt){
     #ifdef debug
     debug("Archive type changed");
     debug(form);
     debug(filt);
     #endif
     if(strcmp(form,"zip")==0)
-        aformat=zip;
+        data->aformat=zip;
     else if(strcmp(form,"tar")==0)
-        aformat=tar;
+        data->aformat=tar;
     else if(strcmp(form,"p7zip")==0)
-        aformat=p7zip;
+        data->aformat=p7zip;
     else if(strcmp(form,"cpio")==0)
-        aformat=cpio;
+        data->aformat=cpio;
     else if(strcmp(form,"ar")==0)
-        aformat=ar;
+        data->aformat=ar;
 
     if(strcmp(filt,"none")==0)
-        afilter=filter_none;
+        data->afilter=filter_none;
     else if(strcmp(filt,"gzip")==0)
-        afilter=filter_gzip;
+        data->afilter=filter_gzip;
     else if(strcmp(filt,"xz")==0)
-        afilter=filter_xz;
+        data->afilter=filter_xz;
 }
 
-void write_archive(const char *outname, const char **filename) {
+void archive_write(archive *data, const char *outname, const char **filename) {
   struct archive *a;
   struct archive_entry *entry;
   struct stat st;
@@ -97,21 +96,21 @@ void write_archive(const char *outname, const char **filename) {
 
   a = archive_write_new();
   /* compress format */
-  if(afilter == filter_gzip){
+  if(data->afilter == filter_gzip){
       archive_write_add_filter_gzip(a);
-  }else if(afilter == filter_xz){
+  }else if(data->afilter == filter_xz){
       archive_write_add_filter_xz(a);
   }else{
       archive_write_add_filter_none(a);
   }
   /* archive format */
-  if(aformat == tar){
+  if(data->aformat == tar){
       e = (archive_write_set_format_gnutar(a) != ARCHIVE_OK);
-  }else if (aformat == p7zip){
+  }else if (data->aformat == p7zip){
       e = (archive_write_set_format_7zip(a) != ARCHIVE_OK);
-  }else if (aformat == cpio){
+  }else if (data->aformat == cpio){
       e = (archive_write_set_format_cpio(a) != ARCHIVE_OK);
-  }else if (aformat == ar){
+  }else if (data->aformat == ar){
       e = (archive_write_set_format_ar_bsd(a) != ARCHIVE_OK);
   }else{
       e = (archive_write_set_format_zip(a) != ARCHIVE_OK);

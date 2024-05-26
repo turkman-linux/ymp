@@ -10,4 +10,5 @@ public class archive {
     public string readfile(string path);
     public string[] list_files();
     public bool is_archive(string path);
+    public void set_type(string aformat, string afilt);
 }

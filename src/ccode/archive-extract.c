@@ -5,9 +5,6 @@
 #include <archive.h>
 #include <archive_entry.h>
 
-extern void set_archive_type(char* type, char* algorthm);
-extern void write_archive(char* path, char** add_list);
-
 extern void error_add(char* message);
 
 extern char* build_string(char* format, ...);
@@ -55,7 +52,7 @@ void archive_unref(archive *data){
 void archive_load(archive *data, char* path) {
     fdebug("archive load: %s", path);
     data->archive_path = strdup(path);
-    set_archive_type("zip", "none");
+    archive_set_type(data, "zip", "none");
 }
 
 void archive_load_archive(archive *data) {
@@ -103,7 +100,7 @@ void archive_add(archive *data, char *path) {
 void archive_create(archive *data){
     fdebug("archive create: %s", data->archive_path);
     int *len;
-    write_archive(data->archive_path, array_get(data->a, &len));
+    archive_write(data, data->archive_path, array_get(data->a, &len));
 }
 
 void archive_extract(archive *data, char *path) {
