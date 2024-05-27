@@ -94,7 +94,7 @@ int isdir(char *path){
 }
 
 #define c_mkdir(A, B) \
-    if (strlen(A) == 0 && mkdir(A, B) < 0 && !isexists(A)) { \
+    if (strlen(A) > 0 && mkdir(A, B) < 0 && !isexists(A)) { \
         ferror_add("%s: %s", "failed to create directory", A); \
 }
 
