@@ -125,7 +125,7 @@ static void archive_extract_fn(archive *data, char *path, bool all) {
                 }
                 continue;
             }
-        } else {
+        }else if (S_ISREG(mode)){
 		    FILE *file = fopen(target_file, "wb");
 		    if (file == NULL) {
 		        char* error_msg = build_string("Failed to open file for writing: %s", target_file);
@@ -139,6 +139,8 @@ static void archive_extract_fn(archive *data, char *path, bool all) {
 		    }
 		    fclose(file);
 		    chmod(target_file, 0755);
+        } else {
+            fwarning("Skip unsupported archive entry: %s", entry_path);
         }
     }
 }
