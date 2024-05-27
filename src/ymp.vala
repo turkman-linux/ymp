@@ -2,12 +2,14 @@ private bool ymp_activated = false;
 
 #ifndef no_locale
 private extern void locale_init();
+private extern void enable_sigsegv_trace();
 public const string GETTEXT_PACKAGE="ymp";
 #endif
 public void ymp_init (string[] args) {
     if(ymp_activated){
         return;
     }
+    enable_sigsegv_trace();
     #ifndef no_locale
     locale_init();
     #endif
