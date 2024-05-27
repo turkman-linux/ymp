@@ -5,10 +5,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <execinfo.h>
 #include <unistd.h>
 #include <string.h>
 
+#if __GNU_LIBRARY__
+#include <execinfo.h>
+#endif 
 typedef void (*sighandler_t)(int);
 sighandler_t sigint_signal;
 
@@ -19,7 +21,7 @@ void block_sigint(){
 void unblock_sigint(){
    signal(SIGINT, sigint_signal);
 }
-
+#if __GNU_LIBRARY__
 static void sigsegv_handler(int sig) {
     void *array[10];
     size_t size;
@@ -52,6 +54,10 @@ void enable_sigsegv_trace(){
     sigact.sa_flags = 0;
     sigaction(SIGSEGV, &sigact, NULL);
 }
+#else
+void enable_sigsegv_trace(){}
+#endif
+
 
 #ifndef kill
 int kill(pid_t pid, int sig);
