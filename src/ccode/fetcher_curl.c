@@ -54,11 +54,8 @@ static size_t write_data_to_string(void *ptr, size_t size, size_t nmemb, void *s
   return size*nmemb;
 }
 
-char fetcher_filename[PATH_MAX];
-
-
 int fetcher_process_to_stderr(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded){
-    fprintf(stderr, "CUR: %ld TOT: %ld NAME: %s\r\n", current, total, fetcher_filename);
+    fprintf(stderr, "CUR: %ld TOT: %ld\r\n", current, total);
     return 0;
 }
 
@@ -95,6 +92,7 @@ void curl_options_common(CURL *curl, char* url){
 
 int fetch(char* url, char* path){
     FILE *fp;
+    char fetcher_filename[PATH_MAX];
     strcpy(fetcher_filename,path);
     CURL* curl=curl_easy_init();
     finfo("Downloading: %s\n",path);
@@ -119,6 +117,7 @@ char* fetch_string(char* url){
     CURL* curl=curl_easy_init();
     struct string s;
     init_string(&s);
+    char fetcher_filename[PATH_MAX];
     strcpy(fetcher_filename,"");
     curl_options_common(curl, url);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_string);
