@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <logger.h>
+#include <error.h>
+
 #ifndef get_bool
 int get_bool(char* msg);
 #endif
@@ -15,7 +18,7 @@ void brainfuck(char * code, unsigned int size) {
   }
   for (i = 0; i < strlen(code); i++) {
     if(ptr >=size){
-        fprintf(stderr,"Failed to run brainfuck code:  %s\n","Out of memory");
+        ferror_add("Failed to run brainfuck code:  %s\n","Out of memory");
         return;
     }
     if (code[i] == '>') {

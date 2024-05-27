@@ -14,26 +14,7 @@ extern char* build_string(char* format, ...);
 #endif
 
 
-#if DEBUG
-extern void debug(char* message);
-#define fdebug(A, ...) \
-    do { \
-        char* message = build_string(A, ##__VA_ARGS__); \
-        debug(message); \
-        free(message); \
-    } while (0)
-#else
-#define debug(A)
-#define fdebug(A,...)
-#endif
-
-extern void info(char* message);
-#define finfo(A, ...) \
-    do { \
-        char* message = build_string(A, ##__VA_ARGS__); \
-        info(message); \
-        free(message); \
-    } while (0)
+#include <logger.h>
 
 #include <archive_extract.h>
 
@@ -55,7 +36,7 @@ void archive_load(archive *data, char* path) {
     archive_set_type(data, "zip", "none");
 }
 
-void archive_load_archive(archive *data) {
+static void archive_load_archive(archive *data) {
     data->archive = archive_read_new();
     archive_read_support_filter_all(data->archive);
     archive_read_support_format_all(data->archive);

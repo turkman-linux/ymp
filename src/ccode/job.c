@@ -7,7 +7,7 @@
 
 #include <jobs.h>
 
-void* worker_thread(void* arg) {
+static void* worker_thread(void* arg) {
     jobs* j = (jobs*)arg;
     while (1) {
         if (j->finished >= j->total) {

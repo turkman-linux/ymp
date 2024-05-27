@@ -1,4 +1,13 @@
 #include <stdbool.h>
+#include <stdlib.h>
 void error(int status);
 void error_add(char* message);
 bool has_error();
+
+#define ferror_add(A, ...) \
+    do { \
+        char* message = build_string(A, ##__VA_ARGS__); \
+        error_add(message); \
+        free(message); \
+    } while (0)
+

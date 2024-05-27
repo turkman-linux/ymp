@@ -32,6 +32,8 @@
 
 
 #include <archive_extract.h>
+#include <logger.h>
+#include <error.h>
 
 #ifndef PATH_MAX
 #define PATH_MAX 1024
@@ -48,16 +50,6 @@ int get_bool(char*variable);
 
 #ifndef isexists
 int isexists(const char*path);
-#endif
-
-#ifndef debug
-void debug(char* msg);
-#endif
-
-#ifndef error_add
-void error_add(char* msg);
-int has_error();
-void error(int num);
 #endif
 
 void archive_set_type(archive *data, char* form, char* filt){
@@ -128,7 +120,7 @@ void archive_write(archive *data, const char *outname, const char **filename) {
   entry = NULL;
   while (*filename) {
     if(!isexists(*filename)){
-        fprintf(stderr,"Non-existent enty detected: %s\n",*filename);
+        fwarning("Non-existent enty detected: %s\n",*filename);
         continue;
     }
     lstat(*filename, &st);
@@ -166,16 +158,12 @@ void archive_write(archive *data, const char *outname, const char **filename) {
         #endif
         len = readlink(*filename,link,sizeof(link));
         if(len < 0){
-            fprintf(stderr,"Broken symlink: %s\n",*filename);
+            ferror_add("Broken symlink: %s\n",*filename);
             error_add("Failed to create archive");
             break;
         }
         link[len] = '\0';
-        #ifdef DEBUG
-        if(get_bool("debug")){
-            fprintf(stderr,"Symlink: %s %s\n",*filename, link);
-        }
-        #endif
+        fdebug("Symlink: %s %s\n",*filename, link);
         archive_entry_set_filetype(entry, AE_IFLNK);
         archive_entry_set_symlink(entry, link);
     } else if (S_ISREG(st.st_mode)) {
@@ -196,16 +184,14 @@ void archive_write(archive *data, const char *outname, const char **filename) {
         type = "unknown";
         #endif
         archive_entry_set_filetype(entry, AE_IFREG);
-        fprintf(stderr,"Unknown enty detected: %s (%d %d)\n",*filename,st.st_mode,AE_IFREG);
+        ferror_add("Unknown enty detected: %s (%d %d)\n",*filename,st.st_mode,AE_IFREG);
         error_add("Failed to create archive");
     }
     if(has_error()){
         error(2);
     }
     #ifdef DEBUG
-    if(get_bool("debug")){
-        fprintf(stderr,"Compress: %s type %s (%d)\n",*filename,type,st.st_mode);
-    }
+    fdebug("Compress: %s type %s (%d)\n",*filename,type,st.st_mode);
     #endif
     archive_entry_set_perm(entry, 0644);
     archive_write_header(a, entry);

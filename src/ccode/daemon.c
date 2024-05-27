@@ -6,6 +6,10 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <fcntl.h>
+
+
+#include <logger.h>
+
 void skeleton_daemon(){
     pid_t pid;
 
@@ -39,6 +43,6 @@ void skeleton_daemon(){
     if (pid > 0)
         exit(EXIT_SUCCESS);
 
-    fprintf (stderr, "Daemon started:\t[%d]\n",getpid ()+1);
+    print_stderr(build_string("Daemon started:\t[%d]\n",getpid ()+1));
 
 }
