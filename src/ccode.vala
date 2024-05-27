@@ -26,13 +26,6 @@ public extern int get_uid_by_user (string username);
 //DOC: chech root user
 public extern bool is_root ();
 
-// ### nostd.c
-// All private functions. please look util/interface.vala
-private extern void no_stdin ();
-private extern void no_stdout ();
-private extern void no_stderr ();
-private extern void reset_std ();
-
 //DOC: ### sandbox.c
 //DOC: `void sandbox (string type, string[] args):`
 //DOC: run command in sandboxed area

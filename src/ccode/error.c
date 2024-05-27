@@ -29,7 +29,6 @@ void error(int status){
     size_t len = 0;
     char** errs = array_get(error_arr, &len);
     if(len > 0 && !get_bool ("ignore-error")) {
-        printf("%ld\n", len);
         for(i=0;i<len;i++){
             if(errs[i] != NULL){
                 print_stderr(build_string("%s: %s", colorize(_ ("ERROR"), red), strdup(errs[i])));

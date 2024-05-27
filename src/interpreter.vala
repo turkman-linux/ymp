@@ -8,6 +8,10 @@ public void add_script(string data) {
     }
 }
 
+private extern void no_stdin();
+private extern void reset_std();
+
+
 public int ymp_run() {
     variable_integer[] labels = {};
     bool label_found = false;
@@ -78,10 +82,10 @@ public int ymp_run() {
         }
         lock_operation();
         if (get_bool("disable-stdin")) {
-            nostdin();
+            no_stdin();
         }
         int status = operation_main(proc[i].type, proc[i].args);
-        resetstd();
+        reset_std();
         unlock_operation();
         if (status != 0) {
             string type = proc[i].type;
