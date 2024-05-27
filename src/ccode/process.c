@@ -22,6 +22,9 @@ char* which(char* path);
 char* str_add(char* str1, char* str2);
 #endif
 
+
+#include <error.h>
+
 int locked=0;
 void single_instance(){
     if(locked){
@@ -32,7 +35,7 @@ void single_instance(){
     locked = 1;
     if(rc) {
         if(EWOULDBLOCK == errno){
-            puts("Another ymp instance is already running");
+            error_add("Another ymp instance is already running");
             exit(31);
         }
     }
@@ -70,7 +73,7 @@ int run_args(char **command) {
             return WEXITSTATUS(status);
         } else {
             /* Child process did not terminate normally */
-            fprintf(stderr, "Child process did not terminate normally.\n");
+            error_add("Child process did not terminate normally.\n");
             return EXIT_FAILURE;
         }
     }
@@ -113,7 +116,7 @@ int run_args_silent(char **command) {
             return WEXITSTATUS(status);
         } else {
             /* Child process did not terminate normally */
-            fprintf(stderr, "Child process did not terminate normally.\n");
+            error_add( "Child process did not terminate normally.\n");
             return EXIT_FAILURE;
         }
     }

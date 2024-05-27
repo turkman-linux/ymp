@@ -11,6 +11,9 @@ char* get_value(char* variable);
 int get_bool(char* variable);
 #endif
 
+#include <logger.h>
+#include <error.h>
+
 #ifndef PATH_MAX
 #define PATH_MAX 1024
 #endif
@@ -29,8 +32,8 @@ void init_string(struct string *s) {
   s->len = 0;
   s->ptr = calloc(1, s->len+1);
   if (s->ptr == NULL) {
-    fprintf(stderr, "calloc() failed\n");
-    exit(EXIT_FAILURE);
+    ferror_add("calloc() failed\n");
+    error(1);
   }
   s->ptr[0] = '\0';
 }
@@ -41,8 +44,8 @@ static size_t write_data_to_string(void *ptr, size_t size, size_t nmemb, void *s
   size_t new_len = s->len + size*nmemb;
   s->ptr = realloc(s->ptr, new_len+1);
   if (s->ptr == NULL) {
-    fprintf(stderr, "realloc() failed\n");
-    exit(EXIT_FAILURE);
+    ferror_add( "realloc() failed\n");
+    error(1);
   }
   memcpy(s->ptr+s->len, ptr, size*nmemb);
   s->ptr[new_len] = '\0';
@@ -94,7 +97,7 @@ int fetch(char* url, char* path){
     FILE *fp;
     strcpy(fetcher_filename,path);
     CURL* curl=curl_easy_init();
-    printf("Downloading: %s\n",path);
+    finfo("Downloading: %s\n",path);
     fp = fopen(path,"wb");
     curl_options_common(curl, url);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_file);
@@ -102,7 +105,7 @@ int fetch(char* url, char* path){
     CURLcode res;
     res = curl_easy_perform(curl);
     if(res != CURLE_OK || res == CURLE_HTTP_RETURNED_ERROR){
-        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+        ferror_add("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
         curl_easy_cleanup(curl);
         return 0;
     }
@@ -123,7 +126,7 @@ char* fetch_string(char* url){
     CURLcode res;
     res = curl_easy_perform(curl);
     if(res != CURLE_OK){
-        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+        ferror_add("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
         return (char*)(s.ptr);
     }
     curl_easy_cleanup(curl);

@@ -1,5 +1,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
+
+extern char* build_string(char* message, ...);
+
 void error(int status);
 void error_add(char* message);
 bool has_error();

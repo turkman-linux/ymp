@@ -132,7 +132,7 @@ char* url_decode(const char *input) {
     char *output = (char *)calloc((cnt + 1), sizeof(char));
 
     if (output == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
+        perror("Memory allocation failed\n");
         return (char*) input;
     }
 
@@ -173,7 +173,7 @@ char* url_encode(const char *input) {
     char *output = (char *)malloc((cnt + 1) * sizeof(char));
 
     if (output == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
+        perror( "Memory allocation failed\n");
         return (char*) input;
     }
 

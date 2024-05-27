@@ -39,6 +39,9 @@ void debug(char* msg);
 #endif
 char* str_add(char* s1, char* s2);
 
+#include <logger.h>
+#include <error.h>
+
 uint64_t filesize(char* path){
     struct stat st;
     stat(path, &st);
@@ -91,8 +94,9 @@ int isdir(char *path){
 }
 
 #define c_mkdir(A, B) \
-    if (mkdir(A, B) < 0) { \
-        fprintf(stderr, "Error: %s %s\n", "failed to create directory.", A); \
+    if (isexists(A)) \
+        if (mkdir(A, B) < 0) { \
+            ferror_add("%s %s\n", "failed to create directory.", A); \
 }
 
 #ifndef isexists
@@ -171,9 +175,9 @@ char * readfile_raw(const char * filename) {
 
     if (err) {
         if (err == FILE_NOT_EXIST) {
-            fprintf(stderr, "Error: %s (%d) %s\n", "file not found.", err, filename);
+            ferror_add("%s (%d) %s\n", "file not found.", err, filename);
         } else if (err == FILE_READ_ERROR) {
-            fprintf(stderr, "Error: %s (%d) %s\n", "failed to read file.", err,filename);
+            ferror_add("%s (%d) %s\n", "failed to read file.", err,filename);
         }
         return "";
     } else {
@@ -200,7 +204,7 @@ void cd(char *path) {
 
     /* Set the current directory to the specified path */
     if (chdir(path) != 0) {
-        perror("Error changing directory");
+        ferror_add("Error changing directory: %s", path);
         return;
     }
 }
@@ -273,13 +277,13 @@ char* safedir(char* dir) {
 void write_to_file(const char *which, const char *format, ...) {
   FILE * fu = fopen(which, "w");
   if (fu == NULL) {
-      fprintf(stderr,"Error: Cannot open for write %s\n", which);
+      ferror_add("Cannot open for write %s\n", which);
       return;
   }
   va_list args;
   va_start(args, format);
   if (vfprintf(fu, format, args) < 0) {
-    fprintf(stderr,"Error: Cannot write %s\n", which);
+    ferror_add("Cannot write %s\n", which);
   }
   fclose(fu);
 }
