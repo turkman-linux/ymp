@@ -204,6 +204,9 @@ private extern void bf_compile(string code);
 //DOC: ymp plugin load function
 public extern void load_plugin (string path);
 
+public extern void error(int status);
+public extern void error_add(string message);
+public extern bool has_error();
 
 //libc functions for vala source
 private extern int chown(char* path, int uid, int gid);

@@ -1,4 +1,3 @@
-private string[] errors;
 
 //DOC: ## logging functions
 
@@ -62,41 +61,3 @@ public void set_terminal_title (string msg) {
     #endif
 }
 
-//DOC: `void error (int status):`
-//DOC: print error message and exit if error message list not empty and status is not 0.
-//DOC: This function clear error message list.
-//DOC: This funtion must run after **error_add (string message)**
-//DOC: Example usage:
-//DOC: ```vala
-//DOC: if (num == 12) {
-//DOC:     error_add ("Number is not 12.");
-//DOC: }
-//DOC: error (1);
-//DOC: ```
-public void error (int status) {
-    if (has_error ()) {
-         if (!get_bool ("ignore-error")) {
-            foreach (string error in errors) {
-                print_stderr ("%s: %s".printf (colorize (_ ("ERROR"), red), error));
-            }
-        }
-        errors = null;
-        if (status != 0 && !get_bool ("shellmode")) {
-            exit (status);
-        }
-    }
-}
-public bool has_error () {
-    return errors.length != 0;
-}
-
-//DOC: `void error_add (string message):`
-//DOC: add error message to error message list
-public void error_add (string message) {
-    if (errors == null) {
-        errors = {};
-    }
-    if (message != null) {
-        errors += message;
-    }
-}
