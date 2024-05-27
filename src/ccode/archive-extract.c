@@ -15,6 +15,7 @@ extern char* build_string(char* format, ...);
 
 
 #include <logger.h>
+#include <error.h>
 
 #include <archive_extract.h>
 
@@ -83,8 +84,10 @@ void archive_create(archive *data){
     int *len;
     archive_write(data, data->archive_path, array_get(data->a, &len));
 }
-
-void archive_extract(archive *data, char *path) {
+extern char* sdirname(char* path);
+extern void create_dir(char* path);
+extern bool isdir(char* path);
+static void archive_extract_fn(archive *data, char *path, bool all) {
     fdebug("archive extract: %s => %s", data->archive_path, path);
     archive_load_archive(data);
     struct archive_entry *entry;
@@ -93,17 +96,11 @@ void archive_extract(archive *data, char *path) {
         char *target_file = NULL;
         if(strlen(entry_path) == 0){
             continue;
-        } else if (strcmp(entry_path, path) != 0) {
+        } else if (strcmp(entry_path, path) != 0 && !all) {
             continue;
         }
         finfo("Extract: %s", entry_path);
-        if (data->target_path != NULL) {
-            size_t target_file_len = strlen(data->target_path) + strlen(entry_path) + 2;
-            target_file = malloc(target_file_len);
-            snprintf((char *)target_file, target_file_len, "%s/%s", data->target_path, entry_path);
-        } else {
-            target_file = entry_path;
-        }
+        target_file = build_string("%s/%s", data->target_path, entry_path);
         /* Check if entry is a directory */
         mode_t mode = archive_entry_filetype(entry);
         if (S_ISDIR(mode)) {
@@ -111,24 +108,38 @@ void archive_extract(archive *data, char *path) {
             if (access(target_file, F_OK) != -1) {
                 continue;
             }
-            if (mkdir(target_file, 0755) != 0) {
-                char* error_msg = build_string("Failed to create directory: %s", target_file);
-                error_add(error_msg);
-            }
+            create_dir(target_file);
             continue;
         }
-        FILE *file = fopen(target_file, "wb");
-        if (file == NULL) {
-            char* error_msg = build_string("Failed to open file for writing: %s", target_file);
-           error_add(error_msg);
+        char* dirname = sdirname(target_file);
+        if (!isdir(dirname)) {
+            create_dir(dirname);
         }
-        char buffer[4096];
-        ssize_t size;
-        while ((size = archive_read_data(data->archive, buffer, sizeof(buffer))) > 0) {
-            fwrite(buffer, 1, size, file);
+        if (S_ISLNK(mode)) {
+            char *link_target = archive_entry_symlink(entry);
+            if (link_target != NULL) {
+                if (symlink(link_target, target_file) != 0) {
+                    char* error_msg = build_string("Failed to create symbolic link: %s -> %s", target_file, link_target);
+                    error_add(error_msg);
+                    error(3);
+                }
+                continue;
+            }
+        } else {
+		    FILE *file = fopen(target_file, "wb");
+		    if (file == NULL) {
+		        char* error_msg = build_string("Failed to open file for writing: %s", target_file);
+		        error_add(error_msg);
+		        error(3);
+		    }
+		    char buffer[4096];
+		    ssize_t size;
+		    while ((size = archive_read_data(data->archive, buffer, sizeof(buffer))) > 0) {
+		        fwrite(buffer, 1, size, file);
+		    }
+		    fclose(file);
+		    chmod(target_file, 0755);
         }
-        fclose(file);
-        chmod(target_file, 0755);
     }
 }
            
@@ -163,48 +174,9 @@ char* archive_readfile(archive *data, char *file_path) {
 #include <sys/stat.h>
 
 void archive_extract_all(archive *data) {
-    archive_load_archive(data);
-    struct archive_entry *entry;
-    while (archive_read_next_header(data->archive, &entry) == ARCHIVE_OK) {
-        char *entry_path = archive_entry_pathname(entry);
-        char *target_file = NULL;
-        if(strlen(entry_path) == 0){
-            continue;
-        }
-        finfo("Extract: %s", entry_path);
-        if (data->target_path != NULL) {
-            size_t target_file_len = strlen(data->target_path) + strlen(entry_path) + 2;
-            target_file = malloc(target_file_len);
-            snprintf((char *)target_file, target_file_len, "%s/%s", data->target_path, entry_path);
-        } else {
-            target_file = entry_path;
-        }
-        /* Check if entry is a directory */
-        mode_t mode = archive_entry_filetype(entry);
-        if (S_ISDIR(mode)) {
-            /* Create the directory if it doesn't exist */
-            if (access(target_file, F_OK) != -1) {
-                continue;
-            }
-            if (mkdir(target_file, 0755) != 0) {
-                char* error_msg = build_string("Failed to create directory: %s", target_file);
-               error_add(error_msg);
-            }
-            continue;
-        }
-        FILE *file = fopen(target_file, "wb");
-        if (file == NULL) {
-            char* error_msg = build_string("Failed to open file for writing: %s", target_file);
-           error_add(error_msg);
-        }
-        char buffer[4096];
-        ssize_t size;
-        while ((size = archive_read_data(data->archive, buffer, sizeof(buffer))) > 0){
-            fwrite(buffer, 1, size, file);
-        }
-        fclose(file);
-        chmod(target_file, 0755);
-    }
+    archive_extract_fn(data, "",true);
 }
-
+void archive_extract(archive *data, char* path) {
+    archive_extract_fn(data, path, false);
+}
 

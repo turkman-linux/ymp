@@ -94,9 +94,8 @@ int isdir(char *path){
 }
 
 #define c_mkdir(A, B) \
-    if (!isexists(A)) \
-        if (mkdir(A, B) < 0) { \
-            ferror_add("%s %s\n", "failed to create directory.", A); \
+    if (strlen(A) == 0 && mkdir(A, B) < 0 && !isexists(A)) { \
+        ferror_add("%s: %s", "failed to create directory", A); \
 }
 
 #ifndef isexists
@@ -115,12 +114,10 @@ void create_dir(const char *dir) {
     for (p = tmp + 1; *p; p++)
         if (*p == '/') {
             *p = 0;
-            if(!isexists(tmp))
-                c_mkdir(tmp, 0755);
+            c_mkdir(tmp, 0755);
             *p = '/';
         }
-    if(!isexists(tmp))
-        c_mkdir(tmp, 0755);
+    c_mkdir(tmp, 0755);
 }
 
 static char * c_read_file(const char * f_name, int * err, size_t * f_size) {
