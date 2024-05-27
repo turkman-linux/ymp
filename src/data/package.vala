@@ -186,6 +186,7 @@ public class package {
     }
 
     public void download_only () {
+        print (colorize (_ ("Downloading: %s"), yellow).printf (name));
         target = get_storage () + "/packages/" + sbasename (get_uri ());
         if (isfile (target)) {
             info (_ ("File already exists: %s").printf (target));
