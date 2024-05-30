@@ -94,6 +94,10 @@ static void archive_extract_fn(archive *data, char *path, bool all) {
     while (archive_read_next_header(data->archive, &entry) == ARCHIVE_OK) {
         char *entry_path = archive_entry_pathname(entry);
         char *target_file = NULL;
+        if(data->target_path == NULL){
+            ferror_add("Archive extract path is not defined: %s", data->archive_path);
+            error(3);
+        }
         if(strlen(entry_path) == 0){
             continue;
         } else if (strcmp(entry_path, path) != 0 && !all) {

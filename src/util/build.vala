@@ -346,6 +346,7 @@ public class builder {
             }
             if (tar.is_archive(srcfile)) {
                 tar.load(srcfile);
+                tar.set_target(ymp_build.ympbuild_buildpath);
                 tar.extract_all();
             }
         }
