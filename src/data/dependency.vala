@@ -5,6 +5,7 @@ private array cache_list;
 
 private bool ignore_missing;
 private bool reinstall;
+private string parent;
 private bool ignore_dependency;
 private int max_depth = -1;
 private bool unsafe;
@@ -60,7 +61,7 @@ private static void resolve_process (string[] names) {
                     pkg = get_installed_package (name);
                 }
             }else {
-                string errmsg = _ ("Package is not installable: %s").printf (name);
+                string errmsg = _ ("Package is not installable: %s Required by %s").printf (name, parent);
                 if (!ignore_missing) {
                     error_add (errmsg);
                 } else {
@@ -77,6 +78,7 @@ private static void resolve_process (string[] names) {
             if (!ignore_dependency) {
                 // run recursive function
                 depth += 1;
+                parent=name;
                 resolve_process (pkg.dependencies);
                 depth -= 1;
             }
@@ -232,12 +234,13 @@ public string[] resolve_dependencies (string[] names) {
     if (max_depth <= 0) {
         max_depth = 1000000;
     }
-    
+
     // reset need list
     need_install = new array ();
     // reset cache list
     cache_list = new array ();
     depth=0;
+    parent = "";
     resolve_process (names);
     error (3);
     return need_install.get ();

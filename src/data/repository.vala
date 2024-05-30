@@ -170,9 +170,9 @@ public bool is_available_source (string name) {
 //DOC: return true if package/source is available
 public bool is_available_from_repository (string name) {
     if (get_bool ("no-emerge")) {
-        return is_available_source (name);
-    }else {
         return is_available_package (name);
+    }else {
+        return is_available_source (name);
     }
 }
 
