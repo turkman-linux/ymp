@@ -325,22 +325,80 @@ public string[] list_available_packages () {
     return ret.get();
 }
 
+
+private string[] index_a;
+private void create_index_single(repo_index_ctx *ctx) {
+    array a = new array();
+    var tar = new archive ();
+    var yaml = new yamlfile ();
+    string file = ctx->file;
+    string path = ctx->path;
+    // name lists
+    string[] srcs = {};
+    string[] pkgs = {};
+    // tmp variable
+    string nam = "";
+    string dat = "";
+    string rel = "";
+    string md5sum = calculate_md5sum (file);
+    string sha256sum = calculate_sha256sum (file);
+    uint64 size = filesize (file);
+    tar.load (file);
+    file = file[path.length:];
+    info ("Index: " + file);
+    string  metadata = tar.readfile ("metadata.yaml");
+    string ymparea = yaml.get_area (metadata, "ymp");
+    if (!get_bool ("ignore-check")) {
+        if (yaml.has_area (ymparea, "source")) {
+            dat = yaml.get_area (ymparea, "source");
+            nam = yaml.get_value (dat, "name");
+            rel = yaml.get_value (dat, "release");
+            if (nam + "-" + rel in srcs) {
+                warning (_ ("A source has multiple versions: %s").printf (nam));
+            }
+            srcs += nam + "-" + rel;
+        }
+        if (yaml.has_area (ymparea, "package")) {
+            dat = yaml.get_area (ymparea, "package");
+            nam = yaml.get_value (dat, "name");
+            rel = yaml.get_value (dat, "release");
+            if (nam + "-" + rel in pkgs) {
+                warning (_ ("A package has multiple versions: %s").printf (nam));
+            }
+            pkgs += nam + "-" + rel;
+        }
+    }
+    foreach (string line in ssplit (ymparea, "\n")) {
+        if (line == "" || line == null) {
+            continue;
+        }
+        a.add("  %s\n".printf(line));
+    }
+    a.add("    md5sum: %s\n".printf(md5sum));
+    a.add("    sha256sum: %s\n".printf(sha256sum));
+    a.add("    size: %s\n".printf(size.to_string ()));
+    a.add("    uri: %s\n\n".printf(file));
+    index_a[ctx->number] = a.get_string();
+}
+
+private class repo_index_ctx {
+    public string path;
+    public string file;
+    public int number;
+}
+
 //DOC: `string create_index_data (string fpath):`
 //DOC: generate remote repository index data
 public string create_index_data (string fpath) {
-    array a = new array();
+    var a = new array();
     a.add("index:\n");
-    string md5sum = "";
-    string sha256sum = "";
-    uint64 size=0;
+    
     string path = srealpath (fpath);
     string index_name = get_value ("name");
     if (index_name == "") {
         error_add (_ ("Index name is not defined. Please use --name=xxx"));
         error (1);
     }
-    var tar = new archive ();
-    var yaml = new yamlfile ();
     a.add("  name: %s\n".printf(index_name));
     foreach (string file in find (path)) {
         if (endswith (file, ".ymp")) {
@@ -360,56 +418,25 @@ public string create_index_data (string fpath) {
             }
         }
     }
-    // name lists
-    string[] srcs = {};
-    string[] pkgs = {};
-    // tmp variable
-    string nam = "";
-    string dat = "";
-    string rel = "";
-    string metadata = "";
-    string ymparea = "";
+
+    jobs j = new jobs();
+    int i=0;
     foreach (string file in find (path)) {
-        if (endswith (file, ".ymp")) {
-            md5sum = calculate_md5sum (file);
-            sha256sum = calculate_sha256sum (file);
-            size = filesize (file);
-            tar.load (file);
-            file = file[path.length:];
-            info ("Index: " + file);
-            metadata = tar.readfile ("metadata.yaml");
-            ymparea = yaml.get_area (metadata, "ymp");
-            if (!get_bool ("ignore-check")) {
-                if (yaml.has_area (ymparea, "source")) {
-                    dat = yaml.get_area (ymparea, "source");
-                    nam = yaml.get_value (dat, "name");
-                    rel = yaml.get_value (dat, "release");
-                    if (nam + "-" + rel in srcs) {
-                        warning (_ ("A source has multiple versions: %s").printf (nam));
-                    }
-                    srcs += nam + "-" + rel;
-                }
-                if (yaml.has_area (ymparea, "package")) {
-                    dat = yaml.get_area (ymparea, "package");
-                    nam = yaml.get_value (dat, "name");
-                    rel = yaml.get_value (dat, "release");
-                    if (nam + "-" + rel in pkgs) {
-                        warning (_ ("A package has multiple versions: %s").printf (nam));
-                    }
-                    pkgs += nam + "-" + rel;
-                }
-            }
-            foreach (string line in ssplit (ymparea, "\n")) {
-                if (line == "" || line == null) {
-                    continue;
-                }
-                a.add("  %s\n".printf(line));
-            }
-            a.add("    md5sum: %s\n".printf(md5sum));
-            a.add("    sha256sum: %s\n".printf(sha256sum));
-            a.add("    size: %s\n".printf(size.to_string ()));
-            a.add("    uri: %s\n\n".printf(file));
+        if (!endswith (file, ".ymp")) { // skip for non ymp files
+            continue;
         }
+        // create context for index
+        repo_index_ctx *ctx = new repo_index_ctx();
+        ctx->path = path; // index path
+        ctx->file= file; // file path
+        ctx->number=i; // file index
+        j.add((void*)create_index_single, ctx, ctx); // run async 
+        i++; // increase index
+    }
+    index_a = new string[i]; // allocate string array
+    j.run(); // run all jobs
+    for(int ii = 0;ii < i;ii++){
+       a.add(index_a[ii]);  // copy all data into array library
     }
     return a.get_string();
 }

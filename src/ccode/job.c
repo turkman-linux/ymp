@@ -6,31 +6,23 @@
 #include <stdarg.h>
 
 #include <jobs.h>
+#include <logger.h>
+
+typedef struct _worker_job {
+    jobs* j;
+    int id;
+} worker_job;
 
 static void* worker_thread(void* arg) {
-    jobs* j = (jobs*)arg;
-    while (1) {
-        if (j->finished >= j->total) {
-            break;
-        }
-        int i;
-        bool e = false; /* search for job */
-        for (i = 0; i < j->total; ++i) {
-            if (j->jobs[i].callback != NULL) {
-                void (*callback)(void*, ...) = j->jobs[i].callback;
-                j->jobs[i].callback = NULL;
-                callback((void*)j->jobs[i].ctx, (void*)j->jobs[i].args);
-                j->finished++;
-                j->current--;
-                e = true;
-                break;
-            }
-        }
-        if(!e){
-            break;
-        }
+    worker_job* jb= (worker_job*)arg;
+    jobs *j = jb->j;
+    int i;
+    for (i = jb->id; i < j->total; i+=j->parallel) {
+        fdebug("Run job: %d\t%d\t\t%d\t%d\n", j->total, j->parallel, i, jb->id);
+        j->jobs[i].callback((void*)j->jobs[i].ctx, (void*)j->jobs[i].args);
+        j->finished++;
     }
-    pthread_exit(NULL);
+    return NULL;
 }
 
 void jobs_unref(jobs *j) {
@@ -49,18 +41,23 @@ void jobs_add(jobs* j, void (*callback)(void*, ...), void* ctx, void* args, ...)
         j->jobs[j->total++] = new_job;
         j->current++;
         pthread_cond_signal(&j->cond);
+        fdebug("Add job:%d\t%d\t%d\n", j->total, j->max, j->parallel);
     }
 }
 
 void jobs_run(jobs* j) {
-    pthread_t* threads = (pthread_t*)malloc(j->parallel * sizeof(pthread_t));
+    pthread_t* threads = (pthread_t*)calloc(j->parallel, sizeof(pthread_t));
     int i;
     for (i = 0; i < j->parallel; ++i) {
-        pthread_create(&threads[i], NULL, worker_thread, (void*)j);
+        worker_job *jb = (worker_job*)calloc(1,sizeof(worker_job));
+        jb->j = j;
+        jb->id = i;
+        pthread_create(&threads[i], NULL, worker_thread, (void*)jb);
     }
     for (i = 0; i < j->parallel; ++i) {
         pthread_join(threads[i], NULL);
     }
+    fdebug("Done jobs:%d\t%d\t%d\n", j->finished, j->max, j->parallel);
     free(threads);
 }
 
@@ -73,5 +70,6 @@ jobs* jobs_new() {
     j->parallel = JOB_PARALLEL;
     j->jobs = (job*)malloc(j->max * sizeof(job));
     pthread_cond_init(&j->cond, NULL);
+    fdebug("New jobs");
     return j;
 }
