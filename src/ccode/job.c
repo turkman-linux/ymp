@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <string.h>
 #include <stdarg.h>
-
+#include <sys/sysinfo.h>
 #include <jobs.h>
 #include <logger.h>
 
@@ -12,6 +12,8 @@ typedef struct _worker_job {
     jobs* j;
     int id;
 } worker_job;
+
+extern char* get_value(char* name);
 
 static void* worker_thread(void* arg) {
     worker_job* jb= (worker_job*)arg;
@@ -67,7 +69,10 @@ jobs* jobs_new() {
     j->current = 0;
     j->finished = 0;
     j->total = 0;
-    j->parallel = JOB_PARALLEL;
+    j->parallel = atoi(get_value("jobs"));
+    if(j->parallel < 1){
+        j->parallel = get_nprocs_conf();
+    }
     j->jobs = (job*)malloc(j->max * sizeof(job));
     pthread_cond_init(&j->cond, NULL);
     fdebug("New jobs");

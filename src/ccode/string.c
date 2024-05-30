@@ -7,12 +7,6 @@
 #include <stddef.h>
 #include <string.h>
 
-/*generic counters*/
-long i;
-long j;
-long cnt = 0;
-long len = 0;
-
 int iseq(char* str1, char* str2){
     return strcmp(str1,str2) == 0;
 }
@@ -28,7 +22,7 @@ size_t sstrlen(const char* str){
 
 
 long count_tab(char* data){
-    cnt = 0;
+    int cnt = 0;
     while (*data == ' ') {
         cnt++;
         data++;
@@ -37,8 +31,8 @@ long count_tab(char* data){
 }
 
 char* join(char* f, char** array){
-    i = 0;
-    len = 0;
+    int i = 0;
+    int len = 0;
     /* find output size */
     while(array[i]){
         len += sstrlen(array[i]) + sstrlen(f);
@@ -48,7 +42,7 @@ char* join(char* f, char** array){
     char* ret = calloc(len+1, sizeof(char));
     strcpy(ret,"");
     /* copy item len and reset value */
-    cnt = i;
+    int cnt = i;
     i = 0;
     /* copy items */
     while(array[i]){
@@ -69,10 +63,10 @@ char* str_add(char* str1, char* str2){
 }
 
 char* trim(char* data) {
-    i=0;
-    j=0;
-    cnt=0;
-    len = sstrlen(data);
+    int i=0;
+    int j=0;
+    int cnt=0;
+    int len = sstrlen(data);
     char* str = calloc(len+1, sizeof(char));
     strcpy(str,data);
     cnt = count_tab (data);
@@ -113,7 +107,8 @@ char* int_to_string(int num){
 
 /* Function to perform URL decoding */
 char* url_decode(const char *input) {
-    cnt = 0;
+    int cnt = 0;
+    int i;
     for (i = 0; input[i] != '\0'; i++) {
         if (input[i] == '%'){
            if (isHexDigit(input[i + 1])){
@@ -136,7 +131,7 @@ char* url_decode(const char *input) {
         return (char*) input;
     }
 
-    j = 0;
+    int j = 0;
     for (i = 0; input[i] != '\0'; i++) {
         if (input[i] == '%') {
             if (isHexDigit(input[i + 1])){
@@ -159,7 +154,8 @@ char* url_decode(const char *input) {
 
 /* Function to perform URL encoding */
 char* url_encode(const char *input) {
-    cnt = 0;
+    int cnt = 0;
+    int i;
     for (i = 0; input[i] != '\0'; i++) {
         if (!isalnum_c(input[i])) {
             /* Two characters for % and the hexadecimal digit */
@@ -177,7 +173,7 @@ char* url_encode(const char *input) {
         return (char*) input;
     }
 
-    j = 0;
+    int j = 0;
     for (i = 0; input[i] != '\0'; i++) {
         if (isalnum_c(input[i])) {
             output[j++] = input[i];
@@ -195,8 +191,8 @@ char* url_encode(const char *input) {
 
 
 int endswith(const char* data, const char* f) {
-    i = sstrlen(data);
-    j = sstrlen(f);
+    int i = sstrlen(data);
+    int j = sstrlen(f);
 
     if (i < j) {
         return 0;
@@ -206,8 +202,8 @@ int endswith(const char* data, const char* f) {
 }
 
 int startswith(const char* data, const char* f) {
-    i = sstrlen(data);
-    j = sstrlen(f);
+    int i = sstrlen(data);
+    int j = sstrlen(f);
 
     if (i < j) {
         return 0;

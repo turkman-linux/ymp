@@ -7,11 +7,6 @@
 
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A)
 
-static size_t i;
-static size_t start, skip, removed;
-static char* tmp;
-static char* tmp2;
-
 static int string_compare(const void* a, const void* b){
     return strcmp(*(const char**)a, *(const char**)b);
 }
@@ -26,6 +21,7 @@ array *array_new() {
     arr->size = 0;
     arr->capacity = 1024;
     arr->removed = 0;
+    size_t start;
     for(start=0;start<arr->capacity;start++){
         arr->data[start] = NULL;
     }
@@ -43,6 +39,7 @@ void array_add(array *arr, char *value) {
     if (arr->size >= arr->capacity-1) {
         arr->capacity += 1024;
         arr->data = (char **)realloc(arr->data, arr->capacity * sizeof(char *));
+        size_t start;
         for(start=arr->capacity-1024;start<arr->capacity;start++){
             arr->data[start] = NULL;
         }
@@ -55,6 +52,7 @@ void array_set(array *arr, char** new_data, size_t len){
     arr->data = calloc(arr->capacity, sizeof(char*));
     arr->size = 0;
     arr->removed = 0;
+    size_t start;
     for(start=0;start<arr->capacity;start++){
             arr->data[start] = NULL;
     }
@@ -63,7 +61,7 @@ void array_set(array *arr, char** new_data, size_t len){
 
 char* array_get_string(array *arr){
     size_t tot_len = 0;
-    start = 0;
+    size_t start = 0;
     while(start < arr->capacity){
         if(arr->data[start] != NULL){
             tot_len += strlen(arr->data[start]);
@@ -82,13 +80,14 @@ char* array_get_string(array *arr){
 }
 
 void array_adds(array *arr, char **value, size_t len) {
+    size_t i;
     for(i=0;i<len;i++){
         array_add(arr, value[i]);
     }
 }
 
 void array_remove(array* arr, char* item){
-    start = 0;
+    size_t start = 0;
     while(start < arr->capacity){
         if(arr->data[start] != NULL && strcmp(arr->data[start],item)==0){
             arr->data[start] = NULL;
@@ -100,7 +99,7 @@ void array_remove(array* arr, char* item){
 }
 
 bool array_has(array* arr, char* name){
-    start = 0;
+    size_t start = 0;
     while(start < arr->size + arr->removed){
         if(arr->data[start]){
            if (strcmp(arr->data[start], name) == 0){
@@ -113,9 +112,9 @@ bool array_has(array* arr, char* name){
 }
 
 void array_uniq(array* arr){
-    start = 1;
-    i = 0;
-    removed = 0;
+    size_t start = 1;
+    size_t i = 0;
+    size_t removed = 0;
     while(start < arr->capacity){
         if(arr->data[start] == NULL){
             start++;
@@ -149,7 +148,8 @@ void array_insert(array* arr, char* value, size_t index){
         arr->size++;
         return;
     }
-    tmp = strdup(arr->data[index]);
+    char* tmp = strdup(arr->data[index]);
+    char* tmp2;
     arr->data[index] = strdup(value);
     size_t start = index+1;
     while(start < arr->capacity){
@@ -168,9 +168,9 @@ void array_insert(array* arr, char* value, size_t index){
 
 void array_sort(array* arr){
     char** new_data = (char**)calloc(arr->capacity,sizeof(char*));
-    start = 0;
-    skip = 0;
-     while(start < arr->size+arr->removed+1){
+    size_t start = 0;
+    size_t skip = 0;
+    while(start < arr->size+arr->removed+1){
         if(arr->data[start] == NULL){
             start++;
             skip++;
@@ -186,8 +186,8 @@ void array_sort(array* arr){
 char **array_get(array *arr, int* len) {
     *len = arr->size;
     char** ret = calloc(arr->size+1, sizeof(char*));
-    start = 0;
-    skip = 0;
+    size_t start = 0;
+    size_t skip = 0;
     while(start < arr->size+arr->removed+1 && start < arr->capacity){
         if(arr->data[start] == NULL){
             start++;
@@ -210,7 +210,7 @@ void array_reverse(array *arr) {
         return; /* No need to reverse if size is 0 or 1 */
     }
 
-    start = 0;
+    size_t start = 0;
     size_t tot = arr->size + arr->removed;
     while (start < tot/2) {
         /* Swap elements at start and end indices */
