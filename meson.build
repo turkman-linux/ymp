@@ -2,7 +2,7 @@ project(
     'ymp',
     'vala', 'c',
     meson_version: '>= 0.58.0',
-    version : '1.1',
+    version : '1.2',
     license: ['GplV3']
 )
 if meson.get_compiler('vala').version().version_compare('<0.54.9')
