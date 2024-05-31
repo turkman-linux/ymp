@@ -87,6 +87,8 @@ void archive_create(archive *data){
 extern char* sdirname(char* path);
 extern void create_dir(char* path);
 extern bool isdir(char* path);
+extern bool issymlink(char* path);
+extern bool isfile(char* path);
 static void archive_extract_fn(archive *data, char *path, bool all) {
     fdebug("archive extract: %s => %s", data->archive_path, path);
     archive_load_archive(data);
@@ -118,6 +120,9 @@ static void archive_extract_fn(archive *data, char *path, bool all) {
         char* dirname = sdirname(target_file);
         if (!isdir(dirname)) {
             create_dir(dirname);
+        }
+        if(issymlink(target_file) || isfile(target_file)){
+            unlink(target_file);
         }
         if (S_ISLNK(mode)) {
             char *link_target = archive_entry_symlink(entry);
