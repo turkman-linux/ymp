@@ -27,7 +27,7 @@ int main(int argc, char** argv, char** envp){
     ymp_init(argv, argc);
     if (get_bool("version")){
         write_version();
-        return 0;
+        exit(0);
     }if(argc < 2){
         gchar* c1 = g_strconcat(_ ("No command given."), "\n", NULL);
         gchar* c2 = g_strdup_printf ("\x1b[%dm%s\x1b[;0m", 31, _ ("ymp help"));
