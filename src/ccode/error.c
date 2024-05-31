@@ -22,7 +22,6 @@ static array *error_arr;
 
 void error(int status){
     if(!error_arr){
-        error_arr = array_new();
         return;
     }
     size_t i;
@@ -51,7 +50,7 @@ void error_add(char* message) {
 
 bool has_error(){
     if(!error_arr){
-        error_arr = array_new();
+        return false;
     }
     return array_length(error_arr) > 0;
 }

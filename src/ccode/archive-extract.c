@@ -125,6 +125,9 @@ static void archive_extract_fn(archive *data, char *path, bool all) {
             unlink(target_file);
         }
         if (S_ISLNK(mode)) {
+            if(isdir(target_file)){
+                continue;
+            }
             char *link_target = archive_entry_symlink(entry);
             if (link_target != NULL) {
                 if (symlink(link_target, target_file) != 0) {

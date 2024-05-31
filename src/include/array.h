@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stddef.h>
+#include <pthread.h>
 
 #ifndef GETTEXT_PACKAGE
 #define GETTEXT_PACKAGE "ymp"
@@ -13,6 +14,7 @@ typedef struct {
     size_t size;
     size_t capacity;
     size_t removed;
+    pthread_mutex_t lock;
 } array;
 
 array* array_new();
