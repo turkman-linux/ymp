@@ -8,7 +8,9 @@ char* _(char* msg){
 #endif
 #include <ymp.h>
 #include <stdio.h>
+#include <unistd.h>
 
+ 
 int main(int argc, char** argv, char** envp){
 #ifndef no_locale
     setlocale(LC_ALL, "");
@@ -30,7 +32,12 @@ int main(int argc, char** argv, char** envp){
         exit(0);
     }if(argc < 2){
         gchar* c1 = g_strconcat(_ ("No command given."), "\n", NULL);
-        gchar* c2 = g_strdup_printf ("\x1b[%dm%s\x1b[;0m", 31, _ ("ymp help"));
+        gchar* c2;
+        if (isatty(fileno(stdout))){
+            c2 = g_strdup_printf ("\x1b[%dm%s\x1b[;0m", 31, _ ("ymp help"));
+        } else {
+            c2 = g_strdup_printf ("%s", _ ("ymp help"));
+        }
         gchar* c3 = g_strdup_printf (_ ("Run %s for more information about usage."), c2);
         gchar* msg =  g_strconcat (c1, c3, NULL);
         error_add (msg);
