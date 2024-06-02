@@ -10,7 +10,10 @@ char* _(char* msg){
 #include <stdio.h>
 #include <unistd.h>
 
- 
+#if musl
+extern int fileno(FILE *f);
+#endif
+
 int main(int argc, char** argv, char** envp){
 #ifndef no_locale
     setlocale(LC_ALL, "");
