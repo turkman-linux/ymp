@@ -67,6 +67,7 @@ static void info_init() {
         "i"
     };
     op.help.name = _("info");
+    op.help.minargs = 1;
     op.help.description = _("Get informations from package manager databases.");
     op.help.add_parameter("--deps", _("list required packages"));
     op.help.add_parameter("--revdeps", _("list packages required by package"));
