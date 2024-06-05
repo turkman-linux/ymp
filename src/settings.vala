@@ -62,6 +62,7 @@ private static void settings_init () {
     #if DEBUG
     if (get_bool ("debug")) {
         set_env ("G_MESSAGES_DEBUG", "all");
+        set_env ("G_ENABLE_DIAGNOSTIC", "1");
         set_env ("G_DEBUG", "fatal_warnings");
     }
     #endif
