@@ -290,9 +290,9 @@ public class builder {
             } else if (isfile(ymp_source_cache + "/" + name)) {
                 info(_("Source file import from cache."));
                 copy_file(ymp_source_cache + "/" + name, srcfile);
-            } else if (isfile(ymp_build.ympbuild_srcpath + "/" + name)) {
+            } else if (isfile(ymp_build.ympbuild_srcpath + "/" + src)) {
                 info(_("Source file copy from package."));
-                copy_file(ymp_build.ympbuild_srcpath + "/" + name, srcfile);
+                copy_file(ymp_build.ympbuild_srcpath + "/" + src, srcfile);
             } else if (startswith(src, "git@") || endswith(src, ".git")) {
                 if(!isdir(ymp_source_cache + "/" + name)){
                     if (run_args({"git", "clone", "--bare",src, ymp_source_cache + "/" + name}) != 0) {
@@ -308,10 +308,12 @@ public class builder {
                 cd(srcfile);
                 run_args({"git", "reset", "--hard"});
                 cd(cur);
-            } else {
+            } else if ("://" in src) {
                 info(_("Download: %s").printf(src));
                 fetch(src, ymp_source_cache + "/" + name);
                 copy_file(ymp_source_cache + "/" + name, srcfile);
+            } else {
+                error_add("File %s does not exists.".printf(src));
             }
             string hash = "";
             if(algo == "md5sum"){
