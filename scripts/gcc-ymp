@@ -13,7 +13,7 @@ for arg in "$@" ; do
 done
 
 if [[ "${is_shared}" == true ]] ; then
-    exec gcc "$@" -nostdlib -lc
+    exec gcc "$@" -nostdlib -lc -fno-plt
 else
-    exec gcc /usr/lib64/start-$(uname -m).o "$@" -nostdlib -lc
+    exec gcc /usr/lib64/start-$(uname -m).o -fvisibility="hidden" "$@" -nostdlib -lc -fno-plt
 fi
