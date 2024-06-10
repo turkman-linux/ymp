@@ -47,6 +47,9 @@ if compiler.get_id() == 'gcc'
     cflags += ['-Werror']
 endif
 
+# some improvements
+cflags += ['-fno-plt', '-flto']
+
 libc_srcs = []
 
 start_code = []
