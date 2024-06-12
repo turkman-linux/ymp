@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdio.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
@@ -77,7 +78,7 @@ int sandbox(char* type, char** args){
     if(sandbox_shared == NULL){
         sandbox_shared = "";
     }
-    int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER;
+    int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER | CLONE_NEWPID | CLONE_NEWUTS;
     if(isfile("/.sandbox")){
         return operation_main(type,args);
     }
@@ -95,6 +96,14 @@ int sandbox(char* type, char** args){
         uid_t uid = getuid();
         gid_t gid = getgid();
         unshare(flag);
+        int pid = fork();
+        if (pid != 0) {
+            int status;
+            waitpid(-1, &status, 0);
+            exit(status);
+        }
+        /* set new hostname */
+        sethostname("ymp-sandbox", 11);
         /* remap uid */
         write_to_file("/proc/self/uid_map", "%d %d 1", sandbox_uid, uid);
         /* deny setgroups (see user_namespaces(7)) */
@@ -115,7 +124,13 @@ int sandbox(char* type, char** args){
         sandbox_create_tmpfs("/tmp/ymp-root/tmp");
         sandbox_create_tmpfs("/tmp/ymp-root/run");
         sandbox_bind(get_builddir_priv());
-        sandbox_bind("/proc/");
+        /* isolate /proc */
+        create_dir("/tmp/ymp-root/proc/");
+        if (mount("proc", "/tmp/ymp-root/proc", "proc", MS_NOSUID|MS_NOEXEC|MS_NODEV, NULL)) {
+            printf("Cannot mount proc! errno=%i\n", errno);
+            exit(1);
+        }
+
         char *token = strtok(sandbox_shared,":");
         while(token != NULL){
             sandbox_bind_shared(token);
@@ -141,7 +156,7 @@ int sandbox(char* type, char** args){
                 }
                 unshare(CLONE_NEWIPC);
                 unshare(CLONE_VM);
-                unshare(CLONE_NEWPID| CLONE_VFORK | SIGCHLD);
+                unshare(CLONE_VFORK | SIGCHLD);
                 #if DEBUG
                 debug(str_add("Sandbox: execute ", type));
                 #endif
@@ -154,6 +169,9 @@ int sandbox(char* type, char** args){
                 while(args[cur]){
                     new_args[cur] = args[cur];
                     cur++;
+                }
+                if(getenv("TERM") == NULL){
+                    setenv("TERM", "linux", 1);
                 }
                 exit(operation_main(type,new_args));
                 /*exit(execvpe("/proc/self/exe",new_args,get_envs())); */
