@@ -285,6 +285,7 @@ public class builder {
             string ymp_source_cache = get_build_dir() + "/.cache/" + ymp_build.get_ympbuild_value("name") + "/";
             create_dir(ymp_source_cache);
             print(ymp_build.ympbuild_srcpath + "/" + name);
+            print(src);
             if (isfile(srcfile)) {
                 info(_("Source file already exists."));
             } else if (isfile(ymp_source_cache + "/" + name)) {
@@ -293,6 +294,9 @@ public class builder {
             } else if (isfile(ymp_build.ympbuild_srcpath + "/" + src)) {
                 info(_("Source file copy from package."));
                 copy_file(ymp_build.ympbuild_srcpath + "/" + src, srcfile);
+            } else if (isfile(ymp_build.ympbuild_srcpath + "/" + name)) {
+                info(_("Source file copy from package."));
+                copy_file(ymp_build.ympbuild_srcpath + "/" + name, srcfile);
             } else if (startswith(src, "git@") || endswith(src, ".git")) {
                 if(!isdir(ymp_source_cache + "/" + name)){
                     if (run_args({"git", "clone", "--bare",src, ymp_source_cache + "/" + name}) != 0) {
