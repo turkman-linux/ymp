@@ -6,7 +6,7 @@
 #include <time.h>
 
 /* functions from vala source */
-int get_bool(char* val);
+bool get_bool(char* val);
 void colorize_init();
 
 /* string add function*/

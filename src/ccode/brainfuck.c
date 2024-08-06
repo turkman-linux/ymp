@@ -2,11 +2,8 @@
 #include <string.h>
 
 #include <logger.h>
+#include <value.h>
 #include <error.h>
-
-#ifndef get_bool
-int get_bool(char* msg);
-#endif
 
 void brainfuck(char * code, unsigned int size) {
   unsigned int ptr = 0;

@@ -7,6 +7,7 @@ char* _(char* msg){
 #include <locale.h>
 #endif
 #include <ymp.h>
+#include <value.h>
 #include <stdio.h>
 #include <unistd.h>
 

@@ -4,15 +4,10 @@
 #include <stdlib.h>
 #include <curl/curl.h>
 
-#ifndef get_value
-char* get_value(char* variable);
-#endif
-#ifndef get_bool
-int get_bool(char* variable);
-#endif
-
 #include <logger.h>
 #include <error.h>
+#include <value.h>
+
 
 #ifndef PATH_MAX
 #define PATH_MAX 1024

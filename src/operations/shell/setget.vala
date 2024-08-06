@@ -1,6 +1,6 @@
 private static int get_main (string[] args) {
     if (args.length < 1) {
-        foreach (string name in list_values ()) {
+        foreach (string name in get_variable_names ()) {
             print (name + ":" + get_value (name));
         }
         return 0;

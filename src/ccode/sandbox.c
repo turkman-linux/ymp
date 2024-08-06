@@ -15,6 +15,10 @@
 #include <sys/mount.h>
 #include <sys/prctl.h>
 
+
+#include <value.h>
+
+
 #ifndef clear_env
 void clear_env();
 #endif
@@ -39,10 +43,6 @@ char* debug(char* message);
 int sandbox_network = 1;
 int sandbox_uid = 0;
 int sandbox_gid = 0;
-
-#ifndef get_bool
-int get_bool(char* variable);
-#endif
 
 #ifndef get_builddir_priv
 char* get_builddir_priv();

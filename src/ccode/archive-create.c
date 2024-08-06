@@ -33,6 +33,7 @@
 
 #include <archive_extract.h>
 #include <logger.h>
+#include <value.h>
 #include <error.h>
 
 #ifndef PATH_MAX
@@ -44,9 +45,6 @@
 int lstat(const char *pathname, struct stat *statbuf);
 #endif
 
-#ifndef get_bool
-int get_bool(char*variable);
-#endif
 
 #ifndef isexists
 int isexists(const char*path);

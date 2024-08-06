@@ -6,9 +6,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#ifndef get_bool
-int get_bool(char* name);
-#endif
+#include <value.h>
 
 #ifdef __STRICT_ANSI__
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
