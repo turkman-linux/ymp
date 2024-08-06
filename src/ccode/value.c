@@ -11,8 +11,7 @@ typedef struct _variable {
 } variable;
 
 static variable* vars;
-size_t var_count = 0;
-
+static size_t var_count = 0;
 
 static void set_value_fn(char* name, char* value, bool read_only){
     if(name == NULL || value == NULL){
