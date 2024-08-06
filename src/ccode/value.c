@@ -25,7 +25,7 @@ static void set_value_fn(char* name, char* value, bool read_only){
         }
     }
     if(vars == NULL){
-        vars = calloc(1, sizeof(var_count));
+        vars = calloc(1, sizeof(variable));
     }
     vars = realloc(vars, (var_count+1)* sizeof(variable));
     vars[var_count].name = strdup(name);
