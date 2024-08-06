@@ -4,6 +4,10 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#ifdef __STRICT_ANSI__
+#define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
+#endif
+
 typedef struct _variable {
     char* name;
     char* value;
