@@ -21,6 +21,11 @@ function list_txt(){
     find src/shcode -type f -exec basename {} \; | sed "s/\..*//g" | sort
 }
 ### ctx_init function build
+echo "private static void builder_ctx_init(){" >> ctx.vala
+for target_name in $(list_build_targets) ; do
+    echo  "     build_target_${target_name/-/_}_init();"
+done >> ctx.vala
+echo "}" >> ctx.vala
 echo "private static void ctx_init(){" >> ctx.vala
 for i in $@ ; do
     name=$(echo $i | cut -f1 -d=)
@@ -32,9 +37,6 @@ for op_name in $(list_operations) ; do
     echo -n "\"${op_name}\", "
 done >> ctx.vala
 echo "};" >> ctx.vala
-for target_name in $(list_build_targets) ; do
-    echo  "     build_target_${target_name/-/_}_init();"
-done >> ctx.vala
 for op_name in $(list_operations) ; do
     echo "    ${op_name/-/_}_init();"
 done >> ctx.vala
