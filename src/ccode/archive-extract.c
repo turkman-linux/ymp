@@ -58,6 +58,8 @@ int archive_is_archive(archive *data, char *path) {
     archive_read_support_filter_all(data->archive);
     archive_read_support_format_all(data->archive);
     int result = archive_read_open_filename(data->archive, path, 10240);
+    archive_read_close(data->archive);
+    archive_read_free(data->archive);
     return result == ARCHIVE_OK;
 }
 
@@ -71,6 +73,9 @@ char** archive_list_files(archive *data, int* len) {
         array_add(data->a,archive_entry_pathname(entry));
         archive_read_data_skip(data->archive);
     }
+    archive_read_close(data->archive);
+    archive_read_free(data->archive);
+
     return array_get(data->a, len);
 }
 
@@ -155,9 +160,10 @@ static void archive_extract_fn(archive *data, char *path, bool all) {
             fwarning("Skip unsupported archive entry: %s", entry_path);
         }
     }
+    archive_read_close(data->archive);
+    archive_read_free(data->archive);
 }
-           
-            
+
 char* archive_readfile(archive *data, char *file_path) {
     archive_load_archive(data);
     struct archive_entry *entry;
@@ -182,6 +188,7 @@ char* archive_readfile(archive *data, char *file_path) {
         break;
     }
     archive_read_close(data->archive);
+    archive_read_free(data->archive);
     return ret;
 }
 
