@@ -210,4 +210,5 @@ private extern void exit(int status);
 private extern void save_env();
 private extern void clear_env();
 private extern void restore_env();
-
+private extern string getenv(string name);
+private extern int setenv(string name, string value, int override);
