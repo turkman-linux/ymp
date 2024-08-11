@@ -4,10 +4,13 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#ifndef _POSIX_C_SOURCE
 #define _POSIX_C_SOURCE
+#endif
 
 #ifdef __STRICT_ANSI__
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
+int setenv(const char *name, const char *value, int overwrite);
 #endif
 
 typedef struct _variable {
