@@ -1,8 +1,8 @@
 private static int install_main (string[] args) {
-    backup_env();
+    save_env();
     clear_env();
     file_cache_reset();
-    set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+    setenv("PATH","/sbin:/bin:/usr/sbin:/usr/bin", 1);
 
     if (!is_root ()) {
         error_add (_ ("You must be root!"));

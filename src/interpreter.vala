@@ -12,6 +12,11 @@ private extern void no_stdin();
 private extern void reset_std();
 
 
+private class variable_integer {
+    public string name;
+    public int value;
+}
+
 public int ymp_run() {
     variable_integer[] labels = {};
     bool label_found = false;

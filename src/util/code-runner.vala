@@ -15,28 +15,28 @@ private static void code_runner_plugin_init(){
         code_runner_plugin script = new code_runner_plugin();
         script.name = plugin;
         script.init.connect((image, directory)=>{
-            backup_env();
+            save_env();
             clear_env();
-            set_env("IMAGE", image);
-            set_env("DIRECTORY", directory);
-            set_env("ACTION", "init");
+            setenv("IMAGE", image, 1);
+            setenv("DIRECTORY", directory, 1);
+            setenv("ACTION", "init", 1);
             run("%s/%s".printf(plugin_directory ,plugin));
             restore_env();
             
         });
         script.run.connect((command)=>{
-            backup_env();
+            save_env();
             clear_env();
-            set_env("COMMAND", command);
-            set_env("ACTION", "run");
+            setenv("COMMAND", command, 1);
+            setenv("ACTION", "run", 1);
             int status = run("%s/%s".printf(plugin_directory, plugin));
             restore_env();
             return status;
         });
         script.clean.connect(()=>{
-            backup_env();
+            save_env();
             clear_env();
-            set_env("ACTION", "clean");
+            setenv("ACTION", "clean", 1);
             run("%s/%s".printf(plugin_directory, plugin));
             restore_env();
         });

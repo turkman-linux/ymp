@@ -44,9 +44,9 @@ public class builder {
     public build_target build_target;
     public string output_package_name;
     public int build_single(string path) {
-        backup_env();
+        save_env();
         clear_env();
-        set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+        setenv("PATH","/sbin:/bin:/usr/sbin:/usr/bin", 1);
         bool unsafe = get_bool("unsafe");
         string srcpath = srealpath(path);
         string srcpkg = "";
@@ -197,9 +197,9 @@ public class builder {
             warning(_("Dependency check disabled"));
             return true;
         }
-        backup_env();
+        save_env();
         clear_env();
-        set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+        setenv("PATH","/sbin:/bin:/usr/sbin:/usr/bin", 1);
 
         string metadata = ymp_build.get_ympbuild_metadata();
         var yaml = new yamlfile();

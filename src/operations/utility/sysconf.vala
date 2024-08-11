@@ -2,12 +2,12 @@ private static int sysconf_main (string[] args) {
     if (!is_root () || get_bool ("no-sysconf")) {
         return 0;
     }
-    backup_env();
+    save_env();
     clear_env();
-    set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+    setenv("PATH","/sbin:/bin:/usr/sbin:/usr/bin", 1);
 
     if (get_value ("OPERATION") != "install" && get_value ("OPERATION") != "remove") {
-        set_env ("OPERATION", get_value ("OPERATION"));
+        setenv ("OPERATION", get_value ("OPERATION"), 1);
     }
     if (DESTDIR != "/") {
         run_args ( {"chroot", get_destdir (), "ldconfig"});

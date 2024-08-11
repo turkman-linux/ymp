@@ -10,9 +10,9 @@ private static int chroot_main (string[] args) {
         cmd = "/bin/sh";
     }
     if(!get_bool("envs")){
-        backup_env();
+        save_env();
         clear_env();
-        set_env("PATH", "/sbin:/bin:/usr/sbin:/usr/bin");
+        setenv("PATH", "/sbin:/bin:/usr/sbin:/usr/bin", 1);
     }
     print_stderr (colorize (_ ("chroot: =>"), blue) + args[0]);
     run_args_silent ( {"mount", "--bind", "/dev", args[0] + "/dev"});

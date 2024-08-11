@@ -53,17 +53,17 @@ private static void settings_init () {
     }else {
         warning (_ ("Config file does not exists: %s").printf (CONFIG));
     }
-    if (get_env ("USE") != null) {
-        set_value ("USE", get_env ("USE"));
+    if (getenv ("USE") != null) {
+        set_value ("USE", getenv ("USE"));
     }else {
         area = config_yaml.get_area (config_yaml.data, "ymp");
         set_value ("USE", config_yaml.get_value (area, "use"));
     }
     #if DEBUG
     if (get_bool ("debug")) {
-        set_env ("G_MESSAGES_DEBUG", "all");
-        set_env ("G_ENABLE_DIAGNOSTIC", "1");
-        set_env ("G_DEBUG", "fatal_warnings");
+        setenv ("G_MESSAGES_DEBUG", "all", 1);
+        setenv ("G_ENABLE_DIAGNOSTIC", "1", 1);
+        setenv ("G_DEBUG", "fatal_warnings", 1);
     }
     #endif
 }
@@ -159,7 +159,7 @@ private static void parse_args (string[] args) {
             }
         }
     }
-    if (get_env ("NO_COLOR") != null) {
+    if (getenv ("NO_COLOR") != null) {
         set_bool ("no-color", true);
     }
 }

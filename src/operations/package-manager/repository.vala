@@ -1,7 +1,7 @@
 private static int index_main (string[] args) {
-    backup_env();
+    save_env();
     clear_env();
-    set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+    setenv("PATH","/sbin:/bin:/usr/sbin:/usr/bin", 1);
     foreach (string arg in args) {
         string path = srealpath (arg);
         string index = create_index_data (path);
@@ -14,10 +14,10 @@ private static int index_main (string[] args) {
 }
 
 private static int update_main (string[] args) {
-    backup_env();
+    save_env();
     clear_env();
     file_cache_reset();
-    set_env("PATH","/sbin:/bin:/usr/sbin:/usr/bin");
+    setenv("PATH","/sbin:/bin:/usr/sbin:/usr/bin", 1);
     if (!is_root ()) {
         error_add (_ ("You must be root!"));
         error (1);

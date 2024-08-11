@@ -57,7 +57,7 @@ private static int cd_main (string[] args) {
 }
 private static int export_main (string[] args) {
     foreach (string arg in args) {
-        set_env(arg,get_value (arg));
+        setenv(arg,get_value (arg), 1);
     }
     return 0;
 }

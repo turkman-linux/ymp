@@ -68,6 +68,11 @@ public string readfile (string path) {
     return a.get_string();
 }
 
+private class variable {
+    public string name;
+    public string value;
+}
+
 private variable[] cached_files;
 
 public string readfile_cached(string path){

@@ -1,6 +1,6 @@
 private static int revdep_rebuild_main (string[] args) {
-    set_env ("LANG", "C");
-    set_env ("LC_ALL", "C");
+    setenv ("LANG", "C", 1);
+    setenv ("LC_ALL", "C", 1);
     if (get_bool ("pkgconfig")) {
         writefile ("/tmp/.empty.c", "");
         foreach (string name in ssplit (getoutput ("pkg-config --list-package-names"), "\n")) {

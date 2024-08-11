@@ -14,9 +14,9 @@ private static int run_sandbox_main (string[] args) {
     }
     info (_ ("Execute sandbox :%s").printf (join (" ", args)));
     if(!get_bool("envs")){
-        backup_env();
+        save_env();
         clear_env();
-        set_env("PATH", "/sbin:/bin:/usr/sbin:/usr/bin");
+        setenv("PATH", "/sbin:/bin:/usr/sbin:/usr/bin", 1);
     }
     int status = sandbox ("exec", args);
     if(!get_bool("envs")){

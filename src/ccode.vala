@@ -206,3 +206,8 @@ private extern int chown(char* path, int uid, int gid);
 private extern int c_umask(int value);
 private extern void exit(int status);
 
+// value
+private extern void save_env();
+private extern void clear_env();
+private extern void restore_env();
+

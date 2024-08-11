@@ -75,12 +75,12 @@ public class code_runner {
         print(colorize("Run operation:",blue)+job.name);
         foreach(code_runner_plugin p in plugins) {
             if(p.name == job.uses){
-                backup_env();
+                save_env();
                 clear_env();
                 foreach(string env in job.environs){
                     string var = ssplit(env,"=")[0];
                     string val = env[var.length+1:];
-                    set_env(var, val);
+                    setenv(var, val, 1);
                 }
                 print(colorize("Init plugin:",green)+p.name);
                 p.init(job.image, job.directory);
