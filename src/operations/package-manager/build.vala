@@ -1,10 +1,5 @@
 private bool no_src = false;
-private static bool builder_init = false;
 private static int build_operation (string[] args) {
-    if(!builder_init){
-        builder_ctx_init();
-        builder_init = true;
-    }
     string current_directory=pwd ();
     string[] new_args = args;
     if (new_args.length == 0) {

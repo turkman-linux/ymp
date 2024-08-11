@@ -18,9 +18,14 @@ public void add_build_target(build_target bt) {
     bts += bt;
 }
 
+private bool builder_init = false;
 public class builder {
 
     public builder() {
+        if(!builder_init){
+            builder_ctx_init();
+            builder_init = true;
+        }
         ymp_build = new ympbuild();
         string target = get_value("build:target");
         if (target == "") {

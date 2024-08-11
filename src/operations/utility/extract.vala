@@ -7,6 +7,7 @@ private static int extract_main (string[] args) {
         }
         return 0;
     }
+    tar.set_target(pwd());
     if (args.length > 1) {
         foreach (string file in args[1:]) {
             tar.extract (file);
