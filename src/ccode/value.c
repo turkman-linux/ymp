@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#define _POSIX_C_SOURCE
+
 #ifdef __STRICT_ANSI__
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A);
 #endif
