@@ -81,6 +81,7 @@ char** get_variable_names(int* len){
 
 
 extern char **environ;
+static char **environ_save;
 void clear_env(){
     char *path = strdup(getenv("PATH"));
     char *env[1];
@@ -89,7 +90,7 @@ void clear_env(){
     setenv("PATH", path, 1);
 }
 
-char** save_env(){
+void save_env(){
     int len = 0;
     while(environ[len]){
         len++;
@@ -101,10 +102,10 @@ char** save_env(){
         len++;
     }
     ret[len] = NULL;
-    return ret;
+    environ_save = ret;
 }
 
-void restore_env(char** envs){
-    environ = envs;
+void restore_env(){
+    environ = environ_save;
 }
 
