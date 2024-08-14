@@ -138,9 +138,14 @@ gint sandbox(const gchar* type, gchar** args, gint length){
             token = strtok(NULL,":");
         }
         token = strtok(sandbox_tmpfs,":");
+        char* target = NULL;
         while(token != NULL){
-            sandbox_create_tmpfs(token);
+            target = calloc((strlen(token)+15), sizeof(char));
+            strcpy(target,"/tmp/ymp-root/");
+            strcat(target,token);
+            sandbox_create_tmpfs(target);
             token = strtok(NULL,":");
+            free(target);
         }
         write_to_file("/tmp/ymp-root/.sandbox", "%d",getpid());
         if (0 == chroot("/tmp/ymp-root")){
