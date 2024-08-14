@@ -139,7 +139,7 @@ gint sandbox(const gchar* type, gchar** args, gint length){
         }
         token = strtok(sandbox_tmpfs,":");
         while(token != NULL){
-            sandbox_bind_shared(token);
+            sandbox_create_tmpfs(token);
             token = strtok(NULL,":");
         }
         write_to_file("/tmp/ymp-root/.sandbox", "%d",getpid());
