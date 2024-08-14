@@ -321,7 +321,7 @@ public string[] list_installed_packages () {
     foreach (string fname in listdir (get_storage () + "/metadata")) {
         pkgs += fname[:-5];
     }
-    csort (pkgs, pkgs.length);
+    csort (pkgs);
     return pkgs;
 }
 //DOC: `package get_installed_package (string name):`

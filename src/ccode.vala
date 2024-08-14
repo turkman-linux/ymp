@@ -136,7 +136,7 @@ public extern string url_decode (string url);
 //DOC: `string run_printf (char* format, ...):`
 //DOC: run command like printf
 public extern string run_printf (char* format, ...);
-public extern void csort (string[] arr, int n);
+public extern void csort (string[] arr);
 //DOC: `string trim (string data):`
 //DOC: fixes excess indentation
 public extern string trim (string data);

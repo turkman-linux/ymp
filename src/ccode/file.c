@@ -19,6 +19,8 @@
 #include <stdint.h>
 #include <ctype.h>
 
+#include <glib.h>
+
 
 #define FILE_OK 0
 #define FILE_NOT_EXIST 1
@@ -66,7 +68,7 @@ void fs_sync(){
     #endif
 }
 
-int issymlink(const char *filename){
+gboolean issymlink(const char *filename){
     if(filename == NULL){
         return FALSE;
     }
@@ -77,7 +79,7 @@ int issymlink(const char *filename){
     return S_ISLNK(st.st_mode);
 }
 
-int isdir(char *path){
+gboolean isdir(char *path){
     if(path == NULL){
         return FALSE;
     }
@@ -99,7 +101,7 @@ int isdir(char *path){
 }
 
 #ifndef isexists
-extern bool isexists(char* path);
+extern gboolean isexists(char* path);
 #endif
 
 void create_dir(const char *dir) {

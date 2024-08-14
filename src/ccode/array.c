@@ -5,13 +5,15 @@
 
 #include <array.h>
 
+#include <glib.h>
+
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A)
 
 static int string_compare(const void* a, const void* b){
     return strcmp(*(const char**)a, *(const char**)b);
 }
 
-void csort(char* arr[], int n){
+void csort(char* arr[], gint n){
     qsort(arr, n, sizeof(const char*), string_compare);
 }
 

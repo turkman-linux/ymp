@@ -15,9 +15,9 @@
 #include <sys/mount.h>
 #include <sys/prctl.h>
 
-
 #include <value.h>
 
+#include <glib.h>
 
 #ifndef clear_env
 void clear_env();
@@ -49,7 +49,7 @@ char* get_builddir_priv();
 #endif
 
 #ifndef operation_main
-int operation_main(char* type, char** args);
+gint operation_main(const gchar* type, gchar** args, gint length);
 #endif
 
 int isdir(char* target);
@@ -71,7 +71,8 @@ char* sandbox_rootfs;
 
 char** get_envs();
 
-int sandbox(char* type, char** args){
+gint sandbox(const gchar* type, gchar** args, gint length){
+    (void)length;
     if(sandbox_rootfs == NULL){
         sandbox_rootfs = "/";
     }
@@ -80,7 +81,7 @@ int sandbox(char* type, char** args){
     }
     int flag = CLONE_NEWCGROUP | CLONE_NEWNS | CLONE_NEWUSER | CLONE_NEWPID | CLONE_NEWUTS;
     if(isfile("/.sandbox")){
-        return operation_main(type,args);
+        return operation_main(type,args, length);
     }
     pid_t pid = fork();
     #if DEBUG
@@ -173,7 +174,7 @@ int sandbox(char* type, char** args){
                 if(getenv("TERM") == NULL){
                     setenv("TERM", "linux", 1);
                 }
-                exit(operation_main(type,new_args));
+                exit(operation_main(type,new_args, cur));
                 /*exit(execvpe("/proc/self/exe",new_args,get_envs())); */
                 #if DEBUG
                 debug(str_add("Sandbox: execute done", type));

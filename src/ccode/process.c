@@ -14,6 +14,8 @@
 #include <sys/prctl.h>
 #include <unistd.h>
 
+#include <glib.h>
+
 #ifndef which
 char* which(char* path);
 #endif
@@ -43,7 +45,8 @@ void single_instance(){
 
 pid_t child_pid, wait_pid;
 int status;
-int run_args(char **command) {
+gint run_args(char **command, gint length) {
+    (void)length;
 
     child_pid = fork();
 
@@ -79,7 +82,7 @@ int run_args(char **command) {
     }
 }
 
-int run_args_silent(char **command) {
+gint run_args_silent(char **command, gint length) {
 
     child_pid = fork();
 
@@ -122,12 +125,12 @@ int run_args_silent(char **command) {
     }
 }
 
-int run(char* command){
+gint run(char* command){
     char* cmd[] = {"sh","-c",command, NULL};
-    return run_args(cmd);
+    return run_args(cmd, 3);
 }
 
-int run_printf(char* format, ...){
+gint run_printf(char* format, ...){
     char cmd[1024];
     va_list args;
     va_start (args, format);
@@ -138,9 +141,9 @@ int run_printf(char* format, ...){
 }
 
 
-int run_silent(char* command){
+gint run_silent(char* command){
     char* cmd[] = {"sh","-c",command, NULL};
-    return run_args_silent(cmd);
+    return run_args_silent(cmd, 3);
 }
 
 char* getoutput(const char* command) {

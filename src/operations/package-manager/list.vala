@@ -37,7 +37,7 @@ private static int list_digraph_main(string[] args) {
             } else {
                 names = repo.list_packages();
             }
-            csort(names, names.length);
+            csort(names);
             foreach(string name in names) {
                 var pkg = repo.get_package(name);
                 if (pkg == null) {
@@ -142,7 +142,7 @@ private static int list_available_main(string[] args) {
         } else {
             names = repo.list_packages();
         }
-        csort(names, names.length);
+        csort(names);
         string type = "package ";
         if (get_bool("source")) {
             type = "source ";

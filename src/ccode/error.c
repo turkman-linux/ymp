@@ -9,6 +9,7 @@
 #define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A)
 #endif
 
+#include <glib.h>
 
 extern bool get_bool(char* value);
 extern char* build_string(char* format, ...);
@@ -20,7 +21,7 @@ extern char* gettext(char* message);
 
 static array *error_arr;
 
-void error(int status){
+void error(gint status){
     if(!error_arr){
         return;
     }
@@ -41,14 +42,14 @@ void error(int status){
     error_arr = array_new();
 }
 
-void error_add(char* message) {
+void error_add(gchar* message) {
     if(!error_arr){
         error_arr = array_new();
     }
     array_add(error_arr, message);
 }
 
-bool has_error(){
+gboolean has_error(){
     if(!error_arr){
         return false;
     }

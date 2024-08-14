@@ -7,6 +7,9 @@
 #include <stddef.h>
 #include <string.h>
 
+
+#include <glib.h>
+
 int iseq(char* str1, char* str2){
     return strcmp(str1,str2) == 0;
 }
@@ -30,7 +33,8 @@ long count_tab(char* data){
     return cnt;
 }
 
-char* join(char* f, char** array){
+gchar* join(const gchar* f, gchar** array, gint length){
+    (void) length;
     int i = 0;
     int len = 0;
     /* find output size */

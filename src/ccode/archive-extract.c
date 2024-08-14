@@ -19,6 +19,9 @@ extern char* build_string(char* format, ...);
 
 #include <archive_extract.h>
 
+#include <glib.h>
+
+
 archive* archive_new(){
     fdebug("new archive");
     archive *data = calloc(1, sizeof(archive));
@@ -91,9 +94,9 @@ void archive_create(archive *data){
 }
 extern char* sdirname(char* path);
 extern void create_dir(char* path);
-extern bool isdir(char* path);
-extern bool issymlink(char* path);
-extern bool isfile(char* path);
+extern gboolean isdir(char* path);
+extern gboolean issymlink(char* path);
+extern gboolean isfile(char* path);
 static void archive_extract_fn(archive *data, char *path, bool all) {
     fdebug("archive extract: %s => %s", data->archive_path, path);
     archive_load_archive(data);

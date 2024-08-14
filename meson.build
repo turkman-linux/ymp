@@ -48,7 +48,7 @@ if compiler.get_id() == 'gcc'
 endif
 
 # some improvements
-cflags += ['-fno-plt', '-flto', '-isystem', '-fvisibility=hidden', '-DVALA_EXTERN=extern']
+cflags += ['-fno-plt', '-flto', '-isystem', '-fvisibility=hidden', '-DVALA_EXTERN=extern', '-pthread']
 
 libc_srcs = []
 
