@@ -50,8 +50,6 @@ endif
 # some improvements
 cflags += ['-fno-plt', '-flto', '-isystem', '-fvisibility=hidden', '-DVALA_EXTERN=extern', '-pthread']
 
-libc_srcs = []
-
 start_code = []
 
 # do not include glibc or musl stdlib and link with glibc or musl
@@ -145,21 +143,11 @@ else
 endif
 
 # find sources
-sources = ['src/ymp.vala',
-           'src/settings.vala',
-           'src/operations.vala',
-           'src/process.vala',
-           'src/interpreter.vala',
-           'src/wslblock.vala',
-           'src/ccode.vala',
-           'data/ymp-extra.h'
-          ]
-sources += run_command('find', 'src/util','-type','f',check:true).stdout().strip().split('\n')
-sources += run_command('find', 'src/operations','-type','f',check:true).stdout().strip().split('\n')
-sources += run_command('find', 'src/data','-type','f',check:true).stdout().strip().split('\n')
+sources = ['data/ymp-extra.h']
+sources += run_command('find', 'src/', '-not', '-path', 'src/cli/*','-type','f', '-iname', '*.vala',check:true).stdout().strip().split('\n')
 
-
-foreach csource : run_command('find', 'src/ccode','-type','f',check:true).stdout().strip().split('\n')
+# find C sources
+foreach csource : run_command('find', 'src/', '-not', '-path', 'src/cli/*','-type','f', '-iname', '*.c' ,check:true).stdout().strip().split('\n')
     sources += [meson.current_source_dir() / csource]
 endforeach
 
@@ -257,11 +245,11 @@ install_data(meson.current_build_dir() / 'libymp.so', install_dir : get_option('
 ########### build tools ###########
 if get_option('tools')
     # ymp cli
-    cli = executable('ymp-cli', ['src/cli/main.c'] + start_code, libc_srcs, dependencies: deps, link_args: ldflags , link_with: libymp)
+    cli = executable('ymp-cli', ['src/cli/main.c'] + start_code, dependencies: deps, link_args: ldflags , link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-cli', install_dir : get_option('bindir'),rename : 'ymp')
 
     # ymp shell
-    shell = executable('ymp-shell', ['src/cli/shell.c'] + start_code, libc_srcs, dependencies: deps, link_args: ldflags, link_with: libymp)
+    shell = executable('ymp-shell', ['src/cli/shell.c'] + start_code, dependencies: deps, link_args: ldflags, link_with: libymp)
     install_data(meson.current_build_dir() / 'ymp-shell', install_dir : get_option('bindir'),rename : 'ympsh')
 
 endif
