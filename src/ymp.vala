@@ -55,7 +55,7 @@ public void ymp_init (string[] args) {
     ymp_activated = true;
 }
 
-private void directories_init () {
+private static void directories_init () {
     create_dir (get_build_dir ());
     GLib.FileUtils.chmod (get_build_dir (), 0777);
     create_dir (get_storage () + "/index/");

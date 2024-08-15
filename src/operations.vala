@@ -10,17 +10,17 @@ private void add_operation (operation op) {
     ops += op;
 }
 
-private void lock_operation () {
+private static void lock_operation () {
     block_sigint ();
     if (get_bool ("unblock")) {
         unblock_sigint ();
     }
 }
-private void unlock_operation () {
+private static void unlock_operation () {
     unblock_sigint ();
 }
 
-public int operation_main(string type, string[] args){
+private static int operation_main(string type, string[] args){
     if(get_bool("sandbox") && !isfile("/.sandbox")){
         info (_ ("RUN (SANDBOX):") + type + ":" + join (" ", args));
         sandbox_shared = get_value ("shared");

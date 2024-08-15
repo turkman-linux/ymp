@@ -1,4 +1,4 @@
-public void build_target_dummy_init() {
+private static void build_target_dummy_init() {
     build_target dummy_target = new build_target();
     dummy_target.suffix = "dummy";
     dummy_target.name = "dummy";

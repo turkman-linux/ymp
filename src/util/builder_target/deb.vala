@@ -1,4 +1,4 @@
-public void build_target_deb_init() {
+private static void build_target_deb_init() {
     build_target deb_target = new build_target();
     deb_target.suffix = "deb";
     deb_target.name = "deb";

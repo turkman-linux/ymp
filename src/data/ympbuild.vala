@@ -8,7 +8,7 @@ public class ympbuild {
         public string ympbuild_buildpath;
         private string ympbuild_header;
 
-        public void ympbuild_init () {
+        private void ympbuild_init () {
             if (ympbuild_srcpath == null) {
                 ympbuild_srcpath = "./";
             }

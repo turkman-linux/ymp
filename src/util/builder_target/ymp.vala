@@ -1,4 +1,4 @@
-public void build_target_ymp_init() {
+private static void build_target_ymp_init() {
    if (usr_is_merged ()) {
         error_add (_ ("Build operation with usrmerge is not allowed!"));
         error (31);

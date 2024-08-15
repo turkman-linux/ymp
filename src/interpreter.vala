@@ -104,7 +104,7 @@ public int ymp_run() {
 }
 
 // preprocessor
-private string[] split_args(string line) {
+private static string[] split_args(string line) {
     array ret = new array();
     string cur = "";
     char c = '\0';
