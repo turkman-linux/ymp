@@ -53,8 +53,8 @@ private static void settings_init () {
     }else {
         warning (_ ("Config file does not exists: %s").printf (CONFIG));
     }
-    if (getenv ("USE") != null) {
-        set_value ("USE", getenv ("USE"));
+    if (GLib.Environment.get_variable ("USE") != null) {
+        set_value ("USE", GLib.Environment.get_variable ("USE"));
     }else {
         area = config_yaml.get_area (config_yaml.data, "ymp");
         set_value ("USE", config_yaml.get_value (area, "use"));
@@ -159,7 +159,7 @@ private static void parse_args (string[] args) {
             }
         }
     }
-    if (getenv ("NO_COLOR") != null) {
+    if (GLib.Environment.get_variable ("NO_COLOR") != null) {
         set_bool ("no-color", true);
     }
 }

@@ -84,7 +84,7 @@ private static int template_main (string[] args) {
 }
 
 private string get_gitconfig_variable (string variable) {
-    string gitconfig = srealpath (getenv ("HOME") + "/.gitconfig");
+    string gitconfig = srealpath (GLib.Environment.get_variable ("HOME") + "/.gitconfig");
     if (isfile (gitconfig)) {
         info (_ ("Reading gitconfig: %s").printf (gitconfig));
         foreach (string line in readfile (gitconfig).split ("\n")) {
