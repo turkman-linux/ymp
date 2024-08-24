@@ -61,7 +61,10 @@ private static void resolve_process (string[] names) {
                     pkg = get_installed_package (name);
                 }
             }else {
-                string errmsg = _ ("Package is not installable: %s Required by %s").printf (name, parent);
+                string errmsg = _ ("Package is not installable: %s").printf (name);
+                if (parent != ""){
+                    errmsg += " "+_("Required by: %s").printf (parent);
+                }
                 if (!ignore_missing) {
                     error_add (errmsg);
                 } else {
