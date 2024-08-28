@@ -15,7 +15,8 @@ export FORCE_UNSAFE_CONFIGURE=1
 export PYTHONDONTWRITEBYTECODE=1
 export SHELL="/bin/bash"
 export EDITOR="/bin/false"
-export CONFIG_SHELL=/bin/bash
+export PAGER="/bin/cat"
+export CONFIG_SHELL="/bin/bash"
 
 declare -r TARGET="@BUILD_TARGET@"
 declare -r DISTRO="@DISTRO@"
@@ -132,6 +133,14 @@ function target(){
     return 1
 }
 readonly -f target
+
+function buildtype (){
+    if [[ "$1" == "$BUILDTYPE" ]] ; then
+        return 0
+    fi
+    return 1
+}
+readonly -f buildtype
 
 function use(){
     if ! echo ${uses[@]} ${uses_extra[@]} ${arch[@]} all extra | grep "$1" >/dev/null; then

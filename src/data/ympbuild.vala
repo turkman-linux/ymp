@@ -112,17 +112,28 @@ public class ympbuild {
                 get_ympbuild_value ("name"),
                 function));
             if (ympbuild_has_function (function)) {
-                string cmd = "cd %s\n %s\n set +e ; source %s/ympbuild ; export ACTION=%s ; set -e ; %s".printf (
-                    ympbuild_buildpath,
-                    ympbuild_header,
-                    ympbuild_srcpath,
-                    function,
-                    function
-                );
-                if (get_bool ("quiet")) {
-                    return run_args_silent ( {"bash", "-c", cmd});
-                }else {
-                    return run_args ( {"bash", "-c", cmd});
+                string[] build_types = get_ympbuild_array("buildtypes");
+                if (build_types.length == 0){
+                    build_types = {"main"};
+                }
+                foreach(string buildtype in build_types){
+                    string cmd = "cd %s\n %s\n set +e ; source %s/ympbuild ; export ACTION=%s BUILDTYPE=%s; set -e ; %s".printf (
+                        ympbuild_buildpath,
+                        ympbuild_header,
+                        ympbuild_srcpath,
+                        function,
+                        buildtype,
+                        function
+                    );
+                    int status = 0;
+                    if (get_bool ("quiet")) {
+                        status = run_args_silent ( {"bash", "-ec", cmd});
+                    }else {
+                        status = run_args ( {"bash", "-ec", cmd});
+                    }
+                    if(status != 0){
+                        return status;
+                    }
                 }
             }else {
                 warning (_ ("ympbuild function not exists: %s").printf (function));
