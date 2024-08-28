@@ -128,7 +128,7 @@ Ymp can compile a package multiple time in same package.  You can define multipl
 .. code-block:: shell
 
 	...
-	buildtypes=(64bit 32bit)
+	buildtypes=(foo bar bazz)
 	...
 
 You can check buildtype like this in ympbuild file
@@ -136,12 +136,12 @@ You can check buildtype like this in ympbuild file
 .. code-block:: shell
 
 	...
-	if buildtype 32bit ; then
-		export CFLAGS="$CFLAGS -m32"
+	if buildtype foo ; then
+		export CFLAGS="..."
 	fi
 	# or check BUILDTYPE environment
-	if [[ "$BUILDTYPE" == "32bit" ]] ; then
-		export CFLAGS="$CFLAGS -m32"
+	if [[ "$BUILDTYPE" == "bar" ]] ; then
+		export CFLAGS="..."
 	fi
 	...
 
