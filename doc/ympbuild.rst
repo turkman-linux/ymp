@@ -121,6 +121,32 @@ Note: If you define **xxx** into use flag list, **xxx_depends** array items are 
 
 Note: Use flags is not usable for binary packages.
 
+Build types
+===========
+Ymp can compile a package multiple time in same package.  You can define multiple build type with **buildtypes** array
+
+.. code-block:: shell
+
+	...
+	buildtypes=(64bit 32bit)
+	...
+
+You can check buildtype like this in ympbuild file
+
+.. code-block:: shell
+
+	...
+	if buildtype 32bit ; then
+		export CFLAGS="$CFLAGS -m32"
+	fi
+	# or check BUILDTYPE environment
+	if [[ "$BUILDTYPE" == "32bit" ]] ; then
+		export CFLAGS="$CFLAGS -m32"
+	fi
+	...
+
+**Note:** If you didn't define buildtypes default build type name is **main** 
+
 Creating git based package
 ==========================
 You can create git based package. First use **ymp template** command then create git repository.
