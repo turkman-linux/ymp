@@ -16,6 +16,7 @@ private static void build_target_ymp_init() {
         if (unsafe || ymp_target.builder.ymp_build.get_ympbuild_value("unsafe") != "") {
             metadata += "    unsafe: true\n";
         }
+        create_dir(buildpath);
         writefile(srealpath(buildpath + "/metadata.yaml"), metadata.strip() + "\n");
         var tar = new archive();
         tar.load(buildpath + "/source.zip");
@@ -106,8 +107,8 @@ private static void build_target_ymp_init() {
             cd(curdir);
             return false;
         }
-        writefile(output + "/files", files_data);
-        writefile(output + "/links", links_data);
+        writefile(ymp_target.builder.ymp_build.ympbuild_buildpath + "/files", files_data);
+        writefile(ymp_target.builder.ymp_build.ympbuild_buildpath + "/links", links_data);
         cd(curdir);
         return true;
     });
@@ -116,7 +117,7 @@ private static void build_target_ymp_init() {
         string buildpath = ymp_target.builder.ymp_build.ympbuild_buildpath;
         string metadata = ymp_target.builder.ymp_build.get_ympbuild_metadata();
         bool unsafe = get_bool("unsafe");
-        debug("Create metadata info: " + buildpath + "/output/metadata.yaml");
+        debug("Create metadata info: " + buildpath + "/metadata.yaml");
         var yaml = new yamlfile();
         yaml.data = metadata;
         string srcdata = yaml.get("ymp.source");
@@ -211,27 +212,27 @@ private static void build_target_ymp_init() {
             return false;
         }
         ymp_target.builder.output_package_name = name + "_" + version + "_" + release;
-        create_dir(buildpath + "/output/");
-        writefile(buildpath + "/output/metadata.yaml", trim(new_data));
+        create_dir(buildpath);
+        writefile(buildpath + "/metadata.yaml", trim(new_data));
         return true;
     });
 
     ymp_target.create_data_file.connect(() => {
         string buildpath = ymp_target.builder.ymp_build.ympbuild_buildpath;
-        debug(_("Create data file: %s/output/data.tar.gz").printf(buildpath));
+        debug(_("Create data file: %s/data.tar.gz").printf(buildpath));
         var tar = new archive();
         if (get_value("compress") == "none") {
-            tar.load(buildpath + "/output/data.tar");
+            tar.load(buildpath + "/data.tar");
             tar.set_type("tar", "none");
         } else if (get_value("compress") == "gzip") {
-            tar.load(buildpath + "/output/data.tar.gz");
+            tar.load(buildpath + "/data.tar.gz");
             tar.set_type("tar", "gzip");
         } else if (get_value("compress") == "xz") {
-            tar.load(buildpath + "/output/data.tar.xz");
+            tar.load(buildpath + "/data.tar.xz");
             tar.set_type("tar", "xz");
         } else {
             // Default format (gzip)
-            tar.load(buildpath + "/output/data.tar.gz");
+            tar.load(buildpath + "/data.tar.gz");
             tar.set_type("tar", "gzip");
         }
         int fnum = 0;
@@ -249,20 +250,18 @@ private static void build_target_ymp_init() {
             tar.add(file);
             fnum++;
         }
-        if (isfile(buildpath + "/output/data.tar.gz")) {
-            remove_file(buildpath + "/output/data.tar.gz");
-        }
         if (fnum != 0) {
             tar.create();
         }
         cd(curdir);
-        string hash = calculate_sha1sum(buildpath + "/output/data.tar.gz");
-        uint64 size = filesize(buildpath + "/output/data.tar.gz");
-        string new_data = readfile(buildpath + "/output/metadata.yaml");
+        string hash = calculate_sha1sum(buildpath + "/data.tar.gz");
+        uint64 size = filesize(buildpath + "/data.tar.gz");
+        string new_data = readfile(buildpath + "/metadata.yaml");
         new_data += "    archive-hash: " + hash + "\n";
         new_data += "    arch: " + getArch() + "\n";
         new_data += "    archive-size: " + size.to_string() + "\n";
-        writefile(buildpath + "/output/metadata.yaml", trim(new_data));
+        create_dir(buildpath);
+        writefile(buildpath + "/metadata.yaml", trim(new_data));
 
     });
 
@@ -270,7 +269,7 @@ private static void build_target_ymp_init() {
         string buildpath = ymp_target.builder.ymp_build.ympbuild_buildpath;
 
         string curdir = pwd();
-        cd(buildpath + "/output/");
+        cd(buildpath);
         ymp_target.create_data_file();
         var tar = new archive();
         tar.load(buildpath + "/package.zip");

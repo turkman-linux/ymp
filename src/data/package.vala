@@ -299,7 +299,7 @@ public class package {
         pkgfile.extract_all ();
         build.build_single(get_build_dir () + "/" + name);
         error (1);
-        quarantine_import_from_path (build.ymp_build.ympbuild_buildpath + "/output");
+        quarantine_import_from_path (build.ymp_build.ympbuild_buildpath);
         cd (curdir);
     }
 

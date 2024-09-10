@@ -212,17 +212,18 @@ public void quarantine_install () {
     fs_sync ();
 }
 
-private void quarantine_import_from_path (string path) {
+private void quarantine_import_from_path (string fpath) {
     print (colorize (_ ("Quarantine import"), yellow));
     string rootfs = srealpath (get_storage () + "/quarantine/rootfs/");
     string files = srealpath (get_storage () + "/quarantine/files/");
     string links = srealpath (get_storage () + "/quarantine/links/");
     string metadata = srealpath (get_storage () + "/quarantine/metadata/");
     package p = new package ();
-    p.load (path + "/metadata.yaml");
-    move_file (path + "/metadata.yaml", metadata + "/" + p.name + ".yaml");
-    move_file (path + "/files", files + "/" + p.name);
-    move_file (path + "/links", links + "/" + p.name);
+    p.load (fpath + "/metadata.yaml");
+    move_file (fpath + "/metadata.yaml", metadata + "/" + p.name + ".yaml");
+    move_file (fpath + "/files", files + "/" + p.name);
+    move_file (fpath + "/links", links + "/" + p.name);
+    string path = fpath + "/output/";
     foreach (string fname in find (path)) {
         string ftarget = fname[path.length:];
         if (isfile (fname)) {
