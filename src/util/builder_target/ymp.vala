@@ -219,22 +219,27 @@ private static void build_target_ymp_init() {
 
     ymp_target.create_data_file.connect(() => {
         string buildpath = ymp_target.builder.ymp_build.ympbuild_buildpath;
-        debug(_("Create data file: %s/data.tar.gz").printf(buildpath));
+        string tarname = "data.tar.gz";
         var tar = new archive();
         if (get_value("compress") == "none") {
-            tar.load(buildpath + "/data.tar");
+            tarname = "/data.tar";
+            tar.load(buildpath + tarname);
             tar.set_type("tar", "none");
         } else if (get_value("compress") == "gzip") {
-            tar.load(buildpath + "/data.tar.gz");
+            tar.load(buildpath + tarname);
+            tarname = "/data.tar.gz";
             tar.set_type("tar", "gzip");
         } else if (get_value("compress") == "xz") {
-            tar.load(buildpath + "/data.tar.xz");
+            tarname =  "/data.tar.xz";
+            tar.load(buildpath + tarname);
             tar.set_type("tar", "xz");
         } else {
             // Default format (gzip)
-            tar.load(buildpath + "/data.tar.gz");
+            tarname = "/data.tar.gz";
+            tar.load(buildpath + tarname);
             tar.set_type("tar", "gzip");
         }
+        debug(_("Create data file: %s%s").printf(buildpath, tarname));
         int fnum = 0;
         string curdir = pwd();
         cd(buildpath + "/output/");
@@ -254,8 +259,8 @@ private static void build_target_ymp_init() {
             tar.create();
         }
         cd(curdir);
-        string hash = calculate_sha1sum(buildpath + "/data.tar.gz");
-        uint64 size = filesize(buildpath + "/data.tar.gz");
+        string hash = calculate_sha1sum(buildpath + tarname);
+        uint64 size = filesize(buildpath + tarname);
         string new_data = readfile(buildpath + "/metadata.yaml");
         new_data += "    archive-hash: " + hash + "\n";
         new_data += "    arch: " + getArch() + "\n";
