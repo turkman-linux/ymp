@@ -122,49 +122,48 @@ void create_dir(const char *dir) {
     c_mkdir(tmp, 0755);
 }
 
+
 static char * c_read_file(const char * f_name, int * err, size_t * f_size) {
-    char * buffer;
-    size_t length;
-    FILE * f = fopen(f_name, "rb");
-    size_t read_length;
-
-    if (f) {
-        fseek(f, 0, SEEK_END);
-        length = ftell(f);
-        fseek(f, 0, SEEK_SET);
-
-        /* 1 GiB; best not to load a whole large file in one string */
-        if (length > 1073741824) {
-            * err = FILE_TO_LARGE;
-
-            return "";
-        }
-
-        buffer = (char * ) calloc(length + 1, sizeof(char));
-
-        if (length) {
-            read_length = fread(buffer, 1, length, f);
-
-            if (length != read_length) {
-                * err = FILE_READ_ERROR;
-
-                return "";
-            }
-        }
-
-        fclose(f);
-
-        * err = FILE_OK;
-        buffer[length] = '\0';
-        * f_size = length;
-    } else {
-        * err = FILE_NOT_EXIST;
-
-        return "";
+    char *buffer = NULL;
+    FILE *f = fopen(f_name, "rb");
+    if (!f) {
+        *err = FILE_NOT_EXIST;
+        return NULL; /* Return NULL on error */
     }
 
-    return buffer;
+    fseek(f, 0, SEEK_END);
+    size_t length = ftell(f);
+    fseek(f, 0, SEEK_SET);
+
+    if (length > 1073741824) {
+        fclose(f);
+        *err = FILE_TO_LARGE;
+        return ""; /* Return empty on error */
+    }
+
+    buffer = (char *)calloc(length + 1, sizeof(char));
+    if (!buffer) {
+        fclose(f);
+        *err = FILE_READ_ERROR;
+        return ""; /* Return empty on error */
+    }
+
+    size_t read_length = fread(buffer, 1, length, f);
+    fclose(f);
+
+    if (length != read_length) {
+        free(buffer); /* Free on error */
+        *err = FILE_READ_ERROR;
+        return ""; /* Return empty on error */
+    }
+
+    *err = FILE_OK;
+    buffer[length] = '\0';
+    *f_size = length;
+    return buffer; /* Return the allocated buffer */
 }
+
+
 char * readfile_raw(const char * filename) {
     int err;
     size_t f_size;
@@ -178,7 +177,7 @@ char * readfile_raw(const char * filename) {
         } else if (err == FILE_READ_ERROR) {
             ferror_add("%s (%d) %s\n", "failed to read file.", err,filename);
         }
-        return "";
+        return ""; /* Return empty on error */
     } else {
         return f_data;
     }
