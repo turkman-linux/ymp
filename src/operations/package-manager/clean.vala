@@ -8,6 +8,7 @@ public static int clean_main (string[] args) {
     print (colorize (_ ("Clean: "), yellow) + _ ("quarantine"));
     quarantine_reset ();
     set_value ("OPERATION", "clean");
+    directories_init();
     sysconf_main (args);
     return 0;
 }
