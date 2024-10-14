@@ -23,6 +23,11 @@ struct string {
   size_t len;
 };
 
+struct progress {
+  char *filename;
+  time_t start_time;
+};
+
 void init_string(struct string *s) {
   s->len = 0;
   s->ptr = calloc(1, s->len+1);
@@ -51,13 +56,31 @@ static size_t write_data_to_string(void *ptr, size_t size, size_t nmemb, void *s
 
 
 int fetcher_process_to_stderr(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded) {
+    struct progress *data = p;
     if (total > 0) {
         /* Calculate percentage */
         double percentage = (double)current / total * 100.0;
 
+        /* Calculate elapsed time */
+        time_t now = time(NULL);
+        double elapsed_time = difftime(now, data->start_time); /* in seconds */
+
+        /* Calculate speed (bytes per second) */
+        double speed = (elapsed_time > 0) ? current / elapsed_time : 0; /* bytes per second */
+
+        /* Calculate ETA (in seconds) */
+        double remaining = total - current;
+        double eta = (speed > 0) ? remaining / speed : 0; /* in seconds */
+
+        /* Format speed and ETA */
+        char speed_str[20];
+        char eta_str[20];
+        snprintf(speed_str, sizeof(speed_str), "%s/s", g_format_size(speed));
+        snprintf(eta_str, sizeof(eta_str), "%.0f s", eta);
+
         /* Print formatted output */
-        fprintf(stderr, "\33[2K\r%6.2f%%  %s/%s", 
-                percentage, g_format_size(current), g_format_size(total));
+        fprintf(stderr, "\33[2K\r%6.2f%% %s  %s/%s  Speed: %s  ETA: %s", 
+                percentage, data->filename, g_format_size(current), g_format_size(total), speed_str, eta_str);
         fflush(stderr);
     }
     return 0;
@@ -108,6 +131,10 @@ int fetch(char* url, char* path){
     curl_options_common(curl, url);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_file);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+    struct progress data;
+    data.filename = strdup(path);
+    data.start_time = time(NULL);
+    curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, &data);
     CURLcode res;
     res = curl_easy_perform(curl);
     if(res != CURLE_OK || res == CURLE_HTTP_RETURNED_ERROR){
