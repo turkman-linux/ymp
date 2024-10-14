@@ -49,8 +49,17 @@ static size_t write_data_to_string(void *ptr, size_t size, size_t nmemb, void *s
   return size*nmemb;
 }
 
-int fetcher_process_to_stderr(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded){
-    fprintf(stderr, "CUR: %ld TOT: %ld\r\n", current, total);
+
+int fetcher_process_to_stderr(void *p, curl_off_t total, curl_off_t current, curl_off_t TotalToUpload, curl_off_t NowUploaded) {
+    if (total > 0) {
+        /* Calculate percentage */
+        double percentage = (double)current / total * 100.0;
+
+        /* Print formatted output */
+        fprintf(stderr, "\33[2K\r%6.2f%%  %s/%s", 
+                percentage, g_format_size(current), g_format_size(total));
+        fflush(stderr);
+    }
     return 0;
 }
 
@@ -74,7 +83,7 @@ void curl_options_common(CURL *curl, char* url){
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
         curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, "");
-        if (get_bool("processbar") || getenv("PROGRESSBAR")){
+        if (get_bool("progressbar") || getenv("PROGRESSBAR")){
             curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_stderr);
         } else {
             curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, fetcher_process_to_dummy);
@@ -92,6 +101,10 @@ int fetch(char* url, char* path){
     CURL* curl=curl_easy_init();
     finfo("Downloading: %s\n",path);
     fp = fopen(path,"wb");
+    if(fp == NULL) {
+        ferror_add("Failed to open file for write: %s\n", path);
+        return 1;
+    }
     curl_options_common(curl, url);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_to_file);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
