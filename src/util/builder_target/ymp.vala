@@ -219,7 +219,7 @@ private static void build_target_ymp_init() {
 
     ymp_target.create_data_file.connect(() => {
         string buildpath = ymp_target.builder.ymp_build.ympbuild_buildpath;
-        string tarname = "data.tar.gz";
+        string tarname = "/data.tar.gz";
         var tar = new archive();
         if (get_value("compress") == "none") {
             tarname = "/data.tar";
