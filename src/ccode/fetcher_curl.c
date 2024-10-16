@@ -9,6 +9,10 @@
 #include <value.h>
 
 
+#ifdef __STRICT_ANSI__
+#define strdup(A) strcpy(calloc(strlen(A) + 1, sizeof(char)), A)
+#endif
+
 #ifndef PATH_MAX
 #define PATH_MAX 1024
 #endif
