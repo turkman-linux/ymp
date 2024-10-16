@@ -13,6 +13,13 @@ private static void build_target_ymp_init() {
         bool unsafe = get_bool("unsafe");
         cd(ymp_target.builder.ymp_build.ympbuild_srcpath);
         string metadata = ymp_target.builder.ymp_build.get_ympbuild_metadata();
+        var yaml = new yamlfile();
+        yaml.data = metadata;
+        string srcdata = yaml.get("ymp.source");
+        string name = yaml.get_value(srcdata, "name");
+        string release = yaml.get_value(srcdata, "release");
+        string version = yaml.get_value(srcdata, "version");
+        ymp_target.builder.output_package_name = name + "_" + version + "_" + release;
         if (unsafe || ymp_target.builder.ymp_build.get_ympbuild_value("unsafe") != "") {
             metadata += "    unsafe: true\n";
         }
