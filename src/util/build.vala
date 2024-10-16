@@ -180,15 +180,7 @@ public class builder {
                 restore_env();
                 return 1;
             }
-            if (get_bool("install")) {
-                if (0 != install_main({
-                        binpkg
-                    })) {
-                    set_bool("unsafe", unsafe);
-                    restore_env();
-                    return 1;
-                }
-            }
+
             string target = output + "/" + output_package_name + "_" + build_target.arch + "." + build_target.suffix;
             move_file(binpkg, target);
         }
