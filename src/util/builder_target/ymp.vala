@@ -214,6 +214,7 @@ private static void build_target_ymp_init() {
         ymp_target.builder.output_package_name = name + "_" + version + "_" + release;
         create_dir(buildpath);
         writefile(buildpath + "/metadata.yaml", trim(new_data));
+        print(buildpath + "/metadata.yaml");
         return true;
     });
 

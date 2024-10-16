@@ -124,12 +124,7 @@ public class builder {
             restore_env();
             return 1;
         }
-        if (!build_target.create_metadata_info()) {
-            error_add(_("Failed to create metadata: %s").printf(srcpath));
-            set_bool("unsafe", unsafe);
-            restore_env();
-            return 1;
-        }
+
         // Set build target again (emerge change build target)
         ymp_build.set_ympbuild_srcpath(srcpath);
         string build_path = srealpath(get_build_dir() + "/" + calculate_md5sum(srcpath + "/ympbuild"));
@@ -162,6 +157,12 @@ public class builder {
             }
         }
         if (!get_bool("no-binary")) {
+            if (!build_target.create_metadata_info()) {
+                error_add(_("Failed to create metadata: %s").printf(srcpath));
+                set_bool("unsafe", unsafe);
+                restore_env();
+                return 1;
+            }
             info("Create binary package");
             if (!extract_package_sources()) {
                 set_bool("unsafe", unsafe);

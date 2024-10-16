@@ -13,7 +13,7 @@ private static int build_operation (string[] args) {
             error_add("Build path: %s (%s)".printf(bd.ymp_build.ympbuild_buildpath, arg));
             return r;
         }
-        if(get_bool("install")) {
+        if(get_bool("install") && !get_bool("no-binary")) {
             quarantine_import_from_path(bd.ymp_build.ympbuild_buildpath);
             quarantine_install ();
             quarantine_reset ();
