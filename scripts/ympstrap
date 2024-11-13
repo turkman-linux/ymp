@@ -31,7 +31,8 @@ function fetch_pkg(){
             uri=$(get_uri $arg)
             pkg="$output"/var/lib/ymp/packages/"$(basename $uri)"
             mkdir -p "$output"/var/lib/ymp/sysconf/"$arg"
-            wget -c ${repo/\$uri/$uri} -O "$pkg"
+            echo "Download: $arg" >/dev/stderr
+            wget -c ${repo/\$uri/$uri} -O "$pkg" -q
             pkginst "$pkg"
             chmod 755 -R "$output"
     done
@@ -40,9 +41,9 @@ function fetch_pkg(){
 function pkginst(){
     mkdir "$output"/tmp/ -p
     cd "$output"/tmp/
-    unzip "$1"
+    unzip "$1" >/dev/null
     cd "$output"
-    tar -xvf "$output"/tmp/data.tar.*
+    tar -xf "$output"/tmp/data.tar.*
     rm -rf "$output"/tmp
 }
 # Stage 1 download repo
