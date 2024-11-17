@@ -6,10 +6,8 @@ private static int sysconf_main (string[] args) {
     clear_env();
     print (colorize (_ ("Running sysconf:"), yellow) + " " + get_value ("OPERATION"));
     setenv("PATH","/sbin:/bin:/usr/sbin:/usr/bin", 1);
+    setenv ("OPERATION", get_value ("OPERATION"), 1);
 
-    if (get_value ("OPERATION") != "install" && get_value ("OPERATION") != "remove") {
-        setenv ("OPERATION", get_value ("OPERATION"), 1);
-    }
     if (DESTDIR != "/") {
         run_args ( {"chroot", get_destdir (), "ldconfig"});
     }else {
