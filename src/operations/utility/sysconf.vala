@@ -14,22 +14,29 @@ private static int sysconf_main (string[] args) {
     }else {
         run ("ldconfig");
     }
+    jobs j = new jobs();
     foreach (string hook in find (get_configdir () + "/sysconf.d")) {
-        if (isfile (hook)) {
-            info (_ ("Run hook: %s").printf (sbasename (hook)));
-            create_dir (get_storage () + "/sysconf/" + sbasename (hook));
-            if (DESTDIR != "/") {
-                hook=hook[DESTDIR.length:];
-                if (0 != run_args ( {"chroot", get_destdir (), hook})) {
-                    warning (_ ("Failed to run sysconf: %s").printf (sbasename (hook)));
-                }
-            }else if (0 != run_args ({hook})) {
-                warning (_ ("Failed to run sysconf: %s").printf (sbasename (hook)));
-            }
-        }
+        j.add((void*)run_sysconf, hook);
     }
+    j.run();
     restore_env();
     return 0;
+}
+
+private static void run_sysconf(string fhook){
+    string hook = fhook;
+    if (isfile (hook)) {
+        info (_ ("Run hook: %s").printf (sbasename (hook)));
+        create_dir (get_storage () + "/sysconf/" + sbasename (hook));
+        if (DESTDIR != "/") {
+            hook=hook[DESTDIR.length:];
+            if (0 != run_args ( {"chroot", get_destdir (), hook})) {
+                warning (_ ("Failed to run sysconf: %s").printf (sbasename (hook)));
+            }
+        }else if (0 != run_args ({hook})) {
+            warning (_ ("Failed to run sysconf: %s").printf (sbasename (hook)));
+        }
+    }
 }
 
 static void sysconf_init () {
