@@ -29,7 +29,8 @@ public bool yesno (string message) {
     if (response == null || response == "") {
         return false;
     }
-    return (response[0] == 'y' || response[0] == 'Y');
+    return (response[0] == 'y' || response[0] == 'Y' \
+        || response[0] == _("Yy")[0] || response[0] == _("Yy")[1]);
 }
 
 //DOC: `void print_array (string[] array):`
