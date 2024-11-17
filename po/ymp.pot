@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-17 13:51+0000\n"
+"POT-Creation-Date: 2024-11-17 13:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1298,7 +1298,7 @@ msgid "Create a ymp shell or execute ympsh script."
 msgstr ""
 
 #: src/operations/utility/sysconf.vala:7
-msgid "Running sysconf modules"
+msgid "Running sysconf:"
 msgstr ""
 
 #: src/operations/utility/sysconf.vala:30

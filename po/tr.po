@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-17 13:51+0000\n"
+"POT-Creation-Date: 2024-11-17 13:55+0000\n"
 "PO-Revision-Date: 2023-03-10 20:35+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1303,8 +1303,9 @@ msgid "Create a ymp shell or execute ympsh script."
 msgstr "ymp kabugu olustur veya ympsh calistir."
 
 #: src/operations/utility/sysconf.vala:7
-msgid "Running sysconf modules"
-msgstr "Sysconf modulleri calistiriliyor"
+#, fuzzy
+msgid "Running sysconf:"
+msgstr "Sysconf calistiriliyor:"
 
 #: src/operations/utility/sysconf.vala:30
 #, c-format
