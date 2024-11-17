@@ -16,7 +16,7 @@ private static int sysconf_main (string[] args) {
     }
     jobs j = new jobs();
     foreach (string hook in find (get_configdir () + "/sysconf.d")) {
-        j.add((void*)run_sysconf, hook);
+        j.add((void*)run_sysconf, strdup(hook));
     }
     j.run();
     restore_env();
