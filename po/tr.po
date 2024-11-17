@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-17 13:47+0000\n"
+"POT-Creation-Date: 2024-11-17 13:51+0000\n"
 "PO-Revision-Date: 2023-03-10 20:35+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1302,23 +1302,27 @@ msgstr "kabuk"
 msgid "Create a ymp shell or execute ympsh script."
 msgstr "ymp kabugu olustur veya ympsh calistir."
 
-#: src/operations/utility/sysconf.vala:29
+#: src/operations/utility/sysconf.vala:7
+msgid "Running sysconf modules"
+msgstr "Sysconf modulleri calistiriliyor"
+
+#: src/operations/utility/sysconf.vala:30
 #, c-format
 msgid "Run hook: %s"
 msgstr "Hook calistir: %s"
 
-#: src/operations/utility/sysconf.vala:34
-#: src/operations/utility/sysconf.vala:37
+#: src/operations/utility/sysconf.vala:35
+#: src/operations/utility/sysconf.vala:38
 #, c-format
 msgid "Failed to run sysconf: %s"
 msgstr "Sysconf calistirmasi basarisiz: %s"
 
-#: src/operations/utility/sysconf.vala:46
 #: src/operations/utility/sysconf.vala:47
+#: src/operations/utility/sysconf.vala:48
 msgid "sysconf"
 msgstr "sysconf"
 
-#: src/operations/utility/sysconf.vala:48
+#: src/operations/utility/sysconf.vala:49
 msgid "Trigger sysconf operations."
 msgstr "Sysconf eylemi tetikle."
 

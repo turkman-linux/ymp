@@ -4,6 +4,7 @@ private static int sysconf_main (string[] args) {
     }
     save_env();
     clear_env();
+    print (colorize (_ ("Running sysconf modules"), yellow));
     setenv("PATH","/sbin:/bin:/usr/sbin:/usr/bin", 1);
 
     if (get_value ("OPERATION") != "install" && get_value ("OPERATION") != "remove") {

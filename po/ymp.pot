@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-17 13:47+0000\n"
+"POT-Creation-Date: 2024-11-17 13:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1297,23 +1297,27 @@ msgstr ""
 msgid "Create a ymp shell or execute ympsh script."
 msgstr ""
 
-#: src/operations/utility/sysconf.vala:29
+#: src/operations/utility/sysconf.vala:7
+msgid "Running sysconf modules"
+msgstr ""
+
+#: src/operations/utility/sysconf.vala:30
 #, c-format
 msgid "Run hook: %s"
 msgstr ""
 
-#: src/operations/utility/sysconf.vala:34
-#: src/operations/utility/sysconf.vala:37
+#: src/operations/utility/sysconf.vala:35
+#: src/operations/utility/sysconf.vala:38
 #, c-format
 msgid "Failed to run sysconf: %s"
 msgstr ""
 
-#: src/operations/utility/sysconf.vala:46
 #: src/operations/utility/sysconf.vala:47
+#: src/operations/utility/sysconf.vala:48
 msgid "sysconf"
 msgstr ""
 
-#: src/operations/utility/sysconf.vala:48
+#: src/operations/utility/sysconf.vala:49
 msgid "Trigger sysconf operations."
 msgstr ""
 
