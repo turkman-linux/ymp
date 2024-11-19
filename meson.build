@@ -24,30 +24,32 @@ run_command('bash', './tool/mkctx.sh',
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
 cflags = ['-I'+meson.current_source_dir()/'src/include/']
 ldflags = ['-L'+meson.current_build_dir(), '-lymp']
-cflags += ['-std=c99']
 if get_option('ansi')
     cflags += ['-ansi']
 endif
 
-# disable vala related warnings
-cflags += ['-Wno-unused', '-Wno-unused-result', '-Wno-incompatible-pointer-types',
-         '-Wno-discarded-qualifiers', '-Wno-infinite-recursion',
-         '-Wno-cast-function-type', '-Wno-attributes','-Wno-unknown-warning-option',
-        ]
-
 cflags += ['-DGETTEXT_PACKAGE=ymp']
 
-# some compiler flags from dpkg-buildpackage
-cflags += ['-g', '-O2', '-Werror=implicit-function-declaration',
+if get_option('optimize')
+    # disable vala related warnings
+    cflags += ['-Wno-unused', '-Wno-unused-result', '-Wno-incompatible-pointer-types',
+         '-Wno-discarded-qualifiers', '-Wno-infinite-recursion',
+         '-Wno-cast-function-type', '-Wno-attributes','-Wno-unknown-warning-option',
+    ]
+
+
+    # some compiler flags from dpkg-buildpackage
+    cflags += ['-g', '-O2', '-Werror=implicit-function-declaration',
          '-ffile-prefix-map=/root/ymp=.', '-fstack-protector-strong',
          '-fstack-clash-protection', '-Wformat', '-Werror=format-security'
-        ]
+    ]
 
-# error on warning
-if compiler.get_id() == 'gcc'
-    cflags += ['-Werror']
+    # error on warning
+    if compiler.get_id() == 'gcc'
+        cflags += ['-Werror']
+    endif
+
 endif
-
 # some improvements
 cflags += ['-fno-plt', '-flto', '-isystem', '-fvisibility=hidden', '-DVALA_EXTERN=extern', '-pthread']
 
