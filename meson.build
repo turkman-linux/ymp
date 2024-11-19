@@ -24,6 +24,7 @@ run_command('bash', './tool/mkctx.sh',
 run_command('bash', './tool/check.sh', meson.current_build_dir(), check:true)
 cflags = ['-I'+meson.current_source_dir()/'src/include/']
 ldflags = ['-L'+meson.current_build_dir(), '-lymp']
+cflags += ['-std=c99']
 if get_option('ansi')
     cflags += ['-ansi']
 endif

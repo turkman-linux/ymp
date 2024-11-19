@@ -7,7 +7,6 @@
 #include <stddef.h>
 #include <string.h>
 
-
 #include <glib.h>
 
 int iseq(char* str1, char* str2){

@@ -1303,9 +1303,8 @@ msgid "Create a ymp shell or execute ympsh script."
 msgstr "ymp kabugu olustur veya ympsh calistir."
 
 #: src/operations/utility/sysconf.vala:7
-#, fuzzy
 msgid "Running sysconf:"
-msgstr "Sysconf calistiriliyor:"
+msgstr "Sysconf calisiyor:"
 
 #: src/operations/utility/sysconf.vala:30
 #, c-format
@@ -1632,9 +1631,8 @@ msgid "Name is not defined."
 msgstr "isim tanimli degil."
 
 #: src/util/builder_target/ymp.vala:250
-#, fuzzy, c-format
 msgid "Create data file: %s%s"
-msgstr "Veri dosyasi olustur oku: %s"
+msgstr "Veri dosyasi olustur: %s"
 
 #: src/util/builder_target/ymp.vala:259
 #, c-format
