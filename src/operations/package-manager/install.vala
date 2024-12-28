@@ -32,7 +32,6 @@ private static int install_main (string[] args) {
         info (_ ("Resolve dependency done: %s").printf (join (" ", pkgs)));
     }
     quarantine_reset ();
-    package[] pkg_obj = {};
     jobs j = new jobs();
     foreach (string name in pkgs) {
         if (isfile (name)) {
@@ -53,12 +52,11 @@ private static int install_main (string[] args) {
         if (pkg == null) {
             error (1);
         }else {
-            pkg_obj += pkg;
             j.add((void*)package_extract_single, pkg);
         }
     }
     j.run();
-    string[] leftovers = calculate_leftover (pkg_obj);
+    string[] leftovers = calculate_leftover (pkgs);
     if (!quarantine_validate ()) {
         error_add (_ ("Quarantine validation failed."));
     }
@@ -106,8 +104,12 @@ private static package package_get_single (string pkg) {
             quarantine_reset ();
         }
         error (1);
+        string[] leftovers = calculate_leftover ({p.name});
         quarantine_install ();
         quarantine_reset ();
+        foreach (string file in leftovers) {
+            remove_file (DESTDIR + "/" + file);
+        }
         sysconf_main ( {});
     }
     return p;
@@ -120,14 +122,14 @@ private static void package_extract_single(package *p){
     }
 }
 
-private static string[] calculate_leftover (package[] pkgs) {
+private static string[] calculate_leftover (string[] pkgs) {
     print (colorize (_ ("Calculating leftovers"), yellow));
     var files = new array ();
     // Fetch installed and new files list
-    foreach (package p in pkgs) {
-        if (is_installed_package (p.name) && !p.is_source ) {
+    foreach (string p in pkgs) {
+        if (is_installed_package (p) && isfile(get_storage () + "/quarantine/metadata/" + p)) {
              // installed files
-             package pi = get_installed_package (p.name);
+             package pi = get_installed_package (p);
              foreach (string file in pi.list_files ()) {
                  if (file.length > 41) {
                      files.add (file[41:]);
@@ -138,13 +140,13 @@ private static string[] calculate_leftover (package[] pkgs) {
                  files.add (ssplit (link, " ")[0]);
              }
              // new files
-             foreach (string file in ssplit (readfile_cached (get_storage () + "/quarantine/files/" + p.name), "\n")) {
+             foreach (string file in ssplit (readfile_cached (get_storage () + "/quarantine/files/" + p), "\n")) {
                  if (file.length > 41) {
                      files.remove (file[41:]);
                  }
              }
              //new symlinks
-             foreach (string link in ssplit (readfile_cached (get_storage () + "/quarantine/links/" + p.name), "\n")) {
+             foreach (string link in ssplit (readfile_cached (get_storage () + "/quarantine/links/" + p), "\n")) {
                  files.remove (ssplit (link, " ")[0]);
              }
         }

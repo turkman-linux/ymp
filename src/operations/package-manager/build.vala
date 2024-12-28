@@ -14,9 +14,13 @@ private static int build_operation (string[] args) {
             return r;
         }
         if(get_bool("install") && !get_bool("no-binary")) {
+            string[] leftovers = calculate_leftover ({bd.ymp_build.get_ympbuild_value("name")});
             quarantine_import_from_path(bd.ymp_build.ympbuild_buildpath);
             quarantine_install ();
             quarantine_reset ();
+            foreach (string file in leftovers) {
+                remove_file (DESTDIR + "/" + file);
+            }
         }
     }
     cd (current_directory);
