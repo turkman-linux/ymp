@@ -1,0 +1,19 @@
+#!/bin/bash
+is_shared=false
+for arg in "$@" ; do
+  if [[ "$arg" == "-shared" ]] ; then
+      is_shared=true
+  elif [[ "$arg" == "-c" ]] ; then
+      exec g++ "$@"
+  elif [[ "$arg" == "-static" ]] ; then
+      exec g++ "$@"
+  elif [[ "$arg" == "-nostdlib" ]] ; then
+      exec g++ "$@"
+  fi
+done
+
+if [[ "${is_shared}" == true ]] ; then
+    exec g++ "$@" -nostdlib -lc -fno-plt
+else
+    exec g++ /usr/lib64/start-$(uname -m).o -fvisibility="hidden" "$@" -nostdlib -lc -fno-plt
+fi
