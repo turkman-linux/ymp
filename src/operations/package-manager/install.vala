@@ -122,36 +122,60 @@ private static void package_extract_single(package *p){
     }
 }
 
+
+private class leftover {
+    public string[] files;
+    public string name;
+}
+
+private static void calculate_leftover_single (leftover l){
+    array files = new array();
+    if (is_installed_package (l.name) && isfile(get_storage () + "/quarantine/metadata/" + l.name+".yaml")) {
+         print (colorize (_ ("Calculating leftovers: %s"), yellow).printf (l.name));
+         // installed files
+         package pi = get_installed_package (l.name);
+         foreach (string file in pi.list_files ()) {
+             if (file.length > 41) {
+                 files.add (file[41:]);
+             }
+         }
+         // installed symlinks
+         foreach (string link in pi.list_links ()) {
+             files.add (ssplit (link, " ")[0]);
+         }
+         print_array(files.get());
+         // new files
+         foreach (string file in ssplit (readfile_cached (get_storage () + "/quarantine/files/" + l.name), "\n")) {
+             if (file.length > 41) {
+                 files.remove (file[41:]);
+             }
+         }
+         //new symlinks
+         foreach (string link in ssplit (readfile_cached (get_storage () + "/quarantine/links/" + l.name), "\n")) {
+             files.remove (ssplit (link, " ")[0]);
+         }
+    }
+    l.files = files.get();
+}
+
 private static string[] calculate_leftover (string[] pkgs) {
     print (colorize (_ ("Calculating leftovers"), yellow));
-    var files = new array ();
     // Fetch installed and new files list
+    jobs j = new jobs();
+    int i=0;
+    leftover[] lft = new leftover[pkgs.length];
     foreach (string p in pkgs) {
-        if (is_installed_package (p) && isfile(get_storage () + "/quarantine/metadata/" + p)) {
-             // installed files
-             package pi = get_installed_package (p);
-             foreach (string file in pi.list_files ()) {
-                 if (file.length > 41) {
-                     files.add (file[41:]);
-                 }
-             }
-             // installed symlinks
-             foreach (string link in pi.list_links ()) {
-                 files.add (ssplit (link, " ")[0]);
-             }
-             // new files
-             foreach (string file in ssplit (readfile_cached (get_storage () + "/quarantine/files/" + p), "\n")) {
-                 if (file.length > 41) {
-                     files.remove (file[41:]);
-                 }
-             }
-             //new symlinks
-             foreach (string link in ssplit (readfile_cached (get_storage () + "/quarantine/links/" + p), "\n")) {
-                 files.remove (ssplit (link, " ")[0]);
-             }
-        }
+        lft[i] = new leftover();
+        lft[i].name = p;
+        j.add((void*)calculate_leftover_single, lft[i]);
+        i++;
     }
-    return files.get ();
+    j.run();
+    var ret = new array();
+    foreach (leftover l in lft) {
+        ret.adds(l.files);
+    }
+    return ret.get ();
 }
 static void install_init () {
     operation op = new operation ();
