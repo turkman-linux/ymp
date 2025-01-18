@@ -143,7 +143,6 @@ private static void calculate_leftover_single (leftover l){
          foreach (string link in pi.list_links ()) {
              files.add (ssplit (link, " ")[0]);
          }
-         print_array(files.get());
          // new files
          foreach (string file in ssplit (readfile_cached (get_storage () + "/quarantine/files/" + l.name), "\n")) {
              if (file.length > 41) {
